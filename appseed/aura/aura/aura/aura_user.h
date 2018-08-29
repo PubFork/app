@@ -96,8 +96,7 @@ namespace draw2d
 //   LPARAM - LPMESSAGE pMsg - a pointer to the MESSAGE structure
 //   return value - 0 if the message was not processed, nonzero if it was
 #define WM_FORWARDMSG      0x037F
-#define WM_REDRAW        WM_APP + 1189  // (params unused) causes idles to kick in
-#define WM_APPEXIT WM_APP + 1444
+#define WM_APPEXIT         WM_APP + 1444
 
 
 

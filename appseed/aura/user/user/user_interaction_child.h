@@ -100,8 +100,7 @@ namespace user
 
       virtual void set_viewport_org(::draw2d::graphics * pgraphics) override;
 
-
-      virtual bool set_need_redraw(LPCRECT lpRectUpdate,::draw2d::region* prgnUpdate,UINT flags) override;
+      virtual bool RedrawWindow(LPCRECT lpRectUpdate,::draw2d::region* prgnUpdate,UINT flags) override;
 
       virtual ::user::interaction * SetOwner(::user::interaction * pui) override;
       virtual ::user::interaction * GetOwner() const override;

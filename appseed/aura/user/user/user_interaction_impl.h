@@ -89,7 +89,7 @@ namespace user
 
       ::user::interaction_ptra      m_guieptraMouseHover;
 
-      sp(::thread)                  m_pthreadUpdateWindow;
+      sp(::thread)                  m_pthreadProDevian;
 
       u64                           m_uiLastUpdateBeg;
       u64                           m_uiLastUpdateEnd;
@@ -124,7 +124,6 @@ namespace user
       virtual bool check_need_layout() override;
       virtual void clear_need_layout() override;
       virtual void set_need_layout() override;
-      virtual void set_need_redraw() override;
 
       virtual bool check_show_flags() override;
 
@@ -520,7 +519,6 @@ namespace user
 //      bool OnCopyData(::window_sp pwindow,COPYDATASTRUCT* pCopyDataStruct);
 //#endif
       DECL_GEN_SIGNAL(_001OnCreate);
-      DECL_GEN_SIGNAL(_001OnRedraw);
 
 
 

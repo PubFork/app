@@ -1151,11 +1151,11 @@ WINBOOL WINAPI IsIconic(oswindow hWnd);
 
 #endif
 
-//WINBOOL set_need_redraw(oswindow hWnd, CONST RECT *lprcUpdate, HRGN hrgnUpdate, UINT flags);
+//WINBOOL RedrawWindow(oswindow hWnd, CONST RECT *lprcUpdate, HRGN hrgnUpdate, UINT flags);
 
 
 /*
-* set_need_redraw() flags
+* RedrawWindow() flags
 */
 #define RDW_INVALIDATE          0x0001
 #define RDW_INTERNALPAINT       0x0002

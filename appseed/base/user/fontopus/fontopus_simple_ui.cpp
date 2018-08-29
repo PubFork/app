@@ -19,11 +19,11 @@ namespace fontopus
 
 #ifdef METROWIN
 
-      set_pro_devian();
+
 
 #else
 
-      set_pro_devian(false);
+      set_prodevian(false);
 
 #endif
 

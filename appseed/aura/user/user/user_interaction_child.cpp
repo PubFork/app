@@ -556,7 +556,7 @@ namespace user
          return false;
 
       }
-      
+
 
       return true;
 
@@ -747,7 +747,7 @@ namespace user
 
 
 
-   bool interaction_child::set_need_redraw(LPCRECT lpRectUpdate,::draw2d::region* prgnUpdate,UINT flags)
+   bool interaction_child::RedrawWindow(LPCRECT lpRectUpdate,::draw2d::region* prgnUpdate,UINT flags)
    {
 
       ::user::interaction * pui = get_wnd();

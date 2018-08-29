@@ -649,8 +649,6 @@ namespace android
       //string calc_window_class();
 
       void on_set_parent(::user::interaction * pui);
-      void set_need_redraw();
-
 
       ::user::interaction * FromHandlePermanent(oswindow oswindow);
 

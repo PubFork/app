@@ -689,7 +689,7 @@ restart:
          if (puiParent != NULL)
          {
 
-            ::multithreading::post_quit(m_pimpl.cast < ::user::interaction_impl>()->m_pthreadUpdateWindow);
+            ::multithreading::post_quit(m_pimpl.cast < ::user::interaction_impl>()->m_pthreadProDevian);
 
             sp(::user::interaction_child) pimplNew = canew(::user::interaction_child(get_app()));
 
@@ -2164,25 +2164,23 @@ restart:
    }
 
 
-   bool interaction::set_pro_devian(bool bSet)
+   bool interaction::set_prodevian(bool bSet)
    {
 
       m_bProDevian = bSet;
-
-      on_set_pro_devian();
 
       return true;
 
    }
 
 
-   void interaction::on_set_pro_devian()
+   void interaction::prodevian_task()
    {
 
       if (m_pimpl.is_set())
       {
 
-         m_pimpl->on_set_pro_devian();
+         m_pimpl->prodevian_task();
 
       }
 
@@ -2199,7 +2197,7 @@ restart:
       if (m_papp == NULL)
          _throw(simple_exception(get_app(), "m_papp cannot be null"));
 
-      on_set_pro_devian();
+      prodevian_task();
 
       {
 

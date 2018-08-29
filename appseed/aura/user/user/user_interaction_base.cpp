@@ -1075,7 +1075,7 @@ Restart:
    }
 
 
-   bool interaction_base::set_need_redraw(LPCRECT lpRectUpdate, ::draw2d::region* prgnUpdate, UINT flags)
+   bool interaction_base::RedrawWindow(LPCRECT lpRectUpdate, ::draw2d::region* prgnUpdate, UINT flags)
    {
 
       ::exception::throw_interface_only(get_app());

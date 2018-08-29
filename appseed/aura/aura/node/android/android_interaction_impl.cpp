@@ -544,7 +544,7 @@ namespace android
 
       UNREFERENCED_PARAMETER(pobj);
 
-      ::multithreading::post_quit_and_wait(m_pthreadUpdateWindow, seconds(10));
+      ::multithreading::post_quit_and_wait(m_pthreadProDevian, seconds(10));
 
       if (m_pui->m_pthread != NULL)
       {

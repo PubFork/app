@@ -73,7 +73,7 @@ namespace user
    bool interaction_impl::has_pending_redraw_flags()
    {
 
-      if(m_pthreadUpdateWindow.is_null())
+      if(m_pthreadProDevian.is_null())
       {
 
          return false;
@@ -576,7 +576,6 @@ namespace user
       {
 
          IGUI_MSG_LINK(WM_CAPTURECHANGED, psender, this, &interaction_impl::_001OnCaptureChanged);
-         IGUI_MSG_LINK(WM_REDRAW, psender, this, &interaction_impl::_001OnRedraw);
 
       }
 
@@ -1710,13 +1709,19 @@ namespace user
 
    bool interaction_impl::LockWindowUpdate()
    {
+
       ::exception::throw_interface_only(get_app());
+
       return false;
+
    }
+
 
    void interaction_impl::UnlockWindowUpdate()
    {
+
       ::exception::throw_interface_only(get_app());
+
    }
 
 
@@ -1730,68 +1735,19 @@ namespace user
    }
 
 
-   void interaction_impl::set_need_redraw()
-   {
-
-      u64 now = get_nanos();
-
-      u64 delta1 = now - m_uiLastUpdateBeg;
-
-      i64 delta2 = (i64) m_uiLastUpdateBeg - (i64) m_uiLastUpdateEnd;
-
-      u64 frameNanos = 1000000000LL / m_dFps;
-
-      if ((!m_bPendingRedraw ||
-            (delta1 > frameNanos && (delta2 < 0 || delta2 > 10000000000LL)))
-            && !m_pui->m_bProDevian)
-      {
-
-         m_bPendingRedraw = m_pui->post_message(WM_REDRAW);
-
-      }
-
-   }
-
-
-   void interaction_impl::_001OnRedraw(::message::message * pmessage)
-   {
-
-      m_bPendingRedraw = false;
-
-      try
-      {
-
-         if (!m_pui->m_bProDevian && m_pui->m_bDrawable)
-         {
-
-            m_uiLastUpdateBeg = get_nanos();
-
-            m_pui->_001UpdateWindow();
-
-            m_uiLastUpdateEnd = get_nanos();
-
-            m_pui->m_pimpl->m_uiLastRedraw = get_tick_count();
-
-         }
-
-      }
-      catch (...)
-      {
-      }
-
-
-
-   }
-
-
-
    bool interaction_impl::EnableScrollBar(int32_t nSBFlags,UINT nArrowFlags)
    {
+
       UNREFERENCED_PARAMETER(nSBFlags);
+
       UNREFERENCED_PARAMETER(nArrowFlags);
+
       ::exception::throw_interface_only(get_app());
+
       return false;
+
    }
+
 
    bool interaction_impl::DrawAnimatedRects(int32_t idAni,CONST RECT *lprcFrom,CONST RECT * lprcTo)
    {

@@ -5,13 +5,13 @@ namespace linux
 {
 
 
-    LRESULT CALLBACK __send_message_hook(int32_t, WPARAM, LPARAM);
+   LRESULT CALLBACK __send_message_hook(int32_t, WPARAM, LPARAM);
    // void _::ca2::StandardSubclass(oswindow);
-    LRESULT CALLBACK __cbt_filter_hook(int32_t, WPARAM, LPARAM);
-    LRESULT __call_window_procedure(::user::interaction * pWnd, oswindow hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam);
+   LRESULT CALLBACK __cbt_filter_hook(int32_t, WPARAM, LPARAM);
+   LRESULT __call_window_procedure(::user::interaction * pWnd, oswindow hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam);
 
 
-class x11data;
+   class x11data;
    class  interaction_impl :
       virtual public ::user::interaction_impl
    {
@@ -103,35 +103,35 @@ class x11data;
 
 
       virtual bool create_message_queue(
-         ::user::interaction * pui,
-         const char * pszName) override;
+      ::user::interaction * pui,
+      const char * pszName) override;
 
       using ::user::interaction_impl::create_window;
 
       // for child windows, views, panes etc
       virtual bool create_window(
-         ::user::interaction * pui,
-         const char * lpszClassName,
-         const char * lpszWindowName,
-         DWORD dwStyle,
-         const RECT& rect,
-         ::user::interaction * pParentWnd,
-         id id,
-         ::create * pContext = NULL) override;
+      ::user::interaction * pui,
+      const char * lpszClassName,
+      const char * lpszWindowName,
+      DWORD dwStyle,
+      const RECT& rect,
+      ::user::interaction * pParentWnd,
+      id id,
+      ::create * pContext = NULL) override;
 
       // advanced creation (allows access to extended styles)
       virtual bool create_window_ex(
-         ::user::interaction * pui,
-         ::user::create_struct & cs,
-         ::user::interaction * pParentWnd = NULL,
-         id id = ::id()) override;
+      ::user::interaction * pui,
+      ::user::create_struct & cs,
+      ::user::interaction * pParentWnd = NULL,
+      id id = ::id()) override;
 
 
       virtual bool native_create_window_ex(
-         ::user::interaction * pui,
-         ::user::create_struct & cs,
-         ::user::interaction * pParentWnd = NULL,
-         id id = ::id());
+      ::user::interaction * pui,
+      ::user::create_struct & cs,
+      ::user::interaction * pParentWnd = NULL,
+      id id = ::id());
 
       virtual bool DestroyWindow();
 
@@ -185,7 +185,7 @@ class x11data;
       virtual bool WfiIsIconic();
       virtual bool WfiIsZoomed();
       void MoveWindow(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight,
-         bool bRepaint = TRUE);
+                      bool bRepaint = TRUE);
       void MoveWindow(LPCRECT lpRect, bool bRepaint = TRUE);
       int32_t SetWindowRgn(HRGN hRgn, bool bRedraw);
       int32_t GetWindowRgn(HRGN hRgn);
@@ -247,8 +247,8 @@ class x11data;
       virtual bool LockWindowUpdate();
       virtual void UnlockWindowUpdate();
       virtual bool RedrawWindow(LPCRECT lpRectUpdate = NULL,
-         ::draw2d::region* prgnUpdate = NULL,
-         UINT flags = RDW_INVALIDATE | RDW_ERASE);
+                                ::draw2d::region* prgnUpdate = NULL,
+                                UINT flags = RDW_INVALIDATE | RDW_ERASE);
       // xxx      virtual bool EnableScrollBar(int32_t nSBFlags, UINT nArrowFlags = ESB_ENABLE_BOTH);
 
       virtual void set_viewport_org(::draw2d::graphics * pgraphics);
@@ -275,7 +275,7 @@ class x11data;
 
       virtual bool SetLayeredWindowAttributes(COLORREF crKey, BYTE bAlpha, DWORD dwFlags);
       virtual bool UpdateLayeredWindow(::draw2d::graphics * pDCDst, POINT *pptDst, SIZE *psize,
-         ::draw2d::graphics * pDCSrc, POINT *pptSrc, COLORREF crKey, BLENDFUNCTION *pblend, DWORD dwFlags);
+                                       ::draw2d::graphics * pDCSrc, POINT *pptSrc, COLORREF crKey, BLENDFUNCTION *pblend, DWORD dwFlags);
 
 #endif   // _WIN32_WINNT >= 0x0500
 
@@ -325,12 +325,12 @@ class x11data;
       // (NOTE: Dialog-Box Items/Controls are not necessarily in dialog boxes!)
       virtual void CheckDlgButton(int32_t nIDButton, UINT nCheck);
       virtual void CheckRadioButton(int32_t nIDFirstButton, int32_t nIDLastButton,
-         int32_t nIDCheckButton);
+                                    int32_t nIDCheckButton);
       virtual int32_t GetCheckedRadioButton(int32_t nIDFirstButton, int32_t nIDLastButton);
       virtual int32_t DlgDirList(LPTSTR lpPathSpec, int32_t nIDListBox,
-         int32_t nIDStaticPath, UINT nFileType);
+                                 int32_t nIDStaticPath, UINT nFileType);
       virtual int32_t DlgDirListComboBox(LPTSTR lpPathSpec, int32_t nIDComboBox,
-         int32_t nIDStaticPath, UINT nFileType);
+                                         int32_t nIDStaticPath, UINT nFileType);
       virtual bool DlgDirSelect(LPTSTR lpString, int32_t nSize, int32_t nIDListBox);
       virtual bool DlgDirSelectComboBox(LPTSTR lpString, int32_t nSize, int32_t nIDComboBox);
 
@@ -348,19 +348,19 @@ class x11data;
       virtual int32_t GetScrollPos(int32_t nBar) const;
       virtual void GetScrollRange(int32_t nBar, LPINT lpMinPos, LPINT lpMaxPos) const;
       virtual void ScrollWindow(int32_t xAmount, int32_t yAmount,
-         LPCRECT lpRect = NULL,
-         LPCRECT lpClipRect = NULL);
+                                LPCRECT lpRect = NULL,
+                                LPCRECT lpClipRect = NULL);
       virtual int32_t SetScrollPos(int32_t nBar, int32_t nPos, bool bRedraw = TRUE);
       virtual void SetScrollRange(int32_t nBar, int32_t nMinPos, int32_t nMaxPos,
-         bool bRedraw = TRUE);
+                                  bool bRedraw = TRUE);
       virtual void ShowScrollBar(UINT nBar, bool bShow = TRUE);
       virtual void EnableScrollBarCtrl(int32_t nBar, bool bEnable = TRUE);
       //      virtual CScrollBar* GetScrollBarCtrl(int32_t nBar) const;
-                  // return sibling scrollbar control (or NULL if none)
+      // return sibling scrollbar control (or NULL if none)
 
       virtual int32_t ScrollWindowEx(int32_t dx, int32_t dy,
-         LPCRECT lpRectScroll, LPCRECT lpRectClip,
-         ::draw2d::region* prgnUpdate, LPRECT lpRectUpdate, UINT flags);
+                                     LPCRECT lpRectScroll, LPCRECT lpRectClip,
+                                     ::draw2d::region* prgnUpdate, LPRECT lpRectUpdate, UINT flags);
       //xxx      virtual bool SetScrollInfo(int32_t nBar, LPSCROLLINFO lpScrollInfo,
       //xxx         bool bRedraw = TRUE);
       //xxx      virtual bool GetScrollInfo(int32_t nBar, LPSCROLLINFO lpScrollInfo, UINT nMask = SIF_ALL);
@@ -435,8 +435,8 @@ class x11data;
       void OnHelpUsing();     // ID_HELP_USING
 
       //void RepositionBars(UINT nIDFirst, UINT nIDLast, id nIDLeftOver,
-        // UINT nFlags = reposDefault, LPRECT lpRectParam = NULL,
-         //LPCRECT lpRectClient = NULL, bool bStretch = TRUE);
+      // UINT nFlags = reposDefault, LPRECT lpRectParam = NULL,
+      //LPCRECT lpRectClient = NULL, bool bStretch = TRUE);
 
 
       void UpdateDialogControls(command_target* pTarget, bool bDisableIfNoHndler);
@@ -455,9 +455,8 @@ class x11data;
       bool OnCopyData(::user::interaction * pWnd, COPYDATASTRUCT* pCopyDataStruct);
       DECL_GEN_SIGNAL(_001OnCreate);
 
-      virtual void on_set_pro_devian() override;
+      virtual void prodevian_task() override;
       virtual void present();
-      virtual void set_need_redraw() override;
 
 
       HBRUSH OnCtlColor(::draw2d::graphics * pgraphics, ::user::interaction * pWnd, UINT nCtlColor);
@@ -531,7 +530,7 @@ class x11data;
       void OnChar(UINT nChar, UINT nRepCnt, UINT nFlags);
       void OnDeadChar(UINT nChar, UINT nRepCnt, UINT nFlags);
       //      void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
-        //    void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
+      //    void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
       void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
       void OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags);
       void OnLButtonDblClk(UINT nFlags, point point);
@@ -567,36 +566,36 @@ class x11data;
       void OnVScrollClipboard(::user::interaction * pClipAppWnd, UINT nSBCode, UINT nPos);
 
       // control message handler member functions
-   //xxx      int32_t OnCompareItem(int32_t nIDCtl, LPCOMPAREITEMSTRUCT lpCompareItemStruct);
-   //xxx      void OnDeleteItem(int32_t nIDCtl, LPDELETEITEMSTRUCT lpDeleteItemStruct);
-   //xxx      void OnDrawItem(int32_t nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct);
+      //xxx      int32_t OnCompareItem(int32_t nIDCtl, LPCOMPAREITEMSTRUCT lpCompareItemStruct);
+      //xxx      void OnDeleteItem(int32_t nIDCtl, LPDELETEITEMSTRUCT lpDeleteItemStruct);
+      //xxx      void OnDrawItem(int32_t nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct);
       UINT OnGetDlgCode();
       //xxx      void OnMeasureItem(int32_t nIDCtl, LPMEASUREITEMSTRUCT lpMeasureItemStruct);
 
-         // MDI message handler member functions
+      // MDI message handler member functions
       void OnMDIActivate(bool bActivate,
-         ::user::interaction * pActivateWnd, ::user::interaction * pDeactivateWnd);
+                         ::user::interaction * pActivateWnd, ::user::interaction * pDeactivateWnd);
 
       // menu loop notification messages
       void OnEnterMenuLoop(bool bIstrack_popup_menu);
       void OnExitMenuLoop(bool bIstrack_popup_menu);
 
       // Win4 messages
-   //xxx      void OnStyleChanged(int32_t nStyleType, LPSTYLESTRUCT lpStyleStruct);
-   //xxx      void OnStyleChanging(int32_t nStyleType, LPSTYLESTRUCT lpStyleStruct);
+      //xxx      void OnStyleChanged(int32_t nStyleType, LPSTYLESTRUCT lpStyleStruct);
+      //xxx      void OnStyleChanging(int32_t nStyleType, LPSTYLESTRUCT lpStyleStruct);
       void OnSizing(UINT nSide, LPRECT lpRect);
       void OnMoving(UINT nSide, LPRECT lpRect);
       void OncaptureChanged(::user::interaction * pWnd);
       bool OnDeviceChange(UINT nEventType, dword_ptr dwData);
 
       // Overridables and other helpers (for implementation of derived classes)
-         // for deriving from a standard control
-   // xxx      virtual WNDPROC* GetSuperWndProcaddr();
+      // for deriving from a standard control
+      // xxx      virtual WNDPROC* GetSuperWndProcaddr();
 
-         // for dialog data exchange and validation
-   //      virtual void do_data_exchange(CDataExchange* pDX);
+      // for dialog data exchange and validation
+      //      virtual void do_data_exchange(CDataExchange* pDX);
 
-         // for modality
+      // for modality
       virtual void BeginModalState();
       virtual void EndModalState();
 
@@ -623,7 +622,7 @@ class x11data;
 
       virtual bool CheckAutoCenter();
       static_function bool PASCAL GrayCtlColor(HDC hDC, oswindow hWnd, UINT nCtlColor,
-         HBRUSH hbrGray, COLORREF clrText);
+            HBRUSH hbrGray, COLORREF clrText);
 
 
       // helper routines for implementation
@@ -648,14 +647,14 @@ class x11data;
       // for creating dialogs and dialog-like windows
       bool CreateDlg(const char * lpszTemplateName, ::user::interaction * pParentWnd);
       //bool CreateDlgIndirect(LPCDLGTEMPLATE lpDialogTemplate, sp(::interaction_impl) pParentWnd,
-        // HINSTANCE hInst);
+      // HINSTANCE hInst);
 
 
       // implementation of message dispatch/hooking
-       friend LRESULT CALLBACK __send_message_hook(int32_t, WPARAM, LPARAM);
+      friend LRESULT CALLBACK __send_message_hook(int32_t, WPARAM, LPARAM);
       // friend void _::ca2::StandardSubclass(oswindow);
-       friend LRESULT CALLBACK __cbt_filter_hook(int32_t, WPARAM, LPARAM);
-       friend LRESULT __call_window_procedure(::user::interaction * pWnd, oswindow hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam);
+      friend LRESULT CALLBACK __cbt_filter_hook(int32_t, WPARAM, LPARAM);
+      friend LRESULT __call_window_procedure(::user::interaction * pWnd, oswindow hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam);
 
       // standard message implementation
       LRESULT OnNTCtlColor(WPARAM wParam, LPARAM lParam);

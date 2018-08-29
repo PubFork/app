@@ -126,7 +126,7 @@ namespace linux
    interaction_impl::~interaction_impl()
    {
 
-      ::multithreading::post_quit_and_wait(m_pthreadUpdateWindow, seconds(10));
+      ::multithreading::post_quit_and_wait(m_pthreadProDevian, seconds(10));
 
    }
 
@@ -717,7 +717,7 @@ namespace linux
 
       UNREFERENCED_PARAMETER(pobj);
 
-      ::multithreading::post_quit_and_wait(m_pthreadUpdateWindow, seconds(10));
+      ::multithreading::post_quit_and_wait(m_pthreadProDevian, seconds(10));
 
       if (m_pui->m_pthread != NULL)
       {
@@ -2952,100 +2952,81 @@ namespace linux
    }
 
 
-   void interaction_impl::on_set_pro_devian()
+   void interaction_impl::prodevian_task()
    {
 
-      if (m_pui->m_bProDevian)
+
+      if (m_pthreadProDevian.is_null())
       {
 
-         if(m_pui->is_message_only_window())
+         m_pthreadProDevian = fork([&]()
          {
 
-            return;
+            DWORD dwStart;
 
-         }
-
-         if (m_pthreadUpdateWindow.is_null())
-         {
-
-            m_pthreadUpdateWindow = fork([&]()
+            while (::get_thread_run())
             {
 
-               DWORD dwStart;
+               dwStart = ::get_tick_count();
 
-               while (::get_thread_run())
+               bool bUpdateScreen = false;
+
+               if (!m_pui->m_bLockWindowUpdate)
                {
 
-                  dwStart = ::get_tick_count();
-
-                  bool bUpdateScreen = false;
-
-                  if (!m_pui->m_bLockWindowUpdate)
+                  if (m_pui->m_bProDevian ||
+                        m_pui->has_pending_graphical_update() ||
+                        m_pui->check_need_layout())
                   {
 
-                     if (m_pui->has_pending_graphical_update() || m_pui->check_need_layout())
-                     {
+                     _001UpdateBuffer();
 
-                        _001UpdateBuffer();
+                     m_pui->on_after_graphical_update();
 
-                        m_pui->on_after_graphical_update();
-
-                        bUpdateScreen = true;
-
-                     }
-
-                  }
-                  else
-                  {
-
-                     output_debug_string("window is locked for drawing update");
-
-                     fflush(stdout);
+                     bUpdateScreen = true;
 
                   }
 
-                  if(bUpdateScreen)
-                  {
+               }
+               else
+               {
 
-                     windowing_output_debug_string("\nGoing to _001UpdateScreen");
+                  output_debug_string("window is locked for drawing update");
 
-                     fflush(stdout);
-
-                     _001UpdateScreen();
-
-                  }
-
-                  DWORD dwDiff = ::get_tick_count() - dwStart;
-
-                  if (dwDiff < 20)
-                  {
-
-                     Sleep(20 - dwDiff);
-
-                  }
-
-                  //Sleep(500);
+                  fflush(stdout);
 
                }
 
-               m_pthreadUpdateWindow.release();
+               if(bUpdateScreen)
+               {
 
-            });
+                  windowing_output_debug_string("\nGoing to _001UpdateScreen");
 
-         }
+                  fflush(stdout);
+
+                  _001UpdateScreen();
+
+               }
+
+               DWORD dwDiff = ::get_tick_count() - dwStart;
+
+               if (dwDiff < 20)
+               {
+
+                  Sleep(20 - dwDiff);
+
+               }
+
+               //Sleep(500);
+
+            }
+
+            m_pthreadProDevian.release();
+
+         });
 
       }
-      else
-      {
 
-         if (m_pthreadUpdateWindow.is_set())
-         {
-
-            ::multithreading::post_quit(m_pthreadUpdateWindow);
-
-         }
-
-      }
 
    }
 
@@ -3053,17 +3034,7 @@ namespace linux
    void interaction_impl::set_need_redraw()
    {
 
-      if (!m_pui->m_bProDevian)
-      {
-
-         if (m_pui->m_pthread != NULL)
-         {
-
-            m_pui->m_pthread->post_message(WM_REDRAW);
-
-         }
-
-      }
+      m_pui
 
    }
 

@@ -10,7 +10,7 @@ namespace filemanager
       simple_frame_window(papp)
    {
 
-      set_pro_devian();
+
 
    }
 

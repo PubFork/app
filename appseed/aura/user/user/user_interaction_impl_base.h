@@ -240,8 +240,7 @@ namespace user
       virtual bool DestroyWindow() override;
 
 
-      virtual void on_set_pro_devian();
-      virtual void set_need_redraw();
+      virtual void prodevian_task();
 
 
       void mouse_hover_add(::user::interaction * pinterface) override;

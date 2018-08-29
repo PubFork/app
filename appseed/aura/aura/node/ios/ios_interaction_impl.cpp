@@ -2454,7 +2454,7 @@ namespace ios
          {
 
 
-            m_pthreadUpdateWindow = m_pui->fork([&]()
+            m_pthreadProDevian = m_pui->fork([&]()
             {
 
                DWORD dwStart;
@@ -2536,7 +2536,7 @@ namespace ios
 
                output_debug_string("m_pthreadDraw has finished!");
 
-               m_pthreadUpdateWindow.release();
+               m_pthreadProDevian.release();
 
                //release_graphics_resources();
 

@@ -107,8 +107,7 @@ namespace windows
 
       virtual void present();
 
-      virtual void on_set_pro_devian();
-//      virtual void set_need_redraw();
+      virtual void prodevian_task();
 
       DECL_GEN_SIGNAL(_001OnEraseBkgnd);
       DECL_GEN_SIGNAL(_001OnSize);

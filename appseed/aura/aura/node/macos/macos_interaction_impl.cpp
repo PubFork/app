@@ -25,23 +25,23 @@ namespace macos
    class round_window_draw_life_time
    {
    public:
-      
-      
+
+
       interaction_impl * m_pimpl;
-      
+
       round_window_draw_life_time(interaction_impl * pimpl) :
          m_pimpl(pimpl)
       {
 
          m_pimpl->m_uiLastUpdateBeg = get_nanos();
-         
+
       }
-      
+
       ~round_window_draw_life_time()
       {
-         
+
          m_pimpl->m_uiLastUpdateEnd = get_nanos();
-         
+
       }
 
    };
@@ -338,7 +338,7 @@ namespace macos
       {
 
          m_oswindow = oswindow_get(new_round_window(this, rect));
-         
+
          m_pui->m_pthread = ::get_thread();
 
          ::copy(&m_rectParentClient, &rectParam);
@@ -382,7 +382,7 @@ namespace macos
          PostNcDestroy();        // cleanup if CreateWindowEx fails too soon
 
       }
-      
+
       m_pui->set_need_layout();
 
       m_pui->add_ref();
@@ -410,11 +410,11 @@ namespace macos
    bool interaction_impl::create_window(::user::interaction * pui, const char * lpszClassName,const char * lpszWindowName,uint32_t dwStyle,const RECT & rect,::user::interaction * pParentWnd,id id, ::create * pcreate)
    {
       // can't use for desktop or pop-up windows (use CreateEx instead)
-      
+
       ASSERT(pParentWnd != NULL);
 
       ::user::create_struct cs(0, lpszClassName, lpszWindowName,dwStyle, rect, pcreate);
-      
+
       cs.hwndParent = pParentWnd->get_safe_handle();
       ASSERT((cs.style & WS_POPUP) == 0);
 
@@ -462,7 +462,6 @@ namespace macos
       {
          IGUI_MSG_LINK(WM_PAINT, pinterface, this, &interaction_impl::_001OnPaint);
          IGUI_MSG_LINK(WM_PRINT, pinterface, this, &interaction_impl::_001OnPrint);
-         IGUI_MSG_LINK(WM_REDRAW, pinterface, this, &interaction_impl::_001OnRedraw);
       }
       m_pui->install_message_routing(pinterface);
       IGUI_MSG_LINK(WM_CREATE, pinterface, this, &interaction_impl::_001OnCreate);
@@ -557,7 +556,7 @@ namespace macos
 
       delete_all_timers();
 
-//      ::multithreading::post_quit_and_wait(m_pthreadUpdateWindow, seconds(5));
+//      ::multithreading::post_quit_and_wait(m_pthreadProDevian, seconds(5));
 //
 //      //for(auto & pthread : m_mapqueue)
 //      {
@@ -1895,151 +1894,139 @@ namespace macos
    }
 
 
-   
-   void interaction_impl::on_set_pro_devian()
-   {
-      
-      if (m_pui->m_bProDevian)
-      {
-         
-         if (m_pthreadUpdateWindow.is_null())
-         {
-            
-             m_pthreadUpdateWindow = fork([&]()
-                     {
-            
-                        DWORD dwStart;
-            
-                        bool bUpdateScreen = false;
-            
-                        while (::get_thread_run())
-                        {
-            
-                           try
-                           {
-            
-                              dwStart = ::get_tick_count();
-            
-                              if(m_pui == NULL)
-                              {
-            
-                                 break;
-            
-                              }
-            
-                              if(m_oswindow != NULL)
-                              {
-            
-                                 m_oswindow->m_bNsWindowRect = false;
-            
-                              }
-            
-                              if (!m_pui->m_bLockWindowUpdate)
-                              {
-            
-                                 bool bUpdateBuffer = m_pui->check_need_layout()
-                                                      || m_pui->check_need_zorder() || m_pui->check_show_flags();
-            
-                                 if(bUpdateBuffer)
-                                 {
-            
-                                 }
-                                 else if(m_pui->IsWindowVisible())
-                                 {
-            
-                                    bUpdateBuffer = m_pui->has_pending_graphical_update();
-            
-                                 }
-            
-                                 if(bUpdateBuffer)
-                                 {
-            
-                                    _001UpdateBuffer();
-            
-                                    if(m_pui == NULL)
-                                    {
-            
-                                       break;
-            
-                                    }
-            
-                                    m_pui->on_after_graphical_update();
-            
-                                    bUpdateScreen = true;
-            
-                                 }
-            
-                              }
-            
-                              if(bUpdateScreen)
-                              {
-                                 
-                                 u64 now = get_nanos();
-                                 
-                                 u64 delta1 = now - m_uiLastUpdateBeg;
-                                 
-                                 i64 delta2 = (i64) m_uiLastUpdateBeg - (i64) m_uiLastUpdateEnd;
-                                 
-                                 u64 frameNanos = 1000000000LL / m_dFps;
-                                 
-                                 if(delta1 < frameNanos || (delta2 > 0 && delta2 < 10000000000LL))
-                                 {
-                                    
-                                    output_debug_string("opt_out set need redraw");
-                                    
-                                 }
-                                 else
-                                 {
-                                 
-                                    bUpdateScreen = false;
-            
-                                    _001UpdateScreen();
-                                    
-                                 }
-            
-                              }
-            
-                              DWORD dwSpan = ::get_tick_count() - dwStart;
-            
-                              if (dwSpan < 50)
-                              {
-            
-                                 Sleep(50 - dwSpan);
-            
-                              }
-            
-                           }
-                           catch(...)
-                           {
-            
-                              break;
-            
-                           }
-            
-                        }
-            
-                        output_debug_string("m_pthreadDraw has finished!");
-            
-                     });
 
-         }
-         
-      }
-      else
+   void interaction_impl::prodevian_task()
+   {
+
+      if (m_pthreadProDevian.is_null())
       {
-         
-         if (m_pthreadUpdateWindow.is_set())
+
+         m_pthreadProDevian = fork([&]()
          {
-            
-            ::multithreading::post_quit(m_pthreadUpdateWindow);
-            
-         }
-         
+
+            DWORD dwStart;
+
+            bool bUpdateScreen = false;
+
+            while (::get_thread_run())
+            {
+
+               try
+               {
+
+                  dwStart = ::get_tick_count();
+
+                  if(m_pui == NULL)
+                  {
+
+                     break;
+
+                  }
+
+                  if(m_oswindow != NULL)
+                  {
+
+                     m_oswindow->m_bNsWindowRect = false;
+
+                  }
+
+                  if (!m_pui->m_bLockWindowUpdate)
+                  {
+
+                     bool bUpdateBuffer =
+                     m_pui->m_bProDevian ||
+                     m_pui->check_need_layout()||
+                     m_pui->check_need_zorder() ||
+                     m_pui->check_show_flags();
+
+                     if(bUpdateBuffer)
+                     {
+
+                     }
+                     else if(m_pui->IsWindowVisible())
+                     {
+
+                        bUpdateBuffer = m_pui->has_pending_graphical_update();
+
+                     }
+
+                     if(bUpdateBuffer)
+                     {
+
+                        _001UpdateBuffer();
+
+                        if(m_pui == NULL)
+                        {
+
+                           break;
+
+                        }
+
+                        m_pui->on_after_graphical_update();
+
+                        bUpdateScreen = true;
+
+                     }
+
+                  }
+
+                  if(bUpdateScreen)
+                  {
+
+                     u64 now = get_nanos();
+
+                     u64 delta1 = now - m_uiLastUpdateBeg;
+
+                     i64 delta2 = (i64) m_uiLastUpdateBeg - (i64) m_uiLastUpdateEnd;
+
+                     u64 frameNanos = 1000000000LL / m_dFps;
+
+                     if(delta1 < frameNanos || (delta2 > 0 && delta2 < 10000000000LL))
+                     {
+
+                        output_debug_string("opt_out set need redraw");
+
+                     }
+                     else
+                     {
+
+                        bUpdateScreen = false;
+
+                        _001UpdateScreen();
+
+                     }
+
+                  }
+
+                  DWORD dwSpan = ::get_tick_count() - dwStart;
+
+                  if (dwSpan < 50)
+                  {
+
+                     Sleep(50 - dwSpan);
+
+                  }
+
+               }
+               catch(...)
+               {
+
+                  break;
+
+               }
+
+            }
+
+            output_debug_string("m_pthreadDraw has finished!");
+
+         });
+
       }
-      
+
+
    }
 
-   
+
    void interaction_impl::_001OnCreate(::message::message * pobj)
    {
 
@@ -2276,14 +2263,6 @@ namespace macos
       //      WIN_DC(graphics.m_p)->Detach();
       //      pobj->m_bRet = true;
       //      pbase->set_lresult(0);
-   }
-   
-   
-   void interaction_impl::_001OnRedraw(::message::message * pobj)
-   {
-      
-   //      m_proundwindow
-   
    }
 
 
@@ -2882,9 +2861,9 @@ namespace macos
 
       if (m_pui->m_pthread == NULL)
       {
-         
+
          return false;
-         
+
       }
 
       return m_pui->m_pthread->post_message((::user::primitive *) m_pui, message, wparam, lparam);
@@ -3284,10 +3263,10 @@ namespace macos
 
    void interaction_impl::on_zorder()
    {
-      
+
       if (m_bZ)
       {
-         
+
          ::SetWindowPos(m_oswindow, (oswindow) m_iZ,
                         0,
                         0,
@@ -3302,16 +3281,16 @@ namespace macos
                         | SWP_NOOWNERZORDER
                         | SWP_NOSENDCHANGING
                         | SWP_DEFERERASE);
-         
+
          m_bZ = false;
-         
+
       }
-      
+
       //::user::interaction_impl::on_translate();
-      
+
    }
 
-   
+
    void interaction_impl::on_translate()
    {
 
@@ -3426,9 +3405,9 @@ namespace macos
 
    bool interaction_impl::enable_window(bool bEnable)
    {
-      
+
       m_bEnabled = bEnable;
-      
+
       return true;
 
    }
@@ -4480,36 +4459,36 @@ namespace macos
 
    void interaction_impl::round_window_draw(CGContextRef cgc)
    {
-      
+
       round_window_draw_life_time roundwindowdrawlifetime(this);
-      
+
       uint64_t delta = m_uiLastUpdateBeg - m_uiLastUpdateEnd;
-      
+
       delta /= 1000 * 1000;
-      
+
       if(delta < 10)
       {
-         
+
          output_debug_string("round_window_draw less than 10\n");
-         
+
       }
       else if(delta < 20)
       {
-         
+
          output_debug_string("round_window_draw less than 20\n");
-         
+
       }
       else if(delta < 50)
       {
-         
+
          output_debug_string("round_window_draw less than 20\n");
-         
+
       }
       else if(delta < 100)
       {
-         
+
          output_debug_string("round_window_draw less than 100\n");
-         
+
       }
 
 
@@ -4526,7 +4505,7 @@ namespace macos
 //         return;
 //
 //      }
-         
+
 
       cslock slDisplay(cs_display());
 
@@ -4564,7 +4543,7 @@ namespace macos
       ::rect rectClient;
 
       GetClientRect(rectClient);
-      
+
       g->set_alpha_mode(::draw2d::alpha_mode_set);
 
       g->BitBlt(0, 0, spdibBuffer->m_size.cx, spdibBuffer->m_size.cy, spdibBuffer->get_graphics(), 0, 0, SRCCOPY);
@@ -4682,7 +4661,7 @@ namespace macos
 
    void interaction_impl::round_window_mouse_down(int iButton, double x, double y)
    {
-      
+
       sp(::message::base) spbase;
 
       if (::GetActiveWindow() != get_handle())
@@ -4929,36 +4908,36 @@ namespace macos
 
    void interaction_impl::round_window_mouse_wheel(double deltaY, double x, double y)
    {
-      
+
       sp(::message::base) spbase;
-      
+
       {
-         
+
          ::message::mouse_wheel * pwheel = canew(::message::mouse_wheel(get_app()));
-         
+
          pwheel->m_id = WM_MOUSEWHEEL;
-         
+
          pwheel->m_pt.x = (LONG)x;
          pwheel->m_pt.y = (LONG)y;
          pwheel->m_bTranslated = true;
-         
+
          short delta = deltaY * WHEEL_DELTA / 3.0;
-         
+
          pwheel->m_wparam = delta << 16;
-         
+
          spbase = pwheel;
-         
+
          if(m_pui == NULL)
          {
-            
+
             return;
-            
+
          }
-         
+
          m_pui->post(spbase);
-         
+
       }
-      
+
    }
 
 

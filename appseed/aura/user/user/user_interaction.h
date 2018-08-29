@@ -258,8 +258,8 @@ namespace user
 
       void set_timer(spa(::aura::timer_item) timera);
 
-      virtual bool set_pro_devian(bool bSet = true);
-      virtual void on_set_pro_devian();
+      virtual bool set_prodevian(bool bSet = true);
+      virtual void prodevian_task();
 
       virtual bool IsWindow() const override;
 

@@ -298,7 +298,7 @@ namespace windows
    interaction_impl::~interaction_impl()
    {
 
-      ::multithreading::post_quit_and_wait(m_pthreadUpdateWindow, seconds(10));
+      ::multithreading::post_quit_and_wait(m_pthreadProDevian, seconds(10));
 
    }
 
@@ -727,7 +727,7 @@ namespace windows
 
       UNREFERENCED_PARAMETER(pobj);
 
-      ::multithreading::post_quit_and_wait(m_pthreadUpdateWindow, seconds(10));
+      ::multithreading::post_quit_and_wait(m_pthreadProDevian, seconds(10));
 
       if (m_pui->m_pthread != NULL)
       {
@@ -932,7 +932,7 @@ namespace windows
       if (pui != NULL)
       {
 
-         ::multithreading::post_quit_and_wait(m_pthreadUpdateWindow, seconds(10));
+         ::multithreading::post_quit_and_wait(m_pthreadProDevian, seconds(10));
 
          detach();
 
@@ -2465,69 +2465,83 @@ namespace windows
    }
 
 
-   void interaction_impl::on_set_pro_devian()
+   void interaction_impl::prodevian_task()
    {
 
-      if (m_pui->m_bProDevian)
+      if (m_pthreadProDevian.is_null())
       {
 
-         if (m_pthreadUpdateWindow.is_null())
+         m_pthreadProDevian = fork([&]()
          {
 
-            m_pthreadUpdateWindow = fork([&]()
+            ::multithreading::set_priority(::multithreading::priority_time_critical);
+
+            HANDLE timer;
+
+            LARGE_INTEGER li = {};
+
+            timer = CreateWaitableTimer(NULL, TRUE, NULL);
+
+            DWORD dwStart;
+
+            double dFps = m_dFps;
+
+            double dPeriod = (1000.0 / dFps);
+
+            dPeriod = MIN(MAX(1.0, dPeriod), 1000.0);
+
+            index iLastFrameId;
+
+            iLastFrameId = index(millis_now() / dPeriod);
+
+            index iFrameId;
+
+            double_array daFrame;
+
+            bool bUpdateScreen;
+
+            while (::get_thread_run())
             {
 
-               ::multithreading::set_priority(::multithreading::priority_time_critical);
+               dwStart = ::get_tick_count();
 
-               HANDLE timer;
+               bUpdateScreen = false;
 
-               LARGE_INTEGER li = {};
-
-               timer = CreateWaitableTimer(NULL, TRUE, NULL);
-
-               DWORD dwStart;
-
-               double dFps = m_dFps;
-
-               double dPeriod = (1000.0 / dFps);
-
-               dPeriod = MIN(MAX(1.0, dPeriod), 1000.0);
-
-               index iLastFrameId;
-
-               iLastFrameId = index(millis_now() / dPeriod);
-
-               index iFrameId;
-
-               double_array daFrame;
-
-               bool bUpdateScreen;
-
-               while (::get_thread_run())
+               if (GetExStyle() & WS_EX_LAYERED)
                {
 
-                  dwStart = ::get_tick_count();
-
-                  bUpdateScreen = false;
-
-                  if (GetExStyle() & WS_EX_LAYERED)
+                  if (m_pui == NULL)
                   {
 
-                     if (m_pui == NULL)
+                     break;
+
+                  }
+
+                  if (!m_pui->m_bLockWindowUpdate)
+                  {
+
+                     synch_lock sl(m_pui->m_pmutex);
+
+                     u64 now = get_nanos();
+
+                     u64 frameNanos = 1000000000LL / m_dFps;
+
+                     bool bUpdateBuffer;
+
+                     if (m_uiLastUpdateEnd - m_uiLastUpdateBeg > frameNanos
+                           && now - m_uiLastUpdateEnd < frameNanos)
                      {
 
-                        break;
+                        bUpdateBuffer = false;
 
                      }
-
-                     if (!m_pui->m_bLockWindowUpdate)
+                     else
                      {
 
-                        synch_lock sl(m_pui->m_pmutex);
-
-                        bool bUpdateBuffer = m_pui->check_need_layout()
-                                             || m_pui->m_bRedraw
-                                             || m_pui->check_show_flags();
+                        bUpdateBuffer = m_pui->m_bProDevian
+                                        || m_pui->check_need_layout()
+                                        || m_pui->m_bRedraw
+                                        || m_pui->check_show_flags();
 
                         if (!bUpdateBuffer && m_pui->IsWindowVisible())
                         {
@@ -2536,156 +2550,141 @@ namespace windows
 
                         }
 
-                        if (bUpdateBuffer)
+                     }
+
+                     if (bUpdateBuffer)
+                     {
+
+                        sl.unlock();
+
+                        m_uiLastUpdateBeg = get_nanos();
+
+                        _001UpdateBuffer();
+
+                        m_uiLastUpdateEnd = get_nanos();
+
+                        try
                         {
 
-                           sl.unlock();
-
-                           _001UpdateBuffer();
-
-                           try
+                           if (m_pui == NULL)
                            {
 
-                              if (m_pui == NULL)
-                              {
-
-                                 break;
-
-                              }
-
-                              m_pui->on_after_graphical_update();
+                              break;
 
                            }
-                           catch (...)
-                           {
-
-                           }
-
-                           bUpdateScreen = true;
-
-                        }
-                        else if (m_pui->check_need_translation() || m_pui->check_show_flags() || m_pui->check_need_zorder())
-                        {
-
-                           sl.unlock();
-
-                           _001UpdateBuffer();
 
                            m_pui->on_after_graphical_update();
+
+                        }
+                        catch (...)
+                        {
 
                         }
 
                         bUpdateScreen = true;
 
                      }
-
-                  }
-                  else if (::IsWindowVisible(get_handle()))
-                  {
-
-                     ::RedrawWindow(get_handle(), NULL, NULL, RDW_INVALIDATE);
-
-                     bUpdateScreen = false;
-
-                  }
-
-                  double dNow = millis_now();
-
-                  double dPeriod = (1000.0 / dFps);
-
-                  dPeriod = MIN(MAX(1.0, dPeriod), 1000.0);
-
-                  double dWait = dPeriod - fmod(dNow, dPeriod);
-
-                  iFrameId = (index)(dNow / dPeriod);
-
-                  ::count cLost = iFrameId - iLastFrameId - 1;
-
-                  if (cLost < 0)
-                  {
-
-                     dWait = dPeriod;
-
-                  }
-
-                  iLastFrameId = iFrameId;
-
-                  li.QuadPart = -((LONGLONG)(dWait * 1000.0) * 10LL);
-
-                  if (!SetWaitableTimer(timer, &li, 0, NULL, NULL, FALSE))
-                  {
-
-                     Sleep(DWORD(dWait));
-
-                  }
-                  else
-                  {
-
-                     WaitForSingleObject(timer, INFINITE);
-
-                  }
-
-                  if (bUpdateScreen)
-                  {
-
-                     _001UpdateScreen();
-
-                     for (index i = 0; i < daFrame.get_size(); i++)
+                     else if (m_pui->check_need_translation() || m_pui->check_show_flags() || m_pui->check_need_zorder())
                      {
 
-                        if (dNow - daFrame[i] >= 1000.0)
-                        {
+                        sl.unlock();
 
-                           daFrame.remove_at(i);
+                        _001UpdateBuffer();
 
-                        }
-                        else
-                        {
+                        m_pui->on_after_graphical_update();
 
-                           break;
+                     }
 
-                        }
+                     bUpdateScreen = true;
+
+                  }
+
+               }
+               else if (::IsWindowVisible(get_handle()))
+               {
+
+                  ::RedrawWindow(get_handle(), NULL, NULL, RDW_INVALIDATE);
+
+                  bUpdateScreen = false;
+
+               }
+
+               double dNow = millis_now();
+
+               double dPeriod = (1000.0 / dFps);
+
+               dPeriod = MIN(MAX(1.0, dPeriod), 1000.0);
+
+               double dWait = dPeriod - fmod(dNow, dPeriod);
+
+               iFrameId = (index)(dNow / dPeriod);
+
+               ::count cLost = iFrameId - iLastFrameId - 1;
+
+               if (cLost < 0)
+               {
+
+                  dWait = dPeriod;
+
+               }
+
+               iLastFrameId = iFrameId;
+
+               li.QuadPart = -((LONGLONG)(dWait * 1000.0) * 10LL);
+
+               if (!SetWaitableTimer(timer, &li, 0, NULL, NULL, FALSE))
+               {
+
+                  Sleep(DWORD(dWait));
+
+               }
+               else
+               {
+
+                  WaitForSingleObject(timer, INFINITE);
+
+               }
+
+               if (bUpdateScreen)
+               {
+
+                  _001UpdateScreen();
+
+                  for (index i = 0; i < daFrame.get_size(); i++)
+                  {
+
+                     if (dNow - daFrame[i] >= 1000.0)
+                     {
+
+                        daFrame.remove_at(i);
+
+                     }
+                     else
+                     {
+
+                        break;
 
                      }
 
                   }
 
-                  m_dUpdateScreenFps = (double)(daFrame.get_size());
-
-                  daFrame.add(dNow);
-
                }
 
-               CloseHandle(timer);
+               m_dUpdateScreenFps = (double)(daFrame.get_size());
 
-               m_pthreadUpdateWindow.release();
+               daFrame.add(dNow);
 
-            });
+            }
 
-         }
+            CloseHandle(timer);
 
-      }
-      else
-      {
+            m_pthreadProDevian.release();
 
-         if (m_pthreadUpdateWindow.is_set())
-         {
-
-            ::multithreading::post_quit(m_pthreadUpdateWindow);
-
-         }
+         });
 
       }
 
    }
-
-
-   //void interaction_impl::set_need_redraw()
-   //{
-
-   //   ::user::interaction_impl::set_need_redraw();
-
-   //}
 
 
    void interaction_impl::_001OnCreate(::message::message * pobj)
@@ -2953,11 +2952,11 @@ namespace windows
       return (HBRUSH)Default();
    }
 
-   // implementation of OnCtlColor for default gray backgrounds
-   //   (works for any interaction_impl containing controls)
-   //  return value of FALSE means caller must call DefWindowProc's default
-   //  TRUE means that 'hbrGray' will be used and the appropriate text
-   //    ('clrText') and background colors are set.
+// implementation of OnCtlColor for default gray backgrounds
+//   (works for any interaction_impl containing controls)
+//  return value of FALSE means caller must call DefWindowProc's default
+//  TRUE means that 'hbrGray' will be used and the appropriate text
+//    ('clrText') and background colors are set.
    bool interaction_impl::GrayCtlColor(HDC hDC, oswindow oswindow, UINT nCtlColor, HBRUSH hbrGray, COLORREF clrText)
    {
       if (hDC == NULL)
@@ -3088,8 +3087,8 @@ namespace windows
       return TRUE;
    }
 
-   /////////////////////////////////////////////////////////////////////////////
-   // Dialog initialization support
+/////////////////////////////////////////////////////////////////////////////
+// Dialog initialization support
 
    bool interaction_impl::ExecuteDlgInit(const char * lpszResourceName)
    {
@@ -3253,47 +3252,47 @@ namespace windows
    }
 
 
-   //void interaction_impl::EndAllModalLoops(id nResult)
-   //{
+//void interaction_impl::EndAllModalLoops(id nResult)
+//{
 
-   //   ASSERT(::IsWindow(get_handle()));
+//   ASSERT(::IsWindow(get_handle()));
 
-   //   // this result will be returned from interaction_impl::RunModalLoop
-   //   m_pui->m_idModalResult = nResult;
+//   // this result will be returned from interaction_impl::RunModalLoop
+//   m_pui->m_idModalResult = nResult;
 
-   //   // make sure a message goes through to exit the modal loop
-   //   if (m_pui->m_iModalCount > 0)
-   //   {
+//   // make sure a message goes through to exit the modal loop
+//   if (m_pui->m_iModalCount > 0)
+//   {
 
-   //      int32_t iLevel = m_pui->m_iModalCount - 1;
+//      int32_t iLevel = m_pui->m_iModalCount - 1;
 
-   //      m_pui->m_iModalCount = 0;
+//      m_pui->m_iModalCount = 0;
 
-   //      m_pui->kick_queue();
+//      m_pui->kick_queue();
 
-   //      get_thread()->kick_thread();
+//      get_thread()->kick_thread();
 
-   //      for (int32_t i = iLevel; i >= 0; i--)
-   //      {
+//      for (int32_t i = iLevel; i >= 0; i--)
+//      {
 
-   //         ::thread * pthread = oprop(string("RunModalLoop.thread(") + ::str::from(i) + ")").cast < ::thread >();
+//         ::thread * pthread = oprop(string("RunModalLoop.thread(") + ::str::from(i) + ")").cast < ::thread >();
 
-   //         try
-   //         {
+//         try
+//         {
 
-   //            pthread->kick_thread();
+//            pthread->kick_thread();
 
-   //         }
-   //         catch (...)
-   //         {
+//         }
+//         catch (...)
+//         {
 
-   //         }
+//         }
 
-   //      }
+//      }
 
-   //   }
+//   }
 
-   //}
+//}
 
 
    bool interaction_impl::subclass_window(oswindow oswindow)
@@ -3896,7 +3895,7 @@ namespace windows
 
 
 
-   // interaction_impl
+// interaction_impl
    /* interaction_impl::operator oswindow() const
    { return this == NULL ? NULL : get_handle(); }*/
    bool interaction_impl::operator==(const interaction_impl& wnd) const
@@ -4056,20 +4055,20 @@ namespace windows
    }
 
 
-   //int32_t interaction_impl::SetWindowRgn(HRGN hRgn,bool bRedraw)
-   //{
+//int32_t interaction_impl::SetWindowRgn(HRGN hRgn,bool bRedraw)
+//{
 
-   //   //ASSERT(::IsWindow(get_handle())); return ::SetWindowRgn(get_handle(),hRgn,bRedraw);
+//   //ASSERT(::IsWindow(get_handle())); return ::SetWindowRgn(get_handle(),hRgn,bRedraw);
 
-   //}
+//}
 
 
-   //int32_t interaction_impl::GetWindowRgn(HRGN hRgn)
-   //{
+//int32_t interaction_impl::GetWindowRgn(HRGN hRgn)
+//{
 
-   //   //ASSERT(::IsWindow(get_handle()) && hRgn != NULL); return ::GetWindowRgn(get_handle(),hRgn);
+//   //ASSERT(::IsWindow(get_handle()) && hRgn != NULL); return ::GetWindowRgn(get_handle(),hRgn);
 
-   //}
+//}
 
 
    void interaction_impl::BringToTop(int nCmdShow)
@@ -4517,7 +4516,7 @@ namespace windows
    }
 
 
-   // Helper for radio buttons
+// Helper for radio buttons
    int32_t interaction_impl::GetCheckedRadioButton(int32_t nIDFirstButton, int32_t nIDLastButton)
    {
       for (int32_t nID = nIDFirstButton; nID <= nIDLastButton; nID++)
@@ -4873,7 +4872,7 @@ namespace windows
 
    }
 
-   // Win4
+// Win4
    HICON interaction_impl::SetIcon(HICON hIcon, bool bBigIcon)
    {
 
@@ -4929,7 +4928,7 @@ namespace windows
    }
 
 
-   // Default message map implementations
+// Default message map implementations
    void interaction_impl::OnActivateApp(bool, uint32_t)
    {
       Default();
@@ -5385,7 +5384,7 @@ namespace windows
    {
       Default();
    }
-   // Win4 support
+// Win4 support
    void interaction_impl::OnStyleChanged(int32_t, LPSTYLESTRUCT)
    {
       Default();
@@ -5431,11 +5430,11 @@ namespace windows
       return (UINT)Default();
    }
 
-   // interaction_impl dialog data support
-   //    void interaction_impl::do_data_exchange(CDataExchange*)
-   //   { } // default does nothing
+// interaction_impl dialog data support
+//    void interaction_impl::do_data_exchange(CDataExchange*)
+//   { } // default does nothing
 
-   // interaction_impl modality support
+// interaction_impl modality support
 
    void interaction_impl::BeginModalState()
    {
@@ -5451,7 +5450,7 @@ namespace windows
 
    }
 
-   // frame_window
+// frame_window
    /*    void frame_window::DelayUpdateFrameTitle()
    { m_nIdleFlags |= idleTitle; }
    void frame_window::DelayRecalcLayout(bool bNotify)
@@ -5481,8 +5480,8 @@ namespace windows
 
    }
 
-   ////////////////////////////////////////////////////////////////////////////
-   // UI related interaction_impl functions
+////////////////////////////////////////////////////////////////////////////
+// UI related interaction_impl functions
 
    oswindow interaction_impl::get_safe_owner(oswindow hParent, oswindow* pWndTop)
    {

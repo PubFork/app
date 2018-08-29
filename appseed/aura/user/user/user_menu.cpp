@@ -9,7 +9,7 @@ namespace user
       menu(get_app())
    {
 
-      //set_pro_devian();
+      //
 
       m_econtroltype = control_type_menu;
 
@@ -23,7 +23,7 @@ namespace user
       m_itemClose(papp)
    {
 
-      set_pro_devian();
+
 
       m_econtroltype = control_type_menu;
       m_bCloseButton = true;
@@ -51,7 +51,7 @@ namespace user
       m_itemClose(papp)
    {
 
-      set_pro_devian();
+
 
       m_econtroltype = control_type_menu;
 

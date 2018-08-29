@@ -272,7 +272,7 @@ namespace user
       {
 
          ModifyStyle(0, WS_VISIBLE);
-         
+
          m_pui->message_call(WM_SHOWWINDOW, 1);
 
       }
@@ -281,7 +281,7 @@ namespace user
       {
 
          ModifyStyle(WS_VISIBLE, 0);
-         
+
          m_pui->message_call(WM_SHOWWINDOW, 0);
 
       }
@@ -656,12 +656,12 @@ namespace user
 
    bool interaction_impl_base::SetWindowPos(int_ptr z,int32_t x,int32_t y,int32_t cx,int32_t cy,UINT nFlags)
    {
-      
+
       if(is_null(m_pui))
       {
-         
+
          return false;
-         
+
       }
 
       synch_lock sl(m_pui->m_pmutex);
@@ -739,12 +739,12 @@ namespace user
       m_rectParentClientRequest = rect;
 
       m_bShowFlags = bShowFlags;
-      
+
       if(!m_pui->m_bProDevian)
       {
-         
+
          set_need_redraw();
-         
+
       }
 
       set_need_redraw();
@@ -1295,13 +1295,13 @@ namespace user
 
       if(m_pui == NULL)
       {
-         
+
          return 0;
-         
+
       }
 
       smart_pointer < ::message::base > spbase;
-      
+
       spbase = m_pui->get_message_base(uiMessage, wparam, lparam);
 
       if (m_pui->WfiIsMoving())
@@ -1442,24 +1442,9 @@ namespace user
    }
 
 
-   void interaction_impl_base::on_set_pro_devian()
+   void interaction_impl_base::prodevian_task()
    {
 
-
-   }
-
-
-   void interaction_impl_base::set_need_redraw()
-   {
-      
-      if(get_wnd() == NULL)
-      {
-         
-         return;
-         
-      }
-
-      //get_wnd()->set_need_redraw();
 
    }
 

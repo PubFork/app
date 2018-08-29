@@ -240,7 +240,7 @@ namespace plugin
    }
 
 
-   bool host_interaction::set_need_redraw(const RECT & lpRectUpdate,::draw2d::region* prgnUpdate,UINT flags)
+   bool host_interaction::RedrawWindow(const RECT & lpRectUpdate,::draw2d::region* prgnUpdate,UINT flags)
    {
 
       UNREFERENCED_PARAMETER(lpRectUpdate);
