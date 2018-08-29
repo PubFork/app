@@ -553,7 +553,12 @@ void simple_frame_window::_001OnCreate(::message::message * pobj)
 
    defer_create_notification_icon();
 
-   m_pimpl->show_task(m_bShowTask);
+   if (!m_bShowTask)
+   {
+
+      m_pimpl->show_task(m_bShowTask);
+
+   }
 
    if(GetParent() == NULL)
    {

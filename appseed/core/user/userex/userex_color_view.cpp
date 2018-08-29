@@ -344,7 +344,7 @@ namespace userex
       m_dibLuminance(allocer())
    {
 
-      m_bCompact = true;
+      m_bCompact = false;
 
       m_strView = "color_sel";
 
