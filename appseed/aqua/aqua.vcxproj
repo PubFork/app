@@ -195,20 +195,20 @@
       <DocumentLibraryDependencies>false</DocumentLibraryDependencies>
     </Xdcmake>
     <CustomBuildStep>
-      <Command>copy $(SolutionDir)..\..\..\nodeapp\thirdparty\binary\$(PlatformName)\$(Configuration)\*.dll $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
-copy $(SolutionDir)..\..\..\nodeapp\thirdparty\binary\$(PlatformName)\$(Configuration)\*.exe $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
-copy $(SolutionDir)..\..\..\nodeapp\thirdparty\binary\$(PlatformName)\$(Configuration)\*.pdb $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\</Command>
+      <Command>copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.dll $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
+copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.exe $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
+copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.pdb $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\</Command>
       <Outputs>$(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\zlib.dll</Outputs>
     </CustomBuildStep>
     <PostBuildEvent>
-      <Command>copy $(SolutionDir)..\..\..\nodeapp\thirdparty\binary\$(PlatformName)\$(Configuration)\*.dll $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
-copy $(SolutionDir)..\..\..\nodeapp\thirdparty\binary\$(PlatformName)\$(Configuration)\*.exe $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
-copy $(SolutionDir)..\..\..\nodeapp\thirdparty\binary\$(PlatformName)\$(Configuration)\*.pdb $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
-copy $(SolutionDir)..\..\..\nodeapp\thirdparty\binary\$(PlatformName)\$(Configuration)\*.sys $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
+      <Command>copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.dll $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
+copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.exe $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
+copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.pdb $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
+copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.sys $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
 
-copy $(SolutionDir)..\..\..\nodeapp\$(PlatformName)\$(Configuration)\bin\*.dll $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
-copy $(SolutionDir)..\..\..\nodeapp\$(PlatformName)\$(Configuration)\bin\*.pdb $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
-copy $(SolutionDir)..\..\..\nodeapp\$(PlatformName)\$(Configuration)\bin\*.exe $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
+copy $(SolutionDir)..\..\..\nodelfs\$(PlatformName)\$(Configuration)\bin\*.dll $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
+copy $(SolutionDir)..\..\..\nodelfs\$(PlatformName)\$(Configuration)\bin\*.pdb $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
+copy $(SolutionDir)..\..\..\nodelfs\$(PlatformName)\$(Configuration)\bin\*.exe $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -268,20 +268,20 @@ copy $(SolutionDir)..\..\..\nodeapp\$(PlatformName)\$(Configuration)\bin\*.exe $
       <DocumentLibraryDependencies>false</DocumentLibraryDependencies>
     </Xdcmake>
     <CustomBuildStep>
-      <Command>copy $(SolutionDir)..\..\..\nodeapp\thirdparty\binary\$(PlatformName)\$(Configuration)\*.dll $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
-copy $(SolutionDir)..\..\..\nodeapp\thirdparty\binary\$(PlatformName)\$(Configuration)\*.exe $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
-copy $(SolutionDir)..\..\..\nodeapp\thirdparty\binary\$(PlatformName)\$(Configuration)\*.pdb $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\</Command>
+      <Command>copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.dll $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
+copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.exe $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
+copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.pdb $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\</Command>
       <Outputs>$(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\zlib.dll</Outputs>
     </CustomBuildStep>
     <PostBuildEvent>
-      <Command>copy $(SolutionDir)..\..\..\nodeapp\thirdparty\binary\$(PlatformName)\$(Configuration)\*.dll $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
-copy $(SolutionDir)..\..\..\nodeapp\thirdparty\binary\$(PlatformName)\$(Configuration)\*.exe $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
-copy $(SolutionDir)..\..\..\nodeapp\thirdparty\binary\$(PlatformName)\$(Configuration)\*.pdb $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
-copy $(SolutionDir)..\..\..\nodeapp\thirdparty\binary\$(PlatformName)\$(Configuration)\*.sys $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
+      <Command>copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.dll $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
+copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.exe $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
+copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.pdb $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
+copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.sys $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
 
-copy $(SolutionDir)..\..\..\nodeapp\$(PlatformName)\$(Configuration)\bin\*.dll $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
-copy $(SolutionDir)..\..\..\nodeapp\$(PlatformName)\$(Configuration)\bin\*.pdb $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
-copy $(SolutionDir)..\..\..\nodeapp\$(PlatformName)\$(Configuration)\bin\*.exe $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
+copy $(SolutionDir)..\..\..\nodelfs\$(PlatformName)\$(Configuration)\bin\*.dll $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
+copy $(SolutionDir)..\..\..\nodelfs\$(PlatformName)\$(Configuration)\bin\*.pdb $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
+copy $(SolutionDir)..\..\..\nodelfs\$(PlatformName)\$(Configuration)\bin\*.exe $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -349,20 +349,20 @@ copy $(SolutionDir)..\..\..\nodeapp\$(PlatformName)\$(Configuration)\bin\*.exe $
       <DocumentLibraryDependencies>false</DocumentLibraryDependencies>
     </Xdcmake>
     <CustomBuildStep>
-      <Command>copy $(SolutionDir)..\..\..\nodeapp\thirdparty\binary\$(PlatformName)\$(Configuration)\*.dll $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
-copy $(SolutionDir)..\..\..\nodeapp\thirdparty\binary\$(PlatformName)\$(Configuration)\*.exe $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
-copy $(SolutionDir)..\..\..\nodeapp\thirdparty\binary\$(PlatformName)\$(Configuration)\*.pdb $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\</Command>
+      <Command>copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.dll $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
+copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.exe $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
+copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.pdb $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\</Command>
       <Outputs>$(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\zlib.dll</Outputs>
     </CustomBuildStep>
     <PostBuildEvent>
-      <Command>copy $(SolutionDir)..\..\..\nodeapp\thirdparty\binary\$(PlatformName)\$(Configuration)\*.dll $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
-copy $(SolutionDir)..\..\..\nodeapp\thirdparty\binary\$(PlatformName)\$(Configuration)\*.exe $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
-copy $(SolutionDir)..\..\..\nodeapp\thirdparty\binary\$(PlatformName)\$(Configuration)\*.pdb $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
-copy $(SolutionDir)..\..\..\nodeapp\thirdparty\binary\$(PlatformName)\$(Configuration)\*.sys $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
+      <Command>copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.dll $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
+copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.exe $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
+copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.pdb $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
+copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.sys $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
 
-copy $(SolutionDir)..\..\..\nodeapp\$(PlatformName)\$(Configuration)\bin\*.dll $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
-copy $(SolutionDir)..\..\..\nodeapp\$(PlatformName)\$(Configuration)\bin\*.pdb $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
-copy $(SolutionDir)..\..\..\nodeapp\$(PlatformName)\$(Configuration)\bin\*.exe $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
+copy $(SolutionDir)..\..\..\nodelfs\$(PlatformName)\$(Configuration)\bin\*.dll $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
+copy $(SolutionDir)..\..\..\nodelfs\$(PlatformName)\$(Configuration)\bin\*.pdb $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
+copy $(SolutionDir)..\..\..\nodelfs\$(PlatformName)\$(Configuration)\bin\*.exe $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -414,22 +414,22 @@ copy $(SolutionDir)..\..\..\nodeapp\$(PlatformName)\$(Configuration)\bin\*.exe $
       </Command>
     </PreBuildEvent>
     <CustomBuildStep>
-      <Command>copy $(SolutionDir)..\..\..\nodeapp\thirdparty\binary\$(PlatformName)\$(Configuration)\*.dll $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
-copy $(SolutionDir)..\..\..\nodeapp\thirdparty\binary\$(PlatformName)\$(Configuration)\*.exe $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
-copy $(SolutionDir)..\..\..\nodeapp\thirdparty\binary\$(PlatformName)\$(Configuration)\*.pdb $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\</Command>
+      <Command>copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.dll $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
+copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.exe $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
+copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.pdb $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\</Command>
     </CustomBuildStep>
     <CustomBuildStep>
       <Outputs>$(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\zlib.dll;%(Outputs)</Outputs>
     </CustomBuildStep>
     <PostBuildEvent>
-      <Command>copy $(SolutionDir)..\..\..\nodeapp\thirdparty\binary\$(PlatformName)\$(Configuration)\*.dll $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
-copy $(SolutionDir)..\..\..\nodeapp\thirdparty\binary\$(PlatformName)\$(Configuration)\*.exe $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
-copy $(SolutionDir)..\..\..\nodeapp\thirdparty\binary\$(PlatformName)\$(Configuration)\*.pdb $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
-copy $(SolutionDir)..\..\..\nodeapp\thirdparty\binary\$(PlatformName)\$(Configuration)\*.sys $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
+      <Command>copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.dll $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
+copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.exe $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
+copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.pdb $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
+copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.sys $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
 
-copy $(SolutionDir)..\..\..\nodeapp\$(PlatformName)\$(Configuration)\bin\*.dll $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
-copy $(SolutionDir)..\..\..\nodeapp\$(PlatformName)\$(Configuration)\bin\*.pdb $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
-copy $(SolutionDir)..\..\..\nodeapp\$(PlatformName)\$(Configuration)\bin\*.exe $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
+copy $(SolutionDir)..\..\..\nodelfs\$(PlatformName)\$(Configuration)\bin\*.dll $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
+copy $(SolutionDir)..\..\..\nodelfs\$(PlatformName)\$(Configuration)\bin\*.pdb $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
+copy $(SolutionDir)..\..\..\nodelfs\$(PlatformName)\$(Configuration)\bin\*.exe $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
 </Command>
     </PostBuildEvent>
     <Manifest>
@@ -484,22 +484,22 @@ copy $(SolutionDir)..\..\..\nodeapp\$(PlatformName)\$(Configuration)\bin\*.exe $
       </Command>
     </PreBuildEvent>
     <CustomBuildStep>
-      <Command>copy $(SolutionDir)..\..\..\nodeapp\thirdparty\binary\$(PlatformName)\$(Configuration)\*.dll $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
-copy $(SolutionDir)..\..\..\nodeapp\thirdparty\binary\$(PlatformName)\$(Configuration)\*.exe $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
-copy $(SolutionDir)..\..\..\nodeapp\thirdparty\binary\$(PlatformName)\$(Configuration)\*.pdb $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\</Command>
+      <Command>copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.dll $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
+copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.exe $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
+copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.pdb $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\</Command>
     </CustomBuildStep>
     <CustomBuildStep>
       <Outputs>$(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\zlib.dll</Outputs>
     </CustomBuildStep>
     <PostBuildEvent>
-      <Command>copy $(SolutionDir)..\..\..\nodeapp\thirdparty\binary\$(PlatformName)\$(Configuration)\*.dll $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
-copy $(SolutionDir)..\..\..\nodeapp\thirdparty\binary\$(PlatformName)\$(Configuration)\*.exe $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
-copy $(SolutionDir)..\..\..\nodeapp\thirdparty\binary\$(PlatformName)\$(Configuration)\*.pdb $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
-copy $(SolutionDir)..\..\..\nodeapp\thirdparty\binary\$(PlatformName)\$(Configuration)\*.sys $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
+      <Command>copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.dll $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
+copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.exe $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
+copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.pdb $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
+copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.sys $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
 
-copy $(SolutionDir)..\..\..\nodeapp\$(PlatformName)\$(Configuration)\bin\*.dll $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
-copy $(SolutionDir)..\..\..\nodeapp\$(PlatformName)\$(Configuration)\bin\*.pdb $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
-copy $(SolutionDir)..\..\..\nodeapp\$(PlatformName)\$(Configuration)\bin\*.exe $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
+copy $(SolutionDir)..\..\..\nodelfs\$(PlatformName)\$(Configuration)\bin\*.dll $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
+copy $(SolutionDir)..\..\..\nodelfs\$(PlatformName)\$(Configuration)\bin\*.pdb $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
+copy $(SolutionDir)..\..\..\nodelfs\$(PlatformName)\$(Configuration)\bin\*.exe $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
 </Command>
     </PostBuildEvent>
     <Manifest>
@@ -561,22 +561,22 @@ copy $(SolutionDir)..\..\..\nodeapp\$(PlatformName)\$(Configuration)\bin\*.exe $
       </Command>
     </PreBuildEvent>
     <CustomBuildStep>
-      <Command>copy $(SolutionDir)..\..\..\nodeapp\thirdparty\binary\$(PlatformName)\$(Configuration)\*.dll $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
-copy $(SolutionDir)..\..\..\nodeapp\thirdparty\binary\$(PlatformName)\$(Configuration)\*.exe $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
-copy $(SolutionDir)..\..\..\nodeapp\thirdparty\binary\$(PlatformName)\$(Configuration)\*.pdb $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\</Command>
+      <Command>copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.dll $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
+copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.exe $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
+copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.pdb $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\</Command>
     </CustomBuildStep>
     <CustomBuildStep>
       <Outputs>$(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\zlib.dll</Outputs>
     </CustomBuildStep>
     <PostBuildEvent>
-      <Command>copy $(SolutionDir)..\..\..\nodeapp\thirdparty\binary\$(PlatformName)\$(Configuration)\*.dll $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
-copy $(SolutionDir)..\..\..\nodeapp\thirdparty\binary\$(PlatformName)\$(Configuration)\*.exe $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
-copy $(SolutionDir)..\..\..\nodeapp\thirdparty\binary\$(PlatformName)\$(Configuration)\*.pdb $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
-copy $(SolutionDir)..\..\..\nodeapp\thirdparty\binary\$(PlatformName)\$(Configuration)\*.sys $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
+      <Command>copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.dll $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
+copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.exe $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
+copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.pdb $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
+copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.sys $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
 
-copy $(SolutionDir)..\..\..\nodeapp\$(PlatformName)\$(Configuration)\bin\*.dll $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
-copy $(SolutionDir)..\..\..\nodeapp\$(PlatformName)\$(Configuration)\bin\*.pdb $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
-copy $(SolutionDir)..\..\..\nodeapp\$(PlatformName)\$(Configuration)\bin\*.exe $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
+copy $(SolutionDir)..\..\..\nodelfs\$(PlatformName)\$(Configuration)\bin\*.dll $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
+copy $(SolutionDir)..\..\..\nodelfs\$(PlatformName)\$(Configuration)\bin\*.pdb $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
+copy $(SolutionDir)..\..\..\nodelfs\$(PlatformName)\$(Configuration)\bin\*.exe $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
 </Command>
     </PostBuildEvent>
     <Manifest>
