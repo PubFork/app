@@ -91,10 +91,6 @@ namespace user
 
       sp(::thread)                  m_pthreadProDevian;
 
-      u64                           m_uiLastUpdateBeg;
-      u64                           m_uiLastUpdateEnd;
-
-
 
       interaction_impl();
       virtual ~interaction_impl();

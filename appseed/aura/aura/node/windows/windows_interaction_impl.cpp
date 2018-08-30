@@ -2484,19 +2484,23 @@ namespace windows
 
             DWORD dwStart;
 
-            double dFps = m_dFps;
+            u64 uNow = get_nanos();
 
-            double dPeriod = (1000.0 / dFps);
+            u64 uFrameNanos = (u64)(1000000000LL / m_dFps);
 
-            dPeriod = MIN(MAX(1.0, dPeriod), 1000.0);
+            uFrameNanos = MIN(MAX(100000, uFrameNanos), 1000000000);
 
-            index iLastFrameId;
+            u64 uFrameId = uNow / uFrameNanos;
 
-            iLastFrameId = index(millis_now() / dPeriod);
+            u64 uLastFrameId = uFrameId;
 
-            index iFrameId;
+            u64 uNextFrame;
 
-            double_array daFrame;
+            u64 uWait;
+
+            ::count cLost;
+
+            uint64_array uaFrame;
 
             bool bUpdateScreen;
 
@@ -2522,33 +2526,15 @@ namespace windows
 
                      synch_lock sl(m_pui->m_pmutex);
 
-                     u64 now = get_nanos();
+                     bool bUpdateBuffer = m_pui->m_bProDevian
+                                          || m_pui->check_need_layout()
+                                          || m_pui->m_bRedraw
+                                          || m_pui->check_show_flags();
 
-                     u64 frameNanos = 1000000000LL / m_dFps;
-
-                     bool bUpdateBuffer;
-
-                     if (m_uiLastUpdateEnd - m_uiLastUpdateBeg > frameNanos
-                           && now - m_uiLastUpdateEnd < frameNanos)
+                     if (!bUpdateBuffer && m_pui->IsWindowVisible())
                      {
 
-                        bUpdateBuffer = false;
-
-                     }
-                     else
-                     {
-
-                        bUpdateBuffer = m_pui->m_bProDevian
-                                        || m_pui->check_need_layout()
-                                        || m_pui->m_bRedraw
-                                        || m_pui->check_show_flags();
-
-                        if (!bUpdateBuffer && m_pui->IsWindowVisible())
-                        {
-
-                           bUpdateBuffer = m_pui->has_pending_graphical_update();
-
-                        }
+                        bUpdateBuffer = m_pui->has_pending_graphical_update();
 
                      }
 
@@ -2557,11 +2543,7 @@ namespace windows
 
                         sl.unlock();
 
-                        m_uiLastUpdateBeg = get_nanos();
-
                         _001UpdateBuffer();
-
-                        m_uiLastUpdateEnd = get_nanos();
 
                         try
                         {
@@ -2609,33 +2591,35 @@ namespace windows
 
                }
 
-               double dNow = millis_now();
+               uNow = get_nanos();
 
-               double dPeriod = (1000.0 / dFps);
+               uFrameNanos = (u64)(1000000000LL / m_dFps);
 
-               dPeriod = MIN(MAX(1.0, dPeriod), 1000.0);
+               uFrameNanos = MIN(MAX(100000, uFrameNanos), 1000000000);
 
-               double dWait = dPeriod - fmod(dNow, dPeriod);
+               uFrameId = uNow / uFrameNanos;
 
-               iFrameId = (index)(dNow / dPeriod);
+               uNextFrame = (uFrameId + 1) * uFrameNanos;
 
-               ::count cLost = iFrameId - iLastFrameId - 1;
+               uWait = uNextFrame - uNow;
+
+               cLost = uFrameId - uLastFrameId - 1;
 
                if (cLost < 0)
                {
 
-                  dWait = dPeriod;
+                  uWait = uFrameNanos; // too much CPU usage?
 
                }
 
-               iLastFrameId = iFrameId;
+               uLastFrameId = uFrameId;
 
-               li.QuadPart = -((LONGLONG)(dWait * 1000.0) * 10LL);
+               li.QuadPart = - ((LONGLONG) uWait / 100LL);
 
                if (!SetWaitableTimer(timer, &li, 0, NULL, NULL, FALSE))
                {
 
-                  Sleep(DWORD(dWait));
+                  Sleep(DWORD(uWait / 1000000LL));
 
                }
                else
@@ -2650,13 +2634,13 @@ namespace windows
 
                   _001UpdateScreen();
 
-                  for (index i = 0; i < daFrame.get_size(); i++)
+                  for (index i = 0; i < uaFrame.get_size(); i++)
                   {
 
-                     if (dNow - daFrame[i] >= 1000.0)
+                     if (uNow - uaFrame[i] >= 1000000000LL)
                      {
 
-                        daFrame.remove_at(i);
+                        uaFrame.remove_at(i);
 
                      }
                      else
@@ -2670,9 +2654,9 @@ namespace windows
 
                }
 
-               m_dUpdateScreenFps = (double)(daFrame.get_size());
+               m_dUpdateScreenFps = (double)(uaFrame.get_size());
 
-               daFrame.add(dNow);
+               uaFrame.add(uNow);
 
             }
 
