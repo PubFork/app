@@ -2054,8 +2054,8 @@ namespace user
    void frame_window::_001OnSetFocus(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
-      if (m_pviewActive != NULL)
-         m_pviewActive->SetFocus();
+      //if (m_pviewActive != NULL)
+      // m_pviewActive->SetFocus();
    }
 
 
@@ -2385,9 +2385,9 @@ namespace user
 
       if(m_sizeMinimum.area() > 0)
       {
-         
+
          return m_sizeMinimum;
-         
+
       }
       else if (get_appearance() == ::user::appearance_minimal)
       {

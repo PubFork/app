@@ -101,6 +101,8 @@ namespace user
       DECL_GEN_SIGNAL(_001OnMouseLeave);
       DECL_GEN_SIGNAL(_001OnKeyDown);
       DECL_GEN_SIGNAL(_001OnEnable);
+      DECL_GEN_SIGNAL(_001OnSetFocus);
+      DECL_GEN_SIGNAL(_001OnKillFocus);
 
 
       virtual void on_control_event(::user::control_event * pevent) override;
@@ -109,8 +111,7 @@ namespace user
 
       //virtual void walk_pre_translate_tree(::message::message * pobj,sp(::user::interaction) puiStop);
 
-      DECL_GEN_SIGNAL(_001OnSetFocus);
-      virtual bool keyboard_focus_OnKillFocus(oswindow oswindowNew) override;
+
 
 
       virtual bool get_element_rect(LPRECT lprect, e_element eelement);

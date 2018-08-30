@@ -48,6 +48,7 @@ namespace user
 
       IGUI_MSG_LINK(WM_ENABLE, psender, this, &::user::control::_001OnEnable);
       IGUI_MSG_LINK(WM_SETFOCUS, psender, this, &::user::control::_001OnSetFocus);
+      IGUI_MSG_LINK(WM_KILLFOCUS, psender, this, &::user::control::_001OnKillFocus);
 
    }
 
@@ -454,20 +455,20 @@ namespace user
    }
 
 
-   bool control::keyboard_focus_OnKillFocus(oswindow oswindowNew)
+   void control::_001OnKillFocus(::message::message * pmessage)
    {
 
-      ::user::box::keyboard_focus_OnKillFocus(oswindowNew);
+      SCAST_PTR(::message::kill_focus, pkillfocus, pmessage);
 
       ::user::control_event ev;
 
       ev.m_puie = this;
 
+      ev.m_id = m_id;
+
       ev.m_eevent = ::user::event_kill_focus;
 
       on_control_event(&ev);
-
-      return ev.m_bOk;
 
    }
 
