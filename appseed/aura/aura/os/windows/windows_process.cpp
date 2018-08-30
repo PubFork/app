@@ -941,7 +941,7 @@ CLASS_DECL_AURA void shared_library_process(dword_array & dwa, stringa & straPro
 CLASS_DECL_AURA ::file::path core_app_path(string strAppId)
 {
 
-   ::file::path path = file_as_string_dup(::dir::system() / "config" / strAppId / "path.txt");
+   ::file::path path = file_as_string_dup(::dir::local() / strAppId / "path.txt");
 
    if (path.has_char())
    {
