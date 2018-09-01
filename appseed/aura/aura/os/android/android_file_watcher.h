@@ -37,7 +37,7 @@ namespace file_watcher
    {
    public:
       /// type for a map from id to watch_struct pointer
-      typedef map < id, id, watch_struct *, watch_struct * > WatchMap;
+      typedef map < id, id, sp(watch), sp(watch) > WatchMap;
 
    public:
       ///
@@ -80,6 +80,28 @@ namespace file_watcher
       /// File descriptor set
       void *  m_pDescriptorSet; // fd_set
 
+
+   };
+
+
+   class watch_item
+   {
+   public:
+
+      id                            m_id;
+      string                        m_strDirName;
+
+   };
+
+
+   class watch :
+      public watch_item
+   {
+
+      bool                          m_bRecursive;
+      listener *                    m_plistener;
+      array < watch_item >          m_itema;
+      bool                          m_bOwn;
 
    };
 

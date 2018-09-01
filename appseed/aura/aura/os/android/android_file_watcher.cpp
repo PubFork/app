@@ -33,25 +33,6 @@
 namespace file_watcher
 {
 
-   struct watch_struct_item
-   {
-
-      id                            m_id;
-      string                        m_strDirName;
-
-   };
-
-
-   struct watch_struct :
-      public watch_struct_item
-   {
-
-      bool                          m_bRecursive;
-      listener *                    m_plistener;
-      array < watch_struct_item >   m_itema;
-      bool                          m_bOwn;
-
-   };
 
 
 
