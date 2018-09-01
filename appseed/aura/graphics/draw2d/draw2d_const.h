@@ -48,8 +48,9 @@ namespace draw2d
    enum e_smooth_mode
    {
       smooth_mode_none,
-      smooth_mode_antialias,
       smooth_mode_high,
+      smooth_mode_anti_alias_8x4,
+      smooth_mode_anti_alias_8x8,
    };
 
 
