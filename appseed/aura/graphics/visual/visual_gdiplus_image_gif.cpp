@@ -841,8 +841,7 @@ int iFrame)
       }
 
 
-
-      if (px == GUID_WICPixelFormat32bppBGRA)
+      if (px == GUID_WICPixelFormat32bppRGBA)
       {
          UINT width = 0;
          UINT height = 0;
@@ -852,7 +851,21 @@ int iFrame)
          pdib->map();
          hr = pframe->CopyPixels(NULL, pdib->m_iScan, pdib->m_iScan * height, (BYTE *)pdib->m_pcolorref);
 #ifdef METROWIN
-         pdib->mult_alpha();
+         //pdib->mult_alpha();
+#endif
+
+      }
+      else if (px == GUID_WICPixelFormat32bppBGRA)
+      {
+         UINT width = 0;
+         UINT height = 0;
+
+         pframe->GetSize(&width, &height);
+         pdib->create(width, height);
+         pdib->map();
+         hr = pframe->CopyPixels(NULL, pdib->m_iScan, pdib->m_iScan * height, (BYTE *)pdib->m_pcolorref);
+#ifdef METROWIN
+         //pdib->mult_alpha();
 #endif
 
       }

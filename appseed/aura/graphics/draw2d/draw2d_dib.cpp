@@ -66,7 +66,7 @@ namespace draw2d
 
    }
 
-   
+
    dib::~dib()
    {
 
@@ -5887,7 +5887,6 @@ restart:
 
          COLORREF * pcr = m_pcolorref;
 
-         #pragma omp parallel for
          for (int64_t i = 0; i < size; i++)
             pcr[i] = cr;
 
@@ -7233,13 +7232,13 @@ restart:
    {
 
       map();
-      
+
       byte * dst = (byte *) m_pcolorref;
-      
+
       int64_t size = scan_area();
 
       int iDiv = 255 * 255;
-      
+
       int iMul = (int)(dRate * (double)iDiv);
 
       while (size > 0)
@@ -7250,17 +7249,17 @@ restart:
          int iMin = MIN(MIN(dst[0], dst[1]), dst[2]);
 
          int iMid = (iMax + iMin) / 2;
-         
+
          dst[0] = ((dst[0] - iMid) * iMul / iDiv) + iMid;
-         
+
          dst[1] = ((dst[1] - iMid) * iMul / iDiv) + iMid;
-         
+
          dst[2] = ((dst[2] - iMid) * iMul / iDiv) + iMid;
-         
+
          dst += 4;
-         
+
          size--;
-         
+
       }
 
    }

@@ -378,38 +378,72 @@ namespace metrowin
 
          }
 
-         ::Windows::Storage::Streams::RandomAccessStreamReference ^ ref = ::wait(dataPackage->GetBitmapAsync());
+         ::Windows::Storage::Streams::IRandomAccessStream ^ stream = (::Windows::Storage::Streams::IRandomAccessStream ^) ::wait(dataPackage->GetDataAsync(L"DeviceIndependentBitmap"));
 
-         if (ref == nullptr)
-         {
-
-            bOk = false;
-
-            return;
-
-         }
-
-         ::Windows::Storage::Streams::IRandomAccessStreamWithContentType ^ stream = ::wait(ref->OpenReadAsync());
+         //auto ref = ::wait(dataPackage->GetDataAsync(L"DeviceIndependentBitmap"));
 
          if (stream == nullptr)
          {
 
-
             bOk = false;
 
             return;
 
          }
 
-         if (!windows_load_dib_from_file(pdib, stream, get_app()))
-         {
+         //::Windows::Storage::Streams::IRandomAccessStreamWithContentType ^ stream = ::wait(ref->OpenReadAsync());
+
+         //if (stream == nullptr)
+         //{
 
 
-            bOk = false;
+         //   bOk = false;
 
+         //   return;
+
+         //}
+
+         memory_size_t s = (memory_size_t)stream->Size;
+
+         Windows::Storage::Streams::Buffer ^ buffer = ref new Windows::Storage::Streams::Buffer(s);
+
+         if (buffer == nullptr)
             return;
 
-         }
+         ::wait(stream->ReadAsync(buffer, s, ::Windows::Storage::Streams::InputStreamOptions::ReadAhead));
+
+         memory m;
+
+         m.set_os_buffer(buffer);
+
+         BITMAPINFO * _ = (BITMAPINFO *) m.get_data();
+
+         pdib->create(_->bmiHeader.biWidth, _->bmiHeader.biHeight);
+
+         pdib->map();
+
+         ::draw2d::copy_colorref(
+         pdib->m_size.cx,
+         pdib->m_size.cy,
+         pdib->m_pcolorref,
+         pdib->m_iScan,
+         (COLORREF *) &m.get_data()[_->bmiHeader.biSize],
+         _->bmiHeader.biSizeImage / _->bmiHeader.biHeight);
+
+
+         //memory m(get_app());
+
+         //m.
+
+         //if (!windows_load_dib_from_file(pdib, stream, get_app()))
+         //{
+
+
+         //   bOk = false;
+
+         //   return;
+
+         //}
 
       });
 
