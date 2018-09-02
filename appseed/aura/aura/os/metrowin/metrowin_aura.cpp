@@ -370,15 +370,17 @@ string key_to_char(WPARAM wparam, LPARAM lparam)
 string get_system_error_message(uint32_t dwError)
 {
    wstring wstr;
-   wstr.alloc(64 * 1024 / sizeof(unichar));
-   FormatMessageW(
-   FORMAT_MESSAGE_FROM_SYSTEM,
-   NULL,
-   dwError,
-   0,
-   (LPWSTR) (LPCWSTR) wstr,
-   wstr.get_storage_size() / sizeof(unichar),
-   NULL);
+   unichar * p = wstr. alloc(64 * 1024 / sizeof(unichar));
+   DWORD dw = FormatMessageW(
+              FORMAT_MESSAGE_FROM_SYSTEM,
+              NULL,
+              dwError,
+              0,
+              p,
+              wstr.get_storage_size() / sizeof(unichar),
+              NULL);
+   p[dw] = L'\0';
+   wstr.release_buffer();
    string str(wstr);
    return str;
 }
