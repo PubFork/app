@@ -782,7 +782,7 @@ namespace user
                else if (!pappearance->IsFullScreen() && !m_pworkset->GetWndDraw()->frame_is_transparent())
                {
 
-                  if (m_pworkset->GetWndDraw()->get_handle() == GetActiveWindow() && m_crActiveCaptionTextBk != 0)
+                  if (m_pworkset->GetWndDraw()->get_handle() == get_active_window() && m_crActiveCaptionTextBk != 0)
                   {
 
                      pgraphics->fill_solid_rect(m_rectCaptionTextBk, m_crActiveCaptionTextBk);
