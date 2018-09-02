@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 #include "linux_user_impl.h"
 #include <X11/Xatom.h>
 #include <sys/stat.h>
@@ -219,7 +219,7 @@ void unmapped_net_state_raw(Display * d, Window w, ...)
 static oswindow g_oswindowCapture;
 
 
-oswindow GetCapture()
+oswindow get_capture()
 {
 
    return g_oswindowCapture;
@@ -227,7 +227,7 @@ oswindow GetCapture()
 }
 
 
-oswindow SetCapture(oswindow window)
+oswindow set_capture(oswindow window)
 {
 
    oswindow windowOld(g_oswindowCapture);
@@ -268,7 +268,7 @@ oswindow SetCapture(oswindow window)
 }
 
 
-WINBOOL ReleaseCapture()
+WINBOOL release_capture()
 {
 
    if(g_oswindowCapture == NULL)
@@ -298,7 +298,7 @@ WINBOOL ReleaseCapture()
 }
 
 
-oswindow SetFocus(oswindow window)
+oswindow set_focus(oswindow window)
 {
 
    if(window == NULL)
@@ -312,7 +312,7 @@ oswindow SetFocus(oswindow window)
 
    xdisplay d(window->display());
 
-   if(!IsWindow(window))
+   if(!is_window(window))
    {
 
       windowing_output_debug_string("\noswindow_data::SetFocus 1.1");
@@ -348,7 +348,7 @@ oswindow SetFocus(oswindow window)
 }
 
 
-oswindow GetFocus()
+oswindow get_focus()
 {
 
    windowing_output_debug_string("\n::GetFocus 1");
@@ -401,20 +401,20 @@ oswindow GetFocus()
 }
 
 
-oswindow GetActiveWindow()
+oswindow get_active_window()
 {
-
-   return GetFocus();
-
+   
+   return get_focus();
+   
 }
 
 
-oswindow SetActiveWindow(oswindow window)
+oswindow set_active_window(oswindow window)
 {
 
    {
 
-      windowing_output_debug_string("\n::SetActiveWindow 1");
+      windowing_output_debug_string("\n::set_active_window 1");
 
       xdisplay d(window->display());
 
@@ -440,7 +440,7 @@ oswindow SetActiveWindow(oswindow window)
 
       XSendEvent (d, windowRoot, False, SubstructureRedirectMask | SubstructureNotifyMask, &xev);
 
-      windowing_output_debug_string("\n::SetActiveWindow 2");
+      windowing_output_debug_string("\n::set_active_window 2");
 
    }
 
@@ -529,7 +529,7 @@ oswindow oswindow_get_previous_found(Window *array, int iStart)
 }
 
 
-oswindow GetWindow(oswindow windowParam, int iParentHood)
+oswindow get_window(oswindow windowParam, int iParentHood)
 {
 
    oswindow window = windowParam;
@@ -541,7 +541,7 @@ oswindow GetWindow(oswindow windowParam, int iParentHood)
 
    }
 
-   windowing_output_debug_string("\n::GetWindow 1");
+   windowing_output_debug_string("\n::get_window 1");
 
    xdisplay d(window->display());
 
@@ -597,7 +597,7 @@ oswindow GetWindow(oswindow windowParam, int iParentHood)
                if(data == NULL)
                {
 
-                  windowing_output_debug_string("\n::GetWindow 2");
+                  windowing_output_debug_string("\n::get_window 2");
 
                   return NULL;
 
@@ -613,7 +613,7 @@ oswindow GetWindow(oswindow windowParam, int iParentHood)
                if(data == NULL)
                {
 
-                  windowing_output_debug_string("\n::GetWindow 3");
+                  windowing_output_debug_string("\n::get_window 3");
 
                   return NULL;
 
@@ -630,7 +630,7 @@ oswindow GetWindow(oswindow windowParam, int iParentHood)
                if(data == NULL) // ????
                {
 
-                  windowing_output_debug_string("\n::GetWindow 4");
+                  windowing_output_debug_string("\n::get_window 4");
 
                   return NULL;
 
@@ -657,7 +657,7 @@ oswindow GetWindow(oswindow windowParam, int iParentHood)
 
                   XFree(data);
 
-                  windowing_output_debug_string("\n::GetWindow 5");
+                  windowing_output_debug_string("\n::get_window 5");
 
                   return NULL;
 
@@ -671,7 +671,7 @@ oswindow GetWindow(oswindow windowParam, int iParentHood)
 
                      XFree(data);
 
-                     windowing_output_debug_string("\n::GetWindow 6");
+                     windowing_output_debug_string("\n::get_window 6");
 
                      return NULL;
 
@@ -688,7 +688,7 @@ oswindow GetWindow(oswindow windowParam, int iParentHood)
 
                      XFree(data);
 
-                     windowing_output_debug_string("\n::GetWindow 7");
+                     windowing_output_debug_string("\n::get_window 7");
 
                      return NULL;
 
@@ -704,7 +704,7 @@ oswindow GetWindow(oswindow windowParam, int iParentHood)
 
             XFree(data);
 
-            windowing_output_debug_string("\n::GetWindow 8");
+            windowing_output_debug_string("\n::get_window 8");
 
             return window;
 
@@ -730,7 +730,7 @@ oswindow GetWindow(oswindow windowParam, int iParentHood)
       if(pchildren == NULL)
       {
 
-         windowing_output_debug_string("\n::GetWindow 9");
+         windowing_output_debug_string("\n::get_window 9");
 
          return NULL;
 
@@ -746,7 +746,7 @@ oswindow GetWindow(oswindow windowParam, int iParentHood)
       if(pchildren == NULL)
       {
 
-         windowing_output_debug_string("\n::GetWindow 10");
+         windowing_output_debug_string("\n::get_window 10");
 
          return NULL;
 
@@ -763,7 +763,7 @@ oswindow GetWindow(oswindow windowParam, int iParentHood)
       if(pchildren == NULL) // ????
       {
 
-         windowing_output_debug_string("\n::GetWindow 11");
+         windowing_output_debug_string("\n::get_window 11");
 
          return NULL;
 
@@ -783,7 +783,7 @@ oswindow GetWindow(oswindow windowParam, int iParentHood)
       if(iFound < 0)
       {
 
-         windowing_output_debug_string("\n::GetWindow 12");
+         windowing_output_debug_string("\n::get_window 12");
 
          return NULL;
 
@@ -795,7 +795,7 @@ oswindow GetWindow(oswindow windowParam, int iParentHood)
          if(iFound + 1 >= ncount)
          {
 
-            windowing_output_debug_string("\n::GetWindow 13");
+            windowing_output_debug_string("\n::get_window 13");
 
             return NULL;
 
@@ -810,7 +810,7 @@ oswindow GetWindow(oswindow windowParam, int iParentHood)
          if(iFound - 1 < 0)
          {
 
-            windowing_output_debug_string("\n::GetWindow 14");
+            windowing_output_debug_string("\n::get_window 14");
 
             return NULL;
 
@@ -827,7 +827,7 @@ oswindow GetWindow(oswindow windowParam, int iParentHood)
    if(pchildren != NULL)
       XFree(pchildren);
 
-   windowing_output_debug_string("\n::GetWindow 15");
+   windowing_output_debug_string("\n::get_window 15");
 
    return window;
 
@@ -835,12 +835,12 @@ oswindow GetWindow(oswindow windowParam, int iParentHood)
 
 
 
-WINBOOL DestroyWindow(oswindow window)
+WINBOOL destroy_window(oswindow window)
 {
 
    //single_lock sl(&user_mutex(), true);
 
-   if(!IsWindow(window) && !window->is_destroying())
+   if(!is_window(window) && !window->is_destroying())
       return FALSE;
 
    Display * pdisplay = window->display();
@@ -849,7 +849,7 @@ WINBOOL DestroyWindow(oswindow window)
 
    oswindow_data * pdata = (oswindow_data *) (void *) window;
 
-   bool bIs = IsWindow(window);
+   bool bIs = is_window(window);
 
    sp(::user::interaction) pui = window->m_pimpl->m_pui;
 
@@ -878,7 +878,7 @@ WINBOOL DestroyWindow(oswindow window)
 }
 
 
-WINBOOL IsWindow(oswindow oswindow)
+WINBOOL is_window(oswindow oswindow)
 {
 
    if(::oswindow_data::s_pdataptra->find_first(oswindow) < 0)

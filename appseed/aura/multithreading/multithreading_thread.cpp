@@ -308,6 +308,7 @@ thread::thread(::aura::application * papp, __THREADPROC pfnThreadProc, LPVOID pP
 
 }
 
+CLASS_DECL_AURA ::thread * get_thread_raw();
 
 void thread::CommonConstruct()
 {

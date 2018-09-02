@@ -3742,14 +3742,7 @@ namespace draw2d_quartz2d
    point graphics::SetViewportOrg(int32_t x, int32_t y)
    {
 
-      return ::draw2d::graphics::SetViewportOrg(point(x, y));
-//      synch_lock sl(m_pmutex);
-//
-//      CGAffineTransform affine = CGContextGetCTM(m_pdc);
-//
-//      CGContextTranslateCTM(m_pdc, x - affine.tx, y - affine.ty);
-//
-//      return point(affine.tx, affine.ty);
+      return ::draw2d::graphics::SetViewportOrg(x, y);
 
    }
 

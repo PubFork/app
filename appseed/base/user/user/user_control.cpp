@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 namespace user
@@ -469,6 +469,8 @@ namespace user
       ev.m_eevent = ::user::event_kill_focus;
 
       on_control_event(&ev);
+      
+      pkillfocus->m_bRet = ev.m_bRet;
 
    }
 

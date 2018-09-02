@@ -9,7 +9,7 @@
 #include "ios_mm.h"
 
 
-//oswindow SetActiveWindow(oswindow window);
+//oswindow set_active_window(oswindow window);
 
 
 
@@ -77,7 +77,7 @@ int GetWkspaceCount()
 //     
 //     */
 //   
-//   SetActiveWindow(window);
+//   set_active_window(window);
 //   
 //   return TRUE;
 //   
@@ -102,7 +102,7 @@ int GetWkspaceCount()
 //     
 //   */
 //   
-//   SetActiveWindow(window);
+//   set_active_window(window);
 //   
 //   return TRUE;
 //   

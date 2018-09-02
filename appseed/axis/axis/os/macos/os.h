@@ -50,13 +50,13 @@ __win_CloseThread(
                   );
 */
 
-oswindow GetCapture();
-oswindow SetCapture(oswindow window);
-WINBOOL ReleaseCapture();
-oswindow SetFocus(oswindow window);
-oswindow GetFocus();
-oswindow GetActiveWindow();
-oswindow SetActiveWindow(oswindow window);
+oswindow get_capture();
+oswindow set_capture(oswindow window);
+WINBOOL release_capture();
+oswindow set_focus(oswindow window);
+oswindow get_focus();
+oswindow get_active_window();
+oswindow set_active_window(oswindow window);
 
 
 int GetMainScreenRect(LPRECT lprect);

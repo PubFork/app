@@ -131,7 +131,7 @@ oswindow_data * oswindow_get(nswindow window);
 bool oswindow_remove(nswindow window);
 
 
-int IsWindow(oswindow oswindow);
+int is_window(oswindow oswindow);
 int IsChild(oswindow oswindowParent, ::oswindow oswindowCandidateChildOrDescendant);
 oswindow GetParent(::oswindow oswindow);
 oswindow SetParent(::oswindow oswindow, ::oswindow oswindowNewParent);

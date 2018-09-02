@@ -267,7 +267,7 @@ namespace ios
 
          //      _throw(todo(get_app()));
 
-         if(!::IsWindow(hWnd))
+         if(!::is_window(hWnd))
             return false;
 
          DWORD dw = hWnd->get_window_long(GWL_STYLE);
@@ -290,7 +290,7 @@ namespace ios
 
          //      _throw(todo(get_app()));
 
-         if(!::IsWindow(hWnd))
+         if(!::is_window(hWnd))
             return false;
 
          DWORD dw = hWnd->get_window_long(GWL_EXSTYLE);
@@ -422,7 +422,7 @@ namespace ios
          ::user::create_struct & cs, LPVOID lpParam)
    {
 
-      if(::IsWindow(get_handle()))
+      if(::is_window(get_handle()))
       {
 
          DestroyWindow();
@@ -586,7 +586,7 @@ namespace ios
 
    bool interaction_impl::create_message_queue(::user::interaction * pui,const char * pszName)
    {
-      if(IsWindow())
+      if(is_window())
       {
 
          set_window_text(pszName);
@@ -745,7 +745,7 @@ namespace ios
        else
        {
        // should be a normal user::interaction
-       ASSERT(::IsWindow(get_handle()));
+       ASSERT(::is_window(get_handle()));
 
        // should also be in the permanent or temporary handle ::collection::map
        single_lock sl(afxMutexHwnd(), TRUE);
@@ -793,7 +793,7 @@ namespace ios
        return;
        }*/
 
-      /*      if (!::IsWindow(get_handle()))
+      /*      if (!::is_window(get_handle()))
        {
        // not a valid user::interaction
        dumpcontext << " (illegal oswindow)";
@@ -964,38 +964,38 @@ namespace ios
 
    /*   bool interaction_impl::GetWindowInfo(PWINDOWINFO pwi) const
     {
-    ASSERT(::IsWindow((oswindow)get_handle()));
+    ASSERT(::is_window((oswindow)get_handle()));
     return ::GetWindowInfo((oswindow)get_handle(), pwi) != FALSE;
     }*/
 
    /*   ::user::interaction * interaction_impl::GetAncestor(UINT gaFlags) const
-    { ASSERT(::IsWindow((oswindow)get_handle())); return  ::macos::interaction_impl::from_handle(::GetAncestor((oswindow)get_handle(), gaFlags)); }
+    { ASSERT(::is_window((oswindow)get_handle())); return  ::macos::interaction_impl::from_handle(::GetAncestor((oswindow)get_handle(), gaFlags)); }
 
     */
 
    /*   bool interaction_impl::GetScrollBarInfo(LONG idObject, PSCROLLBARINFO psbi) const
     {
-    ASSERT(::IsWindow((oswindow)get_handle()));
+    ASSERT(::is_window((oswindow)get_handle()));
     ASSERT(psbi != NULL);
     return ::GetScrollBarInfo((oswindow)get_handle(), idObject, psbi) != FALSE;
     }
     */
    /*   bool interaction_impl::GetTitleBarInfo(PTITLEBARINFO pti) const
     {
-    ASSERT(::IsWindow((oswindow)get_handle()));
+    ASSERT(::is_window((oswindow)get_handle()));
     ASSERT(pti != NULL);
     return ::GetTitleBarInfo((oswindow)get_handle(), pti) != FALSE;
     }
     */
    /*   bool interaction_impl::AnimateWindow(DWORD dwTime, DWORD dwFlags)
     {
-    ASSERT(::IsWindow((oswindow)get_handle()));
+    ASSERT(::is_window((oswindow)get_handle()));
     return ::AnimateWindow((oswindow)get_handle(), dwTime, dwFlags) != FALSE;
     }
 
     bool interaction_impl::FlashWindowEx(DWORD dwFlags, UINT  uCount, DWORD dwTimeout)
     {
-    ASSERT(::IsWindow((oswindow)get_handle()));
+    ASSERT(::is_window((oswindow)get_handle()));
     FLASHWINFO fwi;
     fwi.cbSize = sizeof(fwi);
     fwi.hwnd = (oswindow)get_handle();
@@ -1010,14 +1010,14 @@ namespace ios
    /*
     bool interaction_impl::SetLayeredWindowAttributes(COLORREF crKey, BYTE bAlpha, DWORD dwFlags)
     {
-    ASSERT(::IsWindow((oswindow)get_handle()));
+    ASSERT(::is_window((oswindow)get_handle()));
     return ::SetLayeredWindowAttributes((oswindow)get_handle(), crKey, bAlpha, dwFlags) != FALSE;
     }
 
     bool interaction_impl::UpdateLayeredWindow(::draw2d::graphics * pDCDst, POINT *pptDst, SIZE *psize,
     ::draw2d::graphics * pDCSrc, POINT *pptSrc, COLORREF crKey, BLENDFUNCTION *pblend, DWORD dwFlags)
     {
-    ASSERT(::IsWindow((oswindow)get_handle()));
+    ASSERT(::is_window((oswindow)get_handle()));
     return ::UpdateLayeredWindow((oswindow)get_handle(), WIN_HDC(pDCDst), pptDst, psize,
     WIN_HDC(pDCSrc), pptSrc, crKey, pblend, dwFlags) != FALSE;
     }
@@ -1026,13 +1026,13 @@ namespace ios
    /*
     bool interaction_impl::GetLayeredWindowAttributes(COLORREF *pcrKey, BYTE *pbAlpha, DWORD *pdwFlags) const
     {
-    ASSERT(::IsWindow((oswindow)get_handle()));
+    ASSERT(::is_window((oswindow)get_handle()));
     return ::GetLayeredWindowAttributes((oswindow)get_handle(), pcrKey, pbAlpha, pdwFlags) != FALSE;
     }
 
     bool interaction_impl::PrintWindow(::draw2d::graphics * pgraphics, UINT nFlags) const
     {
-    ASSERT(::IsWindow((oswindow)get_handle()));
+    ASSERT(::is_window((oswindow)get_handle()));
     return ::PrintWindow((oswindow)get_handle(), (HDC)(dynamic_cast<::draw2d_quartz2d::graphics * >(pgraphics))->get_handle(), nFlags) != FALSE;
     }
 
@@ -1336,7 +1336,7 @@ namespace ios
 
          ::user::interaction * puiFocus = dynamic_cast < ::user::interaction * > (Session.get_keyboard_focus());
          if(puiFocus != NULL
-               && puiFocus->IsWindow()
+               && puiFocus->is_window()
                && puiFocus->GetTopLevel() != NULL)
          {
             puiFocus->send(pkey);
@@ -1415,7 +1415,7 @@ namespace ios
        else
        {
        // control notification
-       ASSERT(nID == 0 || ::IsWindow(hWndCtrl));
+       ASSERT(nID == 0 || ::is_window(hWndCtrl));
 
        if (gen_ThreadState->m_hLockoutNotifyWindow == get_handle())
        return TRUE;        // locked out - ignore control notification
@@ -1450,7 +1450,7 @@ namespace ios
        //      int32_t nCode = pNMHDR->code;
 
        ASSERT(hWndCtrl != NULL);
-       ASSERT(::IsWindow(hWndCtrl));
+       ASSERT(::is_window(hWndCtrl));
 
        if (gen_ThreadState->m_hLockoutNotifyWindow == get_handle())
        return true;        // locked out - ignore control notification
@@ -1802,7 +1802,7 @@ namespace ios
    void interaction_impl::ScrollWindow(int32_t xAmount, int32_t yAmount,
                                        LPCRECT lpRect, LPCRECT lpClipRect)
    {
-      /*      ASSERT(::IsWindow(get_handle()));
+      /*      ASSERT(::is_window(get_handle()));
 
        if (IsWindowVisible() || lpRect != NULL || lpClipRect != NULL)
        {
@@ -2150,9 +2150,9 @@ namespace ios
        pParent->send_message(WM_SYSCOMMAND, nID, lparam);
 
        // be very careful here...
-       if (::IsWindow(hWndSave))
+       if (::is_window(hWndSave))
        ::SetActiveWindow(hWndSave);
-       if (::IsWindow(hWndFocus))
+       if (::is_window(hWndFocus))
        ::SetFocus(hWndFocus);
        }
        }
@@ -2164,7 +2164,7 @@ namespace ios
 
    void interaction_impl::WalkPreTranslateTree(::user::interaction *  puiStop, ::message::message * pobj)
    {
-      ASSERT(puiStop == NULL || puiStop->IsWindow());
+      ASSERT(puiStop == NULL || puiStop->is_window());
       ASSERT(pobj != NULL);
 
       SCAST_PTR(::message::base, pbase, pobj);
@@ -3084,7 +3084,7 @@ namespace ios
       //   bool interaction_impl::SubclassDlgItem(UINT nID, ::user::interaction * pParent)
       //   {
       //      ASSERT(pParent != NULL);
-      //      ASSERT(::IsWindow(IOS_WINDOW(pParent)->get_handle()));
+      //      ASSERT(::is_window(IOS_WINDOW(pParent)->get_handle()));
       //
       //      // check for normal dialog control first
       //      oswindow hWndControl = ::GetDlgItem(IOS_WINDOW(pParent)->get_handle(), nID);
@@ -3097,7 +3097,7 @@ namespace ios
 
    oswindow interaction_impl::UnsubclassWindow()
    {
-      ASSERT(::IsWindow(get_handle()));
+      ASSERT(::is_window(get_handle()));
 
       _throw(not_implemented(get_app()));
       //      // set WNDPROC back to original value
@@ -3120,7 +3120,7 @@ namespace ios
 
    bool interaction_impl::IsChild(::user::interaction *  pWnd)
    {
-      ASSERT(::IsWindow(get_handle()));
+      ASSERT(::is_window(get_handle()));
       if(get_handle() == NULL)
       {
          return ::user::interaction_impl::IsChild(pWnd);
@@ -3132,9 +3132,9 @@ namespace ios
       }
    }
 
-   bool interaction_impl::IsWindow() const
+   bool interaction_impl::is_window() const
    {
-      return ::IsWindow(m_oswindow) != FALSE;
+      return ::is_window(m_oswindow) != FALSE;
    }
 
 
@@ -3149,7 +3149,7 @@ namespace ios
    void interaction_impl::MoveWindow(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, bool bRepaint)
    {
 
-      ASSERT(::IsWindow(get_handle()));
+      ASSERT(::is_window(get_handle()));
 
       SetWindowPos(0, x, y, nWidth, nHeight, bRepaint ? SWP_SHOWWINDOW : 0);
 
@@ -3326,9 +3326,9 @@ namespace ios
 
    bool interaction_impl::GetWindowRect(RECT64 * lprect)
    {
-      //      if(!::IsWindow(get_handle()))
+      //      if(!::is_window(get_handle()))
       //       _throw(simple_exception(get_app(), "no more a user::interaction"));
-      if(!::IsWindow(get_handle()))
+      if(!::is_window(get_handle()))
       {
 
          return false;
@@ -3373,10 +3373,10 @@ namespace ios
    bool interaction_impl::GetClientRect(RECT64 * lprect)
    {
 
-      if(!::IsWindow(get_handle()))
+      if(!::is_window(get_handle()))
          return false;
 
-//      ASSERT(::IsWindow(get_handle()));
+//      ASSERT(::is_window(get_handle()));
 
       rect rect32;
 
@@ -3445,7 +3445,7 @@ namespace ios
    bool interaction_impl::ShowWindow(int32_t nCmdShow)
    {
 
-      if(!::IsWindow(get_handle()))
+      if(!::is_window(get_handle()))
       {
 
          return false;
@@ -3472,7 +3472,7 @@ namespace ios
 
    bool interaction_impl::WfiIsIconic()
    {
-      ASSERT(::IsWindow(get_handle()));
+      ASSERT(::is_window(get_handle()));
       if(GetExStyle() & WS_EX_LAYERED)
       {
          return m_pui->m_eappearance == user::appearance_iconic;
@@ -3485,7 +3485,7 @@ namespace ios
 
    bool interaction_impl::WfiIsZoomed()
    {
-      ASSERT(::IsWindow(get_handle()));
+      ASSERT(::is_window(get_handle()));
       return m_pui->m_eappearance == user::appearance_zoomed;
    }
 
@@ -3493,7 +3493,7 @@ namespace ios
    ::user::interaction * interaction_impl::GetParent() const
    {
       return NULL;
-      //      if(!::IsWindow(get_handle()))
+      //      if(!::is_window(get_handle()))
       //       return NULL;
       //  if(get_handle() == NULL)
       //   return NULL;
@@ -3522,25 +3522,25 @@ namespace ios
 
       DWORD interaction_impl::GetStyle() const
       {
-         ASSERT(::IsWindow(get_handle()));
+         ASSERT(::is_window(get_handle()));
          return (DWORD)::GetWindowLong(get_handle(), GWL_STYLE);
       }
 
       DWORD interaction_impl::GetExStyle() const
       {
-         ASSERT(::IsWindow(get_handle()));
+         ASSERT(::is_window(get_handle()));
          return (DWORD)::GetWindowLong(get_handle(), GWL_EXSTYLE);
       }
 
       bool interaction_impl::ModifyStyle(DWORD dwRemove, DWORD dwAdd, UINT nFlags)
       {
-         ASSERT(::IsWindow(get_handle()));
+         ASSERT(::is_window(get_handle()));
          return ModifyStyle(get_handle(), dwRemove, dwAdd, nFlags);
       }
 
       bool interaction_impl::ModifyStyleEx(DWORD dwRemove, DWORD dwAdd, UINT nFlags)
       {
-         ASSERT(::IsWindow(get_handle()));
+         ASSERT(::is_window(get_handle()));
          return ModifyStyleEx(get_handle(), dwRemove, dwAdd, nFlags);
       }
    */
@@ -3593,7 +3593,7 @@ namespace ios
 
       //_throw(todo(get_app()));
 
-      ////ASSERT(::IsWindow(get_handle()));
+      ////ASSERT(::is_window(get_handle()));
       //return ::SendMessage(get_handle(), message, wParam, lParam);
    }
 
@@ -3613,7 +3613,7 @@ namespace ios
    {
 
       _throw(not_implemented(get_app()));
-      //ASSERT(::IsWindow(get_handle()));
+      //ASSERT(::is_window(get_handle()));
 
       //return ::DragDetect(get_handle(), pt) != FALSE;
 
@@ -3653,12 +3653,12 @@ namespace ios
     void interaction_impl::SetFont(::draw2d::font* pfont, bool bRedraw)
     {
     UNREFERENCED_PARAMETER(bRedraw);
-    ASSERT(::IsWindow(get_handle())); m_pfont = new ::draw2d::font(*pfont);
+    ASSERT(::is_window(get_handle())); m_pfont = new ::draw2d::font(*pfont);
     }
 
     ::draw2d::font* interaction_impl::GetFont()
     {
-    ASSERT(::IsWindow(get_handle()));
+    ASSERT(::is_window(get_handle()));
     return m_pfont;
     }
 
@@ -3669,7 +3669,7 @@ namespace ios
 
       _throw(not_implemented(get_app()));
 
-      //ASSERT(::IsWindow(get_handle()));
+      //ASSERT(::is_window(get_handle()));
       //::DragAcceptFiles(get_handle(), bAccept);
 
    }
@@ -3706,19 +3706,19 @@ namespace ios
    UINT interaction_impl::ArrangeIconicWindows()
    {
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow(get_handle())); return ::ArrangeIconicWindows(get_handle());
+      //      ASSERT(::is_window(get_handle())); return ::ArrangeIconicWindows(get_handle());
    }
 
    int32_t interaction_impl::SetWindowRgn(HRGN hRgn, bool bRedraw)
    {
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow(get_handle())); return ::SetWindowRgn(get_handle(), hRgn, bRedraw);
+      //      ASSERT(::is_window(get_handle())); return ::SetWindowRgn(get_handle(), hRgn, bRedraw);
    }
 
    int32_t interaction_impl::GetWindowRgn(HRGN hRgn)
    {
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow(get_handle()) && hRgn != NULL); return ::GetWindowRgn(get_handle(), hRgn);
+      //      ASSERT(::is_window(get_handle()) && hRgn != NULL); return ::GetWindowRgn(get_handle(), hRgn);
    }
 
 
@@ -3750,14 +3750,14 @@ namespace ios
    void interaction_impl::MapWindowPoints(::user::interaction * pwndTo, LPPOINT lpPoint, UINT nCount)
    {
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow(get_handle()));
+      //      ASSERT(::is_window(get_handle()));
       //      ::MapWindowPoints(get_handle(), (oswindow) pwndTo->get_handle(), lpPoint, nCount);
    }
 
    void interaction_impl::MapWindowPoints(::user::interaction * pwndTo, LPRECT lpRect)
    {
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow(get_handle()));
+      //      ASSERT(::is_window(get_handle()));
       //      ::MapWindowPoints(get_handle(), (oswindow) pwndTo->get_handle(), (LPPOINT)lpRect, 2);
    }
 
@@ -3786,7 +3786,7 @@ namespace ios
 
    ::draw2d::graphics * interaction_impl::GetWindowDC()
    {
-      //ASSERT(::IsWindow(get_handle()));
+      //ASSERT(::is_window(get_handle()));
       //::draw2d::graphics_sp g(allocer());
       //g->attach(::GetWindowDC(get_handle()));
       //return g.detach();
@@ -3831,21 +3831,21 @@ namespace ios
    void interaction_impl::SetRedraw(bool bRedraw)
    {
       _throw(not_implemented(get_app()));
-      //ASSERT(::IsWindow(get_handle()));
+      //ASSERT(::is_window(get_handle()));
       //::SendMessage(get_handle(), WM_SETREDRAW, bRedraw, 0);
    }
 
    bool interaction_impl::GetUpdateRect(LPRECT lpRect, bool bErase)
    {
       _throw(not_implemented(get_app()));
-      //ASSERT(::IsWindow(get_handle()));
+      //ASSERT(::is_window(get_handle()));
       //return ::GetUpdateRect(get_handle(), lpRect, bErase) != FALSE;
    }
 
    int32_t interaction_impl::GetUpdateRgn(::draw2d::region* pRgn, bool bErase)
    {
       _throw(not_implemented(get_app()));
-      //ASSERT(::IsWindow(get_handle()));
+      //ASSERT(::is_window(get_handle()));
       //return ::GetUpdateRgn(get_handle(), (HRGN)pRgn->get_handle(), bErase);
    }
 
@@ -3854,42 +3854,42 @@ namespace ios
       m_bNeedsUpdate = true;
       //      round_window_invalidate();
       //      _throw(not_implemented(get_app()));
-      //ASSERT(::IsWindow(get_handle()));
+      //ASSERT(::is_window(get_handle()));
       //::InvalidateRect(get_handle(), NULL, bErase);
    }
 
    void interaction_impl::InvalidateRect(LPCRECT lpRect, bool bErase)
    {
       _throw(not_implemented(get_app()));
-      //ASSERT(::IsWindow(get_handle()));
+      //ASSERT(::is_window(get_handle()));
       //::InvalidateRect(get_handle(), lpRect, bErase);
    }
 
    void interaction_impl::InvalidateRgn(::draw2d::region* pRgn, bool bErase)
    {
       _throw(not_implemented(get_app()));
-      //ASSERT(::IsWindow(get_handle()));
+      //ASSERT(::is_window(get_handle()));
       //::InvalidateRgn(get_handle(), (HRGN)pRgn->get_handle(), bErase);
    }
 
    void interaction_impl::ValidateRect(LPCRECT lpRect)
    {
       _throw(not_implemented(get_app()));
-      //ASSERT(::IsWindow(get_handle()));
+      //ASSERT(::is_window(get_handle()));
       //::ValidateRect(get_handle(), lpRect);
    }
 
    void interaction_impl::ValidateRgn(::draw2d::region* pRgn)
    {
       _throw(not_implemented(get_app()));
-      //ASSERT(::IsWindow(get_handle()));
+      //ASSERT(::is_window(get_handle()));
       //::ValidateRgn(get_handle(), (HRGN)pRgn->get_handle());
    }
 
    bool interaction_impl::IsWindowVisible()
    {
 
-      if(!::IsWindow(get_handle()))
+      if(!::is_window(get_handle()))
          return false;
 
       if(m_pui != NULL)
@@ -3915,14 +3915,14 @@ namespace ios
    {
 
       _throw(not_implemented(get_app()));
-      //ASSERT(::IsWindow(get_handle()));
+      //ASSERT(::is_window(get_handle()));
       //::ShowOwnedPopups(get_handle(), bShow);
 
    }
 
    void interaction_impl::send_message_to_descendants(UINT message, WPARAM wparam, lparam lparam, bool bDeep, bool bOnlyPerm)
    {
-      ASSERT(::IsWindow(get_handle()));
+      ASSERT(::is_window(get_handle()));
       //interaction_impl::send_message_to_descendants(get_handle(), message, wparam, lparam, bDeep, bOnlyPerm);
 
       // walk through oswindows to avoid creating temporary user::interaction objects
@@ -3961,7 +3961,7 @@ namespace ios
 
    ::user::interaction *  interaction_impl::GetDescendantWindow(id id)
    {
-      //      ASSERT(::IsWindow(get_handle()));
+      //      ASSERT(::is_window(get_handle()));
       //    return interaction_impl::GetDescendantWindow(this, id);
 
       single_lock sl(m_papp->m_pmutex, TRUE);
@@ -3984,7 +3984,7 @@ namespace ios
    {
 
       _throw(not_implemented(get_app()));
-      //ASSERT(::IsWindow(get_handle()));
+      //ASSERT(::is_window(get_handle()));
       //::draw2d::graphics_sp g(get_app());
       //g->attach(::GetDCEx(get_handle(), (HRGN)prgnClip->get_handle(), flags));
       //return g.detach();
@@ -3995,7 +3995,7 @@ namespace ios
    {
 
       _throw(not_implemented(get_app()));
-      //ASSERT(::IsWindow(get_handle()));
+      //ASSERT(::is_window(get_handle()));
       //return ::LockWindowUpdate(get_handle()) != FALSE;
 
    }
@@ -4004,7 +4004,7 @@ namespace ios
    {
 
       _throw(not_implemented(get_app()));
-      //ASSERT(::IsWindow(get_handle()));
+      //ASSERT(::is_window(get_handle()));
       //::LockWindowUpdate(NULL);
 
    }
@@ -4087,7 +4087,7 @@ namespace ios
     bool interaction_impl::EnableScrollBar(int32_t nSBFlags, UINT nArrowFlags)
     {
 
-    ASSERT(::IsWindow(get_handle()));
+    ASSERT(::is_window(get_handle()));
 
     return ::EnableScrollBar(get_handle(), nSBFlags, nArrowFlags) != FALSE;
 
@@ -4098,7 +4098,7 @@ namespace ios
    {
 
       _throw(not_implemented(get_app()));
-      //ASSERT(::IsWindow(get_handle()));
+      //ASSERT(::is_window(get_handle()));
       //return ::DrawAnimatedRects(get_handle(), idAni, lprcFrom, lprcTo) != FALSE;
 
    }
@@ -4107,7 +4107,7 @@ namespace ios
    {
 
       _throw(not_implemented(get_app()));
-      //ASSERT(::IsWindow(get_handle()));
+      //ASSERT(::is_window(get_handle()));
       //return ::DrawCaption(get_handle(), (HDC)(dynamic_cast<::draw2d_quartz2d::graphics * >(pgraphics))->get_handle(), lprc, uFlags) != FALSE;
 
    }
@@ -4123,7 +4123,7 @@ namespace ios
        return nIDEvent;
 
        //_throw(not_implemented(get_app()));
-       //ASSERT(::IsWindow(get_handle()));
+       //ASSERT(::is_window(get_handle()));
        //return ::SetTimer(get_handle(), nIDEvent, nElapse, lpfnTimer);
        //return true;*/
 
@@ -4135,7 +4135,7 @@ namespace ios
 
       /*
        //_throw(not_implemented(get_app()));
-       //ASSERT(::IsWindow(get_handle()));
+       //ASSERT(::is_window(get_handle()));
        //return ::KillTimer(get_handle(), nIDEvent)  != FALSE;
 
        m_pui->m_papp->unset_timer(m_pui, nIDEvent);
@@ -4150,7 +4150,7 @@ namespace ios
 
       return true;
 
-      /*      if(!::IsWindow(get_handle()))
+      /*      if(!::is_window(get_handle()))
        return false;
 
        return ::IsWindowEnabled(get_handle()) != FALSE;
@@ -4162,7 +4162,7 @@ namespace ios
    bool interaction_impl::EnableWindow(bool bEnable)
    {
 
-      /*      ASSERT(::IsWindow(get_handle()));
+      /*      ASSERT(::is_window(get_handle()));
 
        return ::EnableWindow(get_handle(), bEnable) != FALSE;
        */
@@ -4199,7 +4199,7 @@ namespace ios
    ::user::interaction *  interaction_impl::SetActiveWindow()
    {
 
-      ASSERT(::IsWindow(get_handle()));
+      ASSERT(::is_window(get_handle()));
 
       oswindow oswindow = ::SetActiveWindow(get_handle());
 
@@ -4256,7 +4256,7 @@ namespace ios
    bool interaction_impl::SetFocus()
    {
 
-      if(!::IsWindow(get_handle()))
+      if(!::is_window(get_handle()))
          return NULL;
 
       oswindow oswindow = ::SetFocus(get_handle());
@@ -4306,7 +4306,7 @@ namespace ios
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow(get_handle()));
+      //      ASSERT(::is_window(get_handle()));
       //      ::CheckDlgButton(get_handle(), nIDButton, nCheck);
 
    }
@@ -4315,7 +4315,7 @@ namespace ios
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow(get_handle()));
+      //      ASSERT(::is_window(get_handle()));
       //      ::CheckRadioButton(get_handle(), nIDFirstButton, nIDLastButton, nIDCheckButton);
 
    }
@@ -4324,7 +4324,7 @@ namespace ios
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow(get_handle()));
+      //      ASSERT(::is_window(get_handle()));
       //      return ::DlgDirList(get_handle(), lpPathSpec, nIDListBox, nIDStaticPath, nFileType);
 
    }
@@ -4333,7 +4333,7 @@ namespace ios
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow(get_handle()));
+      //      ASSERT(::is_window(get_handle()));
       //      return ::DlgDirListComboBox(get_handle(), lpPathSpec, nIDComboBox, nIDStaticPath, nFileType);
 
    }
@@ -4342,7 +4342,7 @@ namespace ios
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow(get_handle()));
+      //      ASSERT(::is_window(get_handle()));
       //      return ::DlgDirSelectEx(get_handle(), lpString, nSize, nIDListBox) != FALSE;
 
    }
@@ -4351,7 +4351,7 @@ namespace ios
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow(get_handle()));
+      //      ASSERT(::is_window(get_handle()));
       //      return ::DlgDirSelectComboBoxEx(get_handle(), lpString, nSize, nIDComboBox) != FALSE;
 
    }
@@ -4360,7 +4360,7 @@ namespace ios
     void interaction_impl::GetDlgItem(id id, oswindow* phWnd) const
     {
 
-    ASSERT(::IsWindow(get_handle()));
+    ASSERT(::is_window(get_handle()));
     ASSERT(phWnd != NULL);
     *phWnd = ::GetDlgItem(get_handle(), (int32_t) id);
 
@@ -4371,7 +4371,7 @@ namespace ios
     UINT interaction_impl::GetDlgItemInt(int32_t nID, WINBOOL * lpTrans, bool bSigned) const
     {
 
-    ASSERT(::IsWindow(get_handle()));
+    ASSERT(::is_window(get_handle()));
 
     return ::GetDlgItemInt(get_handle(), nID, lpTrans, bSigned);
 
@@ -4382,13 +4382,13 @@ namespace ios
    //   {
    //
    //      _throw(not_implemented(get_app()));
-   //      ASSERT(::IsWindow(get_handle())); return ::GetDlgItemText(get_handle(), nID, lpStr, nMaxCount);}
+   //      ASSERT(::is_window(get_handle())); return ::GetDlgItemText(get_handle(), nID, lpStr, nMaxCount);}
 
    ::user::interaction * interaction_impl::GetNextDlgGroupItem(::user::interaction * pWndCtl, bool bPrevious) const
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow(get_handle()));
+      //      ASSERT(::is_window(get_handle()));
       //      return ::macos::interaction_impl::from_handle(::GetNextDlgGroupItem(get_handle(), (oswindow) pWndCtl->get_handle(), bPrevious));
 
    }
@@ -4397,7 +4397,7 @@ namespace ios
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow(get_handle()));
+      //      ASSERT(::is_window(get_handle()));
       //      return ::macos::interaction_impl::from_handle(::GetNextDlgTabItem(get_handle(), (oswindow) pWndCtl->get_handle(), bPrevious));
 
    }
@@ -4406,7 +4406,7 @@ namespace ios
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow(get_handle()));
+      //      ASSERT(::is_window(get_handle()));
       //      return ::IsDlgButtonChecked(get_handle(), nIDButton);
 
    }
@@ -4415,7 +4415,7 @@ namespace ios
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow(get_handle()));
+      //      ASSERT(::is_window(get_handle()));
       //      return ::SendDlgItemMessage(get_handle(), nID, message, wparam, lparam);
 
    }
@@ -4424,7 +4424,7 @@ namespace ios
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow(get_handle()));
+      //      ASSERT(::is_window(get_handle()));
       //      ::SetDlgItemInt(get_handle(), nID, nValue, bSigned);
 
    }
@@ -4433,7 +4433,7 @@ namespace ios
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow(get_handle()));
+      //      ASSERT(::is_window(get_handle()));
       //      ::SetDlgItemText(get_handle(), nID, lpszString);
 
    }
@@ -4442,7 +4442,7 @@ namespace ios
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow(get_handle()));
+      //      ASSERT(::is_window(get_handle()));
       //      return ::ScrollWindowEx(get_handle(), dx, dy, lpRectScroll, lpRectClip, (HRGN)prgnUpdate->get_handle(), lpRectUpdate, flags);
 
    }
@@ -4451,7 +4451,7 @@ namespace ios
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow(get_handle()));
+      //      ASSERT(::is_window(get_handle()));
       //      ::ShowScrollBar(get_handle(), nBar, bShow);
 
    }
@@ -4461,7 +4461,7 @@ namespace ios
 
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow(get_handle()));
+      //      ASSERT(::is_window(get_handle()));
       //      return ::macos::interaction_impl::from_handle(::ChildWindowFromPoint(get_handle(), point));
 
    }
@@ -4470,7 +4470,7 @@ namespace ios
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow(get_handle()));
+      //      ASSERT(::is_window(get_handle()));
       //      return ::macos::interaction_impl::from_handle(::ChildWindowFromPointEx(get_handle(), point, nFlags));
 
    }
@@ -4512,7 +4512,7 @@ namespace ios
    ::user::interaction *  interaction_impl::GetWindow(UINT nCmd)
    {
 
-      ASSERT(::IsWindow(get_handle()));
+      ASSERT(::is_window(get_handle()));
       //      return ::macos::interaction_impl::from_handle(::GetWindow(get_handle(), nCmd));
       return NULL;
 
@@ -4523,7 +4523,7 @@ namespace ios
 
 
       _throw(todo(get_app()));
-      //      ASSERT(::IsWindow(get_handle()));
+      //      ASSERT(::is_window(get_handle()));
       //      return ::macos::interaction_impl::from_handle(::GetLastActivePopup(get_handle()));
 
    }
@@ -4531,7 +4531,7 @@ namespace ios
    ::user::interaction * interaction_impl::SetParent(::user::interaction * pWndNewParent)
    {
 
-      ASSERT(::IsWindow(get_handle()));
+      ASSERT(::is_window(get_handle()));
       return from_handle(::SetParent(get_handle(), (oswindow) pWndNewParent->get_handle()))->m_pui;
 
    }
@@ -4550,7 +4550,7 @@ namespace ios
 
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow(get_handle()));
+      //      ASSERT(::is_window(get_handle()));
       //      return ::FlashWindow(get_handle(), bInvert) != FALSE;
 
    }
@@ -4559,7 +4559,7 @@ namespace ios
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow(get_handle()));
+      //      ASSERT(::is_window(get_handle()));
       //      return ::ChangeClipboardChain(get_handle(), hWndNext) != FALSE;
 
    }
@@ -4568,7 +4568,7 @@ namespace ios
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow(get_handle()));
+      //      ASSERT(::is_window(get_handle()));
       //      return ::SetClipboardViewer(get_handle());
 
    }
@@ -4577,7 +4577,7 @@ namespace ios
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow(get_handle()));
+      //      ASSERT(::is_window(get_handle()));
       //      return ::OpenClipboard(get_handle()) != FALSE;
 
    }
@@ -4610,7 +4610,7 @@ namespace ios
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow(get_handle()));
+      //      ASSERT(::is_window(get_handle()));
       //      ::CreateCaret(get_handle(), (HBITMAP)pBitmap->get_handle(), 0, 0);
 
    }
@@ -4619,7 +4619,7 @@ namespace ios
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow(get_handle()));
+      //      ASSERT(::is_window(get_handle()));
       //      ::CreateCaret(get_handle(), (HBITMAP)0, nWidth, nHeight);
 
    }
@@ -4628,7 +4628,7 @@ namespace ios
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow(get_handle()));
+      //      ASSERT(::is_window(get_handle()));
       //      ::CreateCaret(get_handle(), (HBITMAP)1, nWidth, nHeight);
 
    }
@@ -4698,7 +4698,7 @@ namespace ios
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow(get_handle()));
+      //      ASSERT(::is_window(get_handle()));
       //      const_cast < user::interaction * > (this)->send_message(WM_PRINT, (WPARAM)(dynamic_cast<::draw2d_quartz2d::graphics * >(pgraphics))->get_handle(), dwFlags);
 
    }
@@ -4707,7 +4707,7 @@ namespace ios
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow(get_handle()));
+      //      ASSERT(::is_window(get_handle()));
       //      const_cast < user::interaction * > (this)->send_message(WM_PRINTCLIENT, (WPARAM)(dynamic_cast<::draw2d_quartz2d::graphics * >(pgraphics))->get_handle(), dwFlags);
 
    }
@@ -4716,7 +4716,7 @@ namespace ios
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow(get_handle()));
+      //      ASSERT(::is_window(get_handle()));
       //      return ::SetWindowContextHelpId(get_handle(), dwContextHelpId) != FALSE;
 
    }
@@ -4725,7 +4725,7 @@ namespace ios
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow(get_handle()));
+      //      ASSERT(::is_window(get_handle()));
       //      return ::GetWindowContextHelpId(get_handle());
 
    }
@@ -5048,7 +5048,7 @@ namespace ios
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow(get_handle()));
+      //      ASSERT(::is_window(get_handle()));
       //      ::CloseWindow(get_handle());
 
    }
@@ -5057,7 +5057,7 @@ namespace ios
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow(get_handle()));
+      //      ASSERT(::is_window(get_handle()));
       //      return ::OpenIcon(get_handle()) != FALSE;
 
    }
@@ -5737,7 +5737,7 @@ namespace ios
    void interaction_impl::round_window_deactivate()
    {
 
-      ::DeactivateWindow(get_handle());
+      ::deactivate_window(get_handle());
 
       m_pui->set_need_redraw();
 

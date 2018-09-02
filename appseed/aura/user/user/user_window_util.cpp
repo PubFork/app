@@ -1,4 +1,4 @@
-﻿#include "framework.h" // from "base/user/user.h"
+#include "framework.h" // from "base/user/user.h"
 //#include "base/user/user.h"
 
 #ifdef APPLEIOS
@@ -750,7 +750,7 @@ namespace user
 
       ::oswindow oswindowOrder = NULL;
 
-      if (!::IsWindow(oswindow))
+      if (!::is_window(oswindow))
          return 0x7fffffff;
 
       if (::GetParent(oswindow) == MESSAGE_WINDOW_PARENT)
@@ -759,7 +759,7 @@ namespace user
       try
       {
 
-         oswindowOrder = ::GetWindow(oswindow, GW_HWNDFIRST);
+         oswindowOrder = ::get_window(oswindow, GW_HWNDFIRST);
 
       }
       catch (...)
@@ -771,13 +771,13 @@ namespace user
 
       int32_t iOrder = 0;
 
-      while (oswindowOrder != NULL && ::IsWindow(oswindowOrder))
+      while (oswindowOrder != NULL && ::is_window(oswindowOrder))
       {
 
          if (oswindow == oswindowOrder)
             return iOrder;
 
-         oswindowOrder = ::GetWindow(oswindowOrder, GW_HWNDNEXT);
+         oswindowOrder = ::get_window(oswindowOrder, GW_HWNDNEXT);
 
          iOrder++;
 

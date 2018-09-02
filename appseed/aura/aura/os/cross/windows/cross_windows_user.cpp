@@ -537,5 +537,5 @@ WINBOOL WINAPI IsWindowVisible(::oswindow oswindow)
 
 #endif
 
-CLASS_DECL_AURA WINBOOL IsWindow(oswindow oswindow);
+CLASS_DECL_AURA WINBOOL is_window(oswindow oswindow);
 

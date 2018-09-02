@@ -136,9 +136,9 @@ oswindow_data * oswindow_get(nswindow window);
 bool oswindow_remove(nswindow window);
 
 
-inline int IsWindow(oswindow window)
+inline int is_window(oswindow window)
 {
-   return window->get_user_interaction() != NULL;
+   return (window == NULL) ? FALSE : (window->get_user_interaction() != NULL);
 }
 
 //inline int IsChild(oswindow oswindowParent, ::oswindow oswindowCandidateChildOrDescendant)
@@ -152,7 +152,7 @@ inline int IsWindow(oswindow window)
 //}
 
 
-oswindow GetWindow(oswindow window, int iParentHood);
+oswindow get_window(oswindow window, int iParentHood);
 
 //inline oswindow SetParent(::oswindow window, ::oswindow oswindowNewParent)
 //{
@@ -213,17 +213,17 @@ int GetWkspaceCount();
 //#define HWND_MESSAGE ((::oswindow_data *) (int_ptr) 1)
 
 
-WINBOOL DestroyWindow(oswindow w);
+WINBOOL destroy_window(oswindow w);
 
 
-oswindow GetCapture();
-oswindow SetCapture(oswindow window);
-WINBOOL ReleaseCapture();
-oswindow SetFocus(oswindow window);
-oswindow GetFocus();
-oswindow GetActiveWindow();
-oswindow SetActiveWindow(oswindow window);
-WINBOOL EnableWindow(oswindow hwnd, WINBOOL bEnable);
+oswindow get_capture();
+oswindow set_capture(oswindow window);
+WINBOOL release_capture();
+oswindow set_focus(oswindow window);
+oswindow get_focus();
+oswindow get_active_window();
+oswindow set_active_window(oswindow window);
+WINBOOL enable_window(oswindow hwnd, WINBOOL bEnable);
 
 //void GetMainScreenRect(LPRECT lprect);
 

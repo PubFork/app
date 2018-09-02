@@ -22,7 +22,7 @@
 }
 
 
-oswindow GetWindow(oswindow window, int iParentHood)
+oswindow get_window(oswindow window, int iParentHood)
 {
    
    return NULL;
@@ -352,7 +352,7 @@ oswindow GetFocus();
 oswindow SetFocus(oswindow window)
 {
    
-   if(!IsWindow(window))
+   if(!is_window(window))
       return NULL;
    
    oswindow windowOld = ::GetFocus();
@@ -399,7 +399,7 @@ oswindow GetActiveWindow()
 }
 
 
-void DeactivateWindow(oswindow window)
+void deactivate_window(oswindow window)
 {
    
    synch_lock sl(g_poswindowdataptra->m_pmutex);
@@ -411,12 +411,12 @@ void DeactivateWindow(oswindow window)
       
    }
    
-   SetActiveWindow(NULL);
+   set_active_window(NULL);
    
 }
 
 
-oswindow SetActiveWindow(oswindow window)
+oswindow set_active_window(oswindow window)
 {
    
    oswindow windowOld(g_oswindowActive);
@@ -518,7 +518,7 @@ void defer_dock_application(bool bDock)
 }
 
 
-int_bool DestroyWindow(oswindow window)
+int_bool destroy_window(oswindow window)
 {
    
    UNREFERENCED_PARAMETER(window);

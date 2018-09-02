@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 #include "aura/os/android/android_windowing.h"
 
 ::user::interaction * get_system_window_interaction(::os_system_window * psystemwindow)
@@ -823,23 +823,30 @@ int_bool IsAscendant(oswindow_data * pdata, oswindow_data * pdataAscendant)
 }
 
 
-oswindow GetActiveWindow()
+oswindow g_oswindowActive = NULL;
+
+
+oswindow get_active_window()
 {
 
-   return GetFocus();
+   return g_oswindowActive;
 
 }
 
 
-oswindow SetActiveWindow(oswindow interaction_impl)
+oswindow set_active_window(oswindow oswindow)
 {
 
-   return SetFocus(interaction_impl);
+   ::oswindow oswindowPrevious = g_oswindowActive;
+   
+   g_oswindowActive = oswindow;
+   
+   return g_oswindowActive;
 
 }
 
 
-oswindow GetWindow(oswindow windowParam, int iParentHood)
+oswindow get_window(oswindow windowParam, int iParentHood)
 {
 
    synch_lock sl(windowParam == NULL ? NULL : (windowParam->m_pimpl == NULL || windowParam->m_pimpl->m_pui == NULL ? NULL : windowParam->m_pimpl->m_pui->m_pmutex));

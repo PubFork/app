@@ -26,16 +26,16 @@ int_bool axis_TranslateMessage(const MESSAGE * lpmessage);
 LRESULT axis_DispatchMessage(const MESSAGE * lpmessage);
 
 
-oswindow GetCapture();
-oswindow SetCapture(oswindow window);
-WINBOOL ReleaseCapture();
-oswindow SetFocus(oswindow window);
-oswindow GetFocus();
-oswindow GetWindow(oswindow window, int iParentHood);
-oswindow GetActiveWindow();
-oswindow SetActiveWindow(oswindow window);
-WINBOOL DestroyWindow(oswindow window);
-oswindow GetDesktopWindow();
+oswindow get_capture();
+oswindow set_capture(oswindow window);
+WINBOOL release_capture();
+oswindow set_focus(oswindow window);
+oswindow get_focus();
+oswindow get_window(oswindow window, int iParentHood);
+oswindow get_active_window();
+oswindow set_active_window(oswindow window);
+WINBOOL destroy_window(oswindow window);
+oswindow get_desktop_window();
 
 
 #include "linux_windowing.h"

@@ -2909,7 +2909,7 @@ namespace core
 
       for (int32_t i = 0; i < m_straAppInterest.get_count(); i++)
       {
-         if (m_straAppInterest[i] != m_strAppName && !::IsWindow(m_mapAppInterest[m_straAppInterest[i]]))
+         if (m_straAppInterest[i] != m_strAppName && !::is_window(m_mapAppInterest[m_straAppInterest[i]]))
          {
             System.assert_running_local(m_straAppInterest[i]);
          }

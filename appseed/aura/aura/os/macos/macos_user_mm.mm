@@ -139,7 +139,7 @@ void ns_app_run()
 
 
 
-oswindow SetActiveWindow(oswindow window);
+oswindow set_active_window(oswindow window);
 
 
 
@@ -157,7 +157,7 @@ CGContextRef get_nswindow_cgcontext(oswindow oswindow)
 WINBOOL SetForegroundWindow(oswindow window)
 {
    
-   if(!::IsWindow(window))
+   if(!::is_window(window))
       return FALSE;
    
    [[NSApp dd_invokeOnMainThreadAndWaitUntilDone:FALSE] activateIgnoringOtherApps:YES];
@@ -168,7 +168,7 @@ WINBOOL SetForegroundWindow(oswindow window)
    
    [[window->window() dd_invokeOnMainThreadAndWaitUntilDone:FALSE] makeMainWindow];
    
-   SetActiveWindow(window);
+   set_active_window(window);
    
    return TRUE;
    
@@ -178,7 +178,7 @@ WINBOOL SetForegroundWindow(oswindow window)
 WINBOOL BringWindowToTop(oswindow window)
 {
    
-   if(!::IsWindow(window))
+   if(!::is_window(window))
       return FALSE;
    
    [[window->window() dd_invokeOnMainThreadAndWaitUntilDone:FALSE] orderFront: NSApp];

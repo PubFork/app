@@ -149,7 +149,7 @@ namespace file
 
       struct stat stat;
 
-      if(::stat(strPath, &stat)  == -1)
+      if(::stat(path, &stat)  == -1)
       {
 
          varRet.set_type(var::type_null);

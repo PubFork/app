@@ -1,7 +1,7 @@
 #include "framework.h"
 
 
-void DeactivateWindow(oswindow window);
+void deactivate_window(oswindow window);
 
 
 struct __CTLCOLOR
@@ -132,7 +132,7 @@ namespace macos
    bool interaction_impl::ModifyStyle(oswindow hWnd, DWORD dwRemove, DWORD dwAdd, UINT nFlags)
    {
 
-      if (!::IsWindow(hWnd))
+      if (!::is_window(hWnd))
          return false;
 
       DWORD_PTR dw = hWnd->get_window_long_ptr(GWL_STYLE);
@@ -151,7 +151,7 @@ namespace macos
    bool interaction_impl::ModifyStyleEx(oswindow hWnd, DWORD dwRemove, DWORD dwAdd, UINT nFlags)
    {
 
-      if (!::IsWindow(hWnd))
+      if (!::is_window(hWnd))
       {
 
          return false;
@@ -292,7 +292,7 @@ namespace macos
    id id)
    {
 
-      if (::IsWindow(get_handle()))
+      if (::is_window(get_handle()))
       {
 
          DestroyWindow();
@@ -426,7 +426,7 @@ namespace macos
    bool interaction_impl::create_message_queue(::user::interaction * pui, const char * pszName)
    {
 
-      if (IsWindow())
+      if (is_window(get_handle()))
       {
 
          set_window_text(pszName);
@@ -546,7 +546,7 @@ namespace macos
       if(GetActiveWindow() == m_pui)
       {
 
-         ::SetActiveWindow(NULL);
+         ::set_active_window(NULL);
 
       }
 
@@ -596,7 +596,7 @@ namespace macos
 
       m_bShowWindow = false;
 
-      ::DestroyWindow(get_handle());
+      ::destroy_window(get_handle());
 
       Detach();
 
@@ -650,7 +650,7 @@ namespace macos
        else
        {
        // should be a normal user::interaction
-       ASSERT(::IsWindow(get_handle()));
+       ASSERT(::is_window(get_handle()));
 
        // should also be in the permanent or temporary handle ::collection::map
        single_lock sl(afxMutexHwnd(), TRUE);
@@ -698,7 +698,7 @@ namespace macos
        return;
        }*/
 
-      /*      if (!::IsWindow(get_handle()))
+      /*      if (!::is_window(get_handle()))
        {
        // not a valid user::interaction
        dumpcontext << " (illegal oswindow)";
@@ -792,7 +792,7 @@ namespace macos
    /*
     int32_t interaction_impl::GetDlgItemText(int32_t nID, string & rString) const
     {
-    ASSERT(::IsWindow(get_handle()));
+    ASSERT(::is_window(get_handle()));
     rString = "";    // is_empty without deallocating
 
     oswindow hWnd = ::GetDlgItem(get_handle(), nID);
@@ -809,7 +809,7 @@ namespace macos
 
    bool interaction_impl::GetWindowPlacement(WINDOWPLACEMENT* lpwndpl)
    {
-      /*    ASSERT(::IsWindow(get_handle()));
+      /*    ASSERT(::is_window(get_handle()));
        lpwndpl->length = sizeof(WINDOWPLACEMENT);
        return ::GetWindowPlacement(get_handle(), lpwndpl) != FALSE;*/
       return false;
@@ -817,7 +817,7 @@ namespace macos
 
    bool interaction_impl::SetWindowPlacement(const WINDOWPLACEMENT* lpwndpl)
    {
-      /*      ASSERT(::IsWindow(get_handle()));
+      /*      ASSERT(::is_window(get_handle()));
        ((WINDOWPLACEMENT*)lpwndpl)->length = sizeof(WINDOWPLACEMENT);
        return ::SetWindowPlacement(get_handle(), lpwndpl) != FALSE;*/
       return false;
@@ -886,38 +886,38 @@ namespace macos
 
    /*   bool interaction_impl::GetWindowInfo(PWINDOWINFO pwi) const
     {
-    ASSERT(::IsWindow((oswindow)get_handle()));
+    ASSERT(::is_window((oswindow)get_handle()));
     return ::GetWindowInfo((oswindow)get_handle(), pwi) != FALSE;
     }*/
 
    /*   ::user::interaction * interaction_impl::GetAncestor(UINT gaFlags) const
-    { ASSERT(::IsWindow((oswindow)get_handle())); return  ::macos::interaction_impl::from_handle(::GetAncestor((oswindow)get_handle(), gaFlags)); }
+    { ASSERT(::is_window((oswindow)get_handle())); return  ::macos::interaction_impl::from_handle(::GetAncestor((oswindow)get_handle(), gaFlags)); }
 
     */
 
    /*   bool interaction_impl::GetScrollBarInfo(LONG idObject, PSCROLLBARINFO psbi) const
     {
-    ASSERT(::IsWindow((oswindow)get_handle()));
+    ASSERT(::is_window((oswindow)get_handle()));
     ASSERT(psbi != NULL);
     return ::GetScrollBarInfo((oswindow)get_handle(), idObject, psbi) != FALSE;
     }
     */
    /*   bool interaction_impl::GetTitleBarInfo(PTITLEBARINFO pti) const
     {
-    ASSERT(::IsWindow((oswindow)get_handle()));
+    ASSERT(::is_window((oswindow)get_handle()));
     ASSERT(pti != NULL);
     return ::GetTitleBarInfo((oswindow)get_handle(), pti) != FALSE;
     }
     */
    /*   bool interaction_impl::AnimateWindow(DWORD dwTime, DWORD dwFlags)
     {
-    ASSERT(::IsWindow((oswindow)get_handle()));
+    ASSERT(::is_window((oswindow)get_handle()));
     return ::AnimateWindow((oswindow)get_handle(), dwTime, dwFlags) != FALSE;
     }
 
     bool interaction_impl::FlashWindowEx(DWORD dwFlags, UINT  uCount, DWORD dwTimeout)
     {
-    ASSERT(::IsWindow((oswindow)get_handle()));
+    ASSERT(::is_window((oswindow)get_handle()));
     FLASHWINFO fwi;
     fwi.cbSize = sizeof(fwi);
     fwi.hwnd = (oswindow)get_handle();
@@ -932,14 +932,14 @@ namespace macos
    /*
     bool interaction_impl::SetLayeredWindowAttributes(COLORREF crKey, BYTE bAlpha, DWORD dwFlags)
     {
-    ASSERT(::IsWindow((oswindow)get_handle()));
+    ASSERT(::is_window((oswindow)get_handle()));
     return ::SetLayeredWindowAttributes((oswindow)get_handle(), crKey, bAlpha, dwFlags) != FALSE;
     }
 
     bool interaction_impl::UpdateLayeredWindow(::draw2d::graphics * pDCDst, POINT *pptDst, SIZE *psize,
     ::draw2d::graphics * pDCSrc, POINT *pptSrc, COLORREF crKey, BLENDFUNCTION *pblend, DWORD dwFlags)
     {
-    ASSERT(::IsWindow((oswindow)get_handle()));
+    ASSERT(::is_window((oswindow)get_handle()));
     return ::UpdateLayeredWindow((oswindow)get_handle(), WIN_HDC(pDCDst), pptDst, psize,
     WIN_HDC(pDCSrc), pptSrc, crKey, pblend, dwFlags) != FALSE;
     }
@@ -948,13 +948,13 @@ namespace macos
    /*
     bool interaction_impl::GetLayeredWindowAttributes(COLORREF *pcrKey, BYTE *pbAlpha, DWORD *pdwFlags) const
     {
-    ASSERT(::IsWindow((oswindow)get_handle()));
+    ASSERT(::is_window((oswindow)get_handle()));
     return ::GetLayeredWindowAttributes((oswindow)get_handle(), pcrKey, pbAlpha, pdwFlags) != FALSE;
     }
 
     bool interaction_impl::PrintWindow(::draw2d::graphics * pgraphics, UINT nFlags) const
     {
-    ASSERT(::IsWindow((oswindow)get_handle()));
+    ASSERT(::is_window((oswindow)get_handle()));
     return ::PrintWindow((oswindow)get_handle(), (HDC)(dynamic_cast<::draw2d_quartz2d::graphics * >(pgraphics))->get_handle(), nFlags) != FALSE;
     }
 
@@ -1619,9 +1619,9 @@ namespace macos
        pParent->send_message(WM_SYSCOMMAND, nID, lparam);
 
        // be very careful here...
-       if (::IsWindow(hWndSave))
+       if (::is_window(hWndSave))
        ::SetActiveWindow(hWndSave);
-       if (::IsWindow(hWndFocus))
+       if (::is_window(hWndFocus))
        ::SetFocus(hWndFocus);
        }
        }
@@ -2564,7 +2564,7 @@ namespace macos
       //   bool interaction_impl::SubclassDlgItem(UINT nID, ::user::interaction * pParent)
       //   {
       //      ASSERT(pParent != NULL);
-      //      ASSERT(::IsWindow(MAC_WINDOW(pParent)->get_handle()));
+      //      ASSERT(::is_window(MAC_WINDOW(pParent)->get_handle()));
       //
       //      // check for normal dialog control first
       //      oswindow hWndControl = ::GetDlgItem(MAC_WINDOW(pParent)->get_handle(), nID);
@@ -2577,7 +2577,7 @@ namespace macos
 
    oswindow interaction_impl::UnsubclassWindow()
    {
-      ASSERT(::IsWindow(get_handle()));
+      ASSERT(::is_window(get_handle()));
 
       _throw(not_implemented(get_app()));
       //      // set WNDPROC back to original value
@@ -2600,7 +2600,7 @@ namespace macos
 
    bool interaction_impl::IsChild(::user::interaction *  pWnd)
    {
-      ASSERT(::IsWindow(get_handle()));
+      ASSERT(::is_window(get_handle()));
       if (pWnd->get_handle() == NULL)
       {
          return ::user::interaction_impl::IsChild(pWnd);
@@ -2614,7 +2614,7 @@ namespace macos
 
    bool interaction_impl::IsWindow() const
    {
-      return ::IsWindow(m_oswindow) != FALSE;
+      return ::is_window(m_oswindow) != FALSE;
    }
 
 
@@ -2629,7 +2629,7 @@ namespace macos
    void interaction_impl::MoveWindow(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, bool bRepaint)
    {
 
-      ASSERT(::IsWindow(get_handle()));
+      ASSERT(::is_window(get_handle()));
 
       SetWindowPos(0, x, y, nWidth, nHeight, bRepaint ? SWP_SHOWWINDOW : 0);
 
@@ -2664,7 +2664,7 @@ namespace macos
    bool interaction_impl::GetClientRect(RECT64 * lprect)
    {
 
-      if (!::IsWindow(get_handle()))
+      if (!::is_window(get_handle()))
       {
 
          return false;
@@ -2729,7 +2729,7 @@ namespace macos
    bool interaction_impl::ShowWindow(int32_t nCmdShow)
    {
 
-      if (!::IsWindow(get_handle()))
+      if (!::is_window(get_handle()))
       {
 
          return false;
@@ -2748,7 +2748,7 @@ namespace macos
    bool interaction_impl::WfiIsIconic()
    {
 
-      ASSERT(::IsWindow(get_handle()));
+      ASSERT(::is_window(get_handle()));
 
       if (GetExStyle() & WS_EX_LAYERED)
       {
@@ -2769,7 +2769,7 @@ namespace macos
    bool interaction_impl::WfiIsZoomed()
    {
 
-      ASSERT(::IsWindow(get_handle()));
+      ASSERT(::is_window(get_handle()));
 
       return m_pui->m_eappearance == user::appearance_zoomed;
 
@@ -2803,7 +2803,7 @@ namespace macos
    DWORD interaction_impl::GetStyle() const
    {
 
-      ASSERT(::IsWindow(get_handle()));
+      ASSERT(::is_window(get_handle()));
 
       return (DWORD)::GetWindowLong(get_handle(), GWL_STYLE);
 
@@ -2813,7 +2813,7 @@ namespace macos
    DWORD interaction_impl::GetExStyle() const
    {
 
-      ASSERT(::IsWindow(get_handle()));
+      ASSERT(::is_window(get_handle()));
 
       return (DWORD)::GetWindowLong(get_handle(), GWL_EXSTYLE);
 
@@ -2823,7 +2823,7 @@ namespace macos
    bool interaction_impl::ModifyStyle(DWORD dwRemove, DWORD dwAdd, UINT nFlags)
    {
 
-      ASSERT(::IsWindow(get_handle()));
+      ASSERT(::is_window(get_handle()));
 
       return ModifyStyle(get_handle(), dwRemove, dwAdd, nFlags);
 
@@ -2833,7 +2833,7 @@ namespace macos
    bool interaction_impl::ModifyStyleEx(DWORD dwRemove, DWORD dwAdd, UINT nFlags)
    {
 
-      ASSERT(::IsWindow(get_handle()));
+      ASSERT(::is_window(get_handle()));
 
       return ModifyStyleEx(get_handle(), dwRemove, dwAdd, nFlags);
 
@@ -3076,7 +3076,7 @@ namespace macos
    bool interaction_impl::IsWindowVisible()
    {
 
-      if (!::IsWindow(get_handle()))
+      if (!::is_window(get_handle()))
       {
 
          return false;
@@ -3125,7 +3125,7 @@ namespace macos
    void interaction_impl::send_message_to_descendants(UINT message, WPARAM wparam, lparam lparam, bool bDeep, bool bOnlyPerm)
    {
 
-      ASSERT(::IsWindow(get_handle()));
+      ASSERT(::is_window(get_handle()));
 
       // walk through oswindows to avoid creating temporary user::interaction objects
       // unless we need to call this function recursively
@@ -3416,7 +3416,7 @@ namespace macos
    ::user::interaction *  interaction_impl::GetActiveWindow()
    {
 
-      ::user::interaction_impl * pimpl = ::macos::interaction_impl::from_handle(::GetActiveWindow());
+      ::user::interaction_impl * pimpl = ::macos::interaction_impl::from_handle(::get_active_window());
 
       if(pimpl == NULL)
       {
@@ -3444,7 +3444,7 @@ namespace macos
    ::user::interaction *  interaction_impl::SetActiveWindow()
    {
 
-      ::user::interaction_impl * pimpl = ::macos::interaction_impl::from_handle(::SetActiveWindow(get_handle()));
+      ::user::interaction_impl * pimpl = ::macos::interaction_impl::from_handle(::set_active_window(get_handle()));
 
       if(pimpl == NULL)
       {
@@ -3461,7 +3461,7 @@ namespace macos
    ::user::interaction *  interaction_impl::GetFocus()
    {
 
-      ::user::interaction_impl * pimpl = ::macos::interaction_impl::from_handle(::GetFocus());
+      ::user::interaction_impl * pimpl = ::macos::interaction_impl::from_handle(::get_focus());
 
       if(pimpl == NULL)
       {
@@ -3478,7 +3478,7 @@ namespace macos
    bool  interaction_impl::SetFocus()
    {
 
-      ::user::interaction_impl * pimpl = ::macos::interaction_impl::from_handle(::SetFocus(get_handle()));
+      ::user::interaction_impl * pimpl = ::macos::interaction_impl::from_handle(::set_focus(get_handle()));
 
       if(pimpl == NULL)
       {
@@ -3687,7 +3687,7 @@ namespace macos
    ::user::interaction *  interaction_impl::GetWindow(UINT nCmd)
    {
 
-      ASSERT(::IsWindow(get_handle()));
+      ASSERT(::is_window(get_handle()));
 
       return NULL;
 
@@ -3731,7 +3731,7 @@ namespace macos
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow(get_handle()));
+      //      ASSERT(::is_window(get_handle()));
       //      return ::FlashWindow(get_handle(), bInvert) != FALSE;
 
    }
@@ -3740,7 +3740,7 @@ namespace macos
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow(get_handle()));
+      //      ASSERT(::is_window(get_handle()));
       //      return ::ChangeClipboardChain(get_handle(), hWndNext) != FALSE;
 
    }
@@ -3749,7 +3749,7 @@ namespace macos
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow(get_handle()));
+      //      ASSERT(::is_window(get_handle()));
       //      return ::SetClipboardViewer(get_handle());
 
    }
@@ -3758,7 +3758,7 @@ namespace macos
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow(get_handle()));
+      //      ASSERT(::is_window(get_handle()));
       //      return ::OpenClipboard(get_handle()) != FALSE;
 
    }
@@ -3791,7 +3791,7 @@ namespace macos
    {
 
       _throw(not_implemented(::get_app()));
-      //      ASSERT(::IsWindow(get_handle()));
+      //      ASSERT(::is_window(get_handle()));
       //      ::CreateCaret(get_handle(), (HBITMAP)pBitmap->get_handle(), 0, 0);
 
    }
@@ -3800,7 +3800,7 @@ namespace macos
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow(get_handle()));
+      //      ASSERT(::is_window(get_handle()));
       //      ::CreateCaret(get_handle(), (HBITMAP)0, nWidth, nHeight);
 
    }
@@ -3809,7 +3809,7 @@ namespace macos
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow(get_handle()));
+      //      ASSERT(::is_window(get_handle()));
       //      ::CreateCaret(get_handle(), (HBITMAP)1, nWidth, nHeight);
 
    }
@@ -3879,7 +3879,7 @@ namespace macos
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow(get_handle()));
+      //      ASSERT(::is_window(get_handle()));
       //      const_cast < user::interaction * > (this)->send_message(WM_PRINT, (WPARAM)(dynamic_cast<::draw2d_quartz2d::graphics * >(pgraphics))->get_handle(), dwFlags);
 
    }
@@ -3888,7 +3888,7 @@ namespace macos
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow(get_handle()));
+      //      ASSERT(::is_window(get_handle()));
       //      const_cast < user::interaction * > (this)->send_message(WM_PRINTCLIENT, (WPARAM)(dynamic_cast<::draw2d_quartz2d::graphics * >(pgraphics))->get_handle(), dwFlags);
 
    }
@@ -3897,7 +3897,7 @@ namespace macos
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow(get_handle()));
+      //      ASSERT(::is_window(get_handle()));
       //      return ::SetWindowContextHelpId(get_handle(), dwContextHelpId) != FALSE;
 
    }
@@ -3906,7 +3906,7 @@ namespace macos
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow(get_handle()));
+      //      ASSERT(::is_window(get_handle()));
       //      return ::GetWindowContextHelpId(get_handle());
 
    }
@@ -4395,7 +4395,7 @@ namespace macos
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow(get_handle()));
+      //      ASSERT(::is_window(get_handle()));
       //      ::CloseWindow(get_handle());
 
    }
@@ -4404,7 +4404,7 @@ namespace macos
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow(get_handle()));
+      //      ASSERT(::is_window(get_handle()));
       //      return ::OpenIcon(get_handle()) != FALSE;
 
    }
@@ -4664,7 +4664,7 @@ namespace macos
 
       sp(::message::base) spbase;
 
-      if (::GetActiveWindow() != get_handle())
+      if (::get_active_window() != get_handle())
       {
 
          try
@@ -5025,7 +5025,7 @@ namespace macos
    void interaction_impl::round_window_activate()
    {
 
-      ::SetActiveWindow(get_handle());
+      ::set_active_window(get_handle());
 
       if(m_pui == NULL)
       {
@@ -5042,7 +5042,7 @@ namespace macos
    void interaction_impl::round_window_deactivate()
    {
 
-      ::DeactivateWindow(get_handle());
+      ::deactivate_window(get_handle());
 
       if(m_pui == NULL)
       {
@@ -5194,7 +5194,7 @@ namespace macos
       //   if (!(MAC_WINDOW(pWnd)->GetStyle() & WS_CHILD))
       //   {
       //      ::user::interaction * pTopLevel= MAC_WINDOW(pWnd)->GetTopLevelParent();
-      //      if (pTopLevel && (pWndOther == NULL || !::IsWindow(MAC_WINDOW(pWndOther)->get_handle()) || pTopLevel != MAC_WINDOW(pWndOther)->GetTopLevelParent()))
+      //      if (pTopLevel && (pWndOther == NULL || !::is_window(MAC_WINDOW(pWndOther)->get_handle()) || pTopLevel != MAC_WINDOW(pWndOther)->GetTopLevelParent()))
       //      {
       //         // lparam points to user::interaction getting the WM_ACTIVATE message and
       //         //  hWndOther from the WM_ACTIVATE.

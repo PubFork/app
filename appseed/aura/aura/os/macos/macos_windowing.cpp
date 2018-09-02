@@ -313,12 +313,12 @@ int_ptr oswindow_data::set_window_long_ptr(int_ptr iIndex, int_ptr iNewLong)
 static oswindow g_oswindowCapture;
 
 
-oswindow GetCapture()
+oswindow get_capture()
 {
    return g_oswindowCapture;
 }
 
-oswindow SetCapture(oswindow window)
+oswindow set_capture(oswindow window)
 {
 
    oswindow windowOld(g_oswindowCapture);
@@ -342,7 +342,7 @@ oswindow SetCapture(oswindow window)
 }
 
 
-WINBOOL ReleaseCapture()
+WINBOOL release_capture()
 {
 
    //ifGetCapture().display() == NULL)
@@ -360,19 +360,17 @@ WINBOOL ReleaseCapture()
 }
 
 
-oswindow GetFocus();
+oswindow get_focus();
+
 static oswindow g_oswindowFocus = NULL;
 
-
-
-oswindow SetFocus(oswindow window)
+oswindow set_focus(oswindow window)
 {
 
-   if(!IsWindow(window))
+   if(!is_window(window))
       return NULL;
 
-   oswindow windowOld = ::GetFocus();
-   
+   oswindow windowOld = ::get_focus();
    
    g_oswindowFocus = window;
 
@@ -380,26 +378,9 @@ oswindow SetFocus(oswindow window)
 
 }
 
-oswindow GetFocus()
+oswindow get_focus()
 {
 
-   //isplay * pdisplay = XOpenDisplay(NULL);
-
-   //   Window window = None;
-
-   //   int revert_to = 0;
-
-   //bool bOk = XGetInputFocus(pdisplay, &window, &revert_to) != 0;
-
-   //XCloseDisplay(pdisplay);
-
-   //   if(!bOk)
-   //    return NULL;
-
-   // if(window == None || window == PointerRoot)
-   //  return NULL;
-
-   //return oswindow::defer_get(window);
    return g_oswindowFocus;
 
 }
@@ -419,32 +400,32 @@ static oswindow g_oswindowActive = NULL;
 
 
 
-oswindow GetActiveWindow()
+oswindow get_active_window()
 {
    
    return g_oswindowActive;
    
 }
 
-void DeactivateWindow(oswindow window)
+void deactivate_window(oswindow window)
 {
    
    synch_lock sl(g_poswindowdataptra->m_pmutex);
    
-   if(GetActiveWindow() != window)
+   if(get_active_window() != window)
    {
       
       return;
       
    }
    
-   SetActiveWindow(NULL);
+   set_active_window(NULL);
    
 }
 
 
 
-oswindow SetActiveWindow(oswindow window)
+oswindow set_active_window(oswindow window)
 {
    
    synch_lock sl(g_poswindowdataptra->m_pmutex);
@@ -476,15 +457,12 @@ oswindow SetActiveWindow(oswindow window)
 }
 
 
-
-
-
-oswindow GetWindow(oswindow window, int iParentHood)
+oswindow get_window(oswindow window, int iParentHood)
 {
+   
    return NULL;
+   
 }
-
-
 
 
 void defer_dock_application(bool bDock)
@@ -516,25 +494,25 @@ void defer_dock_application(bool bDock)
 }
 
 
-WINBOOL DestroyWindow(oswindow w)
+WINBOOL destroy_window(oswindow w)
 {
    
-   if(w == GetFocus())
+   if(w == get_focus())
    {
       
-      SetFocus(NULL);
+      set_focus(NULL);
       
    }
-   if(w == GetActiveWindow())
+   if(w == get_active_window())
    {
       
-      SetActiveWindow(NULL);
+      set_active_window(NULL);
       
    }
-   if(w == GetCapture())
+   if(w == get_capture())
    {
       
-      ReleaseCapture();
+      release_capture();
       
    }
    

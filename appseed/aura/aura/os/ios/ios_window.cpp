@@ -364,7 +364,7 @@ int32_t oswindow_data::set_window_long(int32_t iIndex, int32_t iNewLong)
 //   return g_oswindowActive;
 //}
 //
-//oswindow SetActiveWindow(oswindow window)
+//oswindow set_active_window(oswindow window)
 //{
 //
 //   oswindow windowOld(g_oswindowActive);

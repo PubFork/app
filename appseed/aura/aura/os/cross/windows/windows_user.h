@@ -15,7 +15,7 @@ CLASS_DECL_AURA WINBOOL destroy_window(oswindow window);
 
 
 
-WINBOOL IsWindow(oswindow oswindow);
+WINBOOL is_window(oswindow oswindow);
 WINBOOL IsChild(oswindow oswindowParent, oswindow oswindowcandidateChildOrDescendant);
 oswindow GetParent(oswindow oswindow);
 oswindow SetParent(oswindow oswindowChild, oswindow oswindowNewParent);
@@ -31,7 +31,7 @@ WINBOOL IsWindowVisible(oswindow oswindow);
 
 
 
-CLASS_DECL_AURA WINBOOL IsWindow(oswindow oswindow);
+CLASS_DECL_AURA WINBOOL is_window(oswindow oswindow);
 
 
 //CLASS_DECL_AXIS WINBOOL GetCursorPos(LPPOINT lpptCursor);
