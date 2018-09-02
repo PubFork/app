@@ -331,22 +331,22 @@ namespace draw2d
 
    }
 
-    
-    void _001ProperCopyColorref(int cxParam,int cyParam,COLORREF * pcolorrefDst,int iStrideDst,COLORREF * pcolorrefSrc,int iStrideSrc)
-    {
-        
-#ifdef WINDOWS
-        
-        copy_colorref(cxParam, cyParam, pcolorrefDst, iStrideDst, pcolorrefSrc, iStrideSrc);
-        
+
+   void _001ProperCopyColorref(int cxParam,int cyParam,COLORREF * pcolorrefDst,int iStrideDst,COLORREF * pcolorrefSrc,int iStrideSrc)
+   {
+
+#ifdef WINDOWSEX
+
+      copy_colorref(cxParam, cyParam, pcolorrefDst, iStrideDst, pcolorrefSrc, iStrideSrc);
+
 #else
-        
-        vertical_swap_copy_colorref(cxParam, cyParam, pcolorrefDst, iStrideDst, pcolorrefSrc, iStrideSrc);
-        
+
+      vertical_swap_copy_colorref(cxParam, cyParam, pcolorrefDst, iStrideDst, pcolorrefSrc, iStrideSrc);
+
 #endif
-        
-        
-    }
+
+
+   }
 
    void copy_colorref(int xParam, int yParam, int cxParam,int cyParam,COLORREF * pcolorrefDst,int iStrideDst,COLORREF * pcolorrefSrc,int iStrideSrc)
    {

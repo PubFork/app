@@ -422,7 +422,7 @@ namespace metrowin
 
          pdib->map();
 
-         ::draw2d::copy_colorref(
+         ::draw2d::vertical_swap_copy_colorref(
          pdib->m_size.cx,
          pdib->m_size.cy,
          pdib->m_pcolorref,

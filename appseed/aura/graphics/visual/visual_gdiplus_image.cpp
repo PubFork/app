@@ -1256,6 +1256,21 @@ bool windows_write_dib_to_file(IStream * pstream, ::draw2d::dib * pdib, ::visual
 
    pdib->map();
 
+   COLORREF * pcr = pdib->m_pcolorref;
+
+//   memory m;
+//
+//#ifdef METROWIN
+//
+//   m.allocate(uiHeight*pdib->m_iScan);
+//
+//   pcr = (COLORREF *)m.get_data();
+//
+//   ::draw2d::vertical_swap_copy_colorref(pdib->m_size.cx, pdib->m_size.cy, pcr,
+//                                         pdib->m_iScan, pdib->m_pcolorref, pdib->m_iScan);
+//
+//#endif
+
    if (SUCCEEDED(hr))
    {
 
@@ -1265,7 +1280,7 @@ bool windows_write_dib_to_file(IStream * pstream, ::draw2d::dib * pdib, ::visual
          if (SUCCEEDED(hr))
          {
 
-            hr = piBitmapFrame->WritePixels(uiHeight, pdib->m_iScan, uiHeight*pdib->m_iScan, (BYTE *)pdib->m_pcolorref);
+            hr = piBitmapFrame->WritePixels(uiHeight, pdib->m_iScan, uiHeight*pdib->m_iScan, (BYTE *)pcr);
 
          }
 
@@ -1284,7 +1299,7 @@ bool windows_write_dib_to_file(IStream * pstream, ::draw2d::dib * pdib, ::visual
                  GUID_WICPixelFormat32bppBGRA,
                  pdib->m_iScan,
                  pdib->m_iScan * pdib->size().cy,
-                 (BYTE *)pdib->m_pcolorref,
+                 (BYTE *)pcr,
                  &pbitmap
                  );
 
