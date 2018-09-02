@@ -261,9 +261,25 @@ thread_pointer < ::thread > t_pthread;
 ::thread * get_thread()
 {
 
+   if (t_pthread == NULL)
+   {
+
+      t_pthread = new thread(::aura::system::g_p);
+
+   }
+
    return t_pthread;
 
 }
+
+
+::thread * get_thread_raw()
+{
+
+   return t_pthread;
+
+}
+
 
 bool get_thread_run()
 {

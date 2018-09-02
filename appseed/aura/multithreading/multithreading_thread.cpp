@@ -316,10 +316,10 @@ void thread::CommonConstruct()
    m_bTemporary = false;
    m_bSimpleMessageLoop = true;
 
-   if (::get_thread() != NULL)
+   if (::get_thread_raw() != NULL)
    {
 
-      m_bAvoidProcFork = ::get_thread()->m_bAvoidProcFork;
+      m_bAvoidProcFork = ::get_thread_raw()->m_bAvoidProcFork;
 
    }
    else

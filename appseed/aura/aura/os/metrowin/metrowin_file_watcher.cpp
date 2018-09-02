@@ -225,6 +225,8 @@ namespace file_watcher
 
       id watchid = ++m_idLast;
 
+      ::file::path pathFolder = Sys(get_app()).defer_process_path(directory, get_app());
+
       //watch_struct ^ pwatch = watch_struct::create_watch(m_str(directory), FILE_NOTIFY_CHANGE_CREATION | FILE_NOTIFY_CHANGE_SIZE | FILE_NOTIFY_CHANGE_FILE_NAME);
       watch_ref ^ watchref = watch_ref::create_watch(directory, bRecursive);
 
