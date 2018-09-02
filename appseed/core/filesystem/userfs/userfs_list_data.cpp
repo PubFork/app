@@ -174,7 +174,9 @@ namespace userfs
          try
          {
 
-            pitem->m_strText = _001FileSizeText(Application.file().length(m_itema.get_item(pitem->m_iItem).m_filepath));
+            ::file::path path = System.defer_process_path(m_itema.get_item(pitem->m_iItem).m_filepath, get_app());
+
+            pitem->m_strText = _001FileSizeText(Application.file().length(path));
 
          }
          catch (...)
