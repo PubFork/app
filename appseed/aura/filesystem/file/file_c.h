@@ -44,19 +44,6 @@ CLASS_DECL_AURA int_bool file_is_equal_path_dup(const char * pszPath1, const cha
 CLASS_DECL_AURA int_bool file_copy_dup(const char * pszDup, const char * pszSrc, int_bool bOverwrite);
 
 
-//CLASS_DECL_AURA void sprint_hex(char * sz, int32_t iValue);
-
-//typedef HANDLE handle;
-
-//CLASS_DECL_AURA handle create_file(const char * lpcszFileName, DWORD dwDesiredAcces, DWORD dwShareMode, LPSECURITY_ATTRIBUTES lpSA, DWORD dwCreationDisposition, DWORD dwFlagsAndAttributes, HANDLE hTemplateFile);
-//CLASS_DECL_AURA int_bool close_handle(handle h);
-
-
-
-
-
-
-
 CLASS_DECL_AURA void _init_file_dup();
 
 CLASS_DECL_AURA FILE * fopen_dup(const char *path, const char *attrs, int iShare);
@@ -121,22 +108,6 @@ CLASS_DECL_AURA uint64_t file_length_dup(const char * path);
 
 
 CLASS_DECL_AURA int_bool file_is_equal_path(const char * pszPath1, const char * pszPath2);
-
-
-//CLASS_DECL_AURA int_bool file_ftd_dup(const char * pszDir, const char * pszFile);
-
-CLASS_DECL_AURA int_bool file_copy_dup(const char * pszDup, const char * pszSrc, int_bool bOverwrite);
-
-
-//CLASS_DECL_AURA void sprint_hex(char * sz, int32_t iValue);
-
-
-
-
-//typedef HANDLE handle;
-
-//CLASS_DECL_AURA handle create_file(const char * lpcszFileName, DWORD dwDesiredAcces, DWORD dwShareMode, LPSECURITY_ATTRIBUTES lpSA, DWORD dwCreationDisposition, DWORD dwFlagsAndAttributes, HANDLE hTemplateFile);
-//CLASS_DECL_AURA int_bool close_handle(handle h);
 
 
 BEGIN_EXTERN_C
@@ -210,7 +181,6 @@ typedef string_array < string > stringa;
 CLASS_DECL_AURA string file_title_dup(const char * path);
 CLASS_DECL_AURA string file_name_dup(const char * path);
 
-CLASS_DECL_AURA int_bool file_copy_dup(const char * pszDup, const char * pszSrc, int_bool bOverwrite );
 
 CLASS_DECL_AURA string file_get_mozilla_firefox_plugin_container_path();
 

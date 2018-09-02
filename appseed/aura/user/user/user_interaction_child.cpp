@@ -373,7 +373,7 @@ namespace user
       if (m_pui->GetParent() == NULL)
       {
 
-         return NULL;
+         return true;
 
       }
 

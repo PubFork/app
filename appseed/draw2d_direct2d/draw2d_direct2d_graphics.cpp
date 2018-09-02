@@ -594,7 +594,7 @@ namespace draw2d_direct2d
    }
 
 
-   bool graphics::get(::draw2d::matrix & matrix)
+   bool graphics::_get(::draw2d::matrix & matrix)
    {
 
       D2D1::Matrix3x2F m;
@@ -615,7 +615,7 @@ namespace draw2d_direct2d
    }
 
 
-   bool graphics::set(const ::draw2d::matrix & matrix)
+   bool graphics::_set(const ::draw2d::matrix & matrix)
    {
 
       D2D1::Matrix3x2F m;
@@ -636,34 +636,26 @@ namespace draw2d_direct2d
 
    point graphics::GetViewportOrg()
    {
-      //POINT point;
-      //::GetViewportOrgEx(get_handle2(), &point);
 
-      D2D1::Matrix3x2F m;
-
-      m_prendertarget->GetTransform(&m);
-
-      D2D1_POINT_2F origin = m.TransformPoint(D2D1::Point2F(0.0f, 0.0f));
-
-      return point((int64_t) origin.x, (int64_t) origin.y);
+      return ::draw2d::graphics::GetViewportOrg();
 
    }
 
+
    size graphics::GetViewportExt()
    {
+
       _throw(todo(get_app()));
-      //SIZE size;
-      //::GetViewportExtEx(get_handle2(), &size);
-      //return size;
+
    }
 
    point graphics::GetWindowOrg()
    {
+
       _throw(todo(get_app()));
-      //POINT point;
-      //::GetWindowOrgEx(get_handle2(), &point);
-      //return point;
+
    }
+
 
    size graphics::GetWindowExt()
    {
@@ -673,16 +665,22 @@ namespace draw2d_direct2d
       //return size;
    }
 
-   // non-virtual helpers calling virtual mapping functions
+
    point graphics::SetViewportOrg(POINT point)
    {
-      return SetViewportOrg(point.x, point.y);
+
+      return ::draw2d::graphics::SetViewportOrg(point.x, point.y);
+
    }
+
 
    size graphics::SetViewportExt(SIZE size)
    {
-      return SetViewportExt(size.cx, size.cy);
+
+      return ::draw2d::graphics::SetViewportExt(size.cx, size.cy);
+
    }
+
 
    point graphics::SetWindowOrg(POINT point)
    {
@@ -3627,124 +3625,78 @@ namespace draw2d_direct2d
       //return nRetVal;
    }
 
+
    int graphics::SetMapMode(int nMapMode)
    {
-      return 0;
-      //_throw(todo(get_app()));
 
-      //int nRetVal = 0;
-      //if(get_handle1() != NULL && get_handle1() != get_handle2())
-      //   nRetVal = ::SetMapMode(get_handle1(), nMapMode);
-      //if(get_handle2() != NULL)
-      //   nRetVal = ::SetMapMode(get_handle2(), nMapMode);
-      //return nRetVal;
+      return 0;
+
    }
+
 
    point graphics::SetViewportOrg(int x, int y)
    {
 
-      D2D1::Matrix3x2F m;
-
-      m_prendertarget->GetTransform(&m);
-
-      m._31 = (FLOAT)x;
-
-      m._32 = (FLOAT)y;
-
-      m_prendertarget->SetTransform(m);
-
-      return point(x, y);
+      return ::draw2d::graphics::SetViewportOrg(x, y);
 
    }
+
 
    point graphics::OffsetViewportOrg(int nWidth, int nHeight)
    {
 
-      point point = GetViewportOrg();
-
-      point.offset(nWidth, nHeight);
-
-      return SetViewportOrg(point.x, point.y);
+      return ::draw2d::graphics::OffsetViewportOrg(nWidth, nHeight);
 
    }
+
 
    size graphics::SetViewportExt(int x, int y)
    {
 
       _throw(todo(get_app()));
 
-      //size size(0, 0);
-      //if(get_handle1() != NULL && get_handle1() != get_handle2())
-      //   ::SetViewportExtEx(get_handle1(), x, y, &size);
-      //if(get_handle2() != NULL)
-      //   ::SetViewportExtEx(get_handle2(), x, y, &size);
-      //return size;
    }
+
 
    size graphics::ScaleViewportExt(int xNum, int xDenom, int yNum, int yDenom)
    {
 
-      _throw(todo(get_app()));
+      return ::draw2d::graphics::ScaleViewportExt(xNum, xDenom, yNum, yDenom);
 
-      //size size(0, 0);
-      //if(get_handle1() != NULL && get_handle1() != get_handle2())
-      //   ::ScaleViewportExtEx(get_handle1(), xNum, xDenom, yNum, yDenom, &size);
-      //if(get_handle2() != NULL)
-      //   ::ScaleViewportExtEx(get_handle2(), xNum, xDenom, yNum, yDenom, &size);
-      //return size;
    }
+
 
    point graphics::SetWindowOrg(int x, int y)
    {
 
       _throw(todo(get_app()));
 
-      //point point(0, 0);
-      //if(get_handle1() != NULL && get_handle1() != get_handle2())
-      //   ::SetWindowOrgEx(get_handle1(), x, y, &point);
-      //if(get_handle2() != NULL)
-      //   ::SetWindowOrgEx(get_handle2(), x, y, &point);
-      //return point;
    }
+
 
    point graphics::OffsetWindowOrg(int nWidth, int nHeight)
    {
 
       _throw(todo(get_app()));
 
-      //point point(0, 0);
-      //if(get_handle1() != NULL && get_handle1() != get_handle2())
-      //   ::OffsetWindowOrgEx(get_handle1(), nWidth, nHeight, &point);
-      //if(get_handle2() != NULL)
-      //   ::OffsetWindowOrgEx(get_handle2(), nWidth, nHeight, &point);
-      //return point;
    }
+
 
    size graphics::SetWindowExt(int x, int y)
    {
 
       _throw(todo(get_app()));
 
-      //size size(0, 0);
-      //if(get_handle1() != NULL && get_handle1() != get_handle2())
-      //   ::SetWindowExtEx(get_handle1(), x, y, &size);
-      //if(get_handle2() != NULL)
-      //   ::SetWindowExtEx(get_handle2(), x, y, &size);
-      //return size;
    }
+
 
    size graphics::ScaleWindowExt(int xNum, int xDenom, int yNum, int yDenom)
    {
 
       _throw(todo(get_app()));
 
-      //size size(0, 0);
-      //if(get_handle1() != NULL && get_handle1() != get_handle2())
-      //   ::ScaleWindowExtEx(get_handle1(), xNum, xDenom, yNum, yDenom, &size);
-      //if(get_handle2() != NULL)
-      //   ::ScaleWindowExtEx(get_handle2(), xNum, xDenom, yNum, yDenom, &size);
-      //return size;
    }
+
 
    int graphics::GetClipBox(LPRECT lpRect)
    {

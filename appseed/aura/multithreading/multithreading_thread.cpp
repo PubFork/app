@@ -312,7 +312,6 @@ thread::thread(::aura::application * papp, __THREADPROC pfnThreadProc, LPVOID pP
 void thread::CommonConstruct()
 {
 
-   m_bFastPath = false;
    m_bThreadToolsForIncreasedFps = false;
    m_bTemporary = false;
    m_bSimpleMessageLoop = true;

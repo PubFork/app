@@ -109,7 +109,7 @@ namespace file
          if (::str::begins_ci(pszPath, "uifs://"))
          {
 
-            if (::get_thread()->m_bFastPath)
+            if (::thread_is_fast_path())
             {
 
                return var::type_null;

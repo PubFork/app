@@ -1422,15 +1422,7 @@ namespace aura
    ::user::primitive * session::GetFocus()
    {
 
-#ifdef METROWIN
-
-      return System.ui_from_handle(::WinGetFocus());
-
-#else
-
-      return System.ui_from_handle(::GetFocus());
-
-#endif
+      return System.ui_from_handle(::get_focus());
 
    }
 
@@ -1438,15 +1430,7 @@ namespace aura
    ::user::primitive * session::GetActiveWindow()
    {
 
-#ifdef METROWIN
-
-      return System.ui_from_handle(::WinGetActiveWindow());
-
-#else
-
-      return System.ui_from_handle(::GetActiveWindow());
-
-#endif
+      return System.ui_from_handle(::get_active_window());
 
    }
 
@@ -1531,7 +1515,7 @@ namespace aura
    ::user::elemental * session::get_keyboard_focus()
    {
 
-      oswindow oswindowFocus = ::GetFocus();
+      oswindow oswindowFocus = ::get_focus();
 
       if (oswindowFocus == NULL)
       {
@@ -1566,7 +1550,7 @@ namespace aura
          if (oswindow != NULL)
          {
 
-            oswindow = ::GetWindow(oswindow, GW_OWNER);
+            oswindow = ::get_window(oswindow, GW_OWNER);
 
          }
 
@@ -1585,7 +1569,7 @@ namespace aura
 
          m_pimplPendingSetFocus = NULL;
 
-         ::SetFocus(NULL);
+         ::set_focus(NULL);
 
          return false;
 
@@ -1642,7 +1626,7 @@ namespace aura
 #endif
       {
 
-         ::SetFocus(pimpl->m_oswindow);
+         ::set_focus(pimpl->m_oswindow);
 
       }
 
@@ -1903,35 +1887,24 @@ namespace aura
    oswindow session::get_capture()
    {
 
-#ifdef METROWIN
-
-      return ::WinGetCapture();
-
-#else
-
-      return ::GetCapture();
-
-#endif
+      return ::get_capture();
 
    }
+
 
    bool session::ReleaseCapture()
    {
 
-#ifdef METROWIN
-      oswindow oswindowCapture = ::WinGetCapture();
-#else
-      oswindow oswindowCapture = ::GetCapture();
-#endif
+      oswindow oswindowCapture = ::get_capture();
 
       if (oswindowCapture == NULL)
+      {
+
          return false;
 
-#ifdef METROWIN
-      ::WinReleaseCapture();
-#else
-      ::ReleaseCapture();
-#endif
+      }
+
+      ::release_capture();
 
       m_puiCapture = NULL;
 
@@ -1944,19 +1917,23 @@ namespace aura
    sp(::user::interaction) session::GetCapture()
    {
 
-#ifdef METROWIN
-      oswindow oswindowCapture = ::WinGetCapture();
-#else
-      oswindow oswindowCapture = ::GetCapture();
-#endif
+      oswindow oswindowCapture = ::get_capture();
 
       if (oswindowCapture == NULL)
+      {
+
          return NULL;
+
+      }
 
       sp(::user::interaction) pui = System.ui_from_handle(oswindowCapture);
 
-      if (pui == NULL)
+      if (pui.is_null())
+      {
+
          return NULL;
+
+      }
 
       return pui->GetCapture();
 

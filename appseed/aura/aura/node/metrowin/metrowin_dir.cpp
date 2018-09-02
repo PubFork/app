@@ -194,21 +194,6 @@ namespace metrowin
 
       bool bIsDir;
 
-      uint32_t dwLastError;
-
-      //if(m_isdirmap.lookup(lpcszPath,bIsDir,dwLastError))
-      //{
-      //   if(!bIsDir)
-      //   {
-      //      ::set_last_error(dwLastError);
-      //   }
-      //   return bIsDir;
-      //}
-
-      bool bIs;
-
-      //if(::file::dir::system::is_or_definitively_not(bIs,lpcszPath,papp))
-      //   return bIs;
 
 
       string strPath(lpcszPath);
@@ -235,10 +220,12 @@ namespace metrowin
 
       bIsDir = ::dir::_is(strPath);
 
-      m_isdirmap.set(lpcszPath,bIsDir,::get_last_error());
+//      m_isdirmap.set(lpcszPath,bIsDir,::get_last_error());
 
       return bIsDir;
+
    }
+
 
    bool dir::name_is(const ::file::path & str,::aura::application *  papp)
    {
@@ -273,44 +260,18 @@ namespace metrowin
          return true; // assume empty string is root_ones directory
       }
 
-
-      bool bIsDir;
-      uint32_t dwLastError;
-
-
-      if(m_isdirmap.lookup(str,bIsDir,dwLastError,(int)iLast))
-         return bIsDir;
-
-
       if(papp->m_bZipIsDir && iLast >= 3 && !strnicmp_dup(&((const char *)str)[iLast - 3],".zip",4))
       {
-         m_isdirmap.set(str.Left(iLast + 1),true,0);
+
          return true;
+
       }
 
       strsize iFind = ::str::find_ci(".zip:",str);
 
-      //if(papp->m_bZipIsDir && iFind >= 0 && iFind < iLast)
-      //{
-      //   bool bHasSubFolder;
-      //   uint32_t dwLastError;
-      //   if(m_isdirmap.lookup(str,bHasSubFolder,dwLastError))
-      //      return bHasSubFolder;
-      //   bHasSubFolder = m_pziputil->HasSubFolder(papp,str);
-      //   m_isdirmap.set(str.Left(iLast + 1),bHasSubFolder,::get_last_error());
-      //   return bHasSubFolder;
-      //}
-
-
       wstring wstrPath;
 
-      //strsize iLen = ::str::international::utf8_to_unicode_count(str, iLast + 1);
-
-      //wstrPath.alloc(iLen + 32);
-
       wstrPath = ::str::international::utf8_to_unicode(str,iLast + 1);
-
-      //output_debug_string(wstrPath);
 
       if(wstrPath.get_length() >= MAX_PATH)
       {
@@ -323,21 +284,13 @@ namespace metrowin
             ::str::begin(wstrPath,L"\\\\?\\");
          }
       }
-      //      uint32_t dwAttrib;
-      ///      dwAttrib = GetFileAttributesW(wstrPath);
-      /*if(dwAttrib == INVALID_FILE_ATTRIBUTES)
-      {
-      dwAttrib = GetFileAttributes(strPath);
-      }*/
 
-      //   bIsDir = (dwAttrib != INVALID_FILE_ATTRIBUTES) && (dwAttrib & FILE_ATTRIBUTE_DIRECTORY);
-
-      bIsDir = ::dir::is(::str::international::unicode_to_utf8(wstrPath));
-
-      m_isdirmap.set(str.Left(iLast + 1),bIsDir,::get_last_error());
+      bool bIsDir = ::dir::is(::str::international::unicode_to_utf8(wstrPath));
 
       return bIsDir;
+
    }
+
 
    ::file::path dir::votagus()
    {
@@ -477,7 +430,7 @@ namespace metrowin
                if (::dir::mkdir(stra[i]))
                {
 
-                  m_isdirmap.set(stra[i], true, 0);
+//                  m_isdirmap.set(stra[i], true, 0);
 
                   goto try1;
 
@@ -493,7 +446,7 @@ namespace metrowin
 
                APPTRACE("dir::mk CreateDirectoryW last error(%d)=%s", dwError, strError);
 
-               m_isdirmap.set(stra[i], false, 0);
+               //m_isdirmap.set(stra[i], false, 0);
 
                return false;
 
@@ -501,7 +454,7 @@ namespace metrowin
             else
             {
 
-               m_isdirmap.set(stra[i], true, 0);
+               //m_isdirmap.set(stra[i], true, 0);
 
             }
 
@@ -509,7 +462,7 @@ namespace metrowin
          else
          {
 
-            m_isdirmap.set(stra[i],true,0);
+            //m_isdirmap.set(stra[i],true,0);
 
          }
 

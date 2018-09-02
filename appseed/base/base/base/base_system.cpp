@@ -183,52 +183,18 @@ namespace base
    void system::set_active_guie(::user::interaction * pui)
    {
 
-#if defined(METROWIN)
-
       if (pui == NULL)
       {
 
-         ::WinSetActiveWindow(NULL);
+         ::set_active_window(NULL);
 
       }
       else
       {
 
-         ::WinSetActiveWindow(pui->get_wnd()->get_safe_handle());
+         ::set_active_window(pui->get_wnd()->get_safe_handle());
 
       }
-#else
-      if (pui == NULL)
-      {
-
-         ::SetActiveWindow(NULL);
-
-      }
-      else
-      {
-
-         ::SetActiveWindow(pui->get_wnd()->get_safe_handle());
-
-      }
-#endif
-      return;
-
-      //#else
-      //
-      //      synch_lock sl(&m_uiptraFrame);
-      //
-      //      if(m_uiptraFrame.find(pui) > 0)
-      //      {
-      //
-      //         m_uiptraFrame.remove(pui);
-      //
-      //         m_uiptraFrame.insert_at(0,pui);
-      //
-      //      }
-      //
-      //      return pui;
-      //
-      //#endif
 
    }
 
@@ -239,27 +205,14 @@ namespace base
       if (pui == NULL)
       {
 
-#ifdef METROWIN
-
-         ::WinSetFocus(NULL);
-#else
-         ::SetFocus(NULL);
-#endif
+         ::set_focus(NULL);
 
          return;
 
       }
 
 
-#ifdef METROWIN
-
-      ::WinSetFocus(pui->get_safe_handle());
-
-#else
-
-      ::SetFocus(pui->get_safe_handle());
-
-#endif
+      ::set_focus(pui->get_safe_handle());
 
       if (pui->get_wnd() != NULL)
       {
@@ -271,6 +224,7 @@ namespace base
       return;
 
    }
+
 
    ::count system::get_monitor_count()
    {
@@ -786,14 +740,14 @@ error:
 #if !defined(WINDOWS) && !defined(MACOS)
 
       int32_t error = FT_Init_FreeType((FT_Library *)&m_ftlibrary);
-      
+
       if (error)
       {
-         
+
          TRACE("an error occurred during Free Type library initialization");
-         
+
          return false;
-         
+
       }
 
 #endif

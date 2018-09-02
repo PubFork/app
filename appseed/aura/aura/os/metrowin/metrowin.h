@@ -36,8 +36,12 @@ CLASS_DECL_AURA void set_main_thread_id(UINT uiThread);
 
 
 CLASS_DECL_AURA HTHREAD get_main_thread();
-CLASS_DECL_AURA UINT   get_main_thread_id();
+CLASS_DECL_AURA UINT get_main_thread_id();
 
+CLASS_DECL_AURA oswindow get_focus();
+CLASS_DECL_AURA oswindow set_focus(oswindow oswindow);
+
+CLASS_DECL_AURA oswindow get_window(oswindow oswindow, int iWindow);
 
 CLASS_DECL_AURA void attach_thread_input_to_main_thread(int_bool bAttach);
 

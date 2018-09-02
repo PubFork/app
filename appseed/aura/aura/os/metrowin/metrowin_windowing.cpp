@@ -152,6 +152,7 @@ bool oswindow_data::is_child(::oswindow oswindow)
 
 bool oswindow_data::show_window(int nCmdShow)
 {
+
    if (m_pimpl == NULL || m_pimpl->m_pui == NULL)
    {
 
@@ -160,42 +161,9 @@ bool oswindow_data::show_window(int nCmdShow)
    }
 
    return m_pimpl->m_pui->ShowWindow(nCmdShow);
-}
-
-
-LONG_PTR oswindow_data::get_window_long_ptr(int32_t nIndex)
-{
-
-   return m_plongptrmap->operator[](nIndex);
 
 }
 
-
-LONG_PTR oswindow_data::set_window_long_ptr(int32_t nIndex, LONG_PTR l)
-{
-
-   LONG_PTR lOld = m_plongptrmap->operator[](nIndex);
-
-   /*if (nIndex == GWL_EXSTYLE)
-   {
-
-      if ((l & WS_EX_TOOLWINDOW) ^ (m_plongptrmap->operator[](nIndex) & WS_EX_TOOLWINDOW) != 0)
-      {
-
-         wm_toolwindow(this, (l & WS_EX_TOOLWINDOW) != 0);
-
-      }
-
-   }
-
-   */
-   m_plongptrmap->operator[](nIndex) = l;
-
-   return lOld;
-
-}
-
-#if OSBIT == 64
 
 LONG_PTR oswindow_data::get_window_long_ptr(int nIndex)
 {
@@ -223,7 +191,6 @@ LONG_PTR oswindow_data::set_window_long_ptr(int nIndex, LONG_PTR l)
    return m_pimpl->m_pui->set_window_long_ptr(nIndex, l);
 }
 
-#endif
 
 bool oswindow_data::client_to_screen(LPPOINT lppoint)
 {
@@ -318,44 +285,44 @@ Agile < Windows::UI::Core::CoreWindow > get_os_window(oswindow window)
 }
 
 
-static oswindow g_oswindowFocus;
-
-
-oswindow WINAPI WinGetFocus()
-{
-
-   return g_oswindowFocus;
-
-}
-
-oswindow WINAPI WinSetFocus(oswindow __oswindow)
-{
-
-   ::oswindow oswindowOldFocus = g_oswindowFocus;
-
-   g_oswindowFocus = __oswindow;
-
-   // todo
-   //SendMessage(__oswindow, WM_SETFOCUS, WPARAM, (LPARAM) (void *) oswindowOldFocus)
-   //SendMessage(oswindowOldFocus, WM_KILLFOCUS, WPARAM, (LPARAM) (void *) __oswindow)
-
-   return oswindowOldFocus;
-
-}
+//static oswindow g_oswindowFocus;
+//
+//
+//oswindow WINAPI WinGetFocus()
+//{
+//
+//   return g_oswindowFocus;
+//
+//}
+//
+//oswindow WINAPI WinSetFocus(oswindow __oswindow)
+//{
+//
+//   ::oswindow oswindowOldFocus = g_oswindowFocus;
+//
+//   g_oswindowFocus = __oswindow;
+//
+//   // todo
+//   //SendMessage(__oswindow, WM_SETFOCUS, WPARAM, (LPARAM) (void *) oswindowOldFocus)
+//   //SendMessage(oswindowOldFocus, WM_KILLFOCUS, WPARAM, (LPARAM) (void *) __oswindow)
+//
+//   return oswindowOldFocus;
+//
+//}
 
 
 
 static oswindow g_oswindowCapture;
 
 
-oswindow WINAPI WinGetCapture()
+oswindow WINAPI get_capture()
 {
 
    return g_oswindowCapture;
 
 }
 
-oswindow WINAPI WinSetCapture(oswindow __oswindow)
+oswindow WINAPI set_capture(oswindow __oswindow)
 {
 
    ::oswindow oswindowOldCapture = g_oswindowCapture;
@@ -371,7 +338,7 @@ oswindow WINAPI WinSetCapture(oswindow __oswindow)
 }
 
 
-oswindow WINAPI WinReleaseCapture()
+oswindow WINAPI release_capture()
 {
 
    ::oswindow oswindowOldCapture = g_oswindowCapture;
@@ -390,14 +357,14 @@ oswindow WINAPI WinReleaseCapture()
 static oswindow g_oswindowActive;
 
 
-oswindow WINAPI WinGetActiveWindow()
+oswindow WINAPI get_active_window()
 {
 
    return g_oswindowActive;
 
 }
 
-oswindow WINAPI WinSetActiveWindow(oswindow __oswindow)
+oswindow WINAPI set_active_window(oswindow __oswindow)
 {
 
    ::oswindow oswindowOldActive = g_oswindowActive;
@@ -414,23 +381,9 @@ oswindow WINAPI WinSetActiveWindow(oswindow __oswindow)
 
 
 
-//oswindow_data * WINAPI GetParent(oswindow_data * pdata)
-//{
-//
-//   if (pdata == NULL)
-//      return NULL;
-//
-//   if (!::WinIsWindow(pdata))
-//      return NULL;
-//
-//   return (oswindow_data *)pdata->m_pimpl->m_pui->GetParent()->get_os_data();
-//
-//
-//}
-//
 
 
-WINBOOL WinIsWindow(oswindow oswindow)
+WINBOOL is_window(oswindow oswindow)
 {
 
    if (((void *)oswindow) == NULL)
@@ -440,7 +393,7 @@ WINBOOL WinIsWindow(oswindow oswindow)
 
 }
 
-int DestroyWindow(oswindow oswindow)
+int destroy_window(oswindow oswindow)
 {
 
    return TRUE;
@@ -544,3 +497,52 @@ __int64 oswindow_id(struct oswindow_data * pdata)
    return (__int64)pdata;
 
 }
+
+oswindow g_oswindowFocus = NULL;
+
+
+CLASS_DECL_AURA oswindow get_focus()
+{
+
+   return g_oswindowFocus;
+
+}
+
+
+CLASS_DECL_AURA oswindow set_focus(oswindow oswindow)
+{
+
+   ::oswindow oswindowPrevious = g_oswindowFocus;
+
+   g_oswindowFocus = oswindow;
+
+   return oswindowPrevious;
+
+}
+
+
+CLASS_DECL_AURA oswindow get_window(oswindow oswindow, int iWindow)
+{
+
+   if (iWindow == GW_OWNER)
+   {
+
+      ::user::interaction * pui = Sys(::aura::system::g_p).ui_from_handle(oswindow);
+
+      if (pui == NULL || pui->m_puiOwner)
+      {
+
+         return NULL;
+
+      }
+
+      return pui->m_puiOwner->get_safe_handle();
+
+   }
+
+   return NULL;
+
+}
+
+
+

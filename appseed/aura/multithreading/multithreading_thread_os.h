@@ -92,6 +92,12 @@ public:
 };
 
 
+#define THREAD_FLAGS_FAST_PATH 1ULL
+
+CLASS_DECL_AURA u64 & thread_flags();
+CLASS_DECL_AURA void thread_set_fast_path(bool bFastPath = true);
+CLASS_DECL_AURA bool thread_is_fast_path();
+
 
 CLASS_DECL_AURA bool __wait_threading_count(::duration dur);
 CLASS_DECL_AURA bool __wait_threading_count_except(::thread * pthread,::duration dur);

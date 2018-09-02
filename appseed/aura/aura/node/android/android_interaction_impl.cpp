@@ -736,26 +736,32 @@ namespace android
 
    void interaction_impl::on_set_parent(::user::interaction * pui)
    {
+
       if(pui != NULL)
       {
+
          detach();
+
       }
+
    }
+
 
    bool interaction_impl::DestroyWindow()
    {
 
       bool bResult = false;
 
-      if(get_handle() != NULL)
-         bResult = ::DestroyWindow(get_handle()) != FALSE;
+      if (get_handle() != NULL)
+      {
+
+         bResult = ::destroy_window(get_handle()) != FALSE;
+
+      }
 
       return bResult;
 
    }
-
-   /////////////////////////////////////////////////////////////////////////////
-   // Default interaction_impl implementation
 
 
    LRESULT interaction_impl::DefWindowProc(UINT nMsg,WPARAM wParam,lparam lParam)

@@ -1262,11 +1262,7 @@ namespace user
    bool interaction_impl::ReleaseCapture()
    {
 
-#ifdef METROWIN
-      ::WinReleaseCapture();
-#else
-      ::ReleaseCapture();
-#endif
+      ::release_capture();
 
       Session.m_puiCapture = NULL;
 
@@ -1278,15 +1274,7 @@ namespace user
    ::user::interaction * interaction_impl::GetCapture()
    {
 
-#ifdef METROWIN
-
-      oswindow oswindow = ::WinGetCapture();
-
-#else
-
-      oswindow oswindow = ::GetCapture();
-
-#endif
+      oswindow oswindow = ::get_capture();
 
       if (oswindow == NULL)
       {
@@ -1337,11 +1325,7 @@ namespace user
 
       }
 
-#ifdef METROWIN
-      oswindow w = ::WinSetCapture(get_handle());
-#else
-      oswindow w = ::SetCapture(get_handle());
-#endif
+      oswindow w = ::set_capture(get_handle());
 
       output_debug_string("\nSet Capture: oswindow=0x" + ::hex::lower_from((int_ptr) w));
 
@@ -2387,7 +2371,7 @@ namespace user
    void interaction_impl::_001UpdateBuffer()
    {
 
-      ::get_thread()->m_bFastPath = true;
+      thread_set_fast_path();
 
       m_pui->m_bRedraw = false;
 
@@ -2877,26 +2861,35 @@ namespace user
 
       m_pelementalFocus = pelementalFocusNew;
 
-      if(pelementalFocusPrev != NULL)
+      try
       {
 
-         if (::GetFocus() == pelementalFocusPrev->get_safe_handle()
-               && (pelementalFocusNew == NULL
-                   || pelementalFocusNew->get_safe_handle() == pelementalFocusPrev->get_safe_handle()))
+         if (pelementalFocusPrev != NULL)
          {
 
-            pelementalFocusPrev->send_message(WM_KILLFOCUS);
+            if (::get_focus() == pelementalFocusPrev->get_safe_handle()
+                  && (pelementalFocusNew == NULL
+                      || pelementalFocusNew->get_safe_handle() == pelementalFocusPrev->get_safe_handle()))
+            {
+
+               pelementalFocusPrev->send_message(WM_KILLFOCUS);
+
+            }
+
+            pelementalFocusPrev->set_need_redraw();
 
          }
 
-         pelementalFocusPrev->set_need_redraw();
+      }
+      catch (...)
+      {
 
       }
 
       if (pelementalFocusNew != NULL)
       {
 
-         if (::GetFocus() == pelementalFocusNew->get_safe_handle()
+         if (::get_focus() == pelementalFocusNew->get_safe_handle()
                && (pelementalFocusPrev == NULL
                    || pelementalFocusNew->get_safe_handle() == pelementalFocusPrev->get_safe_handle()))
          {

@@ -205,10 +205,58 @@ namespace multithreading
 
 
 
+
+thread_pointer < u64 > t_pflags;
+
+
+u64 & thread_flags()
+{
+
+   if (t_pflags == NULL)
+   {
+
+      t_pflags = new u64;
+
+      *t_pflags = 0ULL;
+
+   }
+
+   return *t_pflags;
+
+}
+
+
+CLASS_DECL_AURA void thread_set_fast_path(bool bFastPath)
+{
+
+   auto & u = thread_flags();
+
+   if (bFastPath)
+   {
+
+      u |= THREAD_FLAGS_FAST_PATH;
+
+   }
+   else
+   {
+
+      u &= ~THREAD_FLAGS_FAST_PATH;
+
+   }
+
+}
+
+
+CLASS_DECL_AURA bool thread_is_fast_path()
+{
+
+   return (thread_flags() & THREAD_FLAGS_FAST_PATH) != 0ULL;
+
+}
+
+
+
 thread_pointer < ::thread > t_pthread;
-
-
-
 
 ::thread * get_thread()
 {

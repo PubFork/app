@@ -792,24 +792,26 @@ namespace user
 
    void window_util::GetZOrder(oswindow oswindow, int_array & ia)
    {
-#ifdef METROWIN
-      if (!WinIsWindow(oswindow))
+
+      if (!is_window(oswindow))
+      {
+
          return;
-#else
-      if (!IsWindow(oswindow))
-         return;
-#endif
+
+      }
 
       int32_t iOrder;
       ia.remove_all();
       while (true)
       {
-#ifdef METROWIN
-         if (oswindow == NULL || !::WinIsWindow(oswindow))
-#else
-         if (oswindow == NULL || !::IsWindow(oswindow))
-#endif
+
+         if (oswindow == NULL || !::is_window(oswindow))
+         {
+
             break;
+
+         }
+
          iOrder = GetZOrder(oswindow);
          if (iOrder == 0x7fffffff)
             break;

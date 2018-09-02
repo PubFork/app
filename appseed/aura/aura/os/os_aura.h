@@ -70,80 +70,40 @@ END_EXTERN_C
 
 #include "os_time.h"
 
-/*
-#if _POSIX_C_SOURCE == 200809L
-#error "Only for test!! Good error!! _POSIX_C_SOURCE still 200809L"
-#endf
-*/
-
-//#ifdef __cplusplus
-//
-//class string;
-//
-//CLASS_DECL_AURA bool file_copy_dup(const string & strDup,const string & strSrc, bool bOverwrite = true);
-//
-//#endif // __cplusplus
 
 #if defined(MACOS)
 
-
-//#include "aura/aura/os/apple/apple.h"
-//#include "aura/aura/os/macos/macos_macos.h"
-
-
 #elif defined(APPLE_IOS)
-
-
-//#include "aura/aura/os/apple/apple.h"
-//#include "aura/os/ios/ios_ios.h"
-
 
 #elif defined(LINUX)
 
-
-//#include "aura/os/linux/linux_linux.h"
-
-
 #elif defined(METROWIN)
 
-
-//#define BYESHYTOULA_STYLE_SOCKS // Thanks to God, Engineers with Good Faith and also Microsoft bro-grammers getting pro.
 #define BSD_STYLE_SOCKETS
 
 #elif defined(WINDOWSEX)
 
-
 #define BSD_STYLE_SOCKETS
 #define HAVE_MYSQL
 #define HAVE_OPENSSL
-
 
 #elif defined(ANDROID)
 
-
 #define BSD_STYLE_SOCKETS
 #define HAVE_MYSQL
 #define HAVE_OPENSSL
-
 
 #elif defined(SOLARIS)
 
-
 #define BSD_STYLE_SOCKETS
 #define HAVE_MYSQL
 #define HAVE_OPENSSL
 
-
 #elif defined(APPLE_IOS)
-
-
-
 
 #else
 
-
 #error Not supported operating system
-
 
 #endif
 

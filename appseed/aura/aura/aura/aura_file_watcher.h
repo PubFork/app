@@ -25,15 +25,16 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 	THE SOFTWARE.
 */
-
 #pragma once
 
 
 namespace file_watcher
 {
 
+
    class watch;
    class file_watcher;
+
 
    /// Type for a watch id
    using id = i64;

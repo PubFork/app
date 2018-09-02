@@ -218,7 +218,8 @@ public:
    }
 
 #ifdef METROWIN
-   string(String ^ & str)
+   string(String ^ & str) :
+      simple_string(string_trait::GetDefaultManager())
    {
 
       operator = (begin(str));

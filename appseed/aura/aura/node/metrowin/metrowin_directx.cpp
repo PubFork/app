@@ -314,15 +314,19 @@ namespace metrowin
 
                   System.m_possystemwindow->m_pui->m_uiptraChild[i]->SetWindowPos(ZORDER_TOP, 0, 0, m_size.cx, m_size.cy, SWP_SHOWWINDOW);
 
+                  System.m_possystemwindow->m_pui->m_uiptraChild[i]->set_need_layout();
+
+                  System.m_possystemwindow->m_pui->m_uiptraChild[i]->set_need_redraw();
+
                }
 
             }
 
          }
 
-         Render();
+         //Render();
 
-         Present();
+         //Present();
 
       }
 

@@ -5,7 +5,7 @@
 
 //#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
 
-CLASS_DECL_AURA WINBOOL DestroyWindow(oswindow window);
+CLASS_DECL_AURA WINBOOL destroy_window(oswindow window);
 
 #ifndef METROWIN
 

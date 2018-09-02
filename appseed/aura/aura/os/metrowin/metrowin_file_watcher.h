@@ -32,6 +32,29 @@ namespace file_watcher
 {
 
 
+   ref class watch_ref;
+
+
+   class watch :
+      virtual public ::simple_object
+   {
+   public:
+
+
+      listener *           m_plistener;
+
+      file_watcher_impl *  m_pwatcher;
+
+      id                   m_id;
+
+      string               m_strFolder;
+
+      watch_ref ^          m_watchref;
+
+
+   };
+
+
    /// Implementation for Win Merde based on StorageFolder::CreateFileQueryWithOptions.
    /// @class os_file_watcher
    class os_file_watcher :
@@ -41,7 +64,7 @@ namespace file_watcher
 
 
       /// type for a map from id to watch_struct pointer
-      typedef map < id, id, watch_holder, watch_holder > watch_map;
+      typedef map < id, id, sp(watch), sp(watch) > watch_map;
 
 
    private:

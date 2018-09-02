@@ -859,7 +859,7 @@ oswindow GetWindow(oswindow windowParam, int iParentHood)
 
 
 
-int_bool DestroyWindow(oswindow w)
+int_bool destroy_window(oswindow w)
 {
 
    synch_lock sl(w == NULL || w->m_pimpl == NULL || w->m_pimpl->m_pui == NULL ? NULL : w->m_pimpl->m_pui->m_pmutex);

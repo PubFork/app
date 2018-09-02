@@ -94,11 +94,6 @@ namespace draw2d_direct2d
       ::draw2d::bitmap_sp  get_current_bitmap() override;
 
 
-      /*
-      Gdiplus::Pen *       direct2d_pen() override;
-      Gdiplus::Brush *     direct2d_brush() override;
-      Gdiplus::Font *      direct2d_font() override;
-      */
 
       // for bidi and mirrored localization
       uint32_t GetLayout() override;
@@ -176,8 +171,8 @@ namespace draw2d_direct2d
       int GetGraphicsMode() override;
 
 
-      virtual bool get(::draw2d::matrix & matrix);
-      virtual bool set(const ::draw2d::matrix & matrix);
+      virtual bool _get(::draw2d::matrix & matrix) override;
+      virtual bool _set(const ::draw2d::matrix & matrix) override;
 
 
       virtual bool draw_path(::draw2d::path * ppath) override;

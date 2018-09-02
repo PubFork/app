@@ -436,15 +436,10 @@ namespace draw2d
    point graphics::SetViewportOrg(POINT point)
    {
 
-      m_matrixViewport.c1 = point.x;
-
-      m_matrixViewport.c2 = point.y;
-
-      update_matrix();
-
-      return ::point(m_matrixViewport.c1, m_matrixViewport.c2);
+      return SetViewportOrg(point.x, point.y);
 
    }
+
 
    size graphics::SetViewportExt(SIZE size)
    {
@@ -460,9 +455,10 @@ namespace draw2d
 
    point graphics::SetWindowOrg(POINT point)
    {
-      UNREFERENCED_PARAMETER(point);
-      _throw(interface_only_exception(get_app()));
 
+      UNREFERENCED_PARAMETER(point);
+
+      _throw(interface_only_exception(get_app()));
 
       return null_point();
 
@@ -483,10 +479,15 @@ namespace draw2d
 
    void graphics::DPtoLP(LPPOINT lpPoints,count nCount)
    {
+
       UNREFERENCED_PARAMETER(lpPoints);
+
       UNREFERENCED_PARAMETER(nCount);
+
       _throw(interface_only_exception(get_app()));
+
    }
+
 
    void graphics::DPtoLP(LPRECT lpRect)
    {
@@ -3061,7 +3062,13 @@ namespace draw2d
    point graphics::SetViewportOrg(i32 x, i32 y)
    {
 
-      return SetViewportOrg(point(x, y));
+      m_matrixViewport.c1 = x;
+
+      m_matrixViewport.c2 = y;
+
+      update_matrix();
+
+      return ::point(m_matrixViewport.c1, m_matrixViewport.c2);
 
    }
 
@@ -5719,13 +5726,13 @@ namespace draw2d
             m_pgraphics->RestoreDC(m_iSavedDC);
             m_pgraphics->m_matrixViewport = m_matrixViewport;
             m_pgraphics->m_matrixTransform = m_matrixTransform;
-   }
+         }
       }
       catch (...)
       {
 
       }
-      
+
    }
 
    bool graphics::_get(matrix & matrix)

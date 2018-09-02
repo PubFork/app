@@ -28,38 +28,54 @@ namespace file_watcher
 {
 
    /// Internal watch data
-   ref class watch_struct sealed
+   ref class watch_ref sealed
    {
+   internal:
+
+      watch *                                                        m_pwatch;
+
    public:
-
-      /*		OVERLAPPED mOverlapped;
-      		HANDLE mDirHandle;
-      		BYTE mBuffer[32 * 1024];
-      		LPARAM lParam;
-      		DWORD mNotifyFilter;
-      		bool mStopNow;
-
-      		id mWatchid;*/
-
 
       property Windows::Storage::StorageFolder ^                     m_folder;
       property Windows::Storage::Search::StorageItemQueryResult ^    m_queryresult;
       property Windows::Foundation::EventRegistrationToken           m_evtoken;
-      property String ^                                              m_strDirName;
-      property size_t                                                m_pwatcher;   // should be exactly file_watcher_impl *
-      property size_t                                                m_plistener;  // should be exactly file_watch_listener *
-      property uint64_t                                              m_id;
       property bool                                                  m_bRecursive;
       property bool                                                  m_bOwn;
 
-      static watch_struct ^ create_watch(String ^ strDirectory, bool bRecursive);
+      static watch_ref ^ create_watch(String ^ strDirectory, bool bRecursive);
 
       void ContentsChanged(::Windows::Storage::Search::IStorageQueryResultBase ^ r, ::Object ^ o)
       {
-         file_watcher_impl::action action;
-         action.watch = this;
-         action.r = r;
-         ((file_watcher_impl *) m_pwatcher)->handle_action(&action);
+
+         //::Windows::Storage::Search::StorageItemQueryResult^ results = (::Windows::Storage::Search::StorageItemQueryResult^) r;
+
+         //if (results != nullptr)
+         //{
+
+         //   auto items = ::wait(results->GetItemsAsync());
+
+         //   for (index i = 0; i < items->Size; i++)
+         //   {
+
+         //auto item = items->GetAt(i);
+
+         //file_watcher_impl::action action;
+
+         //action.m_pwatch = m_pwatch;
+
+         //action.m_strFilename = m_pwatch->m_strFolder;
+
+         //action.m_ulOsAction = -1;
+
+         m_pwatch->m_plistener->handle_file_action(m_pwatch->m_id, m_pwatch->m_strFolder,
+               "", (::file_watcher::e_action) -1);
+
+         //}
+
+
+         //}
+
+
       }
 
    };
@@ -67,10 +83,10 @@ namespace file_watcher
 
    #pragma region Internal Functions
 
-   // forward decl
-   bool RefreshWatch(watch_struct ^ pWatch, bool _clear = false);
+// forward decl
+   bool RefreshWatch(watch_ref ^ pWatch, bool _clear = false);
 
-   /// Unpacks events and passes them to a user defined callback.
+/// Unpacks events and passes them to a user defined callback.
    /*void CALLBACK WatchCallback(DWORD dwErrorCode, DWORD dwNumberOfBytesTransfered, LPOVERLAPPED lpOverlapped)
    {
    	TCHAR szFile[MAX_PATH];
@@ -121,20 +137,19 @@ namespace file_watcher
    		pWatch->m_dwNotify, NULL, &pWatch->m_overlapped, _clear ? 0 : WatchCallback) != 0;
    }*/
 
-   /// Stops monitoring a directory.
-   void DestroyWatch(watch_struct ^ pwatch)
+/// Stops monitoring a directory.
+   void DestroyWatch(watch_ref ^ pwatch)
    {
       if(pwatch != nullptr)
       {
          //delete pWatch;
       }
    }
-   /// Starts monitoring a directory.
-   watch_struct ^ watch_struct::create_watch(String ^ strDirectory, bool bRecursive)
+/// Starts monitoring a directory.
+   watch_ref ^ watch_ref::create_watch(String ^ strDirectory, bool bRecursive)
    {
 
-      watch_struct ^ pwatch = ref new watch_struct;
-
+      watch_ref ^ pwatch = ref new watch_ref;
 
       Windows::Storage::Search::QueryOptions ^ options = ref new Windows::Storage::Search::QueryOptions();
 
@@ -172,11 +187,12 @@ namespace file_watcher
          return nullptr;
 
       pwatch->m_evtoken = pwatch->m_queryresult->ContentsChanged += ref new ::Windows::Foundation::TypedEventHandler < ::Windows::Storage::Search::IStorageQueryResultBase ^,
-              ::Object ^ >(pwatch, &watch_struct::ContentsChanged);
+              ::Object ^ >(pwatch, &watch_ref::ContentsChanged);
 
       return pwatch;
 
    }
+
 
    #pragma endregion
 
@@ -191,12 +207,13 @@ namespace file_watcher
 
    os_file_watcher::~os_file_watcher()
    {
-      watch_map::pair * ppair = m_watchmap.PGetFirstAssoc();
-      for(; ppair != NULL; m_watchmap.PGetNextAssoc(ppair))
-      {
-         DestroyWatch(ppair->m_element2.w);
-      }
-      m_watchmap.remove_all();
+
+      //watch_map::pair * ppair = m_watchmap.PGetFirstAssoc();
+      //for(; ppair != NULL; m_watchmap.PGetNextAssoc(ppair))
+      //{
+      //   DestroyWatch(ppair->m_element2.w);
+      //}
+      //m_watchmap.remove_all();
 
    }
 
@@ -209,22 +226,32 @@ namespace file_watcher
       id watchid = ++m_idLast;
 
       //watch_struct ^ pwatch = watch_struct::create_watch(m_str(directory), FILE_NOTIFY_CHANGE_CREATION | FILE_NOTIFY_CHANGE_SIZE | FILE_NOTIFY_CHANGE_FILE_NAME);
-      watch_struct ^ pwatch = watch_struct::create_watch(directory, bRecursive);
+      watch_ref ^ watchref = watch_ref::create_watch(directory, bRecursive);
 
-      if(pwatch == nullptr)
+      if (watchref == nullptr)
+      {
+
          _throw(file_not_found_exception(directory));
 
-      pwatch->m_id            = watchid;
-      pwatch->m_pwatcher      = (size_t) (int_ptr) (file_watcher_impl *) this;
-      pwatch->m_plistener     = (size_t) (int_ptr) (listener *) watcher;
-      pwatch->m_strDirName    = directory;
-      pwatch->m_bOwn          = bOwn;
+      }
 
-      watch_holder holder;
+      watchref->m_bOwn           = bOwn;
 
-      holder.w = pwatch;
+      watchref->m_bRecursive     = bRecursive;
 
-      m_watchmap.set_at(watchid, holder);
+      sp(watch) pwatch = canew(watch);
+
+      pwatch->m_id               = watchid;
+
+      pwatch->m_plistener        = watcher;
+
+      pwatch->m_pwatcher         = this;
+
+      pwatch->m_strFolder        = directory;
+
+      pwatch->m_watchref         = watchref;
+
+      m_watchmap.set_at(watchid, pwatch);
 
       return watchid;
 
@@ -233,35 +260,48 @@ namespace file_watcher
 
    void os_file_watcher::remove_watch(const string & directory)
    {
+
       watch_map::pair * ppair = m_watchmap.PGetFirstAssoc();
+
       String ^ strDir = directory;
+
       for(; ppair != NULL; m_watchmap.PGetNextAssoc(ppair))
       {
-         if(strDir == ppair->m_element2.w->m_strDirName)
+
+         if(strDir == ppair->m_element2->m_strFolder)
          {
+
             remove_watch(ppair->m_element1);
+
             return;
+
          }
+
       }
+
    }
+
 
    void os_file_watcher::remove_watch(id watchid)
    {
+
       watch_map::pair * ppair = m_watchmap.PLookup(watchid);
 
       if(ppair == NULL)
          return;
 
-      watch_struct ^ pwatch = ppair->m_element2.w;
       m_watchmap.remove_key(ppair->m_element1);
 
-      DestroyWatch(pwatch);
    }
+
 
    string os_file_watcher::watch_path(id watchid)
    {
-      return begin(m_watchmap[watchid].w->m_strDirName);
+
+      return m_watchmap[watchid]->m_strFolder;
+
    }
+
 
    bool os_file_watcher::update()
    {
@@ -270,6 +310,7 @@ namespace file_watcher
       return true;
 
    }
+
 
    void os_file_watcher::handle_action(action * paction)
    {

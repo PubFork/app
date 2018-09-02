@@ -32,19 +32,19 @@
 //CLASS_DECL_AURA bool __cdecl __is_idle_message(MESSAGE * pMsg);
 
 
-CLASS_DECL_AURA oswindow WINAPI WinGetFocus();
-CLASS_DECL_AURA oswindow WINAPI WinSetFocus(oswindow oswindow);
+//CLASS_DECL_AURA oswindow WINAPI WinGetFocus();
+//CLASS_DECL_AURA oswindow WINAPI WinSetFocus(oswindow oswindow);
 
-CLASS_DECL_AURA oswindow WINAPI WinGetCapture();
-CLASS_DECL_AURA oswindow WINAPI WinSetCapture(oswindow oswindow);
-CLASS_DECL_AURA oswindow WINAPI WinReleaseCapture();
+CLASS_DECL_AURA oswindow WINAPI get_capture();
+CLASS_DECL_AURA oswindow WINAPI set_capture(oswindow oswindow);
+CLASS_DECL_AURA oswindow WINAPI release_capture();
 
-CLASS_DECL_AURA oswindow WINAPI WinGetActiveWindow();
-CLASS_DECL_AURA oswindow WINAPI WinSetActiveWindow(oswindow oswindow);
+CLASS_DECL_AURA oswindow WINAPI get_active_window();
+CLASS_DECL_AURA oswindow WINAPI set_active_window(oswindow oswindow);
 
 
 
-CLASS_DECL_AURA int_bool WinIsWindow(oswindow oswindow);
+CLASS_DECL_AURA int_bool is_window(oswindow oswindow);
 
 
 //CLASS_DECL_AURA int WINAPI GetSystemMetrics(int i);

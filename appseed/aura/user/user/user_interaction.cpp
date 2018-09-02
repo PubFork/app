@@ -742,7 +742,7 @@ restart:
                         if (oswindow != NULL)
                         {
 
-                           ::DestroyWindow(oswindow);
+                           ::destroy_window(oswindow);
 
                         }
                         try
@@ -1260,11 +1260,7 @@ restart:
       if (m_papp != NULL && &System != NULL && System.get_active_ui() == this)
       {
 
-#if defined(METROWIN)
-         ::WinSetActiveWindow(NULL);
-#else
-         ::SetActiveWindow(NULL);
-#endif
+         ::set_active_window(NULL);
 
       }
 

@@ -32,8 +32,6 @@ inline bool file_as_pod(POD & pod, const char * path)
 
 
 
-CLASS_DECL_AURA bool file_copy_dup(const string & strNew, const string & strSrc, bool bOverwrite = true);
-
 
 #ifdef WINDOWSEX
 

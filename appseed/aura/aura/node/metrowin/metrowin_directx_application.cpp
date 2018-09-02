@@ -1278,7 +1278,7 @@ namespace metrowin
 
       }
 
-      ::draw2d::keep k(pgraphics);
+      ::draw2d::savedc k(pgraphics);
 
       try
       {
@@ -1342,7 +1342,7 @@ namespace metrowin
 
       return ::user::interaction::_001DrawChildren(pgraphics);
 
-      ::draw2d::keep k(pgraphics);
+      ::draw2d::savedc k(pgraphics);
 
       // while drawing layout can occur and change z-order.
       // keep this past z-order
@@ -1354,7 +1354,7 @@ namespace metrowin
          try
          {
 
-            ::draw2d::keep keep(pgraphics);
+            ::draw2d::savedc keep(pgraphics);
 
             if (!pui->is_custom_draw())
             {

@@ -34,7 +34,7 @@ oswindow_dataptra * g_oswindow_dataptra()
 
    if(this == NULL)
       return NULL;
-   
+
    return m_pimpl;
 
 }
@@ -117,7 +117,7 @@ oswindow WINAPI WinGetFocus()
 
 oswindow WINAPI WinSetFocus(oswindow __oswindow)
 {
-   
+
    ::oswindow oswindowOldFocus = g_oswindowFocus;
 
    g_oswindowFocus = __oswindow;
@@ -135,16 +135,16 @@ oswindow WINAPI WinSetFocus(oswindow __oswindow)
 static oswindow g_oswindowCapture;
 
 
-oswindow WINAPI WinGetCapture()
+oswindow WINAPI get_capture()
 {
 
    return g_oswindowCapture;
 
 }
 
-oswindow WINAPI WinSetCapture(oswindow __oswindow)
+oswindow WINAPI set_capture(oswindow __oswindow)
 {
-   
+
    ::oswindow oswindowOldCapture = g_oswindowCapture;
 
    g_oswindowCapture = __oswindow;
@@ -160,7 +160,7 @@ oswindow WINAPI WinSetCapture(oswindow __oswindow)
 
 oswindow WINAPI WinReleaseCapture()
 {
-   
+
    ::oswindow oswindowOldCapture = g_oswindowCapture;
 
    g_oswindowCapture = NULL;
@@ -221,7 +221,7 @@ WINBOOL WinIsWindow(oswindow oswindow)
 {
 
    if(((void *)oswindow) == NULL)
-   return FALSE;
+      return FALSE;
 
    return TRUE;
 
