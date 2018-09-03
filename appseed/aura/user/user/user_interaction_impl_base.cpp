@@ -92,8 +92,29 @@ namespace user
 
    bool interaction_impl_base::check_need_layout()
    {
+      
+      if(m_pui == NULL)
+      {
+         
+         return false;
+         
+      }
+      
+      if(m_pui->m_bNeedLayout)
+      {
+       
+         return true;
+         
+      }
 
-      return m_pui->m_bNeedLayout || m_rectParentClientRequest.get_size() != m_rectParentClient.get_size();
+      if(m_rectParentClientRequest.get_size() != m_rectParentClient.get_size())
+      {
+         
+         return true;
+         
+      }
+      
+      return false;
 
    }
 
