@@ -28,7 +28,7 @@ namespace macos
    {
    }
 
-   bool copydesk::has_filea()
+   bool copydesk::_has_filea()
    {
 
       return macos_clipboard_get_file_count() > 0;
@@ -36,7 +36,7 @@ namespace macos
    }
 
 
-   bool copydesk::get_filea(::file::patha & patha, e_op & eop)
+   bool copydesk::_get_filea(::file::patha & patha, e_op & eop)
    {
       
       if(!has_filea())
@@ -54,7 +54,7 @@ namespace macos
       
    }
 
-   bool copydesk::set_filea(const ::file::patha & patha, e_op eop)
+   bool copydesk::_set_filea(const ::file::patha & patha, e_op eop)
    {
       
       macos_clipboard_set_filea(patha);
@@ -107,7 +107,7 @@ namespace macos
    }
 
    
-   bool copydesk::set_plain_text(const string & str)
+   bool copydesk::_set_plain_text(const string & str)
    {
       
       macos_clipboard_set_plain_text(str);
@@ -117,7 +117,7 @@ namespace macos
    }
 
 
-   bool copydesk::get_plain_text(string & str)
+   bool copydesk::_get_plain_text(string & str)
    {
       
       str = macos_clipboard_get_plain_text();
@@ -125,14 +125,17 @@ namespace macos
       return true;
       
    }
-   bool copydesk::has_plain_text()
+   
+   
+   bool copydesk::_has_plain_text()
    {
       
       return macos_clipboard_get_plain_text().length()>0;
 
    }
 
-   bool copydesk::desk_to_dib(::draw2d::dib * pdib)
+   
+   bool copydesk::_desk_to_dib(::draw2d::dib * pdib)
    {
       
       int w = 0;
@@ -162,7 +165,7 @@ namespace macos
    }
 
    
-   bool copydesk::dib_to_desk(::draw2d::dib * pdib)
+   bool copydesk::_dib_to_desk(::draw2d::dib * pdib)
    {
       
       throw todo(get_app());
@@ -192,7 +195,8 @@ namespace macos
       
    }
    
-   bool copydesk::has_dib()
+   
+   bool copydesk::_has_dib()
    {
       int w = 0;
       

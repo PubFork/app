@@ -151,35 +151,10 @@ namespace user
    }
 
 
-   bool copydesk::get_plain_text(string & str)
+   bool copydesk::get_plain_text(string & str, e_flag eflag)
    {
 
-      if (_get_plain_text(str))
-      {
-
-         return true;
-
-      }
-
-      if (_has_filea())
-      {
-
-         e_op eop = op_copy;
-
-         ::file::patha patha;
-
-         if (get_filea(patha, eop))
-         {
-
-            str = patha.implode("\r\n");
-
-            return true;
-
-         }
-
-      }
-
-      if (_has_dib())
+      if (!(eflag & flag_prevent_data_blob) && _has_dib())
       {
 
          ::visual::dib_sp dib(allocer());
@@ -206,6 +181,31 @@ namespace user
 
          }
 
+      }
+      
+      if (_has_filea())
+      {
+         
+         e_op eop = op_copy;
+         
+         ::file::patha patha;
+         
+         if (get_filea(patha, eop))
+         {
+            
+            str = patha.implode("\r\n");
+            
+            return true;
+            
+         }
+         
+      }
+      
+      if (_get_plain_text(str))
+      {
+         
+         return true;
+         
       }
 
       return false;
