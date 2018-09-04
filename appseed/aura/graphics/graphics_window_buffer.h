@@ -15,10 +15,7 @@ class CLASS_DECL_AURA window_buffer :
 protected:
 
 
-   int                           m_iScan;
    COLORREF *                    m_pcolorref;
-   int                           m_cx;
-   int                           m_cy;
    ::visual::dib_sp              m_spdibBuffer;
 
 

@@ -11,8 +11,11 @@
 //  this copyright and permission notice. Attribution in compiled projects is
 //  appreciated but not required.
 //
-
+#ifdef MACOS
 #import <Cocoa/Cocoa.h>
+#else
+#import <UIKit/UIKit.h>
+#endif
 
 @interface NSString (SymlinksAndAliases)
 

@@ -68,7 +68,7 @@ namespace user
       oswindow oswindowOrder = ::GetDesktopWindow();
       oswindowOrder = ::GetWindow(oswindowOrder, GW_CHILD);
       while (oswindowOrder != NULL
-             && ::IsWindow(oswindowOrder))
+             && ::is_window(oswindowOrder))
       {
          add(oswindowOrder);
          oswindowOrder = ::GetWindow(oswindowOrder, GW_HWNDNEXT);
@@ -114,7 +114,7 @@ namespace user
    ::window_sp pwndChild = pwnd->GetWindow(GW_HWNDFIRST);
 
    while(pwndChild != NULL
-   && ::IsWindow(pwndChild->GetSafeoswindow_()))
+   && ::is_window(pwndChild->GetSafeoswindow_()))
    {
    pwnd = interaction_impl::FromHandlePermanent(pwndChild->GetSafeoswindow_());
    if(pwnd == NULL)
@@ -184,7 +184,7 @@ namespace user
    oswindow oswindowChild = ::GetWindow(oswindow, GW_HWNDFIRST);
 
    while(oswindowChild != NULL
-   && ::IsWindow(oswindowChild))
+   && ::is_window(oswindowChild))
    {
    oswindowa2.add(oswindowChild);
    oswindowChild = ::GetWindow(oswindowChild, GW_HWNDNEXT);
@@ -216,7 +216,7 @@ namespace user
 
    /*void window_util::EnumChildren(oswindow oswindow, Carray < oswindow, oswindow > & oswindowa)
    {
-   if(!::IsWindow)
+   if(!::is_window)
    return;
    oswindow oswindowChild = ::GetTopWindow;
    while(oswindowChild != NULL)
@@ -279,7 +279,7 @@ namespace user
 
       ::oswindow oswindow = m_oswindow;
 
-      if (!::IsWindow(oswindow))
+      if (!::is_window(oswindow))
          return;
 
       ::oswindow oswindowChild = ::GetTopWindow(oswindow);
@@ -411,7 +411,7 @@ namespace user
 
    /*void window_util::EnumChildren(::window_sp pwnd, interaction_spa & wndpa)
    {
-   if(!::IsWindow(pwnd->GetSafeoswindow_()))
+   if(!::is_window(pwnd->GetSafeoswindow_()))
    return;
    ::window_sp pwndChild = pwnd->GetTopWindow();
    while(pwndChild != NULL)
@@ -431,7 +431,7 @@ namespace user
 
 #ifdef WINDOWSEX
 
-      if (!::IsWindow(oswindow))
+      if (!::is_window(oswindow))
          return;
 
       ::oswindow oswindowChild = ::GetTopWindow(oswindow);
@@ -824,7 +824,7 @@ namespace user
 
    /*void window_util::EnumChildren(oswindow oswindow, oswindow_array & oswindowa)
    {
-   if(!::IsWindow)
+   if(!::is_window)
    return;
    oswindow oswindowChild = ::GetTopWindow;
    while(oswindowChild != NULL)

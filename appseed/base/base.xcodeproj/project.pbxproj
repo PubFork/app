@@ -221,6 +221,11 @@
 		9A9D7C441F5D6E9F009EC103 /* user_impact.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A8384541F416F57005ED52C /* user_impact.cpp */; };
 		9AB167F12121C00E00E84DDF /* user_still.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AB167ED2121C00E00E84DDF /* user_still.h */; };
 		9AB167F22121C00E00E84DDF /* user_still.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AB167F02121C00E00E84DDF /* user_still.cpp */; };
+		9AB3AB4D213D5DD30076237D /* user_form_control.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AC20A4920998C1E0077FEBF /* user_form_control.cpp */; };
+		9AB3AB53213D60F30076237D /* user_simple_view.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AC20A5120998C650077FEBF /* user_simple_view.cpp */; };
+		9AB3AB54213D64CF0076237D /* hotplugin_bare_paint_discreet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AC20A5920998C7F0077FEBF /* hotplugin_bare_paint_discreet.cpp */; };
+		9AB3AB55213D64D40076237D /* hotplugin_bare_paint_full_screen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AC20A5A20998C7F0077FEBF /* hotplugin_bare_paint_full_screen.cpp */; };
+		9AB3AB56213D64D70076237D /* hotplugin_bare_paint_veri_discreet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AC20A5B20998C7F0077FEBF /* hotplugin_bare_paint_veri_discreet.cpp */; };
 		9AC20A4B20998C1F0077FEBF /* user_form_control.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AC20A4920998C1E0077FEBF /* user_form_control.cpp */; };
 		9AC20A4C20998C1F0077FEBF /* user_form_control.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AC20A4A20998C1F0077FEBF /* user_form_control.h */; };
 		9AC20A5520998C660077FEBF /* user_simple_view.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AC20A5120998C650077FEBF /* user_simple_view.cpp */; };
@@ -1384,6 +1389,7 @@
 				9A9D7C001F5D6900009EC103 /* user_impact_update_hint.cpp in Sources */,
 				9A9D7BC31F5D6895009EC103 /* simple_ui_edit_box.cpp in Sources */,
 				9A9D7BC51F5D6895009EC103 /* simple_ui_label.cpp in Sources */,
+				9AB3AB53213D60F30076237D /* user_simple_view.cpp in Sources */,
 				9A9D7C0C1F5D6900009EC103 /* user_plain_edit.cpp in Sources */,
 				9AEB69F81F81CC3700F40B32 /* database_user_interaction.cpp in Sources */,
 				9A9D7B691F5D66D9009EC103 /* ios_simple_app.cpp in Sources */,
@@ -1395,6 +1401,7 @@
 				9A9D7C181F5D6900009EC103 /* user_wait_cursor.cpp in Sources */,
 				07EDC5B61B4FE64F00AF8928 /* main_mm.mm in Sources */,
 				9AEB69D81F81C77800F40B32 /* user_control_descriptor_set.cpp in Sources */,
+				9AB3AB4D213D5DD30076237D /* user_form_control.cpp in Sources */,
 				9A9D7BA01F5D6847009EC103 /* hotplugin_windows.cpp in Sources */,
 				9A9D7BFC1F5D6900009EC103 /* user_form_update_hint.cpp in Sources */,
 				9A9D7C0F1F5D6900009EC103 /* user_scroll_bar.cpp in Sources */,
@@ -1413,6 +1420,7 @@
 				9AEB69D91F81C77800F40B32 /* user_control_descriptor.cpp in Sources */,
 				9A9D7B451F5D6604009EC103 /* ios_factory_exchange.cpp in Sources */,
 				9A9D7B671F5D66D9009EC103 /* ios_graphics.cpp in Sources */,
+				9AB3AB54213D64CF0076237D /* hotplugin_bare_paint_discreet.cpp in Sources */,
 				9A9D7B431F5D6604009EC103 /* ios_util.cpp in Sources */,
 				9A9D7BFA1F5D6900009EC103 /* user_document.cpp in Sources */,
 				9A9D7C361F5D6DF2009EC103 /* base.cpp in Sources */,
@@ -1434,8 +1442,10 @@
 				9A9D7BF51F5D6900009EC103 /* user_button.cpp in Sources */,
 				9A9D7B9E1F5D6847009EC103 /* hotplugin_host.cpp in Sources */,
 				9A9D7B651F5D66D9009EC103 /* ios_app.cpp in Sources */,
+				9AB3AB55213D64D40076237D /* hotplugin_bare_paint_full_screen.cpp in Sources */,
 				07EDC52C1B4F1BB300AF8928 /* ios_user.mm in Sources */,
 				9A9D7B981F5D683C009EC103 /* fontopus_dialog.cpp in Sources */,
+				9AB3AB56213D64D70076237D /* hotplugin_bare_paint_veri_discreet.cpp in Sources */,
 				9A9D7C441F5D6E9F009EC103 /* user_impact.cpp in Sources */,
 				9A9D7C391F5D6DF2009EC103 /* base_static_start.cpp in Sources */,
 				9A9D7BB01F5D6877009EC103 /* simple_scroll_bar.cpp in Sources */,
@@ -1668,7 +1678,7 @@
 					"-Wno-comment",
 					"-Wno-unused-value",
 				);
-				WorkspaceDir = "$(SRCROOT)/../../../nodeapp/seed/macos";
+				WorkspaceDir = "$(SRCROOT)/../../../nodeapp/seed/metaseed";
 			};
 			name = Debug;
 		};
@@ -1744,7 +1754,7 @@
 					"-Wno-comment",
 					"-Wno-unused-value",
 				);
-				WorkspaceDir = "$(SRCROOT)/../../../nodeapp/seed/macos";
+				WorkspaceDir = "$(SRCROOT)/../../../nodeapp/seed/metaseed";
 			};
 			name = Release;
 		};

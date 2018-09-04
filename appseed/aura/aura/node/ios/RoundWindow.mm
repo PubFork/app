@@ -146,8 +146,6 @@
 - (void)mainWindowChanged:(NSNotification *)aNotification
 {
    
-	[closeButton setNeedsDisplay];
-   
 }
 
 //
@@ -315,20 +313,6 @@
 }
 
 
-
-
--(void) display
-{
-//   [childContentView redraw_view];
-   
-   [m_controller->childContentView setNeedsDisplay];
-   
-   
-//   [[NSRunLoop currentRunLoop] runMode: NSDefaultRunLoopMode beforeDate: [NSDate date]];
-
-}
-
-
 - (void)windowDidResize:(NSNotification *)notification
 {
    
@@ -445,8 +429,6 @@
    m_controller->childContentView->m_roundwindow = nil;
    
    m_controller->childContentView = nil;
-   
-   closeButton = nil;
    
 //   [m_controller release];
    

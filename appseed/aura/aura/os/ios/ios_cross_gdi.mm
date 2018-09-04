@@ -62,7 +62,7 @@ int GetWkspaceCount()
 //WINBOOL SetForegroundWindow(oswindow window)
 //{
 //   
-//   if(!::IsWindow(window))
+//   if(!::is_window(window))
 //      return FALSE;
 //   
 //    /*
@@ -87,7 +87,7 @@ int GetWkspaceCount()
 //WINBOOL BringWindowToTop(oswindow window)
 //{
 //   
-//   if(!::IsWindow(window))
+//   if(!::is_window(window))
 //      return FALSE;
 //    
 //   /*

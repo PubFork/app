@@ -36,22 +36,6 @@ namespace file_watcher
    {
    public:
 
-//#if defined METROWIN &&  defined(__cplusplus_winrt)
-//
-//
-//      class action
-//      {
-//      public:
-//
-//
-//         watch_ref ^                                              m_watchref;
-//
-//         ::Windows::Storage::Search::IStorageQueryResultBase ^    m_searchresult;
-//
-//
-//      };
-//
-//#else
 
       class action
       {
@@ -64,9 +48,6 @@ namespace file_watcher
 
 
       };
-
-//#endif
-
 
 
       file_watcher_impl();

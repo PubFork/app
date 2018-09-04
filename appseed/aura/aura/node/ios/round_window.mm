@@ -51,8 +51,26 @@ void round_window::round_window_show()
 void round_window::round_window_redraw()
 {
    
-   ns_main_thread(^{
-      [m_proundwindow : display ];
+   ns_main_async(^{
+      
+      [m_proundwindow->m_controller->childContentView setNeedsDisplay];
+      
+      [m_proundwindow setNeedsDisplay];
+      
+   });
+   
+}
+
+
+void round_window::round_window_redraw_sync()
+{
+   
+   ns_main_async(^{
+      
+      [m_proundwindow->m_controller->childContentView setNeedsDisplay];
+
+      [m_proundwindow setNeedsDisplay];
+      
    });
    
 }
@@ -61,35 +79,46 @@ void round_window::round_window_redraw()
 void round_window::round_window_invalidate()
 {
    
-   [[m_proundwindow dd_invokeOnMainThread] setNeedsDisplay];
-   
+   ns_main_async(^{
+      
+      [m_proundwindow->m_controller->childContentView setNeedsDisplay];
+
+      [m_proundwindow setNeedsDisplay];
+      
+   });
+
 }
 
 
 void round_window::round_window_show_keyboard(bool bShow)
 {
    
-   dispatch_async(dispatch_get_main_queue(), ^{
-      //this runs on the main thread.  Use theData
-   if(bShow)
+   ns_main_async(^
    {
-    
-      [m_proundwindow->m_controller->childContentView roundBecomeFirstResponder];
-      
-   }
-   else
-   {
-      
-      if(m_proundwindow->m_controller->childContentView.isFirstResponder)
+
+      if(bShow)
       {
-      
-         [m_proundwindow->m_controller->childContentView resignFirstResponder];
          
+         m_proundwindow->m_pwindow->m_bCanBecomeFirstResponder = true;
+    
+         [m_proundwindow->m_controller->childContentView becomeFirstResponder];
+      
+      }
+      else
+      {
+         
+         m_proundwindow->m_pwindow->m_bCanBecomeFirstResponder = false;
+      
+         if(m_proundwindow->m_controller->childContentView.isFirstResponder)
+         {
+      
+            [m_proundwindow->m_controller->childContentView resignFirstResponder];
+         
+         }
+      
       }
       
-   }
-   }
-      );
+   });
    
 }
 

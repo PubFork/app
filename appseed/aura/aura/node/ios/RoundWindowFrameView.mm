@@ -14,16 +14,28 @@
 #import "ios_mm.h"
 
 
-void __ios_do_events();
-
-
 @implementation RoundWindowFrameView
 
+
+- (id)initWithFrame:(CGRect)frame
+{
+   self = [super initWithFrame:frame];
+   if (self) {
+      
+//      UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(detectPan:)];
+//      self.gestureRecognizers = @[panRecognizer];
+      
+//      // randomize view color
+//      CGFloat hue = ( arc4random() % 256 / 256.0 );  //  0.0 to 1.0
+//      CGFloat saturation = ( arc4random() % 128 / 256.0 ) + 0.5;  //  0.5 to 1.0, away from white
+//      CGFloat brightness = ( arc4random() % 128 / 256.0 ) + 0.5;  //  0.5 to 1.0, away from black
+//      UIColor *color = [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:1];
 //
-// resizeRect
-//
-// Returns the bounds of the resize box.
-//
+//      self.backgroundColor = color;
+   }
+   return self;
+}
+
 - (CGRect)resizeRect
 {
    
@@ -59,10 +71,11 @@ void __ios_do_events();
    round_window * p = m_roundwindow->m_pwindow;
    
 //   CGPoint point = [[self window] convertBaseToScreen:[event locationInWindow]];
-    CGPoint point;
+   CGPoint point;
     
-    point.x = 0;
-    point.y = 0;
+   point.x = 0;
+   
+   point.y = 0;
     
    CGRect e = [[UIScreen mainScreen] bounds];
    
@@ -86,10 +99,11 @@ void __ios_do_events();
    
 //   CGPoint point = [[self window] convertBaseToScreen:[event locationInWindow]];
     
-    CGPoint point;
+   CGPoint point;
     
-    point.x = 0;
-    point.y = 0;
+   point.x = 0;
+
+   point.y = 0;
    
    CGRect e = [[UIScreen mainScreen] bounds];
    
@@ -113,11 +127,11 @@ void __ios_do_events();
    
 //   CGPoint point = [[self window] convertBaseToScreen:[event locationInWindow]];
     
-    CGPoint point;
+   CGPoint point;
     
-    point.x = 0;
+   point.x = 0;
     
-    point.y = 0;
+   point.y = 0;
    
    CGRect e = [[UIScreen mainScreen] bounds];
    
@@ -148,10 +162,11 @@ void __ios_do_events();
    round_window * p = m_roundwindow->m_pwindow;
    
 //   CGPoint point = [[self window] convertBaseToScreen:[event locationInWindow]];
-    CGPoint point;
+   CGPoint point;
     
-    point.x = 0;
-    point.y = 0;
+   point.x = 0;
+   
+   point.y = 0;
    
    CGRect e = [[UIScreen mainScreen] bounds];
    
@@ -263,22 +278,29 @@ void __ios_do_events();
 //	}
 }
 
+
 - (BOOL) isFlipped
 {
+   
    return YES;
+   
 }
 
 
-
-- (BOOL)acceptsFirstResponder
-{
-   return TRUE;
-}
+//- (BOOL)acceptsFirstResponder
+//{
+//
+// return TRUE;
+//
+//}
 
 //- (BOOL) acceptsFirstMouse:(NSEvent *)theEvent
 //{
-  // [self mouseDown: theEvent];
-   //return YES;
+//
+// [self mouseDown: theEvent];
+//
+// return YES;
+//
 //}
 
 
@@ -355,8 +377,9 @@ void __ios_do_events();
    
 }
 
-- (void)keyDown:(UIEvent *)event {
-   
+
+- (void)keyDown:(UIEvent *)event
+{
 
    ::user::e_key ekey = event_key(event);
    
@@ -369,8 +392,9 @@ void __ios_do_events();
    
 }
 
-- (void)keyUp:(UIEvent *)event {
-   
+
+- (void)keyUp:(UIEvent *)event
+{
    
    ::user::e_key ekey = event_key(event);
    
@@ -384,13 +408,12 @@ void __ios_do_events();
 }
 
 
-- (BOOL)textViewShouldBeginEditing:(UITextView * ) pview
-{
-   
-   return YES;
-   
-}
-
+//- (BOOL)textViewShouldBeginEditing:(UITextView * ) pview
+//{
+//
+//   return YES;
+//
+//}
 
 
 - (void)flagsChanged:(UIEvent *)event
@@ -400,12 +423,21 @@ void __ios_do_events();
    
 //   if([event modifierFlags] & NSShiftKeyMask)
    {
+      
       if(!m_bShift)
       {
+         
          m_bShift = true;
+         
          if(p->round_window_key_down(::user::key_shift))
+         {
+            
             return;
+            
+         }
+         
       }
+      
    }
 //   else
    {
@@ -490,54 +522,154 @@ void __ios_do_events();
 
 - (void)addGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
 {
-   /*[super addGestureRecognizer:gestureRecognizer];
+   [super addGestureRecognizer:gestureRecognizer];
    // Check the new gesture recognizer is the same kind as the one we want to implement
    // Note:
    // This works because `UITextTapRecognizer` is a subclass of `UITapGestureRecognizer`
    // and the text view has some `UITextTapRecognizer` added :)
-   if ([gestureRecognizer isKindOfClass:[UITapGestureRecognizer class]]) {
-      UITapGestureRecognizer *tgr = (UITapGestureRecognizer *)gestureRecognizer;
-      if ([tgr numberOfTapsRequired] == 1 &&
-          [tgr numberOfTouchesRequired] == 1) {
-         // If found then add self to its targets/actions
-         [tgr addTarget:self action:@selector(_handleOneFingerTap:)];
-      }
-   }*/
+//   if ([gestureRecognizer isKindOfClass:[UITapGestureRecognizer class]]) {
+//      UITapGestureRecognizer *tgr = (UITapGestureRecognizer *)gestureRecognizer;
+//      if ([tgr numberOfTapsRequired] == 1 &&
+//          [tgr numberOfTouchesRequired] == 1) {
+//         // If found then add self to its targets/actions
+//         [tgr addTarget:self action:@selector(_handleOneFingerTap:)];
+//      }
+//   }
 }
+
+
 - (void)removeGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
 {
    // Check the new gesture recognizer is the same kind as the one we want to implement
    // Read above note
-/*   if ([gestureRecognizer isKindOfClass:[UITapGestureRecognizer class]]) {
-      UITapGestureRecognizer *tgr = (UITapGestureRecognizer *)gestureRecognizer;
-      if ([tgr numberOfTapsRequired] == 1 &&
-          [tgr numberOfTouchesRequired] == 1) {
-         // If found then remove self from its targets/actions
-         [tgr removeTarget:self action:@selector(_handleOneFingerTap:)];
-      }
-   }
+//   if ([gestureRecognizer isKindOfClass:[UITapGestureRecognizer class]]) {
+//      UITapGestureRecognizer *tgr = (UITapGestureRecognizer *)gestureRecognizer;
+//      if ([tgr numberOfTapsRequired] == 1 &&
+//          [tgr numberOfTouchesRequired] == 1) {
+//         // If found then remove self from its targets/actions
+//         [tgr removeTarget:self action:@selector(_handleOneFingerTap:)];
+//      }
+//   }
    [super removeGestureRecognizer:gestureRecognizer];
- 
- 
- */
-   
    
 }
+
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+   
+   [super touchesBegan:touches withEvent:event];
+   
+   round_window * p = m_roundwindow->m_pwindow;
+   
+   BOOL allTouchesEnded = ([touches count] == [[event touchesForView:self] count]);
+   
+   if ([touches count] == 1)
+   {
+      
+      UITouch *touch = [touches anyObject];
+      
+      if ([touch tapCount] == 1)
+      {
+         
+         CGPoint point = [touch locationInView:self];
+         
+         int x = point.x;
+         
+         int y = point.y;
+         
+         m_ptLastTouchBegan = point;
+         
+         p->round_window_mouse_down(x, y);
+         
+//         if(allTouchesEnded)
+//         {
+//
+//            p->round_window_mouse_up(x, y);
+//
+//         }
+         
+      }
+      
+   }
+   
+}
+
+
+//- (void) detectPan:(UIPanGestureRecognizer *) uiPanGestureRecognizer
+//{
+//
+//   CGPoint translation = [uiPanGestureRecognizer translationInView:self.superview];
+//
+//   round_window * p = m_roundwindow->m_pwindow;
+//
+//   int x = m_ptLastTouchBegan.x + translation.x;
+//
+//   int y = m_ptLastTouchBegan.y + translation.y;
+//
+//   p->round_window_mouse_dragged(x, y);
+//
+//}
+
+
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+   
+   [super touchesMoved:touches withEvent:event];
+   
+   round_window * p = m_roundwindow->m_pwindow;
+   
+   if ([touches count] == 1)
+   {
+        
+      UITouch *touch = [touches anyObject];
+        
+      if ([touch tapCount] == 1)
+      {
+            
+         CGPoint point = [touch locationInView:self];
+            
+         int x = point.x;
+            
+         int y = point.y;
+         
+         m_ptLastTouchBegan = point;
+           
+         p->round_window_mouse_moved(x, y);
+            
+      }
+      else
+      {
+            
+         //            twoFingerTapIsPossible = NO;
+            
+      }
+        
+   }
+   else if([touches count] <= 0)
+   {
+      
+      p->round_window_mouse_up(m_ptLastTouchBegan.x, m_ptLastTouchBegan.y);
+   
+   }
+   
+}
+
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
    
    [super touchesEnded:touches withEvent:event];
-    
+   
    BOOL allTouchesEnded = ([touches count] == [[event touchesForView:self] count]);
    
    round_window * p = m_roundwindow->m_pwindow;
-    
+   
    if ([touches count] == 1 && allTouchesEnded)
    {
-        
+      
       UITouch *touch = [touches anyObject];
-        
+      
       // --------------------------------------------------------
       //
       //   tap/ClickCount == 0 :
@@ -547,54 +679,54 @@ void __ios_do_events();
       //
       if ([touch tapCount] == 0)
       {
-          
+         
          CGPoint point = [touch locationInView:self];
-          
+         
          int x = point.x;
-          
+         
          int y = point.y;
-          
+         
          p->round_window_mouse_up(x, y);
-          
+         
       }
       else if ([touch tapCount] == 1)
       {
-            
+         
          // if touch is a single tap, store its location so we can average it with the second touch location
-            
+         
          CGPoint point = [touch locationInView:self];
-            
+         
          //CGRect e = [[UIScreen mainScreen] applicationFrame];
-            
+         
          //int H = (int) e.size.height;
-            
+         
          int x = point.x;
-            
+         
          //int y = H - point.y;
-           
+         
          int y = point.y;
-            
+         
          p->round_window_mouse_up(x, y);
-            
+         
       }
       else
       {
-            
+         
          //            twoFingerTapIsPossible = NO;
-            
+         
       }
       
    }
    
-//   CGPoint point = [[self window] convertBaseToScreen:[event locationInWindow]];
+   //   CGPoint point = [[self window] convertBaseToScreen:[event locationInWindow]];
    
 }
 
 
-- (void)touchesCanceled:(NSSet *)touches withEvent:(UIEvent *)event
+- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
    
-   [super touchesEnded:touches withEvent:event];
+   [super touchesCancelled:touches withEvent:event];
    
    BOOL allTouchesEnded = ([touches count] == [[event touchesForView:self] count]);
    
@@ -639,111 +771,6 @@ void __ios_do_events();
 }
 
 
-- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
-{
-   
-   [super touchesMoved:touches withEvent:event];
-   
-   round_window * p = m_roundwindow->m_pwindow;
-   
-   if ([touches count] == 1)
-   {
-        
-      UITouch *touch = [touches anyObject];
-        
-      if ([touch tapCount] == 1)
-      {
-            
-         // if touch is a single tap, store its location so we can average it with the second touch location
-            
-         CGPoint point = [touch locationInView:self];
-            
-         //CGRect e = [[UIScreen mainScreen] applicationFrame];
-            
-         //int H = (int) e.size.height;
-            
-         int x = point.x;
-            
-         //            int y = H - point.y;
-           
-         int y = point.y;
-           
-         p->round_window_mouse_moved(x, y);
-            
-      }
-      else
-      {
-            
-         //            twoFingerTapIsPossible = NO;
-            
-      }
-        
-   }
-   
-}
-
-
-//
-// mouseDown:
-//
-// Handles mouse clicks in our frame. Two actions:
-//	- click in the resize box should resize the window
-//	- click anywhere else will drag the window.
-//
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
-   
-   [super touchesBegan:touches withEvent:event];
-    
-   round_window * p = m_roundwindow->m_pwindow;
- 
-   BOOL allTouchesEnded = ([touches count] == [[event touchesForView:self] count]);
-
-   if ([touches count] == 1)
-   {
-        
-      UITouch *touch = [touches anyObject];
-        
-      if ([touch tapCount] == 1)
-      {
-            
-         // if touch is a single tap, store its location so we can average it with the second touch location
-            
-         CGPoint point = [touch locationInView:self];
-            
-         // CGRect e = [[UIScreen mainScreen] applicationFrame];
-            
-         // int H = (int) e.size.height;
-            
-         int x = point.x;
-            
-         // int y = H - point.y;
-           
-         int y = point.y;
-           
-         p->round_window_mouse_down(x, y);
-           
-         if(allTouchesEnded)
-         {
-          
-            //usleep(1500 * 1000);
-             
-            p->round_window_mouse_up(x, y);
-              
-         }
-            
-      }
-      else
-      {
-            
-            //            twoFingerTapIsPossible = NO;
-            
-      }
-        
-   }
-   
-}
-
 //- (void)drawLayer:(CALayer *)layer
 //        inContext:(CGContextRef)ctx;
 //{
@@ -768,26 +795,64 @@ void __ios_do_events();
 - (void)drawRect:(CGRect)rect
 {
    
-   [[UIColor whiteColor] set];
-   
-   UIRectFill(rect);
-   
-   if(m_roundwindow == nil)
-      return;
-  
-   round_window * p = m_roundwindow->m_pwindow;
-   
    CGContextRef context = UIGraphicsGetCurrentContext();
    
+   CGContextResetClip(context);
+   
    CGContextSaveGState(context);
+
+   [[UIColor whiteColor] set];
+
+   UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
    
-   int x = p->round_window_get_x();
+   if(orientation == UIInterfaceOrientationPortrait)
+   {
+      
+   }
+   else
+   {
+      
+//      int w = rect.size.width;
+//
+//      rect.size.width = rect.size.height;
+//
+//      rect.size.height = w;
+      
+   }
+
+   int cx = rect.size.width;
    
-   int y = p->round_window_get_y();
+   int cy = rect.size.height;
    
-   CGContextTranslateCTM(context, x, y);
+   if(m_roundwindow != nil)
+   {
+  
+      round_window * p = m_roundwindow->m_pwindow;
    
-   p->round_window_draw(context);
+      if(orientation == UIInterfaceOrientationPortrait)
+      {
+         
+      }
+      else
+      {
+
+         //CGContextTranslateCTM(context, cx / 2, cy / 2);
+         //CGContextRotateCTM(context, M_PI / 2.0);
+         //CGContextTranslateCTM(context, -cy / 2, -cx / 2);
+
+      }
+
+      UIRectFill(rect);
+      
+      int x = p->round_window_get_x();
+   
+      int y = p->round_window_get_y();
+   
+      CGContextTranslateCTM(context, x, y);
+
+      p->round_window_draw(context, cx, cy);
+      
+   }
    
    CGContextRestoreGState(context);
    
@@ -901,14 +966,7 @@ void __ios_do_events();
 */
 
 
--(void) redraw_view
-{
-   
-   [self setNeedsDisplay];
-   
-   __ios_do_events();
-   
-}
+
 
 //- (BOOL)becomeFirstResponder
 //{
@@ -918,15 +976,16 @@ void __ios_do_events();
 //}
 
 
-- (BOOL)roundBecomeFirstResponder
-{
-   
-   [[self dd_invokeOnMainThread] becomeFirstResponder ];
-//   [super ];
-   
-   return TRUE;
-   
-}
+//- (BOOL)becomeFirstResponder
+//{
+//
+//   round_window * p = m_roundwindow->m_pwindow;
+//
+//   return p->round_window_become_first_responder();
+//
+//}
+
+
 
 @end
 
@@ -1164,22 +1223,9 @@ void __ios_do_events();
       
    }*/
    
-   return ::user::key_none;;
-   
+   return ::user::key_none;
    
 }
-
-
-void __ios_do_events()
-
-{
-
-   
-   [[NSRunLoop currentRunLoop] runMode: NSDefaultRunLoopMode beforeDate: [NSDate date]];
-
-}
-
-
 
 
 

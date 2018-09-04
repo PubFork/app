@@ -1483,6 +1483,10 @@ namespace file
             }
 
             property_set set(papp);
+            
+            set["raw_http"] = true;
+            
+            set["disable_common_name_cert_check"] = true;
 
             string strCandidate = stra.implode("|");
 

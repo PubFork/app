@@ -73,9 +73,16 @@ void * CreateAlphaCursor(void * dib, int xHotSpot, int yHotSpot)
    else
    {
       
+#ifdef MACOS
+      
       ::draw2d::dib * pdib = (::draw2d::dib *) dib;
       
       return nscursor_from_cgimageref(cgimageref_from_dib(pdib), pdib->m_size.cx, pdib->m_size.cy, xHotSpot, yHotSpot);
+#else
+      
+      return NULL;
+      
+#endif
 
    }
    
@@ -86,8 +93,12 @@ void set_cursor_dib(void * dib, int xHotSpot, int yHotSpot)
    
    if(dib == NULL)
    {
+   
+      #ifdef MACOS
       
       ns_set_cursor_cgimageref(NULL, 0, 0, 0, 0);
+      
+#endif
       
    }
    else
@@ -95,7 +106,11 @@ void set_cursor_dib(void * dib, int xHotSpot, int yHotSpot)
       
       ::draw2d::dib * pdib = (::draw2d::dib *) dib;
    
+#ifdef MACOS
+      
       ns_set_cursor_cgimageref(cgimageref_from_dib(pdib), pdib->m_size.cx, pdib->m_size.cy, xHotSpot, yHotSpot);
+      
+#endif
       
    }
    

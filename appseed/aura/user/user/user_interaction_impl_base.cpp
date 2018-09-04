@@ -1692,6 +1692,13 @@ namespace user
       return m_pui->message_handler(pbase);
 
    }
+   
+   
+   void interaction_impl_base::show_software_keyboard(bool bShow, string str, strsize iBeg, strsize iEnd)
+   {
+      
+      
+   }
 
 
 } // namespace user

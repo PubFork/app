@@ -1,6 +1,7 @@
 
 bool _ui_library_dir(char * psz, unsigned int * puiSize);
 
+
 namespace ios
 {
    
@@ -8,13 +9,11 @@ namespace ios
    dir::dir(::aura::application *   papp) :
    ::object(papp),
    ::file::dir::system(papp),
-   ::file_watcher::file_watcher(papp),
-   ::file_watcher::listener_thread(papp)
+   ::file_watcher::file_watcher(papp)
    {
       
       
    }
-   
    
    
    ::file::listing & dir::root_ones(::file::listing & listing,::aura::application * papp)
@@ -635,25 +634,6 @@ namespace ios
    bool dir::is(const ::file::path & lpcszPath, ::aura::application * papp)
    {
       
-      bool bIsDir;
-      
-      DWORD dwLastError;
-      
-      if(m_isdirmap.lookup(lpcszPath, bIsDir, dwLastError))
-      {
-         
-         if(!bIsDir)
-         {
-            
-            set_last_error(dwLastError);
-            
-         }
-         
-         return bIsDir;
-         
-      }
-      
-      
       if(::file::dir::system::is(lpcszPath, papp))
       {
          
@@ -685,9 +665,7 @@ namespace ios
       
 #endif
       
-      bIsDir = ::dir::is(strPath);
-      
-      m_isdirmap.set(lpcszPath, bIsDir, bIsDir ? 0 : ::get_last_error());
+      bool bIsDir = ::dir::_is(strPath);
       
       return bIsDir;
       
@@ -777,18 +755,13 @@ namespace ios
       }
       
       
-      bool bIsDir;
-      
-      DWORD dwLastError;
-      
-      if(m_isdirmap.lookup(str, bIsDir, dwLastError, (int32_t) iLast))
-         return bIsDir;
-      
-      
       if(papp->m_bZipIsDir && iLast >= 3  && !strnicmp_dup(&((const char *) str)[iLast - 3], ".zip", 4))
       {
-         m_isdirmap.set(str.Left(iLast + 1), true, 0);
+         
+         //m_isdirmap.set(str.Left(iLast + 1), true, 0);
+         
          return true;
+         
       }
       
       wstring wstrPath;
@@ -813,11 +786,10 @@ namespace ios
 //         }
 //      }
       
-      bIsDir = ::dir::is(::str::international::unicode_to_utf8(wstrPath));
-      
-      m_isdirmap.set(str.Left(iLast + 1), bIsDir, bIsDir ? 0 : ::get_last_error());
+      bool bIsDir = ::dir::is(::str::international::unicode_to_utf8(wstrPath));
       
       return bIsDir;
+      
    }
    
    
@@ -871,8 +843,6 @@ namespace ios
                return false;
                
             }
-            
-            m_isdirmap.set(stra[i], true, 0);
             
          }
          
@@ -1616,7 +1586,7 @@ namespace ios
       
       m_pathHome = m_strCa2/"Documents";
       
-      ios_set_home(System.m_strIosHome);
+      nodeos_set_home(System.m_strIosHome);
       
       ::file::path str = m_strCa2 / ".ca2/appdata";
       
@@ -1688,7 +1658,7 @@ namespace ios
       
       System.m_strIosTemp = strTime;
       
-      ios_set_temp(System.m_strIosTemp);
+      nodeos_set_temp(System.m_strIosTemp);
       
       str = "/usr/bin";
       

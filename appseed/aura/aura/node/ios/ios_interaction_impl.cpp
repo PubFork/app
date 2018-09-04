@@ -4,6 +4,9 @@
 #include "aura/user/user/user.h"
 
 
+void ns_main_async(dispatch_block_t block);
+
+
 strsize str_begins_common(const string & str1, const string & str2)
 {
 
@@ -200,6 +203,7 @@ namespace ios
       //m_bMouseHover        = false;
       m_oswindow           = NULL;
       m_proundwindow = NULL;
+      m_bCanBecomeFirstResponder = false;
 
    }
 
@@ -211,6 +215,7 @@ namespace ios
 
       set_handle(NULL);
       m_proundwindow = NULL;
+      m_bCanBecomeFirstResponder = false;
 
    }
 
@@ -396,17 +401,19 @@ namespace ios
    /////////////////////////////////////////////////////////////////////////////
    // user::interaction creation
 
-   bool interaction_impl::create_window_ex(::user::interaction * pui,DWORD dwExStyle, const char * lpszClassName,
-                                           const char * lpszWindowName, DWORD dwStyle,
-                                           const RECT& rect, ::user::interaction *  pParentWnd, id id,
-                                           LPVOID lpParam /* = NULL */)
+   bool interaction_impl::create_window_ex(
+                                           ::user::interaction * pui,
+                                           ::user::create_struct & cs,
+                                           ::user::interaction * pParentWnd,
+                                           id id)
    {
 
-      if(!native_create_window_ex(pui, dwExStyle, lpszClassName, lpszWindowName, dwStyle,
-                                  rect,
-                                  pParentWnd == NULL ? NULL : pParentWnd->get_safe_handle(), id, lpParam))
+      if(!native_create_window_ex(pui, cs,
+                                  pParentWnd == NULL ? NULL : pParentWnd->get_safe_handle(), id))
       {
+         
          return false;
+         
       }
 
 
@@ -415,11 +422,11 @@ namespace ios
    }
 
 
-   bool interaction_impl::native_create_window_ex(::user::interaction * pui,DWORD dwExStyle, const char * lpszClassName,
-         const char * lpszWindowName, DWORD dwStyle,
-         const RECT& rectParam,
-         oswindow hWndParent, id id,
-         ::user::create_struct & cs, LPVOID lpParam)
+   bool interaction_impl::native_create_window_ex(
+                                                  ::user::interaction * pui,
+                                                  ::user::create_struct & cs,
+                                                  oswindow oswindowParent,
+                                                  id id)
    {
 
       if(::is_window(get_handle()))
@@ -431,22 +438,7 @@ namespace ios
 
       m_pui = pui;
 
-      //      ASSERT(lpszClassName == NULL || __is_valid_string(lpszClassName) ||
-      //       __is_valid_atom(lpszClassName));
-      ENSURE_ARG(lpszWindowName == NULL || __is_valid_string(lpszWindowName));
-
-      // allow modification of several common create parameters
-      ::user::create_struct cs;
-      cs.dwExStyle = dwExStyle;
-      cs.lpszClass = lpszClassName;
-      cs.lpszName = lpszWindowName;
-      cs.style = dwStyle;
-      cs = rectParam;
-      //      cs.hwndParent = hWndParent;
-      //   cs.hMenu = hWndParent == NULL ? NULL : nIDorHMenu;
-      cs.hMenu = NULL;
-      //      cs.hInstance = System.m_hInstance;
-      cs.lpCreateParams = lpParam;
+      ENSURE_ARG(cs.lpszName == NULL || __is_valid_string(cs.lpszName));
 
       if(m_pui != NULL)
       {
@@ -481,14 +473,16 @@ namespace ios
          cs.style &= ~WS_CHILD;
 
       }
-
-      //      hook_window_create(this);
+      
+      ::rect r;
+      
+      cs.get_rect(r);
 
       CGRect rect;
 
-      copy(rect, &rectParam);
+      copy(rect, r);
 
-      if(hWndParent == HWND_MESSAGE)
+      if(oswindowParent == HWND_MESSAGE)
       {
 
          return true;
@@ -499,7 +493,7 @@ namespace ios
 
          m_oswindow = oswindow_get(new_round_window(this, rect));
 
-         ::copy(&m_rectParentClient, &rectParam);
+         ::copy(&m_rectParentClient, r);
 
          m_spgraphics.alloc(allocer());
 
@@ -538,11 +532,11 @@ namespace ios
       // can't use for desktop or pop-up windows (use CreateEx instead)
       ASSERT(pParentWnd != NULL);
       ASSERT((dwStyle & WS_POPUP) == 0);
+      
+      ::user::create_struct cs(0, lpszClassName, lpszWindowName, dwStyle | WS_CHILD,
+                               rect, (LPVOID) pContext);
 
-      return create_window_ex(pui, 0, lpszClassName, lpszWindowName,
-                              dwStyle | WS_CHILD,
-                              rect,
-                              pParentWnd, id, (LPVOID)pContext);
+      return create_window_ex(pui, cs, pParentWnd, id);
    }
 
 
@@ -586,7 +580,8 @@ namespace ios
 
    bool interaction_impl::create_message_queue(::user::interaction * pui,const char * pszName)
    {
-      if(is_window())
+      
+      if(IsWindow())
       {
 
          set_window_text(pszName);
@@ -594,12 +589,20 @@ namespace ios
       }
       else
       {
-         if(!native_create_window_ex(pui, 0, NULL, pszName, WS_CHILD, null_rect(), HWND_MESSAGE))
+         
+         ::user::create_struct cs(0, NULL, pszName, WS_CHILD);
+         
+         if(!native_create_window_ex(pui, cs, HWND_MESSAGE, pszName))
          {
+            
             return false;
+            
          }
+         
       }
+      
       return true;
+      
    }
 
 
@@ -627,6 +630,8 @@ namespace ios
       IGUI_MSG_LINK(WM_ERASEBKGND, pinterface, this, &interaction_impl::_001OnEraseBkgnd);
       IGUI_MSG_LINK(WM_MOVE, pinterface, this, &interaction_impl::_001OnMove);
       IGUI_MSG_LINK(WM_SIZE, pinterface, this, &interaction_impl::_001OnSize);
+      IGUI_MSG_LINK(WM_SETFOCUS, pinterface, this, &interaction_impl::_001OnSetFocus);
+      IGUI_MSG_LINK(WM_KILLFOCUS, pinterface, this, &interaction_impl::_001OnKillFocus);
 //      IGUI_MSG_LINK(WM_SHOWWINDOW        , pinterface, this, &interaction_impl::_001OnShowWindow);
 //      IGUI_MSG_LINK(ca2m_PRODEVIAN_SYNCH , pinterface, this, &interaction_impl::_001OnProdevianSynch);
       //      //IGUI_MSG_LINK(WM_TIMER             , pinterface, this, &interaction_impl::_001OnTimer);
@@ -646,7 +651,7 @@ namespace ios
    {
       UNREFERENCED_PARAMETER(pobj);
 
-      size sizeRequest = m_rectParentClientRequest.size();
+      size sizeRequest = m_rectParentClientRequest.get_size();
 
       for(auto & pui : m_pui->m_uiptraChild)
       {
@@ -1336,7 +1341,7 @@ namespace ios
 
          ::user::interaction * puiFocus = dynamic_cast < ::user::interaction * > (Session.get_keyboard_focus());
          if(puiFocus != NULL
-               && puiFocus->is_window()
+               && puiFocus->IsWindow()
                && puiFocus->GetTopLevel() != NULL)
          {
             puiFocus->send(pkey);
@@ -1361,15 +1366,20 @@ namespace ios
 
       if(pbase->m_id == ::message::message_event)
       {
+         
          if(m_pui != NULL)
          {
-            m_pui->on_control_event((::user::control_event *) pbase->m_lparam);
+            
+            m_pui->on_control_event(pbase->m_lparam.cast < ::user::control_event >());
+            
          }
          else
          {
-            on_control_event((::user::control_event *) pbase->m_lparam);
+
+            on_control_event(pbase->m_lparam.cast < ::user::control_event > ());
+            
          }
-         return;
+         
       }
 
       route_message(pbase);
@@ -2151,7 +2161,7 @@ namespace ios
 
        // be very careful here...
        if (::is_window(hWndSave))
-       ::SetActiveWindow(hWndSave);
+       ::set_active_window(hWndSave);
        if (::is_window(hWndFocus))
        ::SetFocus(hWndFocus);
        }
@@ -2164,7 +2174,7 @@ namespace ios
 
    void interaction_impl::WalkPreTranslateTree(::user::interaction *  puiStop, ::message::message * pobj)
    {
-      ASSERT(puiStop == NULL || puiStop->is_window());
+      ASSERT(puiStop == NULL || puiStop->IsWindow());
       ASSERT(pobj != NULL);
 
       SCAST_PTR(::message::base, pbase, pobj);
@@ -2422,6 +2432,234 @@ namespace ios
       //      return (int32_t)Default();
    }
 
+   
+   void interaction_impl::prodevian_task()
+   {
+      
+      ::user::interaction_impl::prodevian_task();
+      
+//      if (m_pthreadProDevian.is_null())
+//      {
+//         
+//         m_pthreadProDevian = fork([&]()
+//                                   {
+//                                      
+//                                      DWORD dwStart;
+//                                      
+//                                      bool bUpdateScreen = false;
+//                                      
+//                                      while (::get_thread_run())
+//                                      {
+//                                         
+//                                         try
+//                                         {
+//                                            
+//                                            dwStart = ::get_tick_count();
+//                                            
+//                                            if(m_pui == NULL)
+//                                            {
+//                                               
+//                                               break;
+//                                               
+//                                            }
+//                                            
+////                                            if(m_oswindow != NULL)
+////                                            {
+////                                               
+////                                               m_oswindow->m_bNsWindowRect = false;
+////                                               
+////                                            }
+//                                            
+//                                            if (!m_pui->m_bLockWindowUpdate)
+//                                            {
+//                                               
+//                                               bool bUpdateBuffer =
+//                                               m_pui->m_bProDevian ||
+//                                               m_pui->check_need_layout()||
+//                                               m_pui->check_need_zorder() ||
+//                                               m_pui->check_show_flags();
+//                                               
+//                                               if(bUpdateBuffer)
+//                                               {
+//                                                  
+//                                               }
+//                                               else if(m_pui->IsWindowVisible())
+//                                               {
+//                                                  
+//                                                  bUpdateBuffer = m_pui->has_pending_graphical_update();
+//                                                  
+//                                               }
+//                                               
+//                                               if(bUpdateBuffer)
+//                                               {
+//                                                  
+//                                                  _001UpdateBuffer();
+//                                                  
+//                                                  if(m_pui == NULL)
+//                                                  {
+//                                                     
+//                                                     break;
+//                                                     
+//                                                  }
+//                                                  
+//                                                  m_pui->on_after_graphical_update();
+//                                                  
+//                                                  bUpdateScreen = true;
+//                                                  
+//                                               }
+//                                               
+//                                            }
+//                                            
+//                                            if(bUpdateScreen)
+//                                            {
+//                                               
+//                                               u64 now = get_nanos();
+//                                               
+//                                               u64 delta1 = now - m_uiLastUpdateBeg;
+//                                               
+//                                               i64 delta2 = (i64) m_uiLastUpdateBeg - (i64) m_uiLastUpdateEnd;
+//                                               
+//                                               u64 frameNanos = 1000000000LL / m_dFps;
+//                                               
+//                                               if(delta1 < frameNanos || (delta2 > 0 && delta2 < 10000000000LL))
+//                                               {
+//                                                  
+//                                                  output_debug_string("opt_out set need redraw");
+//                                                  
+//                                               }
+//                                               else
+//                                               {
+//                                                  
+//                                                  bUpdateScreen = false;
+//                                                  
+//                                                  _001UpdateScreen();
+//                                                  
+//                                               }
+//                                               
+//                                            }
+//                                            
+//                                            DWORD dwSpan = ::get_tick_count() - dwStart;
+//                                            
+//                                            if (dwSpan < 50)
+//                                            {
+//                                               
+//                                               Sleep(50 - dwSpan);
+//                                               
+//                                            }
+//                                            
+//                                         }
+//                                         catch(...)
+//                                         {
+//                                            
+//                                            break;
+//                                            
+//                                         }
+//                                         
+//                                      }
+//                                      
+//                                      output_debug_string("m_pthreadDraw has finished!");
+//                                      
+//                                   });
+//         
+//      }
+
+      
+//   if(m_pthreadProDevian.is_null())
+//   {
+//
+//      m_pthreadProDevian = m_pui->fork([&]()
+//                                       {
+//
+//                                          DWORD dwStart;
+//
+//                                          bool bUpdateScreen = false;
+//
+//                                          while (::get_thread_run())
+//                                          {
+//
+//                                             try
+//                                             {
+//
+//                                                dwStart = ::get_tick_count();
+//
+//                                                if(m_pui == NULL)
+//                                                {
+//
+//                                                   break;
+//
+//                                                }
+//
+//                                                if (!m_pui->m_bLockWindowUpdate)
+//                                                {
+//
+//                                                   bool bUpdateBuffer = m_pui->check_need_layout()
+//                                                   || m_pui->check_need_zorder() || m_pui->check_show_flags();
+//
+//                                                   if(bUpdateBuffer)
+//                                                   {
+//
+//                                                   }
+//                                                   else if(m_pui->IsWindowVisible())
+//                                                   {
+//
+//                                                      bUpdateBuffer = m_pui->has_pending_graphical_update();
+//
+//                                                   }
+//
+//                                                   if(bUpdateBuffer)
+//                                                   {
+//
+//                                                      _001UpdateBuffer();
+//
+//                                                      m_pui->on_after_graphical_update();
+//
+//                                                      bUpdateScreen = true;
+//
+//                                                   }
+//
+//                                                }
+//
+//                                                if(bUpdateScreen)
+//                                                {
+//
+//                                                   bUpdateScreen = false;
+//
+//                                                   _001UpdateScreen();
+//
+//                                                }
+//
+//                                                DWORD dwSpan = ::get_tick_count() - dwStart;
+//
+//                                                if (dwSpan < 20)
+//                                                {
+//
+//                                                   Sleep(20 - dwSpan);
+//
+//                                                }
+//
+//                                             }
+//                                             catch(...)
+//                                             {
+//
+//                                                break;
+//
+//                                             }
+//
+//                                          }
+//
+//                                          output_debug_string("m_pthreadDraw has finished!");
+//
+//                                          m_pthreadProDevian.release();
+//
+//                                          //release_graphics_resources();
+//
+//
+//                                       });
+//
+//   }
+   
+   }
+
 
    void interaction_impl::_001OnCreate(::message::message * pobj)
    {
@@ -2443,107 +2681,6 @@ namespace ios
       }
       else
       {
-
-         if(m_pthreadDraw != NULL)
-         {
-
-            TRACE("good : opt out 2!");
-
-         }
-         else
-         {
-
-
-            m_pthreadProDevian = m_pui->fork([&]()
-            {
-
-               DWORD dwStart;
-
-               bool bUpdateScreen = false;
-
-               while (::get_thread_run())
-               {
-
-                  try
-                  {
-
-                     dwStart = ::get_tick_count();
-
-                     if(m_pui == NULL)
-                     {
-
-                        break;
-
-                     }
-
-                     if (!m_pui->m_bLockWindowUpdate)
-                     {
-
-                        bool bUpdateBuffer = m_pui->check_need_layout()
-                                             || m_pui->check_need_zorder() || m_pui->check_show_flags();
-
-                        if(bUpdateBuffer)
-                        {
-
-                        }
-                        else if(m_pui->IsWindowVisible())
-                        {
-
-                           bUpdateBuffer = m_pui->has_pending_graphical_update();
-
-                        }
-
-                        if(bUpdateBuffer)
-                        {
-
-                           _001UpdateBuffer();
-
-                           m_pui->on_after_graphical_update();
-
-                           bUpdateScreen = true;
-
-                        }
-
-                     }
-
-                     if(bUpdateScreen)
-                     {
-
-                        bUpdateScreen = false;
-
-                        _001UpdateScreen();
-
-                     }
-
-                     DWORD dwSpan = ::get_tick_count() - dwStart;
-
-                     if (dwSpan < 20)
-                     {
-
-                        Sleep(20 - dwSpan);
-
-                     }
-
-                  }
-                  catch(...)
-                  {
-
-                     break;
-
-                  }
-
-               }
-
-               output_debug_string("m_pthreadDraw has finished!");
-
-               m_pthreadProDevian.release();
-
-               //release_graphics_resources();
-
-
-            });
-
-         }
 
       }
 
@@ -3132,9 +3269,12 @@ namespace ios
       }
    }
 
-   bool interaction_impl::is_window() const
+   
+   bool interaction_impl::IsWindow() const
    {
+      
       return ::is_window(m_oswindow) != FALSE;
+      
    }
 
 
@@ -4174,7 +4314,7 @@ namespace ios
    ::user::interaction *  interaction_impl::GetActiveWindow()
    {
 
-      oswindow oswindow = ::GetActiveWindow();
+      oswindow oswindow = ::get_active_window();
 
       if(oswindow == NULL)
       {
@@ -4201,7 +4341,7 @@ namespace ios
 
       ASSERT(::is_window(get_handle()));
 
-      oswindow oswindow = ::SetActiveWindow(get_handle());
+      oswindow oswindow = ::set_active_window(get_handle());
 
       if(oswindow == NULL)
       {
@@ -4230,7 +4370,7 @@ namespace ios
    ::user::interaction *  interaction_impl::GetFocus()
    {
 
-      oswindow oswindow = ::GetFocus();
+      oswindow oswindow = ::get_focus();
 
       if(oswindow == NULL)
       {
@@ -4259,7 +4399,7 @@ namespace ios
       if(!::is_window(get_handle()))
          return NULL;
 
-      oswindow oswindow = ::SetFocus(get_handle());
+      oswindow oswindow = ::set_focus(get_handle());
 
       if(oswindow == NULL)
       {
@@ -4768,10 +4908,15 @@ namespace ios
    { Default(); }
    void interaction_impl::OnIconEraseBkgnd(::draw2d::graphics *)
    { Default(); }
-   void interaction_impl::OnKillFocus(::user::interaction *)
-   { Default(); }
+
+
    LRESULT interaction_impl::OnMenuChar(UINT, UINT, ::user::menu*)
-   { return Default(); }
+   {
+      
+      return Default();
+      
+   }
+   
    void interaction_impl::OnMenuSelect(UINT, UINT, HMENU)
    { Default(); }
    void interaction_impl::OnMove(int32_t, int32_t)
@@ -5146,10 +5291,10 @@ namespace ios
    }
 
 
-   void interaction_impl::_001UpdateWindow()
+   void interaction_impl::_001UpdateWindow(bool bUpdateBuffer)
    {
 
-      ::user::interaction_impl::_001UpdateWindow();
+      ::user::interaction_impl::_001UpdateWindow(bUpdateBuffer);
 
    }
 
@@ -5201,15 +5346,9 @@ namespace ios
          round_window_redraw();
 
       }
-      else
-      {
-
-         _001UpdateWindow();
-
-      }
-
 
    }
+   
 
    void interaction_impl::offset_viewport_org(LPRECT lprectScreen)
    {
@@ -5226,14 +5365,24 @@ namespace ios
 
    }
 
+   
+   bool interaction_impl::round_window_become_first_responder()
+   {
+      
+   
+   }
+   
 
-   void interaction_impl::round_window_draw(CGContextRef cgc)
+   void interaction_impl::round_window_draw(CGContextRef cgc, int cx, int cy)
    {
 
       {
-         single_lock sl(m_pui->m_pmutex, true);
 
-         //m_uiLastUpdateBeg = get_nanos();
+         single_lock sl(m_pui->m_pmutex, true);
+         
+         m_rectParentClientRequest.size(cx, cy);
+         
+         m_rectParentClient.size(cx, cy);
 
          if(m_bUpdateGraphics)
          {
@@ -5243,9 +5392,6 @@ namespace ios
          }
 
       }
-
-
-      _001UpdateWindow();
 
       cslock slDisplay(cs_display());
 
@@ -5276,14 +5422,12 @@ namespace ios
       ::rect rectClient;
 
       GetWindowRect(rectClient);
-
+      
       g->BitBlt(0, 0, spdibBuffer->m_size.cx, spdibBuffer->m_size.cy, spdibBuffer->get_graphics(), 0, 0, SRCCOPY);
-
-      //m_uiLastUpdateEnd = get_nanos();
-
-
+      
    }
 
+   
    int interaction_impl::round_window_get_x()
    {
 
@@ -5506,26 +5650,46 @@ namespace ios
    }
 
 
-   bool interaction_impl::on_keyboard_focus(::user::elemental * pfocus)
+   void interaction_impl::show_software_keyboard(bool bShow, string str, strsize iBeg, strsize iEnd)
    {
+      
+      ns_main_async(
+      ^{
+      
+         if(bShow)
+         {
+      
+            round_window_set_text(str);
+      
+            round_window_set_sel(iBeg, iEnd);
+         
+         }
+      
+         round_window_show_keyboard(bShow);
+                       
+      });
+      
+   }
 
-      UNREFERENCED_PARAMETER(pfocus);
 
-      round_window_show_keyboard();
-
-      return true;
-
+   void interaction_impl::_001OnSetFocus(::message::message * pmessage)
+   {
 
    }
 
 
-
+   void interaction_impl::_001OnKillFocus(::message::message * pmessage)
+   {
+      
+   }
+   
+   
    void interaction_impl::round_window_mouse_down(double x, double y)
    {
 
       sp(::message::base) spbase;
 
-      if(::GetActiveWindow() != get_handle())
+      if(::get_active_window() != get_handle())
       {
 
          try
@@ -5664,7 +5828,7 @@ namespace ios
 
          m_rectParentClientRequest.size(rect.size.width, rect.size.height);
 
-         sz = m_rectParentClientRequest.size();
+         sz = m_rectParentClientRequest.get_size();
 
       }
 
@@ -5727,7 +5891,7 @@ namespace ios
    void interaction_impl::round_window_activate()
    {
 
-      ::SetActiveWindow(get_handle());
+      ::set_active_window(get_handle());
 
       m_pui->set_need_redraw();
 

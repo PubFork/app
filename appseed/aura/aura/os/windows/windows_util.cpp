@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 
@@ -18,7 +18,7 @@ bool CLASS_DECL_AURA __is_combo_box_control(oswindow oswindow, UINT nStyle)
 
 bool CLASS_DECL_AURA __compare_class_name(oswindow oswindow, const char * lpszClassName)
 {
-   ASSERT(::IsWindow(oswindow));
+   ASSERT(::is_window(oswindow));
    char szTemp[32];
    ::GetClassName(oswindow, szTemp, _countof(szTemp));
    return ::__invariant_stricmp(szTemp, lpszClassName) == 0;

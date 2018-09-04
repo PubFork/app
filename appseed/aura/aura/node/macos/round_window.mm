@@ -194,6 +194,20 @@ void round_window::round_window_redraw()
 }
 
 
+void round_window::round_window_redraw_sync()
+{
+   
+   ns_main_sync(^
+                 {
+                    
+                    [m_proundwindow display];
+                    
+                 });
+   
+}
+
+
+
 void round_window::round_window_invalidate()
 {
    

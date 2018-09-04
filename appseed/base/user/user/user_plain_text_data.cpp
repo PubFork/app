@@ -55,10 +55,15 @@ namespace user
 
    void plain_text_set_sel_command::Undo(plain_text_tree * pdoc)
    {
+      
       UNREFERENCED_PARAMETER(pdoc);
+      
       pdoc->m_iSelBeg = m_iPreviousSelBeg;
+      
       pdoc->m_iSelEnd = m_iPreviousSelEnd;
+      
    }
+   
    void plain_text_set_sel_command::Redo(plain_text_tree * pdoc)
    {
       UNREFERENCED_PARAMETER(pdoc);

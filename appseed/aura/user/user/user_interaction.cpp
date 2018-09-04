@@ -472,7 +472,7 @@ namespace user
    interaction * interaction::GetParent() const
    {
 
-#if defined(METROWIN) || defined(ANDROID)
+#if defined(METROWIN) || defined(ANDROID) || defined(APPLE_IOS)
 
       if (m_pparent == System.m_possystemwindow->m_pui)
       {
@@ -1119,12 +1119,12 @@ restart:
       //}
 
 
-      //if(Session.get_keyboard_focus() == this)
-      //{
+      if(get_wnd()->get_focus_elemental()== this)
+      {
 
-      //   Session.set_keyboard_focus(NULL);
+         get_wnd()->set_focus_elemental(NULL);
 
-      //}
+      }
 
       try
       {
@@ -1875,6 +1875,8 @@ restart:
 
       windowing_output_debug_string("\n_001Print A");
 
+      pgraphics->fill_solid_rect_dim(100, 100, 400, 120, ARGB(255, 255, 255, 0));
+      
       {
 
          ::draw2d::savedc k(pgraphics);
@@ -3536,7 +3538,7 @@ restart:
          //   m_threadptra.add(get_app());
 
          //}
-#if !defined(METROWIN) && !defined(VSNORD)
+#if !defined(METROWIN) && !defined(VSNORD) && !defined(APPLE_IOS)
 
          if ((WS_CHILD & cs.style) == 0)
          {
@@ -8171,9 +8173,9 @@ restart:
 
             output_debug_string("::user::interaction::_001OnLButtonDown Not Focusable\n");
 
-            ///Session.set_keyboard_focus(NULL);
+            Session.set_keyboard_focus(NULL);
 
-            ///Session.user()->set_mouse_focus_LButtonDown(NULL);
+            //Session.user()->set_mouse_focus_LButtonDown(NULL);
 
          }
 
@@ -9736,22 +9738,56 @@ restart:
 
    }
 
+   void interaction::defer_show_software_keyboard(::user::elemental * pelemental, bool bShow, string str, strsize iBeg, strsize iEnd)
+   {
+      
+      synch_lock sl(m_pmutex);
+      
+      m_iSoftwareKeyboardEventId++;
+      
+      index iEventId = m_iSoftwareKeyboardEventId;
+      
+      m_pelementalSoftwareKeyboard = pelemental;
+      
+      fork([=]
+           {
+              
+              Sleep(400);
+              
+              synch_lock sl(m_pmutex);
+              
+              if(iEventId == m_iSoftwareKeyboardEventId)
+              {
+                 
+                 ASSERT(pelemental == m_pelementalSoftwareKeyboard);
+                 
+                 sl.unlock();
+                 
+                 show_software_keyboard(bShow, str, iBeg, iEnd);
+                 
+              }
+              
+           });
+      
+   }
+   
+   
+   void interaction::show_software_keyboard(bool bShow, string str, strsize iBeg, strsize iEnd)
+   {
+
+      if(m_pimpl.is_null())
+      {
+         
+         return;
+         
+      }
+      
+      m_pimpl->show_software_keyboard(bShow, str, iBeg, iEnd);
+      
+   }
+
 
 } // namespace user
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

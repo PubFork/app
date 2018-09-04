@@ -1973,6 +1973,10 @@
 		9AB169CE212230FA00E84DDF /* str_bstring.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AB169CC212230F900E84DDF /* str_bstring.cpp */; };
 		9AB169D421223B7600E84DDF /* file_cpp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AB169D221223B7500E84DDF /* file_cpp.cpp */; };
 		9AB169D521223B7600E84DDF /* file_cpp.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AB169D321223B7500E84DDF /* file_cpp.h */; };
+		9AB3AB44213D5C090076237D /* draw2d_matrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AE47FA820D09ACD00648DFD /* draw2d_matrix.cpp */; };
+		9AB3AB49213D5C0D0076237D /* draw2d_color_matrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AB1676F2121BCFA00E84DDF /* draw2d_color_matrix.cpp */; };
+		9AB3AB4A213D5C170076237D /* visual_font_list.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AE47F8B20D0987000648DFD /* visual_font_list.cpp */; };
+		9AB3AB50213D5F1B0076237D /* draw2d_draw2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AE47FAC20D09B0400648DFD /* draw2d_draw2d.cpp */; };
 		9AB423B5203D20E600EA1483 /* apple_process.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AB423AF203D20E500EA1483 /* apple_process.cpp */; };
 		9AB423B6203D20ED00EA1483 /* apple_process.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AB423AF203D20E500EA1483 /* apple_process.cpp */; };
 		9AB8C85B1EA98EA0007670A6 /* netserver_socket_handler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AB8C8581EA98EA0007670A6 /* netserver_socket_handler.cpp */; };
@@ -8452,6 +8456,7 @@
 				9A9579871F6225B800623508 /* zip_ioapi.cpp in Sources */,
 				9A9579881F6225B800623508 /* zip_memory_buffer.cpp in Sources */,
 				9A9579891F6225B800623508 /* zip_unzip.cpp in Sources */,
+				9AB3AB4A213D5C170076237D /* visual_font_list.cpp in Sources */,
 				9A95798A1F6225B800623508 /* zip_util.cpp in Sources */,
 				9A95798B1F6225B800623508 /* zip_zip.cpp in Sources */,
 				9A95798C1F6225B800623508 /* compress_department.cpp in Sources */,
@@ -8460,6 +8465,7 @@
 				9A95798E1F6225B800623508 /* crypto_openssl.cpp in Sources */,
 				9AF4C3ED1F83702B00197385 /* aura_debug.cpp in Sources */,
 				9A95798F1F6225B800623508 /* fontopus_authentication_map.cpp in Sources */,
+				9AB3AB50213D5F1B0076237D /* draw2d_draw2d.cpp in Sources */,
 				9A9579901F6225B800623508 /* fontopus_contact_list.cpp in Sources */,
 				9A9579911F6225B800623508 /* fontopus_fontopus.cpp in Sources */,
 				9A4BE0D71FFED87E00DED594 /* visual_ios_image_mm.mm in Sources */,
@@ -8725,6 +8731,7 @@
 				9A6FB1401F5C9D8700AF31B2 /* ftp_client_socket.cpp in Sources */,
 				9A6FB0CB1F5C7D5400AF31B2 /* ios_simple_shell_launcher.cpp in Sources */,
 				9A6FB1221F5C9C6600AF31B2 /* primitive_application_bias.cpp in Sources */,
+				9AB3AB49213D5C0D0076237D /* draw2d_color_matrix.cpp in Sources */,
 				9A9578FE1F62249500623508 /* str_istring.cpp in Sources */,
 				070214231C514A9A00DB16A7 /* exception_engine.cpp in Sources */,
 				9A6FB0BA1F5C7D5400AF31B2 /* ios_base_user.cpp in Sources */,
@@ -9004,6 +9011,7 @@
 				9A4BE0DB1FFEDA3B00DED594 /* visual_font_enumeration.cpp in Sources */,
 				9A9579471F62250800623508 /* collection_stringa.cpp in Sources */,
 				9AF4C41F1F83702B00197385 /* aura_speaker.cpp in Sources */,
+				9AB3AB44213D5C090076237D /* draw2d_matrix.cpp in Sources */,
 				9A4BE0E91FFEDA8400DED594 /* visual_glyph.cpp in Sources */,
 				9A9579051F62249500623508 /* str_strw.cpp in Sources */,
 				9A9579441F62250800623508 /* collection_string_array.cpp in Sources */,
@@ -9835,7 +9843,7 @@
 				STRIP_INSTALLED_PRODUCT = NO;
 				USER_HEADER_SEARCH_PATHS = "$(WorkspaceDir)/../../../include $(WorkspaceDir)/../../../app/include . .. $(WorkspaceDir)/../../.. $(WorkspaceDir)/../../../app/appseed/base/base $(WorkspaceDir)/../../../app/base/include $(WorkspaceDir)/../../../app/appseed/base/base $(WorkspaceDir)/../../appseed $(WorkspaceDir)/../.. $(WorkspaceDir)/../../../app/base $(WorkspaceDir)/../../../app/appseed/base/framework aura/aura $(WorkspaceDir)/../../../app $(WorkspaceDir)/../../../nodeapp/include";
 				WARNING_CFLAGS = "";
-				WorkspaceDir = "$(SRCROOT)/../../../nodeapp/seed/macos";
+				WorkspaceDir = "$(SRCROOT)/../../../nodeapp/seed/metaseed";
 			};
 			name = Debug;
 		};
@@ -9904,7 +9912,7 @@
 				USER_HEADER_SEARCH_PATHS = "$(WorkspaceDir)/../../../include $(WorkspaceDir)/../../../app/include . .. $(WorkspaceDir)/../../.. $(WorkspaceDir)/../../../app/appseed/base/base $(WorkspaceDir)/../../../app/base/include $(WorkspaceDir)/../../../app/appseed/base/base $(WorkspaceDir)/../../appseed $(WorkspaceDir)/../.. $(WorkspaceDir)/../../../app/base $(WorkspaceDir)/../../../app/appseed/base/framework aura/aura $(WorkspaceDir)/../../../app $(WorkspaceDir)/../../../nodeapp/include";
 				VALIDATE_PRODUCT = YES;
 				WARNING_CFLAGS = "";
-				WorkspaceDir = "$(SRCROOT)/../../../nodeapp/seed/macos";
+				WorkspaceDir = "$(SRCROOT)/../../../nodeapp/seed/metaseed";
 			};
 			name = Release;
 		};

@@ -25,15 +25,13 @@
    bool              m_bShift;
    bool              m_bControl;
    bool              m_bAlt;
-   
+   CGPoint           m_ptLastTouchBegan;
    
 }
 
 
--(void)redraw_view;
 -(void)on_text : (NSString *) text;
 -(void)on_sel : (UITextRange *) sel;
--(BOOL)roundBecomeFirstResponder;
 
 
 @end

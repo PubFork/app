@@ -130,6 +130,9 @@ namespace user
       bool                                m_bNeedLayout;
       bool                                m_bRedrawOnVisible;
 
+      bool                                m_bShowSoftwareKeyboard;
+      ::user::elemental *                 m_pelementalSoftwareKeyboard;
+      index                               m_iSoftwareKeyboardEventId;
 
       alpha_source *                      m_palphasource;
 
@@ -1130,7 +1133,9 @@ namespace user
       virtual bool select_solid_brush(e_color ecolor);
       virtual bool select_font(e_font efont = font_default);
 
+      virtual void defer_show_software_keyboard(::user::elemental * pelemental, bool bShow, string str, strsize iBeg, strsize iEnd);
 
+      virtual void show_software_keyboard(bool bShow, string str, strsize iBeg, strsize iEnd);
 
       //using style::_001GetColor;
       //virtual COLORREF           _001GetColor(e_color ecolor, COLORREF crDefault = 0);

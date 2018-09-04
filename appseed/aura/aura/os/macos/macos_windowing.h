@@ -136,10 +136,7 @@ oswindow_data * oswindow_get(nswindow window);
 bool oswindow_remove(nswindow window);
 
 
-inline int is_window(oswindow window)
-{
-   return (window == NULL) ? FALSE : (window->get_user_interaction() != NULL);
-}
+
 
 //inline int IsChild(oswindow oswindowParent, ::oswindow oswindowCandidateChildOrDescendant)
 //{

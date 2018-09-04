@@ -344,7 +344,7 @@ bool file_set_line_dup(const char * path, index iLine, const char * pszLine)
 
       fclose(file);
 
-#ifdef WINDOWS
+#if defined(WINDOWS) || defined(APPLE_IOS)
 
       if (!file_copy_dup(path, pathTime.c_str(), true))
       {

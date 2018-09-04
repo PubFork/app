@@ -52,7 +52,6 @@ oswindow_data::oswindow_data()
 
    m_nswindow  = NULL;
    m_pimpl     = NULL;
-   m_plongmap  = new int_to_int;
 
 }
 
@@ -62,7 +61,6 @@ oswindow_data::oswindow_data(nswindow window)
 
    m_nswindow  = window;
    m_pimpl     = NULL;
-   m_plongmap  = new int_to_int;
 
 }
 
@@ -72,15 +70,12 @@ oswindow_data::oswindow_data(const oswindow_data & oswindow)
 
    m_nswindow  = oswindow.m_nswindow;
    m_pimpl     = oswindow.m_pimpl;
-   m_plongmap  = oswindow.m_plongmap;
 
 }
 
 
 oswindow_data::~oswindow_data()
 {
-
-   delete m_plongmap;
 
 }
 
@@ -93,7 +88,6 @@ oswindow_data & oswindow_data::operator = (const oswindow_data & oswindow)
 
       m_nswindow  = oswindow.m_nswindow;
       m_pimpl     = oswindow.m_pimpl;
-      m_plongmap  = oswindow.m_plongmap;
 
    }
 
@@ -232,34 +226,24 @@ bool oswindow_data::is_child(::oswindow oswindow)
    
 }
 
-int32_t oswindow_data::get_window_long(int32_t iIndex)
+int_ptr oswindow_data::get_window_long_ptr(int_ptr iIndex)
 {
 
    if(is_null())
       return 0;
 
-   if(m_plongmap == NULL)
-      return 0;
-
-   return m_plongmap->operator[](iIndex);
+   return m_pimpl->m_pui->get_window_long_ptr((i32)iIndex);
 
 }
 
 
-int32_t oswindow_data::set_window_long(int32_t iIndex, int32_t iNewLong)
+int_ptr oswindow_data::set_window_long_ptr(int_ptr iIndex, int_ptr iNewLong)
 {
 
    if(is_null())
       return 0;
 
-   if(m_plongmap == NULL)
-      return 0;
-
-   int32_t iLong = m_plongmap->operator[](iIndex);
-
-   m_plongmap->operator[](iIndex) = iNewLong;
-
-   return iLong;
+   return m_pimpl->m_pui->set_window_long_ptr((i32)iIndex, iNewLong);
 
 }
 
@@ -320,7 +304,7 @@ int32_t oswindow_data::set_window_long(int32_t iIndex, int32_t iNewLong)
 //oswindow SetFocus(oswindow window)
 //{
 //
-//   if(!IsWindow(window))
+//   if(!is_window(window))
 //      return NULL;
 //
 //   oswindow windowOld = ::GetFocus();

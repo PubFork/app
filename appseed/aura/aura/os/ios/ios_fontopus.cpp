@@ -579,7 +579,7 @@ namespace fontopus
 
       if (!rectLogin.contains(pt))
       {
-      ReleaseCapture();
+      release_capture();
       DestroyWindow(m_oswindow);
       }
  

@@ -29,15 +29,17 @@ class round_window;
    
     round_window           * m_pwindow;
     RoundViewController    * m_controller;
-    UIButton               * closeButton;
-   
    
 }
+
 
 -(void)unsafe_boot_window_has_focus : (bool *)pbool;
 -(void)on_destroy;
 -(void)windowDidExpose;
 -(void)windowWillClose;
--(void)display;
+
 
 @end
+
+
+

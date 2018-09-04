@@ -42,6 +42,12 @@ plane_system * create_plane_system();
    
 }
 
+- (UIInterfaceOrientationMask)application:(UIApplication *)application
+  supportedInterfaceOrientationsForWindow:(UIWindow *)window
+{
+   return UIInterfaceOrientationMaskAll;
+   
+}
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {

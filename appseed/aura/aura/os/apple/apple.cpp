@@ -256,3 +256,17 @@ bool __node_further_file_is_equal(file::path const & p1 , file::path const & p2)
    return ::str::from_strdup(ns_realpath(path));
    
 }
+
+
+i64 oswindow_id(oswindow w)
+{
+   
+   return (i64) (w);
+   
+}
+
+
+int is_window(oswindow window)
+{
+   return (window == NULL) ? FALSE : (window->get_user_interaction() != NULL);
+}

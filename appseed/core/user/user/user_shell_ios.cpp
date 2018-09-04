@@ -1538,7 +1538,7 @@ namespace user
 
             }
 
-            image_key_store * pstore = new image_key_store(imagekey);
+            image_key * pstore = new image_key(imagekey);
             
             {
 
@@ -1662,10 +1662,10 @@ namespace user
                dib->create(s);
                dib->Fill(255, argb_get_r_value(crBk), argb_get_g_value(crBk), argb_get_b_value(crBk));
                dib->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_blend);
-               dib->get_graphics()->BitBlt(null_point(), d.size(), d.get_graphics());
-               dib->get_graphics()->FillSolidRect(0, 0, d.size().cx, d.size().cy, ARGB(123, argb_get_r_value(crBk), argb_get_g_value(crBk), argb_get_b_value(crBk)));
+               dib->get_graphics()->draw(null_point(), d.size(), d.get_graphics());
+               dib->get_graphics()->fill_solid_rect_dim(0, 0, d.size().cx, d.size().cy, ARGB(123, argb_get_r_value(crBk), argb_get_g_value(crBk), argb_get_b_value(crBk)));
                m_pil[iSize]->m_spdib->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_set);
-               m_pil[iSize]->m_spdib->get_graphics()->BitBlt(null_point(), d.size(), dib->get_graphics());
+               m_pil[iSize]->m_spdib->get_graphics()->draw(null_point(), d.size(), dib->get_graphics());
                m_pil[iSize]->m_spdib->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_blend);
 
             }

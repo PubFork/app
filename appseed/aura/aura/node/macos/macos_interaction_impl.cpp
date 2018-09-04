@@ -1620,7 +1620,7 @@ namespace macos
 
        // be very careful here...
        if (::is_window(hWndSave))
-       ::SetActiveWindow(hWndSave);
+       ::set_active_window(hWndSave);
        if (::is_window(hWndFocus))
        ::SetFocus(hWndFocus);
        }

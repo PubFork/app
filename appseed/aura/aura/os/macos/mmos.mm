@@ -3,86 +3,34 @@
 
 void macos_desktop_image_changed();
 
-void ns_main_sync(dispatch_block_t block);
 bool mm2_get_file_image(unsigned int * pcr, int cx, int cy, int iScan, const char * psz);
 
-
-void ns_main_async(dispatch_block_t block)
-{
-   
-   //   dispatch_block_t block = ^{
-   //      // Code for the method goes here
-   //   };
-   //
-   
-   if ([NSThread isMainThread])
-   {
-      
-      block();
-      
-   }
-   else
-   {
-      
-      dispatch_async(dispatch_get_main_queue(), block);
-      
-   }
-   
-}
-
-
-void ns_main_sync(dispatch_block_t block)
-{
-   
-   //   dispatch_block_t block = ^{
-   //      // Code for the method goes here
-   //   };
-   //
-   
-   if ([NSThread isMainThread])
-   {
-      
-      block();
-      
-   }
-   else
-   {
-      
-      dispatch_sync(dispatch_get_main_queue(), block);
-      
-   }
-   
-}
+//
+//void ns_main_async(dispatch_block_t block)
+//{
+//   
+//   //   dispatch_block_t block = ^{
+//   //      // Code for the method goes here
+//   //   };
+//   //
+//   
+//   if ([NSThread isMainThread])
+//   {
+//      
+//      block();
+//      
+//   }
+//   else
+//   {
+//      
+//      dispatch_async(dispatch_get_main_queue(), block);
+//      
+//   }
+//   
+//}
 
 
-void main_async_runnable(runnable * prunnable)
-{
-   
-   ns_main_async(^
-                 {
 
-                    prunnable->run();
-
-                 });
-   
-   //[[mmos get] runRunnableOnMainThread: prunnable];
-   
-}
-
-
-void main_synch_runnable(runnable * prunnable)
-{
-   
-   ns_main_sync(^
-                {
-
-                   prunnable->run();
-
-                });
-   
-   //[[mmos get] runRunnableOnMainThread: prunnable];
-   
-}
 
 
 @implementation mmos

@@ -662,6 +662,10 @@
 		9A9F05B21D7F24A300ED6D8A /* libace.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A9F05B11D7F24A300ED6D8A /* libace.dylib */; };
 		9AB168032121C09500E84DDF /* user_toggle_switch.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AB168002121C09500E84DDF /* user_toggle_switch.h */; };
 		9AB168042121C09500E84DDF /* user_toggle_switch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AB168022121C09500E84DDF /* user_toggle_switch.cpp */; };
+		9AB3AB41213D5AF30076237D /* user_form_window.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AC20AA220998E3D0077FEBF /* user_form_window.cpp */; };
+		9AB3AB43213D5B480076237D /* user_toggle_switch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AB168022121C09500E84DDF /* user_toggle_switch.cpp */; };
+		9AB3AB4B213D5D510076237D /* userex_view_container.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A038E8421312C0B004C97FA /* userex_view_container.cpp */; };
+		9AB3AB4C213D5D750076237D /* userex_color_view.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AFF968D20F7519A0053D9F4 /* userex_color_view.cpp */; };
 		9AB628431F3D3E930007966E /* filemanager_form.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AB628421F3D3E930007966E /* filemanager_form.h */; };
 		9AB8C8561EA988A7007670A6 /* user_mesh.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AB8C8551EA988A7007670A6 /* user_mesh.h */; };
 		9AC13CD31D20CF7B0026B367 /* hi5_twitter_authorization.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 074DA8121C8E61A400748EB7 /* hi5_twitter_authorization.cpp */; };
@@ -1992,10 +1996,6 @@
 		07F5B2E4184A4FA00092C3E1 /* user */ = {
 			isa = PBXGroup;
 			children = (
-				9A9D7CC61F5D7359009EC103 /* user_check_box.cpp */,
-				9A9D7CC71F5D7359009EC103 /* user_combo_box.cpp */,
-				9A9D7CC81F5D7359009EC103 /* user_combo_list.cpp */,
-				9A9D7CC91F5D7359009EC103 /* user_control_property.cpp */,
 				9A9D7CCA1F5D7359009EC103 /* user_data_exchange.cpp */,
 				9A9D7CCB1F5D7359009EC103 /* user_document_manager.cpp */,
 				9A9D7CCC1F5D7359009EC103 /* user_edit_plain_text_view.cpp */,
@@ -2057,6 +2057,10 @@
 				9A7E85C21E169ABB00B4534B /* user_shell_macos_mm.mm */,
 				9AEB69FF1F81D38D00F40B32 /* user_shell_ios.cpp */,
 				9A9D7D141F5D735A009EC103 /* user.inl */,
+				9A9D7CC61F5D7359009EC103 /* user_check_box.cpp */,
+				9A9D7CC71F5D7359009EC103 /* user_combo_box.cpp */,
+				9A9D7CC81F5D7359009EC103 /* user_combo_list.cpp */,
+				9A9D7CC91F5D7359009EC103 /* user_control_property.cpp */,
 				9A9D7CCF1F5D7359009EC103 /* user_font_list.h */,
 				9A9D7CD11F5D7359009EC103 /* user_form_list_view.h */,
 				9A9D7CD41F5D7359009EC103 /* user_form_mesh.h */,
@@ -2999,6 +3003,7 @@
 				9A957B861F622A0400623508 /* calculator_scanner.cpp in Sources */,
 				9A957B871F622A0400623508 /* calculator_value.cpp in Sources */,
 				9A957B881F622A0400623508 /* kiss_fft_shared.cpp in Sources */,
+				9AB3AB4B213D5D510076237D /* userex_view_container.cpp in Sources */,
 				9A957B891F622A0400623508 /* kiss_fft.cpp in Sources */,
 				9A957B8A1F622A0400623508 /* kiss_ifft.cpp in Sources */,
 				9A957B8B1F622A0400623508 /* kissfft_fftd.cpp in Sources */,
@@ -3025,6 +3030,7 @@
 				9A957BA01F622A0400623508 /* html_impl_form.cpp in Sources */,
 				9A957BA11F622A0400623508 /* html_impl_image.cpp in Sources */,
 				9A957BA21F622A0400623508 /* html_impl_input_button.cpp in Sources */,
+				9AB3AB41213D5AF30076237D /* user_form_window.cpp in Sources */,
 				9A957BA31F622A0400623508 /* html_impl_input_checkbox.cpp in Sources */,
 				9A957BA41F622A0400623508 /* html_impl_input_text.cpp in Sources */,
 				9A957BA51F622A0400623508 /* html_impl_select.cpp in Sources */,
@@ -3040,6 +3046,7 @@
 				9A957BAE1F622A0400623508 /* html_font.cpp in Sources */,
 				9A957BAF1F622A0400623508 /* html_form.cpp in Sources */,
 				9A957BB01F622A0400623508 /* html_html.cpp in Sources */,
+				9AB3AB4C213D5D750076237D /* userex_color_view.cpp in Sources */,
 				9A957BB11F622A0400623508 /* html_message.cpp in Sources */,
 				9A957BB21F622A0400623508 /* html_reader.cpp in Sources */,
 				9A957BB31F622A0400623508 /* html_style_sheet_array.cpp in Sources */,
@@ -3099,6 +3106,7 @@
 				9A957B181F6227A000623508 /* core_str_format.cpp in Sources */,
 				9A957B191F6227A000623508 /* core_strn.cpp in Sources */,
 				9A957B1A1F6227A000623508 /* core_system.cpp in Sources */,
+				9AB3AB43213D5B480076237D /* user_toggle_switch.cpp in Sources */,
 				9A957B1B1F6227A000623508 /* core.cpp in Sources */,
 				9A9D7CB41F5D732A009EC103 /* userex_form_view.cpp in Sources */,
 				9A9D7ED41F5D762B009EC103 /* user_mesh_cache.cpp in Sources */,
@@ -3329,7 +3337,7 @@
 					"-Wno-comment",
 					"-Wno-unused-value",
 				);
-				WorkspaceDir = "$(SRCROOT)/../../../nodeapp/seed/macos";
+				WorkspaceDir = "$(SRCROOT)/../../../nodeapp/seed/metaseed";
 			};
 			name = Debug;
 		};
@@ -3401,7 +3409,7 @@
 					"-Wno-comment",
 					"-Wno-unused-value",
 				);
-				WorkspaceDir = "$(SRCROOT)/../../../nodeapp/seed/macos";
+				WorkspaceDir = "$(SRCROOT)/../../../nodeapp/seed/metaseed";
 			};
 			name = Release;
 		};

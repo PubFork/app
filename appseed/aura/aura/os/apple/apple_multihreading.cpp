@@ -50,3 +50,21 @@ int get_processor_count()
    // return sysconf(_SC_NPROCESSORS_ONLN);
    //#endif
 }
+
+
+namespace multithreading
+{
+   
+   
+   int32_t priority()
+   {
+      
+      return ::GetThreadPriority(::GetCurrentThread());
+      
+   }
+   
+   
+} // namespace multithreading
+
+
+

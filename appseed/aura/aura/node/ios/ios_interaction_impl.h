@@ -24,7 +24,6 @@ namespace ios
       string                           m_strWindowText;
       ::user::interaction_base *       m_pbasewnd;
       bool                             m_bNeedsUpdate;
-      ::thread *                       m_pthreadDraw;
       rect                             m_rectLastPos;
       unsigned long                    m_dwLastPos;
 
@@ -39,6 +38,7 @@ namespace ios
       virtual void assert_valid() const override;
       virtual void dump(dump_context & dumpcontext) const override;
 
+      virtual bool round_window_become_first_responder() override;
 
       virtual bool create_message_queue(::user::interaction * pui,const char * pszName) override;
 
@@ -102,14 +102,17 @@ namespace ios
                                  ::create * pContext = NULL) override;
 
       // advanced creation (allows access to extended styles)
-      virtual bool create_window_ex(::user::interaction * pui,DWORD dwExStyle = 0, const char * lpszClassName=0,
-                                    const char * lpszWindowName= 0, DWORD dwStyle= 0,
-                                    const RECT& rect= null_rect(),
-                                    ::user::interaction *   pParentWnd=NULL, id id=::id(),
-                                    LPVOID lpParam = NULL) override;
-
-      virtual bool native_create_window_ex(::user::interaction * pui,::user::create_struct & cs,
-                                           oswindow hwndParent, id id);
+      virtual bool create_window_ex(
+                                    ::user::interaction * pui,
+                                    ::user::create_struct & cs,
+                                    ::user::interaction * pParentWnd,
+                                    id id) override;
+      
+      virtual bool native_create_window_ex(
+                                           ::user::interaction * pui,
+                                           ::user::create_struct & cs,
+                                           oswindow hwndParent,
+                                           id id);
 
       virtual bool DestroyWindow() override;
 
@@ -215,7 +218,7 @@ namespace ios
       virtual bool IsWindowVisible() override;
       virtual void ShowOwnedPopups(bool bShow = TRUE) override;
 
-      virtual void round_window_draw(CGContextRef cgc) override;
+      virtual void round_window_draw(CGContextRef cgc, i32 cx, i32 cy) override;
       virtual void round_window_mouse_down(double x, double y) override;
       virtual void round_window_mouse_up(double x, double y) override;
       virtual void round_window_mouse_moved(double x, double y) override;
@@ -453,7 +456,6 @@ namespace ios
       void OnGetMinMaxInfo(MINMAXINFO* lpMMI);
       //xxx bool OnHelpInfo(HELPINFO* lpHelpInfo);
       void OnIconEraseBkgnd(::draw2d::graphics * pgraphics);
-      void OnKillFocus(::user::interaction * pNewWnd);
       LRESULT OnMenuChar(UINT nChar, UINT nFlags, ::user::menu* pMenu);
       void OnMenuSelect(UINT nItemID, UINT nFlags, HMENU hSysMenu);
       void OnMove(int32_t x, int32_t y);
@@ -585,7 +587,10 @@ namespace ios
       DECL_GEN_SIGNAL(_001OnNcDestroy);
       DECL_GEN_SIGNAL(_001OnSetCursor);
       DECL_GEN_SIGNAL(_001OnCreate);
+      DECL_GEN_SIGNAL(_001OnSetFocus);
+      DECL_GEN_SIGNAL(_001OnKillFocus);
 
+      virtual void prodevian_task() override;
 
       // Overridables and other helpers (for implementation of derived classes)
       // for deriving from a standard control
@@ -679,7 +684,7 @@ namespace ios
       virtual void _001BaseWndInterfaceMap() override;
 
 
-      void _001UpdateWindow();
+      void _001UpdateWindow(bool bUpdateBuffer) override;
       void _001UpdateScreen() override;
 
 
@@ -707,10 +712,13 @@ namespace ios
       virtual void round_window_activate() override;
       virtual void round_window_deactivate() override;
 
+      
+      virtual void show_software_keyboard(bool bShow, string str, strsize iBeg, strsize iEnd) override;
+
 
       virtual bool initialize_native_window(::user::native_window_initialize * pinitialize) override;
 
-      virtual bool on_keyboard_focus(::user::elemental * pfocus) override;
+      //virtual bool on_keyboard_focus(::user::elemental * pfocus) override;
 
 
       virtual bool has_pending_graphical_update() override;

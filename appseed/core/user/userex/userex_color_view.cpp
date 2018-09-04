@@ -1,6 +1,6 @@
 #include "framework.h"
 
-#ifdef MACOS
+#if defined(APPLEOS)
 #define ARGB_COLORREF(A, R, G, B) ARGB(A, R, G, B)
 #define COLORREF_get_a_value(cr) argb_get_a_value(cr)
 #define COLORREF_get_r_value(cr) argb_get_r_value(cr)
@@ -145,7 +145,7 @@ namespace flag
 
 
             double dS = 1.0 - ((double) j / dh);
-#ifdef MACOS
+#if defined(APPLEOS)
             dS = 1.0 - dS;
 #endif
 
@@ -278,7 +278,7 @@ namespace flag
       {
          double dL = 1.0 - ((double) j / dh);
 
-#ifdef MACOS
+#if defined(APPLEOS)
          dL = 1.0 - dL;
 #endif
 

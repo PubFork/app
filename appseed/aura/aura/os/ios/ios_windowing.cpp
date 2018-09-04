@@ -299,89 +299,87 @@ bool oswindow_remove(nswindow window)
 static oswindow g_oswindowCapture;
 
 
-oswindow GetCapture()
+oswindow get_capture()
 {
+   
    return g_oswindowCapture;
+   
 }
 
-oswindow SetCapture(oswindow window)
+
+oswindow set_capture(oswindow window)
 {
    
    oswindow windowOld(g_oswindowCapture);
    
-   if(window->window() == NULL)
-      return NULL;
-   
    g_oswindowCapture = window;
    
-   /*   if(XGrabPointer(window.display(), window.window(), False, ButtonPressMask | ButtonReleaseMask | PointerMotionMask, GrabModeAsync, GrabModeAsync, None, None, 8CurrentTime) == GrabSuccess)
-    {
-    
-    g_oswindowCapture = window;
-    
-    return windowOld;
-    
-    }*/
+   return windowOld;
+   
+}
+
+
+WINBOOL release_capture()
+{
+   
+   g_oswindowCapture = NULL;
+
+   return TRUE;
+   
+}
+
+
+oswindow get_focus();
+
+oswindow g_oswindowFocus = NULL;
+
+oswindow set_focus(oswindow window)
+{
+   
+   oswindow windowOld = ::get_focus();
+   
+   try
+   {
+      
+      if(windowOld != NULL)
+      {
+       
+         windowOld->m_pimpl->m_pui->send_message(WM_KILLFOCUS);
+         
+      }
+      
+   }
+   catch(...)
+   {
+   }
+   
+   g_oswindowFocus = window;
+
+   try
+   {
+      
+      if(window != NULL)
+      {
+         
+         window->m_pimpl->m_pui->send_message(WM_SETFOCUS);
+         
+      }
+      
+   }
+   catch(...)
+   {
+   }
+
    
    return windowOld;
    
 }
 
 
-WINBOOL ReleaseCapture()
+oswindow get_focus()
 {
    
-   //ifGetCapture().display() == NULL)
-   // return FALSE;
-   
-   //  WINBOOL bRet = XUngrabPointer(GetCapture().display(), CurrentTime) != FALSE;
-   
-   WINBOOL bRet = TRUE;
-   
-   if(bRet)
-      g_oswindowCapture = NULL;
-   
-   return bRet;
-   
-}
-
-
-oswindow GetFocus();
-
-
-oswindow SetFocus(oswindow window)
-{
-   
-   if(!is_window(window))
-      return NULL;
-   
-   oswindow windowOld = ::GetFocus();
-   
-   return windowOld;
-   
-}
-
-oswindow GetFocus()
-{
-   
-   //isplay * pdisplay = XOpenDisplay(NULL);
-   
-   //   Window window = None;
-   
-   //   int revert_to = 0;
-   
-   //bool bOk = XGetInputFocus(pdisplay, &window, &revert_to) != 0;
-   
-   //XCloseDisplay(pdisplay);
-   
-   //   if(!bOk)
-   //    return NULL;
-   
-   // if(window == None || window == PointerRoot)
-   //  return NULL;
-   
-   //return oswindow::defer_get(window);
-   return NULL;
+   return g_oswindowFocus;
    
 }
 
@@ -391,7 +389,7 @@ oswindow GetFocus()
 static oswindow g_oswindowActive = NULL;
 
 
-oswindow GetActiveWindow()
+oswindow get_active_window()
 {
    
    return g_oswindowActive;
@@ -404,7 +402,7 @@ void deactivate_window(oswindow window)
    
    synch_lock sl(g_poswindowdataptra->m_pmutex);
    
-   if(GetActiveWindow() != window)
+   if(get_active_window() != window)
    {
       
       return;

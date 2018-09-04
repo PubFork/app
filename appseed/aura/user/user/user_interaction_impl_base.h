@@ -267,6 +267,7 @@ namespace user
       virtual void redraw_remove(::object * p);
       virtual bool has_redraw();
 
+      virtual void show_software_keyboard(bool bShow, string str, strsize iBeg, strsize iEnd);
 
    };
 

@@ -60,7 +60,7 @@ namespace user
       bool                          m_bFocus;
       bool                          m_bCursorRedraw;
       double                        m_dFps;
-      double                        m_dUpdateScreenFps;
+      double                        m_dScreenOutputFps;
       bool                          m_bIpcCopy;
       bool                          m_bLockWindowUpdate;
       point                         m_ptCursor;
@@ -99,17 +99,12 @@ namespace user
       virtual void assert_valid() const override;
       virtual void dump(dump_context & dumpcontext) const override;
 
-      //virtual e_queue_thread message_queue_thread(UINT uiMessage);
-
+      virtual void prodevian_task() override;
 
       void user_common_construct();
 
 
       virtual void install_message_routing(::message::sender * psender) override;
-
-
-      //virtual void queue_message_handler(::message::base * pbase) override;
-
 
 
       virtual mutex * draw_mutex();

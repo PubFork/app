@@ -94,7 +94,7 @@ namespace user
       virtual void step();
 
 
-#if defined(APPLEIOS) || defined(WINDOWSEX) || defined(ANDROID) || defined(METROWIN)
+#if defined(APPLE_IOS) || defined(WINDOWSEX) || defined(ANDROID) || defined(METROWIN)
       virtual void notify_icon_play(const char * action);
       virtual bool notify_icon_frame_is_opened();
 #else

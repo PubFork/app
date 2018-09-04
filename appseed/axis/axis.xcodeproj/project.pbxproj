@@ -330,6 +330,7 @@
 		9A9D7B221F5D6420009EC103 /* user_keyboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D7B121F5D6418009EC103 /* user_keyboard.cpp */; };
 		9A9F0A8A1D7F35D600ED6D8A /* libaxisidn.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A9F0A311D7F341700ED6D8A /* libaxisidn.dylib */; };
 		9AB1677A2121BEE700E84DDF /* user_hotplugin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AB167792121BEE700E84DDF /* user_hotplugin.cpp */; };
+		9AB3AB51213D5FAE0076237D /* user_hotplugin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AB167792121BEE700E84DDF /* user_hotplugin.cpp */; };
 		9AB6283E1F3D116D0007966E /* NSPasteboard++.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9AB6283D1F3D116D0007966E /* NSPasteboard++.mm */; };
 		9ACBD0BF1DDFAEB2004AF08F /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A18AAF11DDFAB4D00C57231 /* libcrypto.a */; };
 		9ACBD0C01DDFAEB5004AF08F /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A18AAF21DDFAB4D00C57231 /* libssl.a */; };
@@ -1835,6 +1836,7 @@
 				9A9D7A291F5D6333009EC103 /* simpledb_service.cpp in Sources */,
 				9A9D79EC1F5D630E009EC103 /* database_key.cpp in Sources */,
 				07EDC2B51B4ECB3C00AF8928 /* ios_file_watcher.cpp in Sources */,
+				9AB3AB51213D5FAE0076237D /* user_hotplugin.cpp in Sources */,
 				07EDC2B21B4ECB3C00AF8928 /* ios_crypt.cpp in Sources */,
 				9AEB69D71F81C74100F40B32 /* axis.cpp in Sources */,
 				9AEB69EF1F81CAF300F40B32 /* html_html.cpp in Sources */,
@@ -2131,7 +2133,7 @@
 					"-Wno-comment",
 					"-Wno-unused-value",
 				);
-				WorkspaceDir = "$(SRCROOT)/../../../nodeapp/seed/macos";
+				WorkspaceDir = "$(SRCROOT)/../../../nodeapp/seed/metaseed";
 			};
 			name = Debug;
 		};
@@ -2208,7 +2210,7 @@
 					"-Wno-comment",
 					"-Wno-unused-value",
 				);
-				WorkspaceDir = "$(SRCROOT)/../../../nodeapp/seed/macos";
+				WorkspaceDir = "$(SRCROOT)/../../../nodeapp/seed/metaseed";
 			};
 			name = Release;
 		};

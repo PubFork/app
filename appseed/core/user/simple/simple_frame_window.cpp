@@ -1256,7 +1256,7 @@ void simple_frame_window::_001OnActivateApp(::message::message * pobj)
       //      WfiRestore();
 
       //   }
-      //   ::SetActiveWindow(get_handle());
+      //   ::set_active_window(get_handle());
       //}
 
       pbase->m_bRet = true;

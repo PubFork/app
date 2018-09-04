@@ -41,7 +41,7 @@
  
  WINBOOL CLASS_DECL_lnx _AfxCompareClassName(oswindow hWnd, const char * lpszClassName)
  {
- ASSERT(::IsWindow(hWnd));
+ ASSERT(::is_window(hWnd));
  char szTemp[32];
  ::GetClassName(hWnd, szTemp, _countof(szTemp));
  return ::AfxInvariantStrICmp(szTemp, lpszClassName) == 0;

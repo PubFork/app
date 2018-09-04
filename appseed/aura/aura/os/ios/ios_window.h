@@ -42,7 +42,6 @@ public:
    ::user::interaction_impl *    m_pimpl;
    
    
-   int_to_int *                  m_plongmap;
    
    
    oswindow_data();
@@ -108,8 +107,8 @@ public:
    bool is_iconic();
    bool is_window_visible();
    bool show_window(int32_t nCmdShow);
-   int32_t get_window_long(int32_t nIndex);
-   int32_t set_window_long(int32_t nIndex, int32_t l);
+   int_ptr get_window_long_ptr(int_ptr nIndex);
+   int_ptr set_window_long_ptr(int_ptr nIndex, int_ptr l);
    bool client_to_screen(POINT * lppoint);
    bool screen_to_client(POINT * lppoint);
    

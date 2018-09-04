@@ -214,6 +214,9 @@ namespace user
       IGUI_MSG_LINK(WM_UNICHAR, pinterface, this, &plain_edit::_001OnUniChar);
 
       IGUI_MSG_LINK(WM_SIZE, pinterface, this, &::user::plain_edit::_001OnSize);
+      
+      IGUI_MSG_LINK(WM_SETFOCUS, pinterface, this, &::user::plain_edit::_001OnSetFocus);
+      IGUI_MSG_LINK(WM_KILLFOCUS, pinterface, this, &::user::plain_edit::_001OnKillFocus);
 
 
       IGUI_MSG_LINK(WM_VSCROLL, pinterface, this, &::user::plain_edit::_001OnVScroll);
@@ -1598,7 +1601,7 @@ namespace user
       Session.set_keyboard_focus(this);
 
       Session.user()->set_mouse_focus_LButtonDown(this);
-
+      
       pmouse->m_bRet = true;
 
       pmouse->set_lresult(1);
@@ -5095,18 +5098,38 @@ finished_update:
 
    void plain_edit::_001OnSetFocus(::message::message * pmessage)
    {
+      
+      string strText;
+      
+      _001GetText(strText);
+      
+      strsize iBeg;
+      
+      strsize iEnd;
+      
+      _001GetSel(iBeg, iEnd);
 
-      //if (!::user::control::keyboard_focus_OnSetFocus())
-      //{
-
-      //   return false;
-
-      //}
-
-      //return true;
+      get_wnd()->defer_show_software_keyboard(this, true, strText, iBeg, iEnd);
 
    }
+   
 
+   void plain_edit::_001OnKillFocus(::message::message * pmessage)
+   {
+      
+      string strText;
+      
+      _001GetText(strText);
+      
+      strsize iBeg;
+      
+      strsize iEnd;
+      
+      _001GetSel(iBeg, iEnd);
+      
+      get_wnd()->defer_show_software_keyboard(this, false, strText, iBeg, iEnd);
+      
+   }
 
 
    sp(::data::item) plain_edit::on_allocate_item()

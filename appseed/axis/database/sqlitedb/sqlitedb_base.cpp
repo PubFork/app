@@ -21,7 +21,7 @@ namespace sqlite
       ::object(papp)
    {
 
-      ///m_pmutex = new mutex(papp);
+      defer_create_mutex();
 
       active = false;
       _in_transaction = false;      // for transaction
@@ -33,8 +33,10 @@ namespace sqlite
       login = "root";
       passwd = "";
       conn = NULL;
+      
    }
 
+   
    base::~base()
    {
 
@@ -45,17 +47,30 @@ namespace sqlite
 
    database::set * base::CreateDataset()
    {
+      
       return canew(class set((base*)this));
+      
    }
 
+   
    int32_t base::status()
    {
-      if (active == false) return DB_CONNECTION_NONE;
+      
+      if (active == false)
+      {
+         
+         return DB_CONNECTION_NONE;
+         
+      }
+      
       return DB_CONNECTION_OK;
+      
    }
+   
 
    int32_t base::setErr(int32_t err_code)
    {
+      
       switch (err_code)
       {
       case SQLITE_OK: error ="Successful result";
@@ -105,14 +120,22 @@ namespace sqlite
       return err_code;
    }
 
+   
    const char *base::getErrorMsg()
    {
+      
       return error;
+      
    }
+   
 
    int32_t base::connect()
    {
+      
+      synch_lock sl(m_pmutex);
+      
       disconnect();
+      
       if(sqlite3_open(db, (sqlite3 * *) &conn) == SQLITE_OK)
       {
          //cout << "Connected!\n";
@@ -146,12 +169,17 @@ namespace sqlite
          active = true;
          return DB_CONNECTION_OK;
       }
+      
       return DB_CONNECTION_NONE;
+      
    }
+   
 
    void base::disconnect()
    {
 
+      synch_lock sl(m_pmutex);
+      
       if (conn != NULL)
       {
 
@@ -161,26 +189,49 @@ namespace sqlite
 
       }
 
-      if (active == false) return;
+      if (active == false)
+      {
+         
+         return;
+         
+      }
+      
       active = false;
+      
    }
+   
 
    int32_t base::create()
    {
+      
       return connect();
+      
    }
+   
 
    int32_t base::drop()
    {
+      
+      synch_lock sl(m_pmutex);
+      
       disconnect();
-      if (active == false) return DB_ERROR;
+      
+      if (active == false)
+      {
+         
+         return DB_ERROR;
+         
+      }
+      
       try
       {
+         
          Application.file().del(db);
 
       }
       catch(...)
       {
+         
          return DB_ERROR;
 
       }
@@ -192,6 +243,8 @@ namespace sqlite
 
    long base::nextid(const char* sname)
    {
+      
+      synch_lock sl(m_pmutex);
 
       if(!active)
       {
@@ -252,6 +305,8 @@ namespace sqlite
    void base::start_transaction()
    {
 
+      synch_lock sl(m_pmutex);
+      
       if (active)
       {
          sqlite3_exec((sqlite3 *) conn,"begin",NULL,NULL,NULL);
@@ -263,6 +318,8 @@ namespace sqlite
    void base::commit_transaction()
    {
 
+      synch_lock sl(m_pmutex);
+      
       if (active)
       {
          sqlite3_exec((sqlite3 *) conn,"commit",NULL,NULL,NULL);
@@ -274,6 +331,8 @@ namespace sqlite
    void base::rollback_transaction()
    {
 
+      synch_lock sl(m_pmutex);
+      
       if (active)
       {
          sqlite3_exec((sqlite3 *) conn,"rollback",NULL,NULL,NULL);
@@ -294,6 +353,8 @@ namespace sqlite
    void base::create_long_set(const string & strTable)
    {
 
+      synch_lock sl(m_pmutex);
+      
       try
       {
 
@@ -317,9 +378,12 @@ namespace sqlite
 
    }
 
+
    void base::create_string_set(const string & strTable)
    {
 
+      synch_lock sl(m_pmutex);
+      
       try
       {
 

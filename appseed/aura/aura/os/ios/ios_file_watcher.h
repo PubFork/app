@@ -27,15 +27,68 @@
 #pragma once
 
 
+#include <sys/event.h>
+#include <sys/time.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <dirent.h>
+#include <string.h>
+
 namespace file_watcher
 {
+   
+   
+#define MAX_CHANGE_EVENT_SIZE 2000
+   
+   typedef struct kevent KEvent;
+   
+   class watch :
+      virtual public ::simple_object
+   {
+   public:
+      
+      
+      id                         m_id;
+      string                     m_strDirName;
+      listener *                 m_plistener;
+      
+      file_watcher *             m_pwatcher;
+      
+      // index 0 is always the directory
+      KEvent                     m_keventaChange[MAX_CHANGE_EVENT_SIZE];
+      size_t                     m_iChangeCount;
+      
+
+      watch(id watchid, const char * dirname, listener * listener);
+      
+      
+      void addFile(const char * name, bool imitEvents = true);
+      
+      void removeFile(const char * name, bool imitEvents = true);
+      
+      // called when the directory is actually changed
+      // means a file has been added or removed
+      // rescans the watched directory adding/removing files and sending notices
+      void rescan();
+      
+      void handle_action(const char * filename, e_action action);
+      
+      void addAll();
+     
+      void removeAll();
+      
+   };
+
 	/// Implementation for OSX based on kqueue.
 	/// @class os_file_watcher
 	class os_file_watcher : public file_watcher_impl
 	{
 	public:
 		/// type for a map from id to watch_struct pointer
-		typedef map < file_watch_id ,file_watch_id, watch_struct *, watch_struct*> watch_map;
+		typedef map < id ,id, sp(watch), sp(watch) > watch_map;
 
       /// Map of id to watch_struct pointers
       watch_map m_watchmap;
@@ -44,7 +97,9 @@ namespace file_watcher
       /// time out data
       struct timespec mTimeOut;
       /// id allocator
-      file_watch_id mLastWatchID;
+      id mLastWatchID;
+      
+      sp(::thread) m_pthread;
 
 		///
 		///
@@ -56,18 +111,21 @@ namespace file_watcher
 
 		/// Add a directory watch
 		/// @exception FileNotFoundException Thrown when the requested directory does not exist
-		file_watch_id add_watch(const string & directory, file_watch_listener * watcher, bool bRecursive, bool bOwn) override;
+		id add_watch(const string & directory, listener * watcher, bool bRecursive, bool bOwn) override;
 
 		/// Remove a directory watch. This is a brute force lazy search O(nlogn).
 		void remove_watch(const string & directory) override;
 
 		/// Remove a directory watch. This is a map lookup O(logn).
-		void remove_watch(file_watch_id watchid) override;
+		void remove_watch(id watchid) override;
 
-      string watch_path(file_watch_id watchid);
+      string watch_path(id watchid);
+      
+      
+      virtual void defer_start();
 
 		/// Updates the watcher. Must be called often.
-		bool update() override;
+		virtual bool update();
 
 		/// Handles the action
 		void handle_action(action * paction) override;

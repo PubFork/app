@@ -38,6 +38,7 @@
 		9A1F3DC61EB327130054F0F1 /* wndfrm_core_library.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A1EDC3C19C900FE00F5CCE8 /* wndfrm_core_library.cpp */; };
 		9A1F3DC71EB327130054F0F1 /* framework.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB760016F78F120085103B /* framework.cpp */; };
 		9A8B50A919C90CD300E4F4D9 /* libcore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A9705C01915E3B500032B50 /* libcore.dylib */; };
+		9AB3AB57213D66860076237D /* wndfrm_core_user_theme.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9ACB7A5D20D23BF500C1C857 /* wndfrm_core_user_theme.cpp */; };
 		9ACB7A5E20D23BF500C1C857 /* wndfrm_core_user_theme.h in Headers */ = {isa = PBXBuildFile; fileRef = 9ACB7A5C20D23BF400C1C857 /* wndfrm_core_user_theme.h */; };
 		9ACB7A5F20D23BF500C1C857 /* wndfrm_core_user_theme.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9ACB7A5D20D23BF500C1C857 /* wndfrm_core_user_theme.cpp */; };
 		9AE24E6B1904CFE2001AEFFB /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AE24E6A1904CFE2001AEFFB /* XCTest.framework */; };
@@ -530,6 +531,7 @@
 				9AFEDB511EB9B555008F0D19 /* wndfrm_core_frame_schema_Minimal001.cpp in Sources */,
 				9AFEDB521EB9B555008F0D19 /* wndfrm_core_frame_schema.cpp in Sources */,
 				9AFEDB531EB9B555008F0D19 /* wndfrm_core_interaction.cpp in Sources */,
+				9AB3AB57213D66860076237D /* wndfrm_core_user_theme.cpp in Sources */,
 				9AFEDB541EB9B555008F0D19 /* wndfrm_core_library.cpp in Sources */,
 				9AFEDB551EB9B555008F0D19 /* framework.cpp in Sources */,
 			);
@@ -748,7 +750,7 @@
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = NO;
 				USER_HEADER_SEARCH_PATHS = "$(WorkspaceDir)/../../../include $(WorkspaceDir)/../../../nodeapp/include $(WorkspaceDir)/../../../app/include . .. $(WorkspaceDir)/../.. $(WorkspaceDir)/../../.. $(WorkspaceDir)/../../../app $(WorkspaceDir)/../../../app/appseed $(WorkspaceDir)/../../../app/appseed/core $(WorkspaceDir)/../../../app/appseed/base $(WorkspaceDir)/../../../app/appseed/axis $(WorkspaceDir)/../../../app/appseed/aura $(WorkspaceDir)/../../appseed";
-				WorkspaceDir = "$(SRCROOT)/../../../nodeapp/seed/macos";
+				WorkspaceDir = "$(SRCROOT)/../../../nodeapp/seed/metaseed";
 			};
 			name = Debug;
 		};
@@ -809,7 +811,7 @@
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "$(WorkspaceDir)/../../../include $(WorkspaceDir)/../../../nodeapp/include $(WorkspaceDir)/../../../app/include . .. $(WorkspaceDir)/../.. $(WorkspaceDir)/../../.. $(WorkspaceDir)/../../../app $(WorkspaceDir)/../../../app/appseed $(WorkspaceDir)/../../../app/appseed/core $(WorkspaceDir)/../../../app/appseed/base $(WorkspaceDir)/../../../app/appseed/axis $(WorkspaceDir)/../../../app/appseed/aura $(WorkspaceDir)/../../appseed";
-				WorkspaceDir = "$(SRCROOT)/../../../nodeapp/seed/macos";
+				WorkspaceDir = "$(SRCROOT)/../../../nodeapp/seed/metaseed";
 			};
 			name = Release;
 		};

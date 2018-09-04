@@ -40,3 +40,8 @@ void ns_application_main(int argc, char *argv[]);
 
 
 
+int is_window(oswindow window);
+
+void ns_main_sync(dispatch_block_t block);
+void ns_main_async(dispatch_block_t block);
+

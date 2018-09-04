@@ -32,9 +32,10 @@ bool m_bDirty;
    void * m_proundwindow;
 #endif
    ui_window_ptr m_puiwindow;
-   
   
-   virtual void round_window_draw(CGContextRef cgc) = 0;
+   bool m_bCanBecomeFirstResponder;
+  
+   virtual void round_window_draw(CGContextRef cgc, int cx, int cy) = 0;
    virtual void round_window_mouse_down(double x, double y) = 0;
    virtual void round_window_mouse_up(double x, double y) = 0;
    virtual void round_window_mouse_moved(double x, double y) = 0;
@@ -56,10 +57,13 @@ bool m_bDirty;
    virtual void round_window_on_show() = 0;
    virtual void round_window_on_hide() = 0;
    
+   virtual bool round_window_become_first_responder() = 0;
+   
    virtual void round_window_invalidate();
    virtual void round_window_show();
    virtual void round_window_hide();
    virtual void round_window_redraw();
+   virtual void round_window_redraw_sync();
    
    virtual void round_window_show_keyboard(bool bShow = true);
    
