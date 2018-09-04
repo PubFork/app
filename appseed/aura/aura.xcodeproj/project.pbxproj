@@ -1983,6 +1983,7 @@
 		9AB8C85C1EA98EA0007670A6 /* netserver_socket_thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AB8C8591EA98EA0007670A6 /* netserver_socket_thread.cpp */; };
 		9AB8C85D1EA98EA0007670A6 /* netserver_socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AB8C85A1EA98EA0007670A6 /* netserver_socket.cpp */; };
 		9AC20A5020998C2F0077FEBF /* user_form.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AC20A4E20998C2F0077FEBF /* user_form.h */; };
+		9AC2D113213EC54F006F66DF /* apple_multihreading.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A8181191F21B39600FDAF74 /* apple_multihreading.cpp */; };
 		9ACE46FF1D1FE56000A1E0AD /* libace.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A6716741D1553BF0069A961 /* libace.dylib */; };
 		9AD005321EB9AA2200B9FB48 /* compress_bz.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A0254EB1EA5927C003C82CF /* compress_bz.cpp */; };
 		9AD005331EB9AA2200B9FB48 /* compress_gz.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A0254EC1EA5927C003C82CF /* compress_gz.cpp */; };
@@ -9113,6 +9114,7 @@
 				9A6FAE711F5C773700AF31B2 /* datetime.cpp in Sources */,
 				9AD186341F9C2983001CEA8E /* visual_api.cpp in Sources */,
 				9A6FAE201F5C771400AF31B2 /* str_hex.cpp in Sources */,
+				9AC2D113213EC54F006F66DF /* apple_multihreading.cpp in Sources */,
 				9A6FB04C1F5C79CF00AF31B2 /* file_folder_watch.cpp in Sources */,
 				9A6FAF7F1F5C792B00AF31B2 /* http_application.cpp in Sources */,
 				9A6FAF831F5C792B00AF31B2 /* http_status.cpp in Sources */,

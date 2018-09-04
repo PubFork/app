@@ -96,7 +96,11 @@ void set_cursor_dib(void * dib, int xHotSpot, int yHotSpot)
    
       #ifdef MACOS
       
+#ifdef MACOS
+      
       ns_set_cursor_cgimageref(NULL, 0, 0, 0, 0);
+
+#endif
       
 #endif
       
@@ -109,6 +113,7 @@ void set_cursor_dib(void * dib, int xHotSpot, int yHotSpot)
 #ifdef MACOS
       
       ns_set_cursor_cgimageref(cgimageref_from_dib(pdib), pdib->m_size.cx, pdib->m_size.cy, xHotSpot, yHotSpot);
+#else
       
 #endif
       

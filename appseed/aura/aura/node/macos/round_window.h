@@ -69,6 +69,7 @@ public:
    virtual void round_window_show();
    virtual void round_window_hide();
    virtual void round_window_redraw();
+   virtual void round_window_redraw_sync();
    
    virtual void round_window_order_front();
    virtual void round_window_make_key_window();

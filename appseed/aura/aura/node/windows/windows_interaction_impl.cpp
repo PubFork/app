@@ -2224,9 +2224,9 @@ namespace windows
 
                // be very careful here...
                if (::is_window(oswindow_Save))
-                  ::SetActiveWindow(oswindow_Save);
+                  ::set_active_window(oswindow_Save);
                if (::is_window(oswindow_Focus))
-                  ::SetFocus(oswindow_Focus);
+                  ::set_focus(oswindow_Focus);
             }
          }
          return true;

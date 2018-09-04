@@ -56,7 +56,7 @@ WINBOOL ReleaseCapture();
 oswindow SetFocus(oswindow window);
 oswindow GetFocus();
 oswindow GetActiveWindow();
-oswindow SetActiveWindow(oswindow window);
+oswindow set_active_window(oswindow window);
 
 
 void GetMainScreenRect(LPRECT lprect);
