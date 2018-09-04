@@ -1251,18 +1251,29 @@ namespace file
          {
 
             string strMatter = strDir;
-
-            strsize iFind1 = strMatter.find_ci("/matter/");
-
-            strsize iFind2 = strMatter.find_ci("\\matter\\");
-
-            strsize iFind = min_non_neg(iFind1, iFind2);
-
-            if(iFind > 0)
+            
+            if(::str::begins_eat_ci(strMatter, "appmatter://"))
             {
+               
+               strMatter = "/matter/" + strMatter;
+               
+            }
+            else
+            {
+               
+               strsize iFind1 = strMatter.find_ci("/matter/");
 
-               strMatter = strMatter.Mid(iFind);
+               strsize iFind2 = strMatter.find_ci("\\matter\\");
 
+               strsize iFind = min_non_neg(iFind1, iFind2);
+
+               if(iFind > 0)
+               {
+
+                  strMatter = strMatter.Mid(iFind);
+
+               }
+               
             }
 
             property_set set(get_app());
@@ -1271,7 +1282,7 @@ namespace file
 
             ::file::path strFile = System.dir().cache() / strMatter / "list_dir.list_dir";
 
-            iFind = strFile.find(DIR_SEPARATOR);
+            strsize iFind = strFile.find(DIR_SEPARATOR);
 
             if (iFind > 0)
             {
