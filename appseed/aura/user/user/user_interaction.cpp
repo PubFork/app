@@ -1875,7 +1875,7 @@ restart:
 
       windowing_output_debug_string("\n_001Print A");
 
-      pgraphics->fill_solid_rect_dim(100, 100, 400, 120, ARGB(255, 255, 255, 0));
+      //pgraphics->fill_solid_rect_dim(100, 100, 400, 120, ARGB(255, 255, 255, 0));
       
       {
 

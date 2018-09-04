@@ -293,15 +293,7 @@ retry:
 
          string strIndex;
 
-#ifdef WINDOWS
-
-         strIndex.Format("%d-%05d", GetCurrentProcessId(), iRetry);
-
-#else
-
-         strIndex.Format("%d-%05d", getpid(), iRetry);
-
-#endif
+         strIndex.Format("%d-%05d", get_current_process_id(), iRetry);
 
          plog->m_strLogPath = ::dir::appdata() /  string(m_id) / strDatetime + "-" + strIndex + ".log";
 

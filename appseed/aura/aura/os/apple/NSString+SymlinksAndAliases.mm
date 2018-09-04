@@ -204,8 +204,10 @@
 //
 - (NSString *)stringByConditionallyResolvingAlias
 {
+   
 	NSString *resolvedPath = nil;
-	 
+#ifdef MACOS
+
 	CFURLRef url = CFURLCreateWithFileSystemPath
 		(kCFAllocatorDefault, (CFStringRef)self, kCFURLPOSIXPathStyle, NO);
 	if (url != NULL)
@@ -228,7 +230,7 @@
 		}
 		CFRelease(url);
 	}
-	 
+#endif
 	return resolvedPath;
 }
 

@@ -253,6 +253,13 @@ bool __node_further_file_is_equal(file::path const & p1 , file::path const & p2)
 ::file::path __node_full_file_path(file::path path)
 {
    
+   if(path.is_empty())
+   {
+      
+      return path;
+      
+   }
+   
    return ::str::from_strdup(ns_realpath(path));
    
 }

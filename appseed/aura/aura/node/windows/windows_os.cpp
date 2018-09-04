@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 #include <wincred.h>
 #include <wtsapi32.h>
 
@@ -189,7 +189,7 @@ namespace windows
    int os::get_pid()
    {
 
-      return (int) ::GetCurrentProcessId();
+      return (int) ::get_current_process_id();
 
    }
 

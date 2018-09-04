@@ -737,7 +737,7 @@
       
       UITouch *touch = [touches anyObject];
       
-      if ([touch tapCount] == 1)
+      //if ([touch tapCount] == 1)
       {
          
          // if touch is a single tap, store its location so we can average it with the second touch location
@@ -757,12 +757,12 @@
          p->round_window_mouse_up(x, y);
          
       }
-      else
-      {
-         
-         //            twoFingerTapIsPossible = NO;
-         
-      }
+//      else
+//      {
+//         
+//         //            twoFingerTapIsPossible = NO;
+//         
+//      }
       
    }
    

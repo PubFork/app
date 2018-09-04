@@ -818,7 +818,7 @@ namespace exception
       return true;
 
 //      HANDLE hprocess = SymGetProcessHandle();
-//      uint32_t  dwPid = GetCurrentProcessId();
+//      uint32_t  dwPid = get_current_process_id();
 //
 //      // enumerate modules
 //      if (is_windows_nt())
@@ -1025,7 +1025,7 @@ namespace exception
       }
 
       HANDLE hprocess = SymGetProcessHandle();
-      uint32_t  dwPid = GetCurrentProcessId();
+      uint32_t  dwPid = get_current_process_id();
 
       // initializes
       SymSetOptions(SymGetOptions()|SYMOPT_DEFERRED_LOADS|SYMOPT_LOAD_LINES);

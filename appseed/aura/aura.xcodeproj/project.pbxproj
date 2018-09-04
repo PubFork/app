@@ -1637,6 +1637,8 @@
 		9A706D7B1FFE62FA00A78618 /* RoundWindowFrameView.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A706D731FFE62F800A78618 /* RoundWindowFrameView.h */; };
 		9A706D7D1FFE62FA00A78618 /* RoundWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A706D751FFE62F900A78618 /* RoundWindow.h */; };
 		9A706D801FFE62FA00A78618 /* round_window.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A706D781FFE62FA00A78618 /* round_window.h */; };
+		9A801868213E544700493D55 /* str_bstring.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AB169CC212230F900E84DDF /* str_bstring.cpp */; };
+		9A801870213E62ED00493D55 /* NSString+SymlinksAndAliases.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9AEDECE1212C486900952A06 /* NSString+SymlinksAndAliases.mm */; };
 		9A8087471DE1021A00F70A07 /* ios_library.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A8087451DE0FF3000F70A07 /* ios_library.cpp */; };
 		9A8181001F21A3D900FDAF74 /* draw2d_nanosvg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A8ED4821F20052E007DB75C /* draw2d_nanosvg.cpp */; };
 		9A8181021F21A43A00FDAF74 /* netserver_socket_handler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AB8C8581EA98EA0007670A6 /* netserver_socket_handler.cpp */; };
@@ -8768,6 +8770,7 @@
 				9A9579531F62251C00623508 /* net_url_domain.cpp in Sources */,
 				9A6FB10E1F5C9C5D00AF31B2 /* primitive_factory.cpp in Sources */,
 				9A9579161F6224AC00623508 /* math_number_integer.cpp in Sources */,
+				9A801868213E544700493D55 /* str_bstring.cpp in Sources */,
 				9AF4C4121F83702B00197385 /* aura_net.cpp in Sources */,
 				9A6FB0BD1F5C7D5400AF31B2 /* ios_crypt.cpp in Sources */,
 				9A9579061F62249500623508 /* str_strx.cpp in Sources */,
@@ -8977,6 +8980,7 @@
 				9A9578D11F6223D300623508 /* file_dir.cpp in Sources */,
 				9A9578DE1F6223D300623508 /* file_md5.cpp in Sources */,
 				9A6FACFE1F5C75A300AF31B2 /* ios_trace.cpp in Sources */,
+				9A801870213E62ED00493D55 /* NSString+SymlinksAndAliases.mm in Sources */,
 				9A9579191F6224AC00623508 /* math_scalar.cpp in Sources */,
 				9A9579231F6224C700623508 /* datetime_department.cpp in Sources */,
 				9A9579171F6224AC00623508 /* math_number.cpp in Sources */,

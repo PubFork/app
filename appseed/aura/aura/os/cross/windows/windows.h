@@ -7,7 +7,7 @@
 
 BEGIN_EXTERN_C
 
-DWORD GetCurrentProcessId(void);
+DWORD get_current_process_id(void);
 
 END_EXTERN_C
 

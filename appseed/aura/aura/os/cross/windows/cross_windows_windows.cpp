@@ -172,7 +172,7 @@ CLASS_DECL_AURA int_bool is_windows_nt_lesser_than_2000()
 
 
 #if !defined(METROWIN)
-DWORD GetCurrentProcessId()
+DWORD get_current_process_id()
 {
 
     return getpid();

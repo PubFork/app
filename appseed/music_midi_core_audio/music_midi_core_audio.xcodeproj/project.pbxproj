@@ -43,8 +43,6 @@
 		9A21196F1D833C09000C4336 /* CoreMIDIOutput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A210CD41D81E3E8000C4336 /* CoreMIDIOutput.cpp */; };
 		9A2119701D833C09000C4336 /* music_midi_core_audio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A8EAF7817C5640300C458D1 /* music_midi_core_audio.cpp */; };
 		9A2119711D833C09000C4336 /* CAStreamBasicDescription.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A210CB91D81AB9B000C4336 /* CAStreamBasicDescription.cpp */; };
-		9A2119731D833C09000C4336 /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A210CDA1D81ED91000C4336 /* CoreMIDI.framework */; };
-		9A2119741D833C09000C4336 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A210CD81D81ED72000C4336 /* AudioToolbox.framework */; };
 		9A21197A1D833C09000C4336 /* CAStreamBasicDescription.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A210CBA1D81AB9B000C4336 /* CAStreamBasicDescription.h */; };
 		9A21197B1D833C09000C4336 /* framework.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A1B496316A494A600875A94 /* framework.h */; };
 		9A21197C1D833C09000C4336 /* music_midi_core_audio_exception.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A8EAF6D17C5640300C458D1 /* music_midi_core_audio_exception.h */; };
@@ -60,10 +58,6 @@
 		9A2119861D833C09000C4336 /* music_midi_core_audio.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A8EAF7A17C5640300C458D1 /* music_midi_core_audio.h */; };
 		9A2119871D833C09000C4336 /* OutputBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A210CBE1D81AC21000C4336 /* OutputBase.h */; };
 		9A2119881D833C09000C4336 /* AudioUnitOutput.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A210CB41D81AB23000C4336 /* AudioUnitOutput.h */; };
-		9A21199E1D834119000C4336 /* libios_veriwell_multimedia.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0730B01F1BA11864001D28DB /* libios_veriwell_multimedia.a */; };
-		9A2119A01D834133000C4336 /* libios_aura.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A21199F1D834133000C4336 /* libios_aura.dylib */; };
-		9A2119A21D83415F000C4336 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A2119A11D83415F000C4336 /* UIKit.framework */; };
-		9A2119A41D834178000C4336 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A2119A31D834178000C4336 /* CoreFoundation.framework */; };
 		9A8997BD177D0E7F00C7761E /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A8997BC177D0E7D00C7761E /* Carbon.framework */; };
 		9A8EAF7B17C5640300C458D1 /* music_midi_core_audio_exception.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A8EAF6C17C5640300C458D1 /* music_midi_core_audio_exception.cpp */; };
 		9A8EAF7C17C5640300C458D1 /* music_midi_core_audio_exception.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A8EAF6D17C5640300C458D1 /* music_midi_core_audio_exception.h */; };
@@ -107,14 +101,14 @@
 			remoteGlobalIDString = 07B6584B190F3CE7002DAADE;
 			remoteInfo = veriwell_multimedia_iosTests;
 		};
-		0730B0221BA1187C001D28DB /* PBXContainerItemProxy */ = {
+		9A21199C1D833D11000C4336 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0730B0161BA11863001D28DB /* veriwell_multimedia.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 9AEB75A216F78DF10085103B;
-			remoteInfo = veriwell_multimedia;
+			remoteGlobalIDString = 07B6583B190F3CE7002DAADE;
+			remoteInfo = ios_veriwell_multimedia;
 		};
-		9A21199C1D833D11000C4336 /* PBXContainerItemProxy */ = {
+		9A77FD39213F1D2800B3A133 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0730B0161BA11863001D28DB /* veriwell_multimedia.xcodeproj */;
 			proxyType = 1;
@@ -149,7 +143,7 @@
 		9A210CDE1D81EDB5000C4336 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		9A210CE01D81EDF4000C4336 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = System/Library/Frameworks/QTKit.framework; sourceTree = SDKROOT; };
 		9A210CE31D81EE1E000C4336 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
-		9A21198C1D833C09000C4336 /* libmusic_midi_core_audio.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libmusic_midi_core_audio.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A21198C1D833C09000C4336 /* libios_music_midi_core_audio.a */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libios_music_midi_core_audio.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A21199F1D834133000C4336 /* libios_aura.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libios_aura.dylib; path = "../../../../Users/camilo/Library/Developer/Xcode/DerivedData/ios-multimedia-hauwmlivziczmffwiwizawovmyuo/Build/Products/Debug-iphonesimulator/libios_aura.dylib"; sourceTree = "<group>"; };
 		9A2119A11D83415F000C4336 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		9A2119A31D834178000C4336 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/CoreFoundation.framework; sourceTree = DEVELOPER_DIR; };
@@ -179,12 +173,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9A2119A41D834178000C4336 /* CoreFoundation.framework in Frameworks */,
-				9A2119A21D83415F000C4336 /* UIKit.framework in Frameworks */,
-				9A2119A01D834133000C4336 /* libios_aura.dylib in Frameworks */,
-				9A21199E1D834119000C4336 /* libios_veriwell_multimedia.a in Frameworks */,
-				9A2119731D833C09000C4336 /* CoreMIDI.framework in Frameworks */,
-				9A2119741D833C09000C4336 /* AudioToolbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -259,7 +247,7 @@
 			isa = PBXGroup;
 			children = (
 				A1CFD778154F5EAA007447E2 /* libmusic_midi_core_audio.dylib */,
-				9A21198C1D833C09000C4336 /* libmusic_midi_core_audio.dylib */,
+				9A21198C1D833C09000C4336 /* libios_music_midi_core_audio.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -368,7 +356,7 @@
 			);
 			name = ios_music_midi_core_audio;
 			productName = os;
-			productReference = 9A21198C1D833C09000C4336 /* libmusic_midi_core_audio.dylib */;
+			productReference = 9A21198C1D833C09000C4336 /* libios_music_midi_core_audio.a */;
 			productType = "com.apple.product-type.library.dynamic";
 		};
 		A1CFD777154F5EAA007447E2 /* music_midi_core_audio */ = {
@@ -382,7 +370,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				0730B0231BA1187C001D28DB /* PBXTargetDependency */,
+				9A77FD3A213F1D2800B3A133 /* PBXTargetDependency */,
 			);
 			name = music_midi_core_audio;
 			productName = os;
@@ -495,15 +483,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		0730B0231BA1187C001D28DB /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = veriwell_multimedia;
-			targetProxy = 0730B0221BA1187C001D28DB /* PBXContainerItemProxy */;
-		};
 		9A21199D1D833D11000C4336 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = ios_veriwell_multimedia;
 			targetProxy = 9A21199C1D833D11000C4336 /* PBXContainerItemProxy */;
+		};
+		9A77FD3A213F1D2800B3A133 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = ios_veriwell_multimedia;
+			targetProxy = 9A77FD39213F1D2800B3A133 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -512,6 +500,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				EXECUTABLE_EXTENSION = a;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MACH_O_TYPE = staticlib;
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -520,6 +511,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				EXECUTABLE_EXTENSION = a;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MACH_O_TYPE = staticlib;
 				SDKROOT = iphoneos;
 			};
 			name = Release;
@@ -586,7 +580,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_NAME = "$(PROJECT_NAME)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "$(WorkspaceDir)/../../../include $(WorkspaceDir)/../../../nodeapp/include $(WorkspaceDir)/../../../app/include . .. $(WorkspaceDir)/../../.. $(WorkspaceDir)/../.. $(WorkspaceDir)/../../../app $(WorkspaceDir)/../../../app/appseed $(WorkspaceDir)/../../../app/appseed/core $(WorkspaceDir)/../../../app/appseed/base $(WorkspaceDir)/../../../app/appseed/axis $(WorkspaceDir)/../../../app/appseed/aura $(WorkspaceDir)/../../../app/base $(WorkspaceDir)/../../../app/axis $(WorkspaceDir)/../../../app/aura $(WorkspaceDir)/../../../app/atom";
@@ -648,7 +642,7 @@
 					"$(TARGET_BUILD_DIR)",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
-				PRODUCT_NAME = "$(PROJECT_NAME)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "$(WorkspaceDir)/../../../include $(WorkspaceDir)/../../../nodeapp/include $(WorkspaceDir)/../../../app/include . .. $(WorkspaceDir)/../../.. $(WorkspaceDir)/../.. $(WorkspaceDir)/../../../app $(WorkspaceDir)/../../../app/appseed $(WorkspaceDir)/../../../app/appseed/core $(WorkspaceDir)/../../../app/appseed/base $(WorkspaceDir)/../../../app/appseed/axis $(WorkspaceDir)/../../../app/appseed/aura $(WorkspaceDir)/../../../app/base $(WorkspaceDir)/../../../app/axis $(WorkspaceDir)/../../../app/aura $(WorkspaceDir)/../../../app/atom";

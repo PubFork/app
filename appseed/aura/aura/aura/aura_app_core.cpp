@@ -154,7 +154,7 @@ app_core::app_core(aura_main_data * pdata)
 
    int iPid;
 
-   iPid = ::GetCurrentProcessId();
+   iPid = ::get_current_process_id();
 
    printf("%s", ("\n\napplication_pid=" + ::str::from(iPid) + "\n\n").c_str());
    fprintf(stderr, "%s", ("\n\napplication_pid=" + ::str::from(iPid) + "\n\n").c_str());
