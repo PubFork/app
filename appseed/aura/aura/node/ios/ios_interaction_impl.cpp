@@ -3907,7 +3907,7 @@ namespace ios
       oswindow oswindow;
       if(get_handle() == NULL)
       {
-         //         oswindow = ::GetDesktopWindow();
+         //         oswindow = ::get_desktop_window();
 
       }
       else
@@ -4422,7 +4422,7 @@ namespace ios
    }
 
 
-   ::user::interaction *  interaction_impl::GetDesktopWindow()
+   ::user::interaction *  interaction_impl::get_desktop_window()
    {
 
       return NULL;

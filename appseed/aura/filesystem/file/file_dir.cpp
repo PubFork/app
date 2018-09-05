@@ -1308,6 +1308,7 @@ void dir::ls(::file::patha & stra,const ::file::path & psz)
          continue;
       path = psz / dp->d_name;
       path.m_iDir = is(path) ? 1 : 0;
+      path.m_iSize = -1;
       stra.add(path);
 
       //output_debug_string("flood for you: dir::ls ----> " + path);

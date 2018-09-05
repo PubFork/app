@@ -316,7 +316,7 @@ namespace windows
 
       virtual ::user::interaction * GetFocus();
 
-      virtual ::user::interaction * GetDesktopWindow();
+      virtual ::user::interaction * get_desktop_window();
 
       // Obsolete and non-portable APIs - not recommended for new code
       virtual void CloseWindow();

@@ -3492,7 +3492,7 @@ namespace macos
    }
 
 
-   ::user::interaction *  interaction_impl::GetDesktopWindow()
+   ::user::interaction *  interaction_impl::get_desktop_window()
    {
 
       return NULL;

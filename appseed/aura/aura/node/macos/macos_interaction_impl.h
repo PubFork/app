@@ -330,7 +330,7 @@ namespace macos
       virtual ::user::interaction *  GetFocus() override;
       bool  SetFocus() override;
 
-      virtual ::user::interaction *  GetDesktopWindow();
+      virtual ::user::interaction *  get_desktop_window();
 
       virtual void CloseWindow() override;
       virtual bool OpenIcon() override;

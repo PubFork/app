@@ -110,7 +110,7 @@ void CLASS_DECL_lnx AfxcancelModes(oswindow hWndRcvr)
    // combo-box is active, but if receiver is a popup, do nothing
    if (hWndRcvr != NULL &&
      (::GetWindowLong(hWndRcvr, GWL_STYLE) & WS_CHILD) != 0 &&
-     ::GetParent(hWndRcvr) == ::GetDesktopWindow())
+     ::GetParent(hWndRcvr) == ::get_desktop_window())
       return;
 
    // finally, we should cancel the mode!

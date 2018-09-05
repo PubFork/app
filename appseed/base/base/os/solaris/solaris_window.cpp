@@ -748,7 +748,7 @@ public:
       int32_t show_window(const char * lpText, const char * lpCaption)
       {
 
-         ::GetWindowRect(::GetDesktopWindow(), &m_rectDesktop);
+         ::GetWindowRect(::get_desktop_window(), &m_rectDesktop);
 
 
          rect rect(100, 100, 200, 200);
@@ -1225,7 +1225,7 @@ bool c_xstart()
 
 
 
-oswindow GetDesktopWindow()
+oswindow get_desktop_window()
 {
 
 return g_oswindowDesktop;

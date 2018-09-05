@@ -380,7 +380,7 @@ namespace fontopus
          m_rectDesktop.right = 800;
          m_rectDesktop.bottom = 600;
 
-//         ::GetWindowRect(::GetDesktopWindow(), &m_rectDesktop);
+//         ::GetWindowRect(::get_desktop_window(), &m_rectDesktop);
 
       }
       else

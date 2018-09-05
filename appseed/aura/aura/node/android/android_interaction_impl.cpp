@@ -3566,7 +3566,7 @@ namespace android
       if (get_handle() == NULL)
       {
 
-         //         oswindow = ::GetDesktopWindow();
+         //         oswindow = ::get_desktop_window();
 
       }
       else
@@ -3964,10 +3964,10 @@ namespace android
 
    }
 
-   ::user::interaction * PASCAL interaction_impl::GetDesktopWindow()
+   ::user::interaction * PASCAL interaction_impl::get_desktop_window()
    {
       /*
-      return ::android::interaction_impl::from_handle(::GetDesktopWindow());
+      return ::android::interaction_impl::from_handle(::get_desktop_window());
       */
       return NULL;
    }

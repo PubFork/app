@@ -4492,10 +4492,10 @@ namespace windows
    }
 
 
-   ::user::interaction *  interaction_impl::GetDesktopWindow()
+   ::user::interaction *  interaction_impl::get_desktop_window()
    {
 
-      return System.ui_from_handle(::GetDesktopWindow());
+      return System.ui_from_handle(::get_desktop_window());
 
    }
 

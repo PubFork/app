@@ -311,7 +311,7 @@ namespace metrowin
       virtual ::user::interaction *  GetFocus();
       virtual bool  SetFocus() override;
 
-      static_function ::user::interaction *  GetDesktopWindow();
+      static_function ::user::interaction *  get_desktop_window();
 
       // Obsolete and non-portable APIs - not recommended for new code
       virtual void CloseWindow();

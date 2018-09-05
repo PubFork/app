@@ -271,7 +271,7 @@ namespace userstack
          {
 #ifdef WINDOWSEX
             class rect rect;
-            ::GetWindowRect(::GetDesktopWindow(), rect);
+            ::GetWindowRect(::get_desktop_window(), rect);
             point pt = rect.center();
             if(!IsWindowVisible()
                   || ::WindowFromPoint(pt) != get_safe_handle())

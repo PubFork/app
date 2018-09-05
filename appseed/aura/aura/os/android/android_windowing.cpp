@@ -926,7 +926,7 @@ bool c_xstart()
 
 
 
-oswindow GetDesktopWindow()
+oswindow get_desktop_window()
 {
 
    return g_oswindowDesktop;

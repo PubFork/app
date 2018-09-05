@@ -65,7 +65,7 @@ namespace user
 #ifdef WINDOWSEX
 
       int32_t iOrder = 0;
-      oswindow oswindowOrder = ::GetDesktopWindow();
+      oswindow oswindowOrder = ::get_desktop_window();
       oswindowOrder = ::GetWindow(oswindowOrder, GW_CHILD);
       while (oswindowOrder != NULL
              && ::is_window(oswindowOrder))

@@ -131,7 +131,7 @@ namespace user
 #ifdef LINUX
 
                // for safety in Linux
-               ::ReleaseCapture();
+               ::release_capture();
 
 #endif
 

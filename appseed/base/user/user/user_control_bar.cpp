@@ -465,7 +465,7 @@ namespace user
       // call default when toolbar is not floating
       if (!IsFloating())
       {
-         //trans pmouseactivate->set_lresult(::user::interaction::OnMouseActivate(pmouseactivate->GetDesktopWindow(), pmouseactivate->GetHitTest(), pmouseactivate->GetMessage()));
+         //trans pmouseactivate->set_lresult(::user::interaction::OnMouseActivate(pmouseactivate->get_desktop_window(), pmouseactivate->GetHitTest(), pmouseactivate->GetMessage()));
          pobj->m_bRet = true;
          return;
       }

@@ -78,7 +78,7 @@ oswindow GetWindow(oswindow window, int iParentHood);
 oswindow GetActiveWindow();
 oswindow SetActiveWindow(oswindow window);
 WINBOOL DestroyWindow(oswindow window);
-oswindow GetDesktopWindow();
+oswindow get_desktop_window();
 
 
 

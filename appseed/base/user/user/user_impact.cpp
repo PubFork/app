@@ -936,8 +936,8 @@ namespace user
       if (pParentFrame != NULL)
       {
          // eat it if this will cause activation
-         ASSERT(pParentFrame == pmouseactivate->GetDesktopWindow()
-                || pmouseactivate->GetDesktopWindow()->IsChild(pParentFrame));
+         ASSERT(pParentFrame == pmouseactivate->get_desktop_window()
+                || pmouseactivate->get_desktop_window()->IsChild(pParentFrame));
 
          // either re-activate the current ::user::impact, or set this ::user::impact to be active
          sp(::user::impact) pview = pParentFrame->GetActiveView();
@@ -988,8 +988,8 @@ namespace user
       if (pParentFrame != NULL)
       {
          // eat it if this will cause activation
-         /*      ASSERT(pParentFrame == pmouseactivate->GetDesktopWindow()
-         || pmouseactivate->GetDesktopWindow()->IsChild(pParentFrame));*/
+         /*      ASSERT(pParentFrame == pmouseactivate->get_desktop_window()
+         || pmouseactivate->get_desktop_window()->IsChild(pParentFrame));*/
 
          // either re-activate the current ::user::impact, or set this ::user::impact to be active
          sp(::user::impact) pview = pParentFrame->GetActiveView();

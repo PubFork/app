@@ -172,7 +172,7 @@ namespace filemanager
       tab_view * pview = pdoc->get_typed_view < tab_view >();
 
 #ifdef WINDOWSEX
-      oswindow oswindowDesktop = ::GetDesktopWindow();
+      oswindow oswindowDesktop = ::get_desktop_window();
       rect rectOpen;
       ::GetWindowRect(oswindowDesktop, rectOpen);
       int32_t iWidth = rectOpen.width();

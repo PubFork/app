@@ -79,7 +79,7 @@ CLASS_DECL_AXIS bool _istlead(int32_t ch);
 //oswindow GetActiveWindow();
 //oswindow SetActiveWindow(oswindow interaction_impl);
 //int_bool DestroyWindow(oswindow interaction_impl);
-//oswindow GetDesktopWindow();
+//oswindow get_desktop_window();
 //
 //
 

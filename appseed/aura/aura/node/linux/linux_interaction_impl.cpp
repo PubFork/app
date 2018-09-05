@@ -9,14 +9,18 @@
 
 void wm_iconify_window(oswindow w);
 
+void wm_state_above_raw(oswindow w, bool bSet);
 
 void windowing_output_debug_string(const char * pszDebugString);
 
-
 Display * x11_get_display();
+
 void wm_state_above_raw(oswindow w, bool bSet);
+
 void wm_toolwindow(oswindow w, bool bSet);
+
 void wm_state_hidden(oswindow w, bool bSet);
+
 //#include <X11/extensions/Xcomposite.h>
 
 CLASS_DECL_AURA thread_int_ptr < DWORD_PTR > t_time1;
@@ -842,7 +846,7 @@ namespace linux
 
       /*
 
-      if (!::IsWindow((oswindow) get_handle()))
+      if (!::is_window((oswindow) get_handle()))
       {
 
          // not a valid interaction_impl
@@ -910,7 +914,7 @@ namespace linux
       if (window != NULL)
       {
 
-         bResult = ::DestroyWindow(window) != FALSE;
+         bResult = ::destroy_window(window) != FALSE;
 
          //Detach();
 
@@ -966,7 +970,7 @@ namespace linux
    /*
       int32_t interaction_impl::GetDlgItemText(int32_t nID, string & rString) const
       {
-         ASSERT(::IsWindow((oswindow) get_handle()));
+         ASSERT(::is_window((oswindow) get_handle()));
          rString = "";    // is_empty without deallocating
 
          oswindow hWnd = ::GetDlgItem(get_handle(), nID);
@@ -983,7 +987,7 @@ namespace linux
 
    bool interaction_impl::GetWindowPlacement(WINDOWPLACEMENT* lpwndpl)
    {
-      /*    ASSERT(::IsWindow((oswindow) get_handle()));
+      /*    ASSERT(::is_window((oswindow) get_handle()));
           lpwndpl->length = sizeof(WINDOWPLACEMENT);
           return ::GetWindowPlacement(get_handle(), lpwndpl) != FALSE;*/
       return false;
@@ -991,7 +995,7 @@ namespace linux
 
    bool interaction_impl::SetWindowPlacement(const WINDOWPLACEMENT* lpwndpl)
    {
-      /*      ASSERT(::IsWindow((oswindow) get_handle()));
+      /*      ASSERT(::is_window((oswindow) get_handle()));
             ((WINDOWPLACEMENT*)lpwndpl)->length = sizeof(WINDOWPLACEMENT);
             return ::SetWindowPlacement(get_handle(), lpwndpl) != FALSE;*/
       return false;
@@ -1060,38 +1064,38 @@ namespace linux
 
    /*   bool interaction_impl::GetWindowInfo(PWINDOWINFO pwi) const
       {
-         ASSERT(::IsWindow((oswindow)get_handle()));
+         ASSERT(::is_window((oswindow)get_handle()));
          return ::GetWindowInfo((oswindow)get_handle(), pwi) != FALSE;
       }*/
 
    /*   sp(::interaction_impl) interaction_impl::GetAncestor(UINT gaFlags) const
-      { ASSERT(::IsWindow((oswindow)get_handle())); return  ::linux::interaction_impl::from_handle(::GetAncestor((oswindow)get_handle(), gaFlags)); }
+      { ASSERT(::is_window((oswindow)get_handle())); return  ::linux::interaction_impl::from_handle(::GetAncestor((oswindow)get_handle(), gaFlags)); }
 
    */
 
    /*   bool interaction_impl::GetScrollBarInfo(LONG idObject, PSCROLLBARINFO psbi) const
       {
-         ASSERT(::IsWindow((oswindow)get_handle()));
+         ASSERT(::is_window((oswindow)get_handle()));
          ASSERT(psbi != NULL);
          return ::GetScrollBarInfo((oswindow)get_handle(), idObject, psbi) != FALSE;
       }
    */
    /*   bool interaction_impl::GetTitleBarInfo(PTITLEBARINFO pti) const
       {
-         ASSERT(::IsWindow((oswindow)get_handle()));
+         ASSERT(::is_window((oswindow)get_handle()));
          ASSERT(pti != NULL);
          return ::GetTitleBarInfo((oswindow)get_handle(), pti) != FALSE;
       }
    */
    /*   bool interaction_impl::AnimateWindow(DWORD dwTime, DWORD dwFlags)
       {
-         ASSERT(::IsWindow((oswindow)get_handle()));
+         ASSERT(::is_window((oswindow)get_handle()));
          return ::AnimateWindow((oswindow)get_handle(), dwTime, dwFlags) != FALSE;
       }
 
       bool interaction_impl::FlashWindowEx(DWORD dwFlags, UINT  uCount, DWORD dwTimeout)
       {
-         ASSERT(::IsWindow((oswindow)get_handle()));
+         ASSERT(::is_window((oswindow)get_handle()));
          FLASHWINFO fwi;
          fwi.cbSize = sizeof(fwi);
          fwi.hwnd = (oswindow)get_handle();
@@ -1106,14 +1110,14 @@ namespace linux
    /*
       bool interaction_impl::SetLayeredWindowAttributes(COLORREF crKey, BYTE bAlpha, DWORD dwFlags)
       {
-         ASSERT(::IsWindow((oswindow)get_handle()));
+         ASSERT(::is_window((oswindow)get_handle()));
          return ::SetLayeredWindowAttributes((oswindow)get_handle(), crKey, bAlpha, dwFlags) != FALSE;
       }
 
       bool interaction_impl::UpdateLayeredWindow(::draw2d::graphics * pDCDst, POINT *pptDst, SIZE *psize,
          ::draw2d::graphics * pDCSrc, POINT *pptSrc, COLORREF crKey, BLENDFUNCTION *pblend, DWORD dwFlags)
       {
-         ASSERT(::IsWindow((oswindow)get_handle()));
+         ASSERT(::is_window((oswindow)get_handle()));
          return ::UpdateLayeredWindow((oswindow)get_handle(), WIN_HDC(pDCDst), pptDst, psize,
             WIN_HDC(pDCSrc), pptSrc, crKey, pblend, dwFlags) != FALSE;
       }
@@ -1122,13 +1126,13 @@ namespace linux
    /*
       bool interaction_impl::GetLayeredWindowAttributes(COLORREF *pcrKey, BYTE *pbAlpha, DWORD *pdwFlags) const
       {
-         ASSERT(::IsWindow((oswindow)get_handle()));
+         ASSERT(::is_window((oswindow)get_handle()));
          return ::GetLayeredWindowAttributes((oswindow)get_handle(), pcrKey, pbAlpha, pdwFlags) != FALSE;
       }
 
       bool interaction_impl::PrintWindow(::draw2d::graphics * pgraphics, UINT nFlags) const
       {
-         ASSERT(::IsWindow((oswindow)get_handle()));
+         ASSERT(::is_window((oswindow)get_handle()));
          return ::PrintWindow((oswindow)get_handle(), (HDC)(dynamic_cast<::linux::graphics * >(pgraphics))->get_handle(), nFlags) != FALSE;
       }
 
@@ -1506,7 +1510,8 @@ namespace linux
          sp(::user::interaction) puiFocus =  (Session.get_keyboard_focus());
          if(puiFocus != NULL
                && puiFocus->IsWindow()
-               && puiFocus->GetTopLevel() != NULL)
+               && puiFocus->GetTopLevel() != NULL
+               && puiFocus != m_pui)
          {
             puiFocus->send(pkey);
             if(pbase->m_bRet)
@@ -2015,7 +2020,7 @@ namespace linux
       else
       {
       // control notification
-      ASSERT(nID == 0 || ::IsWindow(hWndCtrl));
+      ASSERT(nID == 0 || ::is_window(hWndCtrl));
 
       if (gen_ThreadState->m_hLockoutNotifyWindow == get_handle())
       return TRUE;        // locked out - ignore control notification
@@ -2050,7 +2055,7 @@ namespace linux
           //      int32_t nCode = pNMHDR->code;
 
           ASSERT(hWndCtrl != NULL);
-          ASSERT(::IsWindow(hWndCtrl));
+          ASSERT(::is_window(hWndCtrl));
 
           if (gen_ThreadState->m_hLockoutNotifyWindow == get_handle())
              return true;        // locked out - ignore control notification
@@ -2115,7 +2120,7 @@ namespace linux
    ::user::interaction * interaction_impl::GetParent()
    {
 
-      if(!::IsWindow((oswindow) get_handle()))
+      if(!::is_window((oswindow) get_handle()))
          return NULL;
 
       if(get_handle() == NULL)
@@ -2132,7 +2137,7 @@ namespace linux
    ::user::interaction * interaction_impl::GetTopLevel()
    {
 
-      if(!::IsWindow((oswindow) get_handle()))
+      if(!::is_window((oswindow) get_handle()))
          return NULL;
 
       if(get_handle() == NULL)
@@ -2389,7 +2394,7 @@ namespace linux
    void interaction_impl::ScrollWindow(int32_t xAmount, int32_t yAmount,
                                        LPCRECT lpRect, LPCRECT lpClipRect)
    {
-      /*      ASSERT(::IsWindow((oswindow) get_handle()));
+      /*      ASSERT(::is_window((oswindow) get_handle()));
 
             if (IsWindowVisible() || lpRect != NULL || lpClipRect != NULL)
             {
@@ -2712,9 +2717,9 @@ namespace linux
                      pParent->send_message(WM_SYSCOMMAND, nID, lparam);
 
                      // be very careful here...
-                     if (::IsWindow(hWndSave))
+                     if (::is_window(hWndSave))
                         ::SetActiveWindow(hWndSave);
-                     if (::IsWindow(hWndFocus))
+                     if (::is_window(hWndFocus))
                         ::SetFocus(hWndFocus);
                   }
                }
@@ -2943,100 +2948,100 @@ namespace linux
 //      return (int32_t)Default();
    }
 
+//
+//   void interaction_impl::present()
+//   {
+//
+//      _001UpdateWindow();
+//
+//   }
+//
 
-   void interaction_impl::present()
-   {
-
-      _001UpdateWindow();
-
-   }
-
-
-   void interaction_impl::prodevian_task()
-   {
-
-
-      if (m_pthreadProDevian.is_null())
-      {
-
-         m_pthreadProDevian = fork([&]()
-         {
-
-            DWORD dwStart;
-
-            while (::get_thread_run())
-            {
-
-               dwStart = ::get_tick_count();
-
-               bool bUpdateScreen = false;
-
-               if (!m_pui->m_bLockWindowUpdate)
-               {
-
-                  if (m_pui->m_bProDevian ||
-                        m_pui->has_pending_graphical_update() ||
-                        m_pui->check_need_layout())
-                  {
-
-                     _001UpdateBuffer();
-
-                     m_pui->on_after_graphical_update();
-
-                     bUpdateScreen = true;
-
-                  }
-
-               }
-               else
-               {
-
-                  output_debug_string("window is locked for drawing update");
-
-                  fflush(stdout);
-
-               }
-
-               if(bUpdateScreen)
-               {
-
-                  windowing_output_debug_string("\nGoing to _001UpdateScreen");
-
-                  fflush(stdout);
-
-                  _001UpdateScreen();
-
-               }
-
-               DWORD dwDiff = ::get_tick_count() - dwStart;
-
-               if (dwDiff < 20)
-               {
-
-                  Sleep(20 - dwDiff);
-
-               }
-
-               //Sleep(500);
-
-            }
-
-            m_pthreadProDevian.release();
-
-         });
-
-      }
+//   void interaction_impl::prodevian_task()
+//   {
+//
+//
+//      if (m_pthreadProDevian.is_null())
+//      {
+//
+//         m_pthreadProDevian = fork([&]()
+//         {
+//
+//            DWORD dwStart;
+//
+//            while (::get_thread_run())
+//            {
+//
+//               dwStart = ::get_tick_count();
+//
+//               bool bUpdateScreen = false;
+//
+//               if (!m_pui->m_bLockWindowUpdate)
+//               {
+//
+//                  if (m_pui->m_bProDevian ||
+//                        m_pui->has_pending_graphical_update() ||
+//                        m_pui->check_need_layout())
+//                  {
+//
+//                     _001UpdateBuffer();
+//
+//                     m_pui->on_after_graphical_update();
+//
+//                     bUpdateScreen = true;
+//
+//                  }
+//
+//               }
+//               else
+//               {
+//
+//                  output_debug_string("window is locked for drawing update");
+//
+//                  fflush(stdout);
+//
+//               }
+//
+//               if(bUpdateScreen)
+//               {
+//
+//                  windowing_output_debug_string("\nGoing to _001UpdateScreen");
+//
+//                  fflush(stdout);
+//
+//                  _001UpdateScreen();
+//
+//               }
+//
+//               DWORD dwDiff = ::get_tick_count() - dwStart;
+//
+//               if (dwDiff < 20)
+//               {
+//
+//                  Sleep(20 - dwDiff);
+//
+//               }
+//
+//               //Sleep(500);
+//
+//            }
+//
+//            m_pthreadProDevian.release();
+//
+//         });
+//
+//      }
+//
+//
+//   }
 
 
-   }
-
-
-   void interaction_impl::set_need_redraw()
-   {
-
-      m_pui
-
-   }
+//   void interaction_impl::set_need_redraw()
+//   {
+//
+//      ::user::interaction_impl::set_need_redraw();
+//
+//   }
 
 
    void interaction_impl::_001OnCreate(::message::message * pobj)
@@ -3262,7 +3267,7 @@ namespace linux
 
    /*bool interaction_impl::UpdateData(bool bSaveAndValidate)
    {
-   ASSERT(::IsWindow((oswindow) get_handle())); // calling UpdateData before DoModal?
+   ASSERT(::is_window((oswindow) get_handle())); // calling UpdateData before DoModal?
 
    CDataExchange dx(this, bSaveAndValidate);
 
@@ -3305,7 +3310,7 @@ namespace linux
    void interaction_impl::CenterWindow(::user::interaction * pAlternateOwner)
    {
       _throw(not_implemented(get_app()));
-//      ASSERT(::IsWindow((oswindow) get_handle()));
+//      ASSERT(::is_window((oswindow) get_handle()));
 //
 //      // determine owner interaction_impl to center against
 //      DWORD dwStyle = GetStyle();
@@ -3616,7 +3621,7 @@ namespace linux
 //   bool interaction_impl::SubclassDlgItem(UINT nID, sp(::interaction_impl) pParent)
 //   {
 //      ASSERT(pParent != NULL);
-//      ASSERT(::IsWindow(LNX_WINDOW(pParent)->get_handle()));
+//      ASSERT(::is_window(LNX_WINDOW(pParent)->get_handle()));
 //
 //      // check for normal dialog control first
 //      oswindow hWndControl = ::GetDlgItem(LNX_WINDOW(pParent)->get_handle(), nID);
@@ -3629,7 +3634,7 @@ namespace linux
 
    oswindow interaction_impl::UnsubclassWindow()
    {
-      ASSERT(::IsWindow((oswindow) get_handle()));
+      ASSERT(::is_window((oswindow) get_handle()));
 
       _throw(not_implemented(get_app()));
 //      // set WNDPROC back to original value
@@ -3645,7 +3650,7 @@ namespace linux
    bool interaction_impl::IsChild(::user::interaction * pWnd)
    {
 
-      ASSERT(::IsWindow((oswindow) get_handle()));
+      ASSERT(::is_window((oswindow) get_handle()));
 
       if(pWnd->get_handle() == NULL)
       {
@@ -3666,7 +3671,7 @@ namespace linux
    bool interaction_impl::IsWindow() const
    {
 
-      return ::IsWindow(m_oswindow) != FALSE;
+      return ::is_window(m_oswindow) != FALSE;
 
    }
 
@@ -3896,7 +3901,7 @@ namespace linux
 
 
 
-      if(!::IsWindow((oswindow) get_handle()))
+      if(!::is_window((oswindow) get_handle()))
       {
 
          return false;
@@ -3945,7 +3950,7 @@ namespace linux
    bool interaction_impl::GetClientRect(RECT64 * lprect)
    {
 
-      if(!::IsWindow((oswindow) get_handle()))
+      if(!::is_window((oswindow) get_handle()))
       {
 
          return false;
@@ -4051,7 +4056,7 @@ namespace linux
    bool interaction_impl::WfiIsIconic()
    {
 
-      if(!::IsWindow(m_oswindow))
+      if(!::is_window(m_oswindow))
       {
 
          return false;
@@ -4085,7 +4090,7 @@ namespace linux
    bool interaction_impl::WfiIsZoomed()
    {
 
-      if(!::IsWindow(m_oswindow))
+      if(!::is_window(m_oswindow))
       {
 
          return false;
@@ -4217,7 +4222,7 @@ namespace linux
    {
 
       _throw(not_implemented(get_app()));
-      //ASSERT(::IsWindow((oswindow) get_handle()));
+      //ASSERT(::is_window((oswindow) get_handle()));
 
       //return ::DragDetect(get_handle(), pt) != FALSE;
 
@@ -4258,7 +4263,7 @@ namespace linux
 //   {
 //
 //      _throw(not_implemented(get_app()));
-//      //ASSERT(::IsWindow((oswindow) get_handle()));
+//      //ASSERT(::is_window((oswindow) get_handle()));
 //
 //      //return ::GetWindowTextLength(get_handle());
 //
@@ -4270,7 +4275,7 @@ namespace linux
 
       UNREFERENCED_PARAMETER(bRedraw);
 
-      //ASSERT(::IsWindow((oswindow) get_handle())); m_pfont = new ::draw2d::font(*pfont);
+      //ASSERT(::is_window((oswindow) get_handle())); m_pfont = new ::draw2d::font(*pfont);
 
    }
 
@@ -4278,7 +4283,7 @@ namespace linux
    ::draw2d::font* interaction_impl::GetFont()
    {
 
-      //ASSERT(::IsWindow((oswindow) get_handle()));
+      //ASSERT(::is_window((oswindow) get_handle()));
 
       //return m_pfont;
       return NULL;
@@ -4291,7 +4296,7 @@ namespace linux
 
       _throw(not_implemented(get_app()));
 
-      //ASSERT(::IsWindow((oswindow) get_handle()));
+      //ASSERT(::is_window((oswindow) get_handle()));
       //::DragAcceptFiles(get_handle(), bAccept);
 
    }
@@ -4334,7 +4339,7 @@ namespace linux
 
       _throw(not_implemented(get_app()));
 
-//      ASSERT(::IsWindow((oswindow) get_handle())); return ::ArrangeIconicWindows(get_handle());
+//      ASSERT(::is_window((oswindow) get_handle())); return ::ArrangeIconicWindows(get_handle());
 
    }
 
@@ -4347,7 +4352,7 @@ namespace linux
 
       //_throw(not_implemented(get_app()));
 
-//      ASSERT(::IsWindow((oswindow) get_handle())); return ::SetWindowRgn(get_handle(), hRgn, bRedraw);
+//      ASSERT(::is_window((oswindow) get_handle())); return ::SetWindowRgn(get_handle(), hRgn, bRedraw);
 
    }
 
@@ -4357,7 +4362,7 @@ namespace linux
 
       _throw(not_implemented(get_app()));
 
-//      ASSERT(::IsWindow((oswindow) get_handle()) && hRgn != NULL); return ::GetWindowRgn(get_handle(), hRgn);
+//      ASSERT(::is_window((oswindow) get_handle()) && hRgn != NULL); return ::GetWindowRgn(get_handle(), hRgn);
 
    }
 
@@ -4376,7 +4381,7 @@ namespace linux
 
       _throw(not_implemented(get_app()));
 
-//      ASSERT(::IsWindow((oswindow) get_handle()));
+//      ASSERT(::is_window((oswindow) get_handle()));
 //      ::MapWindowPoints(get_handle(), (oswindow) pwndTo->get_handle(), lpPoint, nCount);
 
    }
@@ -4387,7 +4392,7 @@ namespace linux
 
       _throw(not_implemented(get_app()));
 
-//      ASSERT(::IsWindow((oswindow) get_handle()));
+//      ASSERT(::is_window((oswindow) get_handle()));
 //      ::MapWindowPoints(get_handle(), (oswindow) pwndTo->get_handle(), (LPPOINT)lpRect, 2);
 
    }
@@ -4409,7 +4414,7 @@ namespace linux
       if(get_handle() == NULL)
       {
 
-//         oswindow = ::GetDesktopWindow();
+//         oswindow = ::get_desktop_window();
 
       }
       else
@@ -4440,7 +4445,7 @@ namespace linux
 
    ::draw2d::graphics * interaction_impl::GetWindowDC()
    {
-      ASSERT(::IsWindow((oswindow) get_handle()));
+      ASSERT(::is_window((oswindow) get_handle()));
       //::draw2d::graphics_sp g(allocer());
       //g->attach(::GetWindowDC(get_handle()));
       //return g.detach();
@@ -4491,56 +4496,56 @@ namespace linux
    void interaction_impl::SetRedraw(bool bRedraw)
    {
       _throw(not_implemented(get_app()));
-      //ASSERT(::IsWindow((oswindow) get_handle()));
+      //ASSERT(::is_window((oswindow) get_handle()));
       //::SendMessage(get_handle(), WM_SETREDRAW, bRedraw, 0);
    }
 
    bool interaction_impl::GetUpdateRect(LPRECT lpRect, bool bErase)
    {
       _throw(not_implemented(get_app()));
-      //ASSERT(::IsWindow((oswindow) get_handle()));
+      //ASSERT(::is_window((oswindow) get_handle()));
       //return ::GetUpdateRect(get_handle(), lpRect, bErase) != FALSE;
    }
 
    int32_t interaction_impl::GetUpdateRgn(draw2d::region * pRgn, bool bErase)
    {
       _throw(not_implemented(get_app()));
-      //ASSERT(::IsWindow((oswindow) get_handle()));
+      //ASSERT(::is_window((oswindow) get_handle()));
       //return ::GetUpdateRgn(get_handle(), (HRGN)pRgn->get_handle(), bErase);
    }
 
    void interaction_impl::Invalidate(bool bErase)
    {
       _throw(not_implemented(get_app()));
-      //ASSERT(::IsWindow((oswindow) get_handle()));
+      //ASSERT(::is_window((oswindow) get_handle()));
       //::InvalidateRect(get_handle(), NULL, bErase);
    }
 
    void interaction_impl::InvalidateRect(LPCRECT lpRect, bool bErase)
    {
       _throw(not_implemented(get_app()));
-      //ASSERT(::IsWindow((oswindow) get_handle()));
+      //ASSERT(::is_window((oswindow) get_handle()));
       //::InvalidateRect(get_handle(), lpRect, bErase);
    }
 
    void interaction_impl::InvalidateRgn(::draw2d::region* pRgn, bool bErase)
    {
       _throw(not_implemented(get_app()));
-      //ASSERT(::IsWindow((oswindow) get_handle()));
+      //ASSERT(::is_window((oswindow) get_handle()));
       //::InvalidateRgn(get_handle(), (HRGN)pRgn->get_handle(), bErase);
    }
 
    void interaction_impl::ValidateRect(LPCRECT lpRect)
    {
       _throw(not_implemented(get_app()));
-      //ASSERT(::IsWindow((oswindow) get_handle()));
+      //ASSERT(::is_window((oswindow) get_handle()));
       //::ValidateRect(get_handle(), lpRect);
    }
 
    void interaction_impl::ValidateRgn(::draw2d::region* pRgn)
    {
       _throw(not_implemented(get_app()));
-      //ASSERT(::IsWindow((oswindow) get_handle()));
+      //ASSERT(::is_window((oswindow) get_handle()));
       //::ValidateRgn(get_handle(), (HRGN)pRgn->get_handle());
    }
 
@@ -4576,14 +4581,14 @@ namespace linux
    {
 
       _throw(not_implemented(get_app()));
-      //ASSERT(::IsWindow((oswindow) get_handle()));
+      //ASSERT(::is_window((oswindow) get_handle()));
       //::ShowOwnedPopups(get_handle(), bShow);
 
    }
 
    void interaction_impl::send_message_to_descendants(UINT message, WPARAM wparam, lparam lparam, bool bDeep, bool bOnlyPerm)
    {
-      ASSERT(::IsWindow((oswindow) get_handle()));
+      ASSERT(::is_window((oswindow) get_handle()));
       //interaction_impl::send_message_to_descendants(get_handle(), message, wparam, lparam, bDeep, bOnlyPerm);
 
       // walk through oswindows to avoid creating temporary interaction_impl objects
@@ -4622,7 +4627,7 @@ namespace linux
 
    ::user::interaction * interaction_impl::GetDescendantWindow(id id) const
    {
-      ASSERT(::IsWindow((oswindow) get_handle()));
+      ASSERT(::is_window((oswindow) get_handle()));
       return interaction_impl::GetDescendantWindow(m_pui, id);
    }
 
@@ -4631,7 +4636,7 @@ namespace linux
    {
 
       _throw(not_implemented(get_app()));
-      //ASSERT(::IsWindow((oswindow) get_handle()));
+      //ASSERT(::is_window((oswindow) get_handle()));
       //::draw2d::graphics_sp g(get_app());
       //g->attach(::GetDCEx(get_handle(), (HRGN)prgnClip->get_handle(), flags));
       //return g.detach();
@@ -4642,7 +4647,7 @@ namespace linux
    {
 
       _throw(not_implemented(get_app()));
-      //ASSERT(::IsWindow((oswindow) get_handle()));
+      //ASSERT(::is_window((oswindow) get_handle()));
       //return ::LockWindowUpdate(get_handle()) != FALSE;
 
    }
@@ -4651,7 +4656,7 @@ namespace linux
    {
 
       _throw(not_implemented(get_app()));
-      //ASSERT(::IsWindow((oswindow) get_handle()));
+      //ASSERT(::is_window((oswindow) get_handle()));
       //::LockWindowUpdate(NULL);
 
    }
@@ -4659,7 +4664,7 @@ namespace linux
    bool interaction_impl::RedrawWindow(LPCRECT lpRectUpdate, ::draw2d::region * prgnUpdate, UINT flags)
    {
 
-//      ASSERT(::IsWindow((oswindow) get_handle()));
+//      ASSERT(::is_window((oswindow) get_handle()));
 
       if(flags & RDW_UPDATENOW)
       {
@@ -4680,7 +4685,7 @@ namespace linux
       bool interaction_impl::EnableScrollBar(int32_t nSBFlags, UINT nArrowFlags)
       {
 
-         ASSERT(::IsWindow((oswindow) get_handle()));
+         ASSERT(::is_window((oswindow) get_handle()));
 
          return ::EnableScrollBar(get_handle(), nSBFlags, nArrowFlags) != FALSE;
 
@@ -4691,7 +4696,7 @@ namespace linux
    {
 
       _throw(not_implemented(get_app()));
-      //ASSERT(::IsWindow((oswindow) get_handle()));
+      //ASSERT(::is_window((oswindow) get_handle()));
       //return ::DrawAnimatedRects(get_handle(), idAni, lprcFrom, lprcTo) != FALSE;
 
    }
@@ -4701,7 +4706,7 @@ namespace linux
    {
 
       _throw(not_implemented(get_app()));
-      //ASSERT(::IsWindow((oswindow) get_handle()));
+      //ASSERT(::is_window((oswindow) get_handle()));
       //return ::DrawCaption(get_handle(), (HDC)(dynamic_cast<::linux::graphics * >(pgraphics))->get_handle(), lprc, uFlags) != FALSE;
 
    }
@@ -4720,7 +4725,7 @@ namespace linux
 //        return nIDEvent;
 
       //_throw(not_implemented(get_app()));
-      //ASSERT(::IsWindow((oswindow) get_handle()));
+      //ASSERT(::is_window((oswindow) get_handle()));
       //return ::SetTimer(get_handle(), nIDEvent, nElapse, lpfnTimer);
 
    }
@@ -4737,7 +4742,7 @@ namespace linux
 
       //return ::user::int
 
-      //ASSERT(::IsWindow((oswindow) get_handle()));
+      //ASSERT(::is_window((oswindow) get_handle()));
       //return ::KillTimer(get_handle(), nIDEvent)  != FALSE;
 
    }
@@ -4761,7 +4766,7 @@ namespace linux
    ::user::interaction * interaction_impl::GetActiveWindow()
    {
 
-      ::user::interaction_impl * pimpl = ::linux::interaction_impl::from_handle(::GetActiveWindow());
+      ::user::interaction_impl * pimpl = ::linux::interaction_impl::from_handle(::get_active_window());
 
       if(pimpl == NULL)
       {
@@ -4778,7 +4783,7 @@ namespace linux
    {
 
 
-      ::user::interaction_impl * pimpl = ::linux::interaction_impl::from_handle(::SetActiveWindow(get_handle()));
+      ::user::interaction_impl * pimpl = ::linux::interaction_impl::from_handle(::set_active_window(get_handle()));
 
       if(pimpl == NULL)
       {
@@ -4795,7 +4800,7 @@ namespace linux
    ::user::interaction * PASCAL interaction_impl::GetFocus()
    {
 
-      oswindow w = ::GetFocus();
+      oswindow w = ::get_focus();
 
       if(w == NULL)
          return NULL;
@@ -4808,7 +4813,7 @@ namespace linux
    bool interaction_impl::SetFocus()
    {
 
-      oswindow w = ::SetFocus(get_handle());
+      oswindow w = ::set_focus(get_handle());
 
       if(w  == NULL)
          return NULL;
@@ -4818,10 +4823,10 @@ namespace linux
    }
 
 
-   ::user::interaction * PASCAL interaction_impl::GetDesktopWindow()
+   ::user::interaction * PASCAL interaction_impl::get_desktop_window()
    {
       /*
-            return ::linux::interaction_impl::from_handle(::GetDesktopWindow());
+            return ::linux::interaction_impl::from_handle(::get_desktop_window());
       */
       return NULL;
    }
@@ -4842,7 +4847,7 @@ namespace linux
    {
 
       _throw(not_implemented(get_app()));
-//      ASSERT(::IsWindow((oswindow) get_handle()));
+//      ASSERT(::is_window((oswindow) get_handle()));
 //      ::CheckDlgButton(get_handle(), nIDButton, nCheck);
 
    }
@@ -4851,7 +4856,7 @@ namespace linux
    {
 
       _throw(not_implemented(get_app()));
-//      ASSERT(::IsWindow((oswindow) get_handle()));
+//      ASSERT(::is_window((oswindow) get_handle()));
 //      ::CheckRadioButton(get_handle(), nIDFirstButton, nIDLastButton, nIDCheckButton);
 
    }
@@ -4860,7 +4865,7 @@ namespace linux
    {
 
       _throw(not_implemented(get_app()));
-//      ASSERT(::IsWindow((oswindow) get_handle()));
+//      ASSERT(::is_window((oswindow) get_handle()));
 //      return ::DlgDirList(get_handle(), lpPathSpec, nIDListBox, nIDStaticPath, nFileType);
 
    }
@@ -4869,7 +4874,7 @@ namespace linux
    {
 
       _throw(not_implemented(get_app()));
-//      ASSERT(::IsWindow((oswindow) get_handle()));
+//      ASSERT(::is_window((oswindow) get_handle()));
 //      return ::DlgDirListComboBox(get_handle(), lpPathSpec, nIDComboBox, nIDStaticPath, nFileType);
 
    }
@@ -4878,7 +4883,7 @@ namespace linux
    {
 
       _throw(not_implemented(get_app()));
-//      ASSERT(::IsWindow((oswindow) get_handle()));
+//      ASSERT(::is_window((oswindow) get_handle()));
 //      return ::DlgDirSelectEx(get_handle(), lpString, nSize, nIDListBox) != FALSE;
 
    }
@@ -4887,7 +4892,7 @@ namespace linux
    {
 
       _throw(not_implemented(get_app()));
-//      ASSERT(::IsWindow((oswindow) get_handle()));
+//      ASSERT(::is_window((oswindow) get_handle()));
 //      return ::DlgDirSelectComboBoxEx(get_handle(), lpString, nSize, nIDComboBox) != FALSE;
 
    }
@@ -4896,7 +4901,7 @@ namespace linux
       void interaction_impl::GetDlgItem(id id, oswindow* phWnd) const
       {
 
-         ASSERT(::IsWindow((oswindow) get_handle()));
+         ASSERT(::is_window((oswindow) get_handle()));
          ASSERT(phWnd != NULL);
          *phWnd = ::GetDlgItem(get_handle(), (int32_t) id);
 
@@ -4907,7 +4912,7 @@ namespace linux
       UINT interaction_impl::GetDlgItemInt(int32_t nID, WINBOOL * lpTrans, bool bSigned) const
       {
 
-         ASSERT(::IsWindow((oswindow) get_handle()));
+         ASSERT(::is_window((oswindow) get_handle()));
 
          return ::GetDlgItemInt(get_handle(), nID, lpTrans, bSigned);
 
@@ -4918,13 +4923,13 @@ namespace linux
 //   {
 //
 //      _throw(not_implemented(get_app()));
-//      ASSERT(::IsWindow((oswindow) get_handle())); return ::GetDlgItemText(get_handle(), nID, lpStr, nMaxCount);}
+//      ASSERT(::is_window((oswindow) get_handle())); return ::GetDlgItemText(get_handle(), nID, lpStr, nMaxCount);}
 
    ::user::interaction * interaction_impl::GetNextDlgGroupItem(::user::interaction * pWndCtl, bool bPrevious) const
    {
 
       _throw(not_implemented(get_app()));
-//      ASSERT(::IsWindow((oswindow) get_handle()));
+//      ASSERT(::is_window((oswindow) get_handle()));
 //      return ::linux::interaction_impl::from_handle(::GetNextDlgGroupItem(get_handle(), (oswindow) pWndCtl->get_handle(), bPrevious));
 
    }
@@ -4933,7 +4938,7 @@ namespace linux
    {
 
       _throw(not_implemented(get_app()));
-//      ASSERT(::IsWindow((oswindow) get_handle()));
+//      ASSERT(::is_window((oswindow) get_handle()));
 //      return ::linux::interaction_impl::from_handle(::GetNextDlgTabItem(get_handle(), (oswindow) pWndCtl->get_handle(), bPrevious));
 
    }
@@ -4942,7 +4947,7 @@ namespace linux
    {
 
       _throw(not_implemented(get_app()));
-//      ASSERT(::IsWindow((oswindow) get_handle()));
+//      ASSERT(::is_window((oswindow) get_handle()));
 //      return ::IsDlgButtonChecked(get_handle(), nIDButton);
 
    }
@@ -4951,7 +4956,7 @@ namespace linux
    {
 
       _throw(not_implemented(get_app()));
-//      ASSERT(::IsWindow((oswindow) get_handle()));
+//      ASSERT(::is_window((oswindow) get_handle()));
 //      return ::SendDlgItemMessage(get_handle(), nID, message, wparam, lparam);
 
    }
@@ -4960,7 +4965,7 @@ namespace linux
    {
 
       _throw(not_implemented(get_app()));
-//      ASSERT(::IsWindow((oswindow) get_handle()));
+//      ASSERT(::is_window((oswindow) get_handle()));
 //      ::SetDlgItemInt(get_handle(), nID, nValue, bSigned);
 
    }
@@ -4969,7 +4974,7 @@ namespace linux
    {
 
       _throw(not_implemented(get_app()));
-//      ASSERT(::IsWindow((oswindow) get_handle()));
+//      ASSERT(::is_window((oswindow) get_handle()));
 //      ::SetDlgItemText(get_handle(), nID, lpszString);
 
    }
@@ -4978,7 +4983,7 @@ namespace linux
    {
 
       _throw(not_implemented(get_app()));
-//      ASSERT(::IsWindow((oswindow) get_handle()));
+//      ASSERT(::is_window((oswindow) get_handle()));
 //      return ::ScrollWindowEx(get_handle(), dx, dy, lpRectScroll, lpRectClip, (HRGN)prgnUpdate->get_handle(), lpRectUpdate, flags);
 
    }
@@ -4987,7 +4992,7 @@ namespace linux
    {
 
       _throw(not_implemented(get_app()));
-//      ASSERT(::IsWindow((oswindow) get_handle()));
+//      ASSERT(::is_window((oswindow) get_handle()));
 //      ::ShowScrollBar(get_handle(), nBar, bShow);
 
    }
@@ -4997,7 +5002,7 @@ namespace linux
 
 
       _throw(not_implemented(get_app()));
-//      ASSERT(::IsWindow((oswindow) get_handle()));
+//      ASSERT(::is_window((oswindow) get_handle()));
 //      return ::linux::interaction_impl::from_handle(::ChildWindowFromPoint(get_handle(), point));
 
    }
@@ -5006,7 +5011,7 @@ namespace linux
    {
 
       _throw(not_implemented(get_app()));
-//      ASSERT(::IsWindow((oswindow) get_handle()));
+//      ASSERT(::is_window((oswindow) get_handle()));
 //      return ::linux::interaction_impl::from_handle(::ChildWindowFromPointEx(get_handle(), point, nFlags));
 
    }
@@ -5039,7 +5044,7 @@ namespace linux
 
       return m_pui->m_uiptraChild[0];
       //  _throw(not_implemented(get_app()));
-//      ASSERT(::IsWindow((oswindow) get_handle()));
+//      ASSERT(::is_window((oswindow) get_handle()));
 //      return ::linux::interaction_impl::from_handle(::GetTopWindow(get_handle()));
 
    }
@@ -5047,7 +5052,7 @@ namespace linux
    ::user::interaction * interaction_impl::GetWindow(UINT nCmd)
    {
 
-      ASSERT(::IsWindow((oswindow) get_handle()));
+      ASSERT(::is_window((oswindow) get_handle()));
 //      return ::linux::interaction_impl::from_handle(::GetWindow(get_handle(), nCmd));
       return NULL;
 
@@ -5058,7 +5063,7 @@ namespace linux
 
 
       _throw(todo(get_app()));
-//      ASSERT(::IsWindow((oswindow) get_handle()));
+//      ASSERT(::is_window((oswindow) get_handle()));
 //      return ::linux::interaction_impl::from_handle(::GetLastActivePopup(get_handle()));
 
    }
@@ -5067,7 +5072,7 @@ namespace linux
    ::user::interaction * interaction_impl::SetParent(::user::interaction * pWndNewParent)
    {
 
-      ASSERT(::IsWindow((oswindow) get_handle()));
+      ASSERT(::is_window((oswindow) get_handle()));
 
       return ::linux::interaction_impl::from_handle(::SetParent(get_handle(), (oswindow) pWndNewParent->get_handle()))->m_pui;
 
@@ -5088,7 +5093,7 @@ namespace linux
 
 
       _throw(not_implemented(get_app()));
-//      ASSERT(::IsWindow((oswindow) get_handle()));
+//      ASSERT(::is_window((oswindow) get_handle()));
 //      return ::FlashWindow(get_handle(), bInvert) != FALSE;
 
    }
@@ -5097,7 +5102,7 @@ namespace linux
    {
 
       _throw(not_implemented(get_app()));
-//      ASSERT(::IsWindow((oswindow) get_handle()));
+//      ASSERT(::is_window((oswindow) get_handle()));
 //      return ::ChangeClipboardChain(get_handle(), hWndNext) != FALSE;
 
    }
@@ -5106,7 +5111,7 @@ namespace linux
    {
 
       _throw(not_implemented(get_app()));
-//      ASSERT(::IsWindow((oswindow) get_handle()));
+//      ASSERT(::is_window((oswindow) get_handle()));
 //      return ::SetClipboardViewer(get_handle());
 
    }
@@ -5115,7 +5120,7 @@ namespace linux
    {
 
       _throw(not_implemented(get_app()));
-//      ASSERT(::IsWindow((oswindow) get_handle()));
+//      ASSERT(::is_window((oswindow) get_handle()));
 //      return ::OpenClipboard(get_handle()) != FALSE;
 
    }
@@ -5148,7 +5153,7 @@ namespace linux
    {
 
       _throw(not_implemented(get_app()));
-//      ASSERT(::IsWindow((oswindow) get_handle()));
+//      ASSERT(::is_window((oswindow) get_handle()));
 //      ::Createcaret(get_handle(), (HBITMAP)pBitmap->get_handle(), 0, 0);
 
    }
@@ -5157,7 +5162,7 @@ namespace linux
    {
 
       _throw(not_implemented(get_app()));
-//      ASSERT(::IsWindow((oswindow) get_handle()));
+//      ASSERT(::is_window((oswindow) get_handle()));
 //      ::Createcaret(get_handle(), (HBITMAP)0, nWidth, nHeight);
 
    }
@@ -5166,7 +5171,7 @@ namespace linux
    {
 
       _throw(not_implemented(get_app()));
-//      ASSERT(::IsWindow((oswindow) get_handle()));
+//      ASSERT(::is_window((oswindow) get_handle()));
 //      ::Createcaret(get_handle(), (HBITMAP)1, nWidth, nHeight);
 
    }
@@ -5234,7 +5239,7 @@ namespace linux
    {
 
       _throw(not_implemented(get_app()));
-//      ASSERT(::IsWindow((oswindow) get_handle()));
+//      ASSERT(::is_window((oswindow) get_handle()));
 //      const_cast < interaction_impl * > (this)->send_message(WM_PRINT, (WPARAM)(dynamic_cast<::linux::graphics * >(pgraphics))->get_handle(), dwFlags);
 
    }
@@ -5243,7 +5248,7 @@ namespace linux
    {
 
       _throw(not_implemented(get_app()));
-//      ASSERT(::IsWindow((oswindow) get_handle()));
+//      ASSERT(::is_window((oswindow) get_handle()));
 //      const_cast < interaction_impl * > (this)->send_message(WM_PRINTCLIENT, (WPARAM)(dynamic_cast<::linux::graphics * >(pgraphics))->get_handle(), dwFlags);
 
    }
@@ -5252,7 +5257,7 @@ namespace linux
    {
 
       _throw(not_implemented(get_app()));
-//      ASSERT(::IsWindow((oswindow) get_handle()));
+//      ASSERT(::is_window((oswindow) get_handle()));
 //      return ::SetWindowContextHelpId(get_handle(), dwContextHelpId) != FALSE;
 
    }
@@ -5261,7 +5266,7 @@ namespace linux
    {
 
       _throw(not_implemented(get_app()));
-//      ASSERT(::IsWindow((oswindow) get_handle()));
+//      ASSERT(::is_window((oswindow) get_handle()));
 //      return ::GetWindowContextHelpId(get_handle());
 
    }
@@ -5582,7 +5587,7 @@ namespace linux
    {
 
       _throw(not_implemented(get_app()));
-//      ASSERT(::IsWindow((oswindow) get_handle()));
+//      ASSERT(::is_window((oswindow) get_handle()));
 //      ::CloseWindow(get_handle());
 
    }
@@ -5591,7 +5596,7 @@ namespace linux
    {
 
       _throw(not_implemented(get_app()));
-//      ASSERT(::IsWindow((oswindow) get_handle()));
+//      ASSERT(::is_window((oswindow) get_handle()));
 //      return ::OpenIcon(get_handle()) != FALSE;
 
    }
@@ -5680,82 +5685,6 @@ namespace linux
    }
 
 
-} // namespace linux
-
-
-
-/////////////////////////////////////////////////////////////////////////////
-// The WndProc for all interaction_impl's and derived classes
-
-
-__STATIC void CLASS_DECL_AURA __pre_init_dialog(
-::user::interaction * pWnd, LPRECT lpRectOld, DWORD* pdwStyleOld)
-{
-   ASSERT(lpRectOld != NULL);
-   ASSERT(pdwStyleOld != NULL);
-
-   pWnd->GetWindowRect(lpRectOld);
-   *pdwStyleOld = pWnd->GetStyle();
-}
-
-//__STATIC void CLASS_DECL_AURA __post_init_dialog(
-//   ::user::interaction * pWnd, const RECT& rectOld, DWORD dwStyleOld)
-//{
-//   // must be hidden to start with
-//   if (dwStyleOld & WS_VISIBLE)
-//      return;
-//
-//   // must not be visible after WM_INITDIALOG
-//   if (pWnd->GetStyle() & (WS_VISIBLE|WS_CHILD))
-//      return;
-//
-//   // must not move during WM_INITDIALOG
-//   rect rect;
-//   pWnd->GetWindowRect(rect);
-//   if (rectOld.left != rect.left || rectOld.top != rect.top)
-//      return;
-//
-//   // must be unowned or owner disabled
-//   sp(::user::interaction) pParent = pWnd->GetWindow(GW_OWNER);
-//   if (pParent != NULL && pParent->is_window_enabled())
-//      return;
-//
-//   if (!pWnd->CheckAutoCenter())
-//      return;
-//
-//   // center modal dialog boxes/message boxes
-//   //pWnd->CenterWindow();
-//}
-
-
-
-
-
-
-void wm_state_above_raw(oswindow w, bool bSet);
-
-
-
-namespace linux
-{
-
-
-   void interaction_impl::_001Expose()
-   {
-
-      ::user::interaction_impl::_001UpdateWindow();
-
-   }
-
-
-   void interaction_impl::_001UpdateWindow()
-   {
-
-      ::user::interaction_impl::_001UpdateWindow();
-
-   }
-
-
    void interaction_impl::set_viewport_org(::draw2d::graphics * pgraphics)
    {
       // graphics will be already set its view port to the interaction_impl for linux - cairo with xlib
@@ -5798,6 +5727,7 @@ namespace linux
 
    }
 
+
    void interaction_impl::show_task(bool bShow)
    {
 
@@ -5805,8 +5735,8 @@ namespace linux
 
    }
 
-}
 
+} // namespace linux
 
 
 

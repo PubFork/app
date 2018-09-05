@@ -101,7 +101,7 @@ oswindow GetWindow(oswindow interaction_impl, int iParentHood);
 oswindow GetActiveWindow();
 oswindow SetActiveWindow(oswindow interaction_impl);
 int_bool DestroyWindow(oswindow interaction_impl);
-oswindow GetDesktopWindow();
+oswindow get_desktop_window();
 
 
 

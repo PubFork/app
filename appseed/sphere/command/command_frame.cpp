@@ -261,7 +261,7 @@ namespace prompt
       UNREFERENCED_PARAMETER(pobj);
       /*if(m_workset.GetMovingManager()->IsMoving())
       {
-         oswindow oswindowDesktop = ::GetDesktopWindow();
+         oswindow oswindowDesktop = ::get_desktop_window();
          rect rectDesktop;
          ::GetWindowRect(oswindowDesktop, rectDesktop);
          rect rectWindow;

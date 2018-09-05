@@ -40,7 +40,7 @@ CLASS_DECL_AURA bool GetPrimaryMonitorRect(LPRECT lprect)
    else
    {
 
-      if (!::GetWindowRect(::GetDesktopWindow(), lprect))
+      if (!::GetWindowRect(::get_desktop_window(), lprect))
       {
 
          return false;

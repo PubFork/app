@@ -197,12 +197,12 @@ void window_xlib::update_window(::draw2d::dib * pdib)
 
    }
 
-      if (m_pimpl->m_bIpcCopy)
-      {
+   if (m_pimpl->m_bIpcCopy)
+   {
 
-         ipc_copy(cx, cy, pdib->m_pcolorref, pdib->m_iScan);
+      ipc_copy(cx, cy, pdib->m_pcolorref, pdib->m_iScan);
 
-      }
+   }
 
 }
 

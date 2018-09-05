@@ -516,10 +516,10 @@ namespace draw2d_cairo
       bool draw();
 
 
-      virtual bool get(::draw2d::matrix & matrix);
-      virtual bool set(const ::draw2d::matrix & matrix);
-      virtual bool append(const ::draw2d::matrix & matrix);
-      virtual bool prepend(const ::draw2d::matrix & matrix);
+      virtual bool _get(::draw2d::matrix & matrix);
+      virtual bool _set(const ::draw2d::matrix & matrix);
+//      virtual bool append(const ::draw2d::matrix & matrix);
+  //    virtual bool prepend(const ::draw2d::matrix & matrix);
 
 
       virtual bool flush();

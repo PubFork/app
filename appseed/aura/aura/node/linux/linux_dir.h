@@ -97,6 +97,8 @@ namespace linux
       virtual ::file::path music() override;
       virtual ::file::path video() override;
       virtual ::file::path image() override;
+      virtual ::file::path download() override;
+      virtual ::file::path document() override;
 
 
    };

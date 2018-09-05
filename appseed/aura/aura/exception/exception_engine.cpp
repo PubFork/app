@@ -1782,7 +1782,7 @@ namespace exception
    void engine::backtrace(void ** ppui, int &c)
    {
 
-      synch_lock sl(&m_mutex);
+      synch_lock sl(m_pmutex);
 
       UINT32 maxframes = c;
 

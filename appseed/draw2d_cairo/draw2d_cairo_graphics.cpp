@@ -3589,13 +3589,15 @@ namespace draw2d_cairo
    point graphics::GetViewportOrg()
    {
 
-      synch_lock ml(cairo_mutex());
+//      synch_lock ml(cairo_mutex());
+//
+//      cairo_matrix_t m;
+//
+//      cairo_get_matrix(m_pdc, &m);
+//
+//      return point((int64_t)m.x0, (int64_t)m.y0);
 
-      cairo_matrix_t m;
-
-      cairo_get_matrix(m_pdc, &m);
-
-      return point((int64_t)m.x0, (int64_t)m.y0);
+return ::draw2d::graphics::GetViewportOrg();
 
    }
 
@@ -3603,63 +3605,66 @@ namespace draw2d_cairo
 
    point graphics::SetViewportOrg(int32_t x, int32_t y)
    {
-      synch_lock ml(cairo_mutex());
-      if (abs(x) > 900 || abs(y) > 800)
-      {
+//      synch_lock ml(cairo_mutex());
+//      if (abs(x) > 900 || abs(y) > 800)
+//      {
+//
+//         //         printf("123");
+//
+//      }
+//
+//      cairo_matrix_t m;
+//
+//      if (m_pdc == NULL)
+//      {
+//
+//         return null_point();
+//
+//      }
+//
+//      cairo_get_matrix(m_pdc, &m);
+//
+//      int xOld = (int)m.x0;
+//
+//      int yOld = (int)m.y0;
+//
+//      m.x0 = x;
+//
+//      m.y0 = y;
+//
+//      cairo_set_matrix(m_pdc, &m);
+//
+//      return ::point(xOld, yOld);
 
-         //         printf("123");
-
-      }
-
-      cairo_matrix_t m;
-
-      if (m_pdc == NULL)
-      {
-
-         return null_point();
-
-      }
-
-      cairo_get_matrix(m_pdc, &m);
-
-      int xOld = (int)m.x0;
-
-      int yOld = (int)m.y0;
-
-      m.x0 = x;
-
-      m.y0 = y;
-
-      cairo_set_matrix(m_pdc, &m);
-
-      return ::point(xOld, yOld);
-
+   return ::draw2d::graphics::SetViewportOrg(x, y);
    }
 
    point graphics::OffsetViewportOrg(int32_t nWidth, int32_t nHeight)
    {
 
-      synch_lock ml(cairo_mutex());
+//      synch_lock ml(cairo_mutex());
+//
+//      point point = GetViewportOrg();
+//
+//      if (abs(nWidth) > 800 || abs(nHeight) > 800)
+//      {
+//
+//         //         printf("123");
+//
+//      }
+//
+//      cairo_translate(m_pdc, nWidth, nHeight);
+//
+//      if (abs(point.x + nWidth) > 800 || abs(point.y + nHeight) > 800)
+//      {
+//
+//         ////         printf("123");
+//
+//      }
+//
+//      return ::point(point.x + nWidth, point.y + nHeight);
 
-      point point = GetViewportOrg();
-
-      if (abs(nWidth) > 800 || abs(nHeight) > 800)
-      {
-
-         //         printf("123");
-
-      }
-
-      cairo_translate(m_pdc, nWidth, nHeight);
-
-      if (abs(point.x + nWidth) > 800 || abs(point.y + nHeight) > 800)
-      {
-
-         ////         printf("123");
-
-      }
-
-      return ::point(point.x + nWidth, point.y + nHeight);
+         return ::draw2d::graphics::OffsetViewportOrg(nWidth, nHeight);
 
    }
 
@@ -3682,8 +3687,9 @@ namespace draw2d_cairo
    size graphics::ScaleViewportExt(int32_t xNum, int32_t xDenom, int32_t yNum, int32_t yDenom)
    {
 
-      ::exception::throw_not_implemented(get_app());
-      return ::size(0, 0);
+   return ::draw2d::graphics::ScaleViewportExt(xNum, xDenom, yNum, yDenom);
+      //::exception::throw_not_implemented(get_app());
+      //return ::size(0, 0);
 
       /*
             size size(0, 0);
@@ -6364,7 +6370,7 @@ namespace draw2d_cairo
    }
 
 
-   bool graphics::get(::draw2d::matrix & matrix)
+   bool graphics::_get(::draw2d::matrix & matrix)
    {
 
       cairo_matrix_t cairomatrix;
@@ -6378,7 +6384,7 @@ namespace draw2d_cairo
    }
 
 
-   bool graphics::set(const ::draw2d::matrix & matrix)
+   bool graphics::_set(const ::draw2d::matrix & matrix)
    {
 
       cairo_matrix_t cairomatrix;
@@ -6392,21 +6398,21 @@ namespace draw2d_cairo
    }
 
 
-   bool graphics::append(const ::draw2d::matrix & matrix)
-   {
+//   bool graphics::append(const ::draw2d::matrix & matrix)
+//   {
+//
+//      return ::draw2d::graphics::append(matrix);
+//
+//   }
 
-      return ::draw2d::graphics::append(matrix);
 
-   }
-
-
-   bool graphics::prepend(const ::draw2d::matrix & matrix)
-   {
-
-      return ::draw2d::graphics::prepend(matrix);
-
-   }
-
+//   bool graphics::prepend(const ::draw2d::matrix & matrix)
+//   {
+//
+//      return ::draw2d::graphics::prepend(matrix);
+//
+//   }
+//
 
 
 } // namespace draw2d_cairo

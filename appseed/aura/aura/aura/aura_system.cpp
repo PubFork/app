@@ -3790,7 +3790,7 @@ success:
 
       //_throw(todo(get_app()));
 
-      //::GetWindowRect(::GetDesktopWindow(),lprect);
+      //::GetWindowRect(::get_desktop_window(),lprect);
 
       get_monitor_rect(iWkspace, lprect);
 

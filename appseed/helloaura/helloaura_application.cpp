@@ -150,7 +150,7 @@ namespace helloaura
       //   //ShowWindow(hDlg, SW_SHOW);
 
       //   rect r;
-      //   GetWindowRect(GetDesktopWindow(), r);
+      //   GetWindowRect(get_desktop_window(), r);
       //   rect r2;
       //   GetWindowRect(hDlg, r2);
 

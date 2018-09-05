@@ -10,7 +10,7 @@ void windowing_output_debug_string(const char * pszDebugString);
 oswindow_data::oswindow_data()
 {
 
-   m_plongptrmap           = new int_ptr_to_int_ptr();
+   //m_plongptrmap           = new int_ptr_to_int_ptr();
 
    m_hthread               = 0;
 
@@ -35,7 +35,7 @@ oswindow_data::oswindow_data()
 oswindow_data::~oswindow_data()
 {
 
-   ::aura::del(m_plongptrmap);
+   //::aura::del(m_plongptrmap);
 
 }
 
@@ -836,7 +836,7 @@ void oswindow_data::full_screen(LPCRECT lpcrect)
 LONG_PTR oswindow_data::get_window_long_ptr(int32_t nIndex)
 {
 
-   return m_plongptrmap->operator[](nIndex);
+   return m_pimpl->m_longptr.operator[](nIndex);
 
 }
 
@@ -844,12 +844,12 @@ LONG_PTR oswindow_data::get_window_long_ptr(int32_t nIndex)
 LONG_PTR oswindow_data::set_window_long_ptr(int32_t nIndex, LONG_PTR l)
 {
 
-   LONG_PTR lOld = m_plongptrmap->operator[](nIndex);
+   LONG_PTR lOld = m_pimpl->m_longptr[nIndex];
 
    if(nIndex == GWL_EXSTYLE)
    {
 
-      if((l & WS_EX_TOOLWINDOW) ^ (m_plongptrmap->operator[](nIndex) & WS_EX_TOOLWINDOW) != 0)
+      if((l & WS_EX_TOOLWINDOW) ^ (m_pimpl->m_longptr[nIndex] & WS_EX_TOOLWINDOW) != 0)
       {
 
          wm_toolwindow(this, (l & WS_EX_TOOLWINDOW) != 0);
@@ -858,7 +858,7 @@ LONG_PTR oswindow_data::set_window_long_ptr(int32_t nIndex, LONG_PTR l)
 
    }
 
-   m_plongptrmap->operator[](nIndex) = l;
+   m_pimpl->m_longptr[nIndex] = l;
 
    return lOld;
 

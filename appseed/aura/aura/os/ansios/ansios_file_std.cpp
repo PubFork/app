@@ -153,7 +153,9 @@ uint64_t flen_dup(FILE *str)
 ::file::path __node_full_file_path(file::path path)
 {
 
-   return realpath(path);
+   hstring str(PATH_MAX+1);
+
+   return realpath(path, str);
 
 }
 

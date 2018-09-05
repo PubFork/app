@@ -635,7 +635,7 @@ namespace user
       UNREFERENCED_PARAMETER(bShow);
       // walk through all top-level windows
       ::exception::throw_not_implemented(get_app());
-      /*   oswindow oswindow = ::GetWindow(::GetDesktopWindow(), GW_CHILD);
+      /*   oswindow oswindow = ::GetWindow(::get_desktop_window(), GW_CHILD);
       while (oswindow != NULL)
       {
       ::window_sp pwindow = interaction_impl::FromHandlePermanent(oswindow);
@@ -1811,7 +1811,7 @@ namespace user
       keyState |= Session.is_key_pressed(::user::key_shift) ? MK_SHIFT : 0;
 
       oswindow hwFocus = ::GetFocus();
-      const oswindow hwDesktop = ::GetDesktopWindow();
+      const oswindow hwDesktop = ::get_desktop_window();
 
       if (hwFocus == NULL)
          lResult = send_message(WM_MOUSEWHEEL, (wParam << 16) | keyState, lParam);

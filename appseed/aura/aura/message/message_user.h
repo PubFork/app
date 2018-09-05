@@ -139,7 +139,7 @@ namespace message
 
 
       mouse_activate(::aura::application * papp): ::message::base(papp) {}
-      ::user::interaction * GetDesktopWindow();
+      ::user::interaction * get_desktop_window();
       UINT GetHitTest();
       UINT get_message();
    };

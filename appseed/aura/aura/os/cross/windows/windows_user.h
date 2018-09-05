@@ -665,7 +665,7 @@ typedef struct tagDRAWTEXTPARAMS
 /*
 oswindow
 WINAPI
-GetDesktopWindow(
+get_desktop_window(
 VOID);
 */
 

@@ -315,7 +315,7 @@ namespace linux
       virtual ::user::interaction * GetFocus() override;
       virtual bool SetFocus() override;
 
-      static_function::user::interaction * PASCAL GetDesktopWindow();
+      static_function::user::interaction * PASCAL get_desktop_window();
 
       // Obsolete and non-portable APIs - not recommended for new code
       virtual void CloseWindow();
@@ -455,8 +455,8 @@ namespace linux
       bool OnCopyData(::user::interaction * pWnd, COPYDATASTRUCT* pCopyDataStruct);
       DECL_GEN_SIGNAL(_001OnCreate);
 
-      virtual void prodevian_task() override;
-      virtual void present();
+//      virtual void prodevian_task() override;
+      //virtual void present();
 
 
       HBRUSH OnCtlColor(::draw2d::graphics * pgraphics, ::user::interaction * pWnd, UINT nCtlColor);
@@ -672,10 +672,6 @@ namespace linux
       virtual LONG_PTR set_window_long_ptr(int32_t nIndex, LONG_PTR lValue) override;
 
       virtual void _001BaseWndInterfaceMap();
-
-
-      void _001UpdateWindow();
-      void _001Expose();
 
 
       void _001OnTriggerMouseInside();

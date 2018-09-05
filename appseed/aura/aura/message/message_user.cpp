@@ -239,7 +239,7 @@ namespace message
       m_bTranslated = true;
    }
 
-   ::user::interaction * mouse_activate::GetDesktopWindow()
+   ::user::interaction * mouse_activate::get_desktop_window()
    {
       ::exception::throw_not_implemented(get_app());
       //      return interaction_impl::from_handle_dup(reinterpret_cast<oswindow>(m_wparam));

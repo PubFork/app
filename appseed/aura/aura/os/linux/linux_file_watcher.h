@@ -29,6 +29,27 @@
 
 namespace file_watcher
 {
+
+
+
+	class watch :
+      virtual public simple_object
+	{
+	public:
+
+
+		id                   m_id;
+		string               m_strDirName;
+	   bool                 m_bRecursive;
+	   bool                 m_bOwn;
+		listener *           m_plistener;
+		file_watcher_impl *  m_pwatcher;
+
+	};
+
+
+
+
 	/// Implementation for Linux based on inotify.
 	/// @class os_file_watcher
 	class os_file_watcher :
@@ -36,7 +57,7 @@ namespace file_watcher
 	{
 	public:
 		/// type for a map from id to watch_struct pointer
-		typedef map<id, id, watch_struct *, watch_struct*> WatchMap;
+		typedef map<id, id, sp(watch), sp(watch) > WatchMap;
 
 		sp(::thread) m_pthread;
 

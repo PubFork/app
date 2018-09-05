@@ -2311,7 +2311,7 @@ namespace core
       return window_from_os_data(window);
       */
 #else
-      return window_from_os_data(::GetDesktopWindow());
+      return window_from_os_data(::get_desktop_window());
 #endif
    }
 

@@ -321,7 +321,7 @@ oswindow set_focus(oswindow window)
 
    }
 
-   oswindow windowOld = ::GetFocus();
+   oswindow windowOld = ::get_focus();
 
    if(!IsWindowVisibleRaw(window))
    {
@@ -403,9 +403,9 @@ oswindow get_focus()
 
 oswindow get_active_window()
 {
-   
+
    return get_focus();
-   
+
 }
 
 
@@ -444,7 +444,7 @@ oswindow set_active_window(oswindow window)
 
    }
 
-   return SetFocus(window);
+   return ::set_focus(window);
 
 }
 
@@ -920,7 +920,7 @@ bool c_xstart()
 }
 
 
-oswindow GetDesktopWindow()
+oswindow get_desktop_window()
 {
 
    return g_oswindowDesktop;
@@ -1962,6 +1962,8 @@ bool process_message(osdisplay_data * pdata, Display * display)
 
             ::user::interaction * pui = msg.hwnd->m_pimpl->m_pui;
 
+            pui->ModifyStyle(0, WS_VISIBLE);
+
             if(pui->m_eappearance == ::user::appearance_iconic && !msg.hwnd->is_iconic())
             {
 
@@ -1992,6 +1994,19 @@ bool process_message(osdisplay_data * pdata, Display * display)
                // bHandled = true;
 
             }
+
+         }
+
+      }
+      else
+      {
+
+         if(msg.hwnd != NULL && msg.hwnd->m_pimpl != NULL)
+         {
+
+            ::user::interaction * pui = msg.hwnd->m_pimpl->m_pui;
+
+            pui->ModifyStyle(WS_VISIBLE, 0, 0);
 
          }
 
@@ -2718,7 +2733,7 @@ int xlib_error_handler(Display * d, XErrorEvent * e)
 
 i64 oswindow_id(oswindow w)
 {
-      
+
       return w->window();
 
 }

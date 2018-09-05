@@ -293,7 +293,7 @@ namespace ios
       //virtual ::user::interaction *  GetCapture() override;
       virtual ::user::interaction *  GetFocus() override;
 
-      virtual ::user::interaction *  GetDesktopWindow();
+      virtual ::user::interaction *  get_desktop_window();
 
       virtual void CloseWindow() override;
       virtual bool OpenIcon() override;

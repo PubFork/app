@@ -124,7 +124,7 @@ public:
    bool                          m_bMessageOnlyWindow;
    ::user::interaction_impl *    m_pimpl;
    HTHREAD                       m_hthread;
-   int_ptr_to_int_ptr *          m_plongptrmap;
+   //int_ptr_to_int_ptr *          m_plongptrmap;
    Colormap                      m_colormap;
    DWORD                         m_dwLastMouseMove;
    Window                        m_parent;
