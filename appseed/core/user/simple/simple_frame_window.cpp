@@ -3246,7 +3246,12 @@ void simple_frame_window::_001OnNotifyIconTopic(::message::message * pmessage)
       else
       {
 
-         ShowWindow(SW_SHOW);
+         if(!IsWindowVisible())
+         {
+
+            InitialFramePosition(true);
+
+         }
 
          SetActiveWindow();
 

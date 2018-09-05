@@ -134,74 +134,172 @@ namespace xml
 
    }
 
-   string document::consume_entity_ref(const char * & pszXml, string & strName, bool useExtEnt, bool & bExt)
+
+   string document::consume_entity_ref(const char * & pszXmlParam, string & strName, bool useExtEnt, bool & bExt)
    {
+
+      const char * pszXml = pszXmlParam;
+
+      if(*pszXml == '\0')
+      {
+
+         _throw(simple_exception(get_app(), "No Entity"));
+
+      }
+
       ::str::consume(pszXml, "&");
+
       strName.Empty();
+
       while(*pszXml != ';')
       {
+
+         if(*pszXml == '\0'
+         || *pszXml == '<'
+         || *pszXml == '>'
+         || *pszXml == ' '
+         || *pszXml == '\n'
+         || *pszXml != '\r'
+         || *pszXml != ','
+         || *pszXml != '.'
+         || *pszXml != '=')
+         {
+
+            _throw(simple_exception(get_app(), "Not expected character on Entity Reference"));
+
+         }
+
          strName += *pszXml;
+
          pszXml = ::str::utf8_inc(pszXml);
+
       }
+
       pszXml++;
+
       string ent = entitiesHash[strName];
+
       string extEnt;
+
       if (useExtEnt)
       {
+
          extEnt = extEntitiesHash[strName];
+
       }
+
       if(ent.is_empty() && extEnt.is_empty())
       {
+
          _throw(simple_exception(get_app(), "Undefined Entity Reference"));
+
       }
+
       if(ent.has_char())
       {
+
          bExt = false;
+
+         pszXmlParam = pszXml;
+
          return ent;
+
       }
+
       if(extEnt.has_char())
       {
+
          bExt = true;
+
+         pszXmlParam = pszXml;
+
          return Session.file().as_string(m_pathLocation.sibling(extEnt));
+
       }
-      return "";
+
+      string strEntityReference(pszXmlParam, pszXml - pszXmlParam + 1);
+
+      pszXmlParam = pszXml;
+
+      return strEntityReference;
+
    }
+
 
    // the additional parameter must end with , NULL
    // the parameters are pointers based on m_strData that should be offset because m_strData will be edited by entity ref patch
    char * document::patch_entity_ref(const char * & pszXml, int bUseExtEnt, ...)
    {
+
       // pszXml must be a valid portion of and point to an entity ref in:
       // m_strData of this document
+
       const char * pszOldData = m_strData;
+
       strsize iPos = pszXml - pszOldData;
+
       ASSERT(iPos < m_strData.get_length() && iPos >= 0);
+
       string strName;
+
       bool bExt = false;
-      string strValue = consume_entity_ref(pszXml, strName, bUseExtEnt, bExt);
+
+      string strValue = pszXml[0];
+
+      try
+      {
+
+         strValue = consume_entity_ref(pszXml, strName, bUseExtEnt, bExt);
+
+      }
+      catch(...)
+      {
+
+         pszXml++;
+
+      }
+
+
       m_strData = m_strData.Left(iPos) + strValue + m_strData.Mid(iPos + strName.get_length() + 2);
+
       strsize iOffset = ((const char *)m_strData) - pszOldData;
+
       va_list ptr;
+
       va_start(ptr, bUseExtEnt);
+
       int_ptr p;
+
       while((p = va_arg(ptr, int_ptr)) != 0)
       {
+
          const char ** ppch = (const char **) p;
+
          if(*ppch <= (pszOldData + iPos))
          {
+
             *ppch += iOffset;
+
          }
          else if(*ppch >= (pszOldData + iPos + strName.get_length() + 2))
          {
+
             *ppch += iOffset + strValue.get_length() - strName.get_length() - 2;
+
          }
          else
          {
+
             _throw(simple_exception(get_app(), "pointer to be offset cannot lie inside the entity ref"));
+
          }
+
       }
+
       va_end(ptr);
+
       return (char *) &((const char *)m_strData)[iPos + (bExt ? 0 : strValue.get_length())];
+
    }
 
 

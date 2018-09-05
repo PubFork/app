@@ -4486,13 +4486,6 @@ return ::draw2d::graphics::GetViewportOrg();
 
       pango_layout_set_font_description(playout, (PangoFontDescription *) m_spfont->get_os_data());            // assign the previous font description to the layout
 
-      if(m_spbrush.is_set())
-      {
-
-         set_os_color(m_spbrush->m_cr);
-
-      }
-
       //pango_cairo_update_layout(m_pdc, playout);                  // if the target surface or transformation properties of the cairo instance
 
       PangoRectangle r;
@@ -4500,10 +4493,14 @@ return ::draw2d::graphics::GetViewportOrg();
                                 NULL,
                                 &r);
 
+      pointd ptRef;
+
       if(nFormat & DT_BOTTOM)
       {
 
          cairo_translate(m_pdc, 0, rectd.bottom - r.height);
+
+         ptRef.y = rectd.bottom - r.height;
 
       }
       else if(nFormat & DT_VCENTER)
@@ -4511,35 +4508,51 @@ return ::draw2d::graphics::GetViewportOrg();
 
          cairo_translate(m_pdc, 0, ((rectd.top + rectd.bottom) / 2 - (r.height / 2)));
 
+         ptRef.y = ((rectd.top + rectd.bottom) / 2 - (r.height / 2));
+
       }
       else
       {
 
          cairo_translate(m_pdc, 0, rectd.top);
 
+         ptRef.y = rectd.top;
+
       }
 
       if(nFormat & DT_RIGHT)
       {
 
-         cairo_translate(m_pdc, rectd.right - r.width, 0);                        // set the origin of cairo instance 'cr' to (10,20) (i.e. this is where
+         cairo_translate(m_pdc, rectd.right - r.width, 0);
+
+         ptRef.x = rectd.right - r.width;
 
       }
       else if(nFormat & DT_CENTER)
       {
 
-         cairo_translate(m_pdc, ((rectd.left + rectd.right) / 2) - (r.width/2), 0);                        // set the origin of cairo instance 'cr' to (10,20) (i.e. this is where
+         cairo_translate(m_pdc, ((rectd.left + rectd.right) / 2) - (r.width/2), 0);
+
+         ptRef.x = ((rectd.left + rectd.right) / 2) - (r.width/2);
 
       }
       else
       {
 
-         cairo_translate(m_pdc, rectd.left, 0);                        // set the origin of cairo instance 'cr' to (10,20) (i.e. this is where
+         cairo_translate(m_pdc, rectd.left, 0);
+
+         ptRef.x = rectd.left;
 
       }
 
-      pango_cairo_update_layout(m_pdc, playout);                  // if the target surface or transformation properties of the cairo instance
+      pango_cairo_update_layout(m_pdc, playout);
 
+      if(m_spbrush.is_set())
+      {
+
+         set(m_spbrush, ptRef.x, ptRef.y);
+
+      }
 
       // have changed, update the pango layout to reflect this
       (*pfnPango)(m_pdc, playout);                    // draw the pango layout onto the cairo surface
@@ -5475,7 +5488,7 @@ return ::draw2d::graphics::GetViewportOrg();
    }
 
 
-   bool graphics::set(const ::draw2d::brush * pbrush)
+   bool graphics::set(const ::draw2d::brush * pbrush, double x, double y)
    {
 
       synch_lock ml(cairo_mutex());
@@ -5483,7 +5496,7 @@ return ::draw2d::graphics::GetViewportOrg();
       if (pbrush->m_etype == ::draw2d::brush::type_radial_gradient_color)
       {
 
-         cairo_pattern_t * ppattern = cairo_pattern_create_radial(pbrush->m_pt.x, pbrush->m_pt.y, 0, pbrush->m_pt2.x, pbrush->m_pt2.y, MAX(pbrush->m_size.cx, pbrush->m_size.cy));
+         cairo_pattern_t * ppattern = cairo_pattern_create_radial(pbrush->m_pt.x - x, pbrush->m_pt.y - y, 0, pbrush->m_pt2.x - x, pbrush->m_pt2.y - y, MAX(pbrush->m_size.cx, pbrush->m_size.cy));
 
          cairo_pattern_add_color_stop_rgba(ppattern, 0., argb_get_r_value(pbrush->m_cr1) / 255.0, argb_get_g_value(pbrush->m_cr1) / 255.0, argb_get_b_value(pbrush->m_cr1) / 255.0, argb_get_a_value(pbrush->m_cr1) / 255.0);
 
@@ -5497,7 +5510,7 @@ return ::draw2d::graphics::GetViewportOrg();
       else if (pbrush->m_etype == ::draw2d::brush::type_linear_gradient_point_color)
       {
 
-         cairo_pattern_t * ppattern = cairo_pattern_create_linear(pbrush->m_pt1.x, pbrush->m_pt1.y, pbrush->m_pt2.x, pbrush->m_pt2.y);
+         cairo_pattern_t * ppattern = cairo_pattern_create_linear(pbrush->m_pt1.x - x, pbrush->m_pt1.y - y, pbrush->m_pt2.x - x, pbrush->m_pt2.y - y);
 
          cairo_pattern_add_color_stop_rgba(ppattern, 0., argb_get_r_value(pbrush->m_cr1) / 255.0, argb_get_g_value(pbrush->m_cr1) / 255.0, argb_get_b_value(pbrush->m_cr1) / 255.0, argb_get_a_value(pbrush->m_cr1) / 255.0);
 

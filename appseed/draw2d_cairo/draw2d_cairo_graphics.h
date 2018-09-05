@@ -496,7 +496,7 @@ namespace draw2d_cairo
 
       // platform-specific or platform-internals
       bool set_os_color(COLORREF cr);
-      bool set(const ::draw2d::brush * pbrush);
+      bool set(const ::draw2d::brush * pbrush, double x = 0.0, double y = 0.0);
       bool set(const ::draw2d::pen * ppen);
 #if !defined(USE_PANGO)
       bool set(const ::draw2d::font * pfont);
