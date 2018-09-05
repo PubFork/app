@@ -36,68 +36,22 @@ struct indicator;
 
 void os_post_quit();
 
-GtkWidget * idle_basecore_app_indicator_init(indicator * pind, user_notify_icon_appindicator_bridge * pi);
+GtkWidget * idle_basecore_app_indicator_init(indicator * pind, user_notify_icon_bridge * pbridge);
 
-void * basecore_app_indicator_init(indicator * pind, struct user_notify_icon_appindicator_bridge * pi);
-
-
-static void ___close(void * data)
-{
-
-   ::user_notify_icon_appindicator_bridge * pi = (::user_notify_icon_appindicator_bridge *) data;
-
-   if(pi->__close_is_closed())
-   {
-
-      pi->__open();
-
-   }
-   else
-   {
-
-      pi->__close();
-
-   }
-
-}
-
-
-static void ___quit(void * data)
-{
-
-   ::user_notify_icon_appindicator_bridge * pi = (::user_notify_icon_appindicator_bridge *) data;
-
-   pi->__quit();
-
-}
+void * basecore_app_indicator_init(indicator * pind, struct user_notify_icon_bridge * pbridge);
 
 
 static void ___extra_action(GtkAction * action, void * data)
 {
 
-   ::user_notify_icon_appindicator_bridge * pi = (::user_notify_icon_appindicator_bridge *) data;
+   ::user_notify_icon_bridge * pi = (::user_notify_icon_bridge *) data;
 
-   pi->notification_area_extra_action(gtk_action_get_stock_id(action));
+   pi->notification_area_action(gtk_action_get_stock_id(action));
 
 }
 
 extern "C"
 {
-
-   static void __close(GtkAction * action, gpointer data)
-   {
-
-      ___close(data);
-
-   }
-
-
-   static void __quit(GtkAction * action, gpointer data)
-   {
-
-      ___quit(data);
-
-   }
 
 
    static void __extra_action(GtkAction * action, gpointer data)
@@ -108,16 +62,10 @@ extern "C"
    }
 
 
-   static gboolean f1(gpointer data);
+   static gboolean basecore_data_run(gpointer data);
 
 
 } // extern "C"
-
-
-
-
-
-
 
 
 
@@ -141,42 +89,47 @@ struct basecore_data
 {
 public:
 
-   const char *         m_pszId;
-   const char *         m_pszIcon;
-   const char *         m_pszFolder;
-   AppIndicator *       m_pindicator;
-   user_notify_icon_appindicator_bridge *       m_piclosequit;
-   indicator *          m_pind;
-   bool                 m_bReady;
-   bool                 m_bLoop;
-   bool                 m_bTerm;
-   int                  m_iTry;
-   void *               m_pvoidRet;
-   GtkWidget *          m_pmenu;
-   int                  m_iOpen;
-   bool                 m_bQuitGtk;
+
+   const char *                              m_pszId;
+   const char *                              m_pszIcon;
+   const char *                              m_pszFolder;
+   AppIndicator *                            m_pindicator;
+   user_notify_icon_bridge *                 m_pbridge;
+   indicator *                               m_pind;
+   bool                                      m_bReady;
+   bool                                      m_bLoop;
+   bool                                      m_bTerm;
+   int                                       m_iTry;
+   void *                                    m_pvoidRet;
+   GtkWidget *                               m_pmenu;
+   int                                       m_iOpen;
+   bool                                      m_bQuitGtk;
 
 
    basecore_data();
    ~basecore_data();
+
 
    virtual void post();
    virtual void * process();
    virtual void * wait();
    gboolean run();
 
+
    GtkMenuItem * get_menu_item_close();
+
 
 };
 
 
 basecore_data::basecore_data()
 {
+
    m_pszId = NULL;
    m_pszIcon = NULL;
    m_pindicator = NULL;
    m_pind = NULL;
-   m_piclosequit = NULL;
+   m_pbridge = NULL;
    m_bReady = false;
    m_iTry = 0;
    m_pvoidRet = NULL;
@@ -185,22 +138,32 @@ basecore_data::basecore_data()
    m_bTerm = true;
    m_iOpen = -1;
    m_bQuitGtk = false;
+
 }
 
 
 basecore_data::~basecore_data()
 {
+
    if(m_pszId != NULL)
    {
+
       free((void *)m_pszId);
+
    }
+
    if(m_pszIcon != NULL)
    {
+
       free((void *)m_pszIcon);
+
    }
+
    if(m_pszFolder != NULL)
    {
+
       free((void *)m_pszFolder);
+
    }
 
 }
@@ -208,14 +171,18 @@ basecore_data::~basecore_data()
 
 struct indicator_new : public basecore_data
 {
+
    indicator_new(const char * pszId, const char *pszIcon, const char * pszFolder)
    {
+
       m_pszId     = strdup(pszId);
       m_pszIcon   = strdup(pszIcon);
       m_pszFolder = strdup(pszFolder);
+
    }
 
 };
+
 
 struct indicator : public basecore_data
 {
@@ -223,50 +190,63 @@ struct indicator : public basecore_data
    indicator(AppIndicator * pindicator)
    {
 
-      m_pind            = this;
+      m_pind       = this;
       m_pindicator = pindicator;
 
    }
 
-   void init(user_notify_icon_appindicator_bridge * piclosequit, GtkWidget * pmenu)
+   void init(user_notify_icon_bridge * pbridge, GtkWidget * pmenu)
    {
 
-      m_piclosequit = piclosequit;
-      m_pmenu = pmenu;
-      m_bLoop = false;
-      m_bTerm = false;
+      m_pbridge   = pbridge;
+      m_pmenu     = pmenu;
+      m_bLoop     = false;
+      m_bTerm     = false;
 
    }
 
 };
+
 
 struct indicator_init : public basecore_data
 {
-   indicator_init(indicator * pind, user_notify_icon_appindicator_bridge * piclosequit)
+
+
+   indicator_init(indicator * pind, user_notify_icon_bridge * pbridge)
    {
+
       m_pind         = pind;
       m_pindicator   = pind->m_pindicator;
-      m_piclosequit  = piclosequit;
+      m_pbridge      = pbridge;
+
    }
+
 
 };
 
 
-
-struct indicator_term : public basecore_data
+struct indicator_term :
+   public basecore_data
 {
+
    indicator_term(indicator * pind)
    {
-      m_pind = pind;
+
+      m_pind         = pind;
       m_pindicator   = pind->m_pindicator;
+
    }
 
 };
+
 
 void basecore_data::post()
 {
-   g_idle_add(f1,(basecore_data*)this);
+
+   g_idle_add(&basecore_data_run, (basecore_data *) this);
+
 }
+
 
 void * basecore_data::process()
 {
@@ -274,26 +254,40 @@ void * basecore_data::process()
    post();
 
    return wait();
+
 }
+
 
 void * basecore_data::wait()
 {
+
    timespec req;
-   req.tv_sec=0;
-   req.tv_nsec = 284*1000*1000;
+
+   req.tv_sec = 0;
+
+   req.tv_nsec = 300 * 1000 * 1000;
+
    timespec rem;
+
    while(m_iTry < 100 && !m_bReady)
    {
+
       nanosleep(&req, &rem);
+
       m_iTry++;
+
    }
+
    void * pRet = m_pvoidRet;
+
    delete this;
+
    return pRet;
+
 }
 
 
-gboolean f1(gpointer p)
+gboolean basecore_data_run(gpointer p)
 {
 
    basecore_data * data = (basecore_data *) p;
@@ -313,39 +307,38 @@ void basecore_step(void * p)
 }
 
 
-void * basecore_app_indicator_new(const char * pszId, const char * pszIcon, const char * pszFolder, user_notify_icon_appindicator_bridge * pi)
+void * basecore_app_indicator_new(const char * pszId, const char * pszIcon, const char * pszFolder, user_notify_icon_bridge * pbridge)
 {
 
    indicator_new * data = new indicator_new(pszId, pszIcon, pszFolder);
 
-   indicator * pind = (indicator *) data->process();
+   indicator * pindicator = (indicator *) data->process();
 
-   if(pind == NULL)
+   if(pindicator == NULL)
    {
 
       return NULL;
 
    }
 
-   if(!basecore_app_indicator_init(pind,pi))
+   if(!basecore_app_indicator_init(pindicator, pbridge))
    {
 
-      basecore_app_indicator_term(pind);
+      basecore_app_indicator_term(pindicator);
 
       return NULL;
 
    }
 
-   return pind;
+   return pindicator;
 
 }
 
 
-
-void * basecore_app_indicator_init(indicator * pind, user_notify_icon_appindicator_bridge * pi)
+void * basecore_app_indicator_init(indicator * pindicator, user_notify_icon_bridge * pbridge)
 {
 
-   indicator_init * data = new indicator_init(pind, pi);
+   indicator_init * data = new indicator_init(pindicator, pbridge);
 
    return data->process();
 
@@ -355,23 +348,36 @@ void * basecore_app_indicator_init(indicator * pind, user_notify_icon_appindicat
 void basecore_app_indicator_term(void * pvoidInd)
 {
 
-   indicator * pind = (indicator *) pvoidInd;
+   indicator * pindicator = (indicator *) pvoidInd;
 
-   indicator_term * data = new indicator_term(pind);
+   indicator_term * data = new indicator_term(pindicator);
 
    data->process();
-
-   //pind->wait();
 
 }
 
 
-GtkWidget * idle_basecore_app_indicator_init(indicator * pind, user_notify_icon_appindicator_bridge * pi)
+void safe_free(void * pfree)
 {
 
-   AppIndicator * m_pappindicator = (AppIndicator *) pind->m_pindicator;
+   if(pfree == NULL)
+   {
 
-   GError *error = NULL;
+      return;
+
+   }
+
+   ::free(pfree);
+
+}
+
+
+GtkWidget * idle_basecore_app_indicator_init(indicator * pindicator, user_notify_icon_bridge * pbridge)
+{
+
+   AppIndicator * m_pappindicator = (AppIndicator *) pindicator->m_pindicator;
+
+   GError * error = NULL;
 
    GtkActionGroup * action_group = gtk_action_group_new ("AppActions");
 
@@ -382,28 +388,25 @@ GtkWidget * idle_basecore_app_indicator_init(indicator * pind, user_notify_icon_
 
    }
 
-   GtkActionEntry sentries[] =
+   int iCount = pbridge->notification_area_action_count();
+
+   if(iCount <= 0)
    {
 
-      { "Close" , "application-close" , "_Close" , "<control>C" , "Close the application", G_CALLBACK (__close) },
-      { "Quit"  , "application-exit"  , "_Quit"  , "<control>Q" , "Exit the application", G_CALLBACK (__quit) },
+      return NULL;
 
-   };
+   }
 
-   guint n_entries = G_N_ELEMENTS (sentries);
+   GtkActionEntry * entries = new GtkActionEntry[pbridge->notification_area_action_count()];
 
-   GtkActionEntry * entries = new GtkActionEntry[n_entries + pi->notification_extra_action_count()];
-
-
-   gchar *ui_info = (gchar *) malloc(1024 * 1024);
+   gchar * ui_info = (gchar *) malloc(1024 * 1024);
 
    strcpy(ui_info, "<ui>");
    strcat(ui_info, "  <popup name='IndicatorPopup'>");
-   strcat(ui_info, "    <menuitem action='Close' />");
-   strcat(ui_info, "    <menuitem action='Quit' />");
-   strcat(ui_info, "    <separator/>");
 
-   for(int i = 0; i < pi->notification_extra_action_count(); i++)
+   int iEntry = 0;
+
+   for(int i = 0; i < iCount; i++)
    {
 
       char * pszName = NULL;
@@ -412,43 +415,45 @@ GtkWidget * idle_basecore_app_indicator_init(indicator * pind, user_notify_icon_
       char * pszAccelerator = NULL;
       char * pszDescription = NULL;
 
-      pi->notification_area_action_info(&pszName, &pszId, &pszLabel, &pszAccelerator, &pszDescription, i);
+      pbridge->notification_area_action_info(&pszName, &pszId, &pszLabel, &pszAccelerator, &pszDescription, i);
 
-      entries[i].name = pszLabel;
+      if(strcasecmp(pszName, "separator") == 0)
+      {
 
-      strcat(ui_info, "    <menuitem action='");
-      strcat(ui_info, pszLabel);
-      strcat(ui_info, "' />");
+         strcat(ui_info, "<separator/>\n");
 
-      entries[i].stock_id = pszId;
+         safe_free(pszName);
 
-      entries[i].label = pszName;
+      }
+      else
+      {
 
-      entries[i].accelerator = pszAccelerator;
+         entries[iEntry].name = pszLabel;
 
-      entries[i].tooltip = pszDescription;
+         strcat(ui_info, "    <menuitem action='");
+         strcat(ui_info, pszLabel);
+         strcat(ui_info, "' />");
 
-      entries[i].callback = G_CALLBACK (__extra_action);
+         entries[iEntry].stock_id = pszId;
+
+         entries[iEntry].label = pszName;
+
+         entries[iEntry].accelerator = pszAccelerator;
+
+         entries[iEntry].tooltip = pszDescription;
+
+         entries[iEntry].callback = G_CALLBACK (__extra_action);
+
+         iEntry++;
+
+      }
 
    }
 
    strcat(ui_info, "  </popup>");
    strcat(ui_info, "</ui>");
 
-
-   memcpy(&entries[pi->notification_extra_action_count()], sentries, sizeof(sentries));
-
-
-//static const gchar *ui_info =
-//   "<ui>"
-//  "  <popup name='IndicatorPopup'>"
-//  "    <menuitem action='Close' />"
-//  "    <menuitem action='Quit' />"
-//  "  </popup>"
-//  "</ui>";
-//
-
-   gtk_action_group_add_actions (action_group, entries, n_entries + pi->notification_extra_action_count(), pi);
+   gtk_action_group_add_actions (action_group, entries, iEntry, pbridge);
 
    GtkUIManager * uim = gtk_ui_manager_new ();
 
@@ -474,14 +479,14 @@ GtkWidget * idle_basecore_app_indicator_init(indicator * pind, user_notify_icon_
 
    }
 
-   for(int i = 0; i < pi->notification_extra_action_count(); i++)
+   for(int i = 0; i < iEntry; i++)
    {
 
-      free((void *) entries[i].name);
-      free((void *) entries[i].stock_id);
-      free((void *) entries[i].label);
-      free((void *) entries[i].accelerator);
-      free((void *) entries[i].tooltip);
+      safe_free((void *) entries[i].name);
+      safe_free((void *) entries[i].stock_id);
+      safe_free((void *) entries[i].label);
+      safe_free((void *) entries[i].accelerator);
+      safe_free((void *) entries[i].tooltip);
 
    }
 
@@ -489,15 +494,12 @@ GtkWidget * idle_basecore_app_indicator_init(indicator * pind, user_notify_icon_
 
    free(ui_info);
 
-
    if(!bOk)
    {
 
       return NULL;
 
    }
-
-
 
    GtkWidget *  indicator_menu = gtk_ui_manager_get_widget (uim, "/ui/IndicatorPopup");
 
@@ -529,15 +531,6 @@ GtkMenuItem * basecore_data::get_menu_item_close()
 
    GList * l = gtk_container_get_children(GTK_CONTAINER(m_pmenu));
 
-//   int count = m_piclosequit->bridge_extra_action_count();
-//
-//   while(count > 0)
-//   {
-//      l = l->next;
-//      count--;
-//
-//   }
-
    GtkWidget * pwidget = (GtkWidget *)l->data;
 
    g_list_free1(l);
@@ -547,6 +540,7 @@ GtkMenuItem * basecore_data::get_menu_item_close()
    return pmenuitemClose;
 
 }
+
 
 gboolean basecore_data::run()
 {
@@ -571,45 +565,15 @@ gboolean basecore_data::run()
 
       }
 
-
-
    }
    else if(m_pind != NULL)
    {
 
-      if(m_piclosequit != NULL)
+      if(m_pbridge != NULL)
       {
 
          if(m_pmenu)
          {
-
-
-            if(m_piclosequit->__close_is_closed())
-            {
-
-               if(m_iOpen != 0)
-               {
-
-                  gtk_menu_item_set_label(get_menu_item_close(), "Open");
-
-                  m_iOpen = 0;
-
-               }
-
-            }
-            else
-            {
-
-               if(m_iOpen != 1)
-               {
-
-                  gtk_menu_item_set_label(get_menu_item_close(), "Close");
-
-                  m_iOpen = 1;
-
-               }
-
-            }
 
             if(m_bTerm)
             {
@@ -622,9 +586,9 @@ gboolean basecore_data::run()
          else
          {
 
-            GtkWidget * pmenu = idle_basecore_app_indicator_init(m_pind, m_piclosequit);
+            GtkWidget * pmenu = idle_basecore_app_indicator_init(m_pind, m_pbridge);
 
-            m_pind->init(m_piclosequit, pmenu);
+            m_pind->init(m_pbridge, pmenu);
 
             m_pind->post();
 
@@ -1021,3 +985,6 @@ const char * basecore_get_file_content_type(const char * pszPath)
    return p;
 
 }
+
+
+

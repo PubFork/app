@@ -248,6 +248,7 @@ void simple_frame_window::install_message_routing(::message::sender * pinterface
    connect_command_probe("view_full_screen", &simple_frame_window::_001OnUpdateViewFullScreen);
    connect_command("view_full_screen", &simple_frame_window::_001OnViewFullScreen);
 
+   connect_command("notify_icon_topic", &simple_frame_window::_001OnNotifyIconTopic);
    connect_command("app_exit", &simple_frame_window::_001OnAppExit);
 
    IGUI_MSG_LINK(WM_APPEXIT, pinterface, this, &simple_frame_window::_001OnAppExit);
@@ -3228,60 +3229,38 @@ void simple_frame_window::OnNotifyIconLButtonDown(UINT uiNotifyIcon)
 }
 
 
-void simple_frame_window::OnNotifyIconOpen(UINT uiNotifyIcon)
+void simple_frame_window::_001OnNotifyIconTopic(::message::message * pmessage)
 {
 
    if(m_bDefaultNotifyIcon)
    {
 
-      InitialFramePosition(true);
+      if(IsWindowVisible()
+      && get_active_window() == get_handle()
+      && get_focus() == get_handle())
+      {
+
+         ShowWindow(SW_HIDE);
+
+      }
+      else
+      {
+
+         ShowWindow(SW_SHOW);
+
+         SetActiveWindow();
+
+         BringWindowToTop();
+
+         SetForegroundWindow();
+
+      }
 
    }
 
-}
-
-
-void simple_frame_window::OnNotifyIconClose(UINT uiNotifyIcon)
-{
-
-   if(m_bDefaultNotifyIcon)
-   {
-
-      post_message(WM_CLOSE);
-
-   }
+   pmessage->m_bRet = true;
 
 }
-
-
-void simple_frame_window::OnNotifyIconQuit(UINT uiNotifyIcon)
-{
-
-   if(m_bDefaultNotifyIcon)
-   {
-
-      post_message(WM_APPEXIT);
-
-   }
-
-}
-
-
-bool simple_frame_window::__close_is_closed()
-{
-
-   return !IsWindowVisible();
-
-}
-
-
-bool simple_frame_window::notify_icon_frame_is_opened()
-{
-
-   return !__close_is_closed();
-
-}
-
 
 
 void simple_frame_window::OnInitialFrameUpdate(bool bMakeVisible)
@@ -3335,6 +3314,7 @@ void simple_frame_window::OnUpdateToolWindow(bool bVisible)
    m_pimpl->show_task(bVisible && m_bShowTask);
 
 }
+
 
 void simple_frame_window::show_task(bool bShow)
 {
@@ -3458,10 +3438,8 @@ void simple_frame_window::nextstyle(::user::style_context * pcontext)
 
 
 
-void simple_frame_window::notification_area_extra_action(const char * pszId)
+void simple_frame_window::notification_area_action(const char * pszId)
 {
-
-   //sp(::user::interaction) pwnd = GetOwner();
 
    sp(::user::interaction) pwnd = this;
 
@@ -3477,10 +3455,10 @@ string simple_frame_window::notification_area_extra_get_xml_menu()
 
    string strXml;
 
-   if (notification_area_extra_action_count() > 0)
+   if (notification_area_action_count() > 0)
    {
 
-      for (int i = 0; i < notification_area_extra_action_count(); i++)
+      for (int i = 0; i < notification_area_action_count(); i++)
       {
 
          {
@@ -3492,7 +3470,7 @@ string simple_frame_window::notification_area_extra_get_xml_menu()
             ::aura::malloc < char * > pszDescription;
 
 
-            notification_area_extra_action_info(
+            notification_area_action_info(
             &pszName.m_p,
             &pszId.m_p,
             &pszLabel.m_p,

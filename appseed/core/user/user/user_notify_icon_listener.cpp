@@ -40,18 +40,6 @@ namespace user
 
          break;
 
-      case WM_CLOSE:
-
-         OnNotifyIconClose(uiNotifyIcon);
-
-         break;
-
-      case WM_QUIT:
-
-         OnNotifyIconQuit(uiNotifyIcon);
-
-         break;
-
       }
 
    }
@@ -81,61 +69,61 @@ namespace user
    }
 
 
-   void notify_icon_listener::OnNotifyIconOpen(UINT uiNotifyIcon)
+   int notify_icon_listener::notification_area_action_count()
    {
 
-      UNREFERENCED_PARAMETER(uiNotifyIcon);
+      return 2;
 
    }
 
 
-   void notify_icon_listener::OnNotifyIconClose(UINT uiNotifyIcon)
+   void notify_icon_listener::notification_area_action_info(char ** ppszName, char ** ppszId, char ** ppszLabel, char ** ppszAccelerator, char ** ppszDescription, int iIndex)
    {
 
-      UNREFERENCED_PARAMETER(uiNotifyIcon);
+      if(iIndex == 0)
+      {
+
+         string strAppTitle = Application.m_strAppTitle;
+
+         if(strAppTitle.is_empty())
+         {
+
+            stringa stra;
+
+            stra.explode("/", Application.m_strAppId);
+
+            strAppTitle = stra.slice(1).implode(" ");
+
+            strAppTitle.replace("_", " ");
+
+            strAppTitle.replace("-", " ");
+
+            strAppTitle.replace(".", " ");
+
+         }
+
+         *ppszName = strdup(strAppTitle);
+         *ppszId = strdup("notify_icon_topic");
+         *ppszLabel = strdup(Application.m_strAppTitle);
+         *ppszAccelerator = strdup("");
+         *ppszDescription = strdup(Application.m_strAppTitle);
+
+      }
+      else if(iIndex == 1)
+      {
+
+         *ppszName =strdup("Quit");
+         *ppszId =strdup("app_exit");
+         *ppszLabel = strdup("_Quit");
+         *ppszAccelerator = strdup("ESC");
+         *ppszDescription = strdup("Quit application");
+
+      }
 
    }
 
 
-   void notify_icon_listener::OnNotifyIconQuit(UINT uiNotifyIcon)
-   {
-
-      UNREFERENCED_PARAMETER(uiNotifyIcon);
-
-   }
-
-
-   bool notify_icon_listener::__close_is_closed()
-   {
-
-      return false;
-
-   }
-
-
-   bool notify_icon_listener::notify_icon_frame_is_opened()
-   {
-
-      return false;
-
-   }
-
-
-   int notify_icon_listener::notification_area_extra_action_count()
-   {
-
-      return 0;
-
-   }
-
-
-   void notify_icon_listener::notification_area_extra_action_info(char ** ppszName, char ** ppszId, char ** ppszLabel, char ** ppszAccelerator, char ** ppszDescription, int iIndex)
-   {
-
-   }
-
-
-   void notify_icon_listener::notification_area_extra_action(const char * pszId)
+   void notify_icon_listener::notification_area_action(const char * pszId)
    {
 
    }

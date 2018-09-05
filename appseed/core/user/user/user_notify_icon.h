@@ -22,7 +22,7 @@ namespace user
       virtual public ::object
 #endif
 #ifdef LINUX
-      , public user_notify_icon_appindicator_bridge
+      , public user_notify_icon_bridge
 #elif defined (MACOS)
       , public user_notify_icon_mm_bridge
 #endif
@@ -32,7 +32,9 @@ namespace user
 
       enum e_message
       {
+
          MessageNotifyIcon = WM_USER + 100,
+
       };
 
 
@@ -85,29 +87,21 @@ namespace user
 
       void install_message_routing(::message::sender * pinterface);
 
-      virtual void __open();
-      virtual void __close();
-      virtual void __quit();
-      virtual bool __close_is_closed();
-
 
       virtual void step();
 
 
 #if defined(APPLE_IOS) || defined(WINDOWSEX) || defined(ANDROID) || defined(METROWIN)
       virtual void notify_icon_play(const char * action);
-      virtual bool notify_icon_frame_is_opened();
 #else
 #if defined(LINUX)
       virtual void notify_icon_play(const char * action);
-      virtual bool notify_icon_frame_is_opened();
 #else
       virtual void notify_icon_play(const char * action) override;
-      virtual bool notify_icon_frame_is_opened() override;
 #endif
-      virtual int notification_extra_action_count() override;
+      virtual int notification_area_action_count() override;
       virtual void notification_area_action_info(char ** ppszName, char ** ppszId, char ** ppszLabel, char ** ppszAccelerator, char ** ppszDescription, int iIndex) override;
-      virtual void notification_area_extra_action(const char * pszId) override;
+      virtual void notification_area_action(const char * pszId) override;
 #endif
 
 

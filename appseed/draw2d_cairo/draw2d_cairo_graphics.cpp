@@ -4469,11 +4469,18 @@ return ::draw2d::graphics::GetViewportOrg();
    bool graphics::internal_draw_text_pango(const char * lpszString, strsize nCount, const RECTD & rectd, UINT nFormat, PFN_PANGO_TEXT pfnPango)
    {
 
+      ::draw2d::savedc savedc(this);
+
       PangoLayout * playout;                            // layout for a paragraph of text
 
-      cairo_translate(m_pdc, rectd.left, rectd.top);                        // set the origin of cairo instance 'cr' to (10,20) (i.e. this is where
       // drawing will start from).
       playout = pango_cairo_create_layout(m_pdc);                 // init pango layout ready for use
+
+      //pango_layout_set_width(playout, width(rectd));
+
+      //pango_layout_set_height(playout, height(rectd));
+
+
 
       pango_layout_set_text(playout, lpszString, -1);          // sets the text to be associated with the layout (final arg is length, -1
 
@@ -4486,7 +4493,54 @@ return ::draw2d::graphics::GetViewportOrg();
 
       }
 
+      //pango_cairo_update_layout(m_pdc, playout);                  // if the target surface or transformation properties of the cairo instance
+
+      PangoRectangle r;
+      pango_layout_get_pixel_extents (playout,
+                                NULL,
+                                &r);
+
+      if(nFormat & DT_BOTTOM)
+      {
+
+         cairo_translate(m_pdc, 0, rectd.bottom - r.height);
+
+      }
+      else if(nFormat & DT_VCENTER)
+      {
+
+         cairo_translate(m_pdc, 0, ((rectd.top + rectd.bottom) / 2 - (r.height / 2)));
+
+      }
+      else
+      {
+
+         cairo_translate(m_pdc, 0, rectd.top);
+
+      }
+
+      if(nFormat & DT_RIGHT)
+      {
+
+         cairo_translate(m_pdc, rectd.right - r.width, 0);                        // set the origin of cairo instance 'cr' to (10,20) (i.e. this is where
+
+      }
+      else if(nFormat & DT_CENTER)
+      {
+
+         cairo_translate(m_pdc, ((rectd.left + rectd.right) / 2) - (r.width/2), 0);                        // set the origin of cairo instance 'cr' to (10,20) (i.e. this is where
+
+      }
+      else
+      {
+
+         cairo_translate(m_pdc, rectd.left, 0);                        // set the origin of cairo instance 'cr' to (10,20) (i.e. this is where
+
+      }
+
       pango_cairo_update_layout(m_pdc, playout);                  // if the target surface or transformation properties of the cairo instance
+
+
       // have changed, update the pango layout to reflect this
       (*pfnPango)(m_pdc, playout);                    // draw the pango layout onto the cairo surface
 

@@ -17,23 +17,22 @@
 class user_notify_icon_mm_bridge
 {
 public:
-   
-   
+
+
    void * m_pnotifyicon;
-   
-   
-   
-   
+
+
+
+
    virtual void notify_icon_init(const char * strIconFile);
    virtual void notify_icon_play(const char * action) = 0;
-   
+
    virtual void notify_icon_destroy();
-   virtual bool notify_icon_frame_is_opened() = 0;
-   
+
 
    virtual int notification_extra_action_count() = 0;
    virtual void notification_area_action_info(char ** ppszName, char ** ppszId, char ** ppszLabel, char ** ppszAccelerator, char ** ppszDescription, int iIndex) = 0;
-   virtual void notification_area_extra_action(const char * pszId) = 0;
+   virtual void notification_area_action(const char * pszId) = 0;
 
 
 };

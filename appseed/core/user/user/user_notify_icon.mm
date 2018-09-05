@@ -121,7 +121,7 @@
       if(pitem == [extraMenuItems objectAtIndex:i])
       {
          
-         m_pbridge->notification_area_extra_action([[extraMenuIds objectAtIndex:i] UTF8String]);
+         m_pbridge->notification_area_action([[extraMenuIds objectAtIndex:i] UTF8String]);
          
          return;
          

@@ -64,6 +64,7 @@ public:
 
    };
 
+
    bool                                m_bPendingSaveWindowPlacement;
    bool                                m_bDefaultCreateToolbar;
    bool                                m_bTransparentFrameEnable;
@@ -120,7 +121,6 @@ public:
 
    virtual bool is_application_main_window();
 
-//   virtual bool get_translucency(::user::e_translucency & etranslucency, ::user::e_element eelement, ::user::interaction * pui) override;
 
    bool GetCustomFrame();
    void SetCustomFrame(bool bCustom);
@@ -201,6 +201,7 @@ public:
    DECL_GEN_SIGNAL(_001OnUpdateToggleTransparentFrame);
    DECL_GEN_SIGNAL(_001OnGetMinMaxInfo);
    DECL_GEN_SIGNAL(_001OnAppExit);
+   DECL_GEN_SIGNAL(_001OnNotifyIconTopic);
 
 
 #ifdef WINDOWSEX
@@ -285,19 +286,11 @@ public:
 
    virtual bool frame_is_transparent() override;
 
-   virtual void OnNotifyIconOpen(UINT uiNotifyIcon) override;
-   virtual void OnNotifyIconClose(UINT uiNotifyIcon) override;
-   virtual void OnNotifyIconQuit(UINT uiNotifyIcon) override;
-
-
-
 
    virtual void OnNotifyIconContextMenu(UINT uiNotifyIcon) override;
    virtual void OnNotifyIconLButtonDblClk(UINT uiNotifyIcon) override;
    virtual void OnNotifyIconLButtonDown(UINT uiNotifyIcon) override;
 
-   virtual bool __close_is_closed() override;
-   virtual bool notify_icon_frame_is_opened() override;
 
    virtual void OnInitialFrameUpdate(bool bMakeVisible) override;
 
@@ -307,14 +300,11 @@ public:
 
    virtual void defer_set_icon();
 
-   //virtual ::user::style * get_user_style() override;
-
    using ::user::frame_window::get_color;
-//   virtual bool get_color(COLORREF & cr, ::user::e_color ecolor, ::user::interaction * pui) override;
 
    virtual void on_select_user_style();
 
-   virtual void notification_area_extra_action(const char * pszId) override;
+   virtual void notification_area_action(const char * pszId) override;
 
    virtual string notification_area_extra_get_xml_menu();
 

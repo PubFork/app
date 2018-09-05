@@ -7,7 +7,7 @@ static ::user::notify_icon * g_pnotifyiconLast = NULL;
 
 #include <dlfcn.h>
 BEGIN_EXTERN_C
-typedef void * BASECORE_APP_INDICATOR_NEW(const char *, const char *, const char *, user_notify_icon_appindicator_bridge *);
+typedef void * BASECORE_APP_INDICATOR_NEW(const char *, const char *, const char *, user_notify_icon_bridge *);
 typedef void BASECORE_APP_INDICATOR_TERM(void *);
 typedef void BASECORE_APP_INDICATOR_STEP(void *);
 END_EXTERN_C
@@ -427,66 +427,6 @@ namespace user
    void notify_icon::notify_icon_play(const char * action)
    {
 
-      string strAction(action);
-
-      if(strAction == "close")
-      {
-
-         __close();
-
-      }
-      else if(strAction== "quit")
-      {
-
-         __quit();
-
-      }
-      else if(strAction == "open")
-      {
-
-         __open();
-
-      }
-
-   }
-
-
-   void notify_icon::__open()
-   {
-
-      m_plistener->OnNotifyIconOpen(m_uiId);
-
-   }
-
-
-   void notify_icon::__close()
-   {
-
-      m_plistener->OnNotifyIconMessage(m_uiId, WM_CLOSE);
-
-   }
-
-
-   void notify_icon::__quit()
-   {
-
-      m_plistener->OnNotifyIconMessage(m_uiId, WM_QUIT);
-
-   }
-
-
-   bool notify_icon::__close_is_closed()
-   {
-
-      return m_plistener->__close_is_closed();
-
-   }
-
-
-   bool notify_icon::notify_icon_frame_is_opened()
-   {
-
-      return m_plistener->notify_icon_frame_is_opened();
 
    }
 
@@ -513,10 +453,10 @@ namespace user
 #if defined(LINUX) || defined(MACOS)
 
 
-   int notify_icon::notification_extra_action_count()
+   int notify_icon::notification_area_action_count()
    {
 
-      return m_plistener->notification_area_extra_action_count();
+      return m_plistener->notification_area_action_count();
 
    }
 
@@ -524,15 +464,15 @@ namespace user
    void notify_icon::notification_area_action_info(char ** ppszName, char ** ppszId, char ** ppszLabel, char ** ppszAccelerator, char ** ppszDescription, int iIndex)
    {
 
-      m_plistener->notification_area_extra_action_info(ppszName, ppszId, ppszLabel, ppszAccelerator, ppszDescription, iIndex);
+      m_plistener->notification_area_action_info(ppszName, ppszId, ppszLabel, ppszAccelerator, ppszDescription, iIndex);
 
    }
 
 
-   void notify_icon::notification_area_extra_action(const char * pszId)
+   void notify_icon::notification_area_action(const char * pszId)
    {
 
-      m_plistener->notification_area_extra_action(pszId);
+      m_plistener->notification_area_action(pszId);
 
    }
 
@@ -541,8 +481,6 @@ namespace user
 
 
 } // namespace user
-
-
 
 
 
