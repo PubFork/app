@@ -746,11 +746,13 @@ namespace draw2d_cairo
 
       }
 
-      set(pBrush);
+      //set(pBrush);
 
       cairo_rectangle(m_pdc, lpRect->left, lpRect->top, lpRect->right - lpRect->left, lpRect->bottom - lpRect->top);
 
-      cairo_fill(m_pdc);
+      fill();
+
+      //cairo_fill(m_pdc);
 
       //      ASSERT(get_handle1() != NULL); ::FillRect(get_handle1(), lpRect, (HBRUSH)pBrush->get_os_data());
 
@@ -761,8 +763,6 @@ namespace draw2d_cairo
    {
 
       fill_solid_rect(lpRect, pBrush->m_cr);
-
-      return;
 
    }
 
@@ -5760,7 +5760,7 @@ return ::draw2d::graphics::GetViewportOrg();
    }
 
 
-   bool graphics::fill(::draw2d::brush * pbrush)
+   bool graphics::fill(::draw2d::brush * pbrush, double xOrg, double yOrg)
    {
 
       synch_lock ml(cairo_mutex());
@@ -5781,7 +5781,7 @@ return ::draw2d::graphics::GetViewportOrg();
 
          cairo_push_group(m_pdc);
 
-         set(pbrush);
+         set(pbrush, xOrg, yOrg);
 
          cairo_fill(m_pdc);
 
@@ -5793,7 +5793,7 @@ return ::draw2d::graphics::GetViewportOrg();
       else
       {
 
-         set(pbrush);
+         set(pbrush, xOrg, yOrg);
 
          cairo_fill(m_pdc);
 
@@ -6022,10 +6022,10 @@ return ::draw2d::graphics::GetViewportOrg();
 
 
 
-   bool graphics::fill()
+   bool graphics::fill(double xOrg, double yOrg)
    {
 
-      return fill(m_spbrush);
+      return fill(m_spbrush, xOrg, yOrg);
 
    }
 

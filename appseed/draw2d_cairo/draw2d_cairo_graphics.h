@@ -509,10 +509,10 @@ namespace draw2d_cairo
       bool set(const ::draw2d::path::rect & r);
       bool set(const ::draw2d::path::string_path & str);
       bool fill_and_draw(::draw2d::brush * pbrush, ::draw2d::pen * ppen);
-      bool fill(::draw2d::brush * pbrush);
+      bool fill(::draw2d::brush * pbrush, double xOrg  = 0.0, double yOrg = 0.0);
       bool draw(::draw2d::pen * ppen);
       bool fill_and_draw();
-      bool fill();
+      bool fill(double xOrg = 0.0, double yOrg = 0.0);
       bool draw();
 
 

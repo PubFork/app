@@ -176,7 +176,6 @@
 		</Linker>
 		<ExtraCommands>
 			<Add before="cp -Rf ../../../nodeapp/thirdparty/library/x64/* ../../../time/x64/basis/" />
-			<Add before="cp -Rf ../../../nodeapp/thirdparty/lib/* ../../../time/x64/basis/" />
 		</ExtraCommands>
 		<Unit filename="all.h" />
 		<Unit filename="aura.h" />
