@@ -11,10 +11,32 @@
 
 #include "aura/graphics/graphics_double_pass_scale.h"
 
-#define COLORREF_A 3
-#define COLORREF_R 2
-#define COLORREF_G 1
-#define COLORREF_B 0
+
+template < typename TYPE >
+void sort_dib_argb(TYPE & A, TYPE & R, TYPE & G, TYPE & B)
+{
+
+   #if defined(WINDOWS) || defined(LINUX)
+
+   ::sort::swap(&R, &B);
+
+   #endif
+
+}
+
+
+template < typename TYPE >
+void sort_dib_rgb(TYPE & R, TYPE & G, TYPE & B)
+{
+
+   #if defined(WINDOWS) || defined(LINUX)
+
+   ::sort::swap(&R, &B);
+
+   #endif
+
+}
+
 
 /*
 byte byte_clip(double d);
@@ -2612,8 +2634,10 @@ restart:
    }
    */
 
+
    void dib::set(i32 R, i32 G, i32 B)
    {
+
       int64_t size = scan_area();
 
       COLORREF * pcr = get_data();
@@ -2625,19 +2649,21 @@ restart:
 
       }
 
-#ifdef WINDOWS
-      ::sort::swap(&R, &B);
-#endif
+      sort_dib_rgb(R, G, B);
 
       for (i32 i = 0; i < size; i++)
       {
+
          ((byte *)pcr)[0] = R;
          ((byte *)pcr)[1] = G;
          ((byte *)pcr)[2] = B;
+
          pcr++;
+
       }
 
    }
+
 
    /*   void dib::Fill ( i32 R, i32 G, i32 B )
       {
@@ -4824,35 +4850,63 @@ restart:
             ((LPBYTE)&get_data()[i])[3] = 0;
    }
 
+
    void dib::channel_mask(uchar uchFind, uchar uchSet, uchar uchUnset, visual::rgba::echannel echannel)
    {
+
       i32 size = (m_iScan / sizeof(COLORREF)) * m_size.cy;
+
       uchar * puch = (uchar *)get_data();
+
       puch += ((i32)echannel) % 4;
 
       for (i32 i = 0; i < size; i++)
       {
+
          if (*puch == uchFind)
+         {
+
             *puch = uchSet;
+
+         }
          else
+         {
+
             *puch = uchUnset;
+
+         }
+
          puch += 4;
+
       }
+
    }
+
 
    uint32_t dib::GetPixel(i32 x, i32 y)
    {
-      uint32_t dw = *(get_data() + x + (m_size.cy - y - 1) * (m_iScan / sizeof(COLORREF)));
-      int iA = rgba_get_a(dw);
+
+      u32 ui = *(get_data() + x + (m_size.cy - y - 1) * (m_iScan / sizeof(COLORREF)));
+
+      byte * p = (byte *) &ui;
+
+      int iA = p[COLORREF_A_BYTE_INDEX];
+
       if (iA == 0)
       {
-         return RGB(rgba_get_b(dw), rgba_get_g(dw), rgba_get_r(dw));
+
+         return RGB(p[COLORREF_R_BYTE_INDEX], p[COLORREF_G_BYTE_INDEX], p[COLORREF_B_BYTE_INDEX]);
+
       }
       else
       {
-         return ARGB(iA, rgba_get_b(dw) * 255 / iA, rgba_get_g(dw) * 255 / iA, rgba_get_r(dw) * 255 / iA);
+
+         return ARGB(iA, p[COLORREF_R_BYTE_INDEX] * 255 / iA, p[COLORREF_G_BYTE_INDEX] * 255 / iA, p[COLORREF_B_BYTE_INDEX] * 255 / iA);
+
       }
+
    }
+
 
    // too slow for animation on AMD XP gen_hon.
    // TOP SUGGESTION:
@@ -7480,11 +7534,11 @@ restart:
       while (iArea > 0)
       {
 
-         A = puch[COLORREF_A];
+         A = puch[COLORREF_A_BYTE_INDEX];
 
-         puch[COLORREF_R] = R * A / 255;
-         puch[COLORREF_G] = G * A / 255;
-         puch[COLORREF_B] = B * A / 255;
+         puch[COLORREF_R_BYTE_INDEX] = R * A / 255;
+         puch[COLORREF_G_BYTE_INDEX] = G * A / 255;
+         puch[COLORREF_B_BYTE_INDEX] = B * A / 255;
 
          puch += 4;
 

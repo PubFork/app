@@ -76,6 +76,28 @@ CLASS_DECL_AURA int throw_assert_exception(const char * lpszFileName,int iLineNu
 
 #endif
 
+
+#if defined(WINDOWS) || defined(LINUX)
+
+#define COLORREF_A_BYTE_INDEX 3
+#define COLORREF_R_BYTE_INDEX 2
+#define COLORREF_G_BYTE_INDEX 1
+#define COLORREF_B_BYTE_INDEX 0
+
+#define DIB_ARGB(a, r, g, b)         ((COLORREF)((low_byte(b)|((WORD)(low_byte(g))<<8))|(((uint32_t)low_byte(r))<<16)|(((uint32_t)low_byte(a))<<24)))
+
+#else
+
+#define COLORREF_A_BYTE_INDEX 3
+#define COLORREF_R_BYTE_INDEX 0
+#define COLORREF_G_BYTE_INDEX 1
+#define COLORREF_B_BYTE_INDEX 2
+
+#define DIB_ARGB(a, r, g, b)         ((COLORREF)((low_byte(r)|((WORD)(low_byte(g))<<8))|(((uint32_t)low_byte(b))<<16)|(((uint32_t)low_byte(a))<<24)))
+
+#endif
+
+
 #define low_byte(w)              ((BYTE)((w) & 0xff))
 
 #ifdef VSNORD
@@ -104,8 +126,25 @@ CLASS_DECL_AURA int throw_assert_exception(const char * lpszFileName,int iLineNu
 #define argb_get_a_value(rgb)    (low_byte((rgb)>>24))
 #define RGBA(r, g, b, a)         ((COLORREF)((low_byte(r)|((WORD)(low_byte(g))<<8))|(((uint32_t)low_byte(b))<<16)|(((uint32_t)low_byte(a))<<24)))
 #define ARGB(a, r, g, b)         RGBA(r, g, b, a)
-#define REASSEMBLE_ARGB(a, r, g, b)      ARGB(a, r, g, b)
 #endif
+
+
+#if defined(WINDOWS) || defined(LINUX)
+
+#define dib_r_value(rgb)    (low_byte((rgb)>>16))
+#define dib_g_value(rgb)    (low_byte((rgb)>>8))
+#define dib_b_value(rgb)    (low_byte((rgb)))
+#define dib_a_value(rgb)    (low_byte((rgb)>>24))
+
+#else
+
+#define dib_r_value(rgb)    (low_byte((rgb)))
+#define dib_g_value(rgb)    (low_byte((rgb)>>8))
+#define dib_b_value(rgb)    (low_byte((rgb)>>16))
+#define dib_a_value(rgb)    (low_byte((rgb)>>24))
+
+#endif
+
 
 CLASS_DECL_AURA int is_ptr_null(const void * p, size_t s);
 

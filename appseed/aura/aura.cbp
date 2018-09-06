@@ -892,6 +892,10 @@
 		<Unit filename="graphics/draw2d/draw2d_brush.h" />
 		<Unit filename="graphics/draw2d/draw2d_common.h" />
 		<Unit filename="graphics/draw2d/draw2d_const.h" />
+		<Unit filename="graphics/draw2d/draw2d_dib.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="graphics/draw2d/draw2d_dib.h" />
 		<Unit filename="graphics/draw2d/draw2d_dibmap.h" />
 		<Unit filename="graphics/draw2d/draw2d_dibmap_ex1.h" />
