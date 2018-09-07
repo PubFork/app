@@ -2771,6 +2771,9 @@
     <ClInclude Include="aura\os\os_aura.h">
       <Filter>Header Files\aura\os</Filter>
     </ClInclude>
+    <ClInclude Include="aura\os\windows_common\windows_common_file.h">
+      <Filter>Header Files\aura\os\windows_common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="multithreading\multithreading_condition.cpp">

@@ -2789,6 +2789,7 @@
     <ClInclude Include="aura\os\windows_common\windows_common_comptr.h" />
     <ClInclude Include="aura\os\windows_common\windows_common_cotaskptr.h" />
     <ClInclude Include="aura\os\windows_common\windows_common_error.h" />
+    <ClInclude Include="aura\os\windows_common\windows_common_file.h" />
     <ClInclude Include="aura\os\windows_common\windows_common_graphics.h" />
     <ClInclude Include="aura\os\windows_common\windows_common_unicode.h" />
     <ClInclude Include="aura\process\process.h" />
