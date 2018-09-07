@@ -15,6 +15,8 @@ void wm_state_hidden_raw(oswindow w, bool bSet);
 CLASS_DECL_AURA int_bool mq_remove_window_from_all_queues(oswindow oswindow);
 
 
+Window g_windowFocus = NULL;
+
 #ifdef LINUX
 int32_t _c_XErrorHandler(Display * display, XErrorEvent * perrorevent);
 #endif
@@ -2282,6 +2284,49 @@ bool process_message(osdisplay_data * pdata, Display * display)
 
       msg.message       = WM_SETFOCUS;
 
+      //msg.wParam = (WPARAM) oswindow_get(display(), e.xfocus
+
+      Window wFocus = 0;
+
+      int revert_to_return = 0;
+
+      int iStatus = XGetInputFocus(display, &wFocus, &revert_to_return);
+
+      if(iStatus == Success)
+      {
+
+         if(wFocus == e.xfocus.window)
+         {
+
+            output_debug_string("A\n");
+
+         }
+         else
+         {
+
+            output_debug_string("B " + ::str::from(wFocus));
+
+            g_windowFocus = wFocus;
+
+         }
+
+         if(wFocus == g_windowFocus)
+         {
+
+            output_debug_string("C\n");
+
+         }
+         else
+         {
+
+            output_debug_string("D " + ::str::from(wFocus));
+
+            g_windowFocus = wFocus;
+
+         }
+
+      }
+
       synch_lock sl(pdata->m_pmutexInput);
 
       pdata->m_messsageaInput.add(msg);
@@ -2291,6 +2336,14 @@ bool process_message(osdisplay_data * pdata, Display * display)
    {
 
       msg.message       = WM_KILLFOCUS;
+
+      Window wFocus = 0;
+
+      int revert_to_return = 0;
+
+      XGetInputFocus(display, &wFocus, &revert_to_return);
+
+      msg.wParam = (WPARAM) oswindow_get(wFocus);
 
       synch_lock sl(pdata->m_pmutexInput);
 

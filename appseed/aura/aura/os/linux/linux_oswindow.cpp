@@ -5,7 +5,7 @@ extern bool b_prevent_xdisplay_lock_log;
 
 
 void windowing_output_debug_string(const char * pszDebugString);
-
+void wm_state_below_raw(oswindow w, bool bSet);
 
 oswindow_data::oswindow_data()
 {
@@ -1036,7 +1036,7 @@ bool oswindow_data::set_window_pos(oswindow hwndInsertAfter, int32_t x, int32_t 
    if(nFlags & SWP_SHOWWINDOW)
    {
 
-      if(attrs.map_state != IsViewable)
+      if(attrs.map_state == IsUnmapped )
       {
 
          XMapWindow(display(), window());
@@ -1095,20 +1095,34 @@ bool oswindow_data::set_window_pos(oswindow hwndInsertAfter, int32_t x, int32_t 
 
    }
 
-   if(attrs.map_state == IsViewable)
+   if(attrs.map_state == IsViewable || (nFlags & SWP_SHOWWINDOW))
    {
 
       if(!(nFlags & SWP_NOZORDER))
       {
 
-         if(((int_ptr) hwndInsertAfter) == ZORDER_TOP || ((int_ptr) hwndInsertAfter) == ZORDER_TOPMOST)
+         if(((int_ptr) hwndInsertAfter) == ZORDER_TOPMOST)
          {
+
+            wm_state_above_raw(this, true);
+
+            XRaiseWindow(display(), window());
+
+         }
+         else if(((int_ptr) hwndInsertAfter) == ZORDER_TOP)
+         {
+
+            wm_state_above_raw(this, false);
+
+            wm_state_below_raw(this, false);
 
             XRaiseWindow(display(), window());
 
          }
          else if(((int_ptr) hwndInsertAfter) == ZORDER_BOTTOM)
          {
+
+            wm_state_below_raw(this, true);
 
             XLowerWindow(display(), window());
 
