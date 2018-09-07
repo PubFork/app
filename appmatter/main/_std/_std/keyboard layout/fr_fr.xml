@@ -1,4 +1,5 @@
 ﻿<layout name="France - France" hkla="0x040c040c;0x040c" cc="br" kl="ABNT2">
+	<item code="key_return" value="&#10;" />
 	<item code="key_a" value="q" />
 	<item code="key_b" value="b" />
 	<item code="key_c" value="c" />
@@ -103,7 +104,7 @@
    <item code="key_openbracket2" ralt="1" value="ª" />
    <item code="key_closebracket2" ralt="1" value="º" />
    
-	<item code="key_apostrophe2" value="\'" />
+	<item code="key_apostrophe2" value="&apos;" />
 	<item code="key_apostrophe2" key="192" shift="1" value="\"" />
    
 
@@ -130,7 +131,7 @@
 	<item code="52" key="190" shift="1" value=">" />
 	<item code="115" key="193" value="/" />
 	<item code="115" key="193" shift="1" value="?" />
-	<item code="key_1" value="&" />
+	<item code="key_1" value="&amp;" />
 	<item code="key_2" value="é" />
 	<item code="key_3" value="\"" />
 	<item code="key_4" value="'" />

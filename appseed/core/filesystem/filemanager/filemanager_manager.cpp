@@ -575,7 +575,7 @@ namespace filemanager
 
    }
 
-   
+
    void manager::OnFileManagerBrowse(::action::context actioncontext)
    {
 
@@ -1267,7 +1267,8 @@ namespace filemanager
    void manager::handle_file_action(::file_watcher::id watchid, const char * dir, const char * filename, ::file_watcher::e_action action)
    {
 
-      if (action == ::file_watcher::action_delete || action == ::file_watcher::action_add)
+      if (action == ::file_watcher::action_delete || action == ::file_watcher::action_add
+      || action == ::file_watcher::action_modify)
       {
 
          OnFileManagerBrowse(::action::source_sync);

@@ -183,9 +183,13 @@ namespace user
                }
                else
                {
+
                   m_mapCode[iCode] = "escape=" + strEscape;
+
                }
+
             }
+
          }
          else if(pnode->get_name().compare_ci("escape") == 0)
          {

@@ -114,7 +114,7 @@ namespace file_watcher
 
             string strDirPath = stra[index];
 
-		      int32_t inaw = inotify_add_watch (mFD, strDirPath, IN_CLOSE_WRITE | IN_MOVED_TO | IN_CREATE | IN_MOVED_FROM | IN_DELETE);
+		      int32_t inaw = inotify_add_watch (mFD, strDirPath, IN_CLOSE_WRITE | IN_MOVED_TO | IN_CREATE | IN_MODIFY | IN_MOVED_FROM | IN_DELETE);
 
             if(inaw < 0)
             {
@@ -305,7 +305,7 @@ namespace file_watcher
 
 		}
 
-		if(IN_CLOSE_WRITE & paction->m_ulOsAction || IN_MODIFY & paction->m_ulOsAction)
+		if((IN_CLOSE_WRITE | IN_MODIFY) & paction->m_ulOsAction || IN_MODIFY & paction->m_ulOsAction)
 		{
 
 			paction->m_pwatch->m_plistener->handle_file_action(paction->m_pwatch->m_id, paction->m_pwatch->m_strDirName, paction->m_strFilename, action_modify);

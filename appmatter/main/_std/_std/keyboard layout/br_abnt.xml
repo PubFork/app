@@ -1,4 +1,5 @@
 ﻿<layout name="Brasil - ABNT">
+	<item code="key_return" value="&#10;" />
 	<item code="191" value=";" />
 	<item code="191" shift="1" value=":" />
 	<item code="226" value="\\" />
@@ -21,15 +22,15 @@
 	<item code="190" shift="1" value=">" />
 	<item code="193" value="/" />
 	<item code="193" shift="1" value="?" />
-	<item code="192" value="\'" />
-	<item code="192" shift="1" value="\"" />
+	<item code="192" value="&apos;" />
+	<item code="192" shift="1" value="&quot;" />
 	<item char="1" shift="1" value="!" />
 	<item char="2" shift="1" value="@" />
 	<item char="3" shift="1" value="#" />
 	<item char="4" shift="1" value="$" />
 	<item char="5" shift="1" value="%" />
 	<item char="6" shift="1" escape="¨" />
-	<item char="7" shift="1" value="&" />
+	<item char="7" shift="1" value="&amp;" />
 	<item char="8" shift="1" value="*" />
 	<item char="9" shift="1" value="(" />
 	<item char="0" shift="1" value=")" />

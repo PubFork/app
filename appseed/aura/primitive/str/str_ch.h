@@ -60,6 +60,8 @@ namespace str
       char     m_chLen;
 
 
+      utf8_char(u64 u = 0);
+
       int32_t parse(const char * psz);
 
 

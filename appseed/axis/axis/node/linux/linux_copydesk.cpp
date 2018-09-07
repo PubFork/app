@@ -110,7 +110,7 @@ void clipboard_image_received_func(GtkClipboard * clipboard, GdkPixbuf * pixbuf,
       if(pdata->m_dib->create(w, h))
       {
 
-         ::draw2d::copy_colorref(
+         ::draw2d::copy_colorref_swap_red_blue(
             pdata->m_dib->m_size.cx,
             pdata->m_dib->m_size.cy,
             pdata->m_dib->m_pcolorref,
@@ -680,10 +680,19 @@ namespace linux
    bool copydesk::_has_dib()
    {
 
-      GtkClipboard* clipboard = gtk_clipboard_get(GDK_SELECTION_CLIPBOARD);
+      bool b = false;
 
-      return gtk_clipboard_wait_is_image_available (clipboard);
+      main_sync([&]()
+      {
 
+         GtkClipboard* clipboard = gtk_clipboard_get(GDK_SELECTION_CLIPBOARD);
+
+         b = gtk_clipboard_wait_is_image_available (clipboard);
+
+
+      });
+
+      return b;
 
    }
 

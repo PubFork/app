@@ -1,4 +1,5 @@
 <layout name="Brasil - ABNT2" hkla="0xf0100416;0x0416" cc="br" kl="ABNT2">
+	<item code="key_return" value="&#10;" />
 	<item code="key_a" value="a" />
 	<item code="key_b" value="b" />
 	<item code="key_c" value="c" />
@@ -91,14 +92,14 @@
    <item code="key_closebracket2" ralt="1" value="º" />
    
 	<item code="key_apostrophe2" value="\'" />
-	<item code="key_apostrophe2" shift="1" value="\"" />
+	<item code="key_apostrophe2" shift="1" value="&quot;" />
    
 
    
 	<item code="53" key="191" value=";" />
 	<item code="53" key="191" shift="1" value=":" />
 	<item code="86" key="226" value="\\" />
-	<item code="86" key="226" "shift="1" value="|" />
+	<item code="86" key="226" shift="1" value="|" />
 	<item code="12" key="189" value="-" />
 	<item code="12" key="189" shift="1" value="_" />
 	<item code="13" key="187" value="=" />
@@ -133,7 +134,7 @@
 	<item code="key_4" shift="1" value="$" />
 	<item code="key_5" shift="1" value="%" />
 	<item code="key_6" shift="1" escape="¨" />
-	<item code="key_7" shift="1" value="&" />
+	<item code="key_7" shift="1" value="&amp;" />
 	<item code="key_8" shift="1" value="*" />
 	<item code="key_9" shift="1" value="(" />
 	<item code="key_0" shift="1" value=")" />

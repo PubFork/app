@@ -327,7 +327,7 @@ CLASS_DECL_AURA void main_async_runnable(runnable * prunnable)
 
 }
 
-CLASS_DECL_AURA void main_synch_runnable(runnable * prunnable)
+CLASS_DECL_AURA void main_sync_runnable(runnable * prunnable)
 {
 
    ::aura::system::g_p->send_pred([prunnable]()

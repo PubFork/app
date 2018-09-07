@@ -316,41 +316,56 @@ namespace xml
    //========================================================
    char * node::LoadAttributes( const char * pszAttrs, parse_info * pparseinfo)
    {
+
       if(pparseinfo == NULL)
+      {
+
          pparseinfo = System.xml().m_pparseinfoDefault;
 
-      char * xml = (char *)pszAttrs;
+      }
 
-      while(*xml )
+      char * xml = (char *) pszAttrs;
+
+      while(*xml != '\0')
       {
-         if( (xml = _tcsskip( xml )) )
+
+         if((xml = _tcsskip( xml )) != NULL)
          {
+
             // close tag
-            if( *xml == chXMLTagClose || *xml == chXMLTagPre )
+            if(*xml == chXMLTagClose || *xml == chXMLTagPre)
+            {
+
                // wel-formed tag
                return xml;
 
+            }
+
             // XML Attr Name
             CHAR* pEnd = strpbrk( xml, " =" );
+
             if( pEnd == NULL )
             {
+
                // error
                if( pparseinfo->m_bErrorOccur == false )
                {
+
                   pparseinfo->m_bErrorOccur = true;
                   pparseinfo->m_pszErrorPointer = xml;
                   pparseinfo->m_eparseerror = parse_error_attr_no_value;
                   pparseinfo->m_strError.Format( "<%s> attr has error ", m_strName.c_str() );
-               }
-               return NULL;
-            }
 
+               }
+
+               return NULL;
+
+            }
 
             string strName;
 
             // XML Attr Name
             _SetString(xml, pEnd, &strName);
-
 
             // add new attr
             ::xml::attr * pattr = m_attra.add_attr(strName);
@@ -384,28 +399,59 @@ namespace xml
 
                      CHAR escape = pparseinfo->m_chEscapeValue;
 
-                     //_SetString( xml, pEnd, &attr->m_strValue, trim, chXMLEscape );
+                     string strValue;
 
-                     {
+                     _SetString( xml, pEnd, &strValue, trim, chXMLEscape );
 
-                        string strValue;
+                     pattr->set_string(strValue);
 
-                        _SetString(xml,pEnd,&strValue,trim,escape);
-
-                        pattr->set_string(::move(strValue));
-
-                     }
-
+//                     {
+//
+//                        char * p = xml;
+//
+//                        while(p != pEnd && *p != '\0')
+//                        {
+//
+//                           if(p[0] == '&')
+//                           {
+//
+//                              p = m_pdoc->patch_entity_ref((const char * &) p, true, &xml, &pEnd, NULL);
+//
+//                           }
+//                           else
+//                           {
+//
+//                              p = (char *) ::str::utf8_inc(p);
+//
+//                           }
+//
+//                        }
+//
+//                        string strValue;
+//
+//                        _SetString(xml, pEnd, &strValue, trim, escape);
+//
+//                        pattr->set_string(::move(strValue));
+//
+//                     }
 
                      xml = pEnd;
                      // ATTRVALUE
                      if( pparseinfo->m_bEntityValue && pparseinfo->m_pentities )
+                     {
+
                         pattr->set_string(pparseinfo->m_pentities->ref_to_entity(pattr->get_string()));
+
+                     }
+
                      if( quote == '"' || quote == '\'' )
                      {
+
                         if(*xml == '\0')
                         {
+
                            return xml;
+
                            break;
                            // resilliency
                         }
@@ -880,7 +926,7 @@ namespace xml
                pEnd = xml;
                while(*pEnd != '<' && *pEnd != '\0')
                {
-                  if(pEnd[0] == '&' && pEnd[1] != '#')
+                  if(pEnd[0] == '&')
                   {
                      pEnd = m_pdoc->patch_entity_ref((const char * &) pEnd, true, &xml, NULL);
                   }
@@ -997,7 +1043,7 @@ namespace xml
                      pEnd = xml;
                      while(*pEnd != '<' && *pEnd != '\0' && pEnd < pszEndXml)
                      {
-                        if(pEnd[0] == '&' && pEnd[1] != '#')
+                        if(pEnd[0] == '&')
                         {
                            pEnd = m_pdoc->patch_entity_ref((const char * &) pEnd, true, &xml, NULL);
                         }

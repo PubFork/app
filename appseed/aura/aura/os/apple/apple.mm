@@ -162,7 +162,7 @@ void main_async_runnable(runnable * prunnable)
 }
 
 
-void main_synch_runnable(runnable * prunnable)
+void main_sync_runnable(runnable * prunnable)
 {
    
    ns_main_sync(^

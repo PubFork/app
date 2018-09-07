@@ -74,39 +74,112 @@ namespace xml
       return nCount;
    }
 
-   int32_t entities::ref_to_entity( const char * estr, char * str, int32_t strlen )
+
+   int32_t entities::ref_to_entity(const char * estr, char * str, int32_t strlen)
    {
+
       char * pes = (char *)estr;
+
       char * ps = str;
+
       char * ps_end = ps+strlen;
+
       while(*pes && ps < ps_end )
       {
+
          if(*pes == '&')
          {
-            entity * ent = get_entity(pes+1);
-            if(ent)
+
+            if(*(pes + 1) == '#')
             {
-               // copy m_chEntity meanning char
-               *ps = ent->m_chEntity;
-               pes += ent->m_iRefLen + 1;
+
+               pes+=2;
+
+               char * end = NULL;
+
+               long int l;
+
+               if(*pes == 'X' || *pes == 'x')
+               {
+
+                  pes++;
+
+                  l = strtol(pes, &end, 16);
+
+               }
+               else
+               {
+
+                  l = strtol(pes, &end, 10);
+
+               }
+
+               ::str::utf8_char utf8char(l);
+
+               for(char i = 0; i < utf8char.m_chLen; i++)
+               {
+
+                  ps[i] = utf8char.m_sz[i];
+
+               }
+
+               ps += utf8char.m_chLen;
+
+               pes = end;
+
+               if(*pes == ';')
+               {
+
+                  pes++;
+
+               }
+
             }
             else
             {
-               *ps = '&';   // default character copy
-               pes++;
+
+               entity * ent = get_entity(pes+1);
+
+               if(ent)
+               {
+
+                  // copy m_chEntity meanning char
+
+                  *ps = ent->m_chEntity;
+
+                  pes += ent->m_iRefLen + 1;
+
+               }
+               else
+               {
+
+                  *ps = '&';   // default character copy
+
+                  pes++;
+
+               }
+
             }
+
          }
          else
          {
+
             *ps = *pes++;   // default character copy
+
          }
+
          ps++;
+
       }
+
       *ps = '\0';
 
       // total copied characters
       return (int32_t) (ps-str);
+
    }
+
 
    int32_t entities::entity_to_ref( const char * str, char * estr, int32_t estrlen )
    {
@@ -175,7 +248,7 @@ namespace xml
             iLen = ref_to_entity(pszSrc,pszRet,(int32_t)iLen);
          str.ReleaseBuffer(iLen);
       }
-      
+
    }
 
    void entities::entity_to_ref(string & s, const char * str)
@@ -196,7 +269,7 @@ namespace xml
          }
          s.ReleaseBuffer(len);
       }
-      
+
    }
 
 /*   string XRef2Entity( const char * estr )

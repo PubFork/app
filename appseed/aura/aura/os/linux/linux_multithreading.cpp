@@ -170,3 +170,26 @@ uint64_t get_nanos()
    #endif
 
 }
+
+
+
+
+CLASS_DECL_AURA void main_sync_runnable(runnable * prunnable)
+{
+
+   manual_reset_event ev(::aura::system::g_p);
+
+   ev.ResetEvent();
+
+   gdk_fork([&]()
+   {
+
+      prunnable->run();
+
+      ev.SetEvent();
+
+   });
+
+   ev.wait();
+
+}

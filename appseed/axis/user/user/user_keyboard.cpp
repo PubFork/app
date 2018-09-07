@@ -471,17 +471,29 @@ namespace user
 
    string keyboard::get_current_system_layout()
    {
+
       keyboard_layout_ida layoutida;
+
       ::file::patha patha;
+
       Application.dir().matter_ls_file("keyboard layout", patha);
+
       for(int32_t i = 0; i < patha.get_count(); i++)
       {
+
          keyboard_layout_id layoutid;
-         if(initialize(&layoutid, patha[i]))
+
+         ::file::path path = patha[i];
+
+         if(initialize(&layoutid, path))
          {
+
             layoutida.add(layoutid);
+
          }
+
       }
+
       ::sort::quick_sort(layoutida, true);
 
 #ifdef WINDOWSEX

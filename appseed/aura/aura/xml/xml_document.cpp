@@ -159,10 +159,10 @@ namespace xml
          || *pszXml == '>'
          || *pszXml == ' '
          || *pszXml == '\n'
-         || *pszXml != '\r'
-         || *pszXml != ','
-         || *pszXml != '.'
-         || *pszXml != '=')
+         || *pszXml == '\r'
+         || *pszXml == ','
+         || *pszXml == '.'
+         || *pszXml == '=')
          {
 
             _throw(simple_exception(get_app(), "Not expected character on Entity Reference"));
@@ -188,7 +188,7 @@ namespace xml
 
       }
 
-      if(ent.is_empty() && extEnt.is_empty())
+      if(ent.is_empty() && extEnt.is_empty() && (strName.is_empty() || strName[0] != '#'))
       {
 
          _throw(simple_exception(get_app(), "Undefined Entity Reference"));
@@ -217,7 +217,21 @@ namespace xml
 
       }
 
-      string strEntityReference(pszXmlParam, pszXml - pszXmlParam + 1);
+      string strEntityReference(pszXmlParam, pszXml - pszXmlParam);
+
+      if(::str::begins_eat_ci(strEntityReference, "&#"))
+      {
+
+         int i = atoi(strEntityReference);
+
+         wchar_t wsz[2];
+
+         wsz[0] = i;
+         wsz[1] = L'\0';
+
+         strEntityReference = wsz;
+
+      }
 
       pszXmlParam = pszXml;
 

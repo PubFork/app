@@ -176,7 +176,7 @@ inline void main_sync(PRED pred)
 
    runnable_pred < PRED > * prunnablepred = new runnable_pred < PRED >(pred);
 
-   main_synch_runnable(prunnablepred);
+   main_sync_runnable(prunnablepred);
 
 }
 

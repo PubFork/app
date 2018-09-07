@@ -28,6 +28,24 @@ namespace str
       1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1, 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
       2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2, 3,3,3,3,3,3,3,3,4,4,4,4,5,5,5,5
    };
+
+
+   utf8_char::utf8_char(u64 u)
+   {
+
+      unichar32 u32[2];
+
+      u32[0] = u;
+
+      u32[1] = 0;
+
+      m_chLen = (char) utf32_to_utf8(m_sz, u32, 1);
+
+      m_sz[m_chLen] = '\0';
+
+   }
+
+
    int32_t utf8_char::parse(const char * psz)
    {
       char chLen =  1 + trailingBytesForUTF8(*psz);

@@ -660,6 +660,10 @@
 		</Unit>
 		<Unit filename="aura/os/linux/linux_desktop_file.h" />
 		<Unit filename="aura/os/linux/linux_file.h" />
+		<Unit filename="aura/os/linux/linux_file_watcher.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="aura/os/linux/linux_file_watcher.h" />
 		<Unit filename="aura/os/linux/linux_graphics.h" />
 		<Unit filename="aura/os/linux/linux_launcher.cpp">
@@ -775,7 +779,15 @@
 		<Unit filename="aura/scripting/javascript/javascript_functions.h" />
 		<Unit filename="aura/scripting/javascript/javascript_tinyjs.h" />
 		<Unit filename="aura/scripting/javascript/javascript_tinyjs_functions.h" />
+		<Unit filename="aura/xml/xml.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="aura/xml/xml.h" />
+		<Unit filename="aura/xml/xml_attr.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="aura/xml/xml_attr.h" />
 		<Unit filename="aura/xml/xml_base_array.h" />
 		<Unit filename="aura/xml/xml_data.h" />
@@ -789,6 +801,10 @@
 		<Unit filename="aura/xml/xml_glue.h" />
 		<Unit filename="aura/xml/xml_importable.h" />
 		<Unit filename="aura/xml/xml_input_tree.h" />
+		<Unit filename="aura/xml/xml_node.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="aura/xml/xml_node.h" />
 		<Unit filename="aura/xml/xml_output_tree.h" />
 		<Unit filename="aura/xml/xml_parse_info.h" />
@@ -797,6 +813,14 @@
 		<Unit filename="aura/xml/xml_tree_base.h" />
 		<Unit filename="aura/xml/xml_tree_schema.h" />
 		<Unit filename="aura/xml/xml_var_exchange.h" />
+		<Unit filename="aura/xml/xml_xml.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="aura/xml/xml_xmlite.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="aura/xml/xml_xmlite.h" />
 		<Unit filename="build_debug.cpp" />
 		<Unit filename="factory.h" />

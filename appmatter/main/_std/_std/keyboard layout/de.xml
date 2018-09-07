@@ -1,4 +1,5 @@
 ﻿<layout name="Deutsch">
+	<item code="key_return" value="&#10;" />
 	<item code="191" value="-" />
 	<item code="191" shift="1" value="_" />
 	<item code="226" value="<" />
@@ -30,7 +31,7 @@
 	<item char="3" shift="1" value="§" />
 	<item char="4" shift="1" value="$" />
 	<item char="5" shift="1" value="%" />
-	<item char="6" shift="1" escape=&¨" />
+	<item char="6" shift="1" escape=&amp;¨" />
 	<item char="7" shift="1" value="/" />
 	<item char="8" shift="1" value="(" />
 	<item char="9" shift="1" value=")" />

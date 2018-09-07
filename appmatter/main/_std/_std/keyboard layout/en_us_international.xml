@@ -1,4 +1,5 @@
 ﻿<layout name="English - United States - International" hkla="0xf0010409;0x0409" >
+	<item code="key_return" value="&#10;" />
 	<item code="key_a" value="a" />
 	<item code="key_b" value="b" />
 	<item code="key_c" value="c" />
@@ -74,7 +75,7 @@
 	<item code="key_4" shift="1" value="$" />
 	<item code="key_5" shift="1" value="%" />
 	<item code="key_6" shift="1" escape="¨" />
-	<item code="key_7" shift="1" value="&" />
+	<item code="key_7" shift="1" value="&amp;" />
 	<item code="key_8" shift="1" value="*" />
 	<item code="key_9" shift="1" value="(" />
 	<item code="key_0" shift="1" value=")" />
