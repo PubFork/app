@@ -107,11 +107,14 @@ namespace file_watcher
 
       }
 
-      watch_struct* pWatch = new watch_struct();
+      sp(watch) pWatch = new watch();
+
       pWatch->m_plistener = pwatcher;
       pWatch->m_id = wd;
       pWatch->m_strDirName = directory;
       pWatch->m_bOwn = bOwn;
+      pWatch->m_pwatcher = this;
+
       if(bRecursive)
       {
 
@@ -134,7 +137,7 @@ namespace file_watcher
                   _throw(exception(strerror(errno)));
             }
 
-            watch_struct_item item;
+            watch_item item;
 
             item.m_strDirName = stra[index];
 
@@ -147,12 +150,13 @@ namespace file_watcher
       }
       else
       {
+
          pWatch->m_bRecursive = false;
+
       }
 
-      m_watchmap.set_at(wd, pWatch);
-
       return wd;
+
    }
 
 
@@ -162,13 +166,19 @@ namespace file_watcher
       synch_lock sl(m_pmutex);
 
       WatchMap::pair * ppair = m_watchmap.PGetFirstAssoc();
+
       for(; ppair != NULL; ppair = m_watchmap.PGetNextAssoc(ppair))
       {
+
          if(directory == ppair->m_element2->m_strDirName)
          {
+
             remove_watch(ppair->m_element1);
+
             return;
+
          }
+
       }
 
    }
@@ -181,18 +191,16 @@ namespace file_watcher
 
       WatchMap::pair * ppair = m_watchmap.PLookup(watchid);
 
-      if(ppair == NULL)
+      if (ppair == NULL)
+      {
+
          return;
 
-      watch_struct * watch = ppair->m_element2;
+      }
 
       m_watchmap.remove_key(ppair->m_element1);
 
       inotify_rm_watch(mFD, watchid);
-
-      delete watch;
-
-      watch = 0;
 
    }
 
@@ -216,7 +224,6 @@ namespace file_watcher
          select();
 
       }
-
 
    }
 
@@ -264,11 +271,11 @@ namespace file_watcher
 
             pevent = (struct inotify_event *)&buff[i];
 
-            a.filename = pevent->name;
+            a.m_strFilename = pevent->name;
 
-            a.watch = m_watchmap[(id &)pevent->wd];
+            a.m_pwatch = m_watchmap[(id &)pevent->wd];
 
-            a.ulOsAction = pevent->mask;
+            a.m_ulOsAction = pevent->mask;
 
             handle_action(&a);
 
@@ -286,44 +293,46 @@ namespace file_watcher
    void os_file_watcher::handle_action(action * paction)
    {
 
-      if (!paction->watch)
+      if (!paction->m_pwatch)
       {
 
          return;
 
       }
 
-      if (!paction->watch->m_plistener)
+      if (!paction->m_pwatch->m_plistener)
       {
 
          return;
 
       }
 
-      if (IN_CLOSE_WRITE & paction->ulOsAction)
+      if (IN_CLOSE_WRITE & paction->m_ulOsAction)
       {
 
-         paction->watch->m_plistener->handle_file_action(paction->watch->m_id, paction->watch->m_strDirName, paction->filename, action_modify);
+         paction->m_pwatch->m_plistener->handle_file_action(paction->m_pwatch->m_id, paction->m_pwatch->m_strDirName, paction->m_strFilename, action_modify);
 
       }
 
-      if (IN_MOVED_TO & paction->ulOsAction || IN_CREATE & paction->ulOsAction)
+      if (IN_MOVED_TO & paction->m_ulOsAction || IN_CREATE & paction->m_ulOsAction)
       {
 
-         paction->watch->m_plistener->handle_file_action(paction->watch->m_id, paction->watch->m_strDirName, paction->filename, action_add);
+         paction->m_pwatch->m_plistener->handle_file_action(paction->m_pwatch->m_id, paction->m_pwatch->m_strDirName, paction->m_strFilename, action_add);
 
       }
 
-      if (IN_MOVED_FROM & paction->ulOsAction || IN_DELETE & paction->ulOsAction)
+      if (IN_MOVED_FROM & paction->m_ulOsAction || IN_DELETE & paction->m_ulOsAction)
       {
 
-         paction->watch->m_plistener->handle_file_action(paction->watch->m_id, paction->watch->m_strDirName, paction->filename, action_delete);
+         paction->m_pwatch->m_plistener->handle_file_action(paction->m_pwatch->m_id, paction->m_pwatch->m_strDirName, paction->m_strFilename, action_delete);
 
       }
+
 
    }
 
 
 } // namespace file_watcher
+
 
 

@@ -63,7 +63,7 @@ namespace android
       void _002OnDraw(::draw2d::dib * pdib);
 
       //DECL_GEN_SIGNAL(_001OnEraseBkgnd);
-      //DECL_GEN_SIGNAL(_001OnSize);
+      DECL_GEN_SIGNAL(_001OnSize);
       DECL_GEN_SIGNAL(_001OnShowWindow);
       DECL_GEN_SIGNAL(_001OnProdevianSynch);
       //DECL_GEN_SIGNAL(_001OnWindowPosChanging);

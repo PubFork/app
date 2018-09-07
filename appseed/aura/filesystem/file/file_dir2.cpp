@@ -92,7 +92,36 @@ namespace windows
 
 #elif defined(VSNORD)
 
-   path = ::app_core::s_pappcoreMain->m_pmaindata->m_pnodedataexchange->m_pszCacheDir;
+   if (is_null(::app_core::s_pappcoreMain, 65535))
+   {
+
+      output_debug_string("dir::config(err1)\n");
+
+   }
+   else if (is_null(::app_core::s_pappcoreMain->m_pmaindata, 65535))
+   {
+
+      output_debug_string("dir::config(err2)\n");
+
+   }
+   else if (is_null(::app_core::s_pappcoreMain->m_pmaindata->m_pnodedataexchange, 65535))
+   {
+
+      output_debug_string("dir::config(err3)\n");
+
+   }
+   else if (is_null(::app_core::s_pappcoreMain->m_pmaindata->m_pnodedataexchange->m_pszCacheDir, 65535))
+   {
+
+      output_debug_string("dir::config(err3)\n");
+
+   }
+   else
+   {
+
+      path = ::app_core::s_pappcoreMain->m_pmaindata->m_pnodedataexchange->m_pszCacheDir;
+
+   }
 
 #elif defined(APPLEOS)
 

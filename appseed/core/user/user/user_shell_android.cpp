@@ -1631,7 +1631,7 @@ namespace user
          if (crBk == 0)
          {
 
-            return m_pilHover[iSize]->pred_add_image([&](auto dib)
+            return m_pilHover[iSize]->pred_add_image([&](smart_pointer<draw2d::dib> & dib)
             { Application.imaging().Createcolor_blend_dib(dib, RGB(255, 255, 240), 64); }
             , m_pil[iSize], iImage);
 

@@ -659,26 +659,26 @@ static oswindow g_oswindowFocus;
 static oswindow g_oswindowActive;
 
 
-oswindow GetCapture()
+oswindow get_capture()
 {
 
    return g_oswindowCapture;
 
 }
 
-oswindow SetCapture(oswindow interaction_impl)
+oswindow set_capture(oswindow oswindow)
 {
 
-   oswindow oswindowCapturePrevious = interaction_impl;
+   ::oswindow oswindowCapturePrevious = g_oswindowCapture;
 
-   g_oswindowCapture = interaction_impl;
+   g_oswindowCapture = oswindow;
 
    return oswindowCapturePrevious;
 
 }
 
 
-int_bool ReleaseCapture()
+int_bool release_capture()
 {
 
    g_oswindowCapture = NULL;
@@ -688,16 +688,19 @@ int_bool ReleaseCapture()
 }
 
 
-oswindow SetFocus(oswindow interaction_impl)
+oswindow set_focus(oswindow oswindow)
 {
 
-   g_oswindowFocus = interaction_impl;
+   ::oswindow oswindowFocusPrevious = g_oswindowFocus;
+
+   g_oswindowFocus = oswindow;
 
    return g_oswindowFocus;
 
 }
 
-oswindow GetFocus()
+
+oswindow get_focus()
 {
 
    return g_oswindowFocus;
@@ -823,7 +826,7 @@ int_bool IsAscendant(oswindow_data * pdata, oswindow_data * pdataAscendant)
 }
 
 
-oswindow g_oswindowActive = NULL;
+//oswindow g_oswindowActive = NULL;
 
 
 oswindow get_active_window()
@@ -838,9 +841,9 @@ oswindow set_active_window(oswindow oswindow)
 {
 
    ::oswindow oswindowPrevious = g_oswindowActive;
-   
+
    g_oswindowActive = oswindow;
-   
+
    return g_oswindowActive;
 
 }
@@ -871,8 +874,12 @@ int_bool destroy_window(oswindow w)
 
    synch_lock sl(w == NULL || w->m_pimpl == NULL || w->m_pimpl->m_pui == NULL ? NULL : w->m_pimpl->m_pui->m_pmutex);
 
-   if (!IsWindow(w))
+   if (!is_window(w))
+   {
+
       return FALSE;
+
+   }
 
    return FALSE;
 
@@ -1182,6 +1189,31 @@ void _android_key(unsigned int message, int keyCode, int iUni)
 }
 
 
+void _android_size(float xDummy, float yDummy, float cx, float cy)
+{
+
+   UNREFERENCED_PARAMETER(xDummy);
+
+   UNREFERENCED_PARAMETER(yDummy);
+
+   if (::aura::system::g_p == NULL)
+      return;
+
+   if (::aura::system::g_p->m_psystem == NULL)
+      return;
+
+   if (::aura::system::g_p->m_psystem->m_possystemwindow == NULL)
+      return;
+
+   if (::aura::system::g_p->m_psystem->m_possystemwindow->m_pui == NULL)
+      return;
+
+   ::aura::system::g_p->m_psystem->m_possystemwindow->m_pui->SetWindowPos(ZORDER_TOP, 0, 0, cx, cy, SWP_SHOWWINDOW);
+
+
+}
+
+
 extern "C"
 void android_key_down(int keyCode, int iUni)
 {
@@ -1192,6 +1224,25 @@ void android_key_down(int keyCode, int iUni)
 
 }
 
+// aPokemon : oh_Isee_a_pattern_and_I_am_clown_describing_exactly_pay_attention_exactly_as_inphysical_mirror_that_is_surely_a_perfect_human_mirror_than_another_person
+
+void _android_size(float xScreen, float yScreen, float aPok, float yBitmap);
+
+
+extern "C"
+void android_on_size(float xScreen, float yScreen, float pikachu, float yBitmap)
+{
+
+   output_debug_string("android_on_size\n");
+
+   ::fork(::aura::system::g_p, [=]()
+   {
+
+      _android_size(xScreen, yScreen, pikachu, yBitmap);
+
+   });
+
+}
 
 
 extern "C"
@@ -1395,7 +1446,8 @@ void os_term_windowing()
 
 }
 
-WINBOOL IsWindow(oswindow oswindow)
+
+WINBOOL is_window(oswindow oswindow)
 {
 
    if (::oswindow_data::s_pdataptra->find_first(oswindow) < 0)

@@ -1987,6 +1987,12 @@
     <ClCompile Include="user\user\user_interaction_impl_base.cpp">
       <Filter>Source Files\user\user</Filter>
     </ClCompile>
+    <ClCompile Include="primitive\str\str_bstring.cpp">
+      <Filter>Source Files\primitive\str</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\ios\ios_interaction_impl.cpp">
+      <Filter>Source Files\aura\node</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">

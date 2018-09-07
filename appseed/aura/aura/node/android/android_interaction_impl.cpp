@@ -481,7 +481,7 @@ namespace android
 
          //IGUI_MSG_LINK(WM_ERASEBKGND,pinterface,this,&interaction_impl::_001OnEraseBkgnd);
 
-         //IGUI_MSG_LINK(WM_SIZE,pinterface,this,&interaction_impl::_001OnSize);
+         IGUI_MSG_LINK(WM_SIZE,pinterface,this,&interaction_impl::_001OnSize);
 
          //IGUI_MSG_LINK(WM_WINDOWPOSCHANGING,pinterface,this,&interaction_impl::_001OnWindowPosChanging);
          //IGUI_MSG_LINK(WM_WINDOWPOSCHANGED,pinterface,this,&interaction_impl::_001OnWindowPosChanged);
@@ -679,7 +679,7 @@ namespace android
       //else
       //{
       //   // should be a normal interaction_impl
-      //   ASSERT(::IsWindow(((::android::interaction_impl *)this)->get_handle()));
+      //   ASSERT(::is_window(((::android::interaction_impl *)this)->get_handle()));
 
       //}
    }
@@ -698,7 +698,7 @@ namespace android
       //   return;
       //}
 
-      //if(!::IsWindow(((::android::interaction_impl *)this)->get_handle()))
+      //if(!::is_window(((::android::interaction_impl *)this)->get_handle()))
       //{
       //   // not a valid interaction_impl
       //   dumpcontext << " (illegal oswindow)";
@@ -782,7 +782,7 @@ namespace android
 
    //int32_t interaction_impl::GetChildByIdText(int32_t nID,string & rString) const
    //{
-   //   ASSERT(::IsWindow(((::android::interaction_impl *)this)->get_handle()));
+   //   ASSERT(::is_window(((::android::interaction_impl *)this)->get_handle()));
    //   rString = "";    // is_empty without deallocating
 
    //   //oswindow oswindow = ::GetDlgItem(((::android::interaction_impl *)this)->get_handle(),nID);
@@ -800,7 +800,7 @@ namespace android
    bool interaction_impl::GetWindowPlacement(WINDOWPLACEMENT* lpwndpl)
    {
 
-      //ASSERT(::IsWindow(get_handle()));
+      //ASSERT(::is_window(get_handle()));
 
       //lpwndpl->length = sizeof(WINDOWPLACEMENT);
 
@@ -816,7 +816,7 @@ namespace android
 
       //synch_lock sl(&user_mutex());
 
-      //ASSERT(::IsWindow(get_handle()));
+      //ASSERT(::is_window(get_handle()));
 
       //((WINDOWPLACEMENT*)lpwndpl)->length = sizeof(WINDOWPLACEMENT);
 
@@ -890,40 +890,40 @@ namespace android
 
    //bool interaction_impl::GetWindowInfo(PWINDOWINFO pwi) const
    //{
-   //   ASSERT(::IsWindow(((interaction_impl *) this)->get_handle()));
+   //   ASSERT(::is_window(((interaction_impl *) this)->get_handle()));
    //   return ::GetWindowInfo(((interaction_impl *) this)->get_handle(),pwi) != FALSE;
    //}
 
    //::window_sp interaction_impl::GetAncestor(UINT gaFlags) const
    //{
-   //   ASSERT(::IsWindow(((interaction_impl *) this)->get_handle())); return  ::android::interaction_impl::from_handle(::GetAncestor(((interaction_impl *) this)->get_handle(),gaFlags));
+   //   ASSERT(::is_window(((interaction_impl *) this)->get_handle())); return  ::android::interaction_impl::from_handle(::GetAncestor(((interaction_impl *) this)->get_handle(),gaFlags));
    //}
 
 
 
    //bool interaction_impl::GetScrollBarInfo(LONG idObject,PSCROLLBARINFO psbi) const
    //{
-   //   ASSERT(::IsWindow(((interaction_impl *) this)->get_handle()));
+   //   ASSERT(::is_window(((interaction_impl *) this)->get_handle()));
    //   ASSERT(psbi != NULL);
    //   return ::GetScrollBarInfo(((interaction_impl *) this)->get_handle(),idObject,psbi) != FALSE;
    //}
 
    //bool interaction_impl::GetTitleBarInfo(PTITLEBARINFO pti) const
    //{
-   //   ASSERT(::IsWindow(((interaction_impl *) this)->get_handle()));
+   //   ASSERT(::is_window(((interaction_impl *) this)->get_handle()));
    //   ASSERT(pti != NULL);
    //   return ::GetTitleBarInfo(((interaction_impl *) this)->get_handle(),pti) != FALSE;
    //}
 
    //bool interaction_impl::AnimateWindow(uint32_t dwTime,uint32_t dwFlags)
    //{
-   //   ASSERT(::IsWindow(get_handle()));
+   //   ASSERT(::is_window(get_handle()));
    //   return ::AnimateWindow(get_handle(),dwTime,dwFlags) != FALSE;
    //}
 
    //bool interaction_impl::FlashWindowEx(uint32_t dwFlags,UINT  uCount,uint32_t dwTimeout)
    //{
-   //   ASSERT(::IsWindow(get_handle()));
+   //   ASSERT(::is_window(get_handle()));
    //   FLASHWINFO fwi;
    //   fwi.cbSize = sizeof(fwi);
    //   fwi.hwnd = get_handle();
@@ -938,14 +938,14 @@ namespace android
 
    //bool interaction_impl::SetLayeredWindowAttributes(COLORREF crKey,BYTE bAlpha,uint32_t dwFlags)
    //{
-   //   ASSERT(::IsWindow(get_handle()));
+   //   ASSERT(::is_window(get_handle()));
    //   return ::SetLayeredWindowAttributes(get_handle(),crKey,bAlpha,dwFlags) != FALSE;
    //}
 
    //bool interaction_impl::UpdateLayeredWindow(::draw2d::graphics * pDCDst,POINT *pptDst,SIZE *psize,
    //   ::draw2d::graphics * pDCSrc,POINT *pptSrc,COLORREF crKey,BLENDFUNCTION *pblend,uint32_t dwFlags)
    //{
-   //   ASSERT(::IsWindow(get_handle()));
+   //   ASSERT(::is_window(get_handle()));
    //   ::exception::throw_not_implemented(get_app());
    //   return false;
    //   /*      return ::UpdateLayeredWindow(get_handle(), WIN_HDC(pDCDst), pptDst, psize,
@@ -955,13 +955,13 @@ namespace android
 
    //bool interaction_impl::GetLayeredWindowAttributes(COLORREF *pcrKey,BYTE *pbAlpha,uint32_t *pdwFlags) const
    //{
-   //   ASSERT(::IsWindow(((interaction_impl *) this)->get_handle()));
+   //   ASSERT(::is_window(((interaction_impl *) this)->get_handle()));
    //   return ::GetLayeredWindowAttributes(((interaction_impl *) this)->get_handle(),pcrKey,pbAlpha,(LPDWORD)pdwFlags) != FALSE;
    //}
 
    //bool interaction_impl::PrintWindow(::draw2d::graphics * pgraphics,UINT nFlags) const
    //{
-   //   ASSERT(::IsWindow(((interaction_impl *) this)->get_handle()));
+   //   ASSERT(::is_window(((interaction_impl *) this)->get_handle()));
    //   ::exception::throw_not_implemented(get_app());
    //   //      return ::PrintWindow(get_handle(), (HDC)(dynamic_cast<::android::graphics * >(pgraphics))->get_handle(), nFlags) != FALSE;
    //   return false;
@@ -1060,9 +1060,15 @@ namespace android
       pwindow->send_message_to_descendants(WM_CANCELMODE,0,0,TRUE,TRUE);
 
       // attempt to cancel capture
-      oswindow oswindow_Capture = ::GetCapture();
-      if(oswindow_Capture != NULL)
+      oswindow oswindow_Capture = ::get_capture();
+
+      if (oswindow_Capture != NULL)
+      {
+
          oswindow_Capture->m_pimpl->m_pui->send_message(WM_CANCELMODE);
+
+      }
+
    }
 
 
@@ -1432,7 +1438,7 @@ namespace android
       //      int32_t nCode = pNMHDR->code;
 
       ASSERT(oswindow_Ctrl != NULL);
-      ASSERT(::IsWindow(oswindow_Ctrl));
+      ASSERT(::is_window(oswindow_Ctrl));
 
       //      if (gen_ThreadState->m_hLockoutNotifyWindow == get_handle())
       //       return true;        // locked out - ignore control notification
@@ -1445,10 +1451,10 @@ namespace android
       //    notify.pResult = pResult;
       //  notify.pNMHDR = pNMHDR;
       //xxx   return _001OnCommand(pbase);
+
       return false;
+
    }
-
-
 
 
    bool interaction_impl::IsTopParentActive()
@@ -1657,7 +1663,7 @@ namespace android
    void interaction_impl::ScrollWindow(int32_t xAmount,int32_t yAmount,
                                        LPCRECT lpRect,LPCRECT lpClipRect)
    {
-      //ASSERT(::IsWindow(get_handle()));
+      //ASSERT(::is_window(get_handle()));
 
       //if(IsWindowVisible() || lpRect != NULL || lpClipRect != NULL)
       //{
@@ -1861,9 +1867,9 @@ namespace android
       pParent->send_message(WM_SYSCOMMAND, nID, lparam);
 
       // be very careful here...
-      if (::IsWindow(hWndSave))
+      if (::is_window(hWndSave))
       ::SetActiveWindow(hWndSave);
-      if (::IsWindow(hWndFocus))
+      if (::is_window(hWndFocus))
       ::SetFocus(hWndFocus);
       }
       }
@@ -2091,36 +2097,37 @@ namespace android
    }
 
 
-   void interaction_impl::set_need_redraw()
-   {
+   //void interaction_impl::set_need_redraw()
+   //{
 
-      if (!m_pui->m_bProDevian)
-      {
+   //   if (!m_pui->m_bProDevian)
+   //   {
 
-         if (m_pui->m_pthread != NULL)
-         {
+   //      if (m_pui->m_pthread != NULL)
+   //      {
 
-            if (!m_bRedraw)
-            {
+   //         if (!m_bRedraw)
+   //         {
 
-               m_bRedraw = true;
+   //            m_bRedraw = true;
 
-               m_pui->m_pthread->post_message(WM_KICKIDLE);
+   //            m_pui->m_pthread->post_message(WM_KICKIDLE);
 
-            }
+   //         }
 
-         }
+   //      }
 
-      }
+   //   }
 
-   }
+   //}
 
 
    void interaction_impl::_001OnCreate(::message::message * pobj)
    {
-      UNREFERENCED_PARAMETER(pobj);
-      Default();
 
+      UNREFERENCED_PARAMETER(pobj);
+
+      Default();
 
       if (m_pui->is_message_only_window())
       {
@@ -2131,54 +2138,53 @@ namespace android
       else
       {
 
-         m_pthreadDraw = ::fork(get_app(), [&]()
-         {
+         //m_pthreadDraw = ::fork(get_app(), [&]()
+         //{
 
-            DWORD dwStart;
+         //   DWORD dwStart;
 
-            while (::get_thread_run())
-            {
+         //   while (::get_thread_run())
+         //   {
 
-               dwStart = ::get_tick_count();
+         //      dwStart = ::get_tick_count();
 
-               if (!m_pui->m_bLockWindowUpdate)
-               {
+         //      if (!m_pui->m_bLockWindowUpdate)
+         //      {
 
-                  if (m_pui->has_pending_graphical_update())
-                  {
+         //         if (m_pui->has_pending_graphical_update())
+         //         {
 
-                     set_need_redraw(NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW | RDW_NOERASE);
+         //            set_need_redraw(NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW | RDW_NOERASE);
 
-                     m_pui->on_after_graphical_update();
+         //            m_pui->on_after_graphical_update();
 
-                  }
+         //         }
 
-               }
+         //      }
 
-               _001UpdateBuffer();
+         //      _001UpdateBuffer();
 
-               if (m_spgraphics.is_set())
-               {
+         //      if (m_spgraphics.is_set())
+         //      {
 
-                  m_spgraphics->update_window();
+         //         m_spgraphics->update_window();
 
-               }
+         //      }
 
-               if (::get_tick_count() - dwStart < 5)
-               {
+         //      if (::get_tick_count() - dwStart < 5)
+         //      {
 
-                  Sleep(5);
+         //         Sleep(5);
 
-               }
+         //      }
 
-            }
+         //   }
 
-         });
+         //});
 
       }
 
    }
-
 
 
    bool CALLBACK interaction_impl::GetAppsEnumWindowsProc(oswindow hwnd, LPARAM lparam)
@@ -2436,7 +2442,7 @@ namespace android
 
    /*bool interaction_impl::UpdateData(bool bSaveAndValidate)
    {
-   ASSERT(::IsWindow((oswindow) get_handle())); // calling UpdateData before DoModal?
+   ASSERT(::is_window((oswindow) get_handle())); // calling UpdateData before DoModal?
 
    CDataExchange dx(this, bSaveAndValidate);
 
@@ -2479,7 +2485,7 @@ namespace android
    void interaction_impl::CenterWindow(::user::interaction * pAlternateOwner)
    {
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow((oswindow) get_handle()));
+      //      ASSERT(::is_window((oswindow) get_handle()));
       //
       //      // determine owner interaction_impl to center against
       //      DWORD dwStyle = GetStyle();
@@ -2574,14 +2580,19 @@ namespace android
       return TRUE;
    }
 
-/////////////////////////////////////////////////////////////////////////////
-// Dialog initialization support
+
+   /////////////////////////////////////////////////////////////////////////////
+   // Dialog initialization support
+
 
    bool interaction_impl::ExecuteDlgInit(const char * lpszResourceName)
    {
+
       // find resource handle
       LPVOID lpResource = NULL;
+
       HGLOBAL hResource = NULL;
+
       if (lpszResourceName != NULL)
       {
          //         HINSTANCE hInst = ::ca2::FindResourceHandle(lpszResourceName, RT_DLGINIT);
@@ -2604,16 +2615,24 @@ namespace android
       // cleanup
       if (lpResource != NULL && hResource != NULL)
       {
+
          _throw(not_implemented(get_app()));
+
          //         UnlockResource(hResource);
          //         FreeResource(hResource);
+
       }
+
       return bResult;
+
    }
+
 
    bool interaction_impl::ExecuteDlgInit(LPVOID lpResource)
    {
+
       _throw(not_implemented(get_app()));
+
       //      bool bSuccess = TRUE;
       //      if (lpResource != NULL)
       //      {
@@ -2680,13 +2699,19 @@ namespace android
       //         send_message_to_descendants(WM_INITIALUPDATE, 0, 0, FALSE, FALSE);
       //
       //      return bSuccess;
+
    }
+
 
    void interaction_impl::UpdateDialogControls(command_target* pTarget, bool bDisableIfNoHndler)
    {
+
       UNREFERENCED_PARAMETER(pTarget);
+
       UNREFERENCED_PARAMETER(bDisableIfNoHndler);
+
       ::user::command state(get_app());
+
       //interaction_impl wndTemp;       // very temporary interaction_impl just for CmdUI update
 
       // walk all the kids - assume the IDs are for buttons
@@ -2733,33 +2758,47 @@ namespace android
       bDisableTemp = FALSE;
       }
       }
+         }
+
+         // check for handlers in the target (owner)
+         state.DoUpdate(pTarget, bDisableTemp);
+
       }
-      // check for handlers in the target (owner)
-      state.DoUpdate(pTarget, bDisableTemp);
-      }
+
       wndTemp.set_handle(NULL);      // quick and dirty detach */
+
    }
 
 
-/////////////////////////////////////////////////////////////////////////////
-// frame_window (here for library granularity)
+   /////////////////////////////////////////////////////////////////////////////
+   // frame_window (here for library granularity)
 
    bool interaction_impl::is_frame_window()
    {
-      return FALSE;
+
+      return false;
+
    }
-/////////////////////////////////////////////////////////////////////////////
-// Extra interaction_impl support for dynamic subclassing of controls
+
+
+   /////////////////////////////////////////////////////////////////////////////
+   // Extra interaction_impl support for dynamic subclassing of controls
 
    bool interaction_impl::SubclassWindow(oswindow hWnd)
    {
+
       if (!Attach(hWnd))
-         return FALSE;
+      {
+
+         return false;
+
+      }
 
       // allow any other subclassing to occur
       pre_subclass_window();
 
       _throw(not_implemented(get_app()));
+
       //      m_pfnSuper = (WNDPROC)::GetWindowLongPtr(hWnd, GWLP_WNDPROC);
 
       // now hook into the AFX WndProc
@@ -2790,7 +2829,7 @@ namespace android
       //   bool interaction_impl::SubclassDlgItem(UINT nID, sp(::interaction_impl) pParent)
       //   {
       //      ASSERT(pParent != NULL);
-      //      ASSERT(::IsWindow(LNX_WINDOW(pParent)->get_handle()));
+      //      ASSERT(::is_window(LNX_WINDOW(pParent)->get_handle()));
       //
       //      // check for normal dialog control first
       //      oswindow hWndControl = ::GetDlgItem(LNX_WINDOW(pParent)->get_handle(), nID);
@@ -2799,49 +2838,45 @@ namespace android
       //
       //
       //      return FALSE;   // control not found
+
    }
+
 
    oswindow interaction_impl::UnsubclassWindow()
    {
-      ASSERT(::IsWindow((oswindow)get_handle()));
+
+      ASSERT(::is_window((oswindow)get_handle()));
 
       _throw(not_implemented(get_app()));
-      //      // set WNDPROC back to original value
-      //      WNDPROC* lplpfn = GetSuperWndProcaddr();
-      //      SetWindowLongPtr(get_handle(), GWLP_WNDPROC, (int_ptr)*lplpfn);
-      //      *lplpfn = NULL;
-      //
-      //      // and Detach the oswindow from the interaction_impl object
-      //      return Detach();
+
    }
-
-
-   /*   view_update_hint::view_update_hint(sp(::aura::application) papp) :
-   ::object(papp)
-   {
-   }
-   */
-
 
 
    bool interaction_impl::IsChild(::user::interaction * pWnd)
    {
-      ASSERT(::IsWindow((oswindow)get_handle()));
+
+      ASSERT(::is_window((oswindow)get_handle()));
+
       if (pWnd->get_handle() == NULL)
       {
+
          return ::user::interaction_impl::IsChild(pWnd);
+
       }
       else
       {
+
          return ::IsChild((oswindow)get_handle(), pWnd->get_handle()) != FALSE;
+
       }
+
    }
 
 
    bool interaction_impl::IsWindow() const
    {
 
-      return ::IsWindow((oswindow)get_handle()) != FALSE;
+      return ::is_window((oswindow)get_handle()) != FALSE;
 
    }
 
@@ -2899,7 +2934,7 @@ namespace android
          cy = iPalaceGuard;
 
 
-      ASSERT(::IsWindow((oswindow)get_handle()));
+      ASSERT(::is_window((oswindow)get_handle()));
       /*   return ::SetWindowPos(get_handle(), pWndInsertAfter->get_handle(),
       x, y, cx, cy, nFlags) != FALSE; */
 
@@ -2980,7 +3015,7 @@ namespace android
 
    void interaction_impl::MoveWindow(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, bool bRepaint)
    {
-      ASSERT(::IsWindow((oswindow)get_handle()));
+      ASSERT(::is_window((oswindow)get_handle()));
       SetWindowPos(0, x, y, nWidth, nHeight, bRepaint ? SWP_SHOWWINDOW : 0);
    }
 
@@ -3156,7 +3191,7 @@ namespace android
    bool interaction_impl::GetWindowRect(RECT64 * lprect)
    {
 
-      if (!::IsWindow((oswindow)get_handle()))
+      if (!::is_window((oswindow)get_handle()))
       {
 
          return false;
@@ -3190,7 +3225,7 @@ namespace android
    bool interaction_impl::GetClientRect(RECT64 * lprect)
    {
 
-      if(!::IsWindow((oswindow)get_handle()))
+      if(!::is_window((oswindow)get_handle()))
       {
 
          return false;
@@ -3246,7 +3281,7 @@ namespace android
    bool interaction_impl::ShowWindow(int32_t nCmdShow)
    {
 
-      if (!::IsWindow((oswindow)get_handle()))
+      if (!::is_window((oswindow)get_handle()))
          return false;
 
       ::ShowWindow((oswindow)get_handle(), nCmdShow);
@@ -3276,7 +3311,7 @@ namespace android
 
    bool interaction_impl::WfiIsZoomed()
    {
-      ASSERT(::IsWindow((oswindow)get_handle()));
+      ASSERT(::is_window((oswindow)get_handle()));
       return m_pui->m_eappearance == ::user::appearance_zoomed;
    }
 
@@ -3309,25 +3344,25 @@ namespace android
 
 //DWORD interaction_impl::GetStyle() const
 //{
-//   ASSERT(::IsWindow((oswindow)get_handle()));
+//   ASSERT(::is_window((oswindow)get_handle()));
 //   return (DWORD)::GetWindowLong((oswindow)get_handle(), GWL_STYLE);
 //}
 //
 //DWORD interaction_impl::GetExStyle() const
 //{
-//   ASSERT(::IsWindow((oswindow)get_handle()));
+//   ASSERT(::is_window((oswindow)get_handle()));
 //   return (DWORD)::GetWindowLong((oswindow)get_handle(), GWL_EXSTYLE);
 //}
 
 //bool interaction_impl::ModifyStyle(DWORD dwRemove, DWORD dwAdd, UINT nFlags)
 //{
-//   ASSERT(::IsWindow((oswindow)get_handle()));
+//   ASSERT(::is_window((oswindow)get_handle()));
 //   return ModifyStyle((oswindow)get_handle(), dwRemove, dwAdd, nFlags);
 //}
 //
 //bool interaction_impl::ModifyStyleEx(DWORD dwRemove, DWORD dwAdd, UINT nFlags)
 //{
-//   ASSERT(::IsWindow((oswindow)get_handle()));
+//   ASSERT(::is_window((oswindow)get_handle()));
 //   return ModifyStyleEx((oswindow)get_handle(), dwRemove, dwAdd, nFlags);
 //}
 
@@ -3364,7 +3399,7 @@ namespace android
    {
 
       _throw(not_implemented(get_app()));
-      //ASSERT(::IsWindow((oswindow) get_handle()));
+      //ASSERT(::is_window((oswindow) get_handle()));
 
       //return ::DragDetect(get_handle(), pt) != FALSE;
 
@@ -3377,7 +3412,7 @@ namespace android
 
       UNREFERENCED_PARAMETER(bRedraw);
 
-      //ASSERT(::IsWindow((oswindow) get_handle())); m_pfont = new ::draw2d::font(*pfont);
+      //ASSERT(::is_window((oswindow) get_handle())); m_pfont = new ::draw2d::font(*pfont);
 
    }
 
@@ -3385,7 +3420,7 @@ namespace android
    ::draw2d::font* interaction_impl::GetFont()
    {
 
-      //ASSERT(::IsWindow((oswindow) get_handle()));
+      //ASSERT(::is_window((oswindow) get_handle()));
 
       //return m_pfont;
       return NULL;
@@ -3398,7 +3433,7 @@ namespace android
 
       _throw(not_implemented(get_app()));
 
-      //ASSERT(::IsWindow((oswindow) get_handle()));
+      //ASSERT(::is_window((oswindow) get_handle()));
       //::DragAcceptFiles(get_handle(), bAccept);
 
    }
@@ -3467,7 +3502,7 @@ namespace android
    ::user::interaction * interaction_impl::GetParent()
    {
 
-      if (!::IsWindow((oswindow)get_handle()))
+      if (!::is_window((oswindow)get_handle()))
          return NULL;
 
       if (get_handle() == NULL)
@@ -3492,7 +3527,7 @@ namespace android
 
       _throw(not_implemented(get_app()));
 
-      //      ASSERT(::IsWindow((oswindow) get_handle())); return ::ArrangeIconicWindows(get_handle());
+      //      ASSERT(::is_window((oswindow) get_handle())); return ::ArrangeIconicWindows(get_handle());
 
    }
 
@@ -3505,7 +3540,7 @@ namespace android
 
       //_throw(not_implemented(get_app()));
 
-      //      ASSERT(::IsWindow((oswindow) get_handle())); return ::SetWindowRgn(get_handle(), hRgn, bRedraw);
+      //      ASSERT(::is_window((oswindow) get_handle())); return ::SetWindowRgn(get_handle(), hRgn, bRedraw);
 
       return 0;
 
@@ -3517,7 +3552,7 @@ namespace android
 
       _throw(not_implemented(get_app()));
 
-      //      ASSERT(::IsWindow((oswindow) get_handle()) && hRgn != NULL); return ::GetWindowRgn(get_handle(), hRgn);
+      //      ASSERT(::is_window((oswindow) get_handle()) && hRgn != NULL); return ::GetWindowRgn(get_handle(), hRgn);
       return 0;
 
    }
@@ -3529,6 +3564,8 @@ namespace android
       //      _throw(not_implemented(get_app()));
       //      return ::BringWindowToTop(get_handle()) != FALSE;
 
+      return true;
+
    }
 
 
@@ -3537,7 +3574,7 @@ namespace android
 
       _throw(not_implemented(get_app()));
 
-      //      ASSERT(::IsWindow((oswindow) get_handle()));
+      //      ASSERT(::is_window((oswindow) get_handle()));
       //      ::MapWindowPoints(get_handle(), (oswindow) pwndTo->get_handle(), lpPoint, nCount);
 
    }
@@ -3548,7 +3585,7 @@ namespace android
 
       _throw(not_implemented(get_app()));
 
-      //      ASSERT(::IsWindow((oswindow) get_handle()));
+      //      ASSERT(::is_window((oswindow) get_handle()));
       //      ::MapWindowPoints(get_handle(), (oswindow) pwndTo->get_handle(), (LPPOINT)lpRect, 2);
 
    }
@@ -3590,7 +3627,7 @@ namespace android
 
    ::draw2d::graphics * interaction_impl::GetWindowDC()
    {
-      /*ASSERT(::IsWindow((oswindow)get_handle()));
+      /*ASSERT(::is_window((oswindow)get_handle()));
       ::draw2d::graphics_sp g(allocer());
       g->attach(::GetWindowDC(get_handle()));
       return g.detach();*/
@@ -3641,63 +3678,63 @@ namespace android
    void interaction_impl::SetRedraw(bool bRedraw)
    {
       _throw(not_implemented(get_app()));
-      //ASSERT(::IsWindow((oswindow) get_handle()));
+      //ASSERT(::is_window((oswindow) get_handle()));
       //::SendMessage(get_handle(), WM_SETREDRAW, bRedraw, 0);
    }
 
    bool interaction_impl::GetUpdateRect(LPRECT lpRect, bool bErase)
    {
       _throw(not_implemented(get_app()));
-      //ASSERT(::IsWindow((oswindow) get_handle()));
+      //ASSERT(::is_window((oswindow) get_handle()));
       //return ::GetUpdateRect(get_handle(), lpRect, bErase) != FALSE;
    }
 
    int32_t interaction_impl::GetUpdateRgn(draw2d::region * pRgn, bool bErase)
    {
       _throw(not_implemented(get_app()));
-      //ASSERT(::IsWindow((oswindow) get_handle()));
+      //ASSERT(::is_window((oswindow) get_handle()));
       //return ::GetUpdateRgn(get_handle(), (HRGN)pRgn->get_handle(), bErase);
    }
 
    void interaction_impl::Invalidate(bool bErase)
    {
       _throw(not_implemented(get_app()));
-      //ASSERT(::IsWindow((oswindow) get_handle()));
+      //ASSERT(::is_window((oswindow) get_handle()));
       //::InvalidateRect(get_handle(), NULL, bErase);
    }
 
    void interaction_impl::InvalidateRect(LPCRECT lpRect, bool bErase)
    {
       _throw(not_implemented(get_app()));
-      //ASSERT(::IsWindow((oswindow) get_handle()));
+      //ASSERT(::is_window((oswindow) get_handle()));
       //::InvalidateRect(get_handle(), lpRect, bErase);
    }
 
    void interaction_impl::InvalidateRgn(::draw2d::region* pRgn, bool bErase)
    {
       _throw(not_implemented(get_app()));
-      //ASSERT(::IsWindow((oswindow) get_handle()));
+      //ASSERT(::is_window((oswindow) get_handle()));
       //::InvalidateRgn(get_handle(), (HRGN)pRgn->get_handle(), bErase);
    }
 
    void interaction_impl::ValidateRect(LPCRECT lpRect)
    {
       _throw(not_implemented(get_app()));
-      //ASSERT(::IsWindow((oswindow) get_handle()));
+      //ASSERT(::is_window((oswindow) get_handle()));
       //::ValidateRect(get_handle(), lpRect);
    }
 
    void interaction_impl::ValidateRgn(::draw2d::region* pRgn)
    {
       _throw(not_implemented(get_app()));
-      //ASSERT(::IsWindow((oswindow) get_handle()));
+      //ASSERT(::is_window((oswindow) get_handle()));
       //::ValidateRgn(get_handle(), (HRGN)pRgn->get_handle());
    }
 
    bool interaction_impl::IsWindowVisible()
    {
 
-      if (!::IsWindow((oswindow)get_handle()))
+      if (!::is_window((oswindow)get_handle()))
       {
 
          return false;
@@ -3731,14 +3768,14 @@ namespace android
    {
 
       _throw(not_implemented(get_app()));
-      //ASSERT(::IsWindow((oswindow) get_handle()));
+      //ASSERT(::is_window((oswindow) get_handle()));
       //::ShowOwnedPopups(get_handle(), bShow);
 
    }
 
    void interaction_impl::send_message_to_descendants(UINT message, WPARAM wparam, lparam lparam, bool bDeep, bool bOnlyPerm)
    {
-      ASSERT(::IsWindow((oswindow)get_handle()));
+      ASSERT(::is_window((oswindow)get_handle()));
       //interaction_impl::send_message_to_descendants(get_handle(), message, wparam, lparam, bDeep, bOnlyPerm);
 
       // walk through oswindows to avoid creating temporary interaction_impl objects
@@ -3777,7 +3814,7 @@ namespace android
 
    ::user::interaction * interaction_impl::GetDescendantWindow(id id) const
    {
-      ASSERT(::IsWindow((oswindow)get_handle()));
+      ASSERT(::is_window((oswindow)get_handle()));
       return interaction_impl::GetDescendantWindow(m_pui, id);
    }
 
@@ -3786,7 +3823,7 @@ namespace android
    {
 
       _throw(not_implemented(get_app()));
-      //ASSERT(::IsWindow((oswindow) get_handle()));
+      //ASSERT(::is_window((oswindow) get_handle()));
       //::draw2d::graphics_sp g(get_app());
       //g->attach(::GetDCEx(get_handle(), (HRGN)prgnClip->get_handle(), flags));
       //return g.detach();
@@ -3797,7 +3834,7 @@ namespace android
    {
 
       _throw(not_implemented(get_app()));
-      //ASSERT(::IsWindow((oswindow) get_handle()));
+      //ASSERT(::is_window((oswindow) get_handle()));
       //return ::LockWindowUpdate(get_handle()) != FALSE;
 
    }
@@ -3806,7 +3843,7 @@ namespace android
    {
 
       _throw(not_implemented(get_app()));
-      //ASSERT(::IsWindow((oswindow) get_handle()));
+      //ASSERT(::is_window((oswindow) get_handle()));
       //::LockWindowUpdate(NULL);
 
    }
@@ -3842,7 +3879,7 @@ namespace android
    bool interaction_impl::EnableScrollBar(int32_t nSBFlags, UINT nArrowFlags)
    {
 
-   ASSERT(::IsWindow((oswindow) get_handle()));
+   ASSERT(::is_window((oswindow) get_handle()));
 
    return ::EnableScrollBar(get_handle(), nSBFlags, nArrowFlags) != FALSE;
 
@@ -3853,7 +3890,7 @@ namespace android
    {
 
       _throw(not_implemented(get_app()));
-      //ASSERT(::IsWindow((oswindow) get_handle()));
+      //ASSERT(::is_window((oswindow) get_handle()));
       //return ::DrawAnimatedRects(get_handle(), idAni, lprcFrom, lprcTo) != FALSE;
 
    }
@@ -3862,7 +3899,7 @@ namespace android
    {
 
       _throw(not_implemented(get_app()));
-      //ASSERT(::IsWindow((oswindow) get_handle()));
+      //ASSERT(::is_window((oswindow) get_handle()));
       //return ::DrawCaption(get_handle(), (HDC)(dynamic_cast<::android::graphics * >(pgraphics))->get_handle(), lprc, uFlags) != FALSE;
 
    }
@@ -3882,7 +3919,7 @@ namespace android
       //return nIDEvent;
 
       //_throw(not_implemented(get_app()));
-      //ASSERT(::IsWindow((oswindow) get_handle()));
+      //ASSERT(::is_window((oswindow) get_handle()));
       //return ::SetTimer(get_handle(), nIDEvent, nElapse, lpfnTimer);
 
    }
@@ -3897,7 +3934,7 @@ namespace android
 
       //return TRUE;
 
-      //ASSERT(::IsWindow((oswindow) get_handle()));
+      //ASSERT(::is_window((oswindow) get_handle()));
       //return ::KillTimer(get_handle(), nIDEvent)  != FALSE;
 
    }
@@ -3920,14 +3957,14 @@ namespace android
    ::user::interaction * interaction_impl::GetActiveWindow()
    {
 
-      return ::android::interaction_impl::ui_from_handle(::GetActiveWindow());
+      return ::android::interaction_impl::ui_from_handle(::get_active_window());
 
    }
 
    ::user::interaction * interaction_impl::SetActiveWindow()
    {
 
-      return ::android::interaction_impl::ui_from_handle(::SetActiveWindow(get_handle()));
+      return ::android::interaction_impl::ui_from_handle(::set_active_window(get_handle()));
 
    }
 
@@ -3938,57 +3975,73 @@ namespace android
 //
 //}
 
+
    ::user::interaction * PASCAL interaction_impl::GetFocus()
    {
 
-      oswindow w = ::GetFocus();
+      oswindow w = ::get_focus();
 
-      if (!::IsWindow(w))
+      if (!::is_window(w))
+      {
+
          return NULL;
+
+      }
 
       return w->get_user_interaction();
 
    }
+
 
    bool interaction_impl::SetFocus()
    {
 
-      ASSERT(::IsWindow((oswindow)get_handle()));
+      ASSERT(::is_window((oswindow)get_handle()));
 
-      oswindow w = ::SetFocus(get_handle());
+      oswindow w = ::set_focus(get_handle());
 
-      if (!::IsWindow(w))
+      if (!::is_window(w))
          return NULL;
 
       return w->get_user_interaction();
 
    }
 
+
    ::user::interaction * PASCAL interaction_impl::get_desktop_window()
    {
-      /*
-      return ::android::interaction_impl::from_handle(::get_desktop_window());
-      */
+
       return NULL;
+
    }
 
 
-// Helper for radio buttons
+   // Helper for radio buttons
    int32_t interaction_impl::GetCheckedRadioButton(int32_t nIDFirstButton, int32_t nIDLastButton)
    {
+
       for (int32_t nID = nIDFirstButton; nID <= nIDLastButton; nID++)
       {
+
          if (IsDlgButtonChecked(nID))
+         {
+
             return nID; // id that matched
+
+         }
+
       }
+
       return 0; // invalid ID
+
    }
+
 
    void interaction_impl::CheckDlgButton(int32_t nIDButton, UINT nCheck)
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow((oswindow) get_handle()));
+      //      ASSERT(::is_window((oswindow) get_handle()));
       //      ::CheckDlgButton(get_handle(), nIDButton, nCheck);
 
    }
@@ -3997,7 +4050,7 @@ namespace android
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow((oswindow) get_handle()));
+      //      ASSERT(::is_window((oswindow) get_handle()));
       //      ::CheckRadioButton(get_handle(), nIDFirstButton, nIDLastButton, nIDCheckButton);
 
    }
@@ -4006,7 +4059,7 @@ namespace android
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow((oswindow) get_handle()));
+      //      ASSERT(::is_window((oswindow) get_handle()));
       //      return ::DlgDirList(get_handle(), lpPathSpec, nIDListBox, nIDStaticPath, nFileType);
 
    }
@@ -4015,7 +4068,7 @@ namespace android
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow((oswindow) get_handle()));
+      //      ASSERT(::is_window((oswindow) get_handle()));
       //      return ::DlgDirListComboBox(get_handle(), lpPathSpec, nIDComboBox, nIDStaticPath, nFileType);
 
    }
@@ -4024,7 +4077,7 @@ namespace android
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow((oswindow) get_handle()));
+      //      ASSERT(::is_window((oswindow) get_handle()));
       //      return ::DlgDirSelectEx(get_handle(), lpString, nSize, nIDListBox) != FALSE;
 
    }
@@ -4033,7 +4086,7 @@ namespace android
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow((oswindow) get_handle()));
+      //      ASSERT(::is_window((oswindow) get_handle()));
       //      return ::DlgDirSelectComboBoxEx(get_handle(), lpString, nSize, nIDComboBox) != FALSE;
 
    }
@@ -4042,7 +4095,7 @@ namespace android
    void interaction_impl::GetDlgItem(id id, oswindow* phWnd) const
    {
 
-   ASSERT(::IsWindow((oswindow) get_handle()));
+   ASSERT(::is_window((oswindow) get_handle()));
    ASSERT(phWnd != NULL);
    *phWnd = ::GetDlgItem(get_handle(), (int32_t) id);
 
@@ -4053,7 +4106,7 @@ namespace android
    UINT interaction_impl::GetDlgItemInt(int32_t nID, WINBOOL * lpTrans, bool bSigned) const
    {
 
-   ASSERT(::IsWindow((oswindow) get_handle()));
+   ASSERT(::is_window((oswindow) get_handle()));
 
    return ::GetDlgItemInt(get_handle(), nID, lpTrans, bSigned);
 
@@ -4064,13 +4117,13 @@ namespace android
 //   {
 //
 //      _throw(not_implemented(get_app()));
-//      ASSERT(::IsWindow((oswindow) get_handle())); return ::GetDlgItemText(get_handle(), nID, lpStr, nMaxCount);}
+//      ASSERT(::is_window((oswindow) get_handle())); return ::GetDlgItemText(get_handle(), nID, lpStr, nMaxCount);}
 
    ::user::interaction * interaction_impl::GetNextDlgGroupItem(::user::interaction * pWndCtl, bool bPrevious) const
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow((oswindow) get_handle()));
+      //      ASSERT(::is_window((oswindow) get_handle()));
       //      return ::android::interaction_impl::from_handle(::GetNextDlgGroupItem(get_handle(), (oswindow) pWndCtl->get_handle(), bPrevious));
 
    }
@@ -4079,7 +4132,7 @@ namespace android
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow((oswindow) get_handle()));
+      //      ASSERT(::is_window((oswindow) get_handle()));
       //      return ::android::interaction_impl::from_handle(::GetNextDlgTabItem(get_handle(), (oswindow) pWndCtl->get_handle(), bPrevious));
 
    }
@@ -4088,7 +4141,7 @@ namespace android
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow((oswindow) get_handle()));
+      //      ASSERT(::is_window((oswindow) get_handle()));
       //      return ::IsDlgButtonChecked(get_handle(), nIDButton);
 
    }
@@ -4097,7 +4150,7 @@ namespace android
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow((oswindow) get_handle()));
+      //      ASSERT(::is_window((oswindow) get_handle()));
       //      return ::SendDlgItemMessage(get_handle(), nID, message, wparam, lparam);
 
    }
@@ -4106,7 +4159,7 @@ namespace android
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow((oswindow) get_handle()));
+      //      ASSERT(::is_window((oswindow) get_handle()));
       //      ::SetDlgItemInt(get_handle(), nID, nValue, bSigned);
 
    }
@@ -4115,7 +4168,7 @@ namespace android
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow((oswindow) get_handle()));
+      //      ASSERT(::is_window((oswindow) get_handle()));
       //      ::SetDlgItemText(get_handle(), nID, lpszString);
 
    }
@@ -4124,7 +4177,7 @@ namespace android
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow((oswindow) get_handle()));
+      //      ASSERT(::is_window((oswindow) get_handle()));
       //      return ::ScrollWindowEx(get_handle(), dx, dy, lpRectScroll, lpRectClip, (HRGN)prgnUpdate->get_handle(), lpRectUpdate, flags);
 
    }
@@ -4133,7 +4186,7 @@ namespace android
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow((oswindow) get_handle()));
+      //      ASSERT(::is_window((oswindow) get_handle()));
       //      ::ShowScrollBar(get_handle(), nBar, bShow);
 
    }
@@ -4143,7 +4196,7 @@ namespace android
 
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow((oswindow) get_handle()));
+      //      ASSERT(::is_window((oswindow) get_handle()));
       //      return ::android::interaction_impl::from_handle(::ChildWindowFromPoint(get_handle(), point));
 
    }
@@ -4152,7 +4205,7 @@ namespace android
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow((oswindow) get_handle()));
+      //      ASSERT(::is_window((oswindow) get_handle()));
       //      return ::android::interaction_impl::from_handle(::ChildWindowFromPointEx(get_handle(), point, nFlags));
 
    }
@@ -4185,7 +4238,7 @@ namespace android
 
       return m_pui->m_uiptraChild[0];
       //  _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow((oswindow) get_handle()));
+      //      ASSERT(::is_window((oswindow) get_handle()));
       //      return ::android::interaction_impl::from_handle(::GetTopWindow(get_handle()));
 
    }
@@ -4193,7 +4246,7 @@ namespace android
    ::user::interaction * interaction_impl::GetWindow(UINT nCmd)
    {
 
-      ASSERT(::IsWindow((oswindow)get_handle()));
+      ASSERT(::is_window((oswindow)get_handle()));
       //      return ::android::interaction_impl::from_handle(::GetWindow(get_handle(), nCmd));
       return NULL;
 
@@ -4204,7 +4257,7 @@ namespace android
 
 
       _throw(todo(get_app()));
-      //      ASSERT(::IsWindow((oswindow) get_handle()));
+      //      ASSERT(::is_window((oswindow) get_handle()));
       //      return ::android::interaction_impl::from_handle(::GetLastActivePopup(get_handle()));
 
    }
@@ -4213,7 +4266,7 @@ namespace android
    ::user::interaction * interaction_impl::SetParent(::user::interaction * pWndNewParent)
    {
 
-      ASSERT(::IsWindow((oswindow)get_handle()));
+      ASSERT(::is_window((oswindow)get_handle()));
 
       return ::android::interaction_impl::ui_from_handle(::SetParent(get_handle(), (oswindow)pWndNewParent->get_handle()));
 
@@ -4234,7 +4287,7 @@ namespace android
 
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow((oswindow) get_handle()));
+      //      ASSERT(::is_window((oswindow) get_handle()));
       //      return ::FlashWindow(get_handle(), bInvert) != FALSE;
 
    }
@@ -4243,7 +4296,7 @@ namespace android
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow((oswindow) get_handle()));
+      //      ASSERT(::is_window((oswindow) get_handle()));
       //      return ::ChangeClipboardChain(get_handle(), hWndNext) != FALSE;
 
    }
@@ -4252,7 +4305,7 @@ namespace android
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow((oswindow) get_handle()));
+      //      ASSERT(::is_window((oswindow) get_handle()));
       //      return ::SetClipboardViewer(get_handle());
 
    }
@@ -4261,7 +4314,7 @@ namespace android
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow((oswindow) get_handle()));
+      //      ASSERT(::is_window((oswindow) get_handle()));
       //      return ::OpenClipboard(get_handle()) != FALSE;
 
    }
@@ -4294,7 +4347,7 @@ namespace android
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow((oswindow) get_handle()));
+      //      ASSERT(::is_window((oswindow) get_handle()));
       //      ::CreateCaret(get_handle(), (HBITMAP)pBitmap->get_handle(), 0, 0);
 
    }
@@ -4303,7 +4356,7 @@ namespace android
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow((oswindow) get_handle()));
+      //      ASSERT(::is_window((oswindow) get_handle()));
       //      ::CreateCaret(get_handle(), (HBITMAP)0, nWidth, nHeight);
 
    }
@@ -4312,7 +4365,7 @@ namespace android
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow((oswindow) get_handle()));
+      //      ASSERT(::is_window((oswindow) get_handle()));
       //      ::CreateCaret(get_handle(), (HBITMAP)1, nWidth, nHeight);
 
    }
@@ -4382,7 +4435,7 @@ namespace android
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow((oswindow) get_handle()));
+      //      ASSERT(::is_window((oswindow) get_handle()));
       //      const_cast < interaction_impl * > (this)->send_message(WM_PRINT, (WPARAM)(dynamic_cast<::android::graphics * >(pgraphics))->get_handle(), dwFlags);
 
    }
@@ -4391,7 +4444,7 @@ namespace android
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow((oswindow) get_handle()));
+      //      ASSERT(::is_window((oswindow) get_handle()));
       //      const_cast < interaction_impl * > (this)->send_message(WM_PRINTCLIENT, (WPARAM)(dynamic_cast<::android::graphics * >(pgraphics))->get_handle(), dwFlags);
 
    }
@@ -4400,7 +4453,7 @@ namespace android
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow((oswindow) get_handle()));
+      //      ASSERT(::is_window((oswindow) get_handle()));
       //      return ::SetWindowContextHelpId(get_handle(), dwContextHelpId) != FALSE;
 
    }
@@ -4409,7 +4462,7 @@ namespace android
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow((oswindow) get_handle()));
+      //      ASSERT(::is_window((oswindow) get_handle()));
       //      return ::GetWindowContextHelpId(get_handle());
 
    }
@@ -4524,6 +4577,28 @@ namespace android
       pbase->m_bRet = true;
       //(bool)Default();
    }
+
+
+
+   void interaction_impl::_001OnSize(::message::message * pobj)
+   {
+      UNREFERENCED_PARAMETER(pobj);
+
+      size sizeRequest = m_rectParentClientRequest.get_size();
+
+      for (auto & pui : m_pui->m_uiptraChild)
+      {
+
+         pui->ResizeWindow(sizeRequest);
+
+      }
+
+
+
+   }
+
+
+
    void interaction_impl::OnShowWindow(bool, UINT)
    {
       Default();
@@ -4894,7 +4969,7 @@ namespace android
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow((oswindow) get_handle()));
+      //      ASSERT(::is_window((oswindow) get_handle()));
       //      ::CloseWindow(get_handle());
 
    }
@@ -4903,7 +4978,7 @@ namespace android
    {
 
       _throw(not_implemented(get_app()));
-      //      ASSERT(::IsWindow((oswindow) get_handle()));
+      //      ASSERT(::is_window((oswindow) get_handle()));
       //      return ::OpenIcon(get_handle()) != FALSE;
 
    }

@@ -95,16 +95,22 @@ namespace file_watcher
 
 
    class watch :
-      public watch_item
+      public watch_item,
+      virtual public ::simple_object
    {
+   public:
 
       bool                          m_bRecursive;
       listener *                    m_plistener;
       array < watch_item >          m_itema;
       bool                          m_bOwn;
+      file_watcher_impl *           m_pwatcher;
+
 
    };
 
 
 } // namespace file_watcher
+
+
 

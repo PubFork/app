@@ -268,6 +268,20 @@
     </ClCompile>
     <ClCompile Include="_wndfrm_core.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\aura\nord_aura.vcxproj">
+      <Project>{02207bc4-c08b-4a2d-b754-f3bd46ad3098}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\axis\nord_axis.vcxproj">
+      <Project>{03207bc4-c08b-4a2d-b754-f3bd46ad3098}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\base\nord_base.vcxproj">
+      <Project>{04207bc4-c08b-4a2d-b754-f3bd46ad3098}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\core\nord_core.vcxproj">
+      <Project>{16ab3478-f401-43c0-8bf1-a19f28802711}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
 </Project>

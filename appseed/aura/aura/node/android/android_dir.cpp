@@ -614,48 +614,39 @@ namespace android
    bool dir::is(const ::file::path & lpcszPath, ::aura::application * papp)
    {
 
-      bool bIsDir;
-
-      DWORD dwLastError;
-
-      if(m_isdirmap.lookup(lpcszPath, bIsDir, dwLastError))
+      if (::file::dir::system::is(lpcszPath, papp))
       {
 
-         if(!bIsDir)
-         {
-
-            set_last_error(dwLastError);
-
-         }
-
-         return bIsDir;
+         return true;
 
       }
 
-
-      if(::file::dir::system::is(lpcszPath, papp))
-         return true;
-
-
       string strPath(lpcszPath);
+
       if(strPath.get_length() >= MAX_PATH)
       {
+
          if(::str::begins(strPath, "\\\\"))
          {
+
             strPath = "\\\\?\\UNC" + strPath.Mid(1);
+
          }
          else
          {
+
             strPath = "\\\\?\\" + strPath;
+
          }
+
       }
 
-      bIsDir = ::dir::_is(strPath);
-
-      m_isdirmap.set(lpcszPath, bIsDir, bIsDir ? 0 : ::get_last_error());
+      bool bIsDir = ::dir::_is(strPath);
 
       return bIsDir;
+
    }
+
 
    //bool dir::is(const string & strPath, ::aura::application * papp)
    //{
@@ -730,78 +721,37 @@ namespace android
             {
                iLast++;
                break;
+
             }
+
             iLast--;
+
          }
+
       }
       else
       {
+
          return true; // assume empty string is root_ones directory
+
       }
-
-
-      bool bIsDir;
-
-      DWORD dwLastError;
-
-      if(m_isdirmap.lookup(str, bIsDir, dwLastError, (int32_t) iLast))
-         return bIsDir;
-
 
       if(papp->m_bZipIsDir && iLast >= 3  && !strnicmp_dup(&((const char *) str)[iLast - 3], ".zip", 4))
       {
-         m_isdirmap.set(str.Left(iLast + 1), true, 0);
+
          return true;
+
       }
-
-      //strsize iFind = ::str::find_ci(".zip:", str);
-
-      //if(papp->m_bZipIsDir && iFind >= 0 && iFind < iLast)
-      //{
-      //   bool bHasSubFolder;
-      //   if(m_isdirmap.lookup(str, bHasSubFolder, dwLastError))
-      //      return bHasSubFolder;
-      //   bHasSubFolder = m_pziputil->HasSubFolder(papp, str);
-      //   m_isdirmap.set(str.Left(iLast + 1), bHasSubFolder, bHasSubFolder ? 0 : ::get_last_error());
-      //   return bHasSubFolder;
-      //}
-
 
       wstring wstrPath;
 
-      //strsize iLen = ::str::international::utf8_to_unicode_count(str, iLast + 1);
-
-      //wstrPath.alloc(iLen + 32);
-
       wstrPath = ::str::international::utf8_to_unicode(str, iLast + 1);
 
-      //output_debug_string(wstrPath);
-
-      //if(wstrPath.get_length() >= MAX_PATH)
-      //{
-      //   if(::str::begins(wstrPath, L"\\\\"))
-      //   {
-      //      ::str::begin(wstrPath, L"\\\\?\\UNC");
-      //   }
-      //   else
-      //   {
-      //      ::str::begin(wstrPath, L"\\\\?\\");
-      //   }
-      //}
-
-      bIsDir = ::dir::is(::str::international::unicode_to_utf8(wstrPath));
-
-      m_isdirmap.set(str.Left(iLast + 1), bIsDir, bIsDir ? 0 : ::get_last_error());
+      bool bIsDir = ::dir::is(::str::international::unicode_to_utf8(wstrPath));
 
       return bIsDir;
-   }
 
-   //::file::path dir::votagus()
-   //{
-   //   string strVotagusFolder = System.get_ca2_module_folder();
-   //   System.file().path().eat_end_level(strVotagusFolder, 2, "\\");
-   //   return dir::path(strVotagusFolder, lpcsz, lpcsz2);
-   //}
+   }
 
 
    ::file::path dir::time()
@@ -834,6 +784,7 @@ namespace android
       return m_strNetSeedFolder;
 
    }
+
 
    // stage in ccvotagus spalib
    ::file::path dir::install()
@@ -920,40 +871,42 @@ namespace android
                   catch (...)
                   {
                   }
+
                   //if(::CreateDirectory(::str::international::utf8_to_unicode("\\\\?\\" + stra[i]), NULL))
                   if (::dir::mk("\\\\?\\" + stra[i]))
                   {
-                     m_isdirmap.set(stra[i], true, 0);
+
                      goto try1;
+
                   }
                   else
                   {
-                     dwError = ::get_last_error();
-                  }
-               }
-               //char * pszError;
-               //FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM, NULL, dwError, 0, (LPTSTR)&pszError, 8, NULL);
 
-               //TRACE("dir::mk CreateDirectoryW last error(%d)=%s", dwError, pszError);
-               // xxx               ::LocalFree(pszError);
-               //m_isdirmap.set(stra[i], false);
+                     dwError = ::get_last_error();
+
+                  }
+
+               }
+
             }
-            else
-            {
-               m_isdirmap.set(stra[i], true, 0);
-            }
+
 try1:
 
             if (!is(stra[i], papp))
             {
+
                return false;
+
             }
 
          }
+
       }
+
       return true;
 
    }
+
 
    bool dir::rm(::aura::application * papp, const ::file::path & psz, bool bRecursive)
    {
@@ -985,6 +938,7 @@ try1:
       }
 
       return ::rmdir(psz) != FALSE;
+
    }
 
 
