@@ -195,5 +195,90 @@ CLASS_DECL_AURA bool windows_register_class(WNDCLASSW* lpWndClass)
 }
 
 
+CLASS_DECL_AURA WINBOOL is_window(oswindow oswindow)
+{
 
+   return ::IsWindow(oswindow);
+
+}
+
+
+CLASS_DECL_AURA oswindow get_focus()
+{
+
+   return ::GetFocus();
+
+}
+
+
+CLASS_DECL_AURA oswindow set_focus(oswindow oswindow)
+{
+
+   return ::SetFocus(oswindow);
+
+}
+
+
+CLASS_DECL_AURA oswindow get_active_window()
+{
+
+   return ::GetActiveWindow();
+
+}
+
+
+CLASS_DECL_AURA oswindow set_active_window(oswindow oswindow)
+{
+
+   return ::SetActiveWindow(oswindow);
+
+}
+
+
+CLASS_DECL_AURA oswindow get_capture()
+{
+
+   return ::GetCapture();
+
+}
+
+
+CLASS_DECL_AURA oswindow set_capture(oswindow oswindow)
+{
+
+   return ::SetCapture(oswindow);
+
+}
+
+
+CLASS_DECL_AURA WINBOOL release_capture()
+{
+
+   return ::ReleaseCapture();
+
+}
+
+
+CLASS_DECL_AURA WINBOOL destroy_window(oswindow oswindow)
+{
+
+   return ::DestroyWindow(oswindow);
+
+}
+
+
+CLASS_DECL_AURA oswindow get_desktop_window()
+{
+
+   return ::GetDesktopWindow();
+
+}
+
+
+CLASS_DECL_AURA oswindow get_window(oswindow oswindow, int iWindow)
+{
+
+   return ::GetWindow(oswindow, iWindow);
+
+}
 

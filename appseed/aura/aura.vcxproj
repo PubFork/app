@@ -2754,7 +2754,9 @@
     <ClInclude Include="aura\os\default_library.inl" />
     <ClInclude Include="aura\os\os.h" />
     <ClInclude Include="aura\os\os2.h" />
+    <ClInclude Include="aura\os\os_aura.h" />
     <ClInclude Include="aura\os\os_binreloc.h" />
+    <ClInclude Include="aura\os\os_file.h" />
     <ClInclude Include="aura\os\os_graphics.h" />
     <ClInclude Include="aura\os\os_os.h" />
     <ClInclude Include="aura\os\os_process.h" />

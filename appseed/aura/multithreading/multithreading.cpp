@@ -273,7 +273,7 @@ thread_pointer < ::thread > t_pthread;
 }
 
 
-::thread * get_thread_raw()
+CLASS_DECL_AURA ::thread * get_thread_raw()
 {
 
    return t_pthread;

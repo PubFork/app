@@ -5,80 +5,80 @@
 class CLASS_DECL_AURA nano_timer
 {
 public:
-   
+
 #ifdef WINDOWSEX
-   
+
    HANDLE      m_hTimer;
-   
+
 #endif
-   
-   
+
+
    nano_timer()
    {
-      
+
 #ifdef WINDOWSEX
-      
+
       m_hTimer = ::CreateWaitableTimer(NULL, TRUE, NULL);
-      
+
 #endif
-      
+
    }
-   
-   
+
+
    void wait(u64 uWait)
    {
-      
+
 #ifdef WINDOWSEX
-      
+
       LARGE_INTEGER li = {};
-      
+
       li.QuadPart = - ((LONGLONG) uWait / 100LL);
-      
-      if (!SetWaitableTimer(timer, &li, 0, NULL, NULL, FALSE))
+
+      if (!SetWaitableTimer(m_hTimer, &li, 0, NULL, NULL, FALSE))
       {
-         
+
          Sleep(DWORD(uWait / 1000000LL));
-         
+
       }
       else
       {
-         
-         WaitForSingleObject(timer, INFINITE);
-         
+
+         WaitForSingleObject(m_hTimer, INFINITE);
+
       }
-      
+
 #else
-      
+
       struct timespec req;
-      
+
       struct timespec rem;
-      
+
       req.tv_sec = uWait / 1000000000ULL;
-      
+
       req.tv_nsec = uWait % 1000000000ULL;
-      
+
       rem.tv_sec = 0;
-      
+
       rem.tv_nsec = 0;
-      
+
       ::nanosleep(&req, &rem);
-      
+
 #endif
-      
+
    }
-   
-   
+
+
    ~nano_timer()
    {
-      
+
 #ifdef WINDOWSEX
-      
+
       ::CloseHandle(m_hTimer);
-      
+
 #endif
-      
+
    }
-   
+
 };
 
 

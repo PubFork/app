@@ -12,6 +12,9 @@ CLASS_DECL_AURA WINBOOL IsProcessRunning(DWORD pid);
 END_EXTERN_C
 
 
+#include "os_file.h"
+
+
 #include "os_threading.h"
 
 #include "cross.h"

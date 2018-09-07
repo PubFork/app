@@ -961,3 +961,13 @@ CLASS_DECL_AURA ::file::path core_app_path(string strAppId)
 }
 
 
+
+CLASS_DECL_AURA DWORD get_current_process_id()
+{
+
+   return ::GetCurrentProcessId();
+
+}
+
+
+

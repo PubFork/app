@@ -596,7 +596,7 @@ namespace windows
    bool interaction_impl::create_message_queue(::user::interaction * pui, const char * pszName)
    {
 
-      if (is_window())
+      if (IsWindow())
       {
 
          DestroyWindow();
@@ -1727,7 +1727,7 @@ namespace windows
 
          sp(::user::interaction) puiFocus = Session.get_keyboard_focus();
 
-         if (puiFocus != NULL && puiFocus->is_window() && puiFocus != m_pui)
+         if (puiFocus != NULL && puiFocus->IsWindow() && puiFocus != m_pui)
          {
 
             puiFocus->send(pkey);
@@ -2468,207 +2468,214 @@ namespace windows
    void interaction_impl::prodevian_task()
    {
 
-      if (m_pthreadProDevian.is_null())
-      {
 
-         m_pthreadProDevian = fork([&]()
-         {
+      ::user::interaction_impl::prodevian_task();
 
-            ::multithreading::set_priority(::multithreading::priority_time_critical);
-
-            HANDLE timer;
-
-            LARGE_INTEGER li = {};
-
-            timer = CreateWaitableTimer(NULL, TRUE, NULL);
-
-            DWORD dwStart;
-
-            u64 uNow = get_nanos();
-
-            u64 uFrameNanos = (u64)(1000000000LL / m_dFps);
-
-            uFrameNanos = MIN(MAX(100000, uFrameNanos), 1000000000);
-
-            u64 uFrameId = uNow / uFrameNanos;
-
-            u64 uLastFrameId = uFrameId;
-
-            u64 uNextFrame;
-
-            u64 uWait;
-
-            ::count cLost;
-
-            uint64_array uaFrame;
-
-            bool bUpdateScreen;
-
-            while (::get_thread_run())
-            {
-
-               dwStart = ::get_tick_count();
-
-               bUpdateScreen = false;
-
-               if (GetExStyle() & WS_EX_LAYERED)
-               {
-
-                  if (m_pui == NULL)
-                  {
-
-                     break;
-
-                  }
-
-                  if (!m_pui->m_bLockWindowUpdate)
-                  {
-
-                     synch_lock sl(m_pui->m_pmutex);
-
-                     bool bUpdateBuffer = m_pui->m_bProDevian
-                                          || m_pui->check_need_layout()
-                                          || m_pui->m_bRedraw
-                                          || m_pui->check_show_flags();
-
-                     if (!bUpdateBuffer && m_pui->IsWindowVisible())
-                     {
-
-                        bUpdateBuffer = m_pui->has_pending_graphical_update();
-
-                     }
-
-                     if (bUpdateBuffer)
-                     {
-
-                        sl.unlock();
-
-                        _001UpdateBuffer();
-
-                        try
-                        {
-
-                           if (m_pui == NULL)
-                           {
-
-                              break;
-
-                           }
-
-                           m_pui->on_after_graphical_update();
-
-                        }
-                        catch (...)
-                        {
-
-                        }
-
-                        bUpdateScreen = true;
-
-                     }
-                     else if (m_pui->check_need_translation() || m_pui->check_show_flags() || m_pui->check_need_zorder())
-                     {
-
-                        sl.unlock();
-
-                        _001UpdateBuffer();
-
-                        m_pui->on_after_graphical_update();
-
-                     }
-
-                     bUpdateScreen = true;
-
-                  }
-
-               }
-               else if (::IsWindowVisible(get_handle()))
-               {
-
-                  ::RedrawWindow(get_handle(), NULL, NULL, RDW_INVALIDATE);
-
-                  bUpdateScreen = false;
-
-               }
-
-               uNow = get_nanos();
-
-               uFrameNanos = (u64)(1000000000LL / m_dFps);
-
-               uFrameNanos = MIN(MAX(100000, uFrameNanos), 1000000000);
-
-               uFrameId = uNow / uFrameNanos;
-
-               uNextFrame = (uFrameId + 1) * uFrameNanos;
-
-               uWait = uNextFrame - uNow;
-
-               cLost = uFrameId - uLastFrameId - 1;
-
-               if (cLost < 0)
-               {
-
-                  uWait = uFrameNanos; // too much CPU usage?
-
-               }
-
-               uLastFrameId = uFrameId;
-
-               li.QuadPart = - ((LONGLONG) uWait / 100LL);
-
-               if (!SetWaitableTimer(timer, &li, 0, NULL, NULL, FALSE))
-               {
-
-                  Sleep(DWORD(uWait / 1000000LL));
-
-               }
-               else
-               {
-
-                  WaitForSingleObject(timer, INFINITE);
-
-               }
-
-               if (bUpdateScreen)
-               {
-
-                  _001UpdateScreen();
-
-                  for (index i = 0; i < uaFrame.get_size(); i++)
-                  {
-
-                     if (uNow - uaFrame[i] >= 1000000000LL)
-                     {
-
-                        uaFrame.remove_at(i);
-
-                     }
-                     else
-                     {
-
-                        break;
-
-                     }
-
-                  }
-
-               }
-
-               m_dUpdateScreenFps = (double)(uaFrame.get_size());
-
-               uaFrame.add(uNow);
-
-            }
-
-            CloseHandle(timer);
-
-            m_pthreadProDevian.release();
-
-         });
-
-      }
 
    }
+
+
+   //   if (m_pthreadProDevian.is_null())
+   //   {
+
+   //      m_pthreadProDevian = fork([&]()
+   //      {
+
+   //         ::multithreading::set_priority(::multithreading::priority_time_critical);
+
+   //         HANDLE timer;
+
+   //         LARGE_INTEGER li = {};
+
+   //         timer = CreateWaitableTimer(NULL, TRUE, NULL);
+
+   //         DWORD dwStart;
+
+   //         u64 uNow = get_nanos();
+
+   //         u64 uFrameNanos = (u64)(1000000000LL / m_dFps);
+
+   //         uFrameNanos = MIN(MAX(100000, uFrameNanos), 1000000000);
+
+   //         u64 uFrameId = uNow / uFrameNanos;
+
+   //         u64 uLastFrameId = uFrameId;
+
+   //         u64 uNextFrame;
+
+   //         u64 uWait;
+
+   //         ::count cLost;
+
+   //         uint64_array uaFrame;
+
+   //         bool bUpdateScreen;
+
+   //         while (::get_thread_run())
+   //         {
+
+   //            dwStart = ::get_tick_count();
+
+   //            bUpdateScreen = false;
+
+   //            if (GetExStyle() & WS_EX_LAYERED)
+   //            {
+
+   //               if (m_pui == NULL)
+   //               {
+
+   //                  break;
+
+   //               }
+
+   //               if (!m_pui->m_bLockWindowUpdate)
+   //               {
+
+   //                  synch_lock sl(m_pui->m_pmutex);
+
+   //                  bool bUpdateBuffer = m_pui->m_bProDevian
+   //                                       || m_pui->check_need_layout()
+   //                                       || m_pui->m_bRedraw
+   //                                       || m_pui->check_show_flags();
+
+   //                  if (!bUpdateBuffer && m_pui->IsWindowVisible())
+   //                  {
+
+   //                     bUpdateBuffer = m_pui->has_pending_graphical_update();
+
+   //                  }
+
+   //                  if (bUpdateBuffer)
+   //                  {
+
+   //                     sl.unlock();
+
+   //                     _001UpdateBuffer();
+
+   //                     try
+   //                     {
+
+   //                        if (m_pui == NULL)
+   //                        {
+
+   //                           break;
+
+   //                        }
+
+   //                        m_pui->on_after_graphical_update();
+
+   //                     }
+   //                     catch (...)
+   //                     {
+
+   //                     }
+
+   //                     bUpdateScreen = true;
+
+   //                  }
+   //                  else if (m_pui->check_need_translation() || m_pui->check_show_flags() || m_pui->check_need_zorder())
+   //                  {
+
+   //                     sl.unlock();
+
+   //                     _001UpdateBuffer();
+
+   //                     m_pui->on_after_graphical_update();
+
+   //                  }
+
+   //                  bUpdateScreen = true;
+
+   //               }
+
+   //            }
+   //            else if (::IsWindowVisible(get_handle()))
+   //            {
+
+   //               ::RedrawWindow(get_handle(), NULL, NULL, RDW_INVALIDATE);
+
+   //               bUpdateScreen = false;
+
+   //            }
+
+   //            uNow = get_nanos();
+
+   //            uFrameNanos = (u64)(1000000000LL / m_dFps);
+
+   //            uFrameNanos = MIN(MAX(100000, uFrameNanos), 1000000000);
+
+   //            uFrameId = uNow / uFrameNanos;
+
+   //            uNextFrame = (uFrameId + 1) * uFrameNanos;
+
+   //            uWait = uNextFrame - uNow;
+
+   //            cLost = uFrameId - uLastFrameId - 1;
+
+   //            if (cLost < 0)
+   //            {
+
+   //               uWait = uFrameNanos; // too much CPU usage?
+
+   //            }
+
+   //            uLastFrameId = uFrameId;
+
+   //            li.QuadPart = - ((LONGLONG) uWait / 100LL);
+
+   //            if (!SetWaitableTimer(timer, &li, 0, NULL, NULL, FALSE))
+   //            {
+
+   //               Sleep(DWORD(uWait / 1000000LL));
+
+   //            }
+   //            else
+   //            {
+
+   //               WaitForSingleObject(timer, INFINITE);
+
+   //            }
+
+   //            if (bUpdateScreen)
+   //            {
+
+   //               _001UpdateScreen();
+
+   //               for (index i = 0; i < uaFrame.get_size(); i++)
+   //               {
+
+   //                  if (uNow - uaFrame[i] >= 1000000000LL)
+   //                  {
+
+   //                     uaFrame.remove_at(i);
+
+   //                  }
+   //                  else
+   //                  {
+
+   //                     break;
+
+   //                  }
+
+   //               }
+
+   //            }
+
+   //            m_dScreenOutpuFps = (double)(uaFrame.get_size());
+
+   //            uaFrame.add(uNow);
+
+   //         }
+
+   //         CloseHandle(timer);
+
+   //         m_pthreadProDevian.release();
+
+   //      });
+
+   //   }
+
+   //}
 
 
    void interaction_impl::_001OnCreate(::message::message * pobj)
@@ -3038,10 +3045,10 @@ namespace windows
       //{
       //   // center within parent client coordinates
       //   oswindow_Parent = GetParent();
-      //   ASSERT(oswindow_Parent->is_window());
+      //   ASSERT(oswindow_Parent->IsWindow());
 
       //   oswindow_Parent->GetClientRect(&rcArea);
-      //   ASSERT(oswindow_Center->is_window());
+      //   ASSERT(oswindow_Center->IsWindow());
       //   oswindow_Center->GetClientRect(&rcCenter);
       //   ::MapWindowPoints(oswindow_Center->get_handle(),oswindow_Parent->get_handle(),(POINT*)&rcCenter,2);
       //}
@@ -3344,7 +3351,7 @@ namespace windows
    {
       //ASSERT(::is_window(get_handle()));
 
-      if (!is_window())
+      if (!IsWindow())
          return NULL;
 
       // set WNDPROC back to original value
@@ -3385,7 +3392,7 @@ namespace windows
    */
 
 
-   bool interaction_impl::is_window() const
+   bool interaction_impl::IsWindow() const
    {
 
       return ::is_window(get_handle()) != FALSE;

@@ -154,9 +154,11 @@ namespace file_watcher
 
             ::file_watcher::file_watcher_impl::action action;
 
-            action.watch = pWatch;
-            action.filename = strFile;
-            action.ulOsAction = ulAction;
+            action.m_pwatch = pWatch;
+
+            action.m_strFilename = strFile;
+
+            action.m_ulOsAction = ulAction;
 
             pWatch->m_pwatcher->handle_action(&action);
 
@@ -404,9 +406,9 @@ namespace file_watcher
    void os_file_watcher::handle_action(action * paction)
    {
 
-      watch* watch = paction->watch;
-      const char * filename = paction->filename;
-      uint32_t action = paction->ulOsAction;
+      watch * watch = paction->m_pwatch;
+      string strFilename = paction->m_strFilename;
+      uint32_t action = paction->m_ulOsAction;
       e_action eaction;
 
       switch(action)
@@ -424,7 +426,8 @@ namespace file_watcher
          break;
       };
 
-      watch->m_plistener->handle_file_action(watch->m_id,watch->m_strDirName,filename,eaction);
+      watch->m_plistener->handle_file_action(watch->m_id,watch->m_strDirName,strFilename,eaction);
+
    }
 
 

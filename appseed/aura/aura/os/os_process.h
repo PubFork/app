@@ -91,3 +91,7 @@ CLASS_DECL_AURA void os_term_application();
 CLASS_DECL_AURA string executable_title_from_appid(string str);
 
 
+CLASS_DECL_AURA DWORD get_current_process_id();
+
+
+

@@ -1381,3 +1381,31 @@ CLASS_DECL_AURA bool read_resource_as_memory_dup(memory & m, HINSTANCE hinstance
    return FALSE;
 
 }
+
+
+
+CLASS_DECL_AURA HANDLE create_file(
+const char *            lpFileName,
+DWORD                   dwDesiredAccess,
+DWORD                   dwShareMode,
+LPSECURITY_ATTRIBUTES   lpSecurityAttributes,
+DWORD                   dwCreationDisposition,
+DWORD                   dwFlagsAndAttributes,
+HANDLE                  hTemplateFile
+)
+{
+
+   wstring wstr(lpFileName);
+
+   return ::CreateFileW(
+          wstr,
+          dwDesiredAccess,
+          dwShareMode,
+          lpSecurityAttributes,
+          dwCreationDisposition,
+          dwFlagsAndAttributes,
+          hTemplateFile);
+
+}
+
+

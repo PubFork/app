@@ -2765,6 +2765,12 @@
     <ClInclude Include="graphics\draw2d\draw2d_color_matrix.h">
       <Filter>Header Files\graphics\draw2d</Filter>
     </ClInclude>
+    <ClInclude Include="aura\os\os_file.h">
+      <Filter>Header Files\aura\os</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\os_aura.h">
+      <Filter>Header Files\aura\os</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="multithreading\multithreading_condition.cpp">
