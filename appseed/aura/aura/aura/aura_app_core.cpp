@@ -295,7 +295,7 @@ bool app_core::ini()
 #endif
    });
 
-   set_command_line_dup(strCommandLine);
+   set_command_line(strCommandLine);
 
 #if !defined(WINDOWS)
 
@@ -402,6 +402,50 @@ bool app_core::ini()
    g_bOutputDebugString = file_exists_dup(pathOutputDebugString);
 
    return true;
+
+}
+
+
+string app_core::get_command_line()
+{
+
+   return m_strCommandLine;
+
+}
+
+
+void app_core::set_command_line(const char * psz)
+{
+
+   m_strCommandLine = psz;
+
+   ::file::path pathFolder = ::dir::ca2config() / "program";
+
+   string strAppId = get_command_line_param(psz, "app");
+
+   if (strAppId.has_char())
+   {
+
+      pathFolder /= strAppId;
+
+      ::file::path path = pathFolder / "last_command_line.txt";
+
+      file_put_contents_dup(path, get_command_line());
+
+      ::file::path pathExecutable = consume_param(psz, NULL);
+
+      string strAppTitle = executable_title_from_appid(strAppId);
+
+      path = pathFolder / "last_executable.txt";
+
+      if (file_is_equal_path_dup(pathExecutable.title(), strAppTitle))
+      {
+
+         file_put_contents_dup(path, pathExecutable);
+
+      }
+
+   }
 
 }
 

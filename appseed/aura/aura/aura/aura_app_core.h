@@ -149,6 +149,10 @@ public:
 
    void run();
 
+   void set_command_line(const char * psz);
+
+   string get_command_line();
+
    void end();
 
 };
