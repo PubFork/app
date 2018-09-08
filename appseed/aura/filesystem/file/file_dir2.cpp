@@ -92,25 +92,31 @@ namespace windows
 
 #elif defined(VSNORD)
 
-   if (is_null(::app_core::s_pappcoreMain, 65535))
+   if (is_null(::aura::system::g_p, 65535))
    {
 
       output_debug_string("dir::config(err1)\n");
 
    }
-   else if (is_null(::app_core::s_pappcoreMain->m_pmaindata, 65535))
+   else if (is_null(::aura::system::g_p->m_pappcore, 65535))
+   {
+
+      output_debug_string("dir::config(err1)\n");
+
+   }
+   else if (is_null(::aura::system::g_p->m_pappcore->m_pmaindata, 65535))
    {
 
       output_debug_string("dir::config(err2)\n");
 
    }
-   else if (is_null(::app_core::s_pappcoreMain->m_pmaindata->m_pnodedataexchange, 65535))
+   else if (is_null(::aura::system::g_p->m_pappcore->m_pmaindata->m_pnodedataexchange, 65535))
    {
 
       output_debug_string("dir::config(err3)\n");
 
    }
-   else if (is_null(::app_core::s_pappcoreMain->m_pmaindata->m_pnodedataexchange->m_pszCacheDir, 65535))
+   else if (is_null(::aura::system::g_p->m_pappcore->m_pmaindata->m_pnodedataexchange->m_pszCacheDir, 65535))
    {
 
       output_debug_string("dir::config(err3)\n");
@@ -119,7 +125,7 @@ namespace windows
    else
    {
 
-      path = ::app_core::s_pappcoreMain->m_pmaindata->m_pnodedataexchange->m_pszCacheDir;
+      path = ::aura::system::g_p->m_pappcore->m_pmaindata->m_pnodedataexchange->m_pszCacheDir;
 
    }
 

@@ -362,6 +362,13 @@ namespace visual
 
          synch_lock slLayout(playout->m_pmutex);
 
+         if (m_rectClient.area() <= 0)
+         {
+
+            return;
+
+         }
+
          if (playout->get_count() == m_itema.get_count() && playout->m_iUpdate == m_iUpdate)
          {
 
@@ -405,11 +412,19 @@ namespace visual
          if (layout.m_elayout == layout_wide)
          {
 
+            int iBaseSize = m_rectClient.height() / 10;
+
+            iBaseSize = MIN(iBaseSize, 80);
+
             int i = 18;
+
             int iAddUp = 12;
-            iaSize.add(18);
-            iaSize.add(30);
-            iaSize.add(42);
+
+            iaSize.add(iBaseSize * 18 / 42);
+
+            iaSize.add(iBaseSize * 30 / 42);
+
+            iaSize.add(iBaseSize * 42 / 42);
 
          }
          else

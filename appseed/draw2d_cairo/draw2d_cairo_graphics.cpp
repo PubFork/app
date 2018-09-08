@@ -1,6 +1,157 @@
 #include "framework.h"
 #include <math.h>
 
+// https://www.codeproject.com/Articles/2293/Retrieving-Font-Name-from-TTF-File
+// Philip Patrick
+// Team Leader Varonis
+// Israel Israel
+
+typedef struct _tagTT_OFFSET_TABLE
+{
+   u16	uMajorVersion;
+   u16	uMinorVersion;
+   u16	uNumOfTables;
+   u16	uSearchRange;
+   u16	uEntrySelector;
+   u16	uRangeShift;
+} TT_OFFSET_TABLE;
+
+typedef struct _tagTT_TABLE_DIRECTORY
+{
+   char	szTag[4];			//table name
+   u32	uCheckSum;			//Check sum
+   u32	uOffset;			//Offset from beginning of file
+   u32	uLength;			//length of the table in bytes
+} TT_TABLE_DIRECTORY;
+
+typedef struct _tagTT_NAME_TABLE_HEADER
+{
+   u16	uFSelector;			//format selector. Always 0
+   u16	uNRCount;			//Name Records count
+   u16	uStorageOffset;		//Offset for strings storage, from start of the table
+} TT_NAME_TABLE_HEADER;
+
+typedef struct _tagTT_NAME_RECORD
+{
+   u16	uPlatformID;
+   u16	uEncodingID;
+   u16	uLanguageID;
+   u16	uNameID;
+   u16	uStringLength;
+   u16	uStringOffset;	//from start of storage area
+} TT_NAME_RECORD;
+
+#define SWAPWORD(x)		MAKEWORD(HIBYTE(x), LOBYTE(x))
+#define SWAPLONG(x)		MAKELONG(SWAPWORD(HIWORD(x)), SWAPWORD(LOWORD(x)))
+
+class ttf_util :
+   virtual public ::object
+{
+public:
+
+
+   ttf_util(::aura::application * papp) :
+      ::object(papp)
+   {
+
+
+   }
+
+
+   string GetFontNameFromFile(::file::path lpszFilePath)
+   {
+
+      ::file::file_sp f = Application.file().get_file(lpszFilePath, ::file::mode_read | ::file::share_deny_write);
+
+      string csRetVal;
+
+      if (f.is_null())
+      {
+
+         return "";
+
+      }
+
+      TT_OFFSET_TABLE ttOffsetTable;
+      f->read(&ttOffsetTable, sizeof(TT_OFFSET_TABLE));
+      ttOffsetTable.uNumOfTables = SWAPWORD(ttOffsetTable.uNumOfTables);
+      ttOffsetTable.uMajorVersion = SWAPWORD(ttOffsetTable.uMajorVersion);
+      ttOffsetTable.uMinorVersion = SWAPWORD(ttOffsetTable.uMinorVersion);
+
+      //check is this is a true type font and the version is 1.0
+      if (ttOffsetTable.uMajorVersion != 1 || ttOffsetTable.uMinorVersion != 0)
+         return csRetVal;
+
+      TT_TABLE_DIRECTORY tblDir;
+      WINBOOL bFound = FALSE;
+      string csTemp;
+
+      for (int i = 0; i < ttOffsetTable.uNumOfTables; i++)
+      {
+         f->read(&tblDir, sizeof(TT_TABLE_DIRECTORY));
+         strncpy(csTemp.GetBuffer(5), tblDir.szTag, 4);
+         csTemp.ReleaseBuffer(4);
+         if (csTemp.compare_ci("name") == 0)
+         {
+            bFound = TRUE;
+            tblDir.uLength = SWAPLONG(tblDir.uLength);
+            tblDir.uOffset = SWAPLONG(tblDir.uOffset);
+            break;
+         }
+      }
+
+      if (bFound)
+      {
+         f->seek(tblDir.uOffset, ::file::seek_begin);
+         TT_NAME_TABLE_HEADER ttNTHeader;
+         f->read(&ttNTHeader, sizeof(TT_NAME_TABLE_HEADER));
+         ttNTHeader.uNRCount = SWAPWORD(ttNTHeader.uNRCount);
+         ttNTHeader.uStorageOffset = SWAPWORD(ttNTHeader.uStorageOffset);
+         TT_NAME_RECORD ttRecord;
+         bFound = FALSE;
+
+         for (int i = 0; i < ttNTHeader.uNRCount; i++)
+         {
+            f->read(&ttRecord, sizeof(TT_NAME_RECORD));
+            ttRecord.uNameID = SWAPWORD(ttRecord.uNameID);
+            if (ttRecord.uNameID == 1)
+            {
+               ttRecord.uStringLength = SWAPWORD(ttRecord.uStringLength);
+               ttRecord.uStringOffset = SWAPWORD(ttRecord.uStringOffset);
+               int nPos = f->get_position();
+               f->seek(tblDir.uOffset + ttRecord.uStringOffset + ttNTHeader.uStorageOffset, ::file::seek_begin);
+
+               //bug fix: see the post by SimonSays to read more about it
+               char * lpszNameBuf = csTemp.GetBuffer(ttRecord.uStringLength + 1);
+               memset(lpszNameBuf, 0, ttRecord.uStringLength + 1);
+               f->read(lpszNameBuf, ttRecord.uStringLength);
+               csTemp.ReleaseBuffer();
+               if (csTemp.get_length() > 0)
+               {
+
+                  csRetVal = csTemp;
+
+                  break;
+
+               }
+
+               f->seek(nPos, ::file::seek_begin);
+
+            }
+
+         }
+
+      }
+
+      f->close();
+
+      return csRetVal;
+
+   }
+
+};
+
+
 
 void copy(cairo_matrix_t & cairomatrix, const ::draw2d::matrix & matrix)
 {
@@ -3597,7 +3748,7 @@ namespace draw2d_cairo
 //
 //      return point((int64_t)m.x0, (int64_t)m.y0);
 
-return ::draw2d::graphics::GetViewportOrg();
+      return ::draw2d::graphics::GetViewportOrg();
 
    }
 
@@ -3636,7 +3787,7 @@ return ::draw2d::graphics::GetViewportOrg();
 //
 //      return ::point(xOld, yOld);
 
-   return ::draw2d::graphics::SetViewportOrg(x, y);
+      return ::draw2d::graphics::SetViewportOrg(x, y);
    }
 
    point graphics::OffsetViewportOrg(int32_t nWidth, int32_t nHeight)
@@ -3664,7 +3815,7 @@ return ::draw2d::graphics::GetViewportOrg();
 //
 //      return ::point(point.x + nWidth, point.y + nHeight);
 
-         return ::draw2d::graphics::OffsetViewportOrg(nWidth, nHeight);
+      return ::draw2d::graphics::OffsetViewportOrg(nWidth, nHeight);
 
    }
 
@@ -3687,7 +3838,7 @@ return ::draw2d::graphics::GetViewportOrg();
    size graphics::ScaleViewportExt(int32_t xNum, int32_t xDenom, int32_t yNum, int32_t yDenom)
    {
 
-   return ::draw2d::graphics::ScaleViewportExt(xNum, xDenom, yNum, yDenom);
+      return ::draw2d::graphics::ScaleViewportExt(xNum, xDenom, yNum, yDenom);
       //::exception::throw_not_implemented(get_app());
       //return ::size(0, 0);
 
@@ -4490,8 +4641,8 @@ return ::draw2d::graphics::GetViewportOrg();
 
       PangoRectangle r;
       pango_layout_get_pixel_extents (playout,
-                                NULL,
-                                &r);
+                                      NULL,
+                                      &r);
 
       pointd ptRef;
 
@@ -6312,6 +6463,33 @@ return ::draw2d::graphics::GetViewportOrg();
       item->m_strName = "normal";
 
       itema.add(item);
+
+      ::file::patha patha;
+
+      ::dir::ls(patha, "/system/fonts");
+
+      ttf_util util(get_app());
+
+      for (auto & path : patha)
+      {
+
+         item = canew(::draw2d::font::enum_item);
+
+         item->m_strFile = path;
+
+         item->m_strName = util.GetFontNameFromFile(path);
+
+         if (item->m_strName.is_empty())
+         {
+
+            item->m_strName = path.title();
+
+         }
+
+         itema.add(item);
+
+
+      }
 
 #else
 

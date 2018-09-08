@@ -289,7 +289,11 @@ bool app_core::ini()
       get_c_args(m_pmaindata->m_argc, m_pmaindata->m_argv)
 #endif
       ,get_c_args(m_pmaindata->m_strCommandLine)
+#ifdef WINDOWSEX
       ,get_c_args(ca2_command_line(m_pmaindata->m_hinstance))
+#else
+      ,get_c_args(ca2_command_line())
+#endif
 #ifdef APPLEOS
       ,get_c_args_for_c(ca2_command_line2())
 #endif
