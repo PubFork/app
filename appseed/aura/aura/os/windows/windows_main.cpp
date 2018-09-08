@@ -6,7 +6,7 @@
 #include <crtdbg.h>
 #endif
 
-CLASS_DECL_AURA string ca2_command_line();
+CLASS_DECL_AURA string ca2_command_line(HINSTANCE hinstance);
 
 //#ifdef WINDOWSEX
 //
@@ -242,14 +242,10 @@ CLASS_DECL_AURA void os_term_application()
 }
 
 
-
-
-
-
-string ca2_command_line()
+string ca2_command_line(HINSTANCE hinstance)
 {
 
-   string strAppId = read_resource_as_string_dup(::app_core::s_pappcore->m_pmaindata->m_hinstance, 1, "APPID");
+   string strAppId = read_resource_as_string_dup(hinstance, 1, "APPID");
 
    if (strAppId.is_empty())
    {
@@ -261,8 +257,6 @@ string ca2_command_line()
    return "app.exe : app=" + strAppId;
 
 }
-
-
 
 
 namespace aura
