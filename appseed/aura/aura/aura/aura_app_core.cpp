@@ -14,7 +14,7 @@ typedef DEFER_INIT * PFN_DEFER_INIT;
 //stringa get_c_args(const char * psz);
 //stringa get_c_args(int argc, char ** argv);
 
-::aura_prelude * aura_prelude::s_pprelude = NULL;
+//::aura_prelude * aura_prelude::s_pprelude = NULL;
 
 //::aura::PFN_GET_NEW_APP aura_prelude::s_pfnNewApp = NULL;
 
@@ -119,9 +119,9 @@ aura_main_data::~aura_main_data()
 }
 
 
-app_core * app_core::s_pappcore = NULL;
-
-app_core * app_core::s_pappcoreMain = NULL;
+//app_core * app_core::s_pappcore = NULL;
+//
+//app_core * app_core::s_pappcoreMain = NULL;
 
 
 // ATTENTION

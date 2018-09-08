@@ -96,8 +96,8 @@ class CLASS_DECL_AURA app_core :
 {
 public:
 
-   static app_core *             s_pappcoreMain;
-   static app_core *             s_pappcore;
+   //static app_core *             s_pappcoreMain;
+   //static app_core *             s_pappcore;
    string                        m_strCommandLine;
    string                        m_strProgName;
    bool                          m_bAcidApp = false;
@@ -124,7 +124,8 @@ public:
 
 #endif
 
-   app_core(aura_main_data * pdata);
+   app_core(aura_main_data * pdata, ::aura::PFN_GET_NEW_APP pgetnewapp = NULL);
+   app_core(aura_main_data * pdata, ::aura::PFN_GET_NEW_LIBRARY pgetnewlibrary);
    ~app_core();
 
    bool on_result(int iResultCode);
@@ -159,41 +160,28 @@ CLASS_DECL_AURA void aura_main(app_core * pappcore);
 CLASS_DECL_AURA bool node_fill(app_core * pappcore);
 
 
-class CLASS_DECL_AURA aura_prelude
-{
-public:
+//aura_prelude();
 
 
-   static aura_prelude *         s_pprelude;
-   ::aura::PFN_GET_NEW_APP       m_pfnNewApp;
-   ::aura::PFN_GET_NEW_LIBRARY   m_pfnNewLibrary;
-
-
-   aura_prelude();
-
-
-   aura_prelude(::aura::PFN_GET_NEW_APP pgetnewapp);
-
-
-   aura_prelude(::aura::PFN_GET_NEW_LIBRARY pgetnewlibrary);
-
-
-   virtual ~aura_prelude();
-
-
-   static bool defer_call_construct(app_core * pappcore);
-
-   virtual bool construct(app_core * pappcore);
-
-
-   static bool defer_call_prelude(app_core * pappcore);
-
-
-   virtual bool prelude(app_core * pappcore);
-
-
-};
-
+//   aura_prelude();
+//
+//
+//   virtual ~aura_prelude();
+//
+//
+//   static bool defer_call_construct(app_core * pappcore);
+//
+//   virtual bool construct(app_core * pappcore);
+//
+//
+//   static bool defer_call_prelude(app_core * pappcore);
+//
+//
+//   virtual bool prelude(app_core * pappcore);
+//
+//
+//};
+//
 
 CLASS_DECL_AURA string transform_to_c_arg(const char * psz);
 CLASS_DECL_AURA stringa get_c_args(const char * psz);
