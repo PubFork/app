@@ -172,16 +172,16 @@ END_EXTERN_C
 #endif
 
 
-#define APP_PRELUDE_LEVEL(prefix) \
-extern "C" \
-::aura::application * prefix##_get_new_app(::aura::application * papp); \
-aura_prelude auraprelude(&prefix##_get_new_app);
-
-
-#define LIBRARY_PRELUDE(prefix) \
-extern "C" \
-::aura::library * prefix##_get_new_library(::aura::application * papp); \
-aura_prelude auraprelude(&prefix##_get_new_library);
+//#define APP_PRELUDE_LEVEL(prefix) \
+//extern "C" \
+//::aura::application * prefix##_get_new_app(::aura::application * papp); \
+//aura_prelude auraprelude(&prefix##_get_new_app);
+//
+//
+//#define LIBRARY_PRELUDE(prefix) \
+//extern "C" \
+//::aura::library * prefix##_get_new_library(::aura::application * papp); \
+//aura_prelude auraprelude(&prefix##_get_new_library);
 
 
 #if defined(LINUX) && !defined(LINUX_COMMAND_LINE)

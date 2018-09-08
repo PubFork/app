@@ -128,9 +128,50 @@ aura_main_data::~aura_main_data()
 // This class should (if it uses) member functions with care:
 // It is used after all application app_core (library) finalization,
 // when even new/delete/strings/ids can be used anymore for example.
-
 app_core::app_core(aura_main_data * pdata)
 {
+
+   app_core_common_construct(pdata, NULL, NULL);
+
+}
+
+
+app_core::app_core(aura_main_data * pdata, ::aura::PFN_GET_NEW_APP pgetnewapp)
+{
+
+   app_core_common_construct(pdata, pgetnewapp, NULL);
+
+}
+
+
+app_core::app_core(aura_main_data * pdata, ::aura::PFN_GET_NEW_LIBRARY pgetnewlibrary)
+{
+
+   app_core_common_construct(pdata, NULL, pgetnewlibrary);
+
+}
+
+
+app_core::app_core(aura_main_data * pdata, ::aura::PFN_GET_NEW_APP pgetnewapp, ::aura::PFN_GET_NEW_LIBRARY pgetnewlibrary)
+{
+
+   app_core_common_construct(pdata, pgetnewapp, pgetnewlibrary);
+
+}
+
+
+void app_core::app_core_common_construct(aura_main_data * pdata, ::aura::PFN_GET_NEW_APP pgetnewapp, ::aura::PFN_GET_NEW_LIBRARY pgetnewlibrary)
+{
+
+   ASSERT(!(pgetnewlibrary != NULL && pgetnewapp != NULL));
+
+   m_bAcidApp = false;
+   m_pfnNewLibrary = pgetnewlibrary;
+   m_pfnNewApp = pgetnewapp;
+   m_pfnDeferTerm = NULL;
+   m_psystem = NULL;
+   m_iErrorCount = 0;
+   m_iTotalErrorCount = 0;
 
    m_iMatterFromHttpCache = -1; // -1 = overridable
 
@@ -140,17 +181,7 @@ app_core::app_core(aura_main_data * pdata)
 
 #endif
 
-   if (s_pappcoreMain == NULL)
-   {
-
-      s_pappcoreMain = this;
-
-      m_pmaindata = pdata;
-
-   }
-
-   s_pappcore = this;
-
+   m_pmaindata = pdata;
 
    int iPid;
 
@@ -201,7 +232,7 @@ bool app_core::on_result(int iResultCode)
 bool app_core::beg()
 {
 
-   aura_prelude::defer_call_construct(this);
+   //aura_prelude::defer_call_construct(this);
 
 //#ifdef APPLEOS
 //
@@ -242,6 +273,7 @@ bool app_core::beg()
 
 }
 
+
 bool app_core::ini()
 {
 
@@ -257,7 +289,7 @@ bool app_core::ini()
       get_c_args(m_pmaindata->m_argc, m_pmaindata->m_argv)
 #endif
       ,get_c_args(m_pmaindata->m_strCommandLine)
-      ,get_c_args(ca2_command_line())
+      ,get_c_args(ca2_command_line(m_pmaindata->m_hinstance))
 #ifdef APPLEOS
       ,get_c_args_for_c(ca2_command_line2())
 #endif
@@ -656,12 +688,34 @@ typedef DEFER_INIT * PFN_DEFER_INIT;
 
 
 
-
-
-long aura_aura(aura_main_data * pmaindata)
+CLASS_DECL_AURA long aura_aura(aura_main_data * pmaindata)
 {
 
-   pmaindata->m_pappcore = canew(app_core(pmaindata));
+   return _aura_aura(pmaindata, NULL, NULL);
+
+}
+
+
+CLASS_DECL_AURA long aura_aura(aura_main_data * pmaindata, ::aura::PFN_GET_NEW_APP pfnNewApp)
+{
+
+   return _aura_aura(pmaindata, pfnNewApp, NULL);
+
+}
+
+
+CLASS_DECL_AURA long aura_aura(aura_main_data * pmaindata, ::aura::PFN_GET_NEW_LIBRARY pfnNewLibrary)
+{
+
+   return _aura_aura(pmaindata, NULL, pfnNewLibrary);
+
+}
+
+
+CLASS_DECL_AURA long _aura_aura(aura_main_data * pmaindata, ::aura::PFN_GET_NEW_APP pfnNewApp, ::aura::PFN_GET_NEW_LIBRARY pfnNewLibrary)
+{
+
+   pmaindata->m_pappcore = canew(app_core(pmaindata, pfnNewApp, pfnNewLibrary));
 
    if(!pmaindata->m_pappcore->beg())
    {
@@ -680,14 +734,14 @@ long aura_aura(aura_main_data * pmaindata)
 CLASS_DECL_AURA void aura_boot(app_core * pappcore)
 {
 
-   if (!::aura_prelude::defer_call_prelude(pappcore))
-   {
+   //if (!::aura_prelude::defer_call_prelude(pappcore))
+   //{
 
-      pappcore->on_result(-1);
+   //   pappcore->on_result(-1);
 
-      return;
+   //   return;
 
-   }
+   //}
 
    aura_main(pappcore);
 
@@ -707,112 +761,112 @@ CLASS_DECL_AURA void aura_main(app_core * pappcore)
 
 
 
-aura_prelude::aura_prelude()
-{
-
-   s_pprelude = this;
-
-   m_pfnNewApp = NULL;
-
-   m_pfnNewLibrary = NULL;
-
-}
-
-
-aura_prelude::aura_prelude(::aura::PFN_GET_NEW_APP pgetnewapp)
-{
-
-   s_pprelude = this;
-
-   m_pfnNewApp = pgetnewapp;
-
-   m_pfnNewLibrary = NULL;
-
-   m_pfnNewLibrary = NULL;
-
-}
-
-aura_prelude::aura_prelude(::aura::PFN_GET_NEW_LIBRARY pgetnewlibrary)
-{
-
-   s_pprelude = this;
-
-   m_pfnNewLibrary = pgetnewlibrary;
-
-   m_pfnNewApp = NULL;
-
-}
+//aura_prelude::aura_prelude()
+//{
+//
+//   s_pprelude = this;
+//
+//   m_pfnNewApp = NULL;
+//
+//   m_pfnNewLibrary = NULL;
+//
+//}
 
 
-aura_prelude::~aura_prelude()
-{
-
-}
-
-
-bool aura_prelude::defer_call_construct(app_core * pappcore)
-{
-
-   if(s_pprelude == NULL)
-   {
-
-      return NULL;
-
-   }
-
-   if(!s_pprelude->construct(pappcore))
-   {
-
-      return NULL;
-
-   }
-
-   return true;
-
-}
+//aura_prelude::aura_prelude(::aura::PFN_GET_NEW_APP pgetnewapp)
+//{
+//
+//   s_pprelude = this;
+//
+//   m_pfnNewApp = pgetnewapp;
+//
+//   m_pfnNewLibrary = NULL;
+//
+//   m_pfnNewLibrary = NULL;
+//
+//}
+//
+//aura_prelude::aura_prelude(::aura::PFN_GET_NEW_LIBRARY pgetnewlibrary)
+//{
+//
+//   s_pprelude = this;
+//
+//   m_pfnNewLibrary = pgetnewlibrary;
+//
+//   m_pfnNewApp = NULL;
+//
+//}
 
 
-bool aura_prelude::construct(app_core * pappcore)
-{
-
-   return true;
-
-}
-
-
-bool aura_prelude::defer_call_prelude(app_core * pappcore)
-{
-
-   if(s_pprelude == NULL)
-   {
-
-      return true;
-
-   }
-
-   if(!s_pprelude->prelude(pappcore))
-   {
-
-      return false;
-
-   }
-
-   return true;
-
-}
-
-
-
-bool aura_prelude::prelude(app_core * pappcore)
-{
-
-   pappcore->m_pfnNewApp = m_pfnNewApp;
-
-   pappcore->m_pfnNewLibrary = m_pfnNewLibrary;
-
-   return true;
-
-}
+//aura_prelude::~aura_prelude()
+//{
+//
+//}
+//
+//
+//bool aura_prelude::defer_call_construct(app_core * pappcore)
+//{
+//
+//   if(s_pprelude == NULL)
+//   {
+//
+//      return NULL;
+//
+//   }
+//
+//   if(!s_pprelude->construct(pappcore))
+//   {
+//
+//      return NULL;
+//
+//   }
+//
+//   return true;
+//
+//}
+//
+//
+//bool aura_prelude::construct(app_core * pappcore)
+//{
+//
+//   return true;
+//
+//}
+//
+//
+//bool aura_prelude::defer_call_prelude(app_core * pappcore)
+//{
+//
+//   if(s_pprelude == NULL)
+//   {
+//
+//      return true;
+//
+//   }
+//
+//   if(!s_pprelude->prelude(pappcore))
+//   {
+//
+//      return false;
+//
+//   }
+//
+//   return true;
+//
+//}
+//
+//
+//
+//bool aura_prelude::prelude(app_core * pappcore)
+//{
+//
+//   pappcore->m_pfnNewApp = m_pfnNewApp;
+//
+//   pappcore->m_pfnNewLibrary = m_pfnNewLibrary;
+//
+//   return true;
+//
+//}
 
 
 stringa get_c_args(const char * psz)

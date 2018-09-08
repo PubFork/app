@@ -331,11 +331,11 @@ namespace aura
          if (!m_papp->is_system())
             return false;
 
-         ASSERT(::app_core::s_pappcore->m_pmaindata->m_hPrevInstance == NULL);
+         ASSERT(System.m_pappcore->m_pmaindata->m_hPrevInstance == NULL);
 
-         HINSTANCE hinstance = ::app_core::s_pappcore->m_pmaindata->m_hinstance;
+         HINSTANCE hinstance = System.m_pappcore->m_pmaindata->m_hinstance;
 
-         UINT nCmdShow = ::app_core::s_pappcore->m_pmaindata->m_nCmdShow;
+         UINT nCmdShow = System.m_pappcore->m_pmaindata->m_nCmdShow;
 
          // handle critical errors and avoid Windows message boxes
          SetErrorMode(SetErrorMode(0) | SEM_FAILCRITICALERRORS | SEM_NOOPENFILEERRORBOX);

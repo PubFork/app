@@ -6,7 +6,7 @@
 CLASS_DECL_AURA string & get_command_line_string()
 {
 
-   return ::app_core::s_pappcore->m_strCommandLine;
+   return System.m_pappcore->m_strCommandLine;
 
 }
 

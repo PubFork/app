@@ -1072,7 +1072,7 @@ namespace aura
    node_data_exchange * system::node_ddx()
    {
 
-      return ::app_core::s_pappcoreMain->m_pmaindata->m_pnodedataexchange;
+      return m_pappcore->m_pmaindata->m_pnodedataexchange;
 
    }
 

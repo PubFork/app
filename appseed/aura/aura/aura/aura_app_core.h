@@ -100,22 +100,22 @@ public:
    //static app_core *             s_pappcore;
    string                        m_strCommandLine;
    string                        m_strProgName;
-   bool                          m_bAcidApp = false;
-   ::aura::PFN_GET_NEW_LIBRARY   m_pfnNewLibrary = NULL;
-   ::aura::PFN_GET_NEW_APP       m_pfnNewApp = NULL;
-   PFN_DEFER_TERM                m_pfnDeferTerm = NULL;
+   bool                          m_bAcidApp;
+   ::aura::PFN_GET_NEW_LIBRARY   m_pfnNewLibrary;
+   ::aura::PFN_GET_NEW_APP       m_pfnNewApp;
+   PFN_DEFER_TERM                m_pfnDeferTerm;
    DWORD                         m_dwStartTime;
    DWORD                         m_dwAfterApplicationFirstRequest;
    sp(aura_main_data)            m_pmaindata;
-   ::aura::system *              m_psystem = NULL;
+   ::aura::system *              m_psystem;
    string                        m_strAppId;
    int                           m_iMatterFromHttpCache;
 
 
 
    int                           m_iaError[APP_CORE_MAXIMUM_ERROR_COUNT];
-   int                           m_iErrorCount = 0;
-   int                           m_iTotalErrorCount = 0;
+   int                           m_iErrorCount;
+   int                           m_iTotalErrorCount;
 
 
 #ifdef LINUX
@@ -124,9 +124,15 @@ public:
 
 #endif
 
-   app_core(aura_main_data * pdata, ::aura::PFN_GET_NEW_APP pgetnewapp = NULL);
+   app_core(aura_main_data * pdata);
+   app_core(aura_main_data * pdata, ::aura::PFN_GET_NEW_APP pgetnewapp);
    app_core(aura_main_data * pdata, ::aura::PFN_GET_NEW_LIBRARY pgetnewlibrary);
+   app_core(aura_main_data * pdata, ::aura::PFN_GET_NEW_APP pgetnewapp, ::aura::PFN_GET_NEW_LIBRARY pgetnewlibrary);
    ~app_core();
+
+
+   void app_core_common_construct(aura_main_data * pdata, ::aura::PFN_GET_NEW_APP pgetnewapp, ::aura::PFN_GET_NEW_LIBRARY pgetnewlibrary);
+
 
    bool on_result(int iResultCode);
 
@@ -152,6 +158,12 @@ typedef bool FN_AURA_APP_CORE(app_core * pappcore);
 typedef FN_AURA_APP_CORE * PFN_AURA_APP_CORE;
 
 CLASS_DECL_AURA long aura_aura(aura_main_data * pmaindata);
+
+CLASS_DECL_AURA long aura_aura(aura_main_data * pmaindata, ::aura::PFN_GET_NEW_APP pfnNewApp);
+
+CLASS_DECL_AURA long aura_aura(aura_main_data * pmaindata, ::aura::PFN_GET_NEW_LIBRARY pfnNewLibrary);
+
+CLASS_DECL_AURA long _aura_aura(aura_main_data * pmaindata, ::aura::PFN_GET_NEW_APP pfnNewApp, ::aura::PFN_GET_NEW_LIBRARY pfnNewLibrary);
 
 CLASS_DECL_AURA void aura_boot(app_core * pappcore);
 
@@ -187,7 +199,12 @@ CLASS_DECL_AURA string transform_to_c_arg(const char * psz);
 CLASS_DECL_AURA stringa get_c_args(const char * psz);
 CLASS_DECL_AURA stringa get_c_args_for_c(const char * psz);
 CLASS_DECL_AURA stringa get_c_args(int argc, char ** argv);
+#ifdef WINDOWS
+CLASS_DECL_AURA string ca2_command_line(HINSTANCE hinstance);
+#else
 CLASS_DECL_AURA string ca2_command_line();
+#endif
+
 
 
 
