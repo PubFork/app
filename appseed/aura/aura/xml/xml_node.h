@@ -90,7 +90,7 @@ namespace xml
       virtual index find(node * pnode);
       virtual index find(const char * lpcszName, index iStart = 0);
       virtual index find(const char * lpcszName, attr_array & attr, index iStart = 0);
-      virtual bool contains(attr_array & attributea);
+      virtual bool contains(attr_array & attributea) const;
       virtual node * get_next_sibling();
 
       virtual node * first_child();
@@ -161,6 +161,7 @@ namespace xml
 
       // search node
       node *                  rfind( const char * name, int32_t iDepth = -1);
+      node *                  rfind(const char * lpcszName, const attr_array & attr, index iDepth = -1);
 
       // modify DOM
       ::count get_children_count();
@@ -168,7 +169,8 @@ namespace xml
       ::count get_children_count(const char * pszName, index iDepth);
       node *                  child_at(index i);
       //node *                create_node( const char * name = NULL, const char * value = NULL );
-      node *                  add_child( const char * name = NULL, const char * value = NULL );
+      node *                  add_child(const char * name = NULL, const char * value = NULL);
+      node *                  add_child(const char * name, const attr_array & attra, const char * value = NULL);
       node *                  add_child( node * node );
       bool                    remove_child( node * node );
       node *                  detach_child( node * node );

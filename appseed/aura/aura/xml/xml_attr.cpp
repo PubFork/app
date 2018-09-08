@@ -5,6 +5,13 @@ namespace xml
 {
 
 
+   attr_array::attr_array(::std::initializer_list < var > list) :
+      property_set(list)
+   {
+
+   }
+
+
    attr_array::attr_array(::aura::application * papp) :
       property_set(papp)
    {

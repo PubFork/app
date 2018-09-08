@@ -3167,52 +3167,9 @@ void simple_frame_window::OnNotifyIconContextMenu(UINT uiNotifyIcon)
 
    Session.get_cursor_pos(&pt);
 
-   string strMatter = "popup_notification.xml";
+   sp(::xml::document) pdoc = notification_area_get_menu();
 
-   string strPath = Application.dir().matter(strMatter);
-
-   string strXml = Application.file().as_string(strPath);
-
-   string strExtraXml = notification_area_extra_get_xml_menu();
-
-   if (m_workset.m_pframeschema != NULL)
-   {
-
-      if (m_workset.m_pframeschema->get_control_box()->has_button(::user::wndfrm::frame::button_transparent_frame))
-      {
-
-         if (!strExtraXml.contains_ci("\"transparent_frame\""))
-         {
-
-            strExtraXml += "<item id=\"transparent_frame\">Transparent Frame</item>";
-
-         }
-
-      }
-
-   }
-
-   if (strExtraXml.has_char())
-   {
-
-      string strToken = "<!--EXTRA_MENU!-->";
-
-      if (strXml.find(strToken) >= 0)
-      {
-
-         strXml.replace(strToken, strExtraXml);
-
-      }
-      else
-      {
-
-         strXml.replace("</menubar>", "<separator/>" + strExtraXml + "</menubar>");
-
-      }
-
-   }
-
-   track_popup_xml_string_menu(strXml, 0, pt);
+   track_popup_menu(pdoc->get_root(), 0, pt);
 
 }
 
@@ -3236,8 +3193,8 @@ void simple_frame_window::_001OnNotifyIconTopic(::message::message * pmessage)
    {
 
       if(IsWindowVisible()
-      && get_active_window() == get_handle()
-      && get_focus() == get_handle())
+            && get_active_window() == get_handle()
+            && get_focus() == get_handle())
       {
 
          ShowWindow(SW_HIDE);
@@ -3455,12 +3412,77 @@ void simple_frame_window::notification_area_action(const char * pszId)
 }
 
 
-string simple_frame_window::notification_area_extra_get_xml_menu()
+sp(::xml::document) simple_frame_window::notification_area_get_menu(const char * pszMatter)
 {
 
-   string strXml;
+   string strMatter(pszMatter);
 
-   if (notification_area_action_count() > 0)
+   if (strMatter.is_empty())
+   {
+
+      strMatter = "popup_notification.xml";
+
+   }
+
+   string strPath = Application.dir().matter(strMatter);
+
+   string strXml = Application.file().as_string(strPath);
+
+   sp(::xml::document) pdoc = canew(::xml::document(get_app()));
+
+   pdoc->load(strXml);
+
+   if (pdoc->rfind("item", { "id", "notify_icon_topic" }) == NULL)
+   {
+
+      string strAppTitle = Application.m_strAppTitle;
+
+      if(strAppTitle.is_empty())
+      {
+
+         stringa stra;
+
+         stra.explode("/", Application.m_strAppId);
+
+         strAppTitle = stra.slice(1).implode(" ");
+
+         strAppTitle.replace("_", " ");
+
+         strAppTitle.replace("-", " ");
+
+         strAppTitle.replace(".", " ");
+
+      }
+
+      pdoc->get_root()->add_child("item", { "id", "notify_icon_topic" }, strAppTitle);
+
+   }
+
+   if (m_workset.m_pframeschema != NULL)
+   {
+
+      if (m_workset.m_pframeschema->get_control_box()->has_button(::user::wndfrm::frame::button_transparent_frame))
+      {
+
+         if (pdoc->rfind("item", { "id", "transparent_frame" }) == NULL)
+         {
+
+            pdoc->get_root()->add_child("item", { "id", "transparent_frame" }, _("Transparent Frame"));
+
+         }
+
+      }
+
+   }
+
+   if (pdoc->rfind("item", { "id", "app_exit" }) == NULL)
+   {
+
+      pdoc->get_root()->add_child("item", { "id", "app_exit" }, _("Exit"));
+
+   }
+
+   if(notification_area_action_count() > 0)
    {
 
       for (int i = 0; i < notification_area_action_count(); i++)
@@ -3486,7 +3508,18 @@ string simple_frame_window::notification_area_extra_get_xml_menu()
 
             strName.replace("_", "");
 
-            strXml += "<item id = \"" + string(pszId) + "\">" + strName + "</item>\r\n";
+            if (strName.compare_ci("separator") == 0)
+            {
+
+               pdoc->get_root()->add_child("separator");
+
+            }
+            else if (pdoc->rfind("item", { "id", string(pszId) }) == NULL)
+            {
+
+               pdoc->get_root()->add_child("item", { "id", string(pszId) }, strName);
+
+            }
 
          }
 
@@ -3494,7 +3527,7 @@ string simple_frame_window::notification_area_extra_get_xml_menu()
 
    }
 
-   return strXml;
+   return pdoc;
 
 }
 

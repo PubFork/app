@@ -11,6 +11,7 @@ public:
    //class signal         m_signal;
 
 
+   property_set(::std::initializer_list < var > list);
    property_set(::aura::application * papp = NULL, bool bAutoAdd = true, bool bMultiValue = false);
    property_set(const property_set & set);
 //   property_set(const pair_set_interface & set);
@@ -72,6 +73,7 @@ public:
    bool contains_value(const char * psz, ::count countMin = 1, ::count countMax = -1) const;
 
    bool str_contains(const property_set & set) const;
+   bool contains(const property_set & set) const;
 
    bool remove_first_var_ci(const var & var);
    bool remove_first_value_ci(const var & var);

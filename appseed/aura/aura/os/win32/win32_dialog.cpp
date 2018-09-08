@@ -39,6 +39,8 @@ namespace win32
 
 
 #ifdef WINDOWS
+
+#define GWL_USERDATA        (-21)
    INT_PTR CALLBACK dialog::DialogProc(HWND hwnd, UINT uiMessage, WPARAM wparam, LPARAM lparam)
    {
 

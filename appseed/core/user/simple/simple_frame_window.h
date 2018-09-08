@@ -306,7 +306,7 @@ public:
 
    virtual void notification_area_action(const char * pszId) override;
 
-   virtual string notification_area_extra_get_xml_menu();
+   virtual sp(::xml::document) notification_area_get_menu(const char * pszMatter = NULL);
 
    virtual void nextstyle(::user::style_context * pcontext) override;
 

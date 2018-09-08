@@ -2517,7 +2517,8 @@ Restart:
 
    }
 
-   bool interaction_base::track_popup_menu(::xml::node * lpnode,int32_t iFlags, POINT pt)
+
+   sp(::user::menu) interaction_base::track_popup_menu(::xml::node * lpnode,int32_t iFlags, POINT pt, size sz)
    {
 
       ::exception::throw_interface_only(get_app());

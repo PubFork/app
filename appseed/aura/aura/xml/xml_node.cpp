@@ -101,10 +101,14 @@ namespace xml
       return true;
    }
 
-   bool node::contains(attr_array & attra)
+
+   bool node::contains(attr_array & attra) const
    {
-      return m_attra.str_contains(attra);
+
+      return m_attra.contains(attra);
+
    }
+
 
    attr * node::add_attr(const char * pszName, const var & var)
    {
@@ -146,18 +150,28 @@ namespace xml
 
       return pattr;
 
-
    }
+
 
    index node::find(const char * lpcszName, attr_array & attra, index iStart)
    {
+
       for(index i = iStart; i < m_nodea.get_count(); i++)
       {
-         if(m_nodea[i]->m_strName == lpcszName && m_nodea[i]->m_attra.str_contains(attra))
+
+         if (m_nodea[i]->m_strName == lpcszName && m_nodea[i]->contains(attra))
+         {
+
             return i;
+
+         }
+
       }
+
       return -1;
+
    }
+
 
    node * node::get_child_with_attr(const char * lpcszName, const char * pszAttr, var value, index iStart)
    {
@@ -1645,6 +1659,54 @@ namespace xml
    }
 
 
+   node * node::rfind(const char * pszName, const attr_array & attr, index iDepth)
+   {
+
+      for (auto & node : m_nodea)
+      {
+
+         if (node->m_strName == pszName && node->m_attra.contains(attr))
+         {
+
+            return node;
+
+         }
+
+      }
+
+      if (iDepth == 0)
+      {
+
+         return NULL;
+
+      }
+
+      if (iDepth > 0)
+      {
+
+         iDepth--;
+
+      }
+
+      for (auto & node : m_nodea)
+      {
+
+         auto pnodeChild = node->rfind(pszName, attr, iDepth);
+
+         if (pnodeChild != NULL)
+         {
+
+            return pnodeChild;
+
+         }
+
+      }
+
+      return NULL;
+
+   }
+
+
    //========================================================
    // Name   : add_child
    // Desc   : add node
@@ -1658,6 +1720,15 @@ namespace xml
    {
       sp(node) pnode = canew(node(this));
       pnode->m_strName = pszName;
+      pnode->m_strValue = pszValue;
+      return add_child(pnode);
+   }
+
+   node * node::add_child(const char * pszName, const attr_array & attra, const char * pszValue)
+   {
+      sp(node) pnode = canew(node(this));
+      pnode->m_strName = pszName;
+      pnode->m_attra = attra;
       pnode->m_strValue = pszValue;
       return add_child(pnode);
    }

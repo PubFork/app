@@ -70,7 +70,7 @@ bool builtin_strlangmap::set_current_language(index iSel)
 
       string strLang = System.m_pstrlangmap->m_straLang[iSel];
 
-      if (strLang != System.m_pstrlangmap->m_straLang)
+      if (strLang != System.m_pstrlangmap->m_strLang)
       {
 
          if (!set_current_language(strLang))

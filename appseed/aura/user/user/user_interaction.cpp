@@ -1876,7 +1876,7 @@ restart:
       windowing_output_debug_string("\n_001Print A");
 
       //pgraphics->fill_solid_rect_dim(100, 100, 400, 120, ARGB(255, 255, 255, 0));
-      
+
       {
 
          ::draw2d::savedc k(pgraphics);
@@ -6434,17 +6434,19 @@ restart:
    }
 
 
-   bool interaction::track_popup_menu(::xml::node * lpnode, int32_t iFlags, POINT pt)
+   sp(::user::menu) interaction::track_popup_menu(::xml::node * lpnode, int32_t iFlags, POINT pt, size sizeMinimum)
    {
 
       sp(::user::menu) pmenu = Application.alloc(System.type_info < ::user::menu >());
+
+      pmenu->m_sizeMinimum = sizeMinimum;
 
       if (!pmenu->load_menu(lpnode))
       {
 
          pmenu.release();
 
-         return false;
+         return pmenu;
 
       }
 
@@ -6455,11 +6457,12 @@ restart:
 
          pmenu.release();
 
-         return false;
+         return pmenu;
 
       }
 
-      return true;
+      return pmenu;
+
 
    }
 
@@ -9740,50 +9743,50 @@ restart:
 
    void interaction::defer_show_software_keyboard(::user::elemental * pelemental, bool bShow, string str, strsize iBeg, strsize iEnd)
    {
-      
+
       synch_lock sl(m_pmutex);
-      
+
       m_iSoftwareKeyboardEventId++;
-      
+
       index iEventId = m_iSoftwareKeyboardEventId;
-      
+
       m_pelementalSoftwareKeyboard = pelemental;
-      
+
       fork([=]
-           {
-              
-              Sleep(400);
-              
-              synch_lock sl(m_pmutex);
-              
-              if(iEventId == m_iSoftwareKeyboardEventId)
-              {
-                 
-                 ASSERT(pelemental == m_pelementalSoftwareKeyboard);
-                 
-                 sl.unlock();
-                 
-                 show_software_keyboard(bShow, str, iBeg, iEnd);
-                 
-              }
-              
-           });
-      
+      {
+
+         Sleep(400);
+
+         synch_lock sl(m_pmutex);
+
+         if(iEventId == m_iSoftwareKeyboardEventId)
+         {
+
+            ASSERT(pelemental == m_pelementalSoftwareKeyboard);
+
+            sl.unlock();
+
+            show_software_keyboard(bShow, str, iBeg, iEnd);
+
+         }
+
+      });
+
    }
-   
-   
+
+
    void interaction::show_software_keyboard(bool bShow, string str, strsize iBeg, strsize iEnd)
    {
 
       if(m_pimpl.is_null())
       {
-         
+
          return;
-         
+
       }
-      
+
       m_pimpl->show_software_keyboard(bShow, str, iBeg, iEnd);
-      
+
    }
 
 

@@ -26,7 +26,7 @@ namespace xml
 
    public:
 
-
+      attr_array(::std::initializer_list < var > list);
       attr_array(::aura::application * papp);
 
 

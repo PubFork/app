@@ -1,6 +1,43 @@
 #include "framework.h"
 
 
+property_set::property_set(::std::initializer_list < var > list)
+{
+
+   ::id id;
+
+   index i = 0;
+
+   for (auto & item : list)
+   {
+
+      if (i % 2 == 0)
+      {
+
+         id = item;
+
+      }
+      else if (i % 2 == 1)
+      {
+
+         operator[](id) = item;
+
+      }
+
+      i++;
+
+   }
+
+   if (i % 2 == 1)
+   {
+
+      operator[](id) = var::type_empty;
+
+   }
+
+}
+
+
 property_set::property_set(::aura::application * papp, bool bAutoAdd, bool bMultiValue) :
    object(papp)
 {
@@ -1261,10 +1298,10 @@ property_set & property_set::operator |= (const property_set & set)
 property * property_set::str_find(const property & property) const
 {
 
-   for(const_iterator it = begin(); it != end(); it++)
+   for (const_iterator it = begin(); it != end(); it++)
    {
 
-      if(it->str_compare(property) == 0)
+      if (it->str_compare(property) == 0)
       {
 
          return (::property *) &it->m_element2;
@@ -1281,10 +1318,10 @@ property * property_set::str_find(const property & property) const
 bool property_set::str_contains(const property_set & set) const
 {
 
-   for(const_iterator it = begin(); it != end(); it++)
+   for (const_iterator it = begin(); it != end(); it++)
    {
 
-      if(str_find(*it) == NULL)
+      if (str_find(*it) == NULL)
       {
 
          return false;
@@ -1298,7 +1335,24 @@ bool property_set::str_contains(const property_set & set) const
 }
 
 
+bool property_set::contains(const property_set & set) const
+{
 
+   for (auto & property : set)
+   {
+
+      if (operator[](property.name()).m_element2 != property.m_element2)
+      {
+
+         return false;
+
+      }
+
+   }
+
+   return true;
+
+}
 
 
 string & property_set::get_http_post(string & strPost) const
