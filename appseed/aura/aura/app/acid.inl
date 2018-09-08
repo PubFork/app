@@ -16,6 +16,19 @@ int main(int argc, char * argv[])
 
    ap(aura_main_data) pmaindata = new aura_main_data(argc, argv);
 
+#ifdef BUILTIN_STRLANGMAP
+
+   pmaindata->m_pstrlangmap = BUILTIN_STRLANGMAP;
+
+#endif
+
+#ifdef STANDALONE
+
+   pmaindata->m_strStandalone = STANDALONE;
+
+#endif
+
+
    return (int) aura_aura(pmaindata, &get_acid_app);
 
 }
@@ -31,6 +44,18 @@ int32_t WINAPI _tWinMain(HINSTANCE hinstance, HINSTANCE hPrevInstance, LPTSTR lp
    class aura_aura aura;
 
    aura_main_data * pmaindata = canew(aura_main_data(hinstance, hPrevInstance, lpCmdLine, nCmdShow));
+
+#ifdef BUILTIN_STRLANGMAP
+
+   pmaindata->m_pstrlangmap = BUILTIN_STRLANGMAP;
+
+#endif
+
+#ifdef STANDALONE
+
+   pmaindata->m_strStandalone = STANDALONE;
+
+#endif
 
    return aura_aura(pmaindata, &get_acid_app);
 

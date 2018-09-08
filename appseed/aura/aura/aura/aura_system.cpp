@@ -612,6 +612,16 @@ namespace aura
 
       ::file::dir::system::g_pthis = m_spdir;
 
+      if (m_pappcore->m_pmaindata->m_pstrlangmap != NULL)
+      {
+
+         m_pstrlangmap = canew(builtin_strlangmap(this, m_pappcore->m_pmaindata->m_pstrlangmap));
+
+         m_pstrlangmap->process_init();
+
+      }
+
+
       output_debug_string("CommonAppData (matter) : " + System.dir().commonappdata()  + "\n");
       output_debug_string("commonappdata (matter) : " + System.dir().commonappdata() + "\n");
       output_debug_string("Common App Data (matter) : " + System.dir().commonappdata() + "\n");
@@ -3925,6 +3935,21 @@ success:
       }
 
       return dib;
+
+   }
+
+   string system::standalone_setting(string str)
+   {
+
+      return file_as_string_dup(System.dir().standalone() / (str + ".txt"));
+
+   }
+
+
+   bool system::set_standalone_setting(string str, string strSetting)
+   {
+
+      return file_put_contents_dup(System.dir().standalone() / (str + ".txt"), strSetting);
 
    }
 

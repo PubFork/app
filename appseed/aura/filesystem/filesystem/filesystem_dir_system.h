@@ -82,7 +82,7 @@ namespace file
          ::file::path         m_pathInstall;
 
          bool                 m_bMatterFromHttpCache;
-         
+
 
          system(::aura::application * papp);
          virtual ~system();
@@ -193,6 +193,12 @@ namespace file
          virtual ::file::path image();
 
          virtual ::file::path dropbox(::aura::application * papp);
+
+
+         virtual ::file::path standalone();
+
+
+
 
 
       };

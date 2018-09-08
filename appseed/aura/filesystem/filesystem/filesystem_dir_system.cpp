@@ -1251,16 +1251,16 @@ namespace file
          {
 
             string strMatter = strDir;
-            
+
             if(::str::begins_eat_ci(strMatter, "appmatter://"))
             {
-               
+
                strMatter = "/matter/" + strMatter;
-               
+
             }
             else
             {
-               
+
                strsize iFind1 = strMatter.find_ci("/matter/");
 
                strsize iFind2 = strMatter.find_ci("\\matter\\");
@@ -1273,7 +1273,7 @@ namespace file
                   strMatter = strMatter.Mid(iFind);
 
                }
-               
+
             }
 
             property_set set(get_app());
@@ -1494,9 +1494,9 @@ namespace file
             }
 
             property_set set(papp);
-            
+
             set["raw_http"] = true;
-            
+
             set["disable_common_name_cert_check"] = true;
 
             string strCandidate = stra.implode("|");
@@ -2279,6 +2279,15 @@ ret:
          set.parse_json(strJson);
 
          return set["personal"]["path"];
+
+      }
+
+
+      ::file::path system::standalone()
+      {
+
+
+         return ::dir::config() / System.m_pappcore->m_pmaindata->m_strStandalone;
 
       }
 

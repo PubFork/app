@@ -159,7 +159,7 @@ namespace aura
       bool                                         m_bSystemSynchronizedCursor;
       bool                                         m_bSystemSynchronizedScreen;
 
-
+      sp(builtin_strlangmap)                       m_pstrlangmap;
 #ifdef WINDOWSEX
 
 
@@ -429,9 +429,9 @@ namespace aura
       class ::crypto::crypto                       & crypto();
 
       virtual void * & ftlibrary();
-      
+
       virtual ::file::path defer_make_file_system_url(string str, ::aura::application * papp);
-      
+
       virtual ::file::path defer_process_path(::file::path path, ::aura::application * papp);
 
       virtual ::file::path defer_process_matter_path(::file::path path, ::aura::application * papp);
@@ -531,6 +531,10 @@ namespace aura
       virtual index get_ui_wkspace(::user::interaction * pui);
 
       virtual void on_extra(string str);
+
+      virtual string standalone_setting(string str);
+      virtual bool set_standalone_setting(string str, string strSetting);
+
 
    };
 

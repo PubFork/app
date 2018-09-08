@@ -44,6 +44,8 @@ string ca2_command_line2();
 aura_main_data::aura_main_data(int argc, char ** argv)
 {
 
+   m_pstrlangmap = NULL;
+
    m_pnodedataexchange = NULL;
 
    m_bConsole = true;
@@ -69,6 +71,8 @@ aura_main_data::aura_main_data(int argc, char ** argv)
 aura_main_data::aura_main_data(HINSTANCE hinstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int32_t nCmdShow)
 {
 
+   m_pstrlangmap = NULL;
+
    m_pnodedataexchange = NULL;
 
    m_bConsole = false;
@@ -88,6 +92,8 @@ aura_main_data::aura_main_data(HINSTANCE hinstance, HINSTANCE hPrevInstance, LPT
 
 aura_main_data::aura_main_data(Array < String ^ > ^ refstra)
 {
+
+   m_pstrlangmap = NULL;
 
    m_pnodedataexchange = NULL;
 

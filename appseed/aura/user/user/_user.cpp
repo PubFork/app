@@ -3,7 +3,7 @@
 
 #include "user.cpp"
 
-
+#include "user_builtin_strlangmap.cpp"
 #include "user_command.cpp"
 #include "user_controller.cpp"
 #include "user_control_event.cpp"

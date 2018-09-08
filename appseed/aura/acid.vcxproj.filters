@@ -396,6 +396,12 @@
     <Filter Include="Header Files\aura\app">
       <UniqueIdentifier>{308a4f69-92ee-463d-864b-1acc65eaa74e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\aura\os\win32">
+      <UniqueIdentifier>{469ae58f-431b-472b-bde9-9b5fde010fbc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\aura\os\win32">
+      <UniqueIdentifier>{8f0887e3-e5d6-4884-8cf4-48a4ba979056}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="primitive\primitive_id.h">
@@ -2663,6 +2669,24 @@
     <ClInclude Include="aura\aura\aura_auto_pointer.h">
       <Filter>Header Files\aura\aura</Filter>
     </ClInclude>
+    <ClInclude Include="user\user\user_builtin_strlangmap.h">
+      <Filter>Header Files\user\user</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\win32\win32_window.h">
+      <Filter>Header Files\aura\os\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\win32\win32_dialog.h">
+      <Filter>Header Files\aura\os\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\win32\win32_font.h">
+      <Filter>Header Files\aura\os\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\win32\win32.h">
+      <Filter>Header Files\aura\os\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\windows\windows2.h">
+      <Filter>Header Files\aura\os\windows</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="multithreading\multithreading_condition.cpp">
@@ -4602,6 +4626,21 @@
     </ClCompile>
     <ClCompile Include="aura\aura\aura_serialize.cpp">
       <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="user\user\user_builtin_strlangmap.cpp">
+      <Filter>Source Files\user\user</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\win32\win32_font.cpp">
+      <Filter>Source Files\aura\os\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\win32\win32_window.cpp">
+      <Filter>Source Files\aura\os\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\win32\win32_dialog.cpp">
+      <Filter>Source Files\aura\os\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\win32\_win32.cpp">
+      <Filter>Source Files\aura\os\win32</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

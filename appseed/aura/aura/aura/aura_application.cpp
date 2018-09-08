@@ -8,6 +8,7 @@
 #include <fcntl.h>
 #endif
 
+
 extern "C"
 {
 
@@ -1225,31 +1226,31 @@ namespace aura
 //            call_async(strApp, strParam, pathDir, SW_SHOWDEFAULT, false);
 //
 //         });
-         
-         
+
+
          //strParam += " --user-data-dir=\"" + pathProfile + "\"";
-         
+
          stringa sa;
-         
+
          sa = get_c_args_for_c(strParam);
-         
+
          sa.add("--user-data-dir=" + pathProfile + "");
-         
+
          auto argv = sa.c_get();
 
          argv.add(NULL);
-         
+
          string strApp = System.url().url_decode(path);
-         
+
          // 0x00010000 NSWorkspaceLaunchAsync
          // 0x00080000 NSWorkspaceLaunchNewInstance
-         
+
          ns_launch_app(strApp, argv.get_data(), 0x00010000 | 0x00080000);
-         
+
          //ns_launch_app(strApp, argv.get_data(), 0x00010000 | 0x00080000);
 
          //::system("open -na \"" + System.url().url_decode(path) + "\" --args " + strParam);
-         
+
 //         ::file::path shell;
 //
 //         shell = "/bin/bash";
@@ -7388,6 +7389,13 @@ run:
    }
 
 
+   string application::get_text(string str)
+   {
+
+      return System.m_pstrlangmap->get_text(str);
+
+   }
+
    string application::matter_locator(string strApp)
    {
 
@@ -7475,25 +7483,25 @@ run:
       post_message(WM_QUIT);
 
    }
-   
-   
+
+
    bool application::is_equal_file_path(const ::file::path & p1, const ::file::path & p2)
    {
-      
+
       ::file::path path1;
-      
+
       ::file::path path2;
-      
+
       path1 = System.defer_process_path(p1, this);
-      
+
       path2 = System.defer_process_path(p2, this);
-      
+
       path1 = __node_full_file_path(path1);
-      
+
       path2 = __node_full_file_path(path2);
-      
+
       return strcmp(path1, path2) == 0;
-      
+
    }
 
 

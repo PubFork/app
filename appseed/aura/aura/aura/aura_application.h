@@ -216,8 +216,8 @@ namespace aura
 
       virtual string get_title();
       virtual stringa get_categories();
-      
-      
+
+
       virtual bool is_equal_file_path(const ::file::path & p1, const ::file::path & p2);
 
 
@@ -627,6 +627,9 @@ namespace aura
       virtual ::visual::icon * get_icon(object * pobject, bool bBigIcon) const;
 
       virtual void on_control_event(::user::control_event * pevent);
+
+
+      virtual string get_text(string str);
 
    };
 

@@ -6,6 +6,16 @@ typedef DEFER_INIT * PFN_DEFER_INIT;
 typedef int_bool DEFER_TERM();
 typedef DEFER_TERM * PFN_DEFER_TERM;
 
+class STRLANGMAP
+{
+public:
+
+   int m_iPo;
+   char * m_pszLang;
+   char * m_pszText;
+
+};
+
 
 class node_data_exchange;
 
@@ -49,6 +59,7 @@ class CLASS_DECL_AURA aura_main_data :
 {
 public:
 
+   STRLANGMAP *                  m_pstrlangmap;
    bool                          m_bFork;
    node_data_exchange *          m_pnodedataexchange;
    ::command::command *          m_pmaininitdata;
@@ -58,6 +69,7 @@ public:
    int                           m_iExitCode;
    string                        m_strCommandLine;
    sp(app_core)                  m_pappcore;
+   string                        m_strStandalone;
 
 
 

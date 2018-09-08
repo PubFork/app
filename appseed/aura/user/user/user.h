@@ -50,7 +50,11 @@ namespace user
 
 class simple_scroll_bar;
 
+#undef _
 
+#define _(str) (Application.get_text(str))
+
+#include "aura/user/user/user_builtin_strlangmap.h"
 
 #include "aura/user/user/user_primitive.h"
 
