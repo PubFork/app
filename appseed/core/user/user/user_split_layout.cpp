@@ -61,79 +61,79 @@ namespace user
 
       SCAST_PTR(::message::show_window, pshowwindow, pobj);
 
-      bool bIsWindowVisible = pshowwindow->m_bShow;
+      //bool bIsWindowVisible = pshowwindow->m_bShow;
 
-      ::count iSplitBarCount = get_split_count();
+      //::count iSplitBarCount = get_split_count();
 
-      split_layout::Pane * pcomponent;
+      //split_layout::Pane * pcomponent;
 
-      sp(::user::interaction) pwnd;
+      //sp(::user::interaction) pwnd;
 
-      int32_t i;
+      //int32_t i;
 
-      for (i = 0; i < iSplitBarCount; i++)
-      {
+      //for (i = 0; i < iSplitBarCount; i++)
+      //{
 
-         pwnd = m_splitbara.element_at(i);
+      //   pwnd = m_splitbara.element_at(i);
 
-         if (!bIsWindowVisible)
-         {
+      //   if (!bIsWindowVisible)
+      //   {
 
-            pwnd->ShowWindow(SW_HIDE);
+      //      pwnd->ShowWindow(SW_HIDE);
 
-         }
-         else
-         {
+      //   }
+      //   else
+      //   {
 
-            pwnd->ShowWindow(SW_SHOW);
+      //      pwnd->ShowWindow(SW_SHOW);
 
-         }
+      //   }
 
-      }
+      //}
 
-      rect rectClient;
+      //rect rectClient;
 
-      for (i = 0; i < get_pane_count(); i++)
-      {
+      //for (i = 0; i < get_pane_count(); i++)
+      //{
 
-         rect & rectPane = m_panea[i]->m_rect;
+      //   rect & rectPane = m_panea[i]->m_rect;
 
-         pcomponent = m_panea.element_at(i);
+      //   pcomponent = m_panea.element_at(i);
 
-         if (pcomponent == NULL)
-         {
+      //   if (pcomponent == NULL)
+      //   {
 
-            continue;
+      //      continue;
 
-         }
+      //   }
 
-         pwnd = pcomponent->m_pholder;
+      //   pwnd = pcomponent->m_pholder;
 
-         if ( pwnd == NULL)
-         {
+      //   if ( pwnd == NULL)
+      //   {
 
-            continue;
+      //      continue;
 
-         }
+      //   }
 
-         rectClient = rectPane;
+      //   rectClient = rectPane;
 
-         rectClient.deflate(m_cxBorder, m_cyBorder);
+      //   rectClient.deflate(m_cxBorder, m_cyBorder);
 
-         if (rectPane.area() <= 0 || !bIsWindowVisible)
-         {
+      //   if (rectPane.area() <= 0 || !bIsWindowVisible)
+      //   {
 
-            pwnd->ShowWindow(SW_HIDE);
+      //      pwnd->ShowWindow(SW_HIDE);
 
-         }
-         else
-         {
+      //   }
+      //   else
+      //   {
 
-            pwnd->ShowWindow(SW_SHOW);
+      //      pwnd->ShowWindow(SW_SHOW);
 
-         }
+      //   }
 
-      }
+      //}
 
    }
 
@@ -179,9 +179,9 @@ namespace user
    {
 
 #ifdef _DEBUG
-      
+
       ::count iPaneCount = m_iPaneCount;
-      
+
 #endif
 
       m_bInitialized = false;
