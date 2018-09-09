@@ -1726,20 +1726,16 @@ retry_session:
 
       psocket->m_scalarsourceDownloaded.m_id = set["http_downloaded_id"].get_id();
 
-      if (iTimeoutTotalMs == 0)
+      if (iTimeoutTotalMs <= 0)
       {
 
-         iTimeout = 23;
-         iTimeoutMs = 0;
+         iTimeoutTotalMs = 30000;
 
       }
-      else
-      {
 
-         iTimeout = iTimeoutTotalMs / 1000;
-         iTimeoutMs = iTimeoutTotalMs % 1000;
+      iTimeout = iTimeoutTotalMs / 1000;
 
-      }
+      iTimeoutMs = iTimeoutTotalMs % 1000;
 
       if (strIp.has_char())
       {
@@ -1813,8 +1809,16 @@ retry_session:
 
       DWORD dwTimeoutStart = get_tick_count();
 
+      int64_t iContentLength = -1;
+
+      int64_t iBodySizeDownloaded = -1;
+
+      int iEnteredLoop = 0;
+
       while(handler.get_count() > 0 && (::get_thread() == NULL || ::get_thread_run()))
       {
+
+         iEnteredLoop = 1;
 
          dw1 = ::get_tick_count();
 
@@ -1824,9 +1828,9 @@ retry_session:
 
          double dRateDownloaded = 0.0;
 
-         int64_t iContentLength = set["http_content_length"].i64();
+         iContentLength = set["http_content_length"].i64();
 
-         int64_t iBodySizeDownloaded = set["http_body_size_downloaded"].i64();
+         iBodySizeDownloaded = set["http_body_size_downloaded"].i64();
 
          if(set.has_property("cancel") && set["cancel"].get_bool())
          {
@@ -1834,7 +1838,6 @@ retry_session:
             break;
 
          }
-
 
          if (iContentLength > 0)
          {
@@ -1870,26 +1873,26 @@ retry_session:
             break;
 
          }
-//         if (ptimeoutbuffer != NULL)
-//         {
-//            if (psocket->m_iFinalSize != -1 && ptimeoutbuffer->m_uiExpectedSize != psocket->m_iFinalSize)
-//            {
-//               ptimeoutbuffer->m_uiExpectedSize = psocket->m_iFinalSize;
-//            }
-//         }
+
          dw2 = ::get_tick_count();
+
          TRACE("system::get time(%d) = %d, %d, %d\n", iIteration, dw1, dw2, dw2 - dw1);
+
          iIteration++;
-         if (set.has_property("timeout") && get_tick_count() - dwTimeoutStart > set["timeout"].operator uint32_t())
+
+         if (iTimeoutTotalMs && get_tick_count() - dwTimeoutStart > iTimeoutTotalMs)
          {
 
             break;
 
          }
+
       }
+
       keeplive.keep_alive();
 
       set["get_headers"] = psocket->outheaders();
+
       set["get_attrs"] = psocket->outattrs();
 
 //#ifdef BSD_STYLE_SOCKETS
@@ -1904,28 +1907,57 @@ retry_session:
 //#endif
 
       string strCookie = psocket->response().cookies().get_cookie_header();
+
       set[__id(cookie)] = strCookie;
 
       e_status estatus = status_fail;
 
       int32_t iStatusCode = psocket->outattr("http_status_code");
 
-      set["http_status_code"] = psocket->outattr("http_status_code");
-      set["http_status"] = psocket->outattr("http_status");
+      set["http_status_code"] = iStatusCode;
+
+      string strStatus = psocket->outattr("http_status");
+
+      set["http_status"] = strStatus;
+
+      iContentLength = set["http_content_length"].i64();
+
+      iBodySizeDownloaded = set["http_body_size_downloaded"].i64();
+
+      TRACE("URL: %s Status: %d - %s, Content Length: %d, Body Download: %d, Entered Loop: %d, m_b_complete: %d\n",
+            strUrl,
+            iStatusCode,
+            strStatus,
+            (i32) iContentLength,
+            (i32) iBodySizeDownloaded,
+            iEnteredLoop,
+            psocket->m_b_complete ? 1 : 0
+           );
+
       iTry++;
+
       if(set.has_property("cancel") && set["cancel"].get_bool())
       {
+
          psocket->m_estatus = ::sockets::socket::status_cancelled;
       }
 #ifdef BSD_STYLE_SOCKETS
       else if(iStatusCode == 0)
       {
+
          DWORD dwDelta = get_tick_count() - dwStart;
-         if (iTry <= 1 &&  ::comparison::lt(dwDelta, iTimeoutTotalMs))
+
+         if (iTry <= 3 &&  ::comparison::lt(dwDelta, iTimeoutTotalMs))
          {
-            Sleep(300);
+
+            Sleep(500 * iTry);
+
             goto retry;
+
          }
+
+         TRACE("URL: %s Too much tries (%d)\n", iTry);
+
       }
 #endif
 

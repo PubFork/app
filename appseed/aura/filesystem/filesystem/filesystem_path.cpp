@@ -1,6 +1,25 @@
 #include "framework.h"
 
 
+CLASS_DECL_AURA::file::path __node_full_file_path(file::path path);
+
+CLASS_DECL_AURA ::file::path node_full_file_path(file::path path)
+{
+
+   ::file::path pathFull = __node_full_file_path(path);
+
+   if (pathFull.is_empty())
+   {
+
+      return path;
+
+   }
+
+   return pathFull;
+
+}
+
+
 namespace file
 {
 
@@ -839,16 +858,16 @@ namespace file
       }
 
       bool bCertainlySyntathicallyDir = solve_relative_compressions_inline(strPath, bUrl, bOnlyNativeFileSep, iaSlash, &iSlashCount);
-      
+
       if(bUrl && strPath.begins_ci("file:///"))
       {
-         
+
          bUrl = false;
-         
+
          strPath = ::file::path(::aura::system::g_p->url().url_decode(strPath.Mid(7)));
-         
+
          return bCertainlySyntathicallyDir;
-         
+
       }
 
       if(bUrl)
@@ -907,64 +926,79 @@ namespace file
 
    CLASS_DECL_AURA bool begins_eat_ci(string & str, const char * lpcszPrefix)
    {
-      
+
       ::file::path path(lpcszPrefix);
-      
+
+      if (path.is_empty())
+      {
+
+         return true;
+
+      }
+
+      if (str.is_empty())
+      {
+
+         return false;
+
+      }
+
+
       string strPath;
-      
+
       strPath = path;
-      
+
       if(is_url_dup(strPath))
       {
-         
+
          strPath += "/";
-         
+
       }
       else
       {
-         
+
          strPath += path_sep(path_file);
-         
+
       }
-      
+
       if(str == path || str == strPath)
       {
-         
+
          str.Empty();
-         
+
          return true;
-         
+
       }
       else if(::str::begins_eat_ci(str, strPath))
       {
-         
+
          return true;
-         
+
       }
       else
       {
-         
+
          string strFull;
-         
-         strFull = __node_full_file_path(str);
-         
+
+         strFull = node_full_file_path(str);
+
          string strFullPath;
-         
-         strFullPath = __node_full_file_path(strPath);
-         
+
+         strFullPath = node_full_file_path(strPath);
+
          if(::str::begins_eat_ci(strFull, strFullPath))
          {
-            
+
             str = strFull;
-            
+
             return true;
-            
+
          }
-         
+
       }
-      
+
       return false;
-      
+
    }
 
 } // namespace file

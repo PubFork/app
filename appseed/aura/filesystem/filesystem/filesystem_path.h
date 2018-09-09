@@ -404,7 +404,7 @@ inline UINT HashKey<const ::file::path &>(const ::file::path &  key)
 }
 
 
-CLASS_DECL_AURA ::file::path __node_full_file_path(file::path path);
+CLASS_DECL_AURA ::file::path node_full_file_path(file::path path);
 
 
 

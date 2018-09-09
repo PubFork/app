@@ -230,6 +230,8 @@ namespace sockets
    void http_client_socket::OnDataComplete()
    {
 
+      TRACE("http_client_socket::OnDataComplete %s\n", m_strUrl);
+
       m_b_complete = true;
 
       if (outheader(__id(content_encoding)).compare_value_ci("gzip") == 0)
@@ -329,12 +331,20 @@ namespace sockets
 
    void http_client_socket::OnDelete()
    {
+
       if (!m_b_complete)
       {
+
+         TRACE("http_client_socket::OnDelete %s\n", m_strUrl);
+
          m_b_complete = true;
+
          OnContent();
+
       }
+
    }
+
 
    const string & http_client_socket::GetContent()
    {
@@ -364,10 +374,14 @@ namespace sockets
       return m_content_ptr;
    }
 
+
    bool http_client_socket::Complete()
    {
+
       return m_b_complete;
+
    }
+
 
    const unsigned char *http_client_socket::GetDataPtr() const
    {

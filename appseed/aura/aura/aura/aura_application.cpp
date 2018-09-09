@@ -7503,9 +7503,9 @@ run:
 
       path2 = System.defer_process_path(p2, this);
 
-      path1 = __node_full_file_path(path1);
+      path1 = node_full_file_path(path1);
 
-      path2 = __node_full_file_path(path2);
+      path2 = node_full_file_path(path2);
 
       return strcmp(path1, path2) == 0;
 

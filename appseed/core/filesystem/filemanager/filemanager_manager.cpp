@@ -653,16 +653,20 @@ namespace filemanager
    void manager::on_command(::user::command * pcommand)
    {
 
-      if (get_filemanager_data() != NULL
-            && get_filemanager_template() != NULL)
+      if (get_filemanager_data() != NULL && get_filemanager_template() != NULL)
       {
-         //         ::schema * ptemplate = get_filemanager_template();
-         if (pcommand->m_id.m_psz == get_filemanager_template()->m_strLevelUp)
+
+         if (pcommand->m_id == get_filemanager_template()->m_strLevelUp)
          {
+
             FileManagerOneLevelUp(::action::source_user);
+
             pcommand->m_bRet = true;
+
             return;
+
          }
+
       }
 
       ::user::document::on_command(pcommand);
@@ -1268,7 +1272,7 @@ namespace filemanager
    {
 
       if (action == ::file_watcher::action_delete || action == ::file_watcher::action_add
-      || action == ::file_watcher::action_modify)
+            || action == ::file_watcher::action_modify)
       {
 
          OnFileManagerBrowse(::action::source_sync);

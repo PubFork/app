@@ -1321,18 +1321,7 @@ namespace filemanager
 
             auto & spitem = get_fs_mesh_data()->m_itema.m_itema[i];
 
-            if (spitem.is_null())
-            {
-
-               spitem.alloc(allocer());
-
-            }
-            else
-            {
-
-               spitem->m_flags.unsignalize_all();
-
-            }
+            spitem.alloc(allocer());
 
             ::file::path & path = listing[i];
 

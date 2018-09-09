@@ -97,6 +97,8 @@ bool builtin_strlangmap::set_current_language(string strLang)
 }
 
 
+#ifdef WINDOWSEX
+
 void builtin_strlangmap::_001FillCombo(HWND hwnd)
 {
 
@@ -126,7 +128,7 @@ void builtin_strlangmap::_001FillCombo(HWND hwnd)
 
 }
 
-
+#endif
 
 
 bool builtin_strlangmap::_load_text(string strLang)
@@ -141,13 +143,13 @@ bool builtin_strlangmap::_load_text(string strLang)
 
    auto & m = m_text[strLang];
 
-#ifdef LINUX
+#ifdef WINDOWSEX
 
-   string strPo = load_pofile(strLang);
+   string strPo = load_pofile(m_pomap[strLang].m_iPo);
 
 #else
 
-   string strPo = load_pofile(m_pomap[strLang].m_iPo);
+   string strPo = load_pofile(strLang);
 
 #endif
 

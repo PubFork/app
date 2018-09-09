@@ -1508,64 +1508,78 @@ namespace user
 
       m_itema.remove_all();
 
-
-
       xml::document doc(get_app());
 
-      if(!doc.load(lpszXml))
-         return FALSE;
+      if (!doc.load(lpszXml))
+      {
+
+         return false;
+
+      }
 
       xml::node::array childs(get_app());
 
       childs = doc.get_root()->children();
 
-      //   ::aura::application * papp = (get_app());
-
-//#if defined(WINDOWSEX) || defined(LINUX) || defined(METROWIN) || defined(APPLEOS)
-
       sp(::user::toolbar_item) item;
 
       for(int32_t i = 0; i < childs.get_size(); i++)
       {
+
          sp(::xml::node) pchild = childs[i];
+
          if(pchild->get_name() == "button")
          {
+
             item = canew(::user::toolbar_item);
+
             xml::attr * pattr = pchild->find_attr("id");
+
             item->m_id = pattr->get_string();
+
             item->m_str = pchild->get_value();
+
             if(pchild->attr("image").get_string().has_char())
             {
+
                item->m_spdib.alloc(allocer());
+
                item->m_spdib.load_from_file(pchild->attr("image"));
+
             }
+
             if(pchild->attr("enable_if_has_command_handler").get_string().has_char())
             {
+
                item->m_bEnableIfHasCommandHandler = pchild->attr("enable_if_has_command_handler").get_string().compare_ci("true") == 0;
+
             }
+
             item->m_fsStyle &= ~TBBS_SEPARATOR;
+
             m_itema.add(item);
+
          }
          else if(pchild->get_name() == "separator")
          {
+
             item = canew(::user::toolbar_item);
+
             item->m_id = "separator";
+
             item->m_str = "";
+
             item->m_fsStyle |= TBBS_SEPARATOR;
+
             m_itema.add(item);
+
          }
+
       }
 
-//#else
-
-      //    _throw(todo(get_app()));
-
-//#endif
-
-      return TRUE;
+      return true;
 
    }
-
 
 
    toolbar_item::toolbar_item()

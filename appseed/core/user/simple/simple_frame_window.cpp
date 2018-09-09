@@ -2106,15 +2106,28 @@ bool simple_frame_window::LoadToolBar(sp(::type) sptype, id idToolBar, const cha
 
       ptoolbar = Application.alloc(sptype);
 
-      if(ptoolbar == NULL)
+      if (ptoolbar == NULL)
+      {
+
          return false;
 
-      ptoolbar->create_toolbar(this,dwCtrlStyle,dwStyle);
+      }
+
+      if (!ptoolbar->create_toolbar(this, dwCtrlStyle, dwStyle))
+      {
+
+         return false;
+
+      }
 
    }
 
-   if(ptoolbar == NULL)
+   if (ptoolbar.is_null())
+   {
+
       return false;
+
+   }
 
    string strMatter = Application.dir().matter(pszToolBar);
 

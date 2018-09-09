@@ -1975,33 +1975,40 @@ RetryBuildNumber:
    ::file::path system::defer_make_file_system_url(string str, ::aura::application * papp)
    {
 
-      auto & dir =Sys(papp).dir();
+      if (str.is_empty())
+      {
 
-      if(::file::begins_eat_ci(str, dir.image()))
+         return "";
+
+      }
+
+      auto & dir = Sys(papp).dir();
+
+      if(dir.image().has_char() && ::file::begins_eat_ci(str, dir.image()))
       {
 
          return ::file::path("image://") / str;
 
       }
-      else if(::file::begins_eat_ci(str, dir.music()))
+      else if(dir.music().has_char() && ::file::begins_eat_ci(str, dir.music()))
       {
 
          return ::file::path("music://") / str;
 
       }
-      else if(::file::begins_eat_ci(str, dir.video()))
+      else if(dir.video().has_char() && ::file::begins_eat_ci(str, dir.video()))
       {
 
          return ::file::path("video://") / str;
 
       }
-      else if(::file::begins_eat_ci(str, dir.document()))
+      else if(dir.document().has_char() && ::file::begins_eat_ci(str, dir.document()))
       {
 
          return ::file::path("document://") / str;
 
       }
-      else if(::file::begins_eat_ci(str, dir.download()))
+      else if(dir.download().has_char() && ::file::begins_eat_ci(str, dir.download()))
       {
 
          return ::file::path("download://") / str;
