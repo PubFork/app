@@ -1156,16 +1156,6 @@ namespace user
 
    }
 
-   /*   ::visual::icon * interaction_impl::SetIcon(::visual::icon * picon, bool bBigIcon)
-   {
-   ::exception::throw_interface_only(get_app());
-   }
-
-   ::visual::icon * interaction_impl::GetIcon(bool bBigIcon) const
-   {
-   ::exception::throw_interface_only(get_app());
-   }*/
-
 
    bool interaction_impl::SetWindowPos(int_ptr z,int32_t x,int32_t y,int32_t cx,int32_t cy,UINT nFlags)
    {
@@ -2574,7 +2564,6 @@ namespace user
    }
 
 
-
    void interaction_impl::prodevian_task()
    {
 
@@ -2582,205 +2571,212 @@ namespace user
       {
 
          m_pthreadProDevian = fork([&]()
-                                   {
+         {
 
-                                      ::multithreading::set_priority(::multithreading::priority_normal);
+            _prodevian_loop();
 
-                                      nano_timer nanotimer;
 
-                                      u64 uNow = get_nanos();
+            m_pthreadProDevian.release();
 
-                                      u64 uFrameNanos = (u64)(1000000000LL / m_dFps);
-
-                                      uFrameNanos = MIN(MAX(100000, uFrameNanos), 1000000000);
-
-                                      u64 uFrameId = uNow / uFrameNanos;
-
-                                      u64 uLastFrameId = uFrameId;
-
-                                      u64 uNextFrame;
-
-                                      u64 uWait;
-
-                                      ::count cLost;
-
-                                      uint64_array uaFrame;
-
-                                      bool bUpdateScreen;
-
-                                      while (::get_thread_run())
-                                      {
-
-                                         bUpdateScreen = false;
-
-                                         bool bTransparentDraw;
-
-#ifdef WINDOWSEX
-
-                                         if(GetExStyle() & WS_EX_LAYERED)
-                                         {
-
-                                            bTransparentDraw = true;
-
-                                         }
-                                         else
-                                         {
-
-                                            bTransparentDraw = false;
-
-                                         }
-
-#else
-
-                                         bTransparentDraw = true;
-
-#endif
-
-                                         if (bTransparentDraw)
-                                         {
-
-                                            if (m_pui == NULL)
-                                            {
-
-                                               break;
-
-                                            }
-
-                                            if (!m_pui->m_bLockWindowUpdate)
-                                            {
-
-                                               synch_lock sl(m_pui->m_pmutex);
-
-                                               bool bUpdateBuffer = m_pui->m_bProDevian
-                                               || m_pui->check_need_layout()
-                                               || m_pui->m_bRedraw
-                                               || m_pui->check_show_flags();
-
-                                               if (!bUpdateBuffer && m_pui->IsWindowVisible())
-                                               {
-
-                                                  bUpdateBuffer = m_pui->has_pending_graphical_update();
-
-                                               }
-
-                                               if (bUpdateBuffer)
-                                               {
-
-                                                  sl.unlock();
-
-                                                  _001UpdateBuffer();
-
-                                                  try
-                                                  {
-
-                                                     if (m_pui == NULL)
-                                                     {
-
-                                                        break;
-
-                                                     }
-
-                                                     m_pui->on_after_graphical_update();
-
-                                                  }
-                                                  catch (...)
-                                                  {
-
-                                                  }
-
-                                                  bUpdateScreen = true;
-
-                                               }
-                                               else if (m_pui->check_need_translation() || m_pui->check_show_flags() || m_pui->check_need_zorder())
-                                               {
-
-                                                  sl.unlock();
-
-                                                  _001UpdateBuffer();
-
-                                                  m_pui->on_after_graphical_update();
-
-                                               }
-
-                                               bUpdateScreen = true;
-
-                                            }
-
-                                         }
-                                         else if (::IsWindowVisible(get_handle()))
-                                         {
-
-                                            RedrawWindow(NULL, NULL, RDW_INVALIDATE);
-
-                                            bUpdateScreen = false;
-
-                                         }
-
-                                         uNow = get_nanos();
-
-                                         uFrameNanos = (u64)(1000000000ULL / m_dFps);
-
-                                         uFrameNanos = MIN(MAX(100000ULL, uFrameNanos), 1000000000ULL);
-
-                                         uFrameId = uNow / uFrameNanos;
-
-                                         uNextFrame = (uFrameId + 1) * uFrameNanos;
-
-                                         uWait = uNextFrame - uNow;
-
-                                         cLost = uFrameId - uLastFrameId - 1;
-
-                                         if (cLost < 0 || uWait < (uFrameNanos / 2))
-                                         {
-
-                                            uWait += uFrameNanos; // too much CPU usage?
-
-                                         }
-
-                                         uLastFrameId = uFrameId;
-
-                                         nanotimer.wait(uWait);
-
-                                         if (bUpdateScreen)
-                                         {
-
-                                            _001UpdateScreen();
-
-                                            for (index i = 0; i < uaFrame.get_size(); i++)
-                                            {
-
-                                               if (uNow - uaFrame[i] >= 1000000000LL)
-                                               {
-
-                                                  uaFrame.remove_at(i);
-
-                                               }
-                                               else
-                                               {
-
-                                                  break;
-
-                                               }
-
-                                            }
-
-                                         }
-
-                                         m_dScreenOutputFps = (double)(uaFrame.get_size());
-
-                                         uaFrame.add(uNow);
-
-                                      }
-
-
-                                      m_pthreadProDevian.release();
-
-                                   });
+         });
 
       }
 
    }
 
+
+   void interaction_impl::_prodevian_loop()
+   {
+
+      ::multithreading::set_priority(::multithreading::priority_normal);
+
+      nano_timer nanotimer;
+
+      u64 uNow = get_nanos();
+
+      u64 uFrameNanos = (u64)(1000000000LL / m_dFps);
+
+      uFrameNanos = MIN(MAX(100000, uFrameNanos), 1000000000);
+
+      u64 uFrameId = uNow / uFrameNanos;
+
+      u64 uLastFrameId = uFrameId;
+
+      u64 uNextFrame;
+
+      u64 uWait;
+
+      ::count cLost;
+
+      uint64_array uaFrame;
+
+      bool bUpdateScreen;
+
+      while (::get_thread_run())
+      {
+
+         bUpdateScreen = false;
+
+         bool bTransparentDraw;
+
+#ifdef WINDOWSEX
+
+         if (GetExStyle() & WS_EX_LAYERED)
+         {
+
+            bTransparentDraw = true;
+
+         }
+         else
+         {
+
+            bTransparentDraw = false;
+
+         }
+
+#else
+
+         bTransparentDraw = true;
+
+#endif
+
+         if (bTransparentDraw)
+         {
+
+            if (m_pui == NULL)
+            {
+
+               break;
+
+            }
+
+            if (!m_pui->m_bLockWindowUpdate)
+            {
+
+               synch_lock sl(m_pui->m_pmutex);
+
+               bool bUpdateBuffer = m_pui->m_bProDevian
+                                    || m_pui->check_need_layout()
+                                    || m_pui->m_bRedraw
+                                    || m_pui->check_show_flags();
+
+               if (!bUpdateBuffer && m_pui->IsWindowVisible())
+               {
+
+                  bUpdateBuffer = m_pui->has_pending_graphical_update();
+
+               }
+
+               if (bUpdateBuffer)
+               {
+
+                  sl.unlock();
+
+                  _001UpdateBuffer();
+
+                  try
+                  {
+
+                     if (m_pui == NULL)
+                     {
+
+                        break;
+
+                     }
+
+                     m_pui->on_after_graphical_update();
+
+                  }
+                  catch (...)
+                  {
+
+                  }
+
+                  bUpdateScreen = true;
+
+               }
+               else if (m_pui->check_need_translation() || m_pui->check_show_flags() || m_pui->check_need_zorder())
+               {
+
+                  sl.unlock();
+
+                  _001UpdateBuffer();
+
+                  m_pui->on_after_graphical_update();
+
+               }
+
+               bUpdateScreen = true;
+
+            }
+
+         }
+         else if (::IsWindowVisible(get_handle()))
+         {
+
+            RedrawWindow(NULL, NULL, RDW_INVALIDATE);
+
+            bUpdateScreen = false;
+
+         }
+
+         uNow = get_nanos();
+
+         uFrameNanos = (u64)(1000000000ULL / m_dFps);
+
+         uFrameNanos = MIN(MAX(100000ULL, uFrameNanos), 1000000000ULL);
+
+         uFrameId = uNow / uFrameNanos;
+
+         uNextFrame = (uFrameId + 1) * uFrameNanos;
+
+         uWait = uNextFrame - uNow;
+
+         cLost = uFrameId - uLastFrameId - 1;
+
+         if (cLost < 0 || uWait < (uFrameNanos / 2))
+         {
+
+            uWait += uFrameNanos; // too much CPU usage?
+
+         }
+
+         uLastFrameId = uFrameId;
+
+         nanotimer.wait(uWait);
+
+         if (bUpdateScreen)
+         {
+
+            _001UpdateScreen();
+
+            for (index i = 0; i < uaFrame.get_size(); i++)
+            {
+
+               if (uNow - uaFrame[i] >= 1000000000LL)
+               {
+
+                  uaFrame.remove_at(i);
+
+               }
+               else
+               {
+
+                  break;
+
+               }
+
+            }
+
+         }
+
+         m_dScreenOutputFps = (double)(uaFrame.get_size());
+
+         uaFrame.add(uNow);
+
+      }
+
+   }
 
 
    void interaction_impl::_001UpdateWindow(bool bUpdateBuffer)

@@ -501,7 +501,11 @@ namespace userex
 
          ev.m_puie = this;
 
+         ev.m_actioncontext = ::action::source_user;
+
          on_control_event(&ev);
+
+         set_need_redraw();
 
       }
       else if (pt.x < m_rectColors.center().x + m_rectColors.width() / 8)
@@ -523,7 +527,11 @@ namespace userex
 
          ev.m_puie = this;
 
+         ev.m_actioncontext = ::action::source_user;
+
          on_control_event(&ev);
+
+         set_need_redraw();
 
       }
 
@@ -601,6 +609,8 @@ namespace userex
 
       ev.m_puie = this;
 
+      ev.m_actioncontext = ::action::source_user;
+
       on_control_event(&ev);
 
 
@@ -618,7 +628,6 @@ namespace userex
          ScreenToClient(pt);
          on_mouse(pt);
          pmouse->m_bRet = true;
-         ReleaseCapture();
 
       }
    }

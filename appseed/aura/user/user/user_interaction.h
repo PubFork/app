@@ -1184,8 +1184,10 @@ namespace user
 
       virtual void nextstyle(style_context * pcontext) override;
 
+      virtual void post_destroy_window();
+
       template < typename PRED >
-      void ui_post(PRED pred)
+      void post_pred(PRED pred)
       {
 
          if (get_wnd() == NULL || get_wnd()->m_pthread == NULL
@@ -1205,7 +1207,7 @@ namespace user
       }
 
       template < typename PRED >
-      void ui_send(PRED pred)
+      void send_pred(PRED pred)
       {
 
          if (get_wnd() == NULL || get_wnd()->m_pthread == NULL

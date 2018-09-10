@@ -92,28 +92,28 @@ namespace user
 
    bool interaction_impl_base::check_need_layout()
    {
-      
+
       if(m_pui == NULL)
       {
-         
+
          return false;
-         
+
       }
-      
+
       if(m_pui->m_bNeedLayout)
       {
-       
+
          return true;
-         
+
       }
 
       if(m_rectParentClientRequest.get_size() != m_rectParentClient.get_size())
       {
-         
+
          return true;
-         
+
       }
-      
+
       return false;
 
    }
@@ -737,8 +737,6 @@ namespace user
 
          }
 
-         m_pui->m_bRedraw = true;
-
       }
 
       ::rect64 rect = m_rectParentClientRequest;
@@ -760,13 +758,6 @@ namespace user
       m_rectParentClientRequest = rect;
 
       m_bShowFlags = bShowFlags;
-
-      if(!m_pui->m_bProDevian)
-      {
-
-         set_need_redraw();
-
-      }
 
       set_need_redraw();
 
@@ -1692,12 +1683,12 @@ namespace user
       return m_pui->message_handler(pbase);
 
    }
-   
-   
+
+
    void interaction_impl_base::show_software_keyboard(bool bShow, string str, strsize iBeg, strsize iEnd)
    {
-      
-      
+
+
    }
 
 

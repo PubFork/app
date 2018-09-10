@@ -681,7 +681,7 @@ namespace user
 
                   pre_close_frame(pframe);
 
-                  pframe->DestroyWindow();
+                  pframe->post_destroy_window();
 
                }
 

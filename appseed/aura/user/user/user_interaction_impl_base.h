@@ -15,6 +15,7 @@ namespace user
    public:
 
 
+      bool                                m_bDrawFlagsReady;
       rect64                              m_rectParentClientRequest;
       bool                                m_bShowFlags;
       int                                 m_iShowFlags;

@@ -5874,25 +5874,14 @@ LRESULT CALLBACK __window_procedure(oswindow oswindow, UINT message, WPARAM wpar
    if (pui->m_bMoving || pui->m_bMoveWindow)
    {
 
-      //if(message == WM_MOUSEMOVE)
-      //{
-      //
-      //   return 0;
-
-      //}
-      //else
       if (message == WM_WINDOWPOSCHANGING)
       {
-
-         //return 0;
 
          return ::DefWindowProc(oswindow, message, wparam, lparam);
 
       }
       else if (message == WM_WINDOWPOSCHANGED)
       {
-
-         //return 0;
 
          return ::DefWindowProc(oswindow, message, wparam, lparam);
 

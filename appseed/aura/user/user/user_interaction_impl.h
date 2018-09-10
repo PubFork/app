@@ -100,6 +100,7 @@ namespace user
       virtual void dump(dump_context & dumpcontext) const override;
 
       virtual void prodevian_task() override;
+      virtual void _prodevian_loop();
 
       void user_common_construct();
 

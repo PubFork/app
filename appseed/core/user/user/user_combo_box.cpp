@@ -4,14 +4,14 @@
 namespace user
 {
 
-   
+
    combo_box::combo_box()
    {
-      
+
       user_combo_box_common_construct();
-      
+
    }
-   
+
 
    combo_box::combo_box(::aura::application * papp) :
       object(papp),
@@ -21,20 +21,20 @@ namespace user
       user_combo_box_common_construct();
 
    }
-   
-   
+
+
    void combo_box::user_combo_box_common_construct()
    {
-      
+
       m_iSel                  = -1;
       m_bCaseSensitiveMatch   = false;
       m_typeComboList         = System.type_info < ::user::combo_list > ();
       m_estyle                = style_simply;
       m_bEdit                 = true;
       m_edatamode             = data_mode_opaque;
-      
+
    }
-   
+
 
    combo_box::~combo_box()
    {
@@ -616,7 +616,7 @@ namespace user
    {
 
       //SCAST_PTR(::message::mouse, pmouse, pmessage);
-      
+
       UNREFERENCED_PARAMETER(pmessage);
 
       m_iHover = -1;
@@ -660,12 +660,17 @@ namespace user
    void combo_box::_001OnKillFocus(::message::message * pobj)
    {
 
-      //SCAST_PTR(::message::kill_focus, pkillfocus, pobj);
+      SCAST_PTR(::message::kill_focus, pkillfocus, pobj);
 
       if (m_plist != NULL)
       {
 
-         m_plist->post_message(WM_CLOSE);
+         if (m_plist->get_safe_handle() != pkillfocus->m_oswindowNew)
+         {
+
+            m_plist->post_message(WM_CLOSE);
+
+         }
 
       }
 
