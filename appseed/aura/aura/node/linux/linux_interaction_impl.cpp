@@ -465,7 +465,7 @@ namespace linux
 
             XClassHint * phint = XAllocClassHint();
 
-            string strPrgName = app_core::s_pappcore->m_strAppId;
+            string strPrgName = System.m_pappcore->m_strAppId;
 
             strPrgName.replace("/", ".");
 

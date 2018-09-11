@@ -58,7 +58,7 @@ void sn_start_context()
 
    SnDisplay * pd = sn_display_new(dpy, &x_display_error_trap_push, &x_display_error_trap_pop);
 
-   g_psncontext = sn_launchee_context_new(pd, 0, app_core::s_pappcore->m_strProgName);
+   g_psncontext = sn_launchee_context_new(pd, 0, ::aura::system::g_p->m_pappcore->m_strProgName);
 
 }
 

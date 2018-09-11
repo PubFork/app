@@ -3425,75 +3425,75 @@ void simple_frame_window::notification_area_action(const char * pszId)
 }
 
 
-sp(::xml::document) simple_frame_window::notification_area_get_menu(const char * pszMatter)
+sp(::xml::document) simple_frame_window::notification_area_get_menu()
 {
 
-   string strMatter(pszMatter);
-
-   if (strMatter.is_empty())
-   {
-
-      strMatter = "popup_notification.xml";
-
-   }
-
-   string strPath = Application.dir().matter(strMatter);
-
-   string strXml = Application.file().as_string(strPath);
-
+//   string strMatter(pszMatter);
+//
+//   if (strMatter.is_empty())
+//   {
+//
+//      strMatter = "popup_notification.xml";
+//
+//   }
+//
+//   string strPath = Application.dir().matter(strMatter);
+//
+//   string strXml = Application.file().as_string(strPath);
+//
    sp(::xml::document) pdoc = canew(::xml::document(get_app()));
+//
+//   pdoc->load(strXml);
 
-   pdoc->load(strXml);
+   //if (pdoc->rfind("item", { "id", "notify_icon_topic" }) == NULL)
+//   {
+//
+//      string strAppTitle = Application.m_strAppTitle;
+//
+//      if(strAppTitle.is_empty())
+//      {
+//
+//         stringa stra;
+//
+//         stra.explode("/", Application.m_strAppId);
+//
+//         strAppTitle = stra.slice(1).implode(" ");
+//
+//         strAppTitle.replace("_", " ");
+//
+//         strAppTitle.replace("-", " ");
+//
+//         strAppTitle.replace(".", " ");
+//
+//      }
+//
+//      pdoc->get_root()->add_child("item", { "id", "notify_icon_topic" }, strAppTitle);
+//
+//   }
 
-   if (pdoc->rfind("item", { "id", "notify_icon_topic" }) == NULL)
-   {
+   //if (m_workset.m_pframeschema != NULL)
+//   {
+//
+//      if (m_workset.m_pframeschema->get_control_box()->has_button(::user::wndfrm::frame::button_transparent_frame))
+//      {
+//
+//         if (pdoc->rfind("item", { "id", "transparent_frame" }) == NULL)
+//         {
+//
+//            pdoc->get_root()->add_child("item", { "id", "transparent_frame" }, _("Transparent Frame"));
+//
+//         }
+//
+//      }
+//
+//   }
 
-      string strAppTitle = Application.m_strAppTitle;
-
-      if(strAppTitle.is_empty())
-      {
-
-         stringa stra;
-
-         stra.explode("/", Application.m_strAppId);
-
-         strAppTitle = stra.slice(1).implode(" ");
-
-         strAppTitle.replace("_", " ");
-
-         strAppTitle.replace("-", " ");
-
-         strAppTitle.replace(".", " ");
-
-      }
-
-      pdoc->get_root()->add_child("item", { "id", "notify_icon_topic" }, strAppTitle);
-
-   }
-
-   if (m_workset.m_pframeschema != NULL)
-   {
-
-      if (m_workset.m_pframeschema->get_control_box()->has_button(::user::wndfrm::frame::button_transparent_frame))
-      {
-
-         if (pdoc->rfind("item", { "id", "transparent_frame" }) == NULL)
-         {
-
-            pdoc->get_root()->add_child("item", { "id", "transparent_frame" }, _("Transparent Frame"));
-
-         }
-
-      }
-
-   }
-
-   if (pdoc->rfind("item", { "id", "app_exit" }) == NULL)
-   {
-
-      pdoc->get_root()->add_child("item", { "id", "app_exit" }, _("Exit"));
-
-   }
+   //if (pdoc->rfind("item", { "id", "app_exit" }) == NULL)
+//   {
+//
+//      pdoc->get_root()->add_child("item", { "id", "app_exit" }, _("Exit"));
+//
+//   }
 
    if(notification_area_action_count() > 0)
    {
@@ -3678,6 +3678,100 @@ void simple_frame_window::_001OnNcCalcSize(::message::message * pmessage)
 #endif
 
 }
+
+
+
+
+int simple_frame_window::notification_area_action_count()
+{
+
+   int iCount = 2;
+
+   if (m_workset.m_pframeschema->get_control_box()->has_button(::user::wndfrm::frame::button_transparent_frame))
+   {
+
+      iCount++;
+
+   }
+
+   return iCount;
+
+}
+
+void simple_frame_window::notification_area_action_info(char ** ppszName, char ** ppszId, char ** ppszLabel, char ** ppszAccelerator, char ** ppszDescription, int iIndex)
+{
+
+   if(iIndex == 0)
+   {
+
+      string strAppTitle = Application.m_strAppTitle;
+
+      if(strAppTitle.is_empty())
+      {
+
+         stringa stra;
+
+         stra.explode("/", Application.m_strAppId);
+
+         strAppTitle = stra.slice(1).implode(" ");
+
+         strAppTitle.replace("_", " ");
+
+         strAppTitle.replace("-", " ");
+
+         strAppTitle.replace(".", " ");
+
+      }
+
+      *ppszName = strdup(strAppTitle);
+      *ppszId = strdup("notify_icon_topic");
+      *ppszLabel = strdup("notify_icon_topic");
+      *ppszAccelerator = strdup("notify_icon_topic");
+      *ppszDescription = strdup("notify_icon_topic");
+
+      return;
+
+   }
+
+   iIndex--;
+
+   if(m_workset.m_pframeschema->get_control_box()->has_button(::user::wndfrm::frame::button_transparent_frame))
+   {
+
+      if(iIndex == 0)
+      {
+
+         *ppszName = strdup(_("Transparent Frame"));
+         *ppszId = strdup("transparent_frame");
+         *ppszLabel = strdup("transparent_frame");
+         *ppszAccelerator = strdup("transparent_frame");
+         *ppszDescription = strdup("transparent_frame");
+
+         return;
+
+      }
+
+      iIndex--;
+
+   }
+
+   if(iIndex == 0)
+   {
+
+      *ppszName = strdup(_("Exit"));
+      *ppszId = strdup("app_exit");
+      *ppszLabel = strdup("app_exit");
+      *ppszAccelerator = strdup("app_exit");
+      *ppszDescription = strdup("app_exit");
+
+      return;
+
+   }
+
+   return;
+
+}
+
 
 
 

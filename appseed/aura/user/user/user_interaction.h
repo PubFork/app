@@ -1184,8 +1184,6 @@ namespace user
 
       virtual void nextstyle(style_context * pcontext) override;
 
-      virtual void post_destroy_window();
-
       template < typename PRED >
       void post_pred(PRED pred)
       {

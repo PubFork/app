@@ -148,7 +148,7 @@ namespace linux
    string os::get_command_line()
    {
 
-      return get_command_line_dup();
+      return System.m_pappcore->get_command_line();
 
    }
 

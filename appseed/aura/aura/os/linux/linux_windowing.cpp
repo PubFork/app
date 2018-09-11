@@ -2286,47 +2286,48 @@ bool process_message(osdisplay_data * pdata, Display * display)
 
       //msg.wParam = (WPARAM) oswindow_get(display(), e.xfocus
 
-      Window wFocus = 0;
-
-      int revert_to_return = 0;
-
-      int iStatus = XGetInputFocus(display, &wFocus, &revert_to_return);
-
-      if(iStatus == Success)
-      {
-
-         if(wFocus == e.xfocus.window)
-         {
-
-            output_debug_string("A\n");
-
-         }
-         else
-         {
-
-            output_debug_string("B " + ::str::from(wFocus));
-
-            g_windowFocus = wFocus;
-
-         }
-
-         if(wFocus == g_windowFocus)
-         {
-
-            output_debug_string("C\n");
-
-         }
-         else
-         {
-
-            output_debug_string("D " + ::str::from(wFocus));
-
-            g_windowFocus = wFocus;
-
-         }
-
-      }
-
+//      Window wFocus = 0;
+//
+//      int revert_to_return = 0;
+//
+//      int iStatus = XGetInputFocus(display, &wFocus, &revert_to_return);
+//
+//      //if(iStatus == Success)
+//      if(iStatus)
+//      {
+//
+//         if(wFocus == e.xfocus.window)
+//         {
+//
+//            output_debug_string("A\n");
+//
+//         }
+//         else
+//         {
+//
+//            output_debug_string("B " + ::str::from(wFocus));
+//
+//            g_windowFocus = wFocus;
+//
+//         }
+//
+//         if(wFocus == g_windowFocus)
+//         {
+//
+//            output_debug_string("C\n");
+//
+//         }
+//         else
+//         {
+//
+//            output_debug_string("D " + ::str::from(wFocus));
+//
+//            g_windowFocus = wFocus;
+//
+//         }
+//
+//      }
+//
       synch_lock sl(pdata->m_pmutexInput);
 
       pdata->m_messsageaInput.add(msg);

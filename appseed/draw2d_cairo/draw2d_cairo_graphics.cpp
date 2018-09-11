@@ -874,6 +874,7 @@ namespace draw2d_cairo
 
    }
 
+
    bool graphics::Polyline(const POINT* lpPoints, count nCount)
    {
 
@@ -881,14 +882,11 @@ namespace draw2d_cairo
 
    }
 
-   bool graphics::fill_rect(LPCRECT lpRect, ::draw2d::brush* pBrush)
+
+   bool graphics::fill_rect(LPCRECT lpRect, ::draw2d::brush * pbrush)
    {
 
       synch_lock ml(cairo_mutex());
-
-      //g.SetCompositingMode(Gdiplus::CompositingModeSourceCopy);
-      //g().SetCompositingMode(Gdiplus::CompositingModeSourceOver);
-      //g().SetCompositingQuality(Gdiplus::CompositingQualityGammaCorrected);
 
       if (lpRect->right <= lpRect->left || lpRect->bottom <= lpRect->top)
       {
@@ -897,15 +895,9 @@ namespace draw2d_cairo
 
       }
 
-      //set(pBrush);
-
       cairo_rectangle(m_pdc, lpRect->left, lpRect->top, lpRect->right - lpRect->left, lpRect->bottom - lpRect->top);
 
-      fill();
-
-      //cairo_fill(m_pdc);
-
-      //      ASSERT(get_handle1() != NULL); ::FillRect(get_handle1(), lpRect, (HBRUSH)pBrush->get_os_data());
+      fill(pbrush);
 
    }
 

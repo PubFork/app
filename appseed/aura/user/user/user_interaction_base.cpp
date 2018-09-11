@@ -2523,7 +2523,7 @@ Restart:
 
       ::exception::throw_interface_only(get_app());
 
-      return false;
+      return NULL;
 
    }
 

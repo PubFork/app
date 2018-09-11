@@ -9790,19 +9790,6 @@ restart:
    }
 
 
-   void interaction::post_destroy_window()
-   {
-
-      post_pred([&]()
-      {
-
-         DestroyWindow();
-
-      });
-
-   }
-
-
 } // namespace user
 
 

@@ -377,133 +377,133 @@ GtkWidget * idle_basecore_app_indicator_init(indicator * pindicator, user_notify
 
    AppIndicator * m_pappindicator = (AppIndicator *) pindicator->m_pindicator;
 
-   GError * error = NULL;
+   int iCount = pbridge->notification_area_action_count();
+
+
+   GtkWidget *  indicator_menu = NULL;
+
+   if(iCount > 0)
+   //if(false)
+   {
+
+
+      GError * error = NULL;
 
    GtkActionGroup * action_group = gtk_action_group_new ("AppActions");
 
-   if(action_group == NULL)
+   if(action_group != NULL)
    {
 
-      return NULL;
 
-   }
+      GtkActionEntry * entries = new GtkActionEntry[pbridge->notification_area_action_count()];
 
-   int iCount = pbridge->notification_area_action_count();
+      gchar * ui_info = (gchar *) malloc(1024 * 1024);
 
-   if(iCount <= 0)
-   {
+      strcpy(ui_info, "<ui>");
+      strcat(ui_info, "  <popup name='IndicatorPopup'>");
 
-      return NULL;
+      int iEntry = 0;
 
-   }
-
-   GtkActionEntry * entries = new GtkActionEntry[pbridge->notification_area_action_count()];
-
-   gchar * ui_info = (gchar *) malloc(1024 * 1024);
-
-   strcpy(ui_info, "<ui>");
-   strcat(ui_info, "  <popup name='IndicatorPopup'>");
-
-   int iEntry = 0;
-
-   for(int i = 0; i < iCount; i++)
-   {
-
-      char * pszName = NULL;
-      char * pszId = NULL;
-      char * pszLabel = NULL;
-      char * pszAccelerator = NULL;
-      char * pszDescription = NULL;
-
-      pbridge->notification_area_action_info(&pszName, &pszId, &pszLabel, &pszAccelerator, &pszDescription, i);
-
-      if(strcasecmp(pszName, "separator") == 0)
+      for(int i = 0; i < iCount; i++)
       {
 
-         strcat(ui_info, "<separator/>\n");
+         char * pszName = NULL;
+         char * pszId = NULL;
+         char * pszLabel = NULL;
+         char * pszAccelerator = NULL;
+         char * pszDescription = NULL;
 
-         safe_free(pszName);
+         pbridge->notification_area_action_info(&pszName, &pszId, &pszLabel, &pszAccelerator, &pszDescription, i);
 
-      }
-      else
-      {
+         if(strcasecmp(pszName, "separator") == 0)
+         {
 
-         entries[iEntry].name = pszLabel;
+            strcat(ui_info, "<separator/>\n");
 
-         strcat(ui_info, "    <menuitem action='");
-         strcat(ui_info, pszLabel);
-         strcat(ui_info, "' />");
+            safe_free(pszName);
 
-         entries[iEntry].stock_id = pszId;
+         }
+         else
+         {
 
-         entries[iEntry].label = pszName;
+            entries[iEntry].name = pszLabel;
 
-         entries[iEntry].accelerator = pszAccelerator;
+            strcat(ui_info, "    <menuitem action='");
+            strcat(ui_info, pszLabel);
+            strcat(ui_info, "' />");
 
-         entries[iEntry].tooltip = pszDescription;
+            entries[iEntry].stock_id = pszId;
 
-         entries[iEntry].callback = G_CALLBACK (__extra_action);
+            entries[iEntry].label = pszName;
 
-         iEntry++;
+            entries[iEntry].accelerator = pszAccelerator;
+
+            entries[iEntry].tooltip = pszDescription;
+
+            entries[iEntry].callback = G_CALLBACK (__extra_action);
+
+            iEntry++;
+
+         }
 
       }
 
-   }
+      strcat(ui_info, "  </popup>");
+      strcat(ui_info, "</ui>");
 
-   strcat(ui_info, "  </popup>");
-   strcat(ui_info, "</ui>");
+      gtk_action_group_add_actions (action_group, entries, iEntry, pbridge);
 
-   gtk_action_group_add_actions (action_group, entries, iEntry, pbridge);
+      GtkUIManager * uim = gtk_ui_manager_new ();
 
-   GtkUIManager * uim = gtk_ui_manager_new ();
+      bool bOk = false;
 
-   bool bOk = false;
-
-   if(uim != NULL)
-   {
-
-      gtk_ui_manager_insert_action_group (uim, action_group, 0);
-
-      bOk = gtk_ui_manager_add_ui_from_string (uim, ui_info, -1, &error) != FALSE;
-
-      if(!bOk)
+      if(uim != NULL)
       {
 
-         g_message ("Failed to build menus: %s\n", error->message);
+         gtk_ui_manager_insert_action_group (uim, action_group, 0);
 
-         g_error_free (error);
+         bOk = gtk_ui_manager_add_ui_from_string (uim, ui_info, -1, &error) != FALSE;
 
-         error = NULL;
+         if(!bOk)
+         {
+
+            g_message ("Failed to build menus: %s\n", error->message);
+
+            g_error_free (error);
+
+            error = NULL;
+
+         }
+
+      }
+
+      for(int i = 0; i < iEntry; i++)
+      {
+
+         safe_free((void *) entries[i].name);
+         safe_free((void *) entries[i].stock_id);
+         safe_free((void *) entries[i].label);
+         safe_free((void *) entries[i].accelerator);
+         safe_free((void *) entries[i].tooltip);
+
+      }
+
+      delete [] entries;
+
+      free(ui_info);
+
+      if(bOk)
+      {
+
+         indicator_menu = gtk_ui_manager_get_widget (uim, "/ui/IndicatorPopup");
+
+         app_indicator_set_menu(m_pappindicator, GTK_MENU (indicator_menu));
 
       }
 
    }
 
-   for(int i = 0; i < iEntry; i++)
-   {
-
-      safe_free((void *) entries[i].name);
-      safe_free((void *) entries[i].stock_id);
-      safe_free((void *) entries[i].label);
-      safe_free((void *) entries[i].accelerator);
-      safe_free((void *) entries[i].tooltip);
-
    }
-
-   delete [] entries;
-
-   free(ui_info);
-
-   if(!bOk)
-   {
-
-      return NULL;
-
-   }
-
-   GtkWidget *  indicator_menu = gtk_ui_manager_get_widget (uim, "/ui/IndicatorPopup");
-
-   app_indicator_set_menu(m_pappindicator, GTK_MENU (indicator_menu));
 
    app_indicator_set_status(m_pappindicator, APP_INDICATOR_STATUS_ACTIVE);
 

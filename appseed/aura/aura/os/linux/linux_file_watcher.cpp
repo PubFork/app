@@ -62,15 +62,6 @@ namespace file_watcher
 
 	   ::multithreading::post_quit_and_wait(m_pthread, seconds(15));
 
-		WatchMap::pair * ppair = m_watchmap.PGetFirstAssoc();
-
-		for(; ppair != NULL; ppair = m_watchmap.PGetNextAssoc(ppair))
-		{
-
-			delete ppair->m_element2;
-
-		}
-
 		m_watchmap.remove_all();
 
 	}
