@@ -912,20 +912,19 @@ namespace draw2d_cairo
 
    bool graphics::draw_rect(LPCRECT lpcrect, ::draw2d::pen * ppen)
    {
+
       synch_lock ml(cairo_mutex());
 
-      //g.SetCompositingMode(Gdiplus::CompositingModeSourceCopy);
-      //g().SetCompositingMode(Gdiplus::CompositingModeSourceOver);
-      //g().SetCompositingQuality(Gdiplus::CompositingQualityGammaCorrected);
-
       if (lpcrect->right <= lpcrect->left || lpcrect->bottom <= lpcrect->top)
+      {
+
          return false;
 
-      set(ppen);
+      }
 
       cairo_rectangle(m_pdc, lpcrect->left, lpcrect->top, lpcrect->right - lpcrect->left, lpcrect->bottom - lpcrect->top);
 
-      cairo_stroke(m_pdc);
+      draw(ppen);
 
       return true;
 
