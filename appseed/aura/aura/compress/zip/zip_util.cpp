@@ -336,6 +336,24 @@ namespace zip
 
    }
 
+
+   bool util::extract(::aura::application * papp, memory & m, const char * lpszFileName)
+   {
+
+      in_file infile(papp);
+
+      if(!infile.unzip_open(lpszFileName, 0))
+      {
+
+         return false;
+
+      }
+
+      return infile.dump(m);
+
+   }
+
+
    bool util::extract_all(::aura::application * papp,const char * pszDir,var varFile, stringa * pstraFilter, bool_array * pbaBeginsFilterEat)
    {
 

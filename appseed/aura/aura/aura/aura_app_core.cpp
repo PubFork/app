@@ -62,7 +62,12 @@ aura_main_data::aura_main_data(int argc, char ** argv)
 
    m_nCmdShow = SW_SHOWDEFAULT;
 
+#elif defined(LINUX)
+
+   m_bGtkApp = false;
+
 #endif
+
 
 }
 
@@ -180,12 +185,6 @@ void app_core::app_core_common_construct(aura_main_data * pdata, ::aura::PFN_GET
    m_iTotalErrorCount = 0;
 
    m_iMatterFromHttpCache = -1; // -1 = overridable
-
-#ifdef LINUX
-
-   m_bGtkApp = false;
-
-#endif
 
    m_pmaindata = pdata;
 

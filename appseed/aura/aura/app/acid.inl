@@ -28,6 +28,17 @@ int main(int argc, char * argv[])
 
 #endif
 
+#ifdef BR_INIT_SYMBOL
+
+   br_init_set_symbol(BR_INIT_SYMBOL);
+
+#endif
+
+#ifdef GTKAPP
+
+   pmaindata->m_bGtkApp = true;
+
+#endif
 
    return (int) aura_aura(pmaindata, &get_acid_app);
 

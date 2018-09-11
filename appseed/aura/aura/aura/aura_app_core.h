@@ -79,6 +79,10 @@ public:
    HINSTANCE                     m_hPrevInstance;
    int32_t                       m_nCmdShow;
 
+#elif defined(LINUX)
+
+   bool                          m_bGtkApp;
+
 #endif
 
 
@@ -130,11 +134,6 @@ public:
    int                           m_iTotalErrorCount;
 
 
-#ifdef LINUX
-
-   bool                          m_bGtkApp;
-
-#endif
 
    app_core(aura_main_data * pdata);
    app_core(aura_main_data * pdata, ::aura::PFN_GET_NEW_APP pgetnewapp);

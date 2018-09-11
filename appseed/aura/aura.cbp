@@ -180,7 +180,7 @@
 		<Unit filename="all.h" />
 		<Unit filename="aura.h" />
 		<Unit filename="aura/_aura.cpp" />
-		<Unit filename="aura/app/app_prelude.inl" />
+		<Unit filename="aura/app/acid.inl" />
 		<Unit filename="aura/app/aura.inl" />
 		<Unit filename="aura/aura/aura.h" />
 		<Unit filename="aura/aura/aura_action_context.h" />
@@ -364,10 +364,8 @@
 		<Unit filename="aura/compress/bsdiff/libbsdiff.h" />
 		<Unit filename="aura/compress/compress.h" />
 		<Unit filename="aura/compress/compress_bz.h" />
-		<Unit filename="aura/compress/compress_bzip.h" />
 		<Unit filename="aura/compress/compress_department.h" />
 		<Unit filename="aura/compress/compress_gz.h" />
-		<Unit filename="aura/compress/compress_gzip.h" />
 		<Unit filename="aura/compress/zip/zip.h" />
 		<Unit filename="aura/compress/zip/zip_api.h" />
 		<Unit filename="aura/compress/zip/zip_crypt.h" />
@@ -1395,6 +1393,10 @@
 		<Unit filename="primitive/primitive_memory_base.h" />
 		<Unit filename="primitive/primitive_memory_c.h" />
 		<Unit filename="primitive/primitive_memory_container.h" />
+		<Unit filename="primitive/primitive_object.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="primitive/primitive_object.h" />
 		<Unit filename="primitive/primitive_property.h" />
 		<Unit filename="primitive/primitive_property_set.h" />
@@ -1502,6 +1504,10 @@
 		<Unit filename="user/colorertake5/colorertake5_xmldom.h" />
 		<Unit filename="user/simple/simple_message_box.h" />
 		<Unit filename="user/user/_user.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="user/user/user.cpp">
 			<Option compile="0" />
 			<Option link="0" />
 		</Unit>

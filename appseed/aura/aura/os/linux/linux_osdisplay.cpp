@@ -92,7 +92,7 @@ osdisplay_data * osdisplay_get(Display * pdisplay)
 
    ::osdisplay_data::s_pdataptra->add(pdata);
 
-   if(!::aura::system::g_p->m_pappcore->m_bGtkApp)
+   if(!::aura::system::g_p->m_pappcore->m_pmaindata->m_bGtkApp)
    {
 
       ::aura::system::g_p->fork([pdata]()

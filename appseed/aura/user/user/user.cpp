@@ -51,3 +51,17 @@ namespace user
 
 
 
+
+string get_text(string str)
+{
+
+   if(::get_app() == NULL)
+   {
+
+      return Sys(::aura::system::g_p).get_text(str);
+
+   }
+
+   return Application.get_text(str);
+
+}

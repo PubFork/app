@@ -388,6 +388,26 @@ namespace zip
       return true;
    }
 
+
+   bool in_file::dump(memory & m)
+   {
+
+      BYTE buf[1024];
+
+      memory_size_t iRead;
+
+      while((iRead = read(buf,sizeof(buf))) > 0)
+      {
+
+         m.append(buf, iRead);
+
+      }
+
+      return true;
+
+   }
+
+
    memory_size_t in_file::read(void * lpBuf,memory_size_t nCount)
    {
       //   ASSERT_VALID(this);

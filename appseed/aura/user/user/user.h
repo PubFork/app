@@ -52,7 +52,9 @@ class simple_scroll_bar;
 
 #undef _
 
-#define _(str) (Application.get_text(str))
+#define _(str) (get_text(str))
+
+CLASS_DECL_AURA string get_text(string str);
 
 #include "aura/user/user/user_builtin_strlangmap.h"
 

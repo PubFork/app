@@ -42,6 +42,7 @@ public:
    bool zip(const ::file::path & psz,::aura::application * papp);
 
    bool unzip(::aura::application * papp, const ::file::path & pathUncompressed, const ::file::path & pathZipFileCompressed);
+   bool unzip(::aura::application * papp, memory & m, const ::file::path & pathZipFileCompressed);
 
 
 };

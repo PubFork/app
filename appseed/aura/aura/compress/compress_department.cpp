@@ -309,6 +309,20 @@ bool compress_department::unzip(::aura::application * papp, const ::file::path &
 }
 
 
+bool compress_department::unzip(::aura::application * papp, memory & m, const ::file::path & pathZipFileCompressed)
+{
+
+   if (!zip::util().extract(papp, m, pathZipFileCompressed))
+   {
+
+      return false;
+
+   }
+
+   return true;
+
+}
+
 
 
 

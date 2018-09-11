@@ -85,7 +85,7 @@ void app_core::run()
 
    }
 
-   if(!m_bGtkApp)
+   if(!m_pmaindata->m_bGtkApp)
    {
 
       g_thread_init(NULL);
@@ -189,7 +189,7 @@ void app_core::run()
 //   ::aura::del(m_psystem);
 
 
-   if(m_bGtkApp)
+   if(m_pmaindata->m_bGtkApp)
    {
 
       bloat_pad_run(m_strAppId, m_strProgName);

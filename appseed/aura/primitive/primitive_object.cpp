@@ -826,11 +826,11 @@ object * object::clone()
 
    if(m_pfactoryitembase == NULL)
    {
-      
+
       return NULL;
-      
+
    }
-   
+
    return m_pfactoryitembase->clone(this);
 
 }
@@ -1060,6 +1060,22 @@ void object::threadrefa_remove(::thread * pthread)
    }
 
 }
+
+
+string object::get_string(string str)
+{
+
+   if(get_app() == NULL)
+   {
+
+      return ::get_text(str);
+
+   }
+
+   return Application.get_text(str);
+
+}
+
 
 
 

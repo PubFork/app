@@ -71,6 +71,8 @@ namespace zip
 
          bool dump(::file::file_sp pfile);
 
+         bool dump(memory & m);
+
          virtual ::file::file_sp Duplicate() const override;
 
          ::zip::file * get_zip_file();
