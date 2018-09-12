@@ -226,23 +226,31 @@ u64 & thread_flags()
 }
 
 
-CLASS_DECL_AURA void thread_set_fast_path(bool bFastPath)
+CLASS_DECL_AURA void thread_set_flag(u64 uFlag, bool bSet)
 {
 
    auto & u = thread_flags();
 
-   if (bFastPath)
+   if (bSet)
    {
 
-      u |= THREAD_FLAGS_FAST_PATH;
+      u |= uFlag;
 
    }
    else
    {
 
-      u &= ~THREAD_FLAGS_FAST_PATH;
+      u &= ~uFlag;
 
    }
+
+}
+
+
+CLASS_DECL_AURA void thread_set_fast_path(bool bFastPath)
+{
+
+   thread_set_flag(THREAD_FLAGS_FAST_PATH, bFastPath);
 
 }
 
@@ -251,6 +259,22 @@ CLASS_DECL_AURA bool thread_is_fast_path()
 {
 
    return (thread_flags() & THREAD_FLAGS_FAST_PATH) != 0ULL;
+
+}
+
+
+CLASS_DECL_AURA void thread_set_zip_is_dir(bool bZipIsDir)
+{
+
+   thread_set_flag(THREAD_FLAGS_ZIP_IS_DIR, bZipIsDir);
+
+}
+
+
+CLASS_DECL_AURA bool thread_zip_is_dir()
+{
+
+   return (thread_flags() & THREAD_FLAGS_ZIP_IS_DIR) != 0ULL;
 
 }
 

@@ -267,8 +267,8 @@ namespace linux
    {
 
       // can't use for desktop or pop-up windows (use create_window_ex instead)
-      ASSERT(pParentWnd != NULL);
-      ASSERT((dwStyle & WS_POPUP) == 0);
+      //ASSERT(pParentWnd != NULL);
+      //ASSERT((dwStyle & WS_POPUP) == 0);
 
       ::user::create_struct cs;
 
@@ -280,7 +280,7 @@ namespace linux
       cs.y = rect.top;
       cs.cx = width(rect);
       cs.cy = height(rect);
-      cs.hwndParent = pParentWnd->get_safe_handle();
+      cs.hwndParent = pParentWnd == NULL ?NULL:pParentWnd->get_safe_handle();
       cs.lpCreateParams = (LPVOID) pcreate;
 
       return create_window_ex(pui, cs, pParentWnd, id);
@@ -445,6 +445,14 @@ namespace linux
 
          }
 
+         m_oswindow = oswindow_get(display, window, vis, m_iDepth, m_iScreen, attr.colormap);
+
+         m_oswindow->set_user_interaction(this);
+
+         m_pui->m_pimpl = this;
+
+         m_pui->add_ref();
+
          m_pui->m_pthread = ::get_thread();
 
          if (m_pui->m_pthread != NULL)
@@ -490,8 +498,6 @@ namespace linux
 
          }
 
-         m_oswindow = oswindow_get(display, window, vis, m_iDepth, m_iScreen, attr.colormap);
-
          //m_px11data->m_pgdkwindow = gdk_x11_window_foreign_new_for_display(gdk_display_get_default(), window);
 
          Window root = 0;
@@ -508,10 +514,6 @@ namespace linux
             XFree(pchildren);
 
          }
-
-         m_oswindow->set_user_interaction(this);
-
-         m_pui->add_ref();
 
          HTHREAD hthread = ::GetCurrentThread();
 
