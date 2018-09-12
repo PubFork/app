@@ -14,6 +14,7 @@ namespace netserver
 
       m_iPort = 80;
       m_iSsl = -1;
+      m_strIp = "0.0.0.0";
 
    }
 

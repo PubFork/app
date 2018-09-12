@@ -221,6 +221,9 @@ namespace file
    ::file::file_sp application::get_file(var varFile, UINT nOpenFlags, cres * pfesp)
    {
 
+
+   return System.file().get_file(varFile, nOpenFlags, pfesp, m_papp);
+
       if(pfesp != NULL)
       {
          ::release(pfesp->m_p);

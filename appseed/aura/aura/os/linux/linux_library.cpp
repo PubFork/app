@@ -1,10 +1,48 @@
 #include "framework.h"
 #include <dlfcn.h>
+#include <link.h>
+
 
 CLASS_DECL_AURA void * __node_library_touch(const char * pszPath, string & strMessage)
 {
 
-   return __node_library_open(pszPath, strMessage);
+   link_map * map = (link_map *) dlopen(NULL, RTLD_NOW);
+
+   map = map->l_next->l_next;
+
+   ::file::path path(pszPath);
+
+   if(!::str::ends_ci(path, ".so"))
+   {
+
+      path += ".so";
+
+   }
+
+   if(!::str::begins_ci(path, "/") && !::str::begins_ci(path, "lib"))
+   {
+
+      path = "lib" + path;
+
+   }
+
+   while (map != NULL)
+   {
+
+      ::file::path pathItem(map->l_name);
+
+      if(path == pathItem || path == pathItem.name())
+      {
+
+         return __node_library_open(map->l_name, strMessage);
+
+      }
+
+      map = map->l_next;
+
+   }
+
+   return NULL;
 
 }
 

@@ -3866,7 +3866,7 @@ success:
    ::visual::dib_sp & system::get_dib(::aura::application * papp, ::file::path path, bool bAsync)
    {
 
-#ifdef FILE_SYSTEM_CASE_INSENSITIVE
+#if FILE_SYSTEM_CASE_INSENSITIVE
 
       path.make_lower();
 
@@ -3901,7 +3901,7 @@ success:
                if (is_debugger_attached())
                {
 
-                  simple_message_box("missing image from resource: \"" + path + "\"", MB_OK);
+                  //simple_message_box("missing image from resource: \"" + path + "\"", MB_OK);
 
                }
 
@@ -3911,7 +3911,7 @@ success:
                   if (is_debugger_attached())
                   {
 
-                     simple_message_box("missing framework image from system resource: \"matter://missing_image.png\"", MB_OK);
+                     //simple_message_box("missing framework image from system resource: \"matter://missing_image.png\"", MB_OK);
 
                   }
 
