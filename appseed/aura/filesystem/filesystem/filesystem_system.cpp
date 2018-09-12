@@ -1055,7 +1055,7 @@ restart:
          ::file::path strSrc;
          ::file::path strDirSrc(psz);
          ::file::path strDirDst(pszNew);
-         if (App(papp).m_bZipIsDir && (::str::ends(strDirSrc, ".zip")))
+         if (::get_thread() != NULL && ::get_thread()->m_bZipIsDir && (::str::ends(strDirSrc, ".zip")))
          {
             strDirSrc += ":";
          }
