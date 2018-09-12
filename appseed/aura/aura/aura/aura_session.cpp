@@ -65,6 +65,14 @@ namespace aura
 
 #endif
 
+      m_pmapKeyPressed              = NULL;
+
+      m_pcopydesk = NULL;
+
+      m_puiMouseMoveCapture         = NULL;
+
+      m_iMainMonitor                = -1;
+
       m_psavings = canew(class ::aura::savings(this));
 
       m_bZipIsDir2 = true;
@@ -73,6 +81,7 @@ namespace aura
       m_bShowPlatform = false;
       m_pappCurrent = NULL;
 
+      m_puserstrcontext = NULL;
 
    }
 

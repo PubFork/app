@@ -1,4 +1,4 @@
-#include "framework.h"
+#pragma once
 
 
 class CLASS_DECL_AURA compress_zip_is_dir
