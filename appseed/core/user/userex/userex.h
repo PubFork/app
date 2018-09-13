@@ -4,6 +4,9 @@
 #include "core/user/simple/simple.h"
 
 
+#include "core/user/menu/user_menu_central.h"
+
+
 namespace filemanager
 {
 

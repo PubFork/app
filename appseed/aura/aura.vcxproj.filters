@@ -2774,6 +2774,9 @@
     <ClInclude Include="aura\os\windows_common\windows_common_file.h">
       <Filter>Header Files\aura\os\windows_common</Filter>
     </ClInclude>
+    <ClInclude Include="aura\compress\compress_zip_is_dir.h">
+      <Filter>Header Files\aura\compress</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="multithreading\multithreading_condition.cpp">
@@ -4782,6 +4785,9 @@
     </ClCompile>
     <ClCompile Include="graphics\draw2d\draw2d_color_matrix.cpp">
       <Filter>Source Files\graphics\draw2d</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\compress\compress_zip_is_dir.cpp">
+      <Filter>Source Files\aura\compress</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

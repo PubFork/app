@@ -1146,9 +1146,9 @@ namespace wndfrm_anthill
 
       bool bHover = iItem == ptoolbar->_001GetHoverItem();
 
-      BaseMenuCentral * pmenucentral = BaseMenuCentral::GetMenuCentral(get_app());
+      sp(::user::menu_central) pmenucentral = Session.userex()->menu();
 
-      UINT uiImage = pmenucentral->CommandToImage(item.m_id);
+      UINT uiImage = pmenucentral->command_image(item.m_id);
 
       ::user::toolbar::e_element eelement = ::user::toolbar::element_item;
       ::user::toolbar::e_element eelementImage = ::user::toolbar::element_image;

@@ -122,7 +122,7 @@ namespace windows
          //}
 
 
-         if(::get_thread() != NULL && ::get_thread()->m_bZipIsDir && iLast >= 3 && !strnicmp_dup(&((const char *)str)[iLast - 3],".zip",4))
+         if(::thread_zip_is_dir() && iLast >= 3 && !strnicmp_dup(&((const char *)str)[iLast - 3],".zip",4))
          {
             //            m_isdirmap.set(str.Left(iLast + 1), true, 0);
             return true;
@@ -130,7 +130,7 @@ namespace windows
 
          strsize iFind = ::str::find_file_extension("zip:", str, 0, iLast);
 
-         if(::get_thread() != NULL && ::get_thread()->m_bZipIsDir && iFind >= 0 && iFind < iLast)
+         if(::thread_zip_is_dir() && iFind >= 0 && iFind < iLast)
          {
             bool bHasSubFolder;
             //if(m_isdirmap.lookup(str, bHasSubFolder, uiLastError))
