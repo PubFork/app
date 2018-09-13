@@ -67,7 +67,7 @@ namespace aura
 
       m_psavings = canew(class ::aura::savings(this));
 
-      m_bZipIsDir = true;
+      m_bZipIsDir2 = true;
 
       m_iEdge = 0;
       m_bShowPlatform = false;
@@ -1406,15 +1406,7 @@ namespace aura
    bool session::on_create_frame_window()
    {
 
-      if (m_pcopydesk != NULL)
-         return true;
-
-      alloc(m_pcopydesk);
-
-      if (!m_pcopydesk->initialize())
-         return false;
-
-      return true;
+   return true;
 
    }
 

@@ -117,7 +117,7 @@ public:
    thread_ptra                            m_threadrefaRequired;
    ::user::interactive *                  m_pinteractive;
    bool                                   m_bSimpleMessageLoop;
-   bool                                   m_bZipIsDir;
+   bool                                   m_bZipIsDir2;
 
 //   replace_thread *                       m_preplacethread;
 

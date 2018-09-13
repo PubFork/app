@@ -252,9 +252,13 @@ string builtin_strlangmap::_get_text(string strLang, string strId)
    }
 
    if (p->m_element2[strId].is_empty())
+   {
+
       return strId;
-   else
-      return p->m_element2[strId];
+
+   }
+
+   return p->m_element2[strId];
 
 }
 

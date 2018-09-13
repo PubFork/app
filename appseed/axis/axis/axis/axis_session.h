@@ -109,6 +109,7 @@ namespace axis
       virtual string fontopus_get_cred(::aura::application * papp,const string & strRequestUrlParam,const RECT & rect,string & strUsername,string & strPassword,string strToken,string strTitle,bool bInteractive, ::user::interactive * pinteractive = NULL) override;
       //virtual bool is_session();
 
+      virtual bool on_create_frame_window() override;
 
       //void construct(::aura::application * papp,int iPhase);
 

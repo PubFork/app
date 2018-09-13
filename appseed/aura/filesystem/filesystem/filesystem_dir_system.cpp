@@ -356,7 +356,7 @@ namespace file
          if (l.m_bRecursive)
          {
 
-            if (l.m_eextract != extract_none && ::get_thread() != NULL && ::get_thread()->m_bZipIsDir && (icmp(l.m_path.ext(), ".zip") == 0 || l.m_path.find_ci("zip:") >= 0))
+            if (l.m_eextract != extract_none && thread_zip_is_dir() && (icmp(l.m_path.ext(), ".zip") == 0 || l.m_path.find_ci("zip:") >= 0))
             {
 
                //_throw(simple_exception(get_app(), "should implement recursive zip"));
@@ -389,7 +389,7 @@ namespace file
                l.add_tokens(str, "\n", false);
 
             }
-            else if (::get_thread() != NULL && ::get_thread()->m_bZipIsDir && (::str::ends_ci(l.m_path, ".zip") || ::str::find_file_extension("zip:", l.m_path) >= 0))
+            else if (thread_zip_is_dir() && (::str::ends_ci(l.m_path, ".zip") || ::str::find_file_extension("zip:", l.m_path) >= 0))
             {
 
                m_pziputil->ls(papp, l);
@@ -415,7 +415,7 @@ namespace file
          if (l.m_bRecursive)
          {
 
-            if (l.m_eextract != extract_none && ::get_thread() != NULL && ::get_thread()->m_bZipIsDir && (icmp(l.m_path.ext(), ".zip") == 0 || l.m_path.find_ci("zip:") >= 0))
+            if (l.m_eextract != extract_none && ::thread_zip_is_dir() && (icmp(l.m_path.ext(), ".zip") == 0 || l.m_path.find_ci("zip:") >= 0))
             {
 
                //_throw(simple_exception(get_app(), "should implement recursive zip"));
@@ -448,7 +448,7 @@ namespace file
                l.add_tokens(str, "\n", false);
 
             }
-            else if (::get_thread() != NULL && ::get_thread()->m_bZipIsDir && (::str::ends_ci(l.m_path, ".zip") || ::str::find_file_extension("zip:", l.m_path) >= 0))
+            else if (::thread_zip_is_dir() && (::str::ends_ci(l.m_path, ".zip") || ::str::find_file_extension("zip:", l.m_path) >= 0))
             {
 
                m_pziputil->ls(papp, l);
@@ -526,7 +526,7 @@ namespace file
 
          //}
 
-         if (::get_thread() != NULL && ::get_thread()->m_bZipIsDir && (::str::ends_ci(lpcszPath, ".zip")))
+         if (::thread_zip_is_dir() && (::str::ends_ci(lpcszPath, ".zip")))
          {
 
             bIs = true;
@@ -534,7 +534,7 @@ namespace file
             return true;
          }
 
-         if (::get_thread() != NULL && ::get_thread()->m_bZipIsDir && (::str::find_file_extension("zip:", lpcszPath) >= 0))
+         if (::thread_zip_is_dir() && (::str::find_file_extension("zip:", lpcszPath) >= 0))
          {
 
             bool bHasSubFolder;
@@ -651,7 +651,7 @@ namespace file
 
          }
 
-         if (::get_thread() != NULL && ::get_thread()->m_bZipIsDir && (::str::ends_ci(path, ".zip")))
+         if (::thread_zip_is_dir() && (::str::ends_ci(path, ".zip")))
          {
 
             //m_isdirmap.set(path, true, 0);
@@ -660,7 +660,7 @@ namespace file
 
          }
 
-         if (::get_thread() != NULL && ::get_thread()->m_bZipIsDir && (::str::find_file_extension("zip:", path) >= 0))
+         if (::thread_zip_is_dir() && (::str::find_file_extension("zip:", path) >= 0))
          {
 
             bool bHasSubFolder;
@@ -682,12 +682,12 @@ namespace file
       {
 
          //output_debug_string(strPath);
-         if (::get_thread() != NULL && ::get_thread()->m_bZipIsDir && (::str::ends_ci(strPath, ".zip")))
+         if (::thread_zip_is_dir() && (::str::ends_ci(strPath, ".zip")))
          {
 //            m_isdirmap.set(strPath, true, 0);
             return true;
          }
-         if (::get_thread() != NULL && ::get_thread()->m_bZipIsDir && (::str::find_file_extension("zip:", strPath) >= 0))
+         if (::thread_zip_is_dir() && (::str::find_file_extension("zip:", strPath) >= 0))
          {
             bool bHasSubFolder;
 //            uint32_t dwLastError;

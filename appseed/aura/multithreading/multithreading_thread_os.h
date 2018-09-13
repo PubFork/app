@@ -93,10 +93,14 @@ public:
 
 
 #define THREAD_FLAGS_FAST_PATH 1ULL
+#define THREAD_FLAGS_ZIP_IS_DIR 2ULL
 
 CLASS_DECL_AURA u64 & thread_flags();
+CLASS_DECL_AURA void thread_set_flag(u64 uFlag, bool bSet = true);
 CLASS_DECL_AURA void thread_set_fast_path(bool bFastPath = true);
 CLASS_DECL_AURA bool thread_is_fast_path();
+CLASS_DECL_AURA void thread_set_zip_is_dir(bool bZipIsDir = true);
+CLASS_DECL_AURA bool thread_zip_is_dir();
 
 
 CLASS_DECL_AURA bool __wait_threading_count(::duration dur);

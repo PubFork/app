@@ -734,7 +734,35 @@ namespace axis
 
    }
 
+   bool session::on_create_frame_window()
+   {
 
+      if(!::aura::session::on_create_frame_window())
+      {
+
+         return false;
+
+      }
+
+      if (m_pcopydesk != NULL)
+      {
+
+         return true;
+
+      }
+
+      alloc(m_pcopydesk);
+
+      if (!m_pcopydesk->initialize())
+      {
+
+         return false;
+
+      }
+
+      return true;
+
+   }
 
 
    ::user::keyboard & session::keyboard()

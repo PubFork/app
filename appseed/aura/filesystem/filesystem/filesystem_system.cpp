@@ -80,7 +80,7 @@ namespace file
 
       }
 
-      if (::get_thread() != NULL && ::get_thread()->m_bZipIsDir)
+      if (::thread_zip_is_dir())
       {
 
          strsize iFind = ::str::find_file_extension("zip:", path);
@@ -513,7 +513,7 @@ restart:
 
          strFilePath = System.defer_process_path(strFilePath, papp);
 
-         if (::get_thread() != NULL && ::get_thread()->m_bZipIsDir && (::str::find_file_extension("zip:", strFilePath) >= 0))
+         if (::thread_zip_is_dir() && (::str::find_file_extension("zip:", strFilePath) >= 0))
          {
 
             if (!exists(strFilePath, papp))
@@ -1055,10 +1055,14 @@ restart:
          ::file::path strSrc;
          ::file::path strDirSrc(psz);
          ::file::path strDirDst(pszNew);
-         if (::get_thread() != NULL && ::get_thread()->m_bZipIsDir && (::str::ends(strDirSrc, ".zip")))
+
+         if (::thread_zip_is_dir() && (::str::ends(strDirSrc, ".zip")))
          {
+
             strDirSrc += ":";
+
          }
+
          for (int32_t i = 0; i < patha.get_size(); i++)
          {
             strSrc = patha[i];

@@ -366,6 +366,8 @@
 		<Unit filename="aura/compress/compress_bz.h" />
 		<Unit filename="aura/compress/compress_department.h" />
 		<Unit filename="aura/compress/compress_gz.h" />
+		<Unit filename="aura/compress/compress_zip_dir.cpp" />
+		<Unit filename="aura/compress/compress_zip_dir.h" />
 		<Unit filename="aura/compress/zip/zip.h" />
 		<Unit filename="aura/compress/zip/zip_api.h" />
 		<Unit filename="aura/compress/zip/zip_crypt.h" />
@@ -1512,6 +1514,10 @@
 			<Option link="0" />
 		</Unit>
 		<Unit filename="user/user/user.h" />
+		<Unit filename="user/user/user_builtin_strlangmap.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="user/user/user_command.h" />
 		<Unit filename="user/user/user_const.h" />
 		<Unit filename="user/user/user_control_event.h" />

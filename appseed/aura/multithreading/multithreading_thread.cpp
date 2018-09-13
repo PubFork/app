@@ -281,7 +281,7 @@ thread::thread(::aura::application * papp) :
    if(m_papp != NULL && m_papp->m_psession != NULL)
    {
 
-      m_bZipIsDir = m_papp->m_psession->m_bZipIsDir;
+      m_bZipIsDir2 = m_papp->m_psession->m_bZipIsDir2;
 
    }
 
@@ -302,7 +302,7 @@ thread::thread(::aura::application * papp, __THREADPROC pfnThreadProc, LPVOID pP
    if(m_papp != NULL && m_papp->m_psession != NULL)
    {
 
-      m_bZipIsDir = m_papp->m_psession->m_bZipIsDir;
+      m_bZipIsDir2 = m_papp->m_psession->m_bZipIsDir2;
 
    }
 
@@ -348,7 +348,7 @@ void thread::CommonConstruct()
 
 //   m_iErrorCode = 0;
 //
-   m_bZipIsDir = true;
+   m_bZipIsDir2 = true;
 
    m_pslUser = NULL;
 
@@ -1839,6 +1839,9 @@ uint32_t __thread_entry(void * pparam)
       pthread = pstartup->m_pthread;
 
       set_thread_on(::GetCurrentThreadId());
+
+      thread_set_zip_is_dir(pthread->m_bZipIsDir2);
+
 //#ifndef MACOS
 //      pthread->translator::attach();
 //#endif
