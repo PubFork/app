@@ -7389,13 +7389,13 @@ run:
    }
 
 
-   string application::get_text(string str)
+   string application::__get_text(string str)
    {
 
       if (System.m_pstrlangmap.is_set())
       {
 
-         return System.m_pstrlangmap->get_text(str);
+         return System.m_pstrlangmap->__get_text(str);
 
       }
 

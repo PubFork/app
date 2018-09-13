@@ -102,7 +102,6 @@
 		<Unit filename="axis/axis/axis_os.h" />
 		<Unit filename="axis/axis/axis_session.cpp" />
 		<Unit filename="axis/axis/axis_session.h" />
-		<Unit filename="axis/axis/axis_simple_app.h" />
 		<Unit filename="axis/axis/axis_static_start.cpp" />
 		<Unit filename="axis/axis/axis_static_start.h" />
 		<Unit filename="axis/axis/axis_system.cpp" />

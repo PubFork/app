@@ -1062,17 +1062,17 @@ void object::threadrefa_remove(::thread * pthread)
 }
 
 
-string object::get_string(string str)
+string object::__get_text(string str)
 {
 
    if(get_app() == NULL)
    {
 
-      return ::get_text(str);
+      return ::__get_text(str);
 
    }
 
-   return Application.get_text(str);
+   return Application.__get_text(str);
 
 }
 

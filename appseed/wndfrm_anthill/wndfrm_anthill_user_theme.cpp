@@ -1,5 +1,6 @@
 #include "framework.h" // from "base/user/user.h"
 #include "core/user/menu/user_menu_central.h"
+#include "core/user/userex/userex.h"
 // pgraphics->GetTextExtent("->:<-"); // oh no!! omg!! The size is the size of the alien!!
 #define MAGIC_PALACE_TAB_SPLT "->:<-"
 #define MAGIC_PALACE_TAB_SIZE "-/-"
@@ -849,9 +850,9 @@ namespace wndfrm_anthill
 
       bool bHover = iItem == ptoolbar->_001GetHoverItem();
 
-      BaseMenuCentral * pmenucentral = BaseMenuCentral::GetMenuCentral(get_app());
+      sp(::user::menu_central) pmenucentral = Session.userex()->menu();
 
-      UINT uiImage = pmenucentral->CommandToImage(item.m_id);
+      UINT uiImage = pmenucentral->command_image(item.m_id);
 
       ::user::toolbar::e_element eelement = ::user::toolbar::element_item;
       ::user::toolbar::e_element eelementImage = ::user::toolbar::element_image;

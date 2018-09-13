@@ -629,7 +629,7 @@ namespace aura
       virtual void on_control_event(::user::control_event * pevent);
 
 
-      virtual string get_text(string str);
+      virtual string __get_text(string str) override;
 
    };
 

@@ -91,7 +91,6 @@ namespace userex
       System.factory().creatable_small < ::user::tab_view >();
 
 
-
       if(!create_user_shell())
       {
 
@@ -301,12 +300,7 @@ retry_license:
       System.factory().creatable_small < simple_toolbar >();
       System.factory().creatable_small < ::user::orto_button >();
 
-      if (!BaseMenuCentralContainer::initialize_central_container(get_app()))
-      {
-
-         return false;
-
-      }
+      m_pmenucentral2 = canew(::user::menu_central(get_app()));
 
       if (!::aura::department::init())
       {
@@ -352,12 +346,7 @@ retry_license:
       try
       {
 
-         if(!BaseMenuCentralContainer::finalize_central_container())
-         {
-
-            TRACE("Errors occurred while finalizing BaseMenuCentralContainer");
-
-         }
+         m_pmenucentral2.release();
 
       }
       catch(...)
@@ -375,6 +364,13 @@ retry_license:
 
    }
 
+
+   ::user::menu_central * userex::menu()
+   {
+
+      return m_pmenucentral2;
+
+   }
 
    string userex::message_box(const char * pszMatter,property_set & propertyset)
    {

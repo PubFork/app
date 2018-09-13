@@ -119,7 +119,7 @@ namespace colorertake5
 
       fileErrorHandler = NULL;
 
-      keep < bool > keepZipAsDir(&::get_thread()->m_bZipIsDir,true,::get_thread()->m_bZipIsDir,true);
+      compress_zip_is_dir zipisdir(true);
 
       catalogPath = searchPath();
 

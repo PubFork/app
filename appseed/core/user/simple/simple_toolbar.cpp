@@ -686,9 +686,9 @@ void simple_toolbar::_001DrawSimpleToolbarItem(::draw2d::graphics * pgraphics, i
 
    bool bHover = iItem == _001GetHoverItem();
 
-   BaseMenuCentral * pmenucentral = BaseMenuCentral::GetMenuCentral(get_app());
+   sp(::user::menu_central) pmenucentral = Session.userex()->menu();
 
-   UINT uiImage = pmenucentral->CommandToImage(item.m_id);
+   UINT uiImage = pmenucentral->command_image(item.m_id);
 
    e_element eelement = element_item;
 
@@ -960,20 +960,20 @@ void simple_toolbar::_001DrawSimpleToolbarItem(::draw2d::graphics * pgraphics, i
 
             if(_001GetElementRect(iItem, rect, element_image))
             {
-            
+
 //            if(rect.width() > 10000)
   //          {
-               
+
     //           output_debug_string("width > 10000");
-               
+
       //         _001GetElementRect(iItem, rect, element_image);
-               
+
         //    }
 
                Application.imaging().color_blend(pgraphics, rect.top_left(), rect.get_size(), item.m_spdib->get_graphics(), null_point(), 0.23);
 
             }
-            
+
          }
          else if (uiImage != 0xffffffff)
          {

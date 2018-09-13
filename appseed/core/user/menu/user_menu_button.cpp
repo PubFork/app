@@ -173,7 +173,7 @@ namespace user
       if(m_pmenuitem != NULL)
       {
 
-         uiImage = BaseMenuCentral::GetMenuCentral(get_app())->CommandToImage(m_pmenuitem->m_id);
+         uiImage = Session.userex()->menu()->command_image(m_pmenuitem->m_id);
 
       }
 
@@ -189,11 +189,11 @@ namespace user
          sp(image_list) pimagelist;
          if(!is_window_enabled())
          {
-            pimagelist = BaseMenuCentral::GetMenuCentral(get_app())->MenuV033GetImageListHueLight();
+            pimagelist = Session.userex()->menu()->MenuV033GetImageListHueLight();
          }
          else
          {
-            pimagelist = BaseMenuCentral::GetMenuCentral(get_app())->MenuV033GetImageList();
+            pimagelist = Session.userex()->menu()->MenuV033GetImageList();
          }
          pimagelist->get_image_info(uiImage, &ii);
          rect & rectImageInfo(ii.m_rect);

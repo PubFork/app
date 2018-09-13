@@ -19,6 +19,9 @@ namespace userex
       ::user::impact_system *                   m_ptemplatePlaceHolder;
 
 
+      sp(::user::menu_central)                  m_pmenucentral2;
+
+
       map < ::type *, type *, ::user::impact_system *, ::user::impact_system * > m_mapTemplate;
 
       string_map < ::user::impact_system * > m_mapimpactsystem;
@@ -41,6 +44,8 @@ namespace userex
       userex(::aura::application * papp);
       virtual ~userex();
 
+
+      ::user::menu_central * menu();
 
       ::user::shell::shell * shell();
 
@@ -84,9 +89,6 @@ namespace userex
       ::type * default_type_mesh_data();
       ::type * default_type_list_header();
       ::type * default_type_list_data();
-
-      //void send_language_change_message();
-
 
       virtual void term_instance() override;
 

@@ -52,16 +52,18 @@ namespace user
 
 
 
-string get_text(string str)
+string __get_text(string str)
 {
 
-   if(::get_app() == NULL)
+   ::aura::application * papp = ::get_app();
+
+   if(papp == NULL)
    {
 
-      return Sys(::aura::system::g_p).get_text(str);
+      return Sys(::aura::system::g_p).__get_text(str);
 
    }
 
-   return Application.get_text(str);
+   return Application.__get_text(str);
 
 }

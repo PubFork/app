@@ -259,7 +259,7 @@ public:
 
    virtual string lstr(id id, string strDefault = "");
 
-   virtual string get_string(string str);
+   virtual string __get_text(string str);
 
    bool IsSerializable() const;
 
