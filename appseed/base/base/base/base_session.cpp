@@ -27,15 +27,6 @@ namespace base
 
       m_psavings = canew(class ::aura::savings(this));
 
-      m_bZipIsDir = true;
-
-      m_pmapKeyPressed = NULL;
-
-      m_puserstrcontext = NULL;
-
-      //m_psystem->m_basesessionptra.add_unique(this);
-
-//      m_puserstyle = NULL;
 
       //m_puserstyle           = NULL;
 

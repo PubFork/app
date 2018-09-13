@@ -1084,10 +1084,31 @@
 		<Unit filename="net/net_url.h" />
 		<Unit filename="net/net_url_department.h" />
 		<Unit filename="net/net_url_domain.h" />
+		<Unit filename="net/netserver/_netserver.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="net/netserver/netserver.h" />
+		<Unit filename="net/netserver/netserver_socket.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="net/netserver/netserver_socket.h" />
+		<Unit filename="net/netserver/netserver_socket_handler.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="net/netserver/netserver_socket_handler.h" />
+		<Unit filename="net/netserver/netserver_socket_thread.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="net/netserver/netserver_socket_thread.h" />
 		<Unit filename="net/sockets/_sockets.cpp" />
+		<Unit filename="net/sockets/base/sockets_base_socket.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="net/sockets/base/sockets_base_socket.h" />
 		<Unit filename="net/sockets/base/sockets_base_socket_handler.h" />
 		<Unit filename="net/sockets/bsd/asynch_dns/resolv_server.h" />
@@ -1096,11 +1117,19 @@
 		<Unit filename="net/sockets/bsd/basic/sockets_net.h" />
 		<Unit filename="net/sockets/bsd/basic/sockets_sctp_socket.h" />
 		<Unit filename="net/sockets/bsd/basic/sockets_socket.h" />
+		<Unit filename="net/sockets/bsd/basic/sockets_socket_handler.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="net/sockets/bsd/basic/sockets_socket_handler.h" />
 		<Unit filename="net/sockets/bsd/basic/sockets_ssl_client_context.h" />
 		<Unit filename="net/sockets/bsd/basic/sockets_ssl_client_context_map.h" />
 		<Unit filename="net/sockets/bsd/basic/sockets_stream_socket.h" />
 		<Unit filename="net/sockets/bsd/basic/sockets_sync_socket_handler.h" />
+		<Unit filename="net/sockets/bsd/basic/sockets_tcp_socket.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="net/sockets/bsd/basic/sockets_tcp_socket.h" />
 		<Unit filename="net/sockets/bsd/basic/sockets_tls_socket.h" />
 		<Unit filename="net/sockets/bsd/basic/sockets_udp_socket.h" />
@@ -1138,6 +1167,10 @@
 		<Unit filename="net/sockets/bsd/webserver/ajp13.h" />
 		<Unit filename="net/sockets/bsd/webserver/http_base_socket.h" />
 		<Unit filename="net/sockets/bsd/webserver/httpd_socket.h" />
+		<Unit filename="net/sockets/bsd/webserver/sockets_httpd_socket.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="net/sockets/http/sockets_http.h" />
 		<Unit filename="net/sockets/http/sockets_http_client_socket.cpp" />
 		<Unit filename="net/sockets/http/sockets_http_client_socket.h" />

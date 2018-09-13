@@ -22,9 +22,7 @@ namespace axis
    public:
 
 
-      ::user::keyboard *                              m_pkeyboard;
-
-
+      ::user::keyboard *                                       m_pkeyboard;
 
       ::userpresence::userpresence *                           m_puserpresence;
       sp(::ftpfs)                                              m_pftpfs;
@@ -32,36 +30,20 @@ namespace axis
       sp(::fs::fs)                                             m_spfs;
       sp(class ::fs::data)                                     m_spfsdata;
 
-
-      //::sockets::sockets *                                     m_psockets;
       bool                                                     m_bIfs;
 
-
-
-      //::user::style_simple_impl                               m_schemasimple;
-
-
       bool                                                     m_bMatterFromHttpCache;
-
-
-
-
-
 
       DWORD                                                    m_dwLongPhRESSingTime;
 
 
-
-
       session(::aura::application * papp);
-      virtual ~session_parent;
+      virtual ~session();
+
 
       inline ::userpresence::userpresence & userpresence() { return *m_puserpresence; }
 
-      //application_ptra & appptra();
-
       virtual bool is_session() override;
-
 
       void construct(::aura::application * papp, int iPhase) override;
 
@@ -107,59 +89,8 @@ namespace axis
 
 
       virtual string fontopus_get_cred(::aura::application * papp,const string & strRequestUrlParam,const RECT & rect,string & strUsername,string & strPassword,string strToken,string strTitle,bool bInteractive, ::user::interactive * pinteractive = NULL) override;
-      //virtual bool is_session();
 
       virtual bool on_create_frame_window() override;
-
-      //void construct(::aura::application * papp,int iPhase);
-
-      //virtual bool process_init();
-
-      //virtual bool init1();
-
-      /*virtual bool init2();*/
-
-      //virtual bool init_application() override;
-
-      //virtual bool initialize();
-
-      //virtual bool finalize();
-
-      /*virtual int32_t exit_instance();*/
-
-
-
-
-
-      //virtual bool get_auth(const string & pszForm,string & strUsername,string & strPassword);
-
-
-      // virtual bool on_create_frame_window();
-
-
-
-//      virtual bool  get_window_minimum_size(LPSIZE lpsize);
-
-
-      //virtual void  get_cursor_pos(LPPOINT lppoint);
-
-
-
-
-
-
-
-
-
-
-      //virtual bool is_licensed(const char * pszId,bool bInteractive = true);
-
-      //virtual void defer_initialize_user_presence();
-
-      //virtual string get_cred(::aura::application * papp,const string & strRequestUrlParam,const RECT & rect,string & strUsername,string & strPassword,string strToken,string strTitle,bool bInteractive);
-
-      //virtual void on_request(::create * pcreate);
-
 
       virtual void on_user_login(::fontopus::user * puser) override;
 
@@ -169,49 +100,13 @@ namespace axis
 
       virtual string fontopus_get_user_sessid(const string & str) override;
 
-
       virtual void translate_os_key_message(::user::key * pkey) override;
-
-      //virtual void _001OnDefaultTabPaneDrawTitle(::user::tab_pane & pane, ::user::tab * ptab, ::draw2d::graphics * pgraphics, LPCRECT lpcrect, ::draw2d::brush_sp & brushText);
 
 
    };
 
 
 } // namespace axis
-
-
-
-
-
-
-
-
-//inline ::axis::session & Sess(::aura::application * papp);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

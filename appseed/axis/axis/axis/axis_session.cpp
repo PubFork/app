@@ -1,7 +1,7 @@
 ﻿#include "framework.h"
 #include "aura/net/net_sockets.h"
-//#include "fiasco_finder.h"
 #include "aura/net/ftp/ftp_data_types.h"
+
 
 namespace axis
 {
@@ -13,74 +13,14 @@ namespace axis
       ::aura::session(papp)
    {
 
-      m_datakey.m_bLocalData = true;
-
-#ifdef WINDOWS
-
-      if(m_hinstance == NULL)
-      {
-
-         m_hinstance                = m_papp->m_hinstance;
-
-      }
-
-#endif
-
+      m_datakey.m_bLocalData        = true;
 
       m_bIfs                        = true;
 
-      m_psavings                    = canew(class ::aura::savings(this));
-
-      m_bZipIsDir                   = true;
-
-      m_puserstrcontext             = NULL;
-
+      m_pkeyboard                   = NULL;
 
       m_puserpresence               = NULL;
 
-
-      m_iMainMonitor                = -1;
-
-#ifdef WINDOWS
-
-      if(m_hinstance == NULL)
-      {
-
-         m_hinstance                = m_papp->m_hinstance;
-
-      }
-
-#endif
-
-
-
-      m_puiMouseMoveCapture         = NULL;
-
-
-
-
-      m_puiMouseMoveCapture         = NULL;
-
-      m_psavings                    = canew(class ::aura::savings(this));
-
-      m_bZipIsDir                   = true;
-
-      m_pmapKeyPressed              = NULL;
-
-      m_puserstrcontext             = NULL;
-
-      m_puserpresence = NULL;
-
-      //      m_psystem->m_basesessionptra.add_unique(this);
-
-      m_pcopydesk = NULL;
-
-
-      //m_pelementalFocus  = NULL;
-      //      m_pshellimageset  = NULL;
-      m_pkeyboard       = NULL;
-      //    m_pufeschema      = NULL;
-      //  m_pufe            = NULL;
    }
 
 
@@ -93,10 +33,9 @@ namespace axis
 
       }
 
-
    }
 
-   session::~session_parent
+   session::~session()
    {
 
 

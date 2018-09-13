@@ -511,6 +511,14 @@ void app_core::defer_load_backbone_libraries(string strAppId)
             pfnDeferTerm = (PFN_DEFER_TERM) __node_library_raw_get(hmodule, "defer_axis_term");
 
          }
+         else if ((hmodule = __node_library_touch("aura", strMessage)) != NULL)
+         {
+
+            pfnDeferInit = (PFN_DEFER_INIT) __node_library_raw_get(hmodule, "defer_aura_init");
+
+            pfnDeferTerm = (PFN_DEFER_TERM) __node_library_raw_get(hmodule, "defer_aura_term");
+
+         }
 
       }
 
