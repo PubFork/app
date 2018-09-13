@@ -38,10 +38,15 @@ namespace math
       void random_bytes(void * buf, memory_size_t dwLen);
       void RandomBytes(void * buf, memory_size_t dwLen);
       void gen_rand(void * buf, memory_size_t dwLen);
+
       void gen_rand_alnum(char * buf, memory_size_t dwLen);
+      string gen_rand_alnum(strsize s);
+      string random_string(strsize s);
+
       uint32_t rnd();
       int32_t random_context_entropy(int32_t iMin, int32_t iMax, int32_t iLevel = 3);
       int32_t rand_max();
+
       double LinearMap(
       double dMin, double dMax,
       double dValue,

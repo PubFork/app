@@ -234,6 +234,30 @@ namespace math
    }
 
 
+   string math::random_string(strsize s)
+   {
+
+      return gen_rand_alnum(s);
+
+   }
+
+
+   string math::gen_rand_alnum(strsize s)
+   {
+
+      string str;
+
+      char * psz = str.GetBufferSetLength(s);
+
+      gen_rand_alnum(psz, s);
+
+      str.ReleaseBuffer(s);
+
+      return str;
+
+   }
+
+
    void math::gen_rand_alnum(char * buf, memory_size_t dwLen)
    {
 
