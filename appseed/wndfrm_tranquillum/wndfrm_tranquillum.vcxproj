@@ -92,7 +92,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectName>wndfrm_tranquillum</ProjectName>
-    <ProjectGuid>{0BB1A1D1-7B7D-4484-9DF5-060481390526}</ProjectGuid>
+    <ProjectGuid>{3C892817-9F8B-493C-A3E1-AAC25943A7F9}</ProjectGuid>
     <RootNamespace>wndfrm_tranquillum</RootNamespace>
     <Keyword>Win32Proj</Keyword>
     <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
