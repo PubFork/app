@@ -263,7 +263,7 @@ string builtin_strlangmap::_get_text(string strLang, string strId)
 }
 
 
-string builtin_strlangmap::get_text(string str)
+string builtin_strlangmap::__get_text(string str)
 {
 
    return _get_text(m_strLang, str);

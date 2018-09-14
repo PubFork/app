@@ -1550,6 +1550,7 @@
 			<Option compile="0" />
 			<Option link="0" />
 		</Unit>
+		<Unit filename="user/user/user_builtin_strlangmap.h" />
 		<Unit filename="user/user/user_command.h" />
 		<Unit filename="user/user/user_const.h" />
 		<Unit filename="user/user/user_control_event.h" />

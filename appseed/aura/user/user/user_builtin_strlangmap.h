@@ -35,7 +35,7 @@ public:
    virtual bool _load_text(string strLang);
    virtual string _get_text(string strLang, string str);
 
-   virtual string get_text(string str);
+   virtual string __get_text(string str);
 
 
 };
