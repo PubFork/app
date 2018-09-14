@@ -156,36 +156,6 @@ namespace base
    void session::term_application()
    {
 
-      try
-      {
-
-         for (auto & pair : System.m_appmap)
-         {
-
-            try
-            {
-
-               if (pair.m_element2->m_psession == this)
-               {
-
-                  pair.m_element2->m_psession = NULL;
-
-               }
-
-            }
-            catch (...)
-            {
-
-            }
-
-         }
-
-      }
-      catch (...)
-      {
-
-      }
-
       ::base::application::term_application();
 
       ::axis::session::term_application();

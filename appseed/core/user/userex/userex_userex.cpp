@@ -1772,36 +1772,6 @@ finished:
       try
       {
 
-         for(auto & pair : System.m_appmap)
-         {
-
-            try
-            {
-
-               if(pair.m_element2->m_psession == this)
-               {
-
-                  pair.m_element2->m_psession = NULL;
-
-               }
-
-            }
-            catch(...)
-            {
-
-            }
-
-         }
-
-      }
-      catch(...)
-      {
-
-      }
-
-      try
-      {
-
          ::base::session::term_application();
 
       }

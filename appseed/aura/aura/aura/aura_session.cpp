@@ -248,9 +248,6 @@ namespace aura
 
       m_splicensing = canew(class ::fontopus::licensing(this));
 
-      m_pwindowmap = canew(class ::user::window_map(get_app()));
-
-
       thisend;
 
       return true;
@@ -348,16 +345,16 @@ namespace aura
       try
       {
 
-         for (auto & pair : System.m_appmap)
+         for (auto & papp : System.m_appptra)
          {
 
             try
             {
 
-               if (pair.m_element2->m_psession == this)
+               if (papp->m_psession == this)
                {
 
-                  pair.m_element2->m_psession = NULL;
+                  papp->m_psession = NULL;
 
                }
 
@@ -1415,7 +1412,7 @@ namespace aura
    bool session::on_create_frame_window()
    {
 
-   return true;
+      return true;
 
    }
 
@@ -3246,13 +3243,6 @@ ret:
 
    }
 
-
-   class ::user::window_map & session::window_map()
-   {
-
-      return *m_pwindowmap;
-
-   }
 
 
    void session::_001OnDefaultTabPaneDrawTitle(::user::tab_pane & pane, ::user::tab * ptab, ::draw2d::graphics * pgraphics, LPCRECT lpcrect, ::draw2d::brush_sp & brushText)

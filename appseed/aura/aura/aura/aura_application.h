@@ -62,7 +62,6 @@ namespace aura
       mutex                                           m_mutexFrame;
       ::user::interaction_spa *                       m_puiptraFrame;
 
-      string_map < ::aura::application * >            m_appmap;
       string                                          m_strAppName;
       string                                          m_strAppTitle;
       stringa                                         m_straAppCategory;
@@ -284,18 +283,8 @@ namespace aura
       virtual string app_get(string strPath, string strDefault = "");
 
 
-      //virtual bool verb() override;
-
-
-
-      virtual bool app_map_lookup(const char * psz,::aura::application * &);
-      virtual void app_map_set(const char * psz,::aura::application *);
-
       virtual bool Ex2OnAppInstall();
       virtual bool Ex2OnAppUninstall();
-
-
-
 
 
       virtual void _001CloseApplication();

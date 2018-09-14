@@ -2360,7 +2360,7 @@ namespace user
    void interaction_impl::_001BaseWndInterfaceMap()
    {
 
-      Session.window_map().set((int_ptr)get_handle(), this);
+      System.window_map().set((int_ptr)get_handle(), this);
 
    }
 

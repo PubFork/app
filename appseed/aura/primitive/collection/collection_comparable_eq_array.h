@@ -12,7 +12,6 @@ public:
    //DECLARE_AND_IMPLEMENT_DEFAULT_CONSTRUCTION_AND_ASSIGNMENT(comparable_eq_array, ARRAY_TYPE)
    comparable_eq_array(::std::initializer_list < TYPE > l) : BASE_ARRAY(l) {   }
    comparable_eq_array() {}
-   comparable_eq_array(::aura::application * papp) : object(papp), ARRAY_TYPE(papp) {}
    comparable_eq_array(const comparable_eq_array & array)
    {
       operator = (array);
@@ -211,7 +210,7 @@ get_count(ARG_TYPE t, index find, index last, ::count countMax) const
 {
    ::count count = 0;
    while((countMax >= 0 && count <= countMax)
-      && (find = find_first(t, find, last)) >= 0)
+         && (find = find_first(t, find, last)) >= 0)
       count++;
    return count;
 }
@@ -233,7 +232,7 @@ contains(ARG_TYPE t, index find, index last, ::count countMin, ::count countMax)
 {
    ::count count = 0;
    while((count < countMin || (countMax >= 0 && count <= countMax))
-      && (find = find_first(t, find, last)) >= 0)
+         && (find = find_first(t, find, last)) >= 0)
       count++;
    return count >= countMin && ::conditional(countMax >= 0, count <= countMax);
 }
@@ -385,7 +384,7 @@ remove(ARG_TYPE t, index find, index last, ::count countMin, ::count countMax)
    ::count count = 0;
    if(contains(t, find, last, countMin, countMax))
       while(::conditional(countMax >= 0, count < countMax)
-         && (find = remove_first(t, find, last)) >= 0)
+            && (find = remove_first(t, find, last)) >= 0)
          count++;
    return count;
 }

@@ -1606,35 +1606,6 @@ InitFailure:
    void application::term_application()
    {
 
-      try
-      {
-
-         for(auto & pair : System.m_appmap)
-         {
-
-            try
-            {
-
-               if(pair.m_element2->m_papp == this)
-               {
-
-                  pair.m_element2->m_papp = NULL;
-
-               }
-
-            }
-            catch(...)
-            {
-
-            }
-
-         }
-
-      }
-      catch(...)
-      {
-
-      }
 
       try
       {

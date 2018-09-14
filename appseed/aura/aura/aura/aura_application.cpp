@@ -777,22 +777,6 @@ namespace aura
    }
 
 
-   bool application::app_map_lookup(const char * psz, ::aura::application * & p)
-   {
-
-      return m_appmap.Lookup(psz, p) != FALSE;
-
-   }
-
-
-   void application::app_map_set(const char * psz, ::aura::application * p)
-   {
-
-      m_appmap.set_at(psz, p);
-
-   }
-
-
    void application::open_profile_link(string strUrl, string strProfile, string strTarget)
    {
 
@@ -3428,6 +3412,8 @@ retry_license:
    bool application::process_init()
    {
 
+      m_psystem->m_appptra.add(this);
+
       if (is_system() || is_session())
       {
 
@@ -4207,6 +4193,38 @@ retry_license:
 
    void application::term_application()
    {
+
+      try
+      {
+
+         for (auto & papp : System.m_appptra)
+         {
+
+            try
+            {
+
+               if (papp->m_papp == this && papp != this)
+               {
+
+                  papp->m_papp = NULL;
+
+               }
+
+            }
+            catch (...)
+            {
+
+            }
+
+         }
+
+         System.m_appptra.remove(this);
+
+      }
+      catch (...)
+      {
+
+      }
 
       try
       {

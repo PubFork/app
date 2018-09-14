@@ -217,13 +217,13 @@ namespace aura
 
       m_pfactory->creatable_large < ::file::simple_binary_file >(type_info < ::file::binary_file >());
       m_pfactory->creatable_large < ::file::string_file >();
-      m_pfactory->creatable_large < ::memory_file >();
-      m_pfactory->creatable_large < ::int64_array >();
-      m_pfactory->creatable_large < ::double_array >();
+      //m_pfactory->creatable_large < ::memory_file >();
+      //m_pfactory->creatable_large < ::int64_array >();
+      //m_pfactory->creatable_large < ::double_array >();
 
-      factory().default_cloneable_large < stringa >();
-      factory().default_cloneable_large < memory >();
-      factory().default_cloneable_large < int_array >();
+      //factory().default_cloneable_large < stringa >();
+      //factory().default_cloneable_large < memory >();
+      //factory().default_cloneable_large < int_array >();
 
       factory().creatable_small < ::file::application >();
       factory().creatable_small < ::file::dir::application >();
@@ -271,6 +271,8 @@ namespace aura
       m_pcompress->set_app(this);
 
       ::draw2d::dib::static_initialize();
+
+      m_pwindowmap = canew(class ::user::window_map(get_app()));
 
    }
 
@@ -369,6 +371,15 @@ namespace aura
 //
 //   }
 //
+
+
+   class ::user::window_map & system::window_map()
+   {
+
+      return *m_pwindowmap;
+
+   }
+
 
    void system::defer_check_exit()
    {
@@ -812,16 +823,16 @@ namespace aura
       try
       {
 
-         for (auto & pair : System.m_appmap)
+         for (auto & papp : System.m_appptra)
          {
 
             try
             {
 
-               if (pair.m_element2->m_psystem == this)
+               if (papp->m_psystem == this)
                {
 
-                  pair.m_element2->m_psystem = NULL;
+                  papp->m_psystem = NULL;
 
                }
 

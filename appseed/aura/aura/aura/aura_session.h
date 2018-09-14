@@ -84,7 +84,7 @@ namespace aura
       index                                                    m_iMainMonitor;
       index                                                    m_iMainWkspace;
 
-      sp(::user::window_map)        m_pwindowmap;
+
 
       string_map < ::user::interaction * >            m_mapboundui;
 
@@ -164,9 +164,6 @@ namespace aura
 
 
       virtual void frame_pre_translate_message(::message::message * pobj);
-
-
-      class ::user::window_map & window_map();
 
 
       inline sp(::fontopus::fontopus)              fontopus() { return m_pfontopus; }

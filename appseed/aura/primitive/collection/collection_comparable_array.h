@@ -14,7 +14,6 @@ public:
 
    comparable_array(::std::initializer_list < TYPE > l) : BASE_ARRAY(l) {   }
    comparable_array() {}
-   comparable_array(::aura::application * papp) : object(papp), ARRAY_TYPE(papp) {}
    comparable_array(const comparable_array & array)
    {
       operator = (array);
@@ -195,7 +194,7 @@ full_comparable_array()
 template < class TYPE,class ARG_TYPE,class ARRAY_TYPE >
 full_comparable_array<  TYPE,ARG_TYPE,ARRAY_TYPE >::
 full_comparable_array(const full_comparable_array<  TYPE,ARG_TYPE,ARRAY_TYPE > & a):
-ARRAY_TYPE(a)
+   ARRAY_TYPE(a)
 {
    this->operator = (a);
 }

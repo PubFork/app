@@ -4314,6 +4314,13 @@ namespace windows
 
       }
 
+      if (!(GetExStyle() & WS_EX_LAYERED))
+      {
+
+         ::RedrawWindow(get_handle(), NULL, NULL, flags);
+
+      }
+
       if (flags & RDW_UPDATENOW)
       {
 
@@ -6045,22 +6052,18 @@ void __term_windowing()
       return NULL;
 
    }
+
    synch_lock slSystem(psystem->m_pmutex);
-   auto psession = psystem->m_psession;
-   if (psession == NULL)
+
+   auto pmap = psystem->m_pwindowmap;
+
+   if (pmap == NULL)
    {
 
       return NULL;
 
    }
-   synch_lock slSession(psession->m_pmutex);
-   auto pmap = psession->m_pwindowmap;
-   if (psession->m_pwindowmap == NULL)
-   {
 
-      return NULL;
-
-   }
    synch_lock slMap(pmap->m_pmutex);
 
    ::user::interaction_base * pbase;

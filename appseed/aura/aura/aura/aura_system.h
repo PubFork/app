@@ -42,6 +42,8 @@ namespace aura
       sp(::visual::visual)                         m_pvisual;
 
 
+      pointer_array < ::aura::application * >      m_appptra;
+
 
       sp(class ::datetime::department)             m_pdatetime;
       ::crypto::crypto_sp                          m_spcrypto;
@@ -170,6 +172,8 @@ namespace aura
 #endif
       map < ::file::path, const ::file::path &, ::visual::dib_sp > m_mapDib;
 
+      sp(::user::window_map)                       m_pwindowmap;
+
 
       system(::aura::application * papp, app_core * pappcore);
       virtual ~system();
@@ -179,6 +183,9 @@ namespace aura
 
 
       //spa(::aura::session)                         &  basesessionptra();
+
+      class ::user::window_map & window_map();
+
 
 
       class ::aura::os                             &  os();

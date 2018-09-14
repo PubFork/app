@@ -4269,36 +4269,51 @@ restart:
       else if (!is_message_only_window())
       {
 
-         try
+         if (get_app() != NULL)
          {
 
-            Application.remove_frame(this); // guess this may be a frame, it doesn't hurt to remove if this is not there
+            try
+            {
 
-         }
-         catch (...)
-         {
+               Application.remove_frame(this); // guess this may be a frame, it doesn't hurt to remove if this is not there
 
-         }
+            }
+            catch (...)
+            {
 
-         try
-         {
+            }
 
-            Session.remove_frame(this); // guess this may be a frame, it doesn't hurt to remove if this is not there
+            if (get_app()->m_psession != NULL)
+            {
 
-         }
-         catch (...)
-         {
+               try
+               {
 
-         }
+                  Session.remove_frame(this); // guess this may be a frame, it doesn't hurt to remove if this is not there
 
-         try
-         {
+               }
+               catch (...)
+               {
 
-            System.remove_frame(this); // guess this may be a frame, it doesn't hurt to remove if this is not there
+               }
 
-         }
-         catch (...)
-         {
+            }
+
+            if (get_app()->m_psystem != NULL)
+            {
+
+               try
+               {
+
+                  System.remove_frame(this); // guess this may be a frame, it doesn't hurt to remove if this is not there
+
+               }
+               catch (...)
+               {
+
+               }
+
+            }
 
          }
 

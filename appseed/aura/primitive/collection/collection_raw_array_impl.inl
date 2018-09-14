@@ -235,10 +235,11 @@ inline raw_array < TYPE, ARG_TYPE, ALLOCATOR > & raw_array < TYPE, ARG_TYPE, ALL
 // out-of-line functions
 
 template<class TYPE, class ARG_TYPE, class ALLOCATOR >
-raw_array < TYPE, ARG_TYPE, ALLOCATOR >::raw_array(::aura::application * papp, ::count nGrowBy) :
-   object(papp)
+raw_array < TYPE, ARG_TYPE, ALLOCATOR >::raw_array()
 {
+
 }
+
 
 template<class TYPE,class ARG_TYPE,class ALLOCATOR >
 inline raw_array < TYPE,ARG_TYPE,ALLOCATOR >::raw_array(::std::initializer_list < TYPE >  l)
