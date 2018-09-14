@@ -366,7 +366,6 @@
 		<Unit filename="aura/compress/compress_bz.h" />
 		<Unit filename="aura/compress/compress_department.h" />
 		<Unit filename="aura/compress/compress_gz.h" />
-		<Unit filename="aura/compress/compress_zip_dir.cpp" />
 		<Unit filename="aura/compress/compress_zip_dir.h" />
 		<Unit filename="aura/compress/zip/zip.h" />
 		<Unit filename="aura/compress/zip/zip_api.h" />
