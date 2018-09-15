@@ -80,10 +80,12 @@ namespace netserver
 
             initialize_listen_socket();
 
-            while (true)
+            while (::get_thread_run())
             {
 
-               if (m_plistensocket->Bind(m_strIp, (port_t)m_iPort))
+               int iError = m_plistensocket->Bind(m_strIp, (port_t)m_iPort);
+
+               if(iError != 0)
                {
 
                   string strMessage;
@@ -92,25 +94,18 @@ namespace netserver
 
                   TRACE(strMessage);
 
-               }
-               else
-               {
+                  Sleep(5000);
 
-                  m_psockethandler->add(m_plistensocket);
+                  continue;
 
                }
+
+               m_psockethandler->add(m_plistensocket);
 
                while (m_psockethandler->get_count() > 0 && thread_get_run())
                {
 
                   m_psockethandler->select(1, 0);
-
-               }
-
-               if (!thread_get_run())
-               {
-
-                  break;
 
                }
 

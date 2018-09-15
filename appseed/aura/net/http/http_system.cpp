@@ -1956,7 +1956,7 @@ retry_session:
 
          }
 
-         TRACE("URL: %s Too much tries (%d)\n", iTry);
+         TRACE("URL: %s Too much tries (%d)\n", strUrl, iTry);
 
       }
 #endif

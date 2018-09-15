@@ -406,9 +406,11 @@ bool app_core::ini()
 
    os_init_application();
 
-   ::file::path pathOutputDebugString = ::dir::system() / strAppId / "output_debug_string.txt";
+   ::file::path pathOutputDebugString = ::dir::system() / strAppId / "output_debug_string.txt" ;
 
-   g_bOutputDebugString = file_exists_dup(pathOutputDebugString);
+   ::file::path pathGlobalOutputDebugString = ::dir::system() / "config/output_debug_string.txt" ;
+
+   g_bOutputDebugString = file_exists_dup(pathOutputDebugString)||  file_exists_dup(pathGlobalOutputDebugString);
 
    return true;
 
