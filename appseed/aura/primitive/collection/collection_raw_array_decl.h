@@ -20,12 +20,12 @@ public:
    typedef typename array_base < TYPE,ARG_TYPE, ALLOCATOR >::iterator iterator;
 
 
-   raw_array();
+   raw_array(::aura::application * papp = NULL);
    raw_array(std::initializer_list < TYPE >  l);
    raw_array(const raw_array <TYPE, ARG_TYPE, ALLOCATOR> & a);
    raw_array(raw_array <TYPE,ARG_TYPE,ALLOCATOR> && a);
    raw_array(::count n);
-   raw_array(ARG_TYPE t, ::count n = 1);
+   raw_array(ARG_TYPE t, ::count n);
    raw_array(TYPE * ptypea, ::count n);
    virtual ~raw_array();
 

@@ -235,7 +235,8 @@ inline raw_array < TYPE, ARG_TYPE, ALLOCATOR > & raw_array < TYPE, ARG_TYPE, ALL
 // out-of-line functions
 
 template<class TYPE, class ARG_TYPE, class ALLOCATOR >
-raw_array < TYPE, ARG_TYPE, ALLOCATOR >::raw_array()
+raw_array < TYPE, ARG_TYPE, ALLOCATOR >::raw_array(::aura::application * papp) :
+::object(papp)
 {
 
 }
