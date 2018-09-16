@@ -4893,31 +4893,33 @@ namespace draw2d_direct2d
    }
 
 
-   void graphics::set_alpha_mode(::draw2d::e_alpha_mode ealphamode)
+   bool graphics::set_alpha_mode(::draw2d::e_alpha_mode ealphamode)
    {
 
       try
       {
 
-         ::draw2d::graphics::set_alpha_mode(ealphamode);
-
-         if (m_pdevicecontext != NULL)
+         if (m_pdevicecontext == NULL)
          {
 
-            if(m_ealphamode == ::draw2d::alpha_mode_blend)
-            {
-
-               m_pdevicecontext->SetPrimitiveBlend(D2D1_PRIMITIVE_BLEND_SOURCE_OVER);
-
-            }
-            else if(m_ealphamode == ::draw2d::alpha_mode_set)
-            {
-
-               m_pdevicecontext->SetPrimitiveBlend(D2D1_PRIMITIVE_BLEND_COPY);
-
-            }
+            return false;
 
          }
+
+         if(ealphamode == ::draw2d::alpha_mode_blend)
+         {
+
+            m_pdevicecontext->SetPrimitiveBlend(D2D1_PRIMITIVE_BLEND_SOURCE_OVER);
+
+         }
+         else if(ealphamode == ::draw2d::alpha_mode_set)
+         {
+
+            m_pdevicecontext->SetPrimitiveBlend(D2D1_PRIMITIVE_BLEND_COPY);
+
+         }
+
+         ::draw2d::graphics::set_alpha_mode(ealphamode);
 
       }
       catch(...)
@@ -4925,12 +4927,17 @@ namespace draw2d_direct2d
 
       }
 
+      return true;
+
    }
 
 
-   void graphics::set_text_rendering(::draw2d::e_text_rendering etextrendering)
+   bool graphics::set_text_rendering_hint(::draw2d::e_text_rendering etextrendering)
    {
+
       m_etextrendering = etextrendering;
+
+      return true;
 
    }
 

@@ -83,7 +83,7 @@ namespace wndfrm_core
 
       ptab->get_data()->m_pen->create_solid(1,RGB(32,32,32));
 
-      pgraphics->set_text_rendering(::draw2d::text_rendering_anti_alias_grid_fit);
+      pgraphics->set_text_rendering_hint(::draw2d::text_rendering_anti_alias_grid_fit);
 
       pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 
@@ -109,7 +109,7 @@ namespace wndfrm_core
 
          if(!ptab->get_element_rect(iTab,rectClient, ::user::element_client))
             continue;
-         
+
          bool bTextRect = ptab->get_element_rect(iTab, rectText, ::user::element_text);
 
          if(ptab->get_data()->m_bVertical)
@@ -119,7 +119,7 @@ namespace wndfrm_core
             {
 
                pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
-               
+
                pane.m_dib->bitmap_blend(pgraphics,rectIcon);
 
             }
@@ -130,11 +130,11 @@ namespace wndfrm_core
             {
 
                path->add_line(rectBorder.right,rectBorder.bottom,rectBorder.left + 1,rectBorder.bottom);
-               
+
                path->add_line(rectBorder.left,rectBorder.top - (rectBorder.left - rectClient.left));
-               
+
                path->add_line(rectClient.left,rectBorder.top);
-               
+
                path->add_line(rectBorder.right,rectBorder.top);
 
                path->end_figure(false);

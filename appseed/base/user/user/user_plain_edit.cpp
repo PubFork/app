@@ -214,7 +214,7 @@ namespace user
       IGUI_MSG_LINK(WM_UNICHAR, pinterface, this, &plain_edit::_001OnUniChar);
 
       IGUI_MSG_LINK(WM_SIZE, pinterface, this, &::user::plain_edit::_001OnSize);
-      
+
       IGUI_MSG_LINK(WM_SETFOCUS, pinterface, this, &::user::plain_edit::_001OnSetFocus);
       IGUI_MSG_LINK(WM_KILLFOCUS, pinterface, this, &::user::plain_edit::_001OnKillFocus);
 
@@ -295,7 +295,7 @@ namespace user
 
       m_dwLastDraw = ::get_tick_count();
 
-      pgraphics->set_text_rendering(::draw2d::text_rendering_anti_alias);
+      pgraphics->set_text_rendering_hint(::draw2d::text_rendering_anti_alias);
 
       COLORREF crBk;
       COLORREF crBkSel;
@@ -407,7 +407,7 @@ namespace user
 
       select_font(pgraphics, font_plain_edit);
 
-      pgraphics->set_text_rendering(::draw2d::text_rendering_anti_alias);
+      pgraphics->set_text_rendering_hint(::draw2d::text_rendering_anti_alias);
       //size size3;
       //size3 = pgraphics->GetTextExtent(unitext("gGYIﾍ"));
       int32_t iLineHeight = m_iLineHeight;
@@ -426,7 +426,7 @@ namespace user
       index i = 0;
       pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 
-      pgraphics->set_text_rendering(::draw2d::text_rendering_anti_alias);
+      pgraphics->set_text_rendering_hint(::draw2d::text_rendering_anti_alias);
 
       string strLineGraphics;
 
@@ -1601,7 +1601,7 @@ namespace user
       Session.set_keyboard_focus(this);
 
       Session.user()->set_mouse_focus_LButtonDown(this);
-      
+
       pmouse->m_bRet = true;
 
       pmouse->set_lresult(1);
@@ -1704,7 +1704,7 @@ namespace user
 
       sized sizeUniText;
 
-      pgraphics->set_text_rendering(::draw2d::text_rendering_anti_alias);
+      pgraphics->set_text_rendering_hint(::draw2d::text_rendering_anti_alias);
 
       pgraphics->GetTextExtent(sizeUniText, unitext("gqYALÀWMÍÎÄÃÄÅ"));
 
@@ -2087,7 +2087,7 @@ namespace user
 
       }
 
-      pgraphics->set_text_rendering(::draw2d::text_rendering_anti_alias);
+      pgraphics->set_text_rendering_hint(::draw2d::text_rendering_anti_alias);
 
       wstring wstr = "gqYALﾍWMÍÎÄÃÄÅ";
 
@@ -2550,7 +2550,7 @@ namespace user
 
       select_font(pgraphics, font_plain_edit);
 
-      pgraphics->set_text_rendering(::draw2d::text_rendering_anti_alias);
+      pgraphics->set_text_rendering_hint(::draw2d::text_rendering_anti_alias);
 
       string strLine = get_expanded_line(iLine, { &iChar });
 
@@ -2697,7 +2697,7 @@ namespace user
 
       GetFocusRect(rectClient);
 
-      pgraphics->set_text_rendering(::draw2d::text_rendering_anti_alias);
+      pgraphics->set_text_rendering_hint(::draw2d::text_rendering_anti_alias);
 
       strsize iChar = line_char_hit_test(x, iLine);
 
@@ -4442,7 +4442,7 @@ finished_update:
 
          if (IsWindowVisible() && ::get_tick_count() - m_dwLastDraw > m_dwCaretTime)
          {
-            
+
             m_dwLastDraw = get_tick_count();
 
             set_need_redraw();
@@ -5098,37 +5098,37 @@ finished_update:
 
    void plain_edit::_001OnSetFocus(::message::message * pmessage)
    {
-      
+
       string strText;
-      
+
       _001GetText(strText);
-      
+
       strsize iBeg;
-      
+
       strsize iEnd;
-      
+
       _001GetSel(iBeg, iEnd);
 
       get_wnd()->defer_show_software_keyboard(this, true, strText, iBeg, iEnd);
 
    }
-   
+
 
    void plain_edit::_001OnKillFocus(::message::message * pmessage)
    {
-      
+
       string strText;
-      
+
       _001GetText(strText);
-      
+
       strsize iBeg;
-      
+
       strsize iEnd;
-      
+
       _001GetSel(iBeg, iEnd);
-      
+
       get_wnd()->defer_show_software_keyboard(this, false, strText, iBeg, iEnd);
-      
+
    }
 
 

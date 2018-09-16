@@ -34,7 +34,7 @@ namespace draw2d
       e_alpha_mode                  m_ealphamode;
       e_smooth_mode                 m_esmoothmode;
       e_text_rendering              m_etextrendering;
-      double                           m_dFontFactor;
+      double                        m_dFontFactor;
 
       ::draw2d::matrix              m_matrixViewport;
       ::draw2d::matrix              m_matrixTransform;
@@ -87,15 +87,15 @@ namespace draw2d
       virtual ::aura::draw_context * draw_context();
 
 
-      virtual void set_alpha_mode(e_alpha_mode ealphamode);
+      virtual bool set_alpha_mode(e_alpha_mode ealphamode);
 
-      virtual void set_smooth_mode(e_smooth_mode esmoothmode);
+      virtual bool set_smooth_mode(e_smooth_mode esmoothmode);
 
-      virtual void set_text_rendering(e_text_rendering etextrendering);
+      virtual bool set_text_rendering_hint(e_text_rendering etextrendering);
 
       virtual bool blur(bool bExpand, double dRadius, const RECT & rect);
 
-      virtual void set_solid_pen(double dWidth, COLORREF cr);
+      virtual bool set_solid_pen(double dWidth, COLORREF cr);
 
       virtual bool IsPrinting();            // TRUE if being used for printing
 

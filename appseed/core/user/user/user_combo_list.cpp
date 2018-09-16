@@ -264,7 +264,7 @@ namespace user
 
       }
 
-      pgraphics->set_text_rendering(::draw2d::text_rendering_anti_alias);
+      pgraphics->set_text_rendering_hint(::draw2d::text_rendering_anti_alias);
 
       string strItem;
 

@@ -3983,21 +3983,35 @@ namespace draw2d
    }
 
 
-   void graphics::set_alpha_mode(e_alpha_mode ealphamode)
+   bool graphics::set_alpha_mode(e_alpha_mode ealphamode)
    {
+
       m_ealphamode = ealphamode;
+
+      return true;
+
    }
 
-   void graphics::set_smooth_mode(e_smooth_mode esmoothmode)
+
+   bool graphics::set_smooth_mode(e_smooth_mode esmoothmode)
    {
+
       m_esmoothmode = esmoothmode;
+
+      return true;
+
    }
 
 
-   void graphics::set_text_rendering(e_text_rendering etextrendering)
+   bool graphics::set_text_rendering_hint(e_text_rendering etextrendering)
    {
-//      ::exception::throw_not_implemented(get_app());
+
+      m_etextrendering = etextrendering;
+
+      return true;
+
    }
+
 
    bool graphics::blur(bool bExpand, double dRadius, const RECT & rect)
    {
@@ -4006,8 +4020,7 @@ namespace draw2d
    }
 
 
-
-   void graphics::set_solid_pen(double dWidth, COLORREF cr)
+   bool graphics::set_solid_pen(double dWidth, COLORREF cr)
    {
 
       if(m_sppen.is_null())
@@ -4019,7 +4032,10 @@ namespace draw2d
 
       m_sppen->create_solid(dWidth, cr);
 
+      return true;
+
    }
+
 
    memory_graphics::memory_graphics()
    {
