@@ -16,11 +16,11 @@ template < typename TYPE >
 void sort_dib_argb(TYPE & A, TYPE & R, TYPE & G, TYPE & B)
 {
 
-   #if defined(WINDOWS) || defined(LINUX)
+#if defined(WINDOWS) || defined(LINUX)
 
    ::sort::swap(&R, &B);
 
-   #endif
+#endif
 
 }
 
@@ -29,11 +29,11 @@ template < typename TYPE >
 void sort_dib_rgb(TYPE & R, TYPE & G, TYPE & B)
 {
 
-   #if defined(WINDOWS) || defined(LINUX)
+#if defined(WINDOWS) || defined(LINUX)
 
    ::sort::swap(&R, &B);
 
-   #endif
+#endif
 
 }
 
@@ -93,6 +93,16 @@ namespace draw2d
    {
 
    }
+
+
+   void dib::delete_this()
+   {
+
+      ::object::delete_this();
+
+   }
+
+
 
 
    void dib::draw2d_dib_common_construct()

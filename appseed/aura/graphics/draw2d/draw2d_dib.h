@@ -133,6 +133,7 @@ namespace draw2d
       virtual void set_font_factor(double dFactor);
       virtual void set_alpha_mode(e_alpha_mode e_alpha_mode);
 
+      virtual void delete_this() override;
 
       virtual void create_helper_map();
 
