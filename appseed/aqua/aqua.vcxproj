@@ -197,12 +197,6 @@
     <CustomBuildStep>
       <Command>copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.dll $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
 copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.exe $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
-copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.pdb $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\</Command>
-      <Outputs>$(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\zlib.dll</Outputs>
-    </CustomBuildStep>
-    <PostBuildEvent>
-      <Command>copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.dll $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
-copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.exe $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
 copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.pdb $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
 copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.sys $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
 
@@ -210,6 +204,11 @@ copy $(SolutionDir)..\..\..\nodelfs\$(PlatformName)\$(Configuration)\bin\*.dll $
 copy $(SolutionDir)..\..\..\nodelfs\$(PlatformName)\$(Configuration)\bin\*.pdb $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
 copy $(SolutionDir)..\..\..\nodelfs\$(PlatformName)\$(Configuration)\bin\*.exe $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
 </Command>
+      <Outputs>$(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\zlib.dll;%(Outputs)</Outputs>
+    </CustomBuildStep>
+    <PostBuildEvent>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='cover|Win32'">
@@ -270,12 +269,6 @@ copy $(SolutionDir)..\..\..\nodelfs\$(PlatformName)\$(Configuration)\bin\*.exe $
     <CustomBuildStep>
       <Command>copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.dll $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
 copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.exe $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
-copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.pdb $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\</Command>
-      <Outputs>$(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\zlib.dll</Outputs>
-    </CustomBuildStep>
-    <PostBuildEvent>
-      <Command>copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.dll $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
-copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.exe $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
 copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.pdb $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
 copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.sys $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
 
@@ -283,6 +276,11 @@ copy $(SolutionDir)..\..\..\nodelfs\$(PlatformName)\$(Configuration)\bin\*.dll $
 copy $(SolutionDir)..\..\..\nodelfs\$(PlatformName)\$(Configuration)\bin\*.pdb $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
 copy $(SolutionDir)..\..\..\nodelfs\$(PlatformName)\$(Configuration)\bin\*.exe $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
 </Command>
+      <Outputs>$(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\zlib.dll;%(Outputs)</Outputs>
+    </CustomBuildStep>
+    <PostBuildEvent>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">
@@ -351,12 +349,6 @@ copy $(SolutionDir)..\..\..\nodelfs\$(PlatformName)\$(Configuration)\bin\*.exe $
     <CustomBuildStep>
       <Command>copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.dll $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
 copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.exe $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
-copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.pdb $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\</Command>
-      <Outputs>$(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\zlib.dll</Outputs>
-    </CustomBuildStep>
-    <PostBuildEvent>
-      <Command>copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.dll $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
-copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.exe $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
 copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.pdb $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
 copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.sys $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
 
@@ -364,6 +356,11 @@ copy $(SolutionDir)..\..\..\nodelfs\$(PlatformName)\$(Configuration)\bin\*.dll $
 copy $(SolutionDir)..\..\..\nodelfs\$(PlatformName)\$(Configuration)\bin\*.pdb $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
 copy $(SolutionDir)..\..\..\nodelfs\$(PlatformName)\$(Configuration)\bin\*.exe $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
 </Command>
+      <Outputs>$(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\zlib.dll;%(Outputs)</Outputs>
+    </CustomBuildStep>
+    <PostBuildEvent>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='basis|x64'">
@@ -416,14 +413,6 @@ copy $(SolutionDir)..\..\..\nodelfs\$(PlatformName)\$(Configuration)\bin\*.exe $
     <CustomBuildStep>
       <Command>copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.dll $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
 copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.exe $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
-copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.pdb $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\</Command>
-    </CustomBuildStep>
-    <CustomBuildStep>
-      <Outputs>$(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\zlib.dll;%(Outputs)</Outputs>
-    </CustomBuildStep>
-    <PostBuildEvent>
-      <Command>copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.dll $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
-copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.exe $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
 copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.pdb $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
 copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.sys $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
 
@@ -431,6 +420,13 @@ copy $(SolutionDir)..\..\..\nodelfs\$(PlatformName)\$(Configuration)\bin\*.dll $
 copy $(SolutionDir)..\..\..\nodelfs\$(PlatformName)\$(Configuration)\bin\*.pdb $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
 copy $(SolutionDir)..\..\..\nodelfs\$(PlatformName)\$(Configuration)\bin\*.exe $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
 </Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Outputs>$(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\zlib.dll;%(Outputs)</Outputs>
+    </CustomBuildStep>
+    <PostBuildEvent>
+      <Command>
+      </Command>
     </PostBuildEvent>
     <Manifest>
       <AdditionalManifestFiles>
@@ -486,14 +482,6 @@ copy $(SolutionDir)..\..\..\nodelfs\$(PlatformName)\$(Configuration)\bin\*.exe $
     <CustomBuildStep>
       <Command>copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.dll $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
 copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.exe $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
-copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.pdb $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\</Command>
-    </CustomBuildStep>
-    <CustomBuildStep>
-      <Outputs>$(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\zlib.dll</Outputs>
-    </CustomBuildStep>
-    <PostBuildEvent>
-      <Command>copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.dll $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
-copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.exe $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
 copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.pdb $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
 copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.sys $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
 
@@ -501,6 +489,13 @@ copy $(SolutionDir)..\..\..\nodelfs\$(PlatformName)\$(Configuration)\bin\*.dll $
 copy $(SolutionDir)..\..\..\nodelfs\$(PlatformName)\$(Configuration)\bin\*.pdb $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
 copy $(SolutionDir)..\..\..\nodelfs\$(PlatformName)\$(Configuration)\bin\*.exe $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
 </Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Outputs>$(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\zlib.dll;%(Outputs)</Outputs>
+    </CustomBuildStep>
+    <PostBuildEvent>
+      <Command>
+      </Command>
     </PostBuildEvent>
     <Manifest>
       <AdditionalManifestFiles>
@@ -563,14 +558,6 @@ copy $(SolutionDir)..\..\..\nodelfs\$(PlatformName)\$(Configuration)\bin\*.exe $
     <CustomBuildStep>
       <Command>copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.dll $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
 copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.exe $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
-copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.pdb $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\</Command>
-    </CustomBuildStep>
-    <CustomBuildStep>
-      <Outputs>$(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\zlib.dll</Outputs>
-    </CustomBuildStep>
-    <PostBuildEvent>
-      <Command>copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.dll $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
-copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.exe $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
 copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.pdb $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
 copy $(SolutionDir)..\..\..\nodelfs\thirdparty\binary\$(PlatformName)\$(Configuration)\*.sys $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
 
@@ -578,6 +565,13 @@ copy $(SolutionDir)..\..\..\nodelfs\$(PlatformName)\$(Configuration)\bin\*.dll $
 copy $(SolutionDir)..\..\..\nodelfs\$(PlatformName)\$(Configuration)\bin\*.pdb $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
 copy $(SolutionDir)..\..\..\nodelfs\$(PlatformName)\$(Configuration)\bin\*.exe $(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\
 </Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Outputs>$(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\zlib.dll;%(Outputs)</Outputs>
+    </CustomBuildStep>
+    <PostBuildEvent>
+      <Command>
+      </Command>
     </PostBuildEvent>
     <Manifest>
       <AdditionalManifestFiles>

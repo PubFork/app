@@ -531,7 +531,7 @@ namespace draw2d_cairo
 
       m_pdc = cairo_create((cairo_surface_t *)pbitmap->get_os_data());
 
-      set_text_rendering(::draw2d::text_rendering_anti_alias_grid_fit);
+      set_text_rendering_hint(::draw2d::text_rendering_anti_alias_grid_fit);
 
       m_spbitmap = pbitmap;
 
@@ -5456,7 +5456,7 @@ namespace draw2d_cairo
    }
 
 
-   void graphics::set_alpha_mode(::draw2d::e_alpha_mode ealphamode)
+   bool graphics::set_alpha_mode(::draw2d::e_alpha_mode ealphamode)
    {
 
       synch_lock ml(cairo_mutex());
@@ -5465,31 +5465,44 @@ namespace draw2d_cairo
       {
 
          if (m_pdc == NULL)
-            return;
+         {
+
+            return false;
+
+         }
+
+         if (ealphamode == ::draw2d::alpha_mode_blend)
+         {
+
+            cairo_set_operator(m_pdc, CAIRO_OPERATOR_OVER);
+
+         }
+         else if (ealphamode == ::draw2d::alpha_mode_set)
+         {
+
+            cairo_set_operator(m_pdc, CAIRO_OPERATOR_SOURCE);
+
+         }
 
          ::draw2d::graphics::set_alpha_mode(ealphamode);
-         if (m_ealphamode == ::draw2d::alpha_mode_blend)
-         {
-            cairo_set_operator(m_pdc, CAIRO_OPERATOR_OVER);
-         }
-         else if (m_ealphamode == ::draw2d::alpha_mode_set)
-         {
-            cairo_set_operator(m_pdc, CAIRO_OPERATOR_SOURCE);
-         }
+
+         return true;
 
       }
       catch (...)
       {
-         return;
+
       }
+
+      return false;
 
    }
 
 
-   void graphics::set_text_rendering(::draw2d::e_text_rendering etextrendering)
+   bool graphics::set_text_rendering_hint(::draw2d::e_text_rendering etextrenderinghint)
    {
 
-      m_etextrendering = etextrendering;
+      return ::draw2d::graphics::set_text_rendering_hint(etextrenderinghint);
 
    }
 

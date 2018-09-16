@@ -425,7 +425,7 @@ namespace draw2d_cairo
       // MetaFile Functions
       //xxx      bool PlayMetaFile(HMETAFILE hMF) override;
 //      bool PlayMetaFile(HENHMETAFILE hEnhMetaFile, const RECT & lpBounds) override;
-  //    bool AddMetaFileComment(UINT nDataSize, const BYTE* pCommentData) override;
+      //    bool AddMetaFileComment(UINT nDataSize, const BYTE* pCommentData) override;
       // can be used for enhanced metafiles only
 
 // Path Functions
@@ -461,7 +461,7 @@ namespace draw2d_cairo
       //void fill_solid_rect(int32_t x, int32_t y, int32_t cx, int32_t cy, COLORREF clr) override;
       void draw3d_rect(LPCRECT  lpRect, COLORREF clrTopLeft, COLORREF clrBottomRight) override;
       //void draw3d_rect(int32_t x, int32_t y, int32_t cx, int32_t cy,
-        //              COLORREF clrTopLeft, COLORREF clrBottomRight) override;
+      //              COLORREF clrTopLeft, COLORREF clrBottomRight) override;
 
 
 
@@ -473,9 +473,9 @@ namespace draw2d_cairo
 
       //      HGDIOBJ SelectObject(HGDIOBJ) override;      // do not use for regions
 
-      virtual void set_alpha_mode(::draw2d::e_alpha_mode ealphamode) override;
+      virtual bool set_alpha_mode(::draw2d::e_alpha_mode ealphamode) override;
 
-      virtual void set_text_rendering(::draw2d::e_text_rendering etextrendering) override;
+      virtual bool set_text_rendering_hint(::draw2d::e_text_rendering etextrenderinghint) override;
 
       virtual void * get_os_data() const override;
       //      virtual HDC get_handle() override;
@@ -519,7 +519,7 @@ namespace draw2d_cairo
       virtual bool _get(::draw2d::matrix & matrix);
       virtual bool _set(const ::draw2d::matrix & matrix);
 //      virtual bool append(const ::draw2d::matrix & matrix);
-  //    virtual bool prepend(const ::draw2d::matrix & matrix);
+      //    virtual bool prepend(const ::draw2d::matrix & matrix);
 
 
       virtual bool flush();

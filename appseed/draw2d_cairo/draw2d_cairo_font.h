@@ -45,7 +45,7 @@ namespace draw2d_cairo
       virtual void dump(dump_context & dumpcontext) const;
 
 
-      virtual ::draw2d::font::e_cs calc_cs(::draw2d::graphics * pgraphics) override;
+      virtual ::draw2d::font::e_char_set calc_char_set(::draw2d::graphics * pgraphics) override;
 
    };
 
