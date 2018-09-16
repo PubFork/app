@@ -310,12 +310,7 @@ namespace user
 
       m_pfontlist->m_rectClient = rectFontList;
 
-      if (!m_pfontlist->on_layout(&m_layout))
-      {
-
-         set_need_layout();
-
-      }
+      m_pfontlist->defer_update_layout(&m_layout);
 
       m_sizeTotal = m_layout.m_size -
                     ::size(

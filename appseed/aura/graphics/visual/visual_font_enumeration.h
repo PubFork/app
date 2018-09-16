@@ -22,7 +22,7 @@ namespace visual
       void start_update(PRED predRunAfterEnumeration = []() {})
       {
 
-         ::fork(get_app(), [&]()
+         fork([&]()
          {
 
             update();

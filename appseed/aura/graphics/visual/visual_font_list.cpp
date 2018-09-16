@@ -28,8 +28,8 @@ namespace visual
       m_dwaFg.add(ARGB(255, 255, 255, 255));
 
       m_dwaBg.add(ARGB(0, 0, 0, 0));
-      m_dwaBg.add(ARGB(255, 128, 200, 152));
-      m_dwaBg.add(ARGB(255, 80, 80, 80));
+      m_dwaBg.add(ARGB(128, 128, 200, 152));
+      m_dwaBg.add(ARGB(128, 80, 80, 80));
 
    }
 
@@ -61,7 +61,7 @@ namespace visual
 
       m_dib->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_set);
 
-      m_dib->get_graphics()->fill_solid_rect(rect(m_size.cx), pdata->m_dwaBg[iBox]);
+      m_dib->get_graphics()->fill_solid_rect(rect(m_size), pdata->m_dwaBg[iBox]);
 
       m_dib->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_blend);
 
@@ -369,12 +369,16 @@ namespace visual
 
          }
 
-         if (playout->get_count() == m_itema.get_count() && playout->m_iUpdate == m_iUpdate)
+         if (playout->get_count() == m_itema.get_count()
+               && playout->m_iUpdate == m_iUpdate
+               && m_rectClient == m_rectLayout)
          {
 
             return;
 
          }
+
+         m_rectLayout = m_rectClient;
 
          playout->m_iUpdate = m_iUpdate;
 
@@ -390,7 +394,7 @@ namespace visual
 
       }
 
-      ::fork_count(get_app(), iCount, [=](index iOrder, index i, index iCount, index iScan)
+      ::fork_count_end_pred(get_app(), iCount, [=](index iOrder, index i, index iCount, index iScan)
       {
 
          layout & layout = *playout;
@@ -473,17 +477,19 @@ namespace visual
 
                   pgraphics->SelectFont(pbox->m_font);
 
-                  pbox->m_font->m_ecs = m_itema[i]->m_ecs;
+                  pbox->m_font->m_echarseta = m_itema[i]->m_echarseta;
 
                   if (j == 0)
                   {
 
                      strText = m_strTextLayout;
 
-                     if (strText.is_empty() || (pbox->m_font->m_ecs != ::draw2d::font::cs_ansi && pbox->m_font->m_ecs != ::draw2d::font::cs_default))
+                     if (strText.is_empty() ||
+                           (pbox->m_font->get_char_set(pgraphics) != ::draw2d::font::char_set_ansi
+                            && pbox->m_font->get_char_set(pgraphics) != ::draw2d::font::char_set_default))
                      {
 
-                        strText = ::draw2d::font::get_sample_text(pbox->m_font->m_ecs);
+                        strText = ::draw2d::font::get_sample_text(pbox->m_font->m_echarset);
 
                         if (strText.is_empty())
                         {
@@ -501,10 +507,8 @@ namespace visual
 
                         string strSample;
                         int maxarea = 0;
-                        //::draw2d::font::e_cs ecs;
-                        ::draw2d::font::e_cs ecsFound = pbox->m_font->m_ecs;
+                        ::draw2d::font::e_char_set echarsetFound = pbox->m_font->get_char_set(pgraphics);
                         size sSample;
-
 
                         if (maxarea <= 0)
                         {
@@ -556,7 +560,7 @@ namespace visual
 
                         }
 
-                        pbox->m_font->m_ecs = ecsFound;
+                        pbox->m_font->m_echarset = echarsetFound;
 
 
                      }
@@ -566,7 +570,7 @@ namespace visual
                   else
                   {
 
-                     pbox->m_font->m_ecs = pitem->m_box[j - 1].m_font->m_ecs;
+                     pbox->m_font->m_echarset = pitem->m_box[j - 1].m_font->m_echarset;
 
                      s = pgraphics->GetTextExtent(pitem->m_strSample);
 
@@ -581,34 +585,39 @@ namespace visual
 
                   m_iUpdated++;
 
-
                }
-
-            }
-
-
-
-            for (auto * pui : m_uiptra)
-            {
-
-               try
-               {
-
-                  pui->set_need_layout();
-
-               }
-               catch (...)
-               {
-
-               }
-
 
             }
 
          }
 
+      },
+
+      [=]()
+      {
+
+         on_layout(playout);
+
+
+         for (auto * pui : m_uiptra)
+         {
+
+            try
+            {
+
+               pui->set_need_layout();
+
+            }
+            catch (...)
+            {
+
+            }
+
+
+         }
+
       }
-                  );
+                           );
 
 
 

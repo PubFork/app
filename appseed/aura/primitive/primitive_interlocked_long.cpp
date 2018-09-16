@@ -23,6 +23,7 @@ interlocked_long::~interlocked_long()
    }
 }
 
+
 void interlocked_long::add(long l)
 {
 #ifdef WINDOWS
@@ -31,6 +32,7 @@ void interlocked_long::add(long l)
    __sync_fetch_and_add(m_plong, l);
 #endif
 }
+
 
 void interlocked_long::subtract(long l)
 {
@@ -41,15 +43,37 @@ void interlocked_long::subtract(long l)
 #endif
 }
 
-bool interlocked_long::operator > (long i) const
-{
-   return *m_plong > i;
-}
 
 bool interlocked_long::operator == (long i) const
 {
    return *m_plong == i;
 }
+
+bool interlocked_long::operator > (long i) const
+{
+   return *m_plong > i;
+}
+
+bool interlocked_long::operator >= (long i) const
+{
+   return *m_plong >= i;
+}
+
+bool interlocked_long::operator < (long i) const
+{
+   return *m_plong < i;
+}
+
+bool interlocked_long::operator <= (long i) const
+{
+   return *m_plong <= i;
+}
+
+bool interlocked_long::operator != (long i) const
+{
+   return *m_plong != i;
+}
+
 
 
 

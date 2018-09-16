@@ -39,44 +39,52 @@ namespace draw2d
    {
    public:
 
-      enum e_cs
+
+      enum e_char_set
       {
-         cs_none,
-         cs_ansi,
-         cs_default,
-         cs_symbol,
-         cs_shiftjis,
-         cs_hangeul,
-         cs_hangul,
-         cs_gb2312,
-         cs_chinesebig5,
-         cs_johab,
-         cs_hebrew,
-         cs_arabic,
-         cs_greek,
-         cs_turkish,
-         cs_vietnamese,
-         cs_thai,
-         cs_easteurope,
-         cs_russian,
-         cs_mac,
-         cs_baltic,
-         cs_count
+
+         char_set_none,
+         char_set_ansi,
+         char_set_default,
+         char_set_symbol,
+         char_set_shiftjis,
+         char_set_hangeul,
+         char_set_hangul,
+         char_set_gb2312,
+         char_set_chinesebig5,
+         char_set_johab,
+         char_set_hebrew,
+         char_set_arabic,
+         char_set_greek,
+         char_set_turkish,
+         char_set_vietnamese,
+         char_set_thai,
+         char_set_easteurope,
+         char_set_russian,
+         char_set_mac,
+         char_set_baltic,
+         char_set_count
+
       };
+
+
+      typedef comparable_array < e_char_set > char_set_array;
+
 
       class CLASS_DECL_AURA enum_item :
          virtual public object
       {
       public:
 
-         string      m_strFile;
-         string      m_strName;
-         e_cs        m_ecs;
+
+         string                  m_strFile;
+         string                  m_strName;
+         char_set_array          m_echarseta;
 
 
          enum_item();
-         enum_item(string strName, e_cs ecs);
-         enum_item(string strFile, string strName, e_cs ecs);
+         enum_item(string strName);
+         enum_item(string strFile, string strName);
          virtual ~enum_item();
 
          bool operator < (const enum_item & item) const
@@ -90,13 +98,13 @@ namespace draw2d
             if (iCompare > 0)
                return false;
 
-            iCompare = ((int) m_ecs) - ((int) item.m_ecs);
+            //iCompare = ((int)m_echarset) - ((int) item.m_echarset);
 
-            if (iCompare < 0)
-               return true;
+            //if (iCompare < 0)
+            // return true;
 
-            if (iCompare > 0)
-               return false;
+            //if (iCompare > 0)
+            // return false;
 
             return m_strFile.compare(item.m_strFile);
 
@@ -106,8 +114,8 @@ namespace draw2d
          {
 
             return m_strFile == item.m_strFile
-                   && m_strName == item.m_strName
-                   && m_ecs == item.m_ecs;
+                   && m_strName == item.m_strName;
+            //                   && m_echarset == item.m_echarset;
 
          }
 
@@ -119,16 +127,18 @@ namespace draw2d
       using enum_item_array = spa(enum_item);
 
 
-      string      m_strFontFamilyName;
-      double      m_dFontSize;
-      double      m_dFontWidth;
-      e_unit      m_eunitFontSize;
-      int32_t     m_iFontWeight;
-      bool        m_bItalic;
-      bool        m_bUnderline;
-      bool        m_bStrikeout;
-      e_cs        m_ecs;
-      e_text_rendering m_etextrendering;
+      string                  m_strFontFamilyName;
+      double                  m_dFontSize;
+      double                  m_dFontWidth;
+      e_unit                  m_eunitFontSize;
+      int32_t                 m_iFontWeight;
+      bool                    m_bItalic;
+      bool                    m_bUnderline;
+      bool                    m_bStrikeout;
+      char_set_array          m_echarseta;
+      e_char_set              m_echarset;
+      e_text_rendering        m_etextrendering;
+
 
       font();
       font(const font & font);
@@ -176,11 +186,11 @@ namespace draw2d
       virtual void set_underline(bool bUnderline = true);
       virtual void set_strikeout(bool bStrikeout = true);
 
-      virtual e_cs calc_cs(::draw2d::graphics * pgraphics);
-      virtual e_cs get_cs(::draw2d::graphics * pgraphics);
+      virtual e_char_set calc_char_set(::draw2d::graphics * pgraphics);
+      virtual e_char_set get_char_set(::draw2d::graphics * pgraphics);
       virtual string get_sample_text(::draw2d::graphics * pgraphics);
 
-      static string get_sample_text(e_cs ecs);
+      static string get_sample_text(e_char_set echarsset);
 
       virtual double get_pixel_font_height(::draw2d::graphics * pgraphics);
 
@@ -192,7 +202,7 @@ namespace draw2d
 #ifdef WINDOWS
 
    CLASS_DECL_AURA void wingdi_enum_fonts(::draw2d::font::enum_item_array & itema, bool bRaster, bool bTrueType, bool bOther);
-   CLASS_DECL_AURA font::e_cs wingdi_get_cs(int iCs);
+   CLASS_DECL_AURA font::e_char_set wingdi_get_cs(int iCharSet);
 
 #endif
 

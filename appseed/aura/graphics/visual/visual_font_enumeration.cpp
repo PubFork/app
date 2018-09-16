@@ -20,8 +20,6 @@ namespace visual
    }
 
 
-
-
    void font_enumeration::update()
    {
 
@@ -41,8 +39,6 @@ namespace visual
 
 
 } // namespace visual
-
-
 
 
 

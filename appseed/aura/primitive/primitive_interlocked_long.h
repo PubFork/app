@@ -16,8 +16,12 @@ public:
    void add(long l);
    void subtract(long l);
 
-   bool operator > (long i) const;
    bool operator == (long i) const;
+   bool operator > (long i) const;
+   bool operator >= (long i) const;
+   bool operator < (long i) const;
+   bool operator <= (long i) const;
+   bool operator != (long i) const;
 
 };
 

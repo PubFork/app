@@ -5676,7 +5676,7 @@ namespace draw2d_direct2d
 
             string strName = string((LPCWSTR)(name));
 
-            itema.add(canew(::draw2d::font::enum_item(strName, strName, ::draw2d::font::cs_default)));
+            itema.add(canew(::draw2d::font::enum_item(strName, strName)));
 
          }
 

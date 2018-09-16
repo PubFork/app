@@ -81,6 +81,7 @@ namespace visual
       string                                    m_strText;
       string                                    m_strTextLayout;
 
+      rect                                      m_rectLayout;
       rect                                      m_rectClient;
       rect                                      m_rectMargin;
       index                                     m_iSel;

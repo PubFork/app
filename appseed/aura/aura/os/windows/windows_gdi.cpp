@@ -1,16 +1,6 @@
 ﻿#include "framework.h"
 
 
-
-
-
-
-
-
-
-
-
-
 HFONT wingdi_CreatePointFont(int nPointSize, const char * lpszFaceName, HDC hdc, LOGFONTW *plf)
 {
 
@@ -37,6 +27,7 @@ HFONT wingdi_CreatePointFont(int nPointSize, const char * lpszFaceName, HDC hdc,
    return wingdi_CreatePointFontIndirect(plf, hdc);
 
 }
+
 
 // pLogFont->nHeight is interpreted as PointSize * 10
 HFONT wingdi_CreatePointFontIndirect(LOGFONTW* lpLogFont, HDC hdc)
@@ -70,17 +61,19 @@ HFONT wingdi_CreatePointFontIndirect(LOGFONTW* lpLogFont, HDC hdc)
 }
 
 
-
-
-
 namespace draw2d
 {
+
 
    HBITMAP bitmap::GetHBITMAP()
    {
 
       if (m_hbitmapGet != NULL)
+      {
+
          return m_hbitmapGet;
+
+      }
 
       m_hbitmapGet = _GetHBITMAP();
 
@@ -88,14 +81,23 @@ namespace draw2d
 
    }
 
+
    void bitmap::ReleaseHBITMAP(HBITMAP hbitmap)
    {
 
       if (hbitmap == NULL)
+      {
+
          return;
 
+      }
+
       if (m_hbitmapGet == NULL)
+      {
+
          return;
+
+      }
 
       _ReleaseHBITMAP(hbitmap);
 
@@ -103,18 +105,27 @@ namespace draw2d
 
    }
 
+
    HBITMAP bitmap::_GetHBITMAP()
    {
 
       if (get_os_data() == NULL)
+      {
+
          return NULL;
+
+      }
 
       ::draw2d::dib_sp dib(allocer());
 
       dib->create(GetBitmapDimension());
 
       if (dib->area() <= 0)
+      {
+
          return NULL;
+
+      }
 
       ::draw2d::graphics_sp g(allocer());
 
@@ -136,21 +147,11 @@ namespace draw2d
 
    }
 
-} // namespace draw2d
-
-
-
-
-
-
-
-namespace draw2d
-{
-
 
    class wingdi_font_enum
    {
    public:
+
 
       HDC                                 m_hdc;
       ::draw2d::font::enum_item_array &   m_itema;
@@ -158,8 +159,7 @@ namespace draw2d
       bool                                m_bTrueType;
       bool                                m_bOther;
       wstring                             m_wstrTopicFaceName;
-      int_array                           m_iaCs;
-
+      int_array                           m_iaCharSet;
 
 
       wingdi_font_enum(::draw2d::font::enum_item_array & itema, bool bRaster, bool bTrueType, bool bOther) :
@@ -169,25 +169,25 @@ namespace draw2d
          m_bOther(bOther)
       {
 
-         m_iaCs.add(CHINESEBIG5_CHARSET);
-         m_iaCs.add(GB2312_CHARSET);
-         m_iaCs.add(SHIFTJIS_CHARSET);
-         //m_iaCs.add(ANSI_CHARSET);
-         m_iaCs.add(SYMBOL_CHARSET);
-         //m_iaCs.add(OEM_CHARSET);
-         //m_iaCs.add(DEFAULT_CHARSET);
-         m_iaCs.add(HEBREW_CHARSET);
-         m_iaCs.add(ARABIC_CHARSET);
-         m_iaCs.add(GREEK_CHARSET);
-         m_iaCs.add(TURKISH_CHARSET);
-         m_iaCs.add(VIETNAMESE_CHARSET);
-         m_iaCs.add(THAI_CHARSET);
-         m_iaCs.add(EASTEUROPE_CHARSET);
-         m_iaCs.add(RUSSIAN_CHARSET);
-         m_iaCs.add(JOHAB_CHARSET);
-         m_iaCs.add(HANGUL_CHARSET);
-         m_iaCs.add(BALTIC_CHARSET);
-         //m_iaCs.add(MAC_CHARSET);
+         m_iaCharSet.add(CHINESEBIG5_CHARSET);
+         m_iaCharSet.add(GB2312_CHARSET);
+         m_iaCharSet.add(SHIFTJIS_CHARSET);
+         //m_iaCharSet.add(ANSI_CHARSET);
+         m_iaCharSet.add(SYMBOL_CHARSET);
+         //m_iaCharSet.add(OEM_CHARSET);
+         //m_iaCharSet.add(DEFAULT_CHARSET);
+         m_iaCharSet.add(HEBREW_CHARSET);
+         m_iaCharSet.add(ARABIC_CHARSET);
+         m_iaCharSet.add(GREEK_CHARSET);
+         m_iaCharSet.add(TURKISH_CHARSET);
+         m_iaCharSet.add(VIETNAMESE_CHARSET);
+         m_iaCharSet.add(THAI_CHARSET);
+         m_iaCharSet.add(EASTEUROPE_CHARSET);
+         m_iaCharSet.add(RUSSIAN_CHARSET);
+         m_iaCharSet.add(JOHAB_CHARSET);
+         m_iaCharSet.add(HANGUL_CHARSET);
+         m_iaCharSet.add(BALTIC_CHARSET);
+         //m_iaCharSet.add(MAC_CHARSET);
 
 
          m_hdc = NULL;
@@ -214,129 +214,6 @@ namespace draw2d
          }
 
          ::EnumFontFamiliesW(m_hdc, (LPCWSTR)NULL, (FONTENUMPROCW)&wingdi_font_enum::callback, (LPARAM)this);
-
-         wstring wstrSample;
-
-         LOGFONTW lf;
-
-         HFONT hfont = NULL;
-
-         HFONT hfontOld = NULL;
-
-         size s;
-
-         int iMultiScript;
-
-         size sSample;
-
-         int64_t maxarea;
-
-         ::draw2d::font::e_cs ecs;
-
-         ::draw2d::font::e_cs ecsFound;
-
-         for (index i = 0; i < m_itema.get_size(); i++)
-         {
-
-            if (m_itema[i]->m_ecs == ::draw2d::font::cs_ansi
-                  || m_itema[i]->m_ecs == ::draw2d::font::cs_default)
-
-            {
-
-               maxarea = 0;
-
-               s.cx = 0;
-
-               s.cy = 0;
-
-               ecsFound = m_itema[i]->m_ecs;
-
-               iMultiScript = 0;
-
-               for (index j = 0; j < m_iaCs.get_size(); j++)
-               {
-
-                  ZERO(lf);
-
-                  lf.lfCharSet = m_iaCs[j];
-
-                  ecs = ::draw2d::wingdi_get_cs(lf.lfCharSet);
-
-                  wstring wstrSample = ::draw2d::font::get_sample_text(ecs);
-
-                  if (wstrSample.get_length() > 0)
-                  {
-
-                     string strFont = m_itema[i]->m_strName;
-
-                     hfont = wingdi_CreatePointFont(180, strFont, m_hdc, &lf);
-
-                     if (hfont != NULL)
-                     {
-
-                        try
-                        {
-
-                           hfontOld = (HFONT) ::SelectObject(m_hdc, hfont);
-
-                           if (::GetTextExtentPointW(m_hdc, wstrSample, (int) (wstrSample.get_length()), &sSample))
-                           {
-
-                              if (sSample.area() > maxarea)
-                              {
-
-                                 ecsFound = ecs;
-
-                                 maxarea = sSample.area();
-
-                                 s = sSample;
-
-                                 iMultiScript++;
-
-                              }
-
-                           }
-
-                        }
-                        catch (...)
-                        {
-
-                        }
-
-                     }
-
-                  }
-
-                  ::SelectObject(m_hdc, hfontOld);
-
-                  ::DeleteObject(hfont);
-
-               }
-
-               if (iMultiScript == 1)
-               {
-
-                  m_itema[i]->m_ecs = ecsFound;
-
-               }
-               else if (iMultiScript > 1)
-               {
-
-                  string str = m_itema[i]->m_strName;
-
-
-                  m_itema.pred_remove([&](auto & item)
-                  {
-
-                     return item->m_strName == str;
-
-                  });
-
-               }
-
-            }
-
-         }
 
       }
 
@@ -404,6 +281,7 @@ namespace draw2d
 
    }
 
+
    BOOL CALLBACK wingdi_font_enum::callback_cs(LPLOGFONTW lplf, LPNEWTEXTMETRICW lpntm, DWORD dwFontType, LPVOID p)
    {
 
@@ -452,88 +330,30 @@ namespace draw2d
 
          string str(lplf->lfFaceName);
 
-         ::draw2d::font::e_cs ecs = ::draw2d::wingdi_get_cs(lplf->lfCharSet);
+         ::draw2d::font::e_char_set echarset = ::draw2d::wingdi_get_cs(lplf->lfCharSet);
 
-         if (penum->m_wstrTopicFaceName.get_length() != wcslen(lplf->lfFaceName))
+         string strTopic(penum->m_wstrTopicFaceName);
+
+         iFind = penum->m_itema.pred_find_first([&](auto & item)
          {
 
-            string strTopic(penum->m_wstrTopicFaceName);
+            return item->m_strName == strTopic;
 
-            //   index iFindTopic = -1;
-
-            //   if(iFindTopic = penum->m_itema.pred_find_first(
-            //                   [&](auto & item)
-            //{
-
-            //   return item->m_strName == strTopic && item->m_ecs == ecs;
-
-            //}) >= 0)
-            //   {
-
-            //      penum->m_itema.remove_at(iFindTopic);
-
-            //   }
-            iFind = penum->m_itema.pred_find_first(
-                    [&](auto & item)
-            {
-
-               return item->m_strName == strTopic && item->m_ecs == ecs;
-
-            });
-
-         }
+         });
 
          if (iFind < 0)
          {
 
+            penum->m_itema.add(canew(::draw2d::font::enum_item(lplf->lfFaceName)));
 
-            iFind = penum->m_itema.pred_find_first(
-                    [&](auto & item)
-            {
-
-               return item->m_strName == str;
-
-            });
-
-
-            if (iFind >= 0)
-            {
-
-               if (penum->m_itema[iFind]->m_ecs == ::draw2d::font::cs_ansi
-                     || penum->m_itema[iFind]->m_ecs == ::draw2d::font::cs_default)
-               {
-
-                  penum->m_itema[iFind]->m_ecs = ecs;
-
-                  if (ecs != ::draw2d::font::cs_ansi && ecs != ::draw2d::font::cs_default)
-                  {
-
-                     output_debug_string("test02");
-
-                  }
-
-               }
-               else
-               {
-
-                  iFind = penum->m_itema.pred_find_first(
-                          [&](auto & item)
-                  {
-
-                     return item->m_strName == str && item->m_ecs == ecs;
-
-                  });
-
-               }
-
-            }
+            iFind = penum->m_itema.get_upper_bound();
 
          }
 
-         if (iFind < 0)
+         if (echarset != ::draw2d::font::char_set_ansi && echarset != ::draw2d::font::char_set_default)
          {
 
-            penum->m_itema.add(canew(::draw2d::font::enum_item(lplf->lfFaceName, ecs)));
+            penum->m_itema[iFind]->m_echarseta.add(echarset);
 
          }
 
@@ -552,140 +372,121 @@ namespace draw2d
    }
 
 
-   //CLASS_DECL_AURA void wingdi_enum_cs(string str, ::draw2d::font::csa & csa, bool bRaster, bool bTrueType, bool bOther)
-   //{
-
-   //   stringa stra;
-
-   //   wingdi_font_enum fonts(stra, csa, bRaster, bTrueType, bOther);
-
-   //   HDC hdc = ::CreateCompatibleDC(NULL);
-
-   //   wstring wstr(str);
-
-   //   ::EnumFontFamiliesW(hdc, (LPCWSTR)wstr, (FONTENUMPROCW)&wingdi_font_enum::callback, (LPARAM)&fonts);
-
-   //   ::DeleteDC(hdc);
-
-   //}
-
-
-
-   font::e_cs wingdi_get_cs(int iCs)
+   font::e_char_set wingdi_get_cs(int iCs)
    {
 
       if (iCs == CHINESEBIG5_CHARSET)
       {
 
-         return font::cs_chinesebig5;
+         return font::char_set_chinesebig5;
 
       }
       else if (iCs == GB2312_CHARSET)
       {
 
-         return font::cs_gb2312;
+         return font::char_set_gb2312;
 
       }
       else if (iCs == SHIFTJIS_CHARSET)
       {
 
-         return font::cs_shiftjis;
+         return font::char_set_shiftjis;
 
       }
       else if (iCs == ANSI_CHARSET)
       {
 
-         return font::cs_ansi;
+         return font::char_set_ansi;
 
       }
       else if (iCs == SYMBOL_CHARSET)
       {
 
-         return font::cs_symbol;
+         return font::char_set_symbol;
 
       }
       else if (iCs == OEM_CHARSET)
       {
 
-         return font::cs_default;
+         return font::char_set_default;
 
       }
       else if (iCs == DEFAULT_CHARSET)
       {
 
-         return font::cs_default;
+         return font::char_set_default;
 
       }
       else if (iCs == HEBREW_CHARSET)
       {
 
-         return font::cs_hebrew;
+         return font::char_set_hebrew;
 
       }
       else if (iCs == ARABIC_CHARSET)
       {
 
-         return font::cs_arabic;
+         return font::char_set_arabic;
 
       }
       else if (iCs == GREEK_CHARSET)
       {
 
-         return font::cs_greek;
+         return font::char_set_greek;
 
       }
       else if (iCs == TURKISH_CHARSET)
       {
 
-         return font::cs_turkish;
+         return font::char_set_turkish;
 
       }
       else if (iCs == VIETNAMESE_CHARSET)
       {
 
-         return font::cs_vietnamese;
+         return font::char_set_vietnamese;
 
       }
       else if (iCs == THAI_CHARSET)
       {
 
-         return font::cs_thai;
+         return font::char_set_thai;
 
       }
       else if (iCs == EASTEUROPE_CHARSET)
       {
 
-         return font::cs_easteurope;
+         return font::char_set_easteurope;
 
       }
       else if (iCs == RUSSIAN_CHARSET)
       {
 
-         return font::cs_russian;
+         return font::char_set_russian;
 
       }
       else if (iCs == JOHAB_CHARSET)
       {
 
-         return font::cs_johab;
+         return font::char_set_johab;
 
       }
       else if (iCs == HANGUL_CHARSET)
       {
 
-         return font::cs_hangul;
+         return font::char_set_hangul;
 
       }
       else if (iCs == BALTIC_CHARSET)
       {
 
-         return font::cs_baltic;
+         return font::char_set_baltic;
 
       }
       else if (iCs == MAC_CHARSET)
       {
 
-         return font::cs_mac;
+         return font::char_set_mac;
 
       }
       else
@@ -695,19 +496,12 @@ namespace draw2d
 
       }
 
-      return font::cs_default;
+      return font::char_set_default;
 
    }
 
 
 } // namespace draw2d
-
-
-
-
-
-
-
 
 
 CLASS_DECL_AURA HBITMAP CreateAlphaBitmapV5(::draw2d::dib * pdib)

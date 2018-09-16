@@ -121,11 +121,14 @@ END_EXTERN_C
 #ifdef __cplusplus
 
 #include "os_windowing.h"
+#include "aura/primitive/primitive_interlocked_long.h"
 
 class runnable
 {
 
 public:
+
+   interlocked_long     m_interlockedlong;
 
    virtual void run() = 0;
 

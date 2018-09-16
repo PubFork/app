@@ -285,8 +285,9 @@ class forking_count_thread :
 {
 public:
 
-   PRED     m_pred;
 
+
+   PRED     m_pred;
 
 
    index    m_iOrder;
@@ -294,9 +295,12 @@ public:
    ::count  m_iScan;
    ::count  m_iCount;
 
+   runnable * m_prunnableEnd;
+
    sp(object) m_pholdref;
 
-   forking_count_thread(::aura::application * papp, sp(object) pholdref, index iOrder, index iIndex, ::count iScan, ::count iCount, PRED pred) :
+
+   forking_count_thread(::aura::application * papp, sp(object) pholdref, index iOrder, index iIndex, ::count iScan, ::count iCount, PRED pred, runnable * prunnableEnd = NULL) :
       object(papp),
       thread(papp),
       m_pholdref(pholdref),
@@ -304,19 +308,21 @@ public:
       m_iOrder(iOrder),
       m_iIndex(iIndex),
       m_iScan(iScan),
-      m_iCount(iCount)
+      m_iCount(iCount),
+      m_prunnableEnd(prunnableEnd)
    {
       construct();
    }
 
-   forking_count_thread(::aura::application * papp, index iOrder, index iIndex, ::count iScan, ::count iCount, PRED pred) :
+   forking_count_thread(::aura::application * papp, index iOrder, index iIndex, ::count iScan, ::count iCount, PRED pred, runnable * prunnableEnd = NULL) :
       object(papp),
       thread(papp),
       m_pred(pred),
       m_iOrder(iOrder),
       m_iIndex(iIndex),
       m_iScan(iScan),
-      m_iCount(iCount)
+      m_iCount(iCount),
+      m_prunnableEnd(prunnableEnd)
    {
       construct();
    }
@@ -338,10 +344,25 @@ public:
 
       m_pred(m_iOrder, m_iIndex, m_iCount, m_iScan);
 
+      if (m_prunnableEnd != NULL)
+      {
+
+         m_prunnableEnd->m_interlockedlong.subtract(1);
+
+         if (m_prunnableEnd->m_interlockedlong <= 0)
+         {
+
+            m_prunnableEnd->run();
+
+            delete m_prunnableEnd;
+
+         }
+
+      }
+
    }
 
 };
-
 
 
 template < typename PRED >
@@ -373,6 +394,45 @@ template < typename PRED >
    return iScan;
 
 }
+
+
+
+
+template < typename PRED, typename PRED_END >
+::count fork_count_end_pred(::aura::application * papp, ::count iCount, PRED pred, PRED_END predEnd, ::duration duration = ::duration::infinite(), index iStart = 0)
+{
+
+   int iAffinityOrder = get_current_process_affinity_order();
+
+   if (::get_thread() == NULL || ::get_thread()->m_bAvoidProcFork)
+   {
+
+      iAffinityOrder = 1;
+
+   }
+
+   ::count iScan = MAX(1, MIN(iCount - iStart, iAffinityOrder));
+
+   runnable * prunnableEnd = new runnable_pred < PRED_END > (predEnd);
+
+   prunnableEnd->m_interlockedlong.add(iScan);
+
+   for (index iOrder = 0; iOrder < iScan; iOrder++)
+   {
+
+      auto pforkingthread = canew(forking_count_thread < PRED >(papp, iOrder, iOrder + iStart, iScan, iCount, pred, prunnableEnd));
+
+      ::thread * pthread = dynamic_cast <::thread *> (pforkingthread);
+
+      pthread->begin();
+
+   }
+
+   return iScan;
+
+}
+
+
 
 template < typename PRED >
 class forking_for_thread :
