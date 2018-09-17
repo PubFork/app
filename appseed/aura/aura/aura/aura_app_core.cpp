@@ -176,7 +176,7 @@ void app_core::app_core_common_construct(aura_main_data * pdata, ::aura::PFN_GET
 
    ASSERT(!(pgetnewlibrary != NULL && pgetnewapp != NULL));
 
-   m_bAcidApp = false;
+   m_bAcidApp = pgetnewapp != NULL;
    m_pfnNewLibrary = pgetnewlibrary;
    m_pfnNewApp = pgetnewapp;
    m_pfnDeferTerm = NULL;
