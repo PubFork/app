@@ -52,7 +52,7 @@ template < typename PRED >
 inline void main_async(PRED pred)
 {
 
-   object * pobjectd = create_runnable_pred(pred);
+   object * pobject = create_runnable_pred(pred);
 
    main_async_runnable(pobject);
 
@@ -63,7 +63,7 @@ template < typename PRED >
 inline void main_sync(PRED pred)
 {
 
-   object * pobjectd = create_runnable_pred(pred);
+   object * pobject = create_runnable_pred(pred);
 
    main_sync_runnable(pobject);
 

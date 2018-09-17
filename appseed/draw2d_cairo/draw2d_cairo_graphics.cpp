@@ -6322,7 +6322,7 @@ namespace draw2d_cairo
 
          item->m_strName = item->m_strFile;
 
-         item->m_ecs = ::draw2d::font::cs_default;
+         //item->m_echarset = ::draw2d::font::char_set_default;
 
          itema.add(item);
 

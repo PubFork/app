@@ -62,7 +62,7 @@ namespace user
             {
 
                ::multithreading::set_priority(::multithreading::priority_highest);
-               run();
+               shell_run();
 
             }));
 
@@ -929,7 +929,7 @@ namespace user
 
       }
 
-      int linux::run()
+      int linux::shell_run()
       {
 
          per_fork fork;
