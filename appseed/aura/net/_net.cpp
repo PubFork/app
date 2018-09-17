@@ -2,9 +2,9 @@
 
 
 #include "ftp/_ftp.cpp"
-//#include "http/_http.cpp"
+#include "http/_http.cpp"
 #include "netserver/_netserver.cpp"
-//#include "sockets/_sockets.cpp"
+#include "sockets/_sockets.cpp"
 
 #include "net_address.cpp"
 #include "net_email.cpp"

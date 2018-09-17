@@ -958,8 +958,12 @@ namespace file
 
 #include "aura/primitive/enum.h"
 
-
+#include "aura/primitive/primitive_interlocked_long.h"
+#include "aura/primitive/primitive_interlocked_long_pulse.h"
+#include "aura/aura/aura_runnable.h"
 #include "aura/primitive/primitive_object.h"
+#include "aura/aura/aura_runnable_pred.h"
+
 
 #include "aura/aura/aura/aura_debug.h"
 
@@ -982,7 +986,7 @@ namespace file
 
 #include "aura/multithreading/multithreading_waitable.h"
 
-#include "aura/primitive/primitive_object.h"
+//#include "aura/primitive/primitive_object.h"
 
 
 #include "aura/aura/xml/xml_exportable.h"
@@ -1243,8 +1247,6 @@ CLASS_DECL_AURA string get_system_error_message(uint32_t dwError);
 
 
 
-#include "aura/primitive/primitive_interlocked_long.h"
-#include "aura/primitive/primitive_interlocked_long_pulse.h"
 
 #include "aura/primitive/data/data_data.h"
 #include "aura/primitive/data/data_data_listener.h"

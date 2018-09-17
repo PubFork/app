@@ -55,7 +55,8 @@ inline int64_t atomic_decrement(int64_t * pi)
 }
 
 
-class CLASS_DECL_AURA simple_object
+class CLASS_DECL_AURA simple_object :
+   virtual public runnable
 {
 public:
 
@@ -85,6 +86,9 @@ public:
    virtual int64_t add_ref();
    virtual int64_t dec_ref();
    virtual int64_t release();
+
+
+   virtual void run() override;
 
 
    virtual void io(stream & stream);

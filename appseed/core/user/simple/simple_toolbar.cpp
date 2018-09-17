@@ -962,13 +962,13 @@ void simple_toolbar::_001DrawSimpleToolbarItem(::draw2d::graphics * pgraphics, i
             {
 
 //            if(rect.width() > 10000)
-  //          {
+               //          {
 
-    //           output_debug_string("width > 10000");
+               //           output_debug_string("width > 10000");
 
-      //         _001GetElementRect(iItem, rect, element_image);
+               //         _001GetElementRect(iItem, rect, element_image);
 
-        //    }
+               //    }
 
                Application.imaging().color_blend(pgraphics, rect.top_left(), rect.get_size(), item.m_spdib->get_graphics(), null_point(), 0.23);
 
@@ -1247,8 +1247,6 @@ void simple_toolbar::on_layout()
 
    if (rectClient.area() <= 0)
    {
-
-      set_need_layout();
 
       return;
 

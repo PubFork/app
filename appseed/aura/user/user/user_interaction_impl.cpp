@@ -3031,10 +3031,12 @@ namespace user
          if (m_pelementalFocus != NULL && m_pelementalFocus->m_puiThis != m_pui)
          {
 
+            auto pelementalFocus = m_pelementalFocus;
+
             try
             {
 
-               m_pelementalFocus->m_puiThis->send_message(WM_KILLFOCUS, pkillfocus->m_wparam, pkillfocus->m_lparam);
+               pelementalFocus->m_puiThis->send_message(WM_KILLFOCUS, pkillfocus->m_wparam, pkillfocus->m_lparam);
 
             }
             catch (...)
@@ -3045,7 +3047,7 @@ namespace user
             try
             {
 
-               m_pelementalFocus->set_need_redraw();
+               pelementalFocus->set_need_redraw();
 
             }
             catch (...)

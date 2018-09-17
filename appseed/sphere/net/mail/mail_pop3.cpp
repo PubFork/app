@@ -13,7 +13,7 @@ namespace mail
       ::object(papp),
       m_evFinish(papp)
    {
-      
+
       m_phandler = new ::sockets::socket_handler(papp);
 
       m_bRun = false;
@@ -21,27 +21,28 @@ namespace mail
 
    }
 
-   
+
    pop3::~pop3()
    {
 
       ::aura::del(m_phandler);
-      
+
    }
-   
+
 
    UINT pop3::pop3_thread_proc(LPVOID lpvoid)
    {
 
       pop3 * ppop3 = (pop3 *) lpvoid;
-      ppop3->run();
 
-      return 0;
+      UINT uiPop3 = ppop3->pop3_run();
+
+      return uiPop3;
 
    }
 
 
-   UINT pop3::run()
+   UINT pop3::pop3_run()
    {
       m_psocket = new pop3_socket(*m_phandler);
       m_psocket->m_ppop3 = this;

@@ -71,6 +71,14 @@ int64_t simple_object::release()
 
 }
 
+
+void simple_object::run()
+{
+
+
+}
+
+
 void simple_object::assert_valid() const
 {
 

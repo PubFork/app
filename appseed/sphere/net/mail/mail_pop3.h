@@ -58,7 +58,7 @@ namespace mail
 
       static UINT pop3_thread_proc(LPVOID lpvoid);
 
-      virtual UINT run();
+      virtual UINT pop3_run();
 
       virtual void on_finished_transaction();
 

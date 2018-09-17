@@ -5,7 +5,7 @@ namespace command
 {
 
 
-   command::command() 
+   command::command()
    {
 
       m_ecommand = command_default;
@@ -42,7 +42,7 @@ namespace command
    }
 
 
-   var command::run()
+   var command::command_run()
    {
 
       return true;
@@ -86,6 +86,6 @@ namespace command
 
    }
 
-   
+
 
 } // namespace command

@@ -65,6 +65,7 @@
 #include "aura_printf.cpp"
 #include "aura_profiler.cpp"
 #include "aura_progress.cpp"
+#include "aura_runnable.cpp"
 #include "aura_savings.cpp"
 #include "aura_session.cpp"
 #include "aura_shell_launcher.cpp"

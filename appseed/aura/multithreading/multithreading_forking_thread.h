@@ -347,9 +347,9 @@ public:
       if (m_prunnableEnd != NULL)
       {
 
-         m_prunnableEnd->m_interlockedlong.subtract(1);
+         m_prunnableEnd->interlockedlong().subtract(1);
 
-         if (m_prunnableEnd->m_interlockedlong <= 0)
+         if (m_prunnableEnd->interlockedlong() <= 0)
          {
 
             m_prunnableEnd->run();
@@ -415,7 +415,7 @@ template < typename PRED, typename PRED_END >
 
    runnable * prunnableEnd = new runnable_pred < PRED_END > (predEnd);
 
-   prunnableEnd->m_interlockedlong.add(iScan);
+   prunnableEnd->interlockedlong().add(iScan);
 
    for (index iOrder = 0; iOrder < iScan; iOrder++)
    {

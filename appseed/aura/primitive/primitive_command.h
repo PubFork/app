@@ -25,7 +25,7 @@ namespace command
       virtual ~command();
 
 
-      virtual var run();
+      virtual var command_run();
 
       virtual void on_request(::create * pcreate);
 

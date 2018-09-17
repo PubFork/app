@@ -2777,6 +2777,12 @@
     <ClInclude Include="aura\compress\compress_zip_is_dir.h">
       <Filter>Header Files\aura\compress</Filter>
     </ClInclude>
+    <ClInclude Include="aura\aura\aura_runnable.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_runnable_pred.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="multithreading\multithreading_condition.cpp">
@@ -4788,6 +4794,15 @@
     </ClCompile>
     <ClCompile Include="aura\compress\compress_zip_is_dir.cpp">
       <Filter>Source Files\aura\compress</Filter>
+    </ClCompile>
+    <ClCompile Include="net\sockets\_sockets.cpp">
+      <Filter>Source Files\net\sockets</Filter>
+    </ClCompile>
+    <ClCompile Include="net\sockets\http\_sockets_http.cpp">
+      <Filter>Source Files\net\sockets\http</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_runnable.cpp">
+      <Filter>Source Files\aura\aura</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
