@@ -245,93 +245,98 @@ namespace windows
 
       bool bSetWindowPos = false;
 
-      if (m_rectLast != rectWindow || m_pimpl->m_bZ || m_pimpl->m_bShowFlags || m_pimpl->m_bShowWindow)
+      if (m_pimpl != NULL && m_pimpl->m_pui != NULL)
       {
 
-         keep < bool > keepLockWindowUpdate(&m_pimpl->m_pui->m_bLockWindowUpdate, true, false, true);
-
-         keep < bool > keepIgnoreSizeEvent(&m_pimpl->m_bIgnoreSizeEvent, true, false, true);
-
-         keep < bool > keepIgnoreMoveEvent(&m_pimpl->m_bIgnoreMoveEvent, true, false, true);
-
-         keep < bool > keepDisableSaveWindowRect(&m_pimpl->m_pui->m_bEnableSaveWindowRect, false, m_pimpl->m_pui->m_bEnableSaveWindowRect, true);
-
-
-         UINT uiFlags;
-
-         if (bLayered)
+         if (m_rectLast != rectWindow || m_pimpl->m_bZ || m_pimpl->m_bShowFlags || m_pimpl->m_bShowWindow)
          {
 
-            uiFlags = SWP_NOREDRAW
-                      | SWP_NOCOPYBITS
-                      | SWP_NOACTIVATE
-                      | SWP_NOOWNERZORDER
-                      | SWP_DEFERERASE;
+            keep < bool > keepLockWindowUpdate(&m_pimpl->m_pui->m_bLockWindowUpdate, true, false, true);
 
-         }
-         else
-         {
+            keep < bool > keepIgnoreSizeEvent(&m_pimpl->m_bIgnoreSizeEvent, true, false, true);
 
-            //         uiFlags = SWP_FRAMECHANGED | SWP_NOREDRAW;
+            keep < bool > keepIgnoreMoveEvent(&m_pimpl->m_bIgnoreMoveEvent, true, false, true);
 
-            uiFlags = SWP_NOREDRAW
-                      | SWP_NOCOPYBITS
-                      | SWP_NOACTIVATE
-                      | SWP_NOOWNERZORDER
-                      | SWP_DEFERERASE;
+            keep < bool > keepDisableSaveWindowRect(&m_pimpl->m_pui->m_bEnableSaveWindowRect, false, m_pimpl->m_pui->m_bEnableSaveWindowRect, true);
 
 
-         }
+            UINT uiFlags;
 
-         ::SetWindowPos(m_pimpl->m_oswindow, (m_pimpl->m_bZ ? (HWND)m_pimpl->m_iZ : 0),
-                        rectWindow.left,
-                        rectWindow.top,
-                        rectWindow.width(),
-                        rectWindow.height(),
-                        (m_pimpl->m_bZ ? 0 : SWP_NOZORDER)
-                        | (m_pimpl->m_bShowFlags ? m_pimpl->m_iShowFlags : 0)
-                        | uiFlags);
-
-
-         if (bLayered && !m_pimpl->m_bShowWindow)
-         {
-
-            if (m_pimpl->m_iShowFlags & SWP_SHOWWINDOW)
+            if (bLayered)
             {
 
-               ::ShowWindow(m_pimpl->m_oswindow, SW_NORMAL);
+               uiFlags = SWP_NOREDRAW
+                         | SWP_NOCOPYBITS
+                         | SWP_NOACTIVATE
+                         | SWP_NOOWNERZORDER
+                         | SWP_DEFERERASE;
 
-               if (bLayered)
+            }
+            else
+            {
+
+               //         uiFlags = SWP_FRAMECHANGED | SWP_NOREDRAW;
+
+               uiFlags = SWP_NOREDRAW
+                         | SWP_NOCOPYBITS
+                         | SWP_NOACTIVATE
+                         | SWP_NOOWNERZORDER
+                         | SWP_DEFERERASE;
+
+
+            }
+
+            ::SetWindowPos(m_pimpl->m_oswindow, (m_pimpl->m_bZ ? (HWND)m_pimpl->m_iZ : 0),
+                           rectWindow.left,
+                           rectWindow.top,
+                           rectWindow.width(),
+                           rectWindow.height(),
+                           (m_pimpl->m_bZ ? 0 : SWP_NOZORDER)
+                           | (m_pimpl->m_bShowFlags ? m_pimpl->m_iShowFlags : 0)
+                           | uiFlags);
+
+
+            if (bLayered && !m_pimpl->m_bShowWindow)
+            {
+
+               if (m_pimpl->m_iShowFlags & SWP_SHOWWINDOW)
                {
 
-                  m_pimpl->m_pui->ModifyStyle(0, WS_VISIBLE);
+                  ::ShowWindow(m_pimpl->m_oswindow, SW_NORMAL);
+
+                  if (bLayered)
+                  {
+
+                     m_pimpl->m_pui->ModifyStyle(0, WS_VISIBLE);
+
+                  }
+
+               }
+               else if (m_pimpl->m_iShowFlags & SWP_HIDEWINDOW)
+               {
+
+                  ::ShowWindow(m_pimpl->m_oswindow, SW_HIDE);
+
+                  if (bLayered)
+                  {
+
+                     m_pimpl->m_pui->ModifyStyle(WS_VISIBLE, 0);
+
+                  }
 
                }
 
             }
-            else if (m_pimpl->m_iShowFlags & SWP_HIDEWINDOW)
-            {
 
-               ::ShowWindow(m_pimpl->m_oswindow, SW_HIDE);
+            m_rectLast = rectWindow;
 
-               if (bLayered)
-               {
+            m_pimpl->m_bZ = false;
 
-                  m_pimpl->m_pui->ModifyStyle(WS_VISIBLE, 0);
+            m_pimpl->m_bShowFlags = false;
 
-               }
-
-            }
+            bSetWindowPos = true;
 
          }
-
-         m_rectLast = rectWindow;
-
-         m_pimpl->m_bZ = false;
-
-         m_pimpl->m_bShowFlags = false;
-
-         bSetWindowPos = true;
 
       }
 
@@ -374,7 +379,10 @@ namespace windows
 
       }
 
-      if (bLayered && m_pimpl->m_pui->IsWindowVisible())
+      if (bLayered
+            && m_pimpl != NULL
+            && m_pimpl->m_pui != NULL
+            && m_pimpl->m_pui->IsWindowVisible())
       {
 
          POINT pt;
@@ -444,7 +452,9 @@ namespace windows
 
       ::user::interaction_impl * pimplFocus = NULL;
 
-      if (m_pimpl->m_pui->IsWindowVisible())
+      if (m_pimpl != NULL
+            && m_pimpl->m_pui != NULL
+            && m_pimpl->m_pui->IsWindowVisible())
       {
 
          if (Sess(m_pimpl->get_app()).m_pimplPendingSetFocus == m_pimpl)

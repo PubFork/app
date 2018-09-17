@@ -64,7 +64,7 @@ namespace user
    void font_list::install_message_routing(::message::sender * psender)
    {
 
-      ::user::box::install_message_routing(psender);
+      ::user::control::install_message_routing(psender);
 
       IGUI_MSG_LINK(WM_CREATE, psender, this, &font_list::_001OnCreate);
       IGUI_MSG_LINK(WM_LBUTTONDOWN, psender, this, &font_list::_001OnLButtonDown);
@@ -142,9 +142,9 @@ namespace user
 
       point pt = pmouse->m_pt;
 
-      ScreenToClient(&pt);
+      e_element eelement = element_none;
 
-      index iSel = hit_test(pt);
+      index iSel = hit_test(pt, eelement);
 
       if (iSel != m_pfontlist->m_iSel)
       {
@@ -181,9 +181,9 @@ namespace user
 
       point pt = pmouse->m_pt;
 
-      ScreenToClient(&pt);
+      e_element eelement = element_none;
 
-      auto iHover = hit_test(pt);
+      auto iHover = hit_test(pt, eelement);
 
       if (m_pfontlist->m_iHover != iHover)
       {
@@ -400,12 +400,27 @@ namespace user
    }
 
 
-   index font_list::hit_test(point pt)
+   index font_list::hit_test(point pt, e_element & eelement)
    {
+
+      ScreenToClient(&pt);
 
       pt += m_ptScrollPassword1;
 
-      return m_pfontlist->hit_test(pt, &m_layout);
+      index iItem = m_pfontlist->hit_test(pt, &m_layout);
+
+      if(iItem < 0)
+      {
+
+         eelement = element_none;
+
+         return iItem;
+
+      }
+
+      eelement = element_item;
+
+      return iItem;
 
    }
 

@@ -13,7 +13,7 @@ namespace user
    {
    public:
 
-      
+
       enum timer
       {
 
@@ -21,7 +21,7 @@ namespace user
 
       };
 
-      
+
       ::visual::font_list::layout      m_layout;
       rect                             m_rectMargin;
       int                              m_iSel;
@@ -67,7 +67,7 @@ namespace user
 
       virtual void _001OnTimer(::timer * ptimer) override;
 
-      virtual index hit_test(point pt);
+      virtual index hit_test(point pt, e_element & eelement) override;
 
       virtual void on_layout() override;
 

@@ -767,6 +767,13 @@ namespace user
    index combo_list::hit_test(point pt, e_element & eelement)
    {
 
+      if (m_pcombo == NULL)
+      {
+
+         return -1;
+
+      }
+
       ::count ca = m_pcombo->_001GetListCount();
 
       rect rectClient;

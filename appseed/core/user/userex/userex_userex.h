@@ -80,7 +80,6 @@ namespace userex
       virtual void _001OnFileNew();
 
 
-
       ::user::list_header * default_create_list_header(::aura::application * papp);
       ::user::mesh_data * default_create_mesh_data(::aura::application * papp);
       ::user::list_data * default_create_list_data(::aura::application * papp);

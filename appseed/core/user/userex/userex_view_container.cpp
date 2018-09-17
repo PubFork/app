@@ -391,6 +391,22 @@ namespace userex
 
    }
 
+   sp(::user::impact) view_container::get_view(string strView)
+   {
+
+      sp(::user::document) pdoc = get_doc(strView);
+
+      if (pdoc.is_null())
+      {
+
+         return NULL;
+
+      }
+
+      return pdoc->m_pviewTopic;
+
+   }
+
 
    sp(::user::document) view_container::detach_doc(string strView)
    {

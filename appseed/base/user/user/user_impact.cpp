@@ -158,10 +158,18 @@ namespace user
 
    void impact::_001OnDestroy(::message::message * pobj)
    {
+
       UNREFERENCED_PARAMETER(pobj);
+
       sp(::user::frame_window) pFrame = GetParentFrame();
+
       if (pFrame != NULL && pFrame->GetActiveView() == this)
-         pFrame->SetActiveView(NULL);    // deactivate during death
+      {
+
+         pFrame->SetActiveView(NULL, false);    // deactivate during death
+
+      }
+
       GetTopLevelFrame()->m_viewptraCommandHandlers.remove(this);
       if (m_pdocument != NULL)
       {

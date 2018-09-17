@@ -469,7 +469,7 @@ namespace user
       ev.m_eevent = ::user::event_kill_focus;
 
       on_control_event(&ev);
-      
+
       pkillfocus->m_bRet = ev.m_bRet;
 
    }
@@ -773,7 +773,9 @@ namespace user
 
          if (m_iHover >= 0)
          {
+
             track_mouse_leave();
+
          }
 
          set_need_redraw();
@@ -783,14 +785,24 @@ namespace user
    }
 
 
-   void control::_001OnMouseLeave(::message::message * pobj)
+   void control::_001OnMouseLeave(::message::message * pmessage)
    {
 
-      UNREFERENCED_PARAMETER(pobj);
-
       m_iHover = -1;
+
       m_eelementHover = element_none;
 
+      ::user::control_event ev;
+
+      ev.m_id = m_id;
+
+      ev.m_puie = this;
+
+      ev.m_eevent = event_mouse_leave;
+
+      ev.m_pmessage = pmessage;
+
+      on_control_event(&ev);
    }
 
 

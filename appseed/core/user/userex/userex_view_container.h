@@ -72,13 +72,14 @@ namespace userex
       virtual sp(::user::impact) _001DetachView(string strView);
       virtual bool _001AttachView(string strView);
       virtual void _001DefaultLayoutView(string strView);
-      sp(::user::document) get_doc(string strView);
-      sp(::user::document) detach_doc(string strView);
-      bool attach(sp(::user::document) pdoc, string strView);
+      virtual sp(::user::impact) get_view(string strView);
+      virtual sp(::user::document) get_doc(string strView);
+      virtual sp(::user::document) detach_doc(string strView);
+      virtual bool attach(sp(::user::document) pdoc, string strView);
 
       virtual bool OnUpDownTargetAttach(::user::wndfrm::frame::WorkSetUpDownInterface * pupdown) override;
       virtual bool OnUpDownTargetDetach(::user::wndfrm::frame::WorkSetUpDownInterface * pupdown) override;
-      void tabfy(::user::wndfrm::frame::WorkSetUpDownInterface * pupdown);
+      virtual void tabfy(::user::wndfrm::frame::WorkSetUpDownInterface * pupdown);
 
 
       virtual void on_layout() override;

@@ -1812,7 +1812,7 @@ finished:
       try
       {
 
-         if(m_puserex != NULL)
+         if (m_puserex != NULL)
          {
 
             m_puserex->term();
@@ -1908,10 +1908,10 @@ finished:
    void session::will_use_view_hint(string strView)
    {
 
-      if(strView == "color_sel")
+      if (strView == "color_sel")
       {
 
-         if(userex()->m_mapimpactsystem["color_sel"] != NULL)
+         if (userex()->m_mapimpactsystem["color_sel"] != NULL)
          {
 
             return;
@@ -1930,7 +1930,7 @@ finished:
          add_document_template(userex()->m_mapimpactsystem["color_sel"]);
 
       }
-      else if(strView == "font_sel")
+      else if (strView == "font_sel")
       {
 
          if (m_pfontlist != NULL)
@@ -1973,6 +1973,7 @@ finished:
       }
 
    }
+
 
 
 } // namespace core

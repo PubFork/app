@@ -1350,23 +1350,25 @@ namespace user
 
    void frame_window::SetActiveView(::user::impact * pViewNew, bool bNotify)
    {
-#ifdef DEBUG
-      if (pViewNew != NULL)
-      {
-         //trans      ASSERT(IsChild(pViewNew));
-         //trans      ASSERT_KINDOF(::user::impact, pViewNew);
-      }
-#endif //DEBUG
 
       sp(::user::impact) pViewOld = m_pviewActive;
+
       if (pViewNew == pViewOld)
+      {
+
          return;     // do not re-activate if SetActiveView called more than once
+
+      }
 
       m_pviewActive = NULL;   // no active for the following processing
 
       // deactivate the old one
-      if (pViewOld != NULL)
+      if (pViewOld != NULL && bNotify)
+      {
+
          pViewOld->OnActivateView(FALSE, pViewNew, pViewOld);
+
+      }
 
       // if the OnActivateView moves the active interaction_impl,
       //    that will veto this change
