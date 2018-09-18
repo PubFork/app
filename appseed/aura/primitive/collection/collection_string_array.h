@@ -219,6 +219,8 @@ public:
    index find_first_suffixes_ci(const char * lpcsz, index find = 0, index last = -1) const;
    index find_first_suffixes(const char * lpcsz, index find = 0, index last = -1) const;
 
+   index find_first_contains_ci(const char * lpcszSubString,index find = 0,index last = -1) const;
+   index find_first_contains(const Type & strSubString,index find = 0,index last = -1) const;
 
    index find_first_begins_ci(const char * lpcsz,index find = 0,index last = -1) const;
    index find_first_begins(const Type & strPrefix,index find = 0,index last = -1) const;
@@ -236,6 +238,9 @@ public:
 
    bool contains_ci(const char * lpcsz,index find = 0,index last = -1,::count countMin = 1,::count countMax = -1) const;
    bool contains(const char * lpcsz,index find = 0,index last = -1,::count countMin = 1,::count countMax = -1) const;
+
+   bool contains_contains_ci(const char * lpcsz,index find = 0,index last = -1,::count countMin = 1,::count countMax = -1) const;
+   bool contains_contains(const char * lpcsz,index find = 0,index last = -1,::count countMin = 1,::count countMax = -1) const;
 
    ::count get_begins_ci(string_array & stra,const char * lpcsz,index first = 0,index last = -1);
 
@@ -2233,6 +2238,24 @@ bool string_array < Type, RawType > ::suffixes(const char * lpcsz, index find, i
    return find_first_suffixes(lpcsz, find, last) >= 0;
 }
 
+
+template < class Type, class RawType >
+index string_array < Type, RawType > ::find_first_contains_ci(const char * lpcsz,index find,index last) const
+{
+   if(find < 0)
+      find += this->get_count();
+   if(last < 0)
+      last += this->get_count();
+   for(; find < this->get_count(); find++)
+   {
+      if(this->element_at(find).contains_ci(lpcsz))
+         return find;
+   }
+   return -1;
+}
+
+
+
 template < class Type, class RawType >
 index string_array < Type, RawType > ::find_first_begins_ci(const char * lpcsz,index find,index last) const
 {
@@ -2310,6 +2333,22 @@ index string_array < Type,RawType > ::find_first_begins_eat_ci(string & str,cons
    return find;
 
 }
+
+template < class Type, class RawType >
+index string_array < Type, RawType > ::find_first_contains(const Type & strSubString,index find,index last) const
+{
+   if(find < 0)
+      find += this->get_count();
+   if(last < 0)
+      last += this->get_count();
+   for(; find < this->get_count(); find++)
+   {
+      if(this->element_at(find).contains(strSubString))
+         return find;
+   }
+   return -1;
+}
+
 
 
 template < class Type, class RawType >
@@ -2400,6 +2439,27 @@ bool string_array < Type, RawType > ::contains(const char * lpcsz,index find,ind
    return count >= countMin && conditional(countMax >= 0,count <= countMax);
 }
 
+
+template < class Type, class RawType >
+bool string_array < Type, RawType > ::contains_contains_ci(const char * lpcsz,index find,index last,::count countMin,::count countMax) const
+{
+   ::count count = 0;
+   while((count < countMin || (countMax >= 0 && count <= countMax))
+         && (find = find_first_contains_ci(lpcsz,find,last)) >= 0)
+      count++;
+   return count >= countMin && conditional(countMax >= 0,count <= countMax);
+}
+
+
+template < class Type, class RawType >
+bool string_array < Type, RawType > ::contains_contains(const char * lpcsz,index find,index last,::count countMin,::count countMax) const
+{
+   ::count count = 0;
+   while((count < countMin || (countMax >= 0 && count <= countMax))
+         && (find = find_first_contains(lpcsz,find,last)) >= 0)
+      count++;
+   return count >= countMin && conditional(countMax >= 0,count <= countMax);
+}
 
 
 template < class Type, class RawType >

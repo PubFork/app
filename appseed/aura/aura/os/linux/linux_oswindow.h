@@ -129,6 +129,7 @@ public:
    DWORD                         m_dwLastMouseMove;
    Window                        m_parent;
    RECT                          m_rect;
+   bool                          m_bHasFocus;
 
    //ref_array < bool >            m_bptraTellMeDestroyed; // Telmo why!! :-)
 

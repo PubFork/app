@@ -3952,6 +3952,9 @@ namespace linux
    bool interaction_impl::GetClientRect(RECT64 * lprect)
    {
 
+
+      return ::user::interaction_impl::GetClientRect(lprect);
+
       if(!::is_window((oswindow) get_handle()))
       {
 
@@ -3964,14 +3967,18 @@ namespace linux
 
          rect rect32;
 
-         if(!::GetClientRect((oswindow) get_handle(), rect32))
-         {
+         //if(!::GetClientRect((oswindow) get_handle(), rect32))
+         //{
 
-            return false;
+           // return false;
 
-         }
+         //}
 
-         ::copy(lprect, rect32);
+         rect64 r = m_rectParentClient;
+
+         r.offset(r.top_left());
+
+         *lprect = r;
 
       }
       //else
@@ -5737,6 +5744,20 @@ namespace linux
 
    }
 
+
+   bool interaction_impl::has_focus()
+   {
+
+      if(!::is_window(m_oswindow))
+      {
+
+         return false;
+
+      }
+
+      return m_oswindow->m_bHasFocus;
+
+   }
 
 } // namespace linux
 

@@ -2284,7 +2284,9 @@ bool process_message(osdisplay_data * pdata, Display * display)
 
       msg.message       = WM_SETFOCUS;
 
-      //msg.wParam = (WPARAM) oswindow_get(display(), e.xfocus
+      msg.hwnd->m_bHasFocus = true;
+
+      //msg.wParam = (WPARAM) oswindow_get(display(), e.xfocus.window);
 
 //      Window wFocus = 0;
 //
@@ -2337,6 +2339,8 @@ bool process_message(osdisplay_data * pdata, Display * display)
    {
 
       msg.message       = WM_KILLFOCUS;
+
+      msg.hwnd->m_bHasFocus = false;
 
       Window wFocus = 0;
 

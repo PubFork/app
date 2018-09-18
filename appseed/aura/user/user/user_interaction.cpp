@@ -1225,7 +1225,7 @@ restart:
       try
       {
 
-         if (m_papp != NULL && m_papp->m_psession != NULL && m_papp->m_psession->get_keyboard_focus() == this)
+         if (m_papp != NULL && m_papp->m_psession != NULL && has_focus())
          {
 
             if (GetParent() == NULL || !IsWindowVisible())
@@ -5167,7 +5167,14 @@ restart:
    bool interaction::has_focus()
    {
 
-      return Session.get_keyboard_focus() == this;
+      if(m_pimpl.is_null())
+      {
+
+         return false;
+
+      }
+
+      return m_pimpl->has_focus();
 
    }
 

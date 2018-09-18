@@ -30,7 +30,10 @@ oswindow_data::oswindow_data()
 
    m_colormap              = None;
 
+   m_bHasFocus             = false;
+
 }
+
 
 oswindow_data::~oswindow_data()
 {

@@ -56,6 +56,15 @@ namespace lemon
          return a.element_at(i);
       }
 
+      template < class A >
+      typename A::BASE_TYPE pop_random(A & a)
+      {
+         index i = (index)(rand() % a.get_size());
+         auto element = a.element_at(i);
+         a.remove_at(i);
+         return element;
+      }
+
       template < class A, class TYPE >
       ::count populate(A & a, TYPE start, TYPE end, TYPE step, bool bIncludeStart = true, bool bIncludeEnd = true, bool bIncludeEndOnStep = true)
       {

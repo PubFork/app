@@ -200,6 +200,7 @@ namespace linux
       using ::user::interaction_impl::GetClientRect;
       virtual bool GetClientRect(RECT64 * lpRect);
 
+      virtual bool has_focus() override;
 
       virtual pointd client_to_screen() override;
 

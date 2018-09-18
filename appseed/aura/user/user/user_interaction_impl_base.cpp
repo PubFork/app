@@ -547,12 +547,17 @@ namespace user
 
       }
 
-      if(!m_pui->GetClientRect(lprect))
-      {
+      //if(!m_pui->GetClientRect(lprect))
+      //{
 
-         return false;
+        // return false;
 
-      }
+      //}
+
+      lprect->left = 0;
+      lprect->top = 0;
+      lprect->right = m_rectParentClient.width();
+      lprect->bottom = m_rectParentClient.height();
 
       return true;
 
@@ -790,18 +795,18 @@ namespace user
 
       windowing_output_debug_string("\ninteraction_impl_base::_001Print 2");
 
-      if (GetActiveWindow() == pui)
-      {
-
-         //TRACE("active");
-
-      }
-      else
-      {
-
-         //TRACE("not active");
-
-      }
+//      if (GetActiveWindow() == pui)
+//      {
+//
+//         //TRACE("active");
+//
+//      }
+//      else
+//      {
+//
+//         //TRACE("not active");
+//
+//      }
 
       windowing_output_debug_string("\ninteraction_impl_base::_001Print 3");
 
@@ -1690,6 +1695,39 @@ namespace user
 
 
    }
+
+
+   bool interaction_impl_base::has_focus()
+   {
+
+      if(m_pui == NULL)
+      {
+
+         return NULL;
+
+      }
+
+      if(m_pui->get_wnd() == NULL)
+      {
+
+
+         return false;
+
+      }
+
+      sp(::user::interaction_impl) pimpl = m_pui->get_wnd();
+
+      if(pimpl.is_null())
+      {
+
+         return false;
+
+      }
+
+      return pimpl->m_pelementalFocus == this;
+
+   }
+
 
 
 } // namespace user
