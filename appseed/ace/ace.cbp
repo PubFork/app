@@ -48,6 +48,18 @@
 					<Add option="-D_DEBUG" />
 				</Compiler>
 			</Target>
+			<Target title="cross_arm64_basis">
+				<Option output="../../../time/arm64/basis/libace.a" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="" />
+				<Option object_output="../../../time/intermediate_arm64/app/ace" />
+				<Option type="2" />
+				<Option compiler="gnu_gcc_cross_compiler_for_arm" />
+				<Option createDefFile="1" />
+				<Compiler>
+					<Add option="-g" />
+					<Add option="-D_DEBUG" />
+				</Compiler>
+			</Target>
 		</Build>
 		<Compiler>
 			<Add option="-std=c++14" />

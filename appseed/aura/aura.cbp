@@ -146,6 +146,48 @@
 					<Add directory="../../../time/x64/basis" />
 				</Linker>
 			</Target>
+			<Target title="cross_arm64_basis">
+				<Option output="../../../time/arm64/basis/libaura.so" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="../../../time/arm64/basis/" />
+				<Option object_output="../../../time/intermediate_arm64/app/aura" />
+				<Option type="3" />
+				<Option compiler="gnu_gcc_cross_compiler_for_arm" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-pg" />
+					<Add option="-g" />
+					<Add option="-D_DEBUG" />
+				</Compiler>
+				<Linker>
+					<Add option="-pg" />
+					<Add option="-Wl,-rpath=\\$$$ORIGIN" />
+					<Add option="-lz" />
+					<Add option="-lbz2" />
+					<Add option="-ldl" />
+					<Add option="-lrt" />
+					<Add option="-lbfd" />
+					<Add option="-lX11" />
+					<Add option="-lX11-xcb" />
+					<Add option="-lxcb" />
+					<Add option="-lxcb-util" />
+					<Add option="-lXinerama" />
+					<Add option="-lXmu" />
+					<Add option="-lXrandr" />
+					<Add option="-lXext" />
+					<Add option="-lXxf86vm" />
+					<Add option="-lidn" />
+					<Add option="-lpthread" />
+					<Add option="-lncurses" />
+					<Add option="-lssl" />
+					<Add option="-lcrypto" />
+					<Add option="`pkg-config --libs gtk+-3.0 gthread-2.0`" />
+					<Add option="-lace" />
+					<Add option="-lfreeimage" />
+					<Add option="-Wl,-z,defs" />
+					<Add directory="../../../time/x64/basis" />
+				</Linker>
+			</Target>
 		</Build>
 		<Compiler>
 			<Add option="-std=c++14" />
