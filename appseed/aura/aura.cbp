@@ -1211,6 +1211,10 @@
 			<Option link="0" />
 		</Unit>
 		<Unit filename="net/sockets/bsd/basic/sockets_tcp_socket.h" />
+		<Unit filename="net/sockets/bsd/basic/sockets_tls_socket.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="net/sockets/bsd/basic/sockets_tls_socket.h" />
 		<Unit filename="net/sockets/bsd/basic/sockets_udp_socket.h" />
 		<Unit filename="net/sockets/bsd/internal/SSLInitializer.h" />

@@ -256,7 +256,7 @@ string ip_reverse(string str)
 
 
 
-#if (defined(METROWIN) || defined(LINUX)) && (OPENSSL_API_COMPAT < 0x10100000L)
+#if defined(METROWIN)
 
 
 #include <openssl/ssl.h>

@@ -221,7 +221,7 @@ namespace sockets
 
       }
 
-      if (m_strCipherList.find("DH") >= 0)
+      if (strCipherList.find("DH") >= 0)
       {
 
          int_array ia;
@@ -275,7 +275,7 @@ namespace sockets
 
       //int nid = OBJ_sn2nid(ECDHE_CURVE);
 
-      if (m_strCipherList.find("ECDH") >= 0)
+      if (strCipherList.find("ECDH") >= 0)
       {
 
          EC_KEY *ecdh = EC_KEY_new_by_curve_name(NID_secp384r1);
@@ -284,7 +284,7 @@ namespace sockets
 
       }
 
-      if (m_strCipherList.find("DH") >= 0)
+      if (strCipherList.find("DH") >= 0)
       {
 
          SSL_CTX_set_options(m_psslcontext->m_pclientcontext->m_pcontext, SSL_CTX_get_options(m_psslcontext->m_pclientcontext->m_pcontext) | SSL_OP_SINGLE_DH_USE | SSL_OP_CIPHER_SERVER_PREFERENCE);
