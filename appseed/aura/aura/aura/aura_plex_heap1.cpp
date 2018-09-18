@@ -646,7 +646,9 @@ CLASS_DECL_AURA void simple_debug_print(const char * psz);
 
 #define STR_HELPER(x) #x
 #define STR(x) STR_HELPER(x)
-#ifdef ANDROID
+#ifdef RASPBIAN
+#define QUOTED_KERNEL_SPACE (1024)
+#elif  defined(ANDROID)
 #define QUOTED_KERNEL_SPACE (1024 * 1024)
 #else
 #define QUOTED_KERNEL_SPACE (1024 * 1024)
