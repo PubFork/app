@@ -161,6 +161,9 @@ namespace aura
       m_bDoNotExitIfNoApplications              = true;
 
 
+      m_bSystemSynchronizedCursor = true;
+      m_bSystemSynchronizedScreen = true;
+
 
       //      m_peengine = NULL;
 

@@ -141,10 +141,6 @@ namespace base
 
       __node_base_factory_exchange(this);
 
-      m_bSystemSynchronizedCursor = true;
-
-      m_bSystemSynchronizedScreen = true;
-
    }
 
 

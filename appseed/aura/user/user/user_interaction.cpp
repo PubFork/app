@@ -4601,13 +4601,21 @@ restart:
          return m_pimpl->WfiIsZoomed();
    }
 
+
    bool interaction::WfiIsFullScreen()
    {
-      if (m_pimpl == NULL)
+
+      if (m_pimpl.is_null())
+      {
+
          return false;
-      else
-         return m_pimpl->WfiIsFullScreen();
+
+      }
+
+      return m_pimpl->WfiIsFullScreen();
+
    }
+
 
    bool interaction::WfiIsIconic()
    {
@@ -5296,10 +5304,10 @@ restart:
    }
 
 
-   void interaction::_001WindowFullScreen()
+   void interaction::_001WindowFullScreen(LPCRECT lpcrectHint)
    {
 
-      m_pimpl->_001WindowFullScreen();
+      m_pimpl->_001WindowFullScreen(lpcrectHint);
 
    }
 
@@ -6639,10 +6647,19 @@ restart:
    }
 
 
-   bool interaction::WfiFullScreen()
+   bool interaction::WfiFullScreen(LPCRECT lpcrectHint)
    {
 
-      return false;
+      if(m_pimpl.is_null())
+      {
+
+         return false;
+
+      }
+
+      m_pimpl->_001WindowFullScreen(lpcrectHint);
+
+      return true;
 
    }
 

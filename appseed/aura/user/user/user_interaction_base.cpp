@@ -1985,7 +1985,7 @@ Restart:
    }
 
 
-   void interaction_base::_001WindowFullScreen()
+   void interaction_base::_001WindowFullScreen(LPCRECT lpcrectHint)
    {
 
       ::exception::throw_interface_only(get_app());
@@ -2620,7 +2620,7 @@ Restart:
    }
 
 
-   bool interaction_base::WfiFullScreen()
+   bool interaction_base::WfiFullScreen(LPCRECT lpcrectHint)
    {
 
       ::exception::throw_interface_only(get_app());

@@ -143,6 +143,8 @@ namespace linux
       virtual void CalcWindowRect(LPRECT lpClientRect, UINT nAdjustType = adjustBorder);
 
 
+      virtual void on_layout();
+
       // get immediate child with given ID
       using ::user::interaction_impl::get_child_by_id;
       void get_child_by_id(id id, oswindow* phWnd) const;
@@ -184,6 +186,7 @@ namespace linux
       // oswindow size and position Functions
       virtual bool WfiIsIconic();
       virtual bool WfiIsZoomed();
+      virtual bool WfiIsFullScreen();
       void MoveWindow(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight,
                       bool bRepaint = TRUE);
       void MoveWindow(LPCRECT lpRect, bool bRepaint = TRUE);
@@ -240,7 +243,7 @@ namespace linux
       virtual void _001WindowMaximize() override;
       virtual void _001WindowMinimize(bool bNoActivate) override;
       virtual void _001WindowRestore() override;
-      virtual void _001WindowFullScreen() override;
+      virtual void _001WindowFullScreen(LPCRECT lpcrectHint = NULL) override;
       virtual bool IsWindowVisible();
       virtual void ShowOwnedPopups(bool bShow = TRUE);
 

@@ -128,7 +128,7 @@ public:
    Colormap                      m_colormap;
    DWORD                         m_dwLastMouseMove;
    Window                        m_parent;
-   RECT                          m_rect;
+   RECT64                        m_rect;
    bool                          m_bHasFocus;
 
    //ref_array < bool >            m_bptraTellMeDestroyed; // Telmo why!! :-)
@@ -222,6 +222,7 @@ public:
    int32_t unmap_window(bool bWithdraw);
 
    void full_screen(LPCRECT lpcrect = null_rect());
+   void exit_full_screen();
 
    void set_user_interaction(::user::interaction_impl * pui);
 

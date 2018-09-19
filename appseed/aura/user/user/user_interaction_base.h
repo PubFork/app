@@ -251,7 +251,7 @@ namespace user
 
       virtual void _001WindowMinimize(bool bNoActivate);
       virtual void _001WindowMaximize();
-      virtual void _001WindowFullScreen();
+      virtual void _001WindowFullScreen(LPCRECT lpcrectHint = NULL);
       virtual void _001WindowRestore();
 
 
@@ -550,7 +550,7 @@ namespace user
       virtual bool WfiRestore(bool bForceNormal = false);
       virtual bool WfiMinimize();
       virtual bool WfiMaximize();
-      virtual bool WfiFullScreen();
+      virtual bool WfiFullScreen(LPCRECT lpcrectHint = NULL);
       virtual bool WfiUp();
       virtual bool WfiDown();
       virtual bool WfiNotifyIcon();

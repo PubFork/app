@@ -439,7 +439,7 @@ namespace user
 
       virtual void _001WindowMinimize(bool bNoActivate) override;
       virtual void _001WindowMaximize() override;
-      virtual void _001WindowFullScreen() override;
+      virtual void _001WindowFullScreen(LPCRECT lpcrectHint = NULL) override;
       virtual void _001WindowRestore() override;
       virtual void _001WindowDock(::user::e_appearance eappearance);
 
@@ -891,7 +891,7 @@ namespace user
       virtual bool WfiRestore(bool bForceNormal = false) override;
       virtual bool WfiMinimize() override;
       virtual bool WfiMaximize() override;
-      virtual bool WfiFullScreen() override;
+      virtual bool WfiFullScreen(LPCRECT lpcrectHint = NULL) override;
       virtual bool WfiUp() override;
       virtual bool WfiDown() override;
       virtual bool WfiNotifyIcon() override;

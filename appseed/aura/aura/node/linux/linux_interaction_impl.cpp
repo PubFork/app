@@ -3689,16 +3689,75 @@ namespace linux
    bool interaction_impl::SetWindowPos(int_ptr z, int32_t x, int32_t y, int32_t cx, int32_t cy, UINT nFlags)
    {
 
-      if(!::SetWindowPos(get_handle(), (oswindow) z, x, y, cx, cy, nFlags))
+      if(!(nFlags & SWP_NOMOVE))
+      {
+
+         m_rectParentClientRequest.move_to(x, y);
+
+      }
+
+      if(!(nFlags & SWP_NOSIZE))
+      {
+
+         m_rectParentClientRequest.set_size(cx, cy);
+
+      }
+
+      if(!::SetWindowPos(get_handle(), z, x, y, cx, cy, nFlags))
       {
 
          return false;
 
       }
 
-      m_pui->set_need_redraw();
-
       return true;
+
+   }
+
+
+   void interaction_impl::on_layout()
+   {
+
+      ::user::interaction_impl::on_layout();
+
+//      if(m_rectParentClientRequest != m_rectParentClient)
+//      {
+//
+//         if(m_iPendingRectMatch >= 4)
+//         {
+//
+//            m_iPendingRectMatch = -1;
+//
+//            m_rectParentClientRequest = m_rectParentClient;
+//
+//         }
+//         else if(m_iPendingRectMatch < 0)
+//         {
+//
+//            m_iPendingRectMatch = 1;
+//
+//         }
+//
+//         if(!::SetWindowPos(
+//               get_handle(),
+//               m_bZ ?  m_iZ : 0,
+//               m_rectParentClientRequest.left, m_rectParentClientRequest.top,
+//               m_rectParentClientRequest.width(), m_rectParentClientRequest.height(),
+//               (m_bShowFlags ? m_iShowFlags : 0)
+//               | ( m_bZ ? 0 : SWP_NOZORDER )))
+//         {
+//
+//            return false;
+//
+//         }
+//
+//      }
+//      else
+//      {
+//
+//         m_iPendingRectMatch = -1;
+//
+//      }
 
    }
 
@@ -4055,6 +4114,13 @@ namespace linux
    bool interaction_impl::ShowWindow(int32_t nCmdShow)
    {
 
+      if(m_pui->WfiIsFullScreen())
+      {
+
+         m_oswindow->exit_full_screen();
+
+      }
+
       ::ShowWindow(m_oswindow, nCmdShow);
 
       return m_pui->IsWindowVisible();
@@ -4111,12 +4177,27 @@ namespace linux
    }
 
 
-   void interaction_impl::_001WindowFullScreen()
+   bool interaction_impl::WfiIsFullScreen()
+   {
+
+      if(!::is_window(m_oswindow))
+      {
+
+         return false;
+
+      }
+
+      return m_pui->m_eappearance == ::user::appearance_full_screen;
+
+   }
+
+
+   void interaction_impl::_001WindowFullScreen(LPCRECT lpcrectHint)
    {
 
       m_pui->set_appearance(::user::appearance_full_screen);
 
-      get_handle()->full_screen();
+      get_handle()->full_screen(lpcrectHint);
 
    }
 

@@ -13,6 +13,7 @@ namespace user
       m_mutexLongPtr(get_app())
    {
 
+      m_iPendingRectMatch  = -1;
       m_bPendingRedraw     = false;
       m_bZ                 = false;
       m_pui                = NULL;
@@ -122,13 +123,18 @@ namespace user
    void interaction_impl_base::clear_need_layout()
    {
 
-      m_rectParentClient = m_rectParentClientRequest;
+      if(m_iPendingRectMatch < 0 || m_rectParentClient == m_rectParentClientRequest)
+      {
 
-      m_bShowFlags = false;
+         m_rectParentClient = m_rectParentClientRequest;
 
-      m_iShowFlags = 0;
+         m_bShowFlags = false;
 
-      m_pui->m_bNeedLayout = false;
+         m_iShowFlags = 0;
+
+         m_pui->m_bNeedLayout = false;
+
+      }
 
    }
 
@@ -144,9 +150,14 @@ namespace user
    void interaction_impl_base::clear_need_translation()
    {
 
-      m_rectParentClient = m_rectParentClientRequest;
+      if(m_iPendingRectMatch < 0 || m_rectParentClient == m_rectParentClientRequest)
+      {
 
-      m_bShowFlags = false;
+         m_rectParentClient = m_rectParentClientRequest;
+
+         m_bShowFlags = false;
+
+      }
 
    }
 
@@ -162,11 +173,16 @@ namespace user
    void interaction_impl_base::clear_show_flags()
    {
 
-      m_rectParentClient = m_rectParentClientRequest;
+      if(m_iPendingRectMatch < 0 || m_rectParentClient == m_rectParentClientRequest)
+      {
 
-      m_bShowFlags = false;
+         m_rectParentClient = m_rectParentClientRequest;
 
-      m_bShowWindow = false;
+         m_bShowFlags = false;
+
+         m_bShowWindow = false;
+
+      }
 
    }
 
@@ -182,7 +198,12 @@ namespace user
    void interaction_impl_base::clear_need_zorder()
    {
 
-      m_bZ = false;
+      if(m_iPendingRectMatch < 0 || m_rectParentClient == m_rectParentClientRequest)
+      {
+
+         m_bZ = false;
+
+      }
 
    }
 
@@ -206,6 +227,7 @@ namespace user
       }
 
    }
+
 
    bool interaction_impl_base::has_pending_redraw_flags()
    {
@@ -353,14 +375,25 @@ namespace user
    }
 
 
-   void interaction_impl_base::_001WindowFullScreen()
+   void interaction_impl_base::_001WindowFullScreen(LPCRECT lpcrectHint)
    {
 
       m_pui->set_appearance(appearance_full_screen);
 
       rect rectNormal;
 
-      m_pui->GetWindowRect(rectNormal);
+      if(lpcrectHint != NULL)
+      {
+
+         rectNormal = *lpcrectHint;
+
+      }
+      else
+      {
+
+         m_pui->GetWindowRect(rectNormal);
+
+      }
 
       m_pui->best_monitor(NULL,rectNormal,true);
 
@@ -756,7 +789,7 @@ namespace user
       if (!(nFlags & SWP_NOSIZE) && (rect.width() != cx || rect.height() != cy))
       {
 
-         rect.size(cx, cy);
+         rect.set_size(cx, cy);
 
       }
 

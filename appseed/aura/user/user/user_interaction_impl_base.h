@@ -24,6 +24,7 @@ namespace user
       bool                                m_bZ;
       int_ptr                             m_iZ;
 
+      int                                 m_iPendingRectMatch;
       rect64                              m_rectParentClient;
       ::user::interaction *               m_pui;
       bool                                m_bIgnoreSizeEvent;
@@ -35,6 +36,7 @@ namespace user
 
       bool                                m_bPendingRedraw;
       uint32_t                            m_uiLastRedraw;
+      bool                                m_bUpdatingBuffer;
 
 
 
@@ -86,7 +88,7 @@ namespace user
 
       virtual void _001WindowMinimize(bool bNoActivate) override;
       virtual void _001WindowMaximize() override;
-      virtual void _001WindowFullScreen() override;
+      virtual void _001WindowFullScreen(LPCRECT lpcrectHint = NULL) override;
       virtual void _001WindowRestore() override;
       virtual void _001WindowDock(::user::e_appearance eappearance);
 

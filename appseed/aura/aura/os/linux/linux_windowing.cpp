@@ -2030,6 +2030,8 @@ bool process_message(osdisplay_data * pdata, Display * display)
          if(pui != NULL)
          {
 
+            synch_lock sl(pui->m_pmutex);
+
             if(pui->m_eappearance == ::user::appearance_iconic && !msg.hwnd->is_iconic())
             {
 
@@ -2074,23 +2076,9 @@ bool process_message(osdisplay_data * pdata, Display * display)
 
                rectWindow.bottom = rectWindow.top + e.xconfigure.height;
 
-               auto rect = pimpl->m_rectParentClient;
+               msg.hwnd->m_rect = rectWindow;
 
-               ::copy(pimpl->m_rectParentClientRequest, rectWindow);
-
-               if(rectWindow.top_left() != rect.top_left())
-               {
-
-                  pimpl->m_pui->post_message(WM_MOVE);
-
-               }
-
-               if(rectWindow.get_size() != rect.get_size())
-               {
-
-                  pimpl->m_pui->post_message(WM_SIZE);
-
-               }
+               pimpl->m_pui->set_need_redraw();
 
             }
 

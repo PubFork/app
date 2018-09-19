@@ -18,6 +18,10 @@ namespace aura
       ::thread(papp)
    {
 
+      m_bSystemSynchronizedCursor = true;
+
+      m_bSystemSynchronizedScreen = true;
+
       m_pimplPendingSetFocus = NULL;
 
       m_papp = papp;

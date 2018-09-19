@@ -1312,15 +1312,15 @@ void rect64::offset(int64_t x, int64_t y) NOTHROW
 { ::offset(this, x, y); }
 void rect64::offset(POINT64 point64) NOTHROW
 { ::offset(this, point64.x, point64.y); }
-void rect64::size(SIZE64 s) NOTHROW
+void rect64::set_size(SIZE64 s) NOTHROW
 {
-   this->size(s.cx, s.cy);
+   this->set_size(s.cx, s.cy);
 }
 void rect64::rsize(SIZE64 s) NOTHROW
 {
    this->rsize(s.cx, s.cy);
 }
-void rect64::size(int64_t cx,int64_t cy) NOTHROW
+void rect64::set_size(int64_t cx,int64_t cy) NOTHROW
 {
    ::resize(this,cx,cy);
 }

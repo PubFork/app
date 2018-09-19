@@ -28,6 +28,7 @@ namespace user
    void interaction_impl::user_common_construct()
    {
 
+      m_bUpdatingBuffer = false;
       m_bFocus = false;
       m_bCursorRedraw = false;
 
@@ -2378,6 +2379,10 @@ namespace user
 
    void interaction_impl::_001UpdateBuffer()
    {
+
+      synch_lock sl(m_pui->m_pmutex);
+
+      keep < bool > keepUpdatingBuffer(&m_bUpdatingBuffer, true, false, true);
 
       thread_set_fast_path();
 

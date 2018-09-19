@@ -810,6 +810,8 @@ void oswindow_data::full_screen(LPCRECT lpcrect)
    if(rBest != rWindow)
    {
 
+      ::copy(m_pimpl->m_rectParentClientRequest, rBest);
+
       XMoveResizeWindow(d, m_window, rBest.left, rBest.top, rBest.width(), rBest.height());
 
    }
@@ -832,6 +834,43 @@ void oswindow_data::full_screen(LPCRECT lpcrect)
    windowing_output_debug_string("\n::oswindow_data::full_screen 2");
 
    fflush(stdout);
+
+}
+
+
+void oswindow_data::exit_full_screen()
+{
+
+   xdisplay d(display());
+
+   if(d.is_null())
+   {
+
+      windowing_output_debug_string("\n::oswindow_data::exit_full_screen 1.1");
+
+      return;
+
+   }
+
+   XWindowAttributes attr;
+
+   if(!XGetWindowAttributes(display(), window(), &attr))
+   {
+
+      windowing_output_debug_string("\n::oswindow_data::exit_full_screen 1.2");
+
+      fflush(stdout);
+
+      return;
+
+   }
+
+   if(attr.map_state == IsViewable)
+   {
+
+      mapped_net_state_raw(false, d, window(), m_iScreen, intern_atom("_NET_WM_STATE_FULLSCREEN", false), 0);
+
+   }
 
 }
 

@@ -319,9 +319,9 @@ rect64(point64 ptTopLeft, point64 ptBottomRight) NOTHROW : rect64(ptTopLeft.x, p
    void offset(POINT64 POINT64) NOTHROW;
    void normalize() NOTHROW;
 
-   void size(SIZE64 size) NOTHROW;
+   void set_size(SIZE64 size) NOTHROW;
    void rsize(SIZE64 size) NOTHROW;
-   void size(int64_t cx,int64_t cy) NOTHROW;
+   void set_size(int64_t cx,int64_t cy) NOTHROW;
    void rsize(int64_t cx,int64_t cy) NOTHROW;
 
    // absolute position of rect64angle

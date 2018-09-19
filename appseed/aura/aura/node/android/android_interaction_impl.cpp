@@ -2960,24 +2960,6 @@ namespace android
       }
       else
       {
-         if (nFlags & SWP_NOSIZE)
-         {
-            //XMoveWindow(m_oswindow->display(), m_oswindow->window(), x, y);
-            ////          XClearWindow(m_oswindow->display(), m_oswindow->interaction_impl());
-            //hints.flags = PPosition;
-            //hints.x = x;
-            //hints.y = y;
-         }
-         else
-         {
-            //XMoveResizeWindow(m_oswindow->display(), m_oswindow->window(), x, y, cx, cy);
-            ////        XClearWindow(m_oswindow->display(), m_oswindow->interaction_impl());
-            //hints.flags = PPosition | PSize;
-            //hints.x = x;
-            //hints.y = y;
-            //hints.width = cx;
-            //hints.height = cy;
-         }
       }
 
       if (!IsWindowVisible())
