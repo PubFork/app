@@ -247,7 +247,7 @@ namespace windows
       virtual bool ShowWindow(int32_t nCmdShow);
       virtual void _001WindowMinimize(bool bNoActivate) override;
       virtual void _001WindowMaximize() override;
-      virtual void _001WindowFullScreen() override;
+      virtual void _001WindowFullScreen(LPCRECT lpcrectHint = NULL) override;
       virtual void _001WindowRestore() override;
       virtual bool IsWindowVisible() override;
       virtual void ShowOwnedPopups(bool bShow = TRUE);

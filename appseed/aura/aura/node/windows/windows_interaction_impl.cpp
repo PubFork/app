@@ -3685,10 +3685,10 @@ namespace windows
    }
 
 
-   void interaction_impl::_001WindowFullScreen()
+   void interaction_impl::_001WindowFullScreen(LPCRECT lpcrectHint)
    {
 
-      interaction_impl_base::_001WindowFullScreen();
+      interaction_impl_base::_001WindowFullScreen(lpcrectHint);
 
    }
 

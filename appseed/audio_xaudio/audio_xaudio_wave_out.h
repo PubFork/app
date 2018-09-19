@@ -166,7 +166,7 @@ namespace multimedia
 
          virtual imedia_time wave_out_get_position_millis() override;
          virtual imedia_position wave_out_get_position() override;
-         virtual void wave_out_buffer_ready(index iBuffer) override;
+         virtual void wave_out_filled(index iBuffer) override;
          //virtual void wave_out_buffer_ready(LPWAVEHDR lpwavehdr);
 
 //         virtual ::multimedia::e_result wave_out_open(::thread * pthreadCallback, ::count iBufferCount, ::count iBufferSampleCount) override;

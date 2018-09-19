@@ -492,7 +492,7 @@ namespace multimedia
       }
 
 
-      void wave_out::wave_out_buffer_ready(index iBuffer)
+      void wave_out::wave_out_filled(index iBuffer)
       {
 
          if(wave_out_get_state() != state_playing)
@@ -506,13 +506,6 @@ namespace multimedia
          ::multimedia::audio::wave_buffer::buffer * pbuffer = pwbuffer->get_buffer(iBuffer);
 
          ::multimedia::e_result mmr;
-
-         if(m_peffect != NULL)
-         {
-
-            m_peffect->Process16bits((int16_t *)pbuffer->m_pData,pwbuffer->m_uiBufferSize / 2);
-
-         }
 
          XAUDIO2_BUFFER b;
 
@@ -773,8 +766,6 @@ namespace multimedia
       void wave_out::wave_out_free(index iBuffer)
       {
 
-         //wave_out_free(wave_hdr(iBuffer));
-
          ::multimedia::audio::wave_out::wave_out_free(iBuffer);
 
       }
@@ -891,14 +882,11 @@ namespace multimedia
 
          ::multimedia::audio::wave_buffer::buffer * pbuffer = (::multimedia::audio::wave_buffer::buffer *)pBufferContext;
 
-         m_iBufferedCount--;
-
-
          //pbuffer->m_bIsPlaying = false;
 
          int32_t iBuffer = (int32_t)pbuffer->m_iIndex;
 
-         wave_out_out_buffer_done(iBuffer);
+         wave_out_free(iBuffer);
 
          unsigned __int64 endTime;
          QueryPerformanceCounter((LARGE_INTEGER *)&endTime);
