@@ -204,7 +204,21 @@ public:
 
    void alloc(const ::aura::allocatorsp & spallocator);
 
+   inline void run_and_release()
+   {
 
+      if (is_null())
+      {
+
+         return;
+
+      }
+
+      m_p->run();
+
+      release();
+
+   }
 
 };
 
