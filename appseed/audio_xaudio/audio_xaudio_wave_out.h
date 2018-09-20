@@ -156,7 +156,7 @@ namespace multimedia
 
 
 
-         wave_out(sp(::axis::application) papp);
+         wave_out(::aura::application * papp);
          virtual ~wave_out();
 
 

@@ -15,8 +15,9 @@ namespace multimedia
       public:
 
 
-         factory_exchange(sp(::axis::application) papp);
+         factory_exchange(::aura::application * papp);
          virtual ~factory_exchange();
+
 
       };
 

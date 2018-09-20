@@ -10,7 +10,7 @@ namespace multimedia
 
 
 
-      wave_out::wave_out(sp(::axis::application) papp) :
+      wave_out::wave_out(::aura::application * papp) :
          ::object(papp),
          ::thread(papp),
          wave_base(papp),
@@ -494,10 +494,15 @@ namespace multimedia
       void wave_out::wave_out_filled(index iBuffer)
       {
 
+         synch_lock sl(m_pmutex);
+
          if(wave_out_get_state() != state_playing)
          {
+
             TRACE("ERROR wave_out::BufferReady while wave_out_get_state() != state_playing");
+
             return;
+
          }
 
          ::multimedia::audio::wave_buffer * pwbuffer = wave_out_get_buffer();
@@ -536,7 +541,7 @@ namespace multimedia
 
          DWORD dwTick = get_tick_count();
 
-         if(dwTick-g_dwLastBuffer > 50)
+         if(dwTick - g_dwLastBuffer > 50)
          {
 
             output_debug_string("too much delay for submitting audio buffer\n");
@@ -545,20 +550,20 @@ namespace multimedia
 
          g_dwLastBuffer = dwTick;
 
+         m_iBufferedCount++;
+
          mmr = xaudio::translate(m_psourcevoice->SubmitSourceBuffer(&b));
 
          VERIFY(::multimedia::result_success == mmr);
 
-         if(mmr == ::multimedia::result_success)
+         if(mmr != ::multimedia::result_success)
          {
 
-            m_iBufferedCount++;
+            m_iBufferedCount--;
 
          }
 
       }
-
-
 
 
       ::multimedia::e_result wave_out::wave_out_stop()
@@ -623,33 +628,40 @@ namespace multimedia
 
       }
 
+
       ::multimedia::e_result wave_out::wave_out_start(const imedia_position & position)
       {
 
-         single_lock sLock(m_pmutex,TRUE);
+         synch_lock sl(m_pmutex);
 
-         if(m_estate == state_playing)
-            return result_success;
+         //if(m_estate == state_playing)
+         //   return result_success;
 
-         ASSERT(m_estate == state_opened || m_estate == state_stopped);
+         //ASSERT(m_estate == state_opened || m_estate == state_stopped);
 
-         m_bEOS = false;
+         //m_bEOS = false;
 
-         m_estate = state_playing;
+         //m_estate = state_playing;
 
-         m_pprebuffer->start(position);
+         //m_pprebuffer->start(position);
 
-         for(index i = 0; i < wave_out_get_buffer()->GetBufferCount(); i++)
+         //for(index i = 0; i < wave_out_get_buffer()->GetBufferCount(); i++)
+         //{
+
+         //   wave_out_free(i);
+
+         //}
+
+         m_mmr = ::multimedia::audio::wave_out::wave_out_start(position);
+
+         if(m_mmr != result_success)
          {
 
-            wave_out_free(i);
+            return m_mmr;
 
          }
 
          m_mmr = xaudio::translate(m_psourcevoice->Start(0,XAUDIO2_COMMIT_NOW));
-
-         //         m_prunstepthread = new run_step_thread(this);
-
 
          return result_success;
 
@@ -686,19 +698,6 @@ namespace multimedia
 
       }
 
-
-      /*imedia_time wave_out::GetPositionMillisForSynch()
-      {
-         int64_t dwMillis = GetPositionMillis();
-         int64_t dwPosition = m_pprebuffer->m_position * 8;
-         dwPosition /= m_pwaveformat->wBitsPerSample;
-         dwPosition *= 1000;
-         dwPosition /= m_pwaveformat->nChannels * m_pwaveformat->nSamplesPerSec;
-         if(m_pprebuffer != NULL && m_pprebuffer->m_pdecoder != NULL)
-            return dwMillis + dwPosition - m_pprebuffer->m_pdecoder->audio_plugin_get_lost_millis(dwMillis + dwPosition) - (((int64_t) m_dwLostSampleCount) /  ((int64_t) m_pwaveformat->nSamplesPerSec));
-         else
-            return dwMillis + dwPosition - ((m_dwLostSampleCount) * 1000 / m_pwaveformat->nSamplesPerSec);
-      }*/
 
       imedia_time wave_out::wave_out_get_position_millis()
       {
@@ -885,7 +884,7 @@ namespace multimedia
 
          int32_t iBuffer = (int32_t)pbuffer->m_iIndex;
 
-         wave_out_free(iBuffer);
+         m_psynththread->post_message(message_free, iBuffer);
 
          unsigned __int64 endTime;
          QueryPerformanceCounter((LARGE_INTEGER *)&endTime);
