@@ -24,6 +24,7 @@ interlocked_long::~interlocked_long()
 }
 
 
+
 void interlocked_long::add(long l)
 {
 #ifdef WINDOWS
@@ -43,37 +44,89 @@ void interlocked_long::subtract(long l)
 #endif
 }
 
-
-bool interlocked_long::operator == (long i) const
+interlocked_long & interlocked_long::operator = (long l)
 {
-   return *m_plong == i;
+#ifdef WINDOWS
+   InterlockedExchange(m_plong, l);
+#else
+   __sync_(m_plong, l);
+#endif
+   return *this;
 }
 
-bool interlocked_long::operator > (long i) const
+//bool interlocked_long::operator == (long i) const
+//{
+//   return *m_plong == i;
+//}
+//
+//bool interlocked_long::operator > (long i) const
+//{
+//   return *m_plong > i;
+//}
+//
+//bool interlocked_long::operator >= (long i) const
+//{
+//   return *m_plong >= i;
+//}
+//
+//bool interlocked_long::operator < (long i) const
+//{
+//   return *m_plong < i;
+//}
+//
+//bool interlocked_long::operator <= (long i) const
+//{
+//   return *m_plong <= i;
+//}
+//
+//bool interlocked_long::operator != (long i) const
+//{
+//   return *m_plong != i;
+//}
+
+
+interlocked_long & interlocked_long::operator++()
 {
-   return *m_plong > i;
+
+   add(1);
+
+   return *this;
+
 }
 
-bool interlocked_long::operator >= (long i) const
+
+interlocked_long & interlocked_long::operator--()
 {
-   return *m_plong >= i;
+
+   subtract(1);
+
+   return *this;
+
 }
 
-bool interlocked_long::operator < (long i) const
+
+long interlocked_long::operator++(int)
 {
-   return *m_plong < i;
+
+   long l = *m_plong;
+
+   add(1);
+
+   return l;
+
 }
 
-bool interlocked_long::operator <= (long i) const
-{
-   return *m_plong <= i;
-}
 
-bool interlocked_long::operator != (long i) const
+long interlocked_long::operator--(int)
 {
-   return *m_plong != i;
-}
 
+   long l = *m_plong;
+
+   subtract(1);
+
+   return l;
+
+}
 
 
 

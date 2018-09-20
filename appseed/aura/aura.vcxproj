@@ -2850,6 +2850,7 @@
     <ClInclude Include="aura\aura\aura_system_trace.h" />
     <ClInclude Include="aura\aura\aura_class.h" />
     <ClInclude Include="aura\aura\aura_template.h" />
+    <ClInclude Include="aura\aura\aura_tick.h" />
     <ClInclude Include="aura\aura\aura_timer.h" />
     <ClInclude Include="aura\aura\aura_timer_array.h" />
     <ClInclude Include="aura\aura\aura_timer_callback.h" />
@@ -3900,6 +3901,7 @@
     <ClInclude Include="primitive\collection\collection_iterator.h" />
     <ClInclude Include="primitive\collection\collection_lemon_array.h" />
     <ClInclude Include="primitive\collection\collection_lemon_array_decl.h" />
+    <ClInclude Include="primitive\collection\collection_lemon_weak.h" />
     <ClInclude Include="primitive\collection\collection_list.h" />
     <ClInclude Include="primitive\collection\collection_logic_array.h" />
     <ClInclude Include="primitive\collection\collection_map.h" />

@@ -16,12 +16,23 @@ public:
    void add(long l);
    void subtract(long l);
 
-   bool operator == (long i) const;
-   bool operator > (long i) const;
-   bool operator >= (long i) const;
-   bool operator < (long i) const;
-   bool operator <= (long i) const;
-   bool operator != (long i) const;
+
+   inline operator long() { return *m_plong; }
+
+   interlocked_long & operator = (long i);
+   //bool operator == (long i) const;
+   //bool operator > (long i) const;
+   //bool operator >= (long i) const;
+   //bool operator < (long i) const;
+   //bool operator <= (long i) const;
+   //bool operator != (long i) const;
+
+
+   interlocked_long & operator++();
+   interlocked_long & operator--();
+   long operator++(int);
+   long operator--(int);
+
 
 };
 

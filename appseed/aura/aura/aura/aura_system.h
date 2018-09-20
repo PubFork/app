@@ -317,6 +317,9 @@ namespace aura
       virtual void TermApplication() override;
 
 
+      virtual void process_term() override;
+
+
       virtual bool is_system() override;
 
 

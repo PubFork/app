@@ -22,7 +22,6 @@ namespace multimedia
 
          m_estate             = state_initial;
          m_pthreadCallback    = NULL;
-         m_iBufferedCount     = 0;
          m_peffect            = NULL;
          // m_dwLostSampleCount = 0;
 

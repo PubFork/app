@@ -26,7 +26,6 @@ namespace multimedia
 
          m_estate             = state_initial;
          m_pthreadCallback    = NULL;
-         m_iBufferedCount     = 0;
          m_mmr                = ::multimedia::result_success;
          m_peffect            = NULL;
          //m_dwLostSampleBytes  = 0;
@@ -480,8 +479,6 @@ Opened:
        {
 
        SCAST_PTR(::message::base, pbase, pobj);
-
-       m_iBufferedCount--;
 
        LPWAVEHDR lpwavehdr = (LPWAVEHDR) pbase->m_lparam.m_lparam;
 

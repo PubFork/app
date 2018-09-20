@@ -22,7 +22,6 @@ namespace multimedia
 
          m_estate             = state_initial;
          m_pthreadCallback    = NULL;
-         m_iBufferedCount     = 0;
          m_mmr                = ::multimedia::result_success;
          m_peffect            = NULL;
          m_bDone              = false;
@@ -251,14 +250,14 @@ namespace multimedia
 
       ::multimedia::e_result wave_out::wave_out_open_ex(thread * pthreadCallback, uint32_t uiSamplesPerSec, uint32_t uiChannelCount, uint32_t uiBitsPerSample, ::multimedia::audio::e_purpose epurpose)
       {
-         
+
          synch_lock sLock(m_pmutex);
 
          if(m_Queue != NULL && m_estate != state_initial)
          {
-            
+
             return ::multimedia::result_success;
-            
+
          }
 
          m_pthreadCallback = pthreadCallback;
@@ -278,9 +277,9 @@ namespace multimedia
          ZEROP(&m_dataformat);
 
          translate(m_dataformat, m_pwaveformat);
-         
+
          int iBufferCount = 8;
-         
+
          int iBufferSampleCount = 8192;
 
          if(epurpose == ::multimedia::audio::purpose_playground)
@@ -301,13 +300,13 @@ namespace multimedia
          }
          else if(epurpose == ::multimedia::audio::purpose_live)
          {
-            
+
             iBufferCount = 4;
-            
+
             iBufferSampleCount = uiSamplesPerSec / 40;
-            
+
          }
-         
+
          m_epurpose = epurpose;
          m_iBufferCount = iBufferCount;
          m_iBufferSampleCount = iBufferSampleCount;
@@ -328,9 +327,9 @@ namespace multimedia
 
          }
 
-         
+
          int iFrameSize = m_pwaveformat->wBitsPerSample * m_pwaveformat->nChannels / 8;
-         
+
          int iBufferSize = iBufferSampleCount * iFrameSize;
 
          wave_out_get_buffer()->PCMOutOpen(this, iBufferSize, iBufferCount, 64, m_pwaveformat, m_pwaveformat);
@@ -684,21 +683,19 @@ namespace multimedia
 
          if(m_bDone)
          {
-            
+
             return;
-            
+
          }
 
          index iBuffer = m_Buffers.find_first(inCompleteAQBuffer);
 
          if(iBuffer < 0)
          {
-            
-            return;
-            
-         }
 
-         //m_iBufferedCount--;
+            return;
+
+         }
 
          wave_out_out_buffer_done((int) iBuffer);
 
@@ -735,9 +732,9 @@ namespace multimedia
 
          if(mmr != 0)
          {
-            
+
             return mmr;
-            
+
          }
 
          m_estate = state_paused;
@@ -764,9 +761,9 @@ void WaveOutAudioQueueBufferCallback(void * inUserData, AudioQueueRef inAQ, Audi
 
    if(pwaveout == NULL)
    {
-      
+
       return;
-      
+
    }
 
    try

@@ -1245,7 +1245,7 @@ CLASS_DECL_AURA string get_system_error_message(uint32_t dwError);
 
 
 
-
+#include "aura/aura/aura/aura_tick.h"
 
 
 #include "aura/primitive/data/data_data.h"

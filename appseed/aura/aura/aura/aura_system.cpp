@@ -1077,6 +1077,25 @@ namespace aura
    }
 
 
+   void system::process_term()
+   {
+
+      ::aura::application::process_term();
+
+      try
+      {
+
+         m_mapAppLibrary.remove_all();
+
+      }
+      catch (...)
+      {
+
+      }
+
+   }
+
+
    UINT system::os_post_to_all_threads(UINT uiMessage,WPARAM wparam,lparam lparam)
    {
 
