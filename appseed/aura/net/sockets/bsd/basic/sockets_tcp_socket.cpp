@@ -515,60 +515,79 @@ namespace sockets
 
             }
 
-            n = SSL_read(m_psslcontext->m_ssl, buf, (int)nBufSize);
-            if (n <= 0)
+            if (m_psslcontext->m_ssl == NULL)
             {
-               n = SSL_get_error(m_psslcontext->m_ssl, (int)n);
-               switch (n)
-               {
-               case SSL_ERROR_NONE:
-               case SSL_ERROR_WANT_READ:
-               case SSL_ERROR_WANT_WRITE:
-                  break;
-               case SSL_ERROR_ZERO_RETURN:
-                  //if(SSL_m_psslcontext->m_pclientcontext->m_psession)
-                  TRACE("SSL_read() returns zero - closing socket\n");
-                  OnDisconnect();
-                  SetCloseAndDelete(true);
-                  SetFlushBeforeClose(false);
-                  SetLost();
-                  break;
-               case SSL_ERROR_SYSCALL:
-                  TRACE("SSL read problem, errcode = %d (SSL_ERROR_SYSCALL) errno = %d \n", n, errno);
-                  OnDisconnect();
-                  SetCloseAndDelete(true);
-                  SetFlushBeforeClose(false);
-                  SetLost();
-                  break;
-               default:
-                  TRACE("SSL read problem, errcode = %d\n", n);
-                  OnDisconnect();
-                  SetCloseAndDelete(true);
-                  SetFlushBeforeClose(false);
-                  SetLost();
-               }
-               TRACE("tcp_socket::recv ssl error(1)");
-            }
-            //else if (!n)
-            //{
-            //   OnDisconnect();
-            //   SetCloseAndDelete(true);
-            //   SetFlushBeforeClose(false);
-            //   SetLost();
-            //   SetShutdown(SHUT_WR);
-            //   //TRACE("tcp_socket::recv ssl disconnect(2)");
+#ifdef DEBUG
+               log("tcp_socket::recv(ssl)", (int)n, "SSL context is NULL", ::aura::log::level_error);
+#endif
+               TRACE("tcp_socket::recv ssl SSL context is NULL(0)");
 
-            //}
-            else if (n > 0 && n <= nBufSize)
-            {
-               return n;
+               OnDisconnect();
+               SetCloseAndDelete(true);
+               SetFlushBeforeClose(false);
+               SetLost();
+
             }
             else
             {
+
+               n = SSL_read(m_psslcontext->m_ssl, buf, (int)nBufSize);
+
+               if (n <= 0)
+               {
+                  n = SSL_get_error(m_psslcontext->m_ssl, (int)n);
+                  switch (n)
+                  {
+                  case SSL_ERROR_NONE:
+                  case SSL_ERROR_WANT_READ:
+                  case SSL_ERROR_WANT_WRITE:
+                     break;
+                  case SSL_ERROR_ZERO_RETURN:
+                     //if(SSL_m_psslcontext->m_pclientcontext->m_psession)
+                     TRACE("SSL_read() returns zero - closing socket\n");
+                     OnDisconnect();
+                     SetCloseAndDelete(true);
+                     SetFlushBeforeClose(false);
+                     SetLost();
+                     break;
+                  case SSL_ERROR_SYSCALL:
+                     TRACE("SSL read problem, errcode = %d (SSL_ERROR_SYSCALL) errno = %d \n", n, errno);
+                     OnDisconnect();
+                     SetCloseAndDelete(true);
+                     SetFlushBeforeClose(false);
+                     SetLost();
+                     break;
+                  default:
+                     TRACE("SSL read problem, errcode = %d\n", n);
+                     OnDisconnect();
+                     SetCloseAndDelete(true);
+                     SetFlushBeforeClose(false);
+                     SetLost();
+                  }
+                  TRACE("tcp_socket::recv ssl error(1)");
+               }
+               //else if (!n)
+               //{
+               //   OnDisconnect();
+               //   SetCloseAndDelete(true);
+               //   SetFlushBeforeClose(false);
+               //   SetLost();
+               //   SetShutdown(SHUT_WR);
+               //   //TRACE("tcp_socket::recv ssl disconnect(2)");
+
+               //}
+               else if (n > 0 && n <= nBufSize)
+               {
+                  return n;
+               }
+               else
+               {
 #ifdef DEBUG
-               log("tcp_socket::recv(ssl)", (int)n, "abnormal value from SSL_read", ::aura::log::level_error);
+                  log("tcp_socket::recv(ssl)", (int)n, "abnormal value from SSL_read", ::aura::log::level_error);
 #endif
-               TRACE("tcp_socket::recv ssl abnormal value from SSL_read(3)");
+                  TRACE("tcp_socket::recv ssl abnormal value from SSL_read(3)");
+
+               }
 
             }
 
