@@ -4,6 +4,15 @@
 inline lparam::lparam(::simple_object * p)
 {
 
+   if (is_null(p))
+   {
+
+      m_lparam = 0;
+
+      return;
+
+   }
+
    p->add_ref();
 
    m_lparam = (LPARAM)p;

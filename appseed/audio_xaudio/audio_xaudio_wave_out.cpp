@@ -336,7 +336,7 @@ namespace multimedia
 
          wave_out_get_buffer()->PCMOutOpen(this, uiBufferSize, iBufferCount,iAlign, m_pwaveformat, m_pwaveformat);
 
-         m_pprebuffer->open(this, m_pwaveformat->nChannels, iBufferCount, iBufferSampleCount);
+         m_pprebuffer->open(m_pwaveformat->nChannels, iBufferCount, iBufferSampleCount);
 
          m_estate = state_opened;
 
@@ -574,8 +574,6 @@ namespace multimedia
          if(m_estate != state_playing && m_estate != state_paused)
             return ::multimedia::result_error;
 
-         m_eventStopped.ResetEvent();
-
          m_pprebuffer->stop();
 
          m_estate = state_stopping;
@@ -781,15 +779,7 @@ namespace multimedia
             delete peffect;
          }
 
-         m_eventStopped.SetEvent();
-
-         ::fork(get_app(), [=]()
-         {
-
-            m_pplayer->OnEvent(::multimedia::audio::wave_player::EventPlaybackEnd);
-
-         });
-
+         m_pplayer->post_event(::multimedia::audio::wave_player::EventPlaybackEnd);
 
       }
 
