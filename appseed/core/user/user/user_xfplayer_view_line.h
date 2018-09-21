@@ -118,15 +118,7 @@ public:
 
    user::e_line_hit hit_test(const POINT &ptCursorParam, strsize &iChar);
 
-
-/*   void CalcCharsPositions(
-      ::draw2d::graphics * pdcForeground,
-      visual::font * pFont,
-      const RECT & rect);*/
-
-   void CalcCharsPositions(
-      ::draw2d::graphics * pdcForeground,
-      const RECT & rect);
+   void CalcCharsPositions(::draw2d::graphics * pgraphics, LPCRECT lpcrect);
 
    void SetColors(COLORREF cr, COLORREF crOutline);
 
@@ -194,7 +186,7 @@ public:
 
 
 
-   bool PrepareLine(::draw2d::graphics * pgraphics, const string & str, int32_t flags, const RECT & rect);
+   bool PrepareLine(::draw2d::graphics * pgraphics, string str, i32 flags, LPCRECT lpcrect);
 
    void AddChar(
       WCHAR wch,

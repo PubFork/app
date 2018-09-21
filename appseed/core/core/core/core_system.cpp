@@ -208,33 +208,6 @@ namespace core
 
       ::aura::profiler::initialize();
 
-#ifdef LINUX
-
-      fork([=]()
-      {
-
-         add_ref();
-
-         ::get_thread()->unregister_from_required_threads();
-
-         g_pbasecore = dlopen("libbasecore.so", RTLD_LOCAL | RTLD_NOW);
-
-         BASECORE_INIT * f =  (BASECORE_INIT *) dlsym(g_pbasecore, "basecore_init");
-
-         if(f != NULL)
-         {
-
-            output_debug_string("basecore_init entry point not found at basecore library");
-
-            (*f)();
-
-            output_debug_string("gtk_main exited");
-
-         }
-
-      });
-
-#endif
 
       //m_phtml = create_html();
 

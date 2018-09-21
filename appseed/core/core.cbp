@@ -92,7 +92,7 @@
 			<Add option="-lbz2" />
 			<Add option="-laxis" />
 			<Add option="-lbase" />
-			<Add option="-lbasecore" />
+			<Add option="`pkg-config --libs gtk+-3.0 gdk-3.0 appindicator3-0.1`" />
 			<Add option="-Wl,-z,defs" />
 			<Add directory="../../../time/x64/basis" />
 			<Add directory="/usr/lib64/mysql/" />
@@ -145,6 +145,10 @@
 		<Unit filename="core/core/plane.h" />
 		<Unit filename="core/node/linux/linux_simple_frame_window.cpp" />
 		<Unit filename="core/os/ios/ios_main.h" />
+		<Unit filename="core/os/linux/basecore.cpp" />
+		<Unit filename="core/os/linux/basecore.h" />
+		<Unit filename="core/os/linux/basecore_internal_glue.h" />
+		<Unit filename="core/os/linux/basecore_shared.h" />
 		<Unit filename="core/os/os.h" />
 		<Unit filename="core/plugin/plugin.h" />
 		<Unit filename="core/plugin/plugin_gen.h" />

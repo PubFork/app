@@ -7,11 +7,11 @@ static ::user::notify_icon * g_pnotifyiconLast = NULL;
 
 #include <dlfcn.h>
 BEGIN_EXTERN_C
-typedef void * BASECORE_APP_INDICATOR_NEW(const char *, const char *, const char *, user_notify_icon_bridge *);
-typedef void BASECORE_APP_INDICATOR_TERM(void *);
-typedef void BASECORE_APP_INDICATOR_STEP(void *);
+void * basecore_app_indicator_new(const char * pszId, const char * pszIcon, const char * pszFolder, user_notify_icon_bridge * pbridge);
+void basecore_app_indicator_term(void * pvoidInd);
+void basecore_app_indicator_step(void * pvoidInd);
 END_EXTERN_C
-extern void * g_pbasecore;
+//extern void * g_pbasecore;
 
 #endif
 
@@ -137,17 +137,6 @@ namespace user
 
       {
 
-         BASECORE_APP_INDICATOR_NEW* f = (BASECORE_APP_INDICATOR_NEW *) dlsym(g_pbasecore, "basecore_app_indicator_new");
-
-         if(f == NULL)
-         {
-
-            output_debug_string("basecore_app_indicator_new entry point not found at basecore library");
-
-            return false;
-
-         }
-
          string strFolder(System.dir().install());
 
          strFolder += "/";
@@ -185,7 +174,14 @@ namespace user
 
          strFolder += "/_std/_std/main/";
 
-         m_pindicator = (*f)(m_strId,str1+"_128", strFolder, this);
+         main_sync([&]()
+         {
+
+            m_pindicator = basecore_app_indicator_new(m_strId,str1+"_128", strFolder, this);
+
+         });
+
+
 
       }
 
@@ -354,9 +350,12 @@ namespace user
 
       {
 
-         BASECORE_APP_INDICATOR_TERM * f =  (BASECORE_APP_INDICATOR_TERM *) dlsym(g_pbasecore, "basecore_app_indicator_term");
+         main_sync([&]
+         {
 
-         (*f)(m_pindicator);
+            basecore_app_indicator_term(m_pindicator);
+
+         });
 
       }
 
@@ -436,14 +435,12 @@ namespace user
 
 #if defined(LINUX)
 
-      if(m_pindicator != NULL)
-      {
-
-         BASECORE_APP_INDICATOR_STEP* f = (BASECORE_APP_INDICATOR_STEP *) dlsym(g_pbasecore, "basecore_step");
-
-         (*f)(m_pindicator);
-
-      }
+//      main_async([&]
+//      {
+//
+//         basecore_app_indicator_step(m_pindicator);
+//
+//      });
 
 #endif
 

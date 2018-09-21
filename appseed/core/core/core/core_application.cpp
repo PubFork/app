@@ -3287,7 +3287,7 @@ namespace core
       // hide the application's windows before closing all the documents
       HideApplication();
 
-      close(end_app);
+      post_quit();
 
    }
 

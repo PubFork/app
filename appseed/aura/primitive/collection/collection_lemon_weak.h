@@ -81,7 +81,7 @@ namespace lemon
          }
 
          template < typename MAP >
-         typename MAP::BASE_VALUE value(MAP & m, typename MAP::BASE_ARG_KEY key, typename MAP::BASE_VALUE default_value = default_value < MAP::BASE_VALUE >())
+         typename MAP::BASE_VALUE value(MAP & m, typename MAP::BASE_ARG_KEY key, typename MAP::BASE_VALUE default_value = default_value < typename MAP::BASE_VALUE >())
          {
 
             auto pval = pvalue(m, key);

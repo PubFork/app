@@ -49,7 +49,8 @@ interlocked_long & interlocked_long::operator = (long l)
 #ifdef WINDOWS
    InterlockedExchange(m_plong, l);
 #else
-   __sync_(m_plong, l);
+   __sync_synchronize();
+   *m_plong = l;
 #endif
    return *this;
 }

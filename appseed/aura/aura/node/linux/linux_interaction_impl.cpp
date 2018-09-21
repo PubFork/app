@@ -723,14 +723,21 @@ namespace linux
 
       UNREFERENCED_PARAMETER(pobj);
 
+      ::multithreading::post_quit_and_wait(m_pthreadProDevian, seconds(10));
+
       if (m_pui->m_pthread != NULL)
       {
 
-         m_pui->m_pthread->m_puiptra->remove(m_pui);
+         synch_lock sl(m_pui->m_pthread->m_pmutex);
+
+         if(m_pui->m_pthread->m_puiptra != NULL)
+         {
+
+            m_pui->m_pthread->m_puiptra->remove(m_pui);
+
+         }
 
       }
-
-      ::multithreading::post_quit_and_wait(m_pthreadProDevian, seconds(10));
 
       Default();
 

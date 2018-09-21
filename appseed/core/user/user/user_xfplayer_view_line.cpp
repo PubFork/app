@@ -75,7 +75,7 @@ xfplayer_view_line::~xfplayer_view_line()
 }
 
 
-bool xfplayer_view_line::PrepareLine(::draw2d::graphics * pgraphics, const string & str, int32_t flags, const RECT & rect)
+bool xfplayer_view_line::PrepareLine(::draw2d::graphics * pgraphics, string str, i32 flags, LPCRECT lpcrect)
 {
 
    single_lock sl(m_pContainer->m_pmutex);
@@ -96,9 +96,11 @@ bool xfplayer_view_line::PrepareLine(::draw2d::graphics * pgraphics, const strin
    {
       AddChar(str[iStr], iChars);
    }
-   //   CalcCharsPositions(pgraphics, GetFonts(), pRect);
-   CalcCharsPositions(pgraphics, rect);
+
+   CalcCharsPositions(pgraphics, lpcrect);
+
    return true;
+
 }
 
 
@@ -174,14 +176,18 @@ bool xfplayer_view_line::to(::draw2d::graphics * pgraphics, bool bDraw, const RE
 
    if (!IsVisible())
    {
+
       return true;
+
    }
+
    if (bRecalcLayout || m_rectClient != rect)
    {
+
       m_bCacheEmboss = false;
-      CalcCharsPositions(
-      pgraphics,
-      rect);
+
+      CalcCharsPositions(pgraphics, &rect);
+
    }
 
    ::rect rectTextOut;
@@ -395,10 +401,14 @@ bool xfplayer_view_line::to(::draw2d::graphics * pgraphics, bool bDraw, const RE
 
       return true;
    }
+
    if (bRecalcLayout)
    {
-      CalcCharsPositions(pgraphics, rect);
+
+      CalcCharsPositions(pgraphics, &rect);
+
       pgraphics->SelectObject(m_font);
+
    }
 
 
@@ -657,56 +667,63 @@ bool xfplayer_view_line::to(::draw2d::graphics * pgraphics, bool bDraw, const RE
 
 }*/
 
-void xfplayer_view_line::CalcCharsPositions(::draw2d::graphics *             pgraphics, const RECT & rect)
+
+void xfplayer_view_line::CalcCharsPositions(::draw2d::graphics * pgraphics, LPCRECT lpcrect)
 {
 
    single_lock sl(m_pContainer->m_pmutex);
 
    m_bCacheEmboss = false;
+
    if (m_str.get_length() <= 0)
+   {
+
       return;
 
-   //   ::draw2d::font * pfontOld = pgraphics->get_current_font();
+   }
 
    int32_t i;
    size size;
-   ::rect rectClient(rect);
+   ::rect rectClient(lpcrect);
    m_rectClient = rectClient;
    ::rect rectPlacement;
    GetPlacement(rectPlacement);
+
    string strMain = m_str;
+
+   m_font->m_dFontWidth = 1.0;
+
+   m_font->m_bUpdated = true;
+
    pgraphics->SelectObject(m_font);
+
    size = pgraphics->GetTextExtent(strMain);
-   if (size.cx > rectClient.width())
+
+   if ((size.cx * 1.2) > rectClient.width())
    {
-      m_floatRateX =
-      (float)
-      rectClient.width() /
-      size.cx;
+
+      m_floatRateX = (double) rectClient.width() / ((double) size.cx * 1.2);
+
    }
    else
    {
+
       m_floatRateX = 1.0;
+
    }
 
-   //   pgraphics->SelectObject(fontOriginal);
    ::draw2d::text_metric tm;
+
    pgraphics->get_text_metrics(&tm);
-   // lf.lfWidth = (long) (tm.tmAveCharWidth * m_floatRateX - 1);
 
-   // if(m_font->get_os_data() != NULL)
-//      m_font->delete_object();
+   m_font->m_dFontWidth = m_floatRateX;
 
-   ///m_font->CreateFontIndirect(&lf);
-
-   m_font.m_p->m_dFontWidth = m_floatRateX;
-   m_font.m_p->m_bUpdated = false;
-
+   m_font->m_bUpdated = false;
 
    if (m_straLink.get_size() > 0)
    {
-      *m_fontLink.m_p = *m_font.m_p;
-      m_fontLink.m_p->set_underline();
+      *m_fontLink = *m_font;
+      m_fontLink->set_underline();
    }
 
 
@@ -1517,9 +1534,9 @@ void xfplayer_view_line::EmbossedTextOut(::draw2d::graphics * pgraphics, ::draw2
 
       point pt;
 
-      pt.x = (LONG) (iLeft - 1 - (m_font->m_dFontSize > 8 ? 32 / m_font->m_dFontSize : 0));
+      pt.x = (LONG) (iLeft - ((MAX(2.0, m_floatRateX * 8.0)) / 2));
 
-      pt.y = (LONG) (iTop - 1 - (m_font->m_dFontSize > 8 ? 32 / m_font->m_dFontSize : 0));
+      pt.y = (LONG) (iTop - ((MAX(2.0, m_floatRateX * 8.0)) / 2));
 
       Application.imaging().color_blend(pgraphics, pt, m_dibMain->m_size, m_dibMain->get_graphics(), point(0, 0), dBlend);
 

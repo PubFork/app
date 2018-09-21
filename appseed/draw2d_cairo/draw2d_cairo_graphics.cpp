@@ -4611,6 +4611,12 @@ namespace draw2d_cairo
    bool graphics::internal_draw_text_pango(const char * lpszString, strsize nCount, const RECTD & rectd, UINT nFormat, PFN_PANGO_TEXT pfnPango)
    {
 
+   if(m_spfont.is_null())
+   return false;
+
+   if(m_spfont->m_dFontSize <= 0.0 || m_spfont->m_dFontWidth <= 0.0)
+   return false;
+
       ::draw2d::savedc savedc(this);
 
       PangoLayout * playout;                            // layout for a paragraph of text
@@ -4686,6 +4692,10 @@ namespace draw2d_cairo
          ptRef.x = rectd.left;
 
       }
+
+            cairo_scale(m_pdc, m_spfont->m_dFontWidth, 1.0);
+
+
 
       pango_cairo_update_layout(m_pdc, playout);
 
