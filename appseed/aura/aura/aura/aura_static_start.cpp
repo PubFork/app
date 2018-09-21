@@ -20,12 +20,13 @@ CLASS_DECL_AURA critical_section * g_pcsGlobal = NULL;
 
 bool g_bOutputDebugString = true;
 
-void why_exited()
-{
-
-   printf("why_exited? you can break to ask here");
-
-}
+//extern "C"
+//void why_exited()
+//{
+//
+//   printf("%s", "why_exited? you can break to ask here\n");
+//
+//}
 
 #ifdef __APPLE__
 
@@ -220,7 +221,7 @@ namespace aura
                      NULL);
 
 
-         atexit (&why_exited);
+         //atexit (&why_exited);
 
          g_firstNano = get_nanos();
 

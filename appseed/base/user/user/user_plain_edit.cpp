@@ -352,14 +352,7 @@ namespace user
 
       double left = rectClient.left;
 
-      if (Session.get_keyboard_focus() == this)
-      {
-         m_bFocus = keyboard_focus_is_focusable();
-      }
-      else
-      {
-         m_bFocus = false;
-      }
+      m_bFocus = keyboard_focus_is_focusable() && has_focus();
 
       strsize iSelBeg;
       strsize iSelEnd;
