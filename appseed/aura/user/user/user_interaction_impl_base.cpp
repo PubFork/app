@@ -1740,7 +1740,9 @@ namespace user
 
       }
 
-      if(m_pui->get_wnd() == NULL)
+      sp(::user::interaction) pui = m_pui->get_wnd();
+
+      if(pui.is_null())
       {
 
 
@@ -1748,7 +1750,14 @@ namespace user
 
       }
 
-      sp(::user::interaction_impl) pimpl = m_pui->get_wnd();
+      if(!pui->has_focus())
+      {
+
+         return false;
+
+      }
+
+      sp(::user::interaction_impl) pimpl = pui->m_pimpl;
 
       if(pimpl.is_null())
       {
@@ -1757,7 +1766,7 @@ namespace user
 
       }
 
-      return pimpl->m_pelementalFocus == this;
+      return pimpl->m_pelementalFocus == m_pui;
 
    }
 

@@ -352,7 +352,19 @@ namespace user
 
       double left = rectClient.left;
 
-      m_bFocus = keyboard_focus_is_focusable() && has_focus();
+      if(keyboard_focus_is_focusable() && has_focus())
+      {
+
+         m_bFocus = true;
+
+      }
+      else
+      {
+
+         m_bFocus = false;
+
+      }
+
 
       strsize iSelBeg;
       strsize iSelEnd;
@@ -1579,7 +1591,7 @@ namespace user
 
          SetTimer(timer_overflow_scrolling, 50, NULL);
 
-         SetCapture();
+         //SetCapture();
 
          m_ptree->m_iSelBeg = char_hit_test(pt.x, pt.y);
 
