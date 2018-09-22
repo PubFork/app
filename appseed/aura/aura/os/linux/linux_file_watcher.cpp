@@ -74,15 +74,20 @@ namespace file_watcher
       synch_lock sl(m_pmutex);
 
 		int32_t wd = inotify_add_watch (mFD, directory, IN_CLOSE_WRITE | IN_MOVED_TO | IN_CREATE | IN_MOVED_FROM | IN_DELETE);
+
 		if (wd < 0)
 		{
-			if(errno == ENOENT)
-				_throw(file_not_found_exception(directory));
-			else
-				_throw(exception(strerror(errno)));
+			//if(errno == ENOENT)
+				//_throw(file_not_found_exception(directory));
+			//else
+				//_throw(exception(strerror(errno)));
+
+         TRACE("Error: os_file_watcher::add_watch at directory %s : (%s)", directory, strerror(errno));
 
 //			fprintf (stderr, "Error: %s\n", strerror(errno));
-//			return -1;
+
+			return -1;
+
 		}
 
 		watch* pWatch = canew(watch());

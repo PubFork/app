@@ -934,7 +934,7 @@ namespace user
       else if (ptimer->m_nIDEvent >= 100
                && ptimer->m_nIDEvent <= 200)
       {
-         if (this == Session.get_keyboard_focus())
+         if (has_focus())
          {
 
             _001OnKeyboardFocusTimer(ptimer->m_nIDEvent - 100);

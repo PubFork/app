@@ -606,6 +606,7 @@ namespace user
       virtual bool SetFocus() override;
       virtual ::user::interaction * GetFocus() override;
       virtual bool SetForegroundWindow() override;
+      virtual bool is_active() override;
       virtual interaction * GetActiveWindow() override;
       virtual interaction * SetActiveWindow() override;
 

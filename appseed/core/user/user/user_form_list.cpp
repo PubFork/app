@@ -2260,7 +2260,7 @@ break_click:;
 
             }
 
-            if (pcontrol != Session.get_keyboard_focus())
+            if (!pcontrol->has_focus())
             {
 
                sp(::user::combo_box) pcombobox = pcontrol;

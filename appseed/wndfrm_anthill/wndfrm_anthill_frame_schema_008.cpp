@@ -411,7 +411,7 @@ SizingNone:
 
                   }
 
-                  if (m_pworkset->GetWndDraw()->get_handle() == get_active_window())
+                  if (m_pworkset->GetWndDraw()->is_active())
                   {
 
                      rect rectA(lpcrectClient);

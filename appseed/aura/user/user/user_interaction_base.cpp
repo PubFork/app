@@ -1166,13 +1166,27 @@ Restart:
    }
 
 
+   bool interaction_base::is_active()
+   {
+
+      throw interface_only_exception(get_app());
+
+      return false;
+
+   }
+
+
    ::user::interaction * interaction_base::GetActiveWindow()
    {
 
       ::user::interaction * pui = get_wnd();
 
       if(pui == NULL)
+      {
+
          return NULL;
+
+      }
 
       return get_wnd()->GetActiveWindow();
 

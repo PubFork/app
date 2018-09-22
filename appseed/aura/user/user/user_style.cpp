@@ -743,7 +743,7 @@ namespace user
             }
 
 
-            if (Session.get_keyboard_focus() == pui)
+            if (pui->has_focus())
             {
 
                rectClient.left--;

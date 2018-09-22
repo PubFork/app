@@ -154,7 +154,7 @@ namespace simple_ui
 
       //   pgraphics->SelectClipRgn(&rgn);
 
-      if(Session.get_keyboard_focus() == this)
+      if(has_focus())
       {
          m_bFocus = keyboard_focus_is_focusable();
       }

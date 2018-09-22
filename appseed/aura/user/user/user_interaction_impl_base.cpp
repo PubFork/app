@@ -1771,6 +1771,20 @@ namespace user
    }
 
 
+   bool interaction_impl_base::is_active()
+   {
+
+      if(m_pui == NULL)
+      {
+
+         return NULL;
+
+      }
+
+      return m_pui == m_pui->GetActiveWindow();
+
+   }
+
 
 } // namespace user
 

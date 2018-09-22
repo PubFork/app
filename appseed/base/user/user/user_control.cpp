@@ -391,24 +391,26 @@ namespace user
    index control::get_hover()
    {
 
-      POINT pt;
+      return m_iHover;
 
-      Session.get_cursor_pos(&pt);
-
-      ScreenToClient(&pt);
-
-      rect rect;
-
-      GetWindowRect(rect);
-
-      if (!rect.contains(pt))
-      {
-
-         return -1;
-
-      }
-
-      return 0;
+//      POINT pt;
+//
+//      Session.get_cursor_pos(&pt);
+//
+//      ScreenToClient(&pt);
+//
+//      rect rect;
+//
+//      GetWindowRect(rect);
+//
+//      if (!rect.contains(pt))
+//      {
+//
+//         return -1;
+//
+//      }
+//
+//      return 0;
 
    }
 

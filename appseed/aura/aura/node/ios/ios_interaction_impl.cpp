@@ -5689,7 +5689,7 @@ namespace ios
 
       sp(::message::base) spbase;
 
-      if(::get_active_window() != get_handle())
+      if(!is_active())
       {
 
          try

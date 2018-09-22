@@ -204,6 +204,7 @@ namespace linux
       virtual bool GetClientRect(RECT64 * lpRect);
 
       virtual bool has_focus() override;
+      virtual bool is_active() override;
 
       virtual pointd client_to_screen() override;
 

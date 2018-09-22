@@ -55,7 +55,8 @@ namespace user
       virtual void queue_message_handler(::message::base * pbase);
 
 
-      virtual bool has_focus();
+      virtual bool has_focus() override;
+      virtual bool is_active() override;
 
       virtual bool check_need_layout();
       virtual void clear_need_layout();

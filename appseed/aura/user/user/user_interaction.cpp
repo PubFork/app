@@ -5187,6 +5187,21 @@ restart:
    }
 
 
+   bool interaction::is_active()
+   {
+
+      if(m_pimpl.is_null())
+      {
+
+         return false;
+
+      }
+
+      return m_pimpl->is_active();
+
+   }
+
+
    bool interaction::SetCapture(::user::interaction * pui)
    {
 

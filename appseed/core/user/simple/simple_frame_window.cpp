@@ -2814,8 +2814,7 @@ void simple_frame_window::draw_frame_and_control_box_over(::draw2d::graphics * p
    _001DrawThis(pgraphics);
 
 
-
-   if (!frame_is_transparent() || this == GetActiveWindow())
+   if (!frame_is_transparent() || is_active())
    {
 
       ::draw2d::savedc k(pgraphics);
@@ -3205,9 +3204,7 @@ void simple_frame_window::_001OnNotifyIconTopic(::message::message * pmessage)
    if(m_bDefaultNotifyIcon)
    {
 
-      if(IsWindowVisible()
-            && get_active_window() == get_handle()
-            && get_focus() == get_handle())
+      if(IsWindowVisible() && is_active() && has_focus())
       {
 
          ShowWindow(SW_HIDE);

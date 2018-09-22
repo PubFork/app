@@ -761,6 +761,7 @@
 			<Option link="0" />
 		</Unit>
 		<Unit filename="aura/os/linux/linux_windowing.h" />
+		<Unit filename="aura/os/linux/linux_x11.h" />
 		<Unit filename="aura/os/linux/linux_xdisplay.cpp">
 			<Option compile="0" />
 			<Option link="0" />

@@ -67,7 +67,7 @@ namespace user
          crText = m_pcontrolbox->m_crButtonForeSel;
 
       }
-      else if (Session.get_keyboard_focus() == this)
+      else if (has_focus())
       {
 
          pgraphics->SelectObject(m_pcontrolbox->m_brushButtonBackFocus);

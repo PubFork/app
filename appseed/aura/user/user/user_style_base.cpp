@@ -828,7 +828,7 @@ namespace user
    //      rectClient.left--;
    //      rectClient.top--;
    //
-   //      if (m_papp != NULL && (Session.get_keyboard_focus() == pui || pui->has_action_hover()))
+   //      if (m_papp != NULL && (pui->has_focus() || pui->has_action_hover()))
    //      {
    //
    //         ::draw2d::brush_sp brush(allocer());
@@ -868,7 +868,7 @@ namespace user
    //            }
    //
    //
-   //            if (Session.get_keyboard_focus() == pui)
+   //            if (pui->has_focus())
    //            {
    //
    //               rectClient.left--;

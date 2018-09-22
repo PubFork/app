@@ -93,6 +93,14 @@ namespace user
 
    }
 
+   
+   bool elemental::has_focus()
+   {
+
+      return false;
+
+   }
+
 
    bool elemental::keyboard_focus_is_focusable()
    {

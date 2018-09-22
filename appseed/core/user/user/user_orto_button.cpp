@@ -58,7 +58,7 @@ namespace user
          crText = ARGB(255, 255, 255, 255);
 
       }
-      else if (Session.get_keyboard_focus() == this)
+      else if (has_focus())
       {
 
          pgraphics->fill_solid_rect(rectClient, ARGB(255, 255, 250, 184));

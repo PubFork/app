@@ -112,14 +112,15 @@ namespace user
       virtual ::user::interaction_impl * get_impl() const;
       virtual ::user::elemental * get_wnd_elemental() const;
       virtual void on_control_event(control_event * pevent);
-      virtual elemental * keyboard_get_next_focusable(elemental * pfocus = NULL,bool bSkipChild = false,bool bSkipSiblings = false,bool bSkipParent = false);
-      virtual bool keyboard_set_focus();
-      virtual elemental * keyboard_set_focus_next(bool bSkipChild = false, bool bSkipSiblings = false, bool bSkipParent = false);
 
       // focus
       virtual bool keyboard_focus_is_focusable();
       virtual bool keyboard_focus_OnKillFocus(oswindow oswindowNew);
       virtual bool keyboard_focus_OnChildKillFocus();
+      virtual elemental * keyboard_get_next_focusable(elemental * pfocus = NULL,bool bSkipChild = false,bool bSkipSiblings = false,bool bSkipParent = false);
+      virtual bool keyboard_set_focus();
+      virtual elemental * keyboard_set_focus_next(bool bSkipChild = false, bool bSkipSiblings = false, bool bSkipParent = false);
+      virtual bool has_focus();
 
       // mouse focus
 

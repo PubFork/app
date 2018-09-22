@@ -412,7 +412,7 @@ void deactivate_window(oswindow window)
    
    synch_lock sl(g_poswindowdataptra->m_pmutex);
    
-   if(get_active_window() != window)
+   if(!window->m_pimpl->m_pui->is_active())
    {
       
       return;
@@ -497,13 +497,13 @@ void defer_dock_application(bool bDock)
 WINBOOL destroy_window(oswindow w)
 {
    
-   if(w == get_focus())
+   if(w->m_pimpl->m_pui->has_focus())
    {
       
       set_focus(NULL);
       
    }
-   if(w == get_active_window())
+   if(w->m_pimpl->m_pui->is_active())
    {
       
       set_active_window(NULL);

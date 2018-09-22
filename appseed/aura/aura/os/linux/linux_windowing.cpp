@@ -5,7 +5,13 @@
 #include <X11/extensions/xf86vmode.h> // libxxf86vm-dev
 
 
+// Tutor Exilius Q(t)List streaming contribution
+mutex * g_pmutexX11 = NULL;
+list < sp(object) > * g_prunnableptrlX11 = NULL;
+
+
 mutex * g_pmutexX = NULL;
+
 
 //int get_best_ordered_monitor(::user::interaction * pui, int & l, int & t, int & cx, int & cy);
 //int get_best_monitor(::user::interaction * pui, int & l, int & t, int & cx, int & cy);
@@ -15,6 +21,9 @@ Display * x11_get_display();
 void wm_toolwindow(oswindow w,bool bToolWindow);
 void wm_state_hidden_raw(oswindow w, bool bSet);
 CLASS_DECL_AURA int_bool mq_remove_window_from_all_queues(oswindow oswindow);
+
+
+WINBOOL x11_get_cursor_pos(LPPOINT lpptCursor);
 
 
 Window g_windowFocus = NULL;
@@ -1293,59 +1302,62 @@ void wm_state_hidden(oswindow w, bool bSet)
 void wm_toolwindow(oswindow w, bool bToolWindow)
 {
 
-   synch_lock sl(g_pmutexX);
-
-   windowing_output_debug_string("\n::wm_toolwindow 1");
-
-   xdisplay d(w->display());
-
-   if(d.is_null())
+   sync_x11([=]()
    {
 
-      windowing_output_debug_string("\n::wm_toolwindow 1.1");
+      windowing_output_debug_string("\n::wm_toolwindow 1");
 
-      fflush(stdout);
+      xdisplay d(w->display());
 
-      return;
-
-   }
-
-   Window window = w->window();
-
-   Window windowRoot = d.default_root_window();
-
-   Atom atomWindowType = d.intern_atom("_NET_WM_WINDOW_TYPE", False);
-
-   if(atomWindowType != None)
-   {
-
-      Atom atomWindowTypeValue;
-
-      if(bToolWindow)
+      if(d.is_null())
       {
 
-         atomWindowTypeValue = d.intern_atom("_NET_WM_WINDOW_TYPE_SPLASH", False);
+         windowing_output_debug_string("\n::wm_toolwindow 1.1");
+
+         fflush(stdout);
+
+         return;
 
       }
-      else
-      {
 
-         atomWindowTypeValue = d.intern_atom("_NET_WM_WINDOW_TYPE_NORMAL", False);
+      Window window = w->window();
 
-      }
+      Window windowRoot = d.default_root_window();
+
+      Atom atomWindowType = d.intern_atom("_NET_WM_WINDOW_TYPE", False);
 
       if(atomWindowType != None)
       {
 
-         XChangeProperty(d, window, atomWindowType, XA_ATOM, 32, PropModeReplace, (unsigned char *) &atomWindowTypeValue, 1);
+         Atom atomWindowTypeValue;
+
+         if(bToolWindow)
+         {
+
+            atomWindowTypeValue = d.intern_atom("_NET_WM_WINDOW_TYPE_SPLASH", False);
+
+         }
+         else
+         {
+
+            atomWindowTypeValue = d.intern_atom("_NET_WM_WINDOW_TYPE_NORMAL", False);
+
+         }
+
+         if(atomWindowType != None)
+         {
+
+            XChangeProperty(d, window, atomWindowType, XA_ATOM, 32, PropModeReplace, (unsigned char *) &atomWindowTypeValue, 1);
+
+         }
 
       }
 
-   }
+      wm_add_remove_state_raw(w, "_NET_WM_STATE_SKIP_TASKBAR", bToolWindow);
 
-   wm_add_remove_state_raw(w, "_NET_WM_STATE_SKIP_TASKBAR", bToolWindow);
+      windowing_output_debug_string("\n::wm_toolwindow 2");
 
-   windowing_output_debug_string("\n::wm_toolwindow 2");
+   });
 
 }
 
@@ -1728,7 +1740,7 @@ bool wm_add_remove_list_raw(oswindow w, Atom atomList, Atom atomFlag, bool bSet)
 ::user::interaction_impl * oswindow_get(oswindow oswindow)
 {
 
-   if (oswindow == NULL)
+   if (is_null(oswindow))
    {
 
       return NULL;
@@ -1743,14 +1755,6 @@ bool wm_add_remove_list_raw(oswindow w, Atom atomList, Atom atomFlag, bool bSet)
 
 #else
 
-   if (oswindow == NULL)
-   {
-
-      return NULL;
-
-   }
-
-
    return oswindow->m_pimpl;
 
 #endif
@@ -1758,8 +1762,8 @@ bool wm_add_remove_list_raw(oswindow w, Atom atomList, Atom atomFlag, bool bSet)
 }
 
 
-bool process_message(osdisplay_data * pdata, Display * pdisplay);
-void post_message(MESSAGE & msg);
+bool x11_process_message(osdisplay_data * pdata, Display * pdisplay);
+void x11_post_message(MESSAGE & msg);
 
 
 bool g_bSkipMouseMessageInXcess = true;
@@ -1768,6 +1772,58 @@ DWORD g_dwMotionSkipTimeout = 23;
 
 
 extern bool b_prevent_xdisplay_lock_log;
+
+void x11_idle(int iSleep)
+{
+
+   synch_lock sl(g_pmutexX11);
+
+   if(g_prunnableptrlX11->has_elements())
+   {
+
+      do
+      {
+
+         sp(object) pobject = g_prunnableptrlX11->pop_front();
+
+         sl.unlock();
+
+         pobject->run();
+
+         pobject->interlockedlong()++;
+
+         sl.lock();
+
+      }
+      while(g_prunnableptrlX11->has_elements());
+
+   }
+   else
+   {
+
+      Sleep(iSleep);
+
+      {
+
+         point ptCursor(0, 0);
+
+         x11_get_cursor_pos(ptCursor);
+
+         synch_lock sl(::oswindow_data::s_pmutex);
+
+         for(auto & p : *::oswindow_data::s_pdataptra)
+         {
+
+            p->m_ptCursor = ptCursor;
+
+         }
+
+      }
+
+   }
+
+
+}
 
 
 void __axis_x11_thread(osdisplay_data * pdata)
@@ -1837,14 +1893,14 @@ void __axis_x11_thread(osdisplay_data * pdata)
 
             }
 
-            bCa2Processed = process_message(pdata, display);
+            bCa2Processed = x11_process_message(pdata, display);
 
             sl.unlock();
 
             if(!bCa2Processed)
             {
 
-               Sleep(50);
+               x11_idle(50);
 
             }
 
@@ -1858,7 +1914,7 @@ void __axis_x11_thread(osdisplay_data * pdata)
 
             // Attention: Game
             // TODO: implement ability to change the event check time resolution.
-            Sleep(50);
+            x11_idle(50);
 
          }
 
@@ -1872,7 +1928,7 @@ void __axis_x11_thread(osdisplay_data * pdata)
 extern bool b_prevent_xdisplay_lock_log;
 
 
-bool process_message(osdisplay_data * pdata, Display * display)
+bool x11_process_message(osdisplay_data * pdata, Display * display)
 {
 
    synch_lock sl(g_pmutexX);
@@ -1950,7 +2006,7 @@ bool process_message(osdisplay_data * pdata, Display * display)
          msg.lParam        = 0;
          msg.wParam        = 0;
 
-         post_message(msg);
+         x11_post_message(msg);
 
       }
 
@@ -2036,7 +2092,7 @@ bool process_message(osdisplay_data * pdata, Display * display)
       msg.wParam        = e.type == MapNotify;
       msg.lParam        = 0;
 
-      post_message(msg);
+      x11_post_message(msg);
 
       if(e.type == MapNotify)
       {
@@ -2356,7 +2412,7 @@ bool process_message(osdisplay_data * pdata, Display * display)
       msg.hwnd          = oswindow_get(display, e.xdestroywindow.window);
       msg.message       = WM_DESTROY;
 
-      post_message(msg);
+      x11_post_message(msg);
 
    }
    else if(e.type == FocusIn)
@@ -2443,7 +2499,7 @@ bool process_message(osdisplay_data * pdata, Display * display)
 }
 
 
-void post_message(MESSAGE & msg)
+void x11_post_message(MESSAGE & msg)
 {
 
    try
@@ -2536,10 +2592,14 @@ void __axis_x11_input_thread(osdisplay_data * pdata)
       if(bOk)
       {
 
+         synch_lock sl(::oswindow_data::s_pmutex);
+
          ::user::interaction * pui = msg.hwnd->m_pimpl->m_pui;
 
          if(pui != NULL)
          {
+
+            sl.unlock();
 
             pui->send_message(msg.message, msg.wParam, msg.lParam);
 
@@ -2744,10 +2804,9 @@ WINBOOL ca2_GetClientRect(oswindow window, LPRECT lprect)
 }
 
 
-WINBOOL GetCursorPos(LPPOINT lpptCursor)
+WINBOOL x11_get_cursor_pos(LPPOINT lpptCursor)
 {
 
-   synch_lock sl(g_pmutexX);
 
    Window root_return;
    Window child_return;
@@ -2777,6 +2836,16 @@ WINBOOL GetCursorPos(LPPOINT lpptCursor)
    windowing_output_debug_string("\n::GetCursorPos 2");
 
    return TRUE;
+
+}
+
+
+WINBOOL GetCursorPos(LPPOINT lpptCursor)
+{
+
+   synch_lock sl(g_pmutexX);
+
+   return x11_get_cursor_pos(lpptCursor);
 
 }
 
@@ -2819,7 +2888,11 @@ bool os_init_windowing()
 
    //g_pmutexX = new mutex();
 
-   g_pmutexX = NULL;
+   //g_pmutexX = NULL;
+
+   mutex * g_pmutexX11 = new mutex();
+
+   g_prunnableptrlX11 = new list < sp(object) >();
 
    set_TranslateMessage(&axis_TranslateMessage);
 

@@ -191,23 +191,36 @@ namespace linux
 
    const MESSAGE* PASCAL interaction_impl::GetCurrentMessage()
    {
+
       return NULL;
+
    }
+
 
    LRESULT interaction_impl::Default()
    {
+
       return 0;
+
    }
 
 
    ::user::interaction_impl * interaction_impl::from_handle(oswindow oswindow)
    {
 
-      if(oswindow == NULL)
+      if(is_null(oswindow))
+      {
+
          return NULL;
 
-      if(oswindow->m_pimpl == NULL)
+      }
+
+      if(is_null(oswindow->m_pimpl))
+      {
+
          return NULL;
+
+      }
 
       return oswindow->m_pimpl;
 
@@ -5847,7 +5860,41 @@ namespace linux
 
    }
 
+
+   bool interaction_impl::is_active()
+   {
+
+      return has_focus();
+
+   }
+
+
+
 } // namespace linux
 
 
+
+
+CLASS_DECL_AURA void update_ui_impl_cursor(::user::interaction_impl * puiimpl)
+{
+
+   if(is_null(puiimpl))
+   {
+
+      return;
+
+   }
+
+   sp(::linux::interaction_impl) pimpl = puiimpl;
+
+   if(pimpl.is_null())
+   {
+
+      return;
+
+   }
+
+   Sess(pimpl->get_app()).m_ptCursor = pimpl->m_oswindow->m_ptCursor;
+
+}
 

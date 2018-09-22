@@ -1,6 +1,9 @@
 #include "framework.h"
 
 
+CLASS_DECL_AURA void update_ui_impl_cursor(::user::interaction_impl * pimpl);
+
+
 void windowing_output_debug_string(const char * pszDebugString);
 
 
@@ -3104,7 +3107,7 @@ namespace user
          if (pelementalFocusPrev != NULL)
          {
 
-            if (::get_focus() == pelementalFocusPrev->get_safe_handle()
+            if (pelementalFocusPrev->has_focus()
                   && (pelementalFocusNew == NULL
                       || pelementalFocusNew->get_safe_handle() == pelementalFocusPrev->get_safe_handle()))
             {
@@ -3126,7 +3129,7 @@ namespace user
       if (pelementalFocusNew != NULL)
       {
 
-         if (::get_focus() == pelementalFocusNew->get_safe_handle()
+         if (pelementalFocusNew->has_focus()
                && (pelementalFocusPrev == NULL
                    || pelementalFocusNew->get_safe_handle() == pelementalFocusPrev->get_safe_handle()))
          {
@@ -3276,7 +3279,7 @@ namespace user
       if(is_set(m_pui))
       {
 
-         Session.get_cursor_pos(m_ptCursor);
+         update_ui_impl_cursor(this);
 
       }
 
