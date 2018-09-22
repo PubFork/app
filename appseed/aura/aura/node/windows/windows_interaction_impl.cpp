@@ -4482,6 +4482,22 @@ namespace windows
    }
 
 
+   bool interaction_impl::has_focus()
+   {
+
+      return ::GetFocus() == get_handle();
+
+   }
+
+
+   bool interaction_impl::is_active()
+   {
+
+      return ::GetActiveWindow() == get_handle();
+
+   }
+
+
    bool interaction_impl::SetFocus()
    {
 
