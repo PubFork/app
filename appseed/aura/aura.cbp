@@ -938,6 +938,10 @@
 		<Unit filename="filesystem/filesystem/filesystem_dir_system.h" />
 		<Unit filename="filesystem/filesystem/filesystem_dir_system_heap.h" />
 		<Unit filename="filesystem/filesystem/filesystem_listing.h" />
+		<Unit filename="filesystem/filesystem/filesystem_path.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="filesystem/filesystem/filesystem_path.h" />
 		<Unit filename="filesystem/filesystem/filesystem_system.cpp">
 			<Option compile="0" />
