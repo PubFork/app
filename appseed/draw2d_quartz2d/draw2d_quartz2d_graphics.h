@@ -487,7 +487,7 @@ namespace draw2d_quartz2d
 
       virtual void set_alpha_mode(::draw2d::e_alpha_mode ealphamode) override;
 
-      virtual void set_text_rendering(::draw2d::e_text_rendering_hint etextrendering) override;
+      virtual void set_text_rendering_hint_hint(::draw2d::e_text_rendering_hint_hint etextrendering) override;
 
       virtual void * get_os_data() const override;
       //      virtual HDC get_handle() const;
