@@ -2226,6 +2226,8 @@ bool x11_process_message(osdisplay_data * pdata, Display * display)
 
                msg.hwnd->m_rect = rectWindow;
 
+               pimpl->m_rectParentClient = rectWindow;
+
                pimpl->m_pui->set_need_redraw();
 
             }

@@ -1591,7 +1591,7 @@ namespace user
 
          SetTimer(timer_overflow_scrolling, 50, NULL);
 
-         //SetCapture();
+         SetCapture();
 
          m_ptree->m_iSelBeg = char_hit_test(pt.x, pt.y);
 
