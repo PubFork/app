@@ -122,7 +122,7 @@ namespace hotplugin
 
       pgraphics->set_text_color(ARGB(255, 255, 255, 255));
 
-      pgraphics->set_text_rendering_hint(::draw2d::text_rendering_clear_type_grid_fit);
+      pgraphics->set_text_rendering_hint_hint(::draw2d::text_rendering_hint_clear_type_grid_fit);
 
       pgraphics->text_out(rectBar.left, rectBar.top, m_strStatus + " : " + strProgress + " : " + m_strStatus2);
 

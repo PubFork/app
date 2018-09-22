@@ -47,10 +47,10 @@ namespace user
                m_fontButton->create_point_font("MS Sans Serif", 9.0);
                m_fontCaption->create_point_font("MS Sans Serif", 12.0);
 
-               //m_fontEdit->m_etextrendering = ::draw2d::text_rendering_anti_alias_grid_fit;
-               //m_fontList->m_etextrendering = ::draw2d::text_rendering_anti_alias_grid_fit;
-               //m_fontButton->m_etextrendering = ::draw2d::text_rendering_anti_alias_grid_fit;
-               //m_fontCaption->m_etextrendering = ::draw2d::text_rendering_anti_alias_grid_fit;
+               //m_fontEdit->m_etextrenderinghint = ::draw2d::text_rendering_hint_anti_alias_grid_fit;
+               //m_fontList->m_etextrenderinghint = ::draw2d::text_rendering_hint_anti_alias_grid_fit;
+               //m_fontButton->m_etextrenderinghint = ::draw2d::text_rendering_hint_anti_alias_grid_fit;
+               //m_fontCaption->m_etextrenderinghint = ::draw2d::text_rendering_hint_anti_alias_grid_fit;
 
             }
 
@@ -393,7 +393,7 @@ namespace user
 
             void frame_schema::set_style(const char * pszStyle)
             {
-               
+
                ::user::wndfrm::frame::frame::set_style(pszStyle);
 
                string strStyle(pszStyle);
@@ -743,7 +743,7 @@ namespace user
 
                }
 
-               pgraphics->set_text_rendering(::draw2d::text_rendering_anti_alias);
+               pgraphics->set_text_rendering_hint_hint(::draw2d::text_rendering_hint_anti_alias);
 
                appearance * pappearance = m_pworkset->get_appearance();
 

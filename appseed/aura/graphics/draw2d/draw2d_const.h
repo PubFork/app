@@ -78,16 +78,16 @@ namespace draw2d
    };
 
 
-   enum e_text_rendering
+   enum e_text_rendering_hint_hint
    {
 
-      text_rendering_undefined,
-      text_rendering_none,
-      text_rendering_anti_alias,
-      text_rendering_anti_alias_grid_fit,
-      text_rendering_single_bit_per_pixel,
-      text_rendering_single_bit_per_pixel_grid_fit,
-      text_rendering_clear_type_grid_fit
+      text_rendering_hint_undefined,
+      text_rendering_hint_none,
+      text_rendering_hint_anti_alias,
+      text_rendering_hint_anti_alias_grid_fit,
+      text_rendering_hint_single_bit_per_pixel,
+      text_rendering_hint_single_bit_per_pixel_grid_fit,
+      text_rendering_hint_clear_type_grid_fit
 
    };
 

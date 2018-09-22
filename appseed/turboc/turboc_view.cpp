@@ -208,7 +208,7 @@ namespace turboc
 
             pgraphics->set_font(m_font);
 
-            pgraphics->set_text_rendering(::draw2d::text_rendering_anti_alias);
+            pgraphics->set_text_rendering_hint_hint(::draw2d::text_rendering_hint_anti_alias);
 
             class size size = pgraphics->GetTextExtent(strHelloMultiverse);
 
@@ -261,7 +261,7 @@ namespace turboc
 
          pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 
-         pgraphics->set_text_rendering(::draw2d::text_rendering_anti_alias);
+         pgraphics->set_text_rendering_hint_hint(::draw2d::text_rendering_hint_anti_alias);
 
          ::size size = pgraphics->GetTextExtent(strHelloMultiverse);
 
@@ -399,7 +399,7 @@ namespace turboc
 
 //      pdcScreen->FillSolidRect(500,200,100,100,ARGB(255,255,210,0));
 
-  //    pdcScreen->Draw3dRect(200,200,100,100,ARGB(255,0,255,0),ARGB(255,0,0,255));
+      //    pdcScreen->Draw3dRect(200,200,100,100,ARGB(255,0,255,0),ARGB(255,0,0,255));
 
    }
 
@@ -432,7 +432,7 @@ namespace turboc
 
       pgraphics->set_font(m_font);
 
-      pgraphics->set_text_rendering(::draw2d::text_rendering_anti_alias);
+      pgraphics->set_text_rendering_hint_hint(::draw2d::text_rendering_hint_anti_alias);
 
       class size size = pgraphics->GetTextExtent(strHelloMultiverse);
 
@@ -520,7 +520,7 @@ namespace turboc
          {
 
 
-  //          DWORD dwTime2 = ::get_tick_count();
+            //          DWORD dwTime2 = ::get_tick_count();
 
             //TRACE("message_handler call time0= %d ms",dwTime2 - t_time1.operator DWORD_PTR());
 //            TRACE("hello_view::lyot call timeA= %d ms",(uint64_t) (dwTime2 - t_time1.operator DWORD_PTR()));

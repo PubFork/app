@@ -45,7 +45,7 @@ namespace draw2d
       m_bItalic            = false;
       m_bUnderline         = false;
       m_bStrikeout         = false;
-      m_etextrendering     = text_rendering_undefined;
+      m_etextrenderinghint     = text_rendering_hint_undefined;
       m_echarset           = char_set_none;
 
    }

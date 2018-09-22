@@ -176,7 +176,7 @@ namespace turboc
 
       string strHelloMultiverse = get_processed_turboc();
 
-     ::size size = pgraphics->GetTextExtent(strHelloMultiverse);
+      ::size size = pgraphics->GetTextExtent(strHelloMultiverse);
 
       if(!Session.savings().is_trying_to_save(::aura::resource_display_bandwidth))
       {
@@ -198,7 +198,7 @@ namespace turboc
 
          m_dib->Fill(0,0,0,0);
 
-         m_dib->get_graphics()->set_text_rendering(::draw2d::text_rendering_anti_alias);
+         m_dib->get_graphics()->set_text_rendering_hint_hint(::draw2d::text_rendering_hint_anti_alias);
 
          m_dib->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_blend);
 
@@ -245,7 +245,7 @@ namespace turboc
 
       }
 
-      pgraphics->set_text_rendering(::draw2d::text_rendering_anti_alias);
+      pgraphics->set_text_rendering_hint_hint(::draw2d::text_rendering_hint_anti_alias);
 
       if(Session.savings().is_trying_to_save(::aura::resource_display_bandwidth))
       {
@@ -303,10 +303,10 @@ namespace turboc
          int32_t error;
 
          error = FT_Set_Char_Size(face,        /* handle to face object */
-            0,          /* char_width in 1/64th of points */
-            800 * 64,          /* char_height in 1/64th of points */
-            72,         /* horizontal device resolution */
-            72);         /* vertical device resolution */
+                                  0,          /* char_width in 1/64th of points */
+                                  800 * 64,          /* char_height in 1/64th of points */
+                                  72,         /* horizontal device resolution */
+                                  72);         /* vertical device resolution */
 
          if(error == 0)
          {
@@ -354,10 +354,10 @@ namespace turboc
 
 
          error = FT_Set_Char_Size(face,        /* handle to face object */
-            0,          /* char_width in 1/64th of points */
-            640 * 64,          /* char_height in 1/64th of points */
-            72,         /* horizontal device resolution */
-            72);         /* vertical device resolution */
+                                  0,          /* char_width in 1/64th of points */
+                                  640 * 64,          /* char_height in 1/64th of points */
+                                  72,         /* horizontal device resolution */
+                                  72);         /* vertical device resolution */
 
          if(error == 0)
          {

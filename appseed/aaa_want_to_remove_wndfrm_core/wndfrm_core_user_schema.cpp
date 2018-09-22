@@ -21,7 +21,7 @@ namespace wndfrm_core
       m_etranslucency      = ::user::translucency_present;
       m_pfont.alloc(allocer());
 
-      
+
 
    }
 
@@ -44,7 +44,7 @@ namespace wndfrm_core
 
       ptab->get_data()->m_pen->create_solid(1,RGB(32,32,32));
 
-      pgraphics->set_text_rendering(::draw2d::text_rendering_anti_alias_grid_fit);
+      pgraphics->set_text_rendering_hint_hint(::draw2d::text_rendering_hint_anti_alias_grid_fit);
 
       pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 
@@ -462,14 +462,14 @@ namespace wndfrm_core
          }
 
          iTabWidth += ptab->get_data()->m_rectBorder.left + ptab->get_data()->m_rectBorder.right +
-            ptab->get_data()->m_rectMargin.left + ptab->get_data()->m_rectMargin.right +
-            ptab->get_data()->m_rectTextMargin.left + ptab->get_data()->m_rectTextMargin.right;
+                      ptab->get_data()->m_rectMargin.left + ptab->get_data()->m_rectMargin.right +
+                      ptab->get_data()->m_rectTextMargin.left + ptab->get_data()->m_rectTextMargin.right;
 
          ptab->get_data()->m_iTabWidth = iTabWidth;
 
          iTabHeight += ptab->get_data()->m_rectBorder.top + ptab->get_data()->m_rectBorder.bottom +
-            ptab->get_data()->m_rectMargin.top + ptab->get_data()->m_rectMargin.bottom +
-            ptab->get_data()->m_rectTextMargin.top + ptab->get_data()->m_rectTextMargin.bottom;
+                       ptab->get_data()->m_rectMargin.top + ptab->get_data()->m_rectMargin.bottom +
+                       ptab->get_data()->m_rectTextMargin.top + ptab->get_data()->m_rectTextMargin.bottom;
 
          ptab->get_data()->m_iTabHeight = iTabHeight;
 
@@ -561,9 +561,9 @@ namespace wndfrm_core
 
 
             tab_pane.m_size.cx = size.cx + ixAdd
-               + ptab->get_data()->m_rectBorder.left + ptab->get_data()->m_rectBorder.right
-               + ptab->get_data()->m_rectMargin.left + ptab->get_data()->m_rectMargin.right
-               + ptab->get_data()->m_rectTextMargin.left + ptab->get_data()->m_rectTextMargin.right;
+                                 + ptab->get_data()->m_rectBorder.left + ptab->get_data()->m_rectBorder.right
+                                 + ptab->get_data()->m_rectMargin.left + ptab->get_data()->m_rectMargin.right
+                                 + ptab->get_data()->m_rectTextMargin.left + ptab->get_data()->m_rectTextMargin.right;
 
             x += tab_pane.m_size.cx;
          }
@@ -576,7 +576,7 @@ namespace wndfrm_core
          }
 
          iTabHeight += ptab->get_data()->m_rectBorder.top + ptab->get_data()->m_rectBorder.bottom +
-            ptab->get_data()->m_rectMargin.top + ptab->get_data()->m_rectMargin.bottom + ptab->get_data()->m_iHeightAddUp;
+                       ptab->get_data()->m_rectMargin.top + ptab->get_data()->m_rectMargin.bottom + ptab->get_data()->m_iHeightAddUp;
 
          ptab->get_data()->m_iTabHeight = iTabHeight;
 
@@ -694,10 +694,10 @@ namespace wndfrm_core
 
          if (pbar->m_bTracking)
          {
-            
+
             if (!(bool)pbar->oprop("tracking_on"))
             {
-               
+
                pbar->oprop("tracking_on") = true;
                pbar->oprop("tracking_start") = (uint32_t)(get_tick_count() + uchAlpha * dwFadeIn / 255);
                pbar->oprop("tracking_fade_in") = true;

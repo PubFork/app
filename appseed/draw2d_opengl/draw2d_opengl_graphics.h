@@ -488,7 +488,7 @@ namespace draw2d_opengl
 
       virtual void set_smooth_mode(::draw2d::e_smooth_mode esmoothmode);
 
-      virtual void set_text_rendering(::draw2d::e_text_rendering etextrendering);
+      virtual void set_text_rendering(::draw2d::e_text_rendering_hint etextrendering);
 
       virtual void * get_os_data() const;
       virtual void * get_os_data_ex(int i) const;

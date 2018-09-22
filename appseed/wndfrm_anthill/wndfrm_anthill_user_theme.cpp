@@ -24,7 +24,7 @@ namespace wndfrm_anthill
 
       create_point_font(::user::font_default,"Segoe UI", 12.0);
 
-      userstyle()->m_mapFont->operator[](::user::font_default)->m_etextrendering = ::draw2d::text_rendering_clear_type_grid_fit;
+      userstyle()->m_mapFont->operator[](::user::font_default)->m_etextrenderinghint = ::draw2d::text_rendering_hint_clear_type_grid_fit;
 
       create_color(::user::color_text, ARGB(255, 0, 0, 0));
       create_color(::user::color_edit_text, ARGB(255, 0, 0, 0));
@@ -87,7 +87,7 @@ namespace wndfrm_anthill
 
       ptab->get_data()->m_pen->create_solid(1,RGB(32,32,32));
 
-      pgraphics->set_text_rendering_hint(::draw2d::text_rendering_anti_alias_grid_fit);
+      pgraphics->set_text_rendering_hint_hint(::draw2d::text_rendering_hint_anti_alias_grid_fit);
 
       pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 

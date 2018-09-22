@@ -593,7 +593,7 @@ namespace user
 
       get_data()->m_pen->create_solid(1, RGB(32, 32, 32));
 
-      pgraphics->set_text_rendering_hint(::draw2d::text_rendering_anti_alias_grid_fit);
+      pgraphics->set_text_rendering_hint_hint(::draw2d::text_rendering_hint_anti_alias_grid_fit);
 
       pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 
@@ -884,7 +884,7 @@ namespace user
 
       get_data()->m_pen->create_solid(1,RGB(32,32,32));
 
-      pgraphics->set_text_rendering_hint(::draw2d::text_rendering_anti_alias_grid_fit);
+      pgraphics->set_text_rendering_hint_hint(::draw2d::text_rendering_hint_anti_alias_grid_fit);
 
       pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 

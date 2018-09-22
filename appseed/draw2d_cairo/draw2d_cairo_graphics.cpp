@@ -310,7 +310,7 @@ namespace draw2d_cairo
       m_bPrinting = FALSE;
       m_pdibAlphaBlend = NULL;
       m_pdc = NULL;
-      m_etextrendering = ::draw2d::text_rendering_anti_alias_grid_fit;
+      m_etextrenderinghint = ::draw2d::text_rendering_hint_anti_alias_grid_fit;
 
       m_spfont.alloc(allocer());
       m_spfont->m_strFontFamilyName = FONT_SANS;
@@ -531,7 +531,7 @@ namespace draw2d_cairo
 
       m_pdc = cairo_create((cairo_surface_t *)pbitmap->get_os_data());
 
-      set_text_rendering_hint(::draw2d::text_rendering_anti_alias_grid_fit);
+      set_text_rendering_hint_hint(::draw2d::text_rendering_hint_anti_alias_grid_fit);
 
       m_spbitmap = pbitmap;
 
@@ -4611,11 +4611,11 @@ namespace draw2d_cairo
    bool graphics::internal_draw_text_pango(const char * lpszString, strsize nCount, const RECTD & rectd, UINT nFormat, PFN_PANGO_TEXT pfnPango)
    {
 
-   if(m_spfont.is_null())
-   return false;
+      if(m_spfont.is_null())
+         return false;
 
-   if(m_spfont->m_dFontSize <= 0.0 || m_spfont->m_dFontWidth <= 0.0)
-   return false;
+      if(m_spfont->m_dFontSize <= 0.0 || m_spfont->m_dFontWidth <= 0.0)
+         return false;
 
       ::draw2d::savedc savedc(this);
 
@@ -4693,7 +4693,7 @@ namespace draw2d_cairo
 
       }
 
-            cairo_scale(m_pdc, m_spfont->m_dFontWidth, 1.0);
+      cairo_scale(m_pdc, m_spfont->m_dFontWidth, 1.0);
 
 
 
@@ -5509,10 +5509,10 @@ namespace draw2d_cairo
    }
 
 
-   bool graphics::set_text_rendering_hint(::draw2d::e_text_rendering etextrenderinghint)
+   bool graphics::set_text_rendering_hint_hint(::draw2d::e_text_rendering_hint_hint etextrenderinghint)
    {
 
-      return ::draw2d::graphics::set_text_rendering_hint(etextrenderinghint);
+      return ::draw2d::graphics::set_text_rendering_hint_hint(etextrenderinghint);
 
    }
 

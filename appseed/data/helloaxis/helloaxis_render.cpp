@@ -508,7 +508,7 @@ namespace helloaxis
 
                   m_dib->get_graphics()->set_font(m_font);
 
-                  m_dib->get_graphics()->set_text_rendering(::draw2d::text_rendering_anti_alias);
+                  m_dib->get_graphics()->set_text_rendering_hint_hint(::draw2d::text_rendering_hint_anti_alias);
 
                   m_dib->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_blend);
 
@@ -594,15 +594,15 @@ namespace helloaxis
       pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 
       Application.imaging().bitmap_blend(pgraphics,
-                                             point((m_cx - m_dibTemplate2->m_size.cx) / 2, (m_cy - m_dibTemplate2->m_size.cy) / 2)
-                                             , m_dibTemplate2->m_size,
-                                             m_dibTemplate2->get_graphics(), null_point(), byte (128 + (255 - 128) * r));
+                                         point((m_cx - m_dibTemplate2->m_size.cx) / 2, (m_cy - m_dibTemplate2->m_size.cy) / 2)
+                                         , m_dibTemplate2->m_size,
+                                         m_dibTemplate2->get_graphics(), null_point(), byte (128 + (255 - 128) * r));
 
       //pgraphics->from(rectClient.top_left(),m_dibTemplate, null_point(), rectClient>si);
 
       pgraphics->set_font(m_font);
 
-      pgraphics->set_text_rendering(::draw2d::text_rendering_anti_alias);
+      pgraphics->set_text_rendering_hint_hint(::draw2d::text_rendering_hint_anti_alias);
 
       if (Session.savings().is_trying_to_save(::aura::resource_display_bandwidth))
       {
@@ -774,7 +774,7 @@ namespace helloaxis
 
             m_dib->Fill(0, 0, 0, 0);
 
-            m_dib->get_graphics()->set_text_rendering(::draw2d::text_rendering_anti_alias);
+            m_dib->get_graphics()->set_text_rendering_hint_hint(::draw2d::text_rendering_hint_anti_alias);
 
             m_dib->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_blend);
 
@@ -823,7 +823,7 @@ namespace helloaxis
 
       }
 
-      pgraphics->set_text_rendering(::draw2d::text_rendering_anti_alias);
+      pgraphics->set_text_rendering_hint_hint(::draw2d::text_rendering_hint_anti_alias);
 
       if (Session.savings().is_trying_to_save(::aura::resource_display_bandwidth))
       {
@@ -1155,7 +1155,7 @@ namespace helloaxis
 
                pgraphics->set_font(font);
 
-               pgraphics->set_text_rendering(::draw2d::text_rendering_anti_alias);
+               pgraphics->set_text_rendering_hint_hint(::draw2d::text_rendering_hint_anti_alias);
 
                class size size = pgraphics->GetTextExtent(strHelloAxis);
 
@@ -1185,7 +1185,7 @@ namespace helloaxis
 
             pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 
-            pgraphics->set_text_rendering(::draw2d::text_rendering_anti_alias);
+            pgraphics->set_text_rendering_hint_hint(::draw2d::text_rendering_hint_anti_alias);
 
             ::size size = pgraphics->GetTextExtent(strHelloAxis);
 
@@ -1407,7 +1407,7 @@ namespace helloaxis
 
       pgraphics->set_font(font);
 
-      pgraphics->set_text_rendering(::draw2d::text_rendering_anti_alias);
+      pgraphics->set_text_rendering_hint_hint(::draw2d::text_rendering_hint_anti_alias);
 
       class size size = pgraphics->GetTextExtent(strHelloAxis);
 

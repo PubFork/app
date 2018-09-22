@@ -35,10 +35,10 @@ void resizeSC(SIZE s)
       //glViewport(0, 0, s.cx/2, s.cy/2);
       //glViewport(0, 0, 1, 1);
       glViewport(0, 0, s.cx, s.cy);
-     
+
 
    }
-   
+
    glMatrixMode(GL_PROJECTION);
    glLoadIdentity();
 
@@ -47,7 +47,7 @@ void resizeSC(SIZE s)
 
 
    glScalef(2.0 / (float)s.cx, -2.0 / (float)s.cy, 0);
-   glTranslatef(-s.cx / 2.0 , -s.cy / 2.0, 0);
+   glTranslatef(-s.cx / 2.0, -s.cy / 2.0, 0);
    //glScalef(0.5, 0.5, 0);
    //glTranslatef(0.5 , 0.5, 0);
 
@@ -90,7 +90,7 @@ namespace draw2d_opengl
       m_hdcGraphics     = NULL;
 //      m_ppath           = NULL;
       //m_ppathPaint      = NULL;
-      m_etextrendering  = ::draw2d::text_rendering_anti_alias_grid_fit;
+      m_etextrenderinghint  = ::draw2d::text_rendering_hint_anti_alias_grid_fit;
       m_dFontFactor     = 1.0;
       //m_pm = new plusplus::Matrix();
 
@@ -319,7 +319,7 @@ namespace draw2d_opengl
 
       //m_pgraphics->SetPageUnit(plusplus::UnitPixel);
 
-      //set_text_rendering(::draw2d::text_rendering_anti_alias_grid_fit);
+      //set_text_rendering_hint_hint(::draw2d::text_rendering_hint_anti_alias_grid_fit);
 
       //set_smooth_mode(::draw2d::smooth_mode_high);
 
@@ -380,7 +380,7 @@ namespace draw2d_opengl
 
          //m_pgraphics->SetPageUnit(plusplus::UnitPixel);
 
-         //set_text_rendering(::draw2d::text_rendering_anti_alias_grid_fit);
+         //set_text_rendering_hint_hint(::draw2d::text_rendering_hint_anti_alias_grid_fit);
 
          return hbitmap;
 
@@ -958,7 +958,7 @@ namespace draw2d_opengl
 
       //return ::DrawIconEx(get_handle1(), x, y, picon->m_hicon, cx, cy, istepIfAniCur, hbrFlickerFreeDraw, diFlags);
 
-return true;
+      return true;
 
    }
 
@@ -1012,12 +1012,14 @@ return true;
    }
 
    bool graphics::DrawState(point pt, size size, DRAWSTATEPROC lpDrawProc, LPARAM lData, UINT nFlags, HBRUSH hBrush)
-   {  ASSERT(get_handle1() != NULL);
+   {
+      ASSERT(get_handle1() != NULL);
       return ::DrawState(get_handle1(), hBrush,
                          lpDrawProc, lData, 0, pt.x, pt.y, size.cx, size.cy, nFlags|DST_COMPLEX) != FALSE;
    }
    bool graphics::DrawState(point pt, size size, DRAWSTATEPROC lpDrawProc, LPARAM lData, UINT nFlags, ::draw2d::brush* pBrush)
-   {  ASSERT(get_handle1() != NULL);
+   {
+      ASSERT(get_handle1() != NULL);
       return ::DrawState(get_handle1(), (HBRUSH)pBrush->get_os_data(),
                          lpDrawProc, lData, 0, pt.x, pt.y, size.cx, size.cy, nFlags|DST_COMPLEX) != FALSE;
    }
@@ -1156,7 +1158,8 @@ return true;
       return ::Pie(get_handle1(), x1, y1, x2, y2, x3, y3, x4, y4) != FALSE;
    }
    bool graphics::Pie(const RECT &  rectParam,POINT ptStart,POINT ptEnd)
-   {  ASSERT(get_handle1() != NULL);
+   {
+      ASSERT(get_handle1() != NULL);
       return ::Pie(get_handle1(), rectParam.left, rectParam.top,
                    rectParam.right, rectParam.bottom, ptStart.x, ptStart.y,
                    ptEnd.x, ptEnd.y) != FALSE;
@@ -1165,44 +1168,44 @@ return true;
    bool graphics::fill_polygon(const POINTD * lpPoints,count nCount)
    {
 
-   //   if(nCount <= 0)
-   //      return TRUE;
+      //   if(nCount <= 0)
+      //      return TRUE;
 
-   //   bool bOk1 = FALSE;
+      //   bool bOk1 = FALSE;
 
-   //   plusplus::PointF * ppoints = new plusplus::PointF[nCount];
+      //   plusplus::PointF * ppoints = new plusplus::PointF[nCount];
 
-   //   try
-   //   {
+      //   try
+      //   {
 
-   //      for(int32_t i = 0; i < nCount; i++)
-   //      {
-   //         ppoints[i].X = (plusplus::REAL) lpPoints[i].x;
-   //         ppoints[i].Y = (plusplus::REAL) lpPoints[i].y;
-   //      }
+      //      for(int32_t i = 0; i < nCount; i++)
+      //      {
+      //         ppoints[i].X = (plusplus::REAL) lpPoints[i].x;
+      //         ppoints[i].Y = (plusplus::REAL) lpPoints[i].y;
+      //      }
 
-   //      m_pgraphics->SetInterpolationMode(plusplus::InterpolationModeHighQualityBicubic);
+      //      m_pgraphics->SetInterpolationMode(plusplus::InterpolationModeHighQualityBicubic);
 
-   //      set_smooth_mode(::draw2d::smooth_mode_high);
-
-
-   //      bOk1 = m_pgraphics->FillPolygon(gl2d_brush(), ppoints, (INT) nCount, gl2d_get_fill_mode()) == plusplus::Status::Ok;
-
-   //   }
-   //   catch(...)
-   //   {
-   //   }
-
-   //   try
-   //   {
-   //      delete ppoints;
-   //   }
-   //   catch(...)
-   //   {
-   //   }
+      //      set_smooth_mode(::draw2d::smooth_mode_high);
 
 
-   //   return bOk1;
+      //      bOk1 = m_pgraphics->FillPolygon(gl2d_brush(), ppoints, (INT) nCount, gl2d_get_fill_mode()) == plusplus::Status::Ok;
+
+      //   }
+      //   catch(...)
+      //   {
+      //   }
+
+      //   try
+      //   {
+      //      delete ppoints;
+      //   }
+      //   catch(...)
+      //   {
+      //   }
+
+
+      //   return bOk1;
 
       return true;
    }
@@ -1210,41 +1213,41 @@ return true;
    bool graphics::fill_polygon(const POINT* lpPoints,count nCount)
    {
 
-   //   if(nCount <= 0)
-   //      return TRUE;
+      //   if(nCount <= 0)
+      //      return TRUE;
 
-   //   bool bOk1 = FALSE;
+      //   bool bOk1 = FALSE;
 
-   //   plusplus::Point * ppoints = new plusplus::Point[nCount];
+      //   plusplus::Point * ppoints = new plusplus::Point[nCount];
 
-   //   try
-   //   {
+      //   try
+      //   {
 
-   //      for(int32_t i = 0; i < nCount; i++)
-   //      {
-   //         ppoints[i].X = lpPoints[i].x;
-   //         ppoints[i].Y = lpPoints[i].y;
-   //      }
+      //      for(int32_t i = 0; i < nCount; i++)
+      //      {
+      //         ppoints[i].X = lpPoints[i].x;
+      //         ppoints[i].Y = lpPoints[i].y;
+      //      }
 
-   //      m_pgraphics->SetInterpolationMode(plusplus::InterpolationModeHighQualityBicubic);
+      //      m_pgraphics->SetInterpolationMode(plusplus::InterpolationModeHighQualityBicubic);
 
-   //      bOk1 = m_pgraphics->FillPolygon(gl2d_brush(), ppoints, (INT)  nCount, gl2d_get_fill_mode()) == plusplus::Status::Ok;
+      //      bOk1 = m_pgraphics->FillPolygon(gl2d_brush(), ppoints, (INT)  nCount, gl2d_get_fill_mode()) == plusplus::Status::Ok;
 
-   //   }
-   //   catch(...)
-   //   {
-   //   }
+      //   }
+      //   catch(...)
+      //   {
+      //   }
 
-   //   try
-   //   {
-   //      delete ppoints;
-   //   }
-   //   catch(...)
-   //   {
-   //   }
+      //   try
+      //   {
+      //      delete ppoints;
+      //   }
+      //   catch(...)
+      //   {
+      //   }
 
 
-   //   return bOk1;
+      //   return bOk1;
 
       return true;
    }
@@ -1526,7 +1529,8 @@ return true;
       return ::RoundRect(get_handle1(), x1, y1, x2, y2, x3, y3) != FALSE;
    }
    bool graphics::RoundRect(const RECT &  rectParam,POINT point)
-   {  ASSERT(get_handle1() != NULL);
+   {
+      ASSERT(get_handle1() != NULL);
       return ::RoundRect(get_handle1(), rectParam.left, rectParam.top,
                          rectParam.right, rectParam.bottom, point.x, point.y) != FALSE;
    }
@@ -2008,7 +2012,8 @@ return true;
    }
    uint32_t graphics::GetGlyphOutline(UINT nChar, UINT nFormat, LPGLYPHMETRICS lpgm,
                                       uint32_t cbBuffer, LPVOID lpBuffer, const MAT2* lpmat2) const
-   {  ASSERT(get_handle2() != NULL);
+   {
+      ASSERT(get_handle2() != NULL);
       return ::GetGlyphOutline(get_handle2(), nChar, nFormat,
                                lpgm, cbBuffer, lpBuffer, lpmat2);
    }
@@ -2042,11 +2047,11 @@ return true;
    int32_t graphics::EndPage()
    {
 
-     /* ASSERT(m_hdc != NULL);
+      /* ASSERT(m_hdc != NULL);
 
-      delete m_pgraphics;
+       delete m_pgraphics;
 
-*/
+      */
       return ::EndPage(m_hdc);
 
    }
@@ -2083,7 +2088,8 @@ return true;
 
    bool graphics::MaskBlt(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, ::draw2d::graphics * pgraphicsSrc,
                           int32_t xSrc, int32_t ySrc, ::draw2d::bitmap& maskBitmap, int32_t xMask, int32_t yMask, uint32_t dwRop)
-   {  ASSERT(get_handle1() != NULL);
+   {
+      ASSERT(get_handle1() != NULL);
       return ::MaskBlt(get_handle1(), x, y, nWidth, nHeight, GL2D_HDC(pgraphicsSrc),
                        xSrc, ySrc,  (HBITMAP)maskBitmap.get_os_data(), xMask, yMask, dwRop) != FALSE;
    }
@@ -2120,7 +2126,7 @@ return true;
       {
          return FALSE;
       }
-*/
+      */
       return true;
 
    }
@@ -2128,27 +2134,32 @@ return true;
 
 
    bool graphics::SetPixelV(int32_t x, int32_t y, COLORREF crColor)
-   {  ASSERT(get_handle1() != NULL);
+   {
+      ASSERT(get_handle1() != NULL);
       return ::SetPixelV(get_handle1(), x, y, crColor) != FALSE;
    }
    bool graphics::SetPixelV(POINT point, COLORREF crColor)
-   {  ASSERT(get_handle1() != NULL);
+   {
+      ASSERT(get_handle1() != NULL);
       return ::SetPixelV(get_handle1(), point.x, point.y, crColor) != FALSE;
    }
 
    bool graphics::AngleArc(int32_t x, int32_t y, int32_t nRadius, float fStartAngle, float fSweepAngle)
-   {  ASSERT(get_handle1() != NULL);
+   {
+      ASSERT(get_handle1() != NULL);
       return ::AngleArc(get_handle1(), x, y, nRadius, fStartAngle, fSweepAngle) != FALSE;
    }
 
 
    bool graphics::ArcTo(const RECT &  rectParam,POINT ptStart,POINT ptEnd)
-   {  ASSERT(get_handle1() != NULL);
+   {
+      ASSERT(get_handle1() != NULL);
       return ArcTo(rectParam.left, rectParam.top, rectParam.right,
                    rectParam.bottom, ptStart.x, ptStart.y, ptEnd.x, ptEnd.y);
    }
    int32_t graphics::GetArcDirection() const
-   {  ASSERT(get_handle2() != NULL);
+   {
+      ASSERT(get_handle2() != NULL);
       return ::GetArcDirection(get_handle2());
    }
 
@@ -2164,7 +2175,8 @@ return true;
 
 
    bool graphics::GetColorAdjustment(LPCOLORADJUSTMENT lpColorAdjust) const
-   {  ASSERT(get_handle2() != NULL);
+   {
+      ASSERT(get_handle2() != NULL);
       return ::GetColorAdjustment(get_handle2(), lpColorAdjust) != FALSE;
    }
 
@@ -2254,11 +2266,11 @@ return true;
    bool graphics::BeginPath()
    {
 
- /*     if(m_ppath != NULL)
-         delete m_ppath;
+      /*     if(m_ppath != NULL)
+              delete m_ppath;
 
-      m_ppath = new plusplus::GraphicsPath;
-*/
+           m_ppath = new plusplus::GraphicsPath;
+      */
 //      return m_ppath != NULL;
 
       return true;
@@ -3038,7 +3050,7 @@ return true;
 
       //   m_pgraphics->SetPageUnit(plusplus::UnitPixel);
 
-      //   set_text_rendering(::draw2d::text_rendering_anti_alias_grid_fit);
+      //   set_text_rendering_hint_hint(::draw2d::text_rendering_hint_anti_alias_grid_fit);
 
       //   m_hdc = (HDC) hdc;
 
@@ -3544,7 +3556,7 @@ return true;
       {
 
          RECT rectWindow;
-         
+
          ::GetWindowRect(m_hwnd, &rectWindow);
 
          s.cx = width(rectWindow);
@@ -3574,8 +3586,8 @@ return true;
 
       //return point(x, y);
       glLoadIdentity();
-      
-      
+
+
 
       glScalef(2.0 / (float)s.cx, -2.0 / (float)s.cy, 0);
 
@@ -3585,7 +3597,7 @@ return true;
       //
       //glTranslatef(-s.cx/2.0+x, -s.cy/2.0+y, 0);
 
-      
+
       m_ptTranslate.x = x;
       m_ptTranslate.y = y;
 
@@ -4051,33 +4063,33 @@ return true;
          break;
       case META_SETWINDOWEXT:
          (dynamic_cast<::draw2d_opengl::graphics * >(pgraphics))->SetWindowExt(
-            (int32_t)(int16_t)pMetaRec->rdParm[1], (int32_t)(int16_t)pMetaRec->rdParm[0]);
+         (int32_t)(int16_t)pMetaRec->rdParm[1], (int32_t)(int16_t)pMetaRec->rdParm[0]);
          break;
       case META_SETWINDOWORG:
          (dynamic_cast<::draw2d_opengl::graphics * >(pgraphics))->SetWindowOrg(
-            (int32_t)(int16_t)pMetaRec->rdParm[1], (int32_t)(int16_t)pMetaRec->rdParm[0]);
+         (int32_t)(int16_t)pMetaRec->rdParm[1], (int32_t)(int16_t)pMetaRec->rdParm[0]);
          break;
       case META_SETVIEWPORTEXT:
          (dynamic_cast<::draw2d_opengl::graphics * >(pgraphics))->SetViewportExt(
-            (int32_t)(int16_t)pMetaRec->rdParm[1], (int32_t)(int16_t)pMetaRec->rdParm[0]);
+         (int32_t)(int16_t)pMetaRec->rdParm[1], (int32_t)(int16_t)pMetaRec->rdParm[0]);
          break;
       case META_SETVIEWPORTORG:
          (dynamic_cast<::draw2d_opengl::graphics * >(pgraphics))->SetViewportOrg(
-            (int32_t)(int16_t)pMetaRec->rdParm[1], (int32_t)(int16_t)pMetaRec->rdParm[0]);
+         (int32_t)(int16_t)pMetaRec->rdParm[1], (int32_t)(int16_t)pMetaRec->rdParm[0]);
          break;
       case META_SCALEWINDOWEXT:
          (dynamic_cast<::draw2d_opengl::graphics * >(pgraphics))->ScaleWindowExt(
-            (int32_t)(int16_t)pMetaRec->rdParm[3], (int32_t)(int16_t)pMetaRec->rdParm[2],
-            (int32_t)(int16_t)pMetaRec->rdParm[1], (int32_t)(int16_t)pMetaRec->rdParm[0]);
+         (int32_t)(int16_t)pMetaRec->rdParm[3], (int32_t)(int16_t)pMetaRec->rdParm[2],
+         (int32_t)(int16_t)pMetaRec->rdParm[1], (int32_t)(int16_t)pMetaRec->rdParm[0]);
          break;
       case META_SCALEVIEWPORTEXT:
          (dynamic_cast<::draw2d_opengl::graphics * >(pgraphics))->ScaleViewportExt(
-            (int32_t)(int16_t)pMetaRec->rdParm[3], (int32_t)(int16_t)pMetaRec->rdParm[2],
-            (int32_t)(int16_t)pMetaRec->rdParm[1], (int32_t)(int16_t)pMetaRec->rdParm[0]);
+         (int32_t)(int16_t)pMetaRec->rdParm[3], (int32_t)(int16_t)pMetaRec->rdParm[2],
+         (int32_t)(int16_t)pMetaRec->rdParm[1], (int32_t)(int16_t)pMetaRec->rdParm[0]);
          break;
       case META_OFFSETVIEWPORTORG:
          (dynamic_cast<::draw2d_opengl::graphics * >(pgraphics))->OffsetViewportOrg(
-            (int32_t)(int16_t)pMetaRec->rdParm[1], (int32_t)(int16_t)pMetaRec->rdParm[0]);
+         (int32_t)(int16_t)pMetaRec->rdParm[1], (int32_t)(int16_t)pMetaRec->rdParm[0]);
          break;
       case META_SAVEDC:
          (dynamic_cast<::draw2d_opengl::graphics * >(pgraphics))->SaveDC();
@@ -4086,52 +4098,52 @@ return true;
          (dynamic_cast<::draw2d_opengl::graphics * >(pgraphics))->RestoreDC((int32_t)(int16_t)pMetaRec->rdParm[0]);
          break;
       case META_SETBKCOLOR:
-         {
-            ::draw2d::brush_sp brush((dynamic_cast<::draw2d_opengl::graphics * >(pgraphics))->allocer(), *(UNALIGNED COLORREF*)&pMetaRec->rdParm[0]);
-            (dynamic_cast<::draw2d_opengl::graphics * >(pgraphics))->SelectObject(brush);
-         }
-         break;
+      {
+         ::draw2d::brush_sp brush((dynamic_cast<::draw2d_opengl::graphics * >(pgraphics))->allocer(), *(UNALIGNED COLORREF*)&pMetaRec->rdParm[0]);
+         (dynamic_cast<::draw2d_opengl::graphics * >(pgraphics))->SelectObject(brush);
+      }
+      break;
       case META_SETTEXTCOLOR:
-         {
-            ::draw2d::brush_sp brush((dynamic_cast<::draw2d_opengl::graphics * >(pgraphics))->allocer(), *(UNALIGNED COLORREF*)&pMetaRec->rdParm[0]);
-            (dynamic_cast<::draw2d_opengl::graphics * >(pgraphics))->SelectObject(brush);
-         }
-         break;
+      {
+         ::draw2d::brush_sp brush((dynamic_cast<::draw2d_opengl::graphics * >(pgraphics))->allocer(), *(UNALIGNED COLORREF*)&pMetaRec->rdParm[0]);
+         (dynamic_cast<::draw2d_opengl::graphics * >(pgraphics))->SelectObject(brush);
+      }
+      break;
 
       // need to watch out for SelectObject(HFONT), for custom font mapping
       case META_SELECTOBJECT:
+      {
+         HGDIOBJ hObject = pHandleTable->objectHandle[pMetaRec->rdParm[0]];
+         UINT nObjType = GetObjectType(hObject);
+         if (nObjType == 0)
          {
-            HGDIOBJ hObject = pHandleTable->objectHandle[pMetaRec->rdParm[0]];
-            UINT nObjType = GetObjectType(hObject);
-            if (nObjType == 0)
+            // object type is unknown, determine if it is a font
+            HFONT hStockFont = (HFONT)::GetStockObject(SYSTEM_FONT);
+            HFONT hFontOld = (HFONT)::SelectObject((dynamic_cast<::draw2d_opengl::graphics * >(pgraphics))->get_handle1(), hStockFont);
+            HGDIOBJ hObjOld = ::SelectObject((dynamic_cast<::draw2d_opengl::graphics * >(pgraphics))->get_handle1(), hObject);
+            if (hObjOld == hStockFont)
             {
-               // object type is unknown, determine if it is a font
-               HFONT hStockFont = (HFONT)::GetStockObject(SYSTEM_FONT);
-               HFONT hFontOld = (HFONT)::SelectObject((dynamic_cast<::draw2d_opengl::graphics * >(pgraphics))->get_handle1(), hStockFont);
-               HGDIOBJ hObjOld = ::SelectObject((dynamic_cast<::draw2d_opengl::graphics * >(pgraphics))->get_handle1(), hObject);
-               if (hObjOld == hStockFont)
-               {
-                  // got the stock object back, so must be selecting a font
-                  _throw(not_implemented(get_app()));
-//                  (dynamic_cast<::draw2d_opengl::graphics * >(pgraphics))->SelectObject(::draw2d_opengl::font::from_handle(pgraphics->get_app(), (HFONT)hObject));
-                  break;  // don't play the default record
-               }
-               else
-               {
-                  // didn't get the stock object back, so restore everything
-                  ::SelectObject((dynamic_cast<::draw2d_opengl::graphics * >(pgraphics))->get_handle1(), hFontOld);
-                  ::SelectObject((dynamic_cast<::draw2d_opengl::graphics * >(pgraphics))->get_handle1(), hObjOld);
-               }
-               // and fall through to PlayMetaFileRecord...
-            }
-            else if (nObjType == OBJ_FONT)
-            {
-               // play back as graphics::SelectObject(::draw2d::font*)
-//               (dynamic_cast<::draw2d_opengl::graphics * >(pgraphics))->SelectObject(::draw2d_opengl::font::from_handle(pgraphics->get_app(), (HFONT)hObject));
+               // got the stock object back, so must be selecting a font
                _throw(not_implemented(get_app()));
+//                  (dynamic_cast<::draw2d_opengl::graphics * >(pgraphics))->SelectObject(::draw2d_opengl::font::from_handle(pgraphics->get_app(), (HFONT)hObject));
                break;  // don't play the default record
             }
+            else
+            {
+               // didn't get the stock object back, so restore everything
+               ::SelectObject((dynamic_cast<::draw2d_opengl::graphics * >(pgraphics))->get_handle1(), hFontOld);
+               ::SelectObject((dynamic_cast<::draw2d_opengl::graphics * >(pgraphics))->get_handle1(), hObjOld);
+            }
+            // and fall through to PlayMetaFileRecord...
          }
+         else if (nObjType == OBJ_FONT)
+         {
+            // play back as graphics::SelectObject(::draw2d::font*)
+//               (dynamic_cast<::draw2d_opengl::graphics * >(pgraphics))->SelectObject(::draw2d_opengl::font::from_handle(pgraphics->get_app(), (HFONT)hObject));
+            _throw(not_implemented(get_app()));
+            break;  // don't play the default record
+         }
+      }
       // fall through...
 
       default:
@@ -4217,21 +4229,21 @@ return true;
 
       //   /*
 
-      //   switch(m_etextrendering)
+      //   switch(m_etextrenderinghint)
       //   {
-      //   case ::draw2d::text_rendering_anti_alias:
+      //   case ::draw2d::text_rendering_hint_anti_alias:
       //      m_pgraphics->SetCompositingMode(plusplus::CompositingModeSourceOver);
       //      m_pgraphics->SetTextRenderingHint(plusplus::TextRenderingHintAntiAlias);
       //      break;
-      //   case ::draw2d::text_rendering_anti_alias_grid_fit:
+      //   case ::draw2d::text_rendering_hint_anti_alias_grid_fit:
       //      m_pgraphics->SetCompositingMode(plusplus::CompositingModeSourceOver);
       //      m_pgraphics->SetTextRenderingHint(plusplus::TextRenderingHintAntiAliasGridFit);
       //      break;
-      //   case ::draw2d::text_rendering_single_bit_per_pixel:
+      //   case ::draw2d::text_rendering_hint_single_bit_per_pixel:
       //      m_pgraphics->SetCompositingMode(plusplus::CompositingModeSourceOver);
       //      m_pgraphics->SetTextRenderingHint(plusplus::TextRenderingHintSingleBitPerPixel);
       //      break;
-      //   case ::draw2d::text_rendering_clear_type_grid_fit:
+      //   case ::draw2d::text_rendering_hint_clear_type_grid_fit:
       //      m_pgraphics->SetCompositingMode(plusplus::CompositingModeSourceOver);
       //      m_pgraphics->SetTextRenderingHint(plusplus::TextRenderingHintClearTypeGridFit);
       //      break;
@@ -4511,7 +4523,7 @@ return true;
       size.cx = s.cx;
 
       size.cy = s.cy;
-   
+
       return true;
 
    }
@@ -4566,7 +4578,7 @@ namespace draw2d_opengl
 
          if (m_spbitmap.is_set())
          {
-            
+
 
             ::size s = m_spbitmap.cast < bitmap>()->m_sizeOut;
 
@@ -4678,16 +4690,16 @@ namespace draw2d_opengl
 
    }
 
-   
+
    void graphics::set(::draw2d::pen * ppen)
    {
 
       glLineWidth(ppen->m_dWidth);
       glColor4f(
-         argb_get_r_value(ppen->m_cr) / 255.f, 
-         argb_get_g_value(ppen->m_cr) / 255.f, 
-         argb_get_b_value(ppen->m_cr) / 255.f, 
-         argb_get_a_value(ppen->m_cr) / 255.f);	
+      argb_get_r_value(ppen->m_cr) / 255.f,
+      argb_get_g_value(ppen->m_cr) / 255.f,
+      argb_get_b_value(ppen->m_cr) / 255.f,
+      argb_get_a_value(ppen->m_cr) / 255.f);
 
    }
 
@@ -4695,15 +4707,15 @@ namespace draw2d_opengl
    {
 
       glColor4f(
-         argb_get_r_value(pbrush->m_cr) / 255.f, 
-         argb_get_g_value(pbrush->m_cr) / 255.f,
-         argb_get_b_value(pbrush->m_cr) / 255.f,
-         argb_get_a_value(pbrush->m_cr) / 255.f);
+      argb_get_r_value(pbrush->m_cr) / 255.f,
+      argb_get_g_value(pbrush->m_cr) / 255.f,
+      argb_get_b_value(pbrush->m_cr) / 255.f,
+      argb_get_a_value(pbrush->m_cr) / 255.f);
 
    }
 
 
-   void graphics::set(const ::draw2d::font * pfont) const 
+   void graphics::set(const ::draw2d::font * pfont) const
    {
 
       pfont->get_os_data();
@@ -4812,7 +4824,7 @@ namespace draw2d_opengl
       //}
       //catch(...)
       //{
-         return;
+      return;
       //}
 
    }
@@ -4848,9 +4860,9 @@ namespace draw2d_opengl
    }
 
 
-   void graphics::set_text_rendering(::draw2d::e_text_rendering etextrendering)
+   void graphics::set_text_rendering_hint_hint(::draw2d::e_text_rendering_hint_hint etextrendering)
    {
-      m_etextrendering = etextrendering;
+      m_etextrenderinghint = etextrendering;
 
    }
 
@@ -5016,47 +5028,47 @@ namespace draw2d_opengl
    bool graphics::blur(bool bExpand,double dRadius,const RECT & rectParam)
    {
 
-   //   // Commented Out for Running in cosan machine running Windows 2008
+      //   // Commented Out for Running in cosan machine running Windows 2008
 
-   //   //if(m_spbitmap.is_null() || m_spbitmap->get_os_data() == NULL)
-   //   //   return false;
+      //   //if(m_spbitmap.is_null() || m_spbitmap->get_os_data() == NULL)
+      //   //   return false;
 
-   //   //plusplus::BlurParams myBlurParams;
+      //   //plusplus::BlurParams myBlurParams;
 
-   //   //myBlurParams.expandEdge    = bExpand ? 1 : 0;
-   //   //myBlurParams.radius        = (float) dRadius;
+      //   //myBlurParams.expandEdge    = bExpand ? 1 : 0;
+      //   //myBlurParams.radius        = (float) dRadius;
 
-   //   //plusplus::Blur myBlur;
-   //   //myBlur.SetParameters(&myBlurParams);
+      //   //plusplus::Blur myBlur;
+      //   //myBlur.SetParameters(&myBlurParams);
 
-   //   //
+      //   //
 
-   //   //plusplus::Matrix m;
-   //   //m_pgraphics->GetTransform(&m);
+      //   //plusplus::Matrix m;
+      //   //m_pgraphics->GetTransform(&m);
 
-   //   //plusplus::PointF points[2];
+      //   //plusplus::PointF points[2];
 
-   //   //points[0].X    = (plusplus::REAL) rectParam.left;
-   //   //points[0].Y    = (plusplus::REAL) rectParam.top;
-   //   //points[1].X    = (plusplus::REAL) rectParam.right;
-   //   //points[1].Y    = (plusplus::REAL) rectParam.bottom;
+      //   //points[0].X    = (plusplus::REAL) rectParam.left;
+      //   //points[0].Y    = (plusplus::REAL) rectParam.top;
+      //   //points[1].X    = (plusplus::REAL) rectParam.right;
+      //   //points[1].Y    = (plusplus::REAL) rectParam.bottom;
 
-   //   //m.TransformPoints(points, 2);
+      //   //m.TransformPoints(points, 2);
 
-   //   ////plusplus::RectF rectf(points[0].X, points[0].Y, points[1].X - points[0].X, points[1].Y - points[0].Y);
+      //   ////plusplus::RectF rectf(points[0].X, points[0].Y, points[1].X - points[0].X, points[1].Y - points[0].Y);
 
-   //   //RECT rect;
+      //   //RECT rect;
 
-   //   //rect.left      = (LONG) points[0].X;
-   //   //rect.top       = (LONG) points[0].Y;
-   //   //rect.right     = (LONG) points[1].X;
-   //   //rect.bottom    = (LONG) points[1].Y;
+      //   //rect.left      = (LONG) points[0].X;
+      //   //rect.top       = (LONG) points[0].Y;
+      //   //rect.right     = (LONG) points[1].X;
+      //   //rect.bottom    = (LONG) points[1].Y;
 
-   //   //plusplus::Bitmap * pbitmap = ((plusplus::Bitmap *) m_spbitmap->get_os_data());
+      //   //plusplus::Bitmap * pbitmap = ((plusplus::Bitmap *) m_spbitmap->get_os_data());
 
-   //   //pbitmap->ApplyEffect(&myBlur, &rect);
+      //   //pbitmap->ApplyEffect(&myBlur, &rect);
 
-   //   return true;
+      //   return true;
 
       return true;
    }
@@ -5168,9 +5180,10 @@ namespace draw2d_opengl
    {
 
       // http://stackoverflow.com/questions/4052940/how-to-make-an-opengl-rendering-context-with-transparent-background
-      // 
+      //
 
-      PIXELFORMATDESCRIPTOR pfd = {
+      PIXELFORMATDESCRIPTOR pfd =
+      {
          sizeof(PIXELFORMATDESCRIPTOR),
          1,                                // Version Number
          PFD_DRAW_TO_WINDOW |         // Format Must Support Window
@@ -5204,19 +5217,22 @@ namespace draw2d_opengl
 
       m_hdc = GetDC(wnd);
       int PixelFormat = ChoosePixelFormat(m_hdc, &pfd);
-      if (PixelFormat == 0) {
+      if (PixelFormat == 0)
+      {
          ASSERT(0);
          return FALSE;
       }
 
       BOOL bResult = SetPixelFormat(m_hdc, PixelFormat, &pfd);
-      if (bResult == FALSE) {
+      if (bResult == FALSE)
+      {
          ASSERT(0);
          return FALSE;
       }
 
       m_hrc = wglCreateContext(m_hdc);
-      if (!m_hrc) {
+      if (!m_hrc)
+      {
          ASSERT(0);
          return FALSE;
       }
@@ -5237,28 +5253,28 @@ namespace draw2d_opengl
 
    void graphics::on_begin_draw(oswindow wnd, SIZE sz)
    {
-      
+
       wglMakeCurrent(m_hdc, m_hrc);
       initSC();
       resizeSC(sz);
 
 
-         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-      
-         //glPushMatrix();
-      
-         //glColor3f(0, 1, 1);
-         //glBegin(GL_TRIANGLES);                              // Drawing Using Triangles
-         //glColor3f(1.0f, 0.0f, 0.0f);                      // Set The Color To Red
-         //glVertex3f(sz.cx/2, 0, 0.0f);                  // Top
-         //glColor3f(0.0f, 1.0f, 0.0f);                      // Set The Color To Green
-         //glVertex3f(0, sz.cy, 0.0f);                  // Bottom Left
-         //glColor3f(0.0f, 0.0f, 1.0f);                      // Set The Color To Blue
-         //glVertex3f(sz.cx, sz.cy, 0.0f);                  // Bottom Right
-         //glEnd();
-      
-         //glPopMatrix();
-         //glFlush();
+      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+      //glPushMatrix();
+
+      //glColor3f(0, 1, 1);
+      //glBegin(GL_TRIANGLES);                              // Drawing Using Triangles
+      //glColor3f(1.0f, 0.0f, 0.0f);                      // Set The Color To Red
+      //glVertex3f(sz.cx/2, 0, 0.0f);                  // Top
+      //glColor3f(0.0f, 1.0f, 0.0f);                      // Set The Color To Green
+      //glVertex3f(0, sz.cy, 0.0f);                  // Bottom Left
+      //glColor3f(0.0f, 0.0f, 1.0f);                      // Set The Color To Blue
+      //glVertex3f(sz.cx, sz.cy, 0.0f);                  // Bottom Right
+      //glEnd();
+
+      //glPopMatrix();
+      //glFlush();
 
    }
 

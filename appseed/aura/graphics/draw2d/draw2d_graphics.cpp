@@ -4003,10 +4003,10 @@ namespace draw2d
    }
 
 
-   bool graphics::set_text_rendering_hint(e_text_rendering etextrendering)
+   bool graphics::set_text_rendering_hint_hint(e_text_rendering_hint_hint etextrendering)
    {
 
-      m_etextrendering = etextrendering;
+      m_etextrenderinghint = etextrendering;
 
       return true;
 

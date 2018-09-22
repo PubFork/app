@@ -30,12 +30,12 @@ namespace user
 
 
 
-                  m_rectClient = null_rect();
+               m_rectClient = null_rect();
 
-                  //               m_iMargin = 7;
+               //               m_iMargin = 7;
 
 
-               }
+            }
 
             frame_schema::~frame_schema()
             {
@@ -165,53 +165,53 @@ namespace user
             }
             */
 
-/*            bool frame_schema::_000OnTimer(uint32_t nIDEvent)
-            {
-               UNREFERENCED_PARAMETER(nIDEvent);
-               return false;
-            }
+            /*            bool frame_schema::_000OnTimer(uint32_t nIDEvent)
+                        {
+                           UNREFERENCED_PARAMETER(nIDEvent);
+                           return false;
+                        }
 
 
-            bool frame_schema::_000OnSize(uint32_t nType, int32_t cx, int32_t cy)
-            {
+                        bool frame_schema::_000OnSize(uint32_t nType, int32_t cx, int32_t cy)
+                        {
 
-               UNREFERENCED_PARAMETER(cx);
-               UNREFERENCED_PARAMETER(cy);
+                           UNREFERENCED_PARAMETER(cx);
+                           UNREFERENCED_PARAMETER(cy);
 
-               sp(::user::interaction) pwnd = get_window();
+                           sp(::user::interaction) pwnd = get_window();
 
-               if(pwnd == NULL || pwnd->m_pimpl->m_bIgnoreSizeEvent)
-                  return false;
+                           if(pwnd == NULL || pwnd->m_pimpl->m_bIgnoreSizeEvent)
+                              return false;
 
-               on_layout();
+                           on_layout();
 
-               return false;
+                           return false;
 
-            }
+                        }
 
 
-            bool frame_schema::_000OnMove(int32_t x, int32_t y)
-            {
-               UNREFERENCED_PARAMETER(x);
-               UNREFERENCED_PARAMETER(y);
-               return false;
-            }
+                        bool frame_schema::_000OnMove(int32_t x, int32_t y)
+                        {
+                           UNREFERENCED_PARAMETER(x);
+                           UNREFERENCED_PARAMETER(y);
+                           return false;
+                        }
 
-            bool frame_schema::_000OnCommand(WPARAM wparam, LPARAM lparam, LRESULT & lresult)
-            {
-               UNREFERENCED_PARAMETER(wparam);
-               UNREFERENCED_PARAMETER(lparam);
-               UNREFERENCED_PARAMETER(lresult);
-               return false;
-            }
+                        bool frame_schema::_000OnCommand(WPARAM wparam, LPARAM lparam, LRESULT & lresult)
+                        {
+                           UNREFERENCED_PARAMETER(wparam);
+                           UNREFERENCED_PARAMETER(lparam);
+                           UNREFERENCED_PARAMETER(lresult);
+                           return false;
+                        }
 
-            bool frame_schema::_000OnDisplayChange(int32_t iBitsPerPixel, size sizeScreen)
-            {
-               UNREFERENCED_PARAMETER(iBitsPerPixel);
-               UNREFERENCED_PARAMETER(sizeScreen);
-               update_drawing_objects();
-               return false;
-            }*/
+                        bool frame_schema::_000OnDisplayChange(int32_t iBitsPerPixel, size sizeScreen)
+                        {
+                           UNREFERENCED_PARAMETER(iBitsPerPixel);
+                           UNREFERENCED_PARAMETER(sizeScreen);
+                           update_drawing_objects();
+                           return false;
+                        }*/
 
             /*
             void frame_schema::OnNcCalcSize(LPRECT lprect)
@@ -277,7 +277,7 @@ namespace user
                if(rectClient.area() <= 0)
                   return;
 
-               
+
 
                int32_t iInflate = 5; // raio 2 pixels + centro 1 pixel
 
@@ -303,8 +303,8 @@ namespace user
                bool b = spdib2->get_graphics()->BitBlt(0, 0, rectClient.width() + iInflate * 2, rectClient.height() + iInflate * 2, pgraphics, rectClient.left - iInflate, rectClient.top - iInflate, SRCCOPY);
                //bool b = ::BitBlt(dc2, 0, 0, rectClient.width() + iInflate * 2, rectClient.height() + iInflate * 2, hdcScreen, rectClient.left - iInflate, rectClient.top - iInflate, SRCCOPY);
                b = imaging.blur(spdib->get_graphics(), point(0, 0),
-                  size(rectClient.width() + iInflate * 2, rectClient.height() + iInflate * 2),
-                  spdib2->get_graphics(), point(0, 0), 2);
+                                size(rectClient.width() + iInflate * 2, rectClient.height() + iInflate * 2),
+                                spdib2->get_graphics(), point(0, 0), 2);
 
                //spgraphics->Draw3dRect(rectClient, 127 << 24, 127 << 24);
                //rectClient.deflate(1, 1);
@@ -353,7 +353,7 @@ namespace user
                g.SetCompositingMode(Gdiplus::CompositingModeSourceOver);
                Gdiplus::SolidBrush solidBrush(Gdiplus::Color(bAlpha, argb_get_r_value(cr), argb_get_g_value(cr), argb_get_b_value(cr)));
                g.FillRectangle(&solidBrush, lprect->left, lprect->top, lprect->right - lprect->left, lprect->bottom - lprect->top);*/
-               
+
                Application.imaging().color_blend(pgraphics, lprect, cr, bAlpha);
 
             }
@@ -419,7 +419,7 @@ namespace user
                switch(eelement)
                {
                case ElementTopLeftIcon:
-                  
+
                   if(m_pworkset->m_pappearance == NULL || m_pworkset->m_pappearance->m_picon == NULL)
                      return false;
 
@@ -431,7 +431,7 @@ namespace user
                   return true;
 
                case ElementMoveGripMinimal:
-                  
+
                   if(m_pworkset->m_pappearance == NULL || m_pworkset->m_pappearance->GetAppearance() != ::user::appearance_minimal)
                      return false;
 
@@ -453,8 +453,8 @@ namespace user
             {
                rect rect;
                for(e_element eelement = (e_element)(ElementNone + 1);
-                  eelement < ElementEnd;
-                  eelement++)
+                     eelement < ElementEnd;
+                     eelement++)
                {
                   get_element_rect(rect, eelement);
                   if(rect.contains(point))
@@ -607,10 +607,10 @@ namespace user
             {
 
                return
-                  estyle == StyleTranslucidWarmGray
-                  || estyle == StyleTranslucidLightBlue
-                  || estyle == StyleTranslucidLightGreen
-                  || estyle == StyleTranslucidWarmLiteGray;
+               estyle == StyleTranslucidWarmGray
+               || estyle == StyleTranslucidLightBlue
+               || estyle == StyleTranslucidLightGreen
+               || estyle == StyleTranslucidWarmLiteGray;
 
 
             }
@@ -625,7 +625,7 @@ namespace user
                int32_t cx = rect.width();
                int32_t cy = rect.height();
 
-               
+
 
                pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 
@@ -706,9 +706,9 @@ namespace user
                if(!m_pworkset->IsAppearanceEnabled())
                   return;
 
-               
 
-               pgraphics->set_text_rendering(::draw2d::text_rendering_anti_alias);
+
+               pgraphics->set_text_rendering_hint_hint(::draw2d::text_rendering_hint_anti_alias);
 
                appearance * pappearance = m_pworkset->get_appearance();
 
@@ -751,7 +751,7 @@ namespace user
                         pgraphics->Draw3dRect(rectGrip.left + i,rectGrip.top,3,rectGrip.height(),ARGB(84 + 23,230,230,230),ARGB(84 + 23,108 + 23,108 + 23,108 + 23));
 
                         i += 5;
-   
+
                      }
 
                      //pgraphics->Draw3dRect(rectGrip.left + 12,rectGrip.top,3,rectGrip.height(),ARGB(184,255,255,255),ARGB(184,84,84,84));

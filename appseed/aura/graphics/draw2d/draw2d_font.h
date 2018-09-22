@@ -137,7 +137,7 @@ namespace draw2d
       bool                    m_bStrikeout;
       char_set_array          m_echarseta;
       e_char_set              m_echarset;
-      e_text_rendering        m_etextrendering;
+      e_text_rendering_hint_hint   m_etextrenderinghint;
 
 
       font();

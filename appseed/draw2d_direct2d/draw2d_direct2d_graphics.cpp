@@ -4338,21 +4338,21 @@ namespace draw2d_direct2d
          if(m_prendertarget == NULL)
             return FALSE;
 
-         switch(m_etextrendering)
+         switch(m_etextrenderinghint)
          {
-         case ::draw2d::text_rendering_anti_alias:
+         case ::draw2d::text_rendering_hint_anti_alias:
             if(m_pdevicecontext) m_pdevicecontext->SetPrimitiveBlend(D2D1_PRIMITIVE_BLEND_SOURCE_OVER);
             m_prendertarget->SetTextAntialiasMode(D2D1_TEXT_ANTIALIAS_MODE_GRAYSCALE);
             break;
-         case ::draw2d::text_rendering_anti_alias_grid_fit:
+         case ::draw2d::text_rendering_hint_anti_alias_grid_fit:
             if(m_pdevicecontext) m_pdevicecontext->SetPrimitiveBlend(D2D1_PRIMITIVE_BLEND_SOURCE_OVER);
             m_prendertarget->SetTextAntialiasMode(D2D1_TEXT_ANTIALIAS_MODE_GRAYSCALE);
             break;
-         case ::draw2d::text_rendering_single_bit_per_pixel:
+         case ::draw2d::text_rendering_hint_single_bit_per_pixel:
             if(m_pdevicecontext) m_pdevicecontext->SetPrimitiveBlend(D2D1_PRIMITIVE_BLEND_SOURCE_OVER);
             m_prendertarget->SetTextAntialiasMode(D2D1_TEXT_ANTIALIAS_MODE_GRAYSCALE);
             break;
-         case ::draw2d::text_rendering_clear_type_grid_fit:
+         case ::draw2d::text_rendering_hint_clear_type_grid_fit:
             if(m_pdevicecontext) m_pdevicecontext->SetPrimitiveBlend(D2D1_PRIMITIVE_BLEND_SOURCE_OVER);
             m_prendertarget->SetTextAntialiasMode(D2D1_TEXT_ANTIALIAS_MODE_CLEARTYPE);
             break;
@@ -4709,21 +4709,21 @@ namespace draw2d_direct2d
          if(m_prendertarget == NULL)
             return FALSE;
 
-         switch(m_etextrendering)
+         switch(m_etextrenderinghint)
          {
-         case ::draw2d::text_rendering_anti_alias:
+         case ::draw2d::text_rendering_hint_anti_alias:
             if(m_pdevicecontext) m_pdevicecontext->SetPrimitiveBlend(D2D1_PRIMITIVE_BLEND_SOURCE_OVER);
             m_prendertarget->SetTextAntialiasMode(D2D1_TEXT_ANTIALIAS_MODE_GRAYSCALE);
             break;
-         case ::draw2d::text_rendering_anti_alias_grid_fit:
+         case ::draw2d::text_rendering_hint_anti_alias_grid_fit:
             if(m_pdevicecontext) m_pdevicecontext->SetPrimitiveBlend(D2D1_PRIMITIVE_BLEND_SOURCE_OVER);
             m_prendertarget->SetTextAntialiasMode(D2D1_TEXT_ANTIALIAS_MODE_GRAYSCALE);
             break;
-         case ::draw2d::text_rendering_single_bit_per_pixel:
+         case ::draw2d::text_rendering_hint_single_bit_per_pixel:
             if(m_pdevicecontext) m_pdevicecontext->SetPrimitiveBlend(D2D1_PRIMITIVE_BLEND_SOURCE_OVER);
             m_prendertarget->SetTextAntialiasMode(D2D1_TEXT_ANTIALIAS_MODE_GRAYSCALE);
             break;
-         case ::draw2d::text_rendering_clear_type_grid_fit:
+         case ::draw2d::text_rendering_hint_clear_type_grid_fit:
             if(m_pdevicecontext) m_pdevicecontext->SetPrimitiveBlend(D2D1_PRIMITIVE_BLEND_SOURCE_OVER);
             m_prendertarget->SetTextAntialiasMode(D2D1_TEXT_ANTIALIAS_MODE_CLEARTYPE);
             break;
@@ -4932,10 +4932,10 @@ namespace draw2d_direct2d
    }
 
 
-   bool graphics::set_text_rendering_hint(::draw2d::e_text_rendering etextrendering)
+   bool graphics::set_text_rendering_hint_hint(::draw2d::e_text_rendering_hint_hint etextrendering)
    {
 
-      m_etextrendering = etextrendering;
+      m_etextrenderinghint = etextrendering;
 
       return true;
 
