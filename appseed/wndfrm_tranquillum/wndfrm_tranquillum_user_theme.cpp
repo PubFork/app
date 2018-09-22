@@ -964,14 +964,14 @@ namespace wndfrm_tranquillum
                   {
 
                      // button is enabled
-                     pmenucentral->MenuV033GetImageListBlend()->draw(pgraphics, uiImage, rectImage.top_left(), 0);
+                     Session.userex()->menu()->MenuV033GetImageListBlend()->draw(pgraphics, uiImage, rectImage.top_left(), 0);
 
                   }
                   else
                   {
 
                      // button is disabled
-                     pmenucentral->MenuV033GetImageListHueLight()->draw(pgraphics, uiImage, rectImage.top_left(), 0);
+                     Session.userex()->menu()->MenuV033GetImageListHueLight()->draw(pgraphics, uiImage, rectImage.top_left(), 0);
 
                   }
 
@@ -1015,9 +1015,9 @@ namespace wndfrm_tranquillum
 
                   ptoolbar->_001GetElementRect(iItem, rect, ::user::toolbar::ElementItemHover);
 
-                  pmenucentral->MenuV033GetImageListHue()->draw(pgraphics, uiImage, rect.top_left(), 0);
+                  Session.userex()->menu()->MenuV033GetImageListHue()->draw(pgraphics, uiImage, rect.top_left(), 0);
 
-                  pmenucentral->MenuV033GetImageList()->draw(pgraphics, uiImage, rectImage.top_left(), 0);
+                  Session.userex()->menu()->MenuV033GetImageList()->draw(pgraphics, uiImage, rectImage.top_left(), 0);
                }
 
             }
@@ -1052,7 +1052,7 @@ namespace wndfrm_tranquillum
             else if (uiImage != 0xffffffff)
             {
 
-               pmenucentral->MenuV033GetImageList()->draw(pgraphics, uiImage, rectImage.top_left(), 0);
+               Session.userex()->menu()->MenuV033GetImageList()->draw(pgraphics, uiImage, rectImage.top_left(), 0);
 
             }
 
@@ -1092,13 +1092,13 @@ namespace wndfrm_tranquillum
                if ((nStyle & TBBS_DISABLED) == 0)
                {
 
-                  pmenucentral->MenuV033GetImageListBlend()->draw(pgraphics, uiImage, rectImage.top_left(), 0);
+                  Session.userex()->menu()->MenuV033GetImageListBlend()->draw(pgraphics, uiImage, rectImage.top_left(), 0);
 
                }
                else
                {
 
-                  pmenucentral->MenuV033GetImageListHueLight()->draw(pgraphics, uiImage, rectImage.top_left(), 0);
+                  Session.userex()->menu()->MenuV033GetImageListHueLight()->draw(pgraphics, uiImage, rectImage.top_left(), 0);
 
                }
 
@@ -1160,9 +1160,7 @@ namespace wndfrm_tranquillum
 
       bool bHover = iItem == ptoolbar->_001GetHoverItem();
 
-      BaseMenuCentral * pmenucentral = BaseMenuCentral::GetMenuCentral(get_app());
-
-      UINT uiImage = pmenucentral->CommandToImage(item.m_id);
+      UINT uiImage = Session.userex()->menu()->command_image(item.m_id);
 
       ::user::toolbar::e_element eelement = ::user::toolbar::element_item;
       ::user::toolbar::e_element eelementImage = ::user::toolbar::element_image;
@@ -1261,14 +1259,14 @@ namespace wndfrm_tranquillum
                   {
 
                      // button is enabled
-                     pmenucentral->MenuV033GetImageListBlend()->draw(pgraphics, uiImage, rectImage.top_left(), 0);
+                     Session.userex()->menu()->MenuV033GetImageListBlend()->draw(pgraphics, uiImage, rectImage.top_left(), 0);
 
                   }
                   else
                   {
 
                      // button is disabled
-                     pmenucentral->MenuV033GetImageListHueLight()->draw(pgraphics, uiImage, rectImage.top_left(), 0);
+                     Session.userex()->menu()->MenuV033GetImageListHueLight()->draw(pgraphics, uiImage, rectImage.top_left(), 0);
 
                   }
 
@@ -1312,9 +1310,9 @@ namespace wndfrm_tranquillum
 
                   ptoolbar->_001GetElementRect(iItem, rect, ::user::toolbar::ElementItemHover);
 
-                  pmenucentral->MenuV033GetImageListHue()->draw(pgraphics, uiImage, rect.top_left(), 0);
+                  Session.userex()->menu()->MenuV033GetImageListHue()->draw(pgraphics, uiImage, rect.top_left(), 0);
 
-                  pmenucentral->MenuV033GetImageList()->draw(pgraphics, uiImage, rectImage.top_left(), 0);
+                  Session.userex()->menu()->MenuV033GetImageList()->draw(pgraphics, uiImage, rectImage.top_left(), 0);
                }
 
             }
@@ -1349,7 +1347,7 @@ namespace wndfrm_tranquillum
             else if (uiImage != 0xffffffff)
             {
 
-               pmenucentral->MenuV033GetImageList()->draw(pgraphics, uiImage, rectImage.top_left(), 0);
+               Session.userex()->menu()->MenuV033GetImageList()->draw(pgraphics, uiImage, rectImage.top_left(), 0);
 
             }
 
@@ -1408,13 +1406,13 @@ namespace wndfrm_tranquillum
                if ((nStyle & TBBS_DISABLED) == 0)
                {
 
-                  pmenucentral->MenuV033GetImageListBlend()->draw(pgraphics, uiImage, rectImage.top_left(), 0);
+                  Session.userex()->menu()->MenuV033GetImageListBlend()->draw(pgraphics, uiImage, rectImage.top_left(), 0);
 
                }
                else
                {
 
-                  pmenucentral->MenuV033GetImageListHueLight()->draw(pgraphics, uiImage, rectImage.top_left(), 0);
+                  Session.userex()->menu()->MenuV033GetImageListHueLight()->draw(pgraphics, uiImage, rectImage.top_left(), 0);
 
                }
 
