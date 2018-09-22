@@ -213,12 +213,12 @@ namespace aura
 
 
 
-  g_log_set_handler (NULL,
-                     G_LOG_LEVEL_WARNING |
-                     G_LOG_LEVEL_ERROR |
-                     G_LOG_LEVEL_CRITICAL| G_LOG_FLAG_FATAL,
-                     log_handler,
-                     NULL);
+//  g_log_set_handler (NULL,
+  //                   G_LOG_LEVEL_WARNING |
+    //                 G_LOG_LEVEL_ERROR |
+      //               G_LOG_LEVEL_CRITICAL| G_LOG_FLAG_FATAL,
+        //             log_handler,
+          //           NULL);
 
 
          //atexit (&why_exited);

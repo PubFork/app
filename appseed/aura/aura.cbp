@@ -16,8 +16,8 @@
 				<Option createStaticLib="1" />
 				<Compiler>
 					<Add option="-std=c++14" />
-					<Add option="-fPIC" />
 					<Add option="-g" />
+					<Add option="-fPIC" />
 					<Add option="-fnon-call-exceptions" />
 					<Add option="-fno-stack-protector" />
 					<Add option="-fno-omit-frame-pointer" />
@@ -52,6 +52,9 @@
 					<Add option="-Wl,-z,defs" />
 					<Add directory="../../../time/x64/basis" />
 				</Linker>
+				<ExtraCommands>
+					<Add before="cp -Rf ../../../nodelfs/thirdparty/library/x64/* ../../../time/x64/basis/" />
+				</ExtraCommands>
 			</Target>
 			<Target title="stage">
 				<Option output="../../../time/x64/basis/libaura.so" prefix_auto="0" extension_auto="0" />
@@ -86,6 +89,9 @@
 					<Add option="-Wl,-z,defs" />
 					<Add directory="../../../time/x64/basis" />
 				</Linker>
+				<ExtraCommands>
+					<Add before="cp -Rf ../../../nodelfs/thirdparty/library/x64/* ../../../time/x64/basis/" />
+				</ExtraCommands>
 			</Target>
 			<Target title="memdleak">
 				<Option output="../../../time/x64/basis/libaura.so" prefix_auto="0" extension_auto="0" />
@@ -216,9 +222,6 @@
 			<Add option="`pkg-config --libs gtk+-3.0 gdk-3.0 gthread-2.0`" />
 			<Add directory="../../../time/x64/basis" />
 		</Linker>
-		<ExtraCommands>
-			<Add before="cp -Rf ../../../nodelfs/thirdparty/library/x64/* ../../../time/x64/basis/" />
-		</ExtraCommands>
 		<Unit filename="all.h" />
 		<Unit filename="aura.h" />
 		<Unit filename="aura/_aura.cpp" />
