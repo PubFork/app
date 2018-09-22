@@ -9,7 +9,11 @@
 #include "aura/net/net_sockets.h"
 #include "aura/aura/aura_plex_heap1.h"
 #include "aura/aura/aura_plex_heap_impl1.h"
+
+#ifdef LINUX
 #include <glib.h>
+#endif
+
 extern mutex * g_pmutexThreadWaitClose;
 
 extern string_map < ::aura::PFN_GET_NEW_LIBRARY, ::aura::PFN_GET_NEW_LIBRARY  > * g_pmapLibrary;
@@ -173,17 +177,19 @@ extern mutex * g_pmutexCvt;
 
 #undef new
 
+#ifdef LINUX
 static void
 log_handler (const gchar   *log_domain,
              GLogLevelFlags log_level,
              const gchar   *message,
              gpointer       user_data)
 {
-  g_log_default_handler (log_domain, log_level, message, user_data);
+   g_log_default_handler (log_domain, log_level, message, user_data);
 
-  g_on_error_query (NULL);
+   g_on_error_query (NULL);
 }
 
+#endif
 
 namespace aura
 {
@@ -214,11 +220,11 @@ namespace aura
 
 
 //  g_log_set_handler (NULL,
-  //                   G_LOG_LEVEL_WARNING |
-    //                 G_LOG_LEVEL_ERROR |
-      //               G_LOG_LEVEL_CRITICAL| G_LOG_FLAG_FATAL,
-        //             log_handler,
-          //           NULL);
+         //                   G_LOG_LEVEL_WARNING |
+         //                 G_LOG_LEVEL_ERROR |
+         //               G_LOG_LEVEL_CRITICAL| G_LOG_FLAG_FATAL,
+         //             log_handler,
+         //           NULL);
 
 
          //atexit (&why_exited);
