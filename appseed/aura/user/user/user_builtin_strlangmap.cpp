@@ -1,5 +1,8 @@
 #include "framework.h"
 
+
+#define STR_BOM "\xEF\xBB\xBF"
+
 #ifdef WINDOWSEX
 string load_pofile(int iId);
 #else
@@ -152,6 +155,8 @@ bool builtin_strlangmap::_load_text(string strLang)
    string strPo = load_pofile(strLang);
 
 #endif
+
+   ::str::begins_eat_ci(strPo, STR_BOM);
 
    stringa stra;
 

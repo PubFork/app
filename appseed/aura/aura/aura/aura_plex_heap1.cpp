@@ -651,7 +651,11 @@ CLASS_DECL_AURA void simple_debug_print(const char * psz);
 #elif  defined(ANDROID)
 #define QUOTED_KERNEL_SPACE (1024 * 1024)
 #else
+#if OSBIT == 64
 #define QUOTED_KERNEL_SPACE (1024 * 1024)
+#else
+#define QUOTED_KERNEL_SPACE 1024
+#endif
 #endif
 
 void Alloc_check_pointer_in_cpp(void * p)
