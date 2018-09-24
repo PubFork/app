@@ -78,6 +78,10 @@ aura_main_data::aura_main_data(int argc, char ** argv)
 aura_main_data::aura_main_data(HINSTANCE hinstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int32_t nCmdShow)
 {
 
+   m_argc = __argc;
+
+   m_argv = __argv;
+
    m_pstrlangmap = NULL;
 
    m_pnodedataexchange = NULL;

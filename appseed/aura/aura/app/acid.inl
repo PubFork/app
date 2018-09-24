@@ -74,6 +74,11 @@ int32_t WINAPI _tWinMain(HINSTANCE hinstance, HINSTANCE hPrevInstance, LPTSTR lp
 
 #endif
 
+#ifdef PATH_INSTALL_FOLDER_EXE_ARG
+
+   pmaindata->m_iPathInstallFolderExeArg = PATH_INSTALL_FOLDER_EXE_ARG;
+
+#endif
    return aura_aura(pmaindata, &get_acid_app);
 
 }
