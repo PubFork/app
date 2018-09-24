@@ -44,6 +44,8 @@ string ca2_command_line2();
 aura_main_data::aura_main_data(int argc, char ** argv)
 {
 
+   m_iPathInstallFolderExeArg = -1;
+
    m_pstrlangmap = NULL;
 
    m_pnodedataexchange = NULL;
@@ -277,12 +279,21 @@ bool app_core::beg()
    return true;
 
 }
-
+extern ::file::path * g_ppathInstallFolder;
 
 bool app_core::ini()
 {
 
    m_bAcidApp = m_pfnNewApp != NULL;
+
+   if (m_pmaindata->m_iPathInstallFolderExeArg >= 0 && m_pmaindata->m_iPathInstallFolderExeArg < m_pmaindata->m_argc)
+   {
+
+      ::file::path pathModule = m_pmaindata->m_argv[m_pmaindata->m_iPathInstallFolderExeArg];
+
+      g_ppathInstallFolder = new ::file::path(pathModule.folder(4));
+
+   }
 
    string strAppId;
 

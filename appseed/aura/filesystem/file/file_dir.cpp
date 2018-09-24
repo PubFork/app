@@ -18,7 +18,7 @@
 #include "aura/aura/os/windows_common/windows_common_cotaskptr.h"
 #endif
 
-
+::file::path * g_ppathInstallFolder = NULL;
 
 void TranslateLastError()
 {
@@ -740,18 +740,32 @@ CLASS_DECL_AURA::file::path dir::inplace_install(string strAppId, string strPlat
 ::file::path dir::install()
 {
 
+   if (g_ppathInstallFolder == NULL || g_ppathInstallFolder->is_empty())
+   {
+
+      return default_install();
+
+   }
+
+   return *g_ppathInstallFolder;
+
+}
+
+
+::file::path dir::default_install()
+{
+
 #ifdef ANDROID
 
-   return ::dir::config();
+	return ::dir::config();
 
 #else
 
-   return ::file::app_module().folder(4);
+	return ::file::app_module().folder(4);
 
 #endif
 
 }
-
 
 
 bool dir::mk(const ::file::path & path)

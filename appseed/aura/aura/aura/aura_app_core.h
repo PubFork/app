@@ -59,6 +59,8 @@ class CLASS_DECL_AURA aura_main_data :
 {
 public:
 
+
+   int                           m_iPathInstallFolderExeArg;
    STRLANGMAP *                  m_pstrlangmap;
    bool                          m_bFork;
    node_data_exchange *          m_pnodedataexchange;

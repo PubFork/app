@@ -40,6 +40,12 @@ int main(int argc, char * argv[])
 
 #endif
 
+#ifdef PATH_INSTALL_FOLDER_EXE_ARG
+
+   pmaindata->m_iPathInstallFolderExeArg = PATH_INSTALL_FOLDER_EXE_ARG;
+
+#endif
+
    return (int) aura_aura(pmaindata, &get_acid_app);
 
 }
