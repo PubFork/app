@@ -8,7 +8,7 @@ public:
 
 
    STRLANGMAP *                     m_pmap;
-   string_map < STRLANGMAP >        m_pomap;
+   string_map < string_lang_map >   m_pomap;
    stringa                          m_straLang;
    string                           m_strLang;
    string_map < string_to_string >  m_text;

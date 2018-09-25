@@ -49,6 +49,7 @@ namespace win32
       virtual void on_command(UINT nID);
 
       int_ptr send_message(UINT uiMessage, WPARAM wparam = 0, LPARAM lparam = 0);
+      int_ptr send_message_w(UINT uiMessage, WPARAM wparam = 0, LPARAM lparam = 0);
       void post_message(UINT uiMessage, WPARAM wparam = 0, LPARAM lparam = 0);
 
 

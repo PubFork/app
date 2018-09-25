@@ -17,12 +17,16 @@ builtin_strlangmap::builtin_strlangmap(::aura::application * papp, STRLANGMAP * 
 
    int i = 0;
 
-   while (m_pmap[i].m_pszLang != NULL)
+   while (m_pmap[i].m_pszLanguageCode != NULL)
    {
 
-      m_straLang.add(m_pmap[i].m_pszLang);
+      m_straLang.add(m_pmap[i].m_pszLanguageCode);
 
-      m_pomap[m_pmap[i].m_pszLang] = m_pmap[i];
+      m_pomap[m_pmap[i].m_pszLanguageCode].m_iPo = m_pmap[i].m_iPo;
+
+      string strLanguageCode = m_pmap[i].m_pszLanguageCode;
+
+      m_pomap[m_pmap[i].m_pszLanguageCode].m_strLanguageCode = strLanguageCode;
 
       i++;
 
@@ -121,9 +125,12 @@ void builtin_strlangmap::_001FillCombo(HWND hwnd)
 
       }
 
-      string strText = m_pomap[m_straLang[i]].m_pszText;
+      string strText = _get_text(m_pomap[m_straLang[i]].m_strLanguageCode, "IDS_LANGUAGE");
 
-      comboLang.send_message(CB_ADDSTRING, 0, (LPARAM)strText.c_str());
+      wstring wstr(strText);
+
+      //comboLang.send_message(CB_ADDSTRING, 0, (LPARAM)wstr.c_str());
+      comboLang.send_message_w(CB_ADDSTRING, 0, (LPARAM)wstr.c_str());
 
    }
 
@@ -212,6 +219,7 @@ bool builtin_strlangmap::_load_text(string strLang)
    return true;
 
 }
+
 
 
 string builtin_strlangmap::_get_text(string strLang, string strId)

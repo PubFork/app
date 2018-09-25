@@ -6,13 +6,23 @@ typedef DEFER_INIT * PFN_DEFER_INIT;
 typedef int_bool DEFER_TERM();
 typedef DEFER_TERM * PFN_DEFER_TERM;
 
+
 class STRLANGMAP
 {
 public:
 
-   int m_iPo;
-   char * m_pszLang;
-   char * m_pszText;
+   int      m_iPo;
+   char *   m_pszLanguageCode;
+
+};
+
+
+class string_lang_map
+{
+public:
+
+   int      m_iPo;
+   string   m_strLanguageCode;
 
 };
 

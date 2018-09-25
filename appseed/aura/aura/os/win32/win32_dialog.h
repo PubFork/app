@@ -10,21 +10,19 @@ namespace win32
    {
    public:
 
-#ifdef WINDOWS
-      const char * m_pszResource;
-#endif
+
+      LPCWSTR m_pszResource;
+
 
       dialog();
-      dialog(::aura::application * papp, const char *pszResource);
+      dialog(::aura::application * papp, LPCWSTR pszResource);
       virtual ~dialog();
 
 
       bool create_dialog(window * pwindow = NULL);
 
-#ifdef _WIN32
       static INT_PTR CALLBACK DialogProc(HWND h, UINT u, WPARAM, LPARAM);
       virtual INT_PTR on_dialog_message(UINT uiMessage, WPARAM wparam, LPARAM lparam);
-#endif
 
       virtual bool on_init_dialog();
       virtual void on_close();

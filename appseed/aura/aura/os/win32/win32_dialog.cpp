@@ -12,7 +12,7 @@ namespace win32
    }
 
 
-   dialog::dialog(::aura::application * papp, const char * pszResource) :
+   dialog::dialog(::aura::application * papp, LPCWSTR pszResource) :
       ::object(papp),
       m_pszResource(pszResource)
    {
@@ -29,9 +29,13 @@ namespace win32
    bool dialog::create_dialog(window * pwnd)
    {
 
+      int i = GetThreadLocale();
+      SetThreadLocale(65001);
+      int i2 = GetThreadLocale();
 
-      CreateDialogParam(System.m_hinstance, m_pszResource,
-                        pwnd == NULL ? NULL : pwnd->m_hwnd, &DialogProc, (LPARAM)this);
+
+      CreateDialogParamW(System.m_hinstance, m_pszResource,
+                         pwnd == NULL ? NULL : pwnd->m_hwnd, &DialogProc, (LPARAM)this);
 
       return true;
 
@@ -40,7 +44,6 @@ namespace win32
 
 #ifdef WINDOWS
 
-#define GWL_USERDATA        (-21)
    INT_PTR CALLBACK dialog::DialogProc(HWND hwnd, UINT uiMessage, WPARAM wparam, LPARAM lparam)
    {
 
@@ -49,7 +52,7 @@ namespace win32
       if (uiMessage == WM_INITDIALOG)
       {
 
-         SetWindowLongPtr(hwnd, GWL_USERDATA, lparam);
+         SetWindowLongPtr(hwnd, GWLP_USERDATA, lparam);
 
          pdialog = (dialog *)lparam;
 

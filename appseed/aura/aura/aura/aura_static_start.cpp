@@ -204,6 +204,10 @@ namespace aura
 
 #ifdef WINDOWS
 
+         SetThreadLocale(65001);
+
+         SetConsoleOutputCP(65001);
+
          QueryPerformanceFrequency(&g_freq);
 
 #elif defined(__APPLE__)

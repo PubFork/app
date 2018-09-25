@@ -97,6 +97,8 @@ IDTHREAD get_current_thread_id()
 bool on_init_thread()
 {
 
+   SetThreadLocale(65001);
+
    attach_thread_input_to_main_thread();
 
    if(!__os_init_thread())

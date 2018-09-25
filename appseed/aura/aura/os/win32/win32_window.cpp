@@ -65,7 +65,7 @@ namespace win32
    void window::set_font(font & font)
    {
 
-      ::SendMessage(m_hwnd, WM_SETFONT, (WPARAM)font.get_os_data(), FALSE);
+      ::SendMessageW(m_hwnd, WM_SETFONT, (WPARAM)font.get_os_data(), FALSE);
 
    }
    void window::on_command(UINT nID)
@@ -82,9 +82,16 @@ namespace win32
    }
 
 
+   int_ptr window::send_message_w(UINT uiMessage, WPARAM wparam, LPARAM lparam)
+   {
+
+      return ::SendMessageW(m_hwnd, uiMessage, wparam, lparam);
+
+   }
+
    void window::post_message(UINT uiMessage, WPARAM wparam, LPARAM lparam)
    {
-      ::PostMessage(m_hwnd, uiMessage, wparam, lparam);
+      ::PostMessageW(m_hwnd, uiMessage, wparam, lparam);
    }
 
    void window::enable_window(bool bEnable)
