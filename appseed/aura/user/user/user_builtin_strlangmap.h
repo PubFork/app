@@ -1,6 +1,17 @@
 #pragma once
 
 
+class string_lang_map
+{
+public:
+
+   int      m_iPo;
+   string   m_strLanguageCode;
+
+};
+
+
+
 class CLASS_DECL_AURA builtin_strlangmap :
    virtual public ::object
 {

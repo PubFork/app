@@ -17,15 +17,6 @@ public:
 };
 
 
-class string_lang_map
-{
-public:
-
-   int      m_iPo;
-   string   m_strLanguageCode;
-
-};
-
 
 class node_data_exchange;
 
