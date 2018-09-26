@@ -62,7 +62,7 @@ namespace win32
       else
       {
 
-         pdialog = (dialog *)GetWindowLongPtr(hwnd, GWL_USERDATA);
+         pdialog = (dialog *)GetWindowLongPtr(hwnd, GWLP_USERDATA);
 
       }
 
