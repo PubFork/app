@@ -72,26 +72,30 @@ string builtin_strlangmap::get_current_language()
 bool builtin_strlangmap::set_current_language(index iSel)
 {
 
-   if (iSel >= 0 && iSel < System.m_pstrlangmap->m_straLang.get_count())
+   if (iSel < 0 || iSel >= System.m_pstrlangmap->m_straLang.get_count())
    {
 
-      string strLang = System.m_pstrlangmap->m_straLang[iSel];
+      return false;
 
-      if (strLang != System.m_pstrlangmap->m_strLang)
-      {
+   }
 
-         if (!set_current_language(strLang))
-         {
+   string strLang = System.m_pstrlangmap->m_straLang[iSel];
 
-            return false;
-
-         }
-
-      }
+   if (strLang == System.m_pstrlangmap->m_strLang)
+   {
 
       return true;
 
    }
+
+   if (!set_current_language(strLang))
+   {
+
+      return false;
+
+   }
+
+   return true;
 
 }
 
@@ -152,6 +156,7 @@ bool builtin_strlangmap::_load_text(string strLang)
    }
 
    auto & m = m_text[strLang];
+   auto & h = m_header[strLang];
 
 #ifdef WINDOWSEX
 
@@ -174,45 +179,175 @@ bool builtin_strlangmap::_load_text(string strLang)
 
    avoid_parsing_exception avoidParsingException;
 
+   int iStringCount = 0;
+
+   string strLine;
+
+   const char * psz = NULL;
+
+   const char * pszEnd = NULL;
+
+   string strName;
+
+   string str;
+
+   string strHeader;
+
    for (index i = 0; i < stra.get_count(); i++)
    {
-      string strLine = stra[i];
 
-      const char * psz = strLine;
-      const char * pszEnd = psz + strLine.get_length();
+      strLine = stra[i];
+
+      psz = strLine;
+
+      pszEnd = psz + strLine.get_length();
 
       ::str::consume_spaces(psz, 0, pszEnd);
+
+
       try
       {
-         if (iState == -1)
-         {
-            strMsgId = ::str::consume_nc_name(psz);
-            if (strMsgId == "msgid")
-            {
-               iState = 0;
-               ::str::consume_spaces(psz, 1, pszEnd);
-               strMsgId = ::str::consume_quoted_value_ex(psz, pszEnd);
-            }
-         }
-         else if (iState == 0)
-         {
-            strText = ::str::consume_nc_name(psz);
-            if (strText == "msgstr")
-            {
-               iState = -1;
-               ::str::consume_spaces(psz, 1, pszEnd);
-               strText = ::str::consume_quoted_value_ex(psz, pszEnd);
-               m[strMsgId] = strText;
-            }
 
+         strName = ::str::consume_nc_name(psz);
+
+         if (strName == "msgid")
+         {
+
+            iState = 0;
 
          }
+         else if(strName == "msgstr")
+         {
+
+            iState = -1;
+
+         }
+         else if (strName.is_empty())
+         {
+
+            iState = 1;
+
+         }
+
+         ::str::consume_spaces(psz, 1, pszEnd);
+
+         str = ::str::consume_quoted_value_ex(psz, pszEnd);
+
+         i++;
+
+         while (i < stra.get_count())
+         {
+
+            strLine = stra[i];
+
+            psz = strLine;
+
+            pszEnd = psz + strLine.get_length();
+
+            ::str::consume_spaces(psz, 0, pszEnd);
+
+            strName = ::str::consume_nc_name(psz);
+
+            if (strName.has_char())
+            {
+
+               i--;
+
+               break;
+
+            }
+
+            if (iStringCount == 0)
+            {
+
+               if (iStringCount <= 1)
+               {
+
+                  try
+                  {
+
+                     strHeader = ::str::consume_quoted_value_ex(psz, pszEnd);
+
+                     if (strHeader.has_char())
+                     {
+
+                        stringa stra;
+
+                        stra.explode(":", strHeader);
+
+                        h[stra[0]] = stra.slice(1).implode(":");
+
+                     }
+
+                  }
+                  catch (...)
+                  {
+
+                     if (iStringCount == 1)
+                     {
+
+                        iStringCount = 2;
+
+                     }
+                     else
+                     {
+
+
+                     }
+
+                  }
+
+               }
+
+
+            }
+            else
+            {
+
+               ::str::consume_spaces(psz, 0, pszEnd);
+
+               str += ::str::consume_quoted_value_ex(psz, pszEnd);
+
+            }
+
+            i++;
+
+         }
+
+         str.replace("\\n", "\n");
+
+         if (iState == 0)
+         {
+
+            strMsgId = str;
+
+         }
+         else if(iState == -1)
+         {
+
+            if (iStringCount > 0 || strMsgId.has_char() || strText.has_char())
+            {
+
+               m[strMsgId] = str;
+
+               iStringCount++;
+
+            }
+            else if(iStringCount <= 0)
+            {
+
+               iStringCount = 1;
+
+            }
+
+         }
+
       }
       catch (...)
       {
 
-
       }
+
    }
 
 

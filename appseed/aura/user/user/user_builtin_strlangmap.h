@@ -23,6 +23,7 @@ public:
    stringa                          m_straLang;
    string                           m_strLang;
    string_map < string_to_string >  m_text;
+   string_map < string_to_string >  m_header;
    string_to_string                 m_po;
 
 

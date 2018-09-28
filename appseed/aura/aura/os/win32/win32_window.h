@@ -31,13 +31,19 @@ namespace win32
       void set_font(font & font);
 
       template < typename WINDOW >
-      void get_dlg_item(WINDOW & w, int iItem)
+      void get_dlg_item(WINDOW & w, int iItem, string strText = "")
       {
 
          w.set_app(get_app());
          w.attach(::GetDlgItem(m_hwnd, iItem));
 
-         if (w.get_window_text().has_char())
+         if (strText.has_char())
+         {
+
+            w._set_window_text(strText);
+
+         }
+         else if (w.get_window_text().has_char())
          {
 
             w._set_window_text(_(w.get_window_text()));
