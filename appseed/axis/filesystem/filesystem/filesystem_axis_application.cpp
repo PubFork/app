@@ -317,6 +317,13 @@ namespace file
 
          ::file::file_sp pfile = m_papp->m_psystem->m_spfile->get_file(varFile,nOpenFlags,pfesp,m_papp);
 
+         if (pfile.is_null() && pfesp != NULL && pfesp->failed())
+         {
+
+            return NULL;
+
+         }
+
          if (pfile.is_set())
          {
 

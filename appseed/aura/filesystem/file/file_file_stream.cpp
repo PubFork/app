@@ -47,7 +47,7 @@ namespace file
          if (papp == NULL)
          {
 
-            m_spfile = canew(::file::stdio_file(lpszFileName, nOpenFlags | ::file::mode_read));
+            m_spfile = canew(::file::stdio_file(papp, lpszFileName, nOpenFlags | ::file::mode_read));
 
          }
          else

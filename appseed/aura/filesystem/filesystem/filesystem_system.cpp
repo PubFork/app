@@ -850,10 +850,12 @@ restart:
 
       ::file::file_sp spfile;
 
+      cres cres;
+
       try
       {
 
-         spfile = App(papp).file().get_file(varFile,::file::type_text | ::file::mode_read);
+         spfile = App(papp).file().get_file(varFile,::file::type_text | ::file::mode_read, &cres);
 
       }
       catch(...)
@@ -2728,7 +2730,19 @@ restart:
             }
             */
 
-            spfile = App(papp).alloc(System.type_info < ::file::file >());
+            if (nOpenFlags & ::file::type_text)
+            {
+
+               spfile = canew(::file::stdio_file(papp));
+
+            }
+            else
+            {
+
+               spfile = App(papp).alloc(System.type_info < ::file::file >());
+
+            }
+
 
             cres = spfile->open(strPath, nOpenFlags);
 

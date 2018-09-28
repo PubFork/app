@@ -374,6 +374,8 @@ public:
    inline void swap(iterator index1, iterator index2);
    //   inline void swap(const_iterator index1, const_iterator index2);
 
+   void set_all(const TYPE & t);
+
 
    void zero(index iStart = 0, ::count c = -1);
 
@@ -659,5 +661,4 @@ inline TYPE& operator%(index nIndex, array_base < TYPE, ARG_TYPE, ALLOCATOR > & 
    return a[nIndex % a.get_size()];
 
 }
-
 

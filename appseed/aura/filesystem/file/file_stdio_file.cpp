@@ -5,7 +5,8 @@ namespace file
 {
 
 
-   stdio_file::stdio_file()
+   stdio_file::stdio_file(::aura::application * papp) :
+      ::object(papp)
    {
 
       m_pfile = NULL;
@@ -13,7 +14,8 @@ namespace file
    }
 
 
-   stdio_file::stdio_file(const char * lpszFileName,UINT nOpenFlags)
+   stdio_file::stdio_file(::aura::application * papp, const char * lpszFileName,UINT nOpenFlags) :
+      ::object(papp)
    {
 
       m_pfile = NULL;
@@ -76,6 +78,13 @@ namespace file
       }
       else if(nOpenFlags & ::file::type_text)
       {
+
+      }
+
+      if (nOpenFlags & ::file::defer_create_directory)
+      {
+
+         Application.dir().mk(::file::path(lpszFileName).folder());
 
       }
 

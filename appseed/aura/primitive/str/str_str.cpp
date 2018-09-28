@@ -2346,6 +2346,54 @@ namespace str
       return true;
    }
 
+
+   bool is_natural(const char * psz)
+   {
+
+      string str(psz);
+
+      str.trim();
+
+      for (index i = 0; i < str.get_length(); i++)
+      {
+
+         if (!isdigit_dup(str[i]))
+         {
+
+            return false;
+
+         }
+
+      }
+
+      return true;
+
+   }
+
+
+   bool is_integer(const char * psz)
+   {
+
+      string str(psz);
+
+      str.trim();
+
+      if (::str::begins_eat_ci(str, "-") || ::str::begins_eat_ci(str, "+"))
+      {
+
+         return is_natural(str);
+
+      }
+      else
+      {
+
+         return is_natural(str);
+
+      }
+
+   }
+
+
    void consume(const char * & pszXml, const char * psz)
    {
 

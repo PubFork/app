@@ -156,6 +156,10 @@ public:
 
    class ::memory GetFormatV004();
    ::count remove_empty();
+   ::count remove_empty_end();
+   ::count remove_empty_begin();
+   ::count remove_empty_trimmed_end();
+   ::count remove_empty_trimmed_begin();
    index add_normal(const char * lpcsz);
    void trim_right(const char * pszChars);
    void trim_left(const char * pszChars);
@@ -2632,9 +2636,84 @@ template < class Type, class RawType >
    return count;
 }
 
+template < class Type, class RawType >
+::count string_array < Type, RawType > ::remove_empty_begin()
+{
+   ::count count = 0;
+   for (index i = 0; i < this->get_size();)
+   {
+      if (this->element_at(i).is_empty())
+      {
+         this->remove_at(i);
+         count++;
+      }
+      else
+      {
+         break;
+      }
+   }
+   return count;
+}
+
+template < class Type, class RawType >
+::count string_array < Type, RawType > ::remove_empty_end()
+{
+   ::count count = 0;
+   index i;
+   while((i = this->get_upper_bound()) >= 0)
+   {
+      if (this->element_at(i).is_empty())
+      {
+         this->remove_at(i);
+         count++;
+      }
+      else
+      {
+         break;
+      }
+   }
+   return count;
+}
 
 
+template < class Type, class RawType >
+::count string_array < Type, RawType > ::remove_empty_trimmed_begin()
+{
+   ::count count = 0;
+   for (index i = 0; i < this->get_size();)
+   {
+      if (this->element_at(i).trimmed().is_empty())
+      {
+         this->remove_at(i);
+         count++;
+      }
+      else
+      {
+         break;
+      }
+   }
+   return count;
+}
 
+template < class Type, class RawType >
+::count string_array < Type, RawType > ::remove_empty_trimmed_end()
+{
+   ::count count = 0;
+   index i;
+   while ((i = this->get_upper_bound()) >= 0)
+   {
+      if (this->element_at(i).trimmed().is_empty())
+      {
+         this->remove_at(i);
+         count++;
+      }
+      else
+      {
+         break;
+      }
+   }
+   return count;
+}
 
 
 template < class Type, class RawType >

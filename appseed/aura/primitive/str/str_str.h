@@ -278,6 +278,8 @@ namespace str
    CLASS_DECL_AURA  int32_t        get_escaped_char(const char * str, strsize pos, strsize &retPos);
    CLASS_DECL_AURA  bool           get_curly_content(const char * psz, string & str);
    CLASS_DECL_AURA  bool           is_simple_natural(const char * psz, strsize iCount = -1);
+   CLASS_DECL_AURA  bool           is_natural(const char * psz);
+   CLASS_DECL_AURA  bool           is_integer(const char * psz);
 
    CLASS_DECL_AURA string          to_lower(const char * psz);
    CLASS_DECL_AURA string          to_upper(const char * psz);
@@ -568,6 +570,6 @@ CLASS_DECL_AURA string normalize_wildcard_criteria(const string & strPattern);
 namespace stra
 {
 
-      CLASS_DECL_AURA stringa from_strdup(char ** ppParam);
+   CLASS_DECL_AURA stringa from_strdup(char ** ppParam);
 
 } // namespace stra

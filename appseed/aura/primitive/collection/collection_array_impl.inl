@@ -796,3 +796,19 @@ inline TYPE & array_base < TYPE, ARG_TYPE, ALLOCATOR >::middle(index index)
    return element_at(this->get_middle_index(index));
 
 }
+
+template < class TYPE, class ARG_TYPE, class ALLOCATOR >
+void  array_base < TYPE, ARG_TYPE, ALLOCATOR >::set_all(const TYPE & t)
+{
+
+   for (index i = 0; i < get_count(); i++)
+   {
+
+      m_pData[i] = t;
+
+   }
+
+}
+
+
+
