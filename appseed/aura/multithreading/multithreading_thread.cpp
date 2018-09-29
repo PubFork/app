@@ -986,7 +986,7 @@ void thread::wait_close_dependent_threads(const duration & duration)
 
       }
 
-      Sleep(200);
+      thread_sleep(200);
 
    }
 
