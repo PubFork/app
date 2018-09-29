@@ -5412,6 +5412,10 @@ restart:
    void dib::rotate(dib * pdib, double dAngle, double dScale)
    {
 
+      map();
+
+      pdib->map();
+
       i32 l = MAX(m_size.cx, m_size.cy);
 
       i32 jmax = MIN(l, m_size.cy / 2);
