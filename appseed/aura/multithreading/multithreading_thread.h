@@ -472,5 +472,7 @@ CLASS_DECL_AURA void set_thread_off(IDTHREAD id);
 
 
 CLASS_DECL_AURA bool thread_sleep(DWORD dwMillis);
+CLASS_DECL_AURA bool thread_pump_sleep(DWORD dwMillis);
+
 
 

@@ -986,7 +986,7 @@ void thread::wait_close_dependent_threads(const duration & duration)
 
       }
 
-      thread_sleep(200);
+      thread_pump_sleep(200);
 
    }
 
@@ -3594,21 +3594,76 @@ thread_ptra::~thread_ptra()
 CLASS_DECL_AURA bool thread_sleep(DWORD dwMillis)
 {
 
-   int iTenths = (dwMillis / 1000) * 10;
+   int iTenths = dwMillis / 100;
 
-   int iMillis = dwMillis % 1000;
+   int iMillis = dwMillis % 100;
 
    while(iTenths > 0)
    {
 
-      if(!::get_thread_run())
+      if (!::get_thread_run())
       {
 
          return false;
 
       }
 
+      iTenths--;
+
       Sleep(100);
+
+   }
+
+   Sleep(iMillis);
+
+   return ::get_thread_run();
+
+}
+
+
+CLASS_DECL_AURA bool thread_pump_sleep(DWORD dwMillis)
+{
+
+   int iTenths = dwMillis / 100;
+
+   int iMillis = dwMillis % 100;
+
+   while (true)
+   {
+
+      ::count cMessage = 0;
+
+      try
+      {
+
+         while (::get_thread() != NULL && ::get_thread()->has_message())
+         {
+
+            ::get_thread()->defer_pump_message();
+
+            cMessage++;
+
+         }
+
+      }
+      catch (...)
+      {
+
+      }
+
+      if (iTenths <= 0)
+      {
+
+         break;
+
+      }
+
+      if (cMessage <= 0)
+      {
+
+         Sleep(100);
+
+      }
 
       iTenths--;
 
