@@ -620,6 +620,10 @@ namespace aura
 
       virtual string __get_text(string str) override;
 
+
+      virtual void on_user_login(::fontopus::user * puser);
+
+
    };
 
 

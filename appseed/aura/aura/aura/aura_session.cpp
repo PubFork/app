@@ -1248,7 +1248,17 @@ namespace aura
    void session::on_user_login(::fontopus::user * puser)
    {
 
+      for (auto & papp : m_appptra)
+      {
 
+         if (papp.is_set())
+         {
+
+            papp->on_user_login(puser);
+
+         }
+
+      }
 
    }
 

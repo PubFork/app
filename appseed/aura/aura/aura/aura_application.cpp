@@ -2960,6 +2960,13 @@ run:
    }
 
 
+   void application::on_user_login(::fontopus::user * puser)
+   {
+
+
+   }
+
+
    bool application::initial_check_directrix()
    {
 
