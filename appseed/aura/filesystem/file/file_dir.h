@@ -55,6 +55,8 @@ namespace dir
    //CLASS_DECL_AURA ::file::path caconfig();
    CLASS_DECL_AURA ::file::path pathfind(const string & pszEnv, const string & pszTopic, const string & pszMode);
    CLASS_DECL_AURA ::file::path program_files_x86();
+   CLASS_DECL_AURA ::file::path program_files();
+   CLASS_DECL_AURA ::file::path program_data();
    CLASS_DECL_AURA ::file::path stage(string strAppId, string strPlatform, string strConfiguration);
    CLASS_DECL_AURA ::file::path sys_temp();
 } // namespace dir

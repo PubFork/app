@@ -697,13 +697,13 @@ CLASS_DECL_AURA::file::path dir::inplace_install(string strAppId, string strPlat
    if (strPlatform.compare_ci("win32") == 0 || strPlatform.compare_ci("x86") == 0)
    {
 
-      path = "C:\\Program Files (x86)\\";
+      path = ::dir::program_files_x86();
 
    }
    else
    {
 
-      path = "C:\\Program Files\\";
+      path = ::dir::program_files();
 
    }
 
@@ -757,11 +757,11 @@ CLASS_DECL_AURA::file::path dir::inplace_install(string strAppId, string strPlat
 
 #ifdef ANDROID
 
-	return ::dir::config();
+   return ::dir::config();
 
 #else
 
-	return ::file::app_module().folder(4);
+   return ::file::app_module().folder(4);
 
 #endif
 
@@ -1983,7 +1983,19 @@ void dir::ls_file(::file::patha & stra,const ::file::path & psz)
 
 #ifdef WINDOWSEX
 
+
 #include <Shlobj.h>
+
+
+namespace windows
+{
+
+
+   ::file::path get_known_folder(REFKNOWNFOLDERID kfid);
+
+
+} // namespace windows
+
 
 ::file::path dir::program_files_x86()
 {
@@ -2019,6 +2031,21 @@ void dir::ls_file(::file::patha & stra,const ::file::path & psz)
 }
 
 
+::file::path dir::program_files()
+{
+
+   return ::windows::get_known_folder(FOLDERID_ProgramFiles);
+
+}
+
+
+//::file::path dir::program_data()
+//{
+//
+//   return ::windows::get_known_folder(FOLDERID_ProgramData);
+//
+//}
+
 #else
 
 ::file::path dir::program_files_x86()
@@ -2031,6 +2058,28 @@ void dir::ls_file(::file::patha & stra,const ::file::path & psz)
 
 
 }
+
+::file::path dir::program_files()
+{
+
+
+   ::file::path p("/opt/ca2");
+
+   return p;
+
+
+}
+
+//::file::path dir::program_data()
+//{
+//
+//
+//   ::file::path p("/var/lib/ca2");
+//
+//   return p;
+//
+//
+//}
 
 
 #endif
