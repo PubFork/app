@@ -702,6 +702,8 @@ CLASS_DECL_AURA::file::path dir::inplace_install(string strAppId, string strPlat
    }
    else
    {
+      path = ::dir::program_files_x86();
+
 
       path = ::dir::program_files();
 
@@ -2034,7 +2036,34 @@ namespace windows
 ::file::path dir::program_files()
 {
 
-   return ::windows::get_known_folder(FOLDERID_ProgramFiles);
+   hwstring lpszModuleFolder(sizeof(unichar) * 8);
+
+   hwstring lpszModuleFilePath(sizeof(unichar) * 8);
+
+   wcscpy(lpszModuleFilePath, _wgetenv(L"PROGRAMW6432"));
+
+   if (wcslen(lpszModuleFilePath) == 0)
+   {
+
+      SHGetSpecialFolderPathW(
+      NULL,
+      lpszModuleFilePath,
+      CSIDL_PROGRAM_FILES,
+      FALSE);
+
+   }
+
+   if (lpszModuleFilePath[wcslen(lpszModuleFilePath) - 1] == '\\' || lpszModuleFilePath[wcslen(lpszModuleFilePath) - 1] == '/')
+   {
+
+      lpszModuleFilePath[wcslen(lpszModuleFilePath) - 1] = '\0';
+
+   }
+
+   wcscpy(lpszModuleFolder, lpszModuleFilePath);
+
+   return string(lpszModuleFolder);
+
 
 }
 
