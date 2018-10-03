@@ -1245,6 +1245,8 @@ namespace file
       void system::matter_ls(::aura::application * papp, const ::file::path & path, ::file::patha & stra)
       {
 
+         synch_lock sl(System.m_spmutexMatter);
+
          string strDir = matter(papp, path, true);
 
          if (m_bMatterFromHttpCache)

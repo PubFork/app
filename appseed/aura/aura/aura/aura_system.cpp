@@ -74,6 +74,8 @@ namespace aura
       ::thread(NULL)
    {
 
+      m_spmutexMatter = canew(mutex(papp, false, "Global\\ca2-appmatter"));
+
       m_pappcore = pappcore;
 
       if(papp == NULL)
@@ -622,7 +624,9 @@ namespace aura
 
       }
 
-      m_spdir->m_bMatterFromHttpCache = bMatterFromHttpCache;
+      //m_spdir->m_bMatterFromHttpCache = bMatterFromHttpCache;
+
+      m_spdir->m_bMatterFromHttpCache = true;
 
       ::file::dir::system::g_pthis = m_spdir;
 
@@ -2170,6 +2174,8 @@ RetryBuildNumber:
    ::file::path system::get_matter_cache_path(string strMatter)
    {
 
+      synch_lock sl(m_spmutexMatter);
+
       if (::str::begins_eat_ci(strMatter, "appmatter://"))
       {
 
@@ -2178,7 +2184,7 @@ RetryBuildNumber:
 
             ::file::path path = "https://server.ca2.cc/matter" / strMatter;
 
-            ::file::path pathCache = dir().cache() / strMatter;
+            ::file::path pathCache = ::dir::ca2config() / "appmatter" / strMatter;
 
             ::str::begins_eat_ci(strMatter, "appmatter://");
 

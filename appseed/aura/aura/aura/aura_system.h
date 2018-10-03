@@ -92,7 +92,7 @@ namespace aura
       sp(mutex)                                    m_spmutexUserAppData;
       sp(mutex)                                    m_spmutexSystemAppData;
 
-
+      sp(mutex)                                    m_spmutexMatter;
 
       mutex                                        m_mutexFactory;
 
