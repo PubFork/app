@@ -20,6 +20,8 @@ extern string_map < ::aura::PFN_GET_NEW_LIBRARY, ::aura::PFN_GET_NEW_LIBRARY  > 
 
 extern mutex * g_pmutexLibrary;
 
+CLASS_DECL_AURA mutex * g_pmutexGlobals = NULL;
+
 CLASS_DECL_AURA critical_section * g_pcsGlobal = NULL;
 
 bool g_bOutputDebugString = true;
@@ -248,6 +250,8 @@ namespace aura
          g_pplexheapallocarray = new plex_heap_alloc_array();
 
 #endif
+
+         g_pmutexGlobals = new mutex();
 
          g_pcsGlobal = new critical_section();
 
@@ -621,6 +625,8 @@ namespace aura
          del(s_pstringmanager);
 
          del(g_pcsGlobal);
+
+         del(g_pmutexGlobals);
 
          //::aura::del(g_pplexheapallocarray);
 

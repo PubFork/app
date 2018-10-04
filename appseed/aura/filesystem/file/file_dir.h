@@ -15,6 +15,7 @@ namespace dir
    CLASS_DECL_AURA ::file::path install();
    CLASS_DECL_AURA ::file::path default_install();
    CLASS_DECL_AURA ::file::path inplace_install(string strAppId, string strPlatform, string strConfiguration);
+   CLASS_DECL_AURA ::file::path inplace_matter_install(string strAppId, string strPlatform, string strConfiguration);
    CLASS_DECL_AURA ::file::path beforeca2();
    CLASS_DECL_AURA ::file::path module();
    CLASS_DECL_AURA ::file::path relative(::file::path path);

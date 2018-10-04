@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "aura/net/sockets/bsd/basic/sockets_ssl_context.h"
 #include <openssl/ssl.h>
 
+extern mutex * g_pmutexGlobals;
 
 namespace sockets
 {
@@ -174,20 +175,59 @@ namespace sockets
    }
 
 
-   map < int, int, DH *, DH * > g_dh;
+   map < int, int, DH *, DH * > * g_pmapdh = NULL;
+
+   map < int, int, DH *, DH * > * dh_map()
+   {
+
+      synch_lock sl(g_pmutexGlobals);
+
+      if (g_pmapdh == NULL)
+      {
+
+         g_pmapdh = new map < int, int, DH *, DH * >();
+
+      }
+
+      return g_pmapdh;
+
+   }
+
+
+   DH * get_dh(int keylength)
+   {
+
+      synch_lock sl(g_pmutexGlobals);
+
+      return dh_map()->operator[](keylength);
+
+   }
+
+
+   void set_dh(int keylength, DH * pdh)
+   {
+
+      synch_lock sl(g_pmutexGlobals);
+
+      dh_map()->operator[](keylength) = pdh;
+
+   }
+
 
    DH * tmp_dh_callback(SSL *ssl, int is_export, int keylength)
    {
+
       switch(keylength)
       {
       case 512:
       case 1024:
       case 2048:
       case 4096:
-         return g_dh[keylength];
-         break;
+         return get_dh(keylength);
       }
+
       return NULL;
+
    }
 
 
@@ -206,11 +246,6 @@ namespace sockets
 
       }
       InitializeContext(strId, m_strCat, "", TLS_server_method());
-
-
-      // SSL_CTX_set_min_proto_version(m_ssl_ctx, TLS1_VERSION);
-
-      //synch_lock sl(m_pmutexSslCtx);
 
       string strCipherList = m_strCipherList;
 
@@ -236,7 +271,7 @@ namespace sockets
 
             int keylength = ia[i];
 
-            if (g_dh[keylength] == NULL)
+            if (get_dh(keylength) == NULL)
             {
 
                string strTitle = ::file::path(m_strCat).name();
@@ -248,7 +283,6 @@ namespace sockets
 
                }
 
-
                string strFile = ::file::path(m_strCat).sibling(strTitle) + ".dh" + ::str::from(keylength) + ".pem";
 
                FILE * paramfile = fopen(strFile, "r");
@@ -258,7 +292,7 @@ namespace sockets
 
                   DH * pdh = PEM_read_DHparams(paramfile, NULL, NULL, NULL);
 
-                  g_dh[keylength] = pdh;
+                  set_dh(keylength, pdh);
 
                   fclose(paramfile);
 

@@ -739,6 +739,38 @@ CLASS_DECL_AURA::file::path dir::inplace_install(string strAppId, string strPlat
 
 }
 
+
+CLASS_DECL_AURA::file::path dir::inplace_matter_install(string strAppId, string strPlatform, string strConfiguration)
+{
+
+#ifdef WINDOWSEX
+
+   ::file::path path;
+
+   string strFolder;
+
+   strsize iFind = strAppId.find('/');
+
+   path = ::dir::ca2config();
+
+   path /= "appmatter";
+
+   return path;
+
+#elif defined(ANDROID)
+
+   return ::dir::config();
+
+#else
+
+   return ::file::app_module().folder(4);
+
+#endif
+
+
+}
+
+
 ::file::path dir::install()
 {
 
