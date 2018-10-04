@@ -74,18 +74,26 @@ namespace zip
 
    bool file::unzip_open(::file::file_sp pfile, int iBufferLevel)
    {
+
       if (iBufferLevel >= 2)
       {
-         m_pbuffile1 = new ::file::buffered_file(get_app(), pfile, 1024 * 32);
-         m_pbuffile2 = new ::file::buffered_file(get_app(), m_pbuffile1, 1024 * 32);
+
+         m_pbuffile1 = canew(::file::buffered_file(get_app(), pfile, 1024 * 32));
+
+         m_pbuffile2 = canew(::file::buffered_file(get_app(), m_pbuffile1, 1024 * 32));
+
       }
       else if (iBufferLevel == 1)
       {
+
          m_pbuffile1 = NULL;
-         m_pbuffile2 = new ::file::buffered_file(get_app(), pfile, 1024 * 32);
+
+         m_pbuffile2 = canew(::file::buffered_file(get_app(), pfile, 1024 * 32));
+
       }
       else
       {
+
          // good option if pfile is memory file?
          m_pbuffile2 = pfile;
 
@@ -106,34 +114,48 @@ namespace zip
 
    bool file::zip_open(const char * lpcwsz)
    {
+
       m_bOwnFile = true;
+
       ::file::file_sp spfile(allocer());
+
       try
       {
+
          if(spfile->open(lpcwsz, ::file::mode_read_write | ::file::type_binary | ::file::mode_create | ::file::defer_create_directory).failed())
          {
+
             return false;
+
          }
+
       }
       catch(exception::exception * pe)
       {
+
          pe->Delete();
+
          return false;
+
       }
       catch(...)
       {
+
          return false;
+
       }
+
       return zip_open(spfile);
+
    }
 
 
    bool file::zip_open(::file::file_sp pfile)
    {
 
-      m_pbuffile1 = new ::file::buffered_file(get_app(), pfile, 1024 * 256);
+      m_pbuffile1 = canew(::file::buffered_file(get_app(), pfile, 1024 * 256));
 
-      m_pbuffile2 = new ::file::buffered_file(get_app(), m_pbuffile1, 1024 * 256);
+      m_pbuffile2 = canew(::file::buffered_file(get_app(), m_pbuffile1, 1024 * 256));
 
       m_pbuffile2->seek_to_begin();
 
