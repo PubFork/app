@@ -624,9 +624,7 @@ namespace aura
 
       }
 
-      //m_spdir->m_bMatterFromHttpCache = bMatterFromHttpCache;
-
-      m_spdir->m_bMatterFromHttpCache = true;
+      m_spdir->m_bMatterFromHttpCache = bMatterFromHttpCache;
 
       ::file::dir::system::g_pthis = m_spdir;
 
