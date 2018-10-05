@@ -108,16 +108,11 @@ bool builtin_strlangmap::set_current_language(string strLang)
 }
 
 
-#ifdef WINDOWSEX
-
-void builtin_strlangmap::_001FillCombo(HWND hwnd)
+/// return selected language in the list
+index builtin_strlangmap::get_language_list(stringa & stra)
 {
 
-   ::win32::window comboLang;
-
-   comboLang.attach(hwnd);
-
-   int iSel = CB_ERR;
+   index iSel = -1;
 
    for (int i = 0; i < m_straLang.get_size(); i++)
    {
@@ -131,18 +126,16 @@ void builtin_strlangmap::_001FillCombo(HWND hwnd)
 
       string strText = _get_text(m_pomap[m_straLang[i]].m_strLanguageCode, "IDS_LANGUAGE");
 
-      wstring wstr(strText);
-
-      //comboLang.send_message(CB_ADDSTRING, 0, (LPARAM)wstr.c_str());
-      comboLang.send_message_w(CB_ADDSTRING, 0, (LPARAM)wstr.c_str());
+      stra.add(strText);
 
    }
 
-   comboLang.send_message(CB_SETCURSEL, iSel);
+   return iSel;
 
 }
 
-#endif
+
+
 
 
 bool builtin_strlangmap::_load_text(string strLang)
@@ -439,7 +432,7 @@ string load_pofile(int iId)
 string load_pofile(string strLang)
 {
 
-   ::file::path path = ::dir::module() / "po" / (strLang + ".po");
+   ::file::path path = ::aura::system::g_p->dir().module() / "po" / (strLang + ".po");
 
    return file_as_string_dup(path);
 

@@ -38,11 +38,9 @@ public:
    virtual bool set_current_language(string strLang);
    virtual bool set_current_language(index iSel);
 
-#ifdef WINDOWSEX
 
-   virtual void _001FillCombo(HWND hwnd);
+   virtual index get_language_list(stringa & stra);
 
-#endif
 
    virtual bool _load_text(string strLang);
    virtual string _get_text(string strLang, string str);

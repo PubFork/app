@@ -74,6 +74,9 @@ namespace win32
       void redraw_window();
 
       int_ptr get_combo_sel();
+      void set_combo_sel(index iSel);
+      void fill_combo(const stringa & stra);
+
    };
 
 

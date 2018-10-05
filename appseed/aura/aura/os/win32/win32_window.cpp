@@ -174,12 +174,37 @@ namespace win32
 
    }
 
+
    void window::show_window(int nCmdShow)
    {
 
       ::ShowWindow(m_hwnd, nCmdShow);
 
    }
+
+
+   void window::set_combo_sel(index iSel)
+   {
+
+      send_message(CB_SETCURSEL, iSel);
+
+   }
+
+
+   void window::fill_combo(const stringa & stra)
+   {
+
+      for (index i = 0; i < stra.get_size(); i++)
+      {
+
+         wstring wstr(stra[i]);
+
+         send_message_w(CB_ADDSTRING, 0, (LPARAM)wstr.c_str());
+
+      }
+
+   }
+
 
 } // namespace win32
 
