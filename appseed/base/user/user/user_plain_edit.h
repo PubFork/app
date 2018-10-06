@@ -45,7 +45,7 @@ namespace user
       array <error> m_errora;
       //WPARAM                        m_dwLastKeyWparam;
       //LPARAM                        m_dwLastKeyLparam;
-      ::message::key                m_keymessageLast;
+      sp(::message::key)            m_pmessagekeyLast;
       //size                          m_sizeTotal;
 
       string                        m_strEmtpyText;
@@ -54,7 +54,6 @@ namespace user
       bool                          m_bCalcLayoutHintNoTextChange;
 
       int                           m_iTabWidth;
-      bool                          m_bKeyPressed;
       bool                          m_bColorerTake5;
       index                         m_iLineStart;
       index                         m_iLineEnd;

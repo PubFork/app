@@ -27,6 +27,7 @@ namespace macos
       bool                             m_bNeedsUpdate;
       rect64                           m_rectLastOsPlacement;
       bool                             m_bEnabled;
+      tick                             m_tickLastRoundWindowDraw;
 
 
       interaction_impl();

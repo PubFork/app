@@ -25,89 +25,13 @@ namespace user
 
       macos::macos(::aura::application * papp) :
          ::object(papp),
-      m_evKey(papp),
-         //::thread(papp),
+         m_evKey(papp),
          ::user::shell::shell(papp),
          m_mutexQueue(papp)
       {
 
          defer_create_mutex();
-         //begin();
-
-         //SHGetImageList(SHIL_SMALL, IID_IImageList, m_pilSmall);
-         //SHGetImageList(SHIL_LARGE, IID_IImageList, m_pilLarge);
-         //SHGetImageList(SHIL_EXTRALARGE, IID_IImageList, m_pilExtraLarge);
-         //SHGetImageList(SHIL_JUMBO, IID_IImageList, m_pilJumbo);
-         /// SHGetMalloc(&m_pmalloc);
          
-         int iThreadCount = MAX(1, MIN(get_processor_count(), 3));
-
-         for (index i = 0; i < iThreadCount; i++)
-         {
-
-            m_threadaGetImage.add(fork([&]()
-            {
-
-               ::multithreading::set_priority(::multithreading::priority_highest);
-               run();
-
-            }));
-
-         }
-
-         
-         fork([&]()
-         {
-            
-            per_fork fork;
-            
-            
-            
-            
-            synch_lock sl(&m_mutexQueue);
-            
-            while (get_thread_run())
-            {
-               
-               if(m_keyptra.is_empty())
-               {
-                  
-                  sl.unlock();
-                  
-                  Sleep(100);
-                  
-               }
-               else
-               {
-                  
-                  image_key * pkey = m_keyptra.first();
-                  
-                  m_keyptra.remove_at(0);
-                  
-                  sl.unlock();
-                  
-                  int iImage = get_image(&fork, pkey->m_oswindow, *pkey, NULL, pkey->m_cr);
-                  
-                  {
-                     
-                     synch_lock s(m_pmutex);
-                     
-                     m_imagemap.set_at(*pkey, iImage);
-                     
-                  }
-                  
-                  delete pkey;
-                  
-               }
-               
-               sl.lock();
-               
-            }
-            
-            return 0;
-            
-         });
-
       }
 
       macos::~macos()
@@ -1145,101 +1069,7 @@ namespace user
 
       }
 
-      //int macos::run()
-      //{
-
-      //   // These images are the Shell standard extra-large icon size. This is typically 48x48, but the size can be customized by the user.
-
-      //   return 0;
-
-      //   while (this->get_thread_run())
-      //   {
-
-      //      if (!do_call())
-      //      {
-
-      //         Sleep(100);
-
-      //      }
-
-      //      try
-      //      {
-
-      //         {
-
-      //         restart:
-
-      //            {
-
-      //               synch_lock sl(m_pmutex);
-
-      //               for (auto & folder : m_mapFolder)
-      //               {
-
-      //                  if (get_tick_count() - folder.m_element2.m_dwStart > 30000)
-      //                  {
-
-      //                     m_mapFolder.remove_key(folder.m_element1);
-
-      //                     goto restart;
-
-      //                  }
-
-      //               }
-
-      //            }
-
-      //         }
-
-      //         //int i = 20;
-
-      //         //while (thread_get_run() && i >= 0)
-      //         //{
-
-      //         //   Sleep(500);
-
-      //         //   i--;
-
-      //         //}
-
-
-      //      }
-      //      catch (...)
-      //      {
-
-
-      //      }
-
-
-      //   }
-
-
-      //   return 0;
-
-      //}
-
-      //bool macos::do_call()
-      //{
-
-      //   if (m_callCurrent.m_bCall)
-      //   {
-
-      //      m_callCurrent.m_iImage = get_image(
-      //         m_callCurrent.m_oswindow,
-      //         m_callCurrent.m_imagekey,
-      //         m_callCurrent.m_lpcszExtra,
-      //         m_callCurrent.m_crBk);
-      //      m_callCurrent.m_bCall = false;
-      //      m_eventReady.SetEvent();
-
-      //      return true;
-
-      //   }
-
-      //   return false;
-
-      //}
-
+      
       int32_t macos::get_image(per_fork * pfork, oswindow oswindow, image_key imagekey, const unichar * lpcszExtra, COLORREF crBk)
       {
 
@@ -1460,8 +1290,10 @@ namespace user
 
       }
       
+      
       macos::per_fork::per_fork(bool bInit)
       {
+         
          if (bInit)
          {
 
@@ -1674,15 +1506,70 @@ namespace user
          }
 
       }
+      
+      
+      void macos::do_initialize()
+      {
+         
+         on_update_sizes_interest();
+         
+         fork([&]()
+              {
+                 
+                 per_fork fork;
+                 
+                 synch_lock sl(&m_mutexQueue);
+                 
+                 while (get_thread_run())
+                 {
+                    
+                    if(m_keyptra.is_empty())
+                    {
+                       
+                       sl.unlock();
+                       
+                       Sleep(100);
+                       
+                    }
+                    else
+                    {
+                       
+                       image_key * pkey = m_keyptra.first();
+                       
+                       m_keyptra.remove_at(0);
+                       
+                       sl.unlock();
+                       
+                       int iImage = get_image(&fork, pkey->m_oswindow, *pkey, NULL, pkey->m_cr);
+                       
+                       {
+                          
+                          synch_lock s(m_pmutex);
+                          
+                          m_imagemap.set_at(*pkey, iImage);
+                          
+                       }
+                       
+                       delete pkey;
+                       
+                    }
+                    
+                    sl.lock();
+                    
+                 }
+                 
+                 return 0;
+                 
+              });
+
+         
+      }
+      
 
    } // namespace shell
 
 
 } // namespace user
-
-
-
-
 
 
 

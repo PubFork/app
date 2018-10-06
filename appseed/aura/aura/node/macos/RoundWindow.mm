@@ -321,6 +321,13 @@ NSWindow * get_os_window_ns_window(oswindow hwnd);
    try
    {
       
+      if(m_pwindow == NULL)
+      {
+         
+         return;
+         
+      }
+      
       m_pwindow->round_window_on_show();
 
    }

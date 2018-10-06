@@ -25,7 +25,6 @@ namespace multimedia
          m_mmr                = ::multimedia::result_success;
          m_peffect            = NULL;
          m_bDone              = false;
-         m_eventRunning.ResetEvent();
 
       }
 
@@ -334,7 +333,7 @@ namespace multimedia
 
          wave_out_get_buffer()->PCMOutOpen(this, iBufferSize, iBufferCount, 64, m_pwaveformat, m_pwaveformat);
 
-         m_pprebuffer->open(this, m_pwaveformat->nChannels, iBufferCount, iBufferSampleCount);
+         m_pprebuffer->open( m_pwaveformat->nChannels, iBufferCount, iBufferSampleCount);
 
          m_estate = state_opened;
 
@@ -418,7 +417,7 @@ namespace multimedia
       }
 
 
-      void wave_out::wave_out_buffer_ready(index iBuffer)
+      void wave_out::wave_out_filled(index iBuffer)
       {
 
          if(wave_out_get_state() != state_playing)
@@ -447,13 +446,13 @@ namespace multimedia
 
          status = AudioQueueEnqueueBuffer(m_Queue, buf, 0, NULL);
 
-         if(status != 0)
+         if(status == 0)
          {
 
-            m_iBufferedCount--;
+            m_iBufferedCount++;
 
          }
-
+         
       }
 
       ::multimedia::e_result wave_out::wave_out_stop()
@@ -467,8 +466,6 @@ namespace multimedia
             return ::multimedia::result_error;
 
          }
-
-         m_eventStopped.ResetEvent();
 
          m_estate = state_stopping;
 
@@ -539,33 +536,45 @@ namespace multimedia
 
          }
 
-         OSStatus statusPrime = AudioQueuePrime(m_Queue, 0, NULL);
-
-         m_mmr = translate(statusPrime);
-
-         ASSERT(m_mmr == ::multimedia::result_success);
-
-//         Sleep(500);
-
-         OSStatus statusStart = AudioQueueStart(m_Queue, NULL);
-
-         string strErrorString = apple_error_string(statusStart);
-
-         string strErrorDescription = apple_error_description(statusStart);
-
-         m_mmr = translate(statusStart);
-
-         ASSERT(m_mmr == ::multimedia::result_success);
-
-         if(m_mmr == ::multimedia::result_success)
-         {
-
-            m_estate = state_playing;
-
-         }
-
+         m_mmr = _wave_out_start();
+         
          return m_mmr;
 
+      }
+
+      
+      ::multimedia::e_result wave_out::_wave_out_start()
+      {
+         
+         single_lock sLock(m_pmutex, TRUE);
+         
+         OSStatus statusPrime = AudioQueuePrime(m_Queue, 0, NULL);
+         
+         m_mmr = translate(statusPrime);
+         
+         ASSERT(m_mmr == ::multimedia::result_success);
+         
+         //         Sleep(500);
+         
+         OSStatus statusStart = AudioQueueStart(m_Queue, NULL);
+         
+         string strErrorString = apple_error_string(statusStart);
+         
+         string strErrorDescription = apple_error_description(statusStart);
+         
+         m_mmr = translate(statusStart);
+         
+         ASSERT(m_mmr == ::multimedia::result_success);
+         
+         if(m_mmr == ::multimedia::result_success)
+         {
+            
+            m_estate = state_playing;
+            
+         }
+         
+         return m_mmr;
+         
       }
 
 
@@ -659,8 +668,6 @@ namespace multimedia
             delete peffect;
          }
 
-         m_eventStopped.SetEvent();
-
          m_pplayer->OnEvent(::multimedia::audio::wave_player::EventPlaybackEnd);
 
       }
@@ -697,7 +704,7 @@ namespace multimedia
 
          }
 
-         wave_out_out_buffer_done((int) iBuffer);
+         m_psynththread->post_message(message_free, iBuffer);
 
       }
 
@@ -737,9 +744,7 @@ namespace multimedia
 
          }
 
-         m_estate = state_paused;
-
-         m_mmr = wave_out_restart();
+         m_mmr = _wave_out_start();
 
          return m_mmr;
 

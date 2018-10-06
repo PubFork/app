@@ -516,7 +516,6 @@ DWORD fixKeyCode(DWORD keyCode, unichar keyChar, enum APPLE_KEYBOARD_TYPE type)
     
     //   [super drawRect:rect];
     
-    
     // return;
     
     BOOL bWindowVisible = [m_roundwindow isVisible];
@@ -529,27 +528,15 @@ DWORD fixKeyCode(DWORD keyCode, unichar keyChar, enum APPLE_KEYBOARD_TYPE type)
     
     double a = [m_roundwindow alphaValue];
     
-    
-    
-    
-    
     CGContextRef cgc1 = (CGContextRef) [[NSGraphicsContext currentContext] graphicsPort];
-    
     
     COLORREF cr = ARGB(255, 0, 0, 0);
     
-    
     CGContextSetBlendMode(cgc1, kCGBlendModeCopy);
-    
     
     CGContextSetRGBFillColor(cgc1, argb_get_r_value(cr) / 255.0f, argb_get_g_value(cr) / 255.0f, argb_get_b_value(cr) / 255.0f, argb_get_a_value(cr) / 255.0f);
     
-    
     CGContextFillRect(cgc1, rect);
-    
-    
-    
-    
     
     //   [[NSColor greenColor] set];
     
@@ -559,7 +546,10 @@ DWORD fixKeyCode(DWORD keyCode, unichar keyChar, enum APPLE_KEYBOARD_TYPE type)
     
     */
    
-   /* 	[[NSColor clearColor] set];
+   /*
+    
+    [[NSColor clearColor] set];
+    
     NSRectFill(rect);
     
     NSBezierPath * rectPath = [NSBezierPath bezierPathWithRect : [self bounds]];
@@ -612,8 +602,6 @@ DWORD fixKeyCode(DWORD keyCode, unichar keyChar, enum APPLE_KEYBOARD_TYPE type)
 - (void)drawRect:(NSRect)rect
 {
 
-   // [[self drawDebugRect] rect];
-  
    round_window * p = m_roundwindow->m_pwindow;
    
    if(p == NULL)
@@ -739,16 +727,17 @@ m_f = true; \
 - (void)keyDown:(NSEvent *)event
 {
 
-   //unsigned int uiKeyCode = event_key_code(event);
-   
    round_window * p = m_roundwindow->m_pwindow;
      
    if(p == NULL)
    {
       
-      // printf("key_down(0)\n");
+      return;
       
-      // [super keyUp:event];
+   }
+   
+   if(event.isARepeat)
+   {
       
       return;
       
@@ -766,13 +755,24 @@ m_f = true; \
    
    NSString * characters;
    
-   //bool bLCommand = [event modifierFlags] & (1 << 4);
-
-   //bool bRCommand = [event modifierFlags] & (1 << 5);
-      
    keyCode = [event keyCode];
    
    characters = [event charactersIgnoringModifiers];
+   
+   char sz[1024];
+   char szFormat[1024];
+
+   strcpy(sz, "");
+   strcat(sz, "\n");
+   strcat(sz, "\n");
+   strcat(sz, "-----------------------------------------------------------------------------\n");
+   sprintf(szFormat, "RoundWindowFrameView::keyDown : %s\n", [characters UTF8String]);
+   strcat(sz, szFormat);
+   strcat(sz, "-----------------------------------------------------------------------------\n");
+   strcat(sz, "\n");
+   strcat(sz, "\n");
+
+   printf("%s", sz);
    
    if ([characters length] > 0)
    {
@@ -791,18 +791,12 @@ m_f = true; \
    
    bool bRet = p->round_window_key_down(vkcode, scancode);
    
-   printf("key_down : %d\n", bRet ? 1 : 0);
-   
-   // [super keyDown:event];
-   
 }
 
 
 - (void)keyUp:(NSEvent *)event
 {
    
-   //unsigned int uiKeyCode = event_key_code(event);
-
    DWORD keyCode;
    
    DWORD keyFlags = 0;
@@ -820,25 +814,28 @@ m_f = true; \
    if(p == NULL)
    {
       
-      //printf("key_up(0)\n");
-      
-      //[super keyUp:event];
-
       return;
       
    }
    
-   //bool bLCommand = [event modifierFlags] & (1 << 4);
-   
-   //bool bRCommand = [event modifierFlags] & (1 << 5);
-      
-   //DO_FLAG(m_bLCommand, p, bLCommand, 2031)
-   
-   //DO_FLAG(m_bRCommand, p, bRCommand, 2033)
-   
    keyCode = [event keyCode];
    
    characters = [event charactersIgnoringModifiers];
+   
+   char sz[1024];
+   char szFormat[1024];
+   
+   strcpy(sz, "");
+   strcat(sz, "\n");
+   strcat(sz, "\n");
+   strcat(sz, "-----------------------------------------------------------------------------\n");
+   sprintf(szFormat, "RoundWindowFrameView::keyUp : %s\n", [characters UTF8String]);
+   strcat(sz, szFormat);
+   strcat(sz, "-----------------------------------------------------------------------------\n");
+   strcat(sz, "\n");
+   strcat(sz, "\n");
+   
+   printf("%s", sz);
    
    if ([characters length] > 0)
    {
@@ -857,10 +854,6 @@ m_f = true; \
    
    bool bRet = p->round_window_key_up(vkcode, scancode);
 
-   printf("key_down : %d\n", bRet ? 1 : 0);
-   
-   // [super keyUp:event];
-   
 }
 
 

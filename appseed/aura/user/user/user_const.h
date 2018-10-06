@@ -341,7 +341,8 @@ namespace user
       timer_command_probe = 11225,
       timer_menu,
       timer_overflow_scrolling,
-
+      timer_key_repeat_start,
+      timer_key_repeat
    };
 
 

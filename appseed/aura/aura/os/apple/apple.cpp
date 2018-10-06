@@ -261,10 +261,15 @@ bool __node_further_file_is_equal(file::path const & p1 , file::path const & p2)
    }
    
    //return ::str::from_strdup(ns_realpath(path));
-
-   return realpath(path);
    
+   char sz[4096];
+   
+   ZERO(sz);
+
+   return realpath(path, sz);
+  
 }
+  
 
 
 i64 oswindow_id(oswindow w)

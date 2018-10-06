@@ -311,7 +311,7 @@ namespace base
          return false;
 
       sp(::user::message) pmessage    = canew(::user::message);
-
+      
 #if MEMDLEAK
 
       ::aura::application * papp = this;

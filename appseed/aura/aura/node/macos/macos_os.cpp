@@ -773,18 +773,16 @@ namespace macos
        */
    }
 
+   
    bool os::resolve_link(string & strTarget, string & strFolder, string & strParams, const string & strSource, ::user::primitive * puiMessageParentOptional)
    {
 
-//      _throw(not_implemented(get_app()));
-      
-      strTarget = __node_full_file_path(strSource);
+      strTarget = node_full_file_path(strSource);
       
       return true;
 
-      //      return vfxResolveShortcut(strTarget, pszSource, puiMessageParentOptional);
-
    }
+   
 
    void os::raise_exception( DWORD dwExceptionCode, DWORD dwExceptionFlags)
    {
@@ -1121,12 +1119,12 @@ namespace macos
       
       path = System.defer_process_path(path, papp);
       
-      ns_main_async(^()
-                    {
+      ns_main_async(^
+      {
       
-      ns_open_file(path.c_str());
+         ns_open_file(path.c_str());
                        
-                    });
+      });
       
       return true;
       

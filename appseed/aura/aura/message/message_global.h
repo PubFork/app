@@ -4,7 +4,7 @@
 enum e_message
 {
 
-   message_view_update = WM_USER + 8000,
+   message_view_update = WM_USER + 18000,
    message_system,
    message_desk,
    message_display_change,
@@ -12,6 +12,7 @@ enum e_message
    message_event,
    message_simple_command,
    message_set_schema,
+   message_post_user,
 
 };
 

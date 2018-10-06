@@ -198,8 +198,7 @@ namespace aura
       virtual string fontopus_get_cred(::aura::application * papp, const string & strRequestUrl, const RECT & rect, string & strUsername, string & strPassword, string strToken, string strTitle, bool bInteractive, ::user::interactive * pinteractive = NULL) override;
 
 
-      virtual void on_user_login(::fontopus::user * puser);
-
+      virtual void on_user_login(::fontopus::user * puser) override;
 
 
       virtual void on_request(::create * pcreate) override;

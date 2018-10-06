@@ -1638,6 +1638,8 @@
 		9A706D7D1FFE62FA00A78618 /* RoundWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A706D751FFE62F900A78618 /* RoundWindow.h */; };
 		9A706D801FFE62FA00A78618 /* round_window.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A706D781FFE62FA00A78618 /* round_window.h */; };
 		9A7B32332168518B004AD1E9 /* aura_runnable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A7B322E2168518A004AD1E9 /* aura_runnable.cpp */; };
+		9A7B33B12168649A004AD1E9 /* compress_zip_is_dir.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A7B33AB21686498004AD1E9 /* compress_zip_is_dir.h */; };
+		9A7B33B22168649A004AD1E9 /* compress_zip_is_dir.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A7B33B021686499004AD1E9 /* compress_zip_is_dir.cpp */; };
 		9A801868213E544700493D55 /* str_bstring.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AB169CC212230F900E84DDF /* str_bstring.cpp */; };
 		9A801870213E62ED00493D55 /* NSString+SymlinksAndAliases.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9AEDECE1212C486900952A06 /* NSString+SymlinksAndAliases.mm */; };
 		9A8087471DE1021A00F70A07 /* ios_library.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A8087451DE0FF3000F70A07 /* ios_library.cpp */; };
@@ -3799,6 +3801,8 @@
 		9A706D771FFE62FA00A78618 /* RoundViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = RoundViewController.mm; path = ios/RoundViewController.mm; sourceTree = "<group>"; };
 		9A706D781FFE62FA00A78618 /* round_window.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = round_window.h; path = ios/round_window.h; sourceTree = "<group>"; };
 		9A7B322E2168518A004AD1E9 /* aura_runnable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = aura_runnable.cpp; sourceTree = "<group>"; };
+		9A7B33AB21686498004AD1E9 /* compress_zip_is_dir.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = compress_zip_is_dir.h; sourceTree = "<group>"; };
+		9A7B33B021686499004AD1E9 /* compress_zip_is_dir.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = compress_zip_is_dir.cpp; sourceTree = "<group>"; };
 		9A8087451DE0FF3000F70A07 /* ios_library.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ios_library.cpp; sourceTree = "<group>"; };
 		9A813B4E2041ADCF00646A4C /* linux */ = {isa = PBXFileReference; lastKnownFileType = folder; path = linux; sourceTree = "<group>"; };
 		9A813B542041AEB100646A4C /* linux_process.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = linux_process.cpp; sourceTree = "<group>"; };
@@ -5089,6 +5093,8 @@
 		9A0254891EA59238003C82CF /* compress */ = {
 			isa = PBXGroup;
 			children = (
+				9A7B33B021686499004AD1E9 /* compress_zip_is_dir.cpp */,
+				9A7B33AB21686498004AD1E9 /* compress_zip_is_dir.h */,
 				9A02548B1EA59238003C82CF /* bsdiff */,
 				9A0254A81EA59238003C82CF /* zip */,
 				9A0254EB1EA5927C003C82CF /* compress_bz.cpp */,
@@ -7479,6 +7485,7 @@
 				9A6FAEFF1F5C77F800AF31B2 /* all.h in Headers */,
 				07B0950918495C2B007A0560 /* comparison_var_strict.h in Headers */,
 				9A6FB1A41F5C9FF700AF31B2 /* webserver_http_response.h in Headers */,
+				9A7B33B12168649A004AD1E9 /* compress_zip_is_dir.h in Headers */,
 				9A16423719C4A4CE00966C5E /* exception_system.h in Headers */,
 				9AF4C31C1F836F8300197385 /* aura_app_launcher.h in Headers */,
 				9A41733E20004E7A0056265A /* rsa.h in Headers */,
@@ -9353,6 +9360,7 @@
 				9A6FB0421F5C79CF00AF31B2 /* file_file_base.cpp in Sources */,
 				9A34F5D31E15763000AE2607 /* mmos.mm in Sources */,
 				9A6FAF181F5C783900AF31B2 /* net_port_forward.cpp in Sources */,
+				9A7B33B22168649A004AD1E9 /* compress_zip_is_dir.cpp in Sources */,
 				9A6FACA91F5C719700AF31B2 /* cross_windows_shared_memory.cpp in Sources */,
 				9AD186371F9C2983001CEA8E /* visual_image_list.cpp in Sources */,
 				9A6FABC41F5C70BE00AF31B2 /* exception_base.cpp in Sources */,

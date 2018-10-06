@@ -1,5 +1,4 @@
-		#include "framework.h" // from "base/user/user.h"
-//#include "base/user/user.h"
+#include "framework.h"
 
 
 namespace user
@@ -12,15 +11,12 @@ namespace user
       try
       {
          
-         if(m_uiMessage == MESSAGE_POST_MESSAGE &&
-            m_wparam == 1)
+         if(m_uiMessage == message_post_user && m_wparam == 1)
          {
             
             sp(::message::base) pbase(m_lparam);
             
-            
             return m_pui->send(pbase);
-            
             
          }
 
@@ -35,13 +31,19 @@ namespace user
       return 0;
 
    }
+   
 
    UINT message::ThreadProcSendMessage(LPVOID lp)
    {
+      
       message * pmessage = (message *) lp;
+      
       pmessage->send();
+      
       delete pmessage;
+      
       return 0;
+      
    }
 
    void message::post(sp(::user::interaction) puie, UINT uiMessage, WPARAM wparam, LPARAM lparam, int32_t epriority)

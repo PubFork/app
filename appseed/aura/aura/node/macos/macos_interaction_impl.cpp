@@ -1075,6 +1075,12 @@ namespace macos
          {
             try
             {
+               if(Session.is_key_pressed(pkey->m_ekey))
+               {
+                  
+                  return;
+                  
+               }
                Session.set_key_pressed(pkey->m_ekey, true);
             }
             catch (...)
@@ -4459,53 +4465,21 @@ namespace macos
 
    void interaction_impl::round_window_draw(CGContextRef cgc)
    {
+      
+      tick tickNow = tick::now();
+      
+      tick tickEllapsed = tickNow - m_tickLastRoundWindowDraw;
+      
+      if(tickEllapsed.m_ui < 12)
+      {
+
+         output_debug_string("\n\nwarning: round_window_draw more than 80FPS!!! Ellapsed: " + str::from(tickEllapsed.m_ui) + "ms.\n\n");
+         
+      }
+      
+      m_tickLastRoundWindowDraw = tickNow;
 
       round_window_draw_life_time roundwindowdrawlifetime(this);
-
-      uint64_t delta = m_uiLastUpdateBeg - m_uiLastUpdateEnd;
-
-      delta /= 1000 * 1000;
-
-      if(delta < 10)
-      {
-
-         output_debug_string("round_window_draw less than 10\n");
-
-      }
-      else if(delta < 20)
-      {
-
-         output_debug_string("round_window_draw less than 20\n");
-
-      }
-      else if(delta < 50)
-      {
-
-         output_debug_string("round_window_draw less than 20\n");
-
-      }
-      else if(delta < 100)
-      {
-
-         output_debug_string("round_window_draw less than 100\n");
-
-      }
-
-
-      if (m_bUpdateGraphics)
-      {
-
-         update_graphics_resources();
-
-      }
-
-//      if(m_bOfflineRender)
-//      {
-//
-//         return;
-//
-//      }
-
 
       cslock slDisplay(cs_display());
 
@@ -4571,7 +4545,7 @@ namespace macos
 
       }
 
-      m_pui->post(spbase);
+      m_pui->send(spbase);
 
       return spbase->m_bRet;
 
@@ -4598,7 +4572,7 @@ namespace macos
 
       }
 
-      m_pui->post(spbase);
+      m_pui->send(spbase);
 
       return spbase->m_bRet;
 
@@ -4625,7 +4599,7 @@ namespace macos
 
       }
 
-      m_pui->post(spbase);
+      m_pui->send(spbase);
 
       return spbase->m_bRet;
 
@@ -4652,7 +4626,7 @@ namespace macos
 
       }
 
-      m_pui->post(spbase);
+      m_pui->send(spbase);
 
       return spbase->m_bRet;
 
@@ -4739,7 +4713,7 @@ namespace macos
 
          }
 
-         m_pui->post(spbase);
+         m_pui->send(spbase);
 
       }
 
@@ -4779,7 +4753,7 @@ namespace macos
 
       }
 
-      m_pui->post(spbase);
+      m_pui->send(spbase);
 
    }
 
@@ -4817,7 +4791,7 @@ namespace macos
 
       }
 
-      m_pui->post(spbase);
+      m_pui->send(spbase);
 
    }
 
@@ -4859,7 +4833,7 @@ namespace macos
 
       }
 
-      m_pui->post(spbase);
+      m_pui->send(spbase);
 
    }
 
@@ -4901,7 +4875,7 @@ namespace macos
 
       }
 
-      m_pui->post(spbase);
+      m_pui->send(spbase);
 
    }
 
@@ -4934,7 +4908,7 @@ namespace macos
 
          }
 
-         m_pui->post(spbase);
+         m_pui->send(spbase);
 
       }
 

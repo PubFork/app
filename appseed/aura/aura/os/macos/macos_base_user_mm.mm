@@ -157,7 +157,7 @@ WINBOOL move_nswindow(oswindow hwnd, int x, int y)
    
 //   printf("\nmove nswindow (%f, %f)", point.x, point.y);
    
-   ns_main_sync(^
+   ns_main_async(^
               {
                         
                  [hwnd->window() setFrameTopLeftPoint : point];

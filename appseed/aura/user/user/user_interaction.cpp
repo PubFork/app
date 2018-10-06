@@ -2899,8 +2899,15 @@ restart:
    // handling
    bool interaction::post(::message::base * pbase)
    {
+      
+      if(pbase->m_id == WM_KEYDOWN)
+      {
+         
+         output_debug_string("::user::interaction::post WM_KEYDOWN");
+         
+      }
 
-      return post_message(MESSAGE_POST_MESSAGE, 1, pbase);
+      return post_message(message_post_user, 1, pbase);
 
    }
 
@@ -5111,6 +5118,13 @@ restart:
 
          return false;
 
+      }
+      
+      if(uiMessage == WM_KEYDOWN)
+      {
+         
+         output_debug_string("::user::interaction::post_message WM_KEYDOWN");
+         
       }
 
       return m_pimpl->post_message(uiMessage, wparam, lparam);

@@ -61,9 +61,14 @@ round_window::~round_window()
 void round_window::round_window_set_title(const char * pszTitle)
 {
    
+   ns_main_async(^
+                 {
+   
    NSString * str = [NSString stringWithUTF8String:pszTitle];
    
    [m_proundwindow setTitle:str];
+                    
+                 });
    
 }
 
@@ -71,9 +76,15 @@ void round_window::round_window_set_title(const char * pszTitle)
 void round_window::round_window_get_title(char * pszTitle, int iSize)
 {
    
-   NSString * str = [m_proundwindow title];
-   
-   strncpy(pszTitle, [str UTF8String], iSize);
+   ns_main_sync(^
+                {
+                   
+                  NSString * str = [m_proundwindow title];
+                  
+                  strncpy(pszTitle, [str UTF8String], iSize);
+                   
+                });
+                
    
 }
 

@@ -9,9 +9,11 @@
 #ifndef user_notify_icon_mm_h
 #define user_notify_icon_mm_h
 
+
 #import <Foundation/Foundation.h>
 #import <Cocoa/Cocoa.h>
 #import <ApplicationServices/ApplicationServices.h>
+
 
 class user_notify_icon_mm_bridge;
 
@@ -24,15 +26,15 @@ class user_notify_icon_mm_bridge;
    
    // http://stackoverflow.com/questions/3409985/how-to-create-a-menubar-application-for-mac
    // Flycut/AppController.h
-   NSMenu *jcMenu;
-   NSStatusItem *statusItem;
-   NSMutableArray * extraMenuItems;
-   NSMutableArray * extraMenuIds;
-   NSMenuItem *closeItem;
-   NSMenuItem *quitItem;
+   NSMenu *             m_menu;
+   NSStatusItem *       m_statusitem;
+   NSMutableArray *     m_menuitema;
+   NSMutableArray *     m_menuida;
+   
 }
-- (id)init:(NSString *)strIconFile bridge: (user_notify_icon_mm_bridge *) pbridge
-;
+
+- (id)init:(NSString *)strIconFile bridge: (user_notify_icon_mm_bridge *) pbridge;
+
 - (void)play:(NSString *)strIconFile;
 
 - (void) close;

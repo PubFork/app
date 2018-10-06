@@ -1,7 +1,5 @@
-#include "framework.h" // from "base/user/user.h"
+#include "framework.h"
 #include "aura/user/user/user_const.h"
-//#include "base/user/user.h"
-//include "aura/user/colorertake5/colorertake5.h"
 
 extern CLASS_DECL_AURA thread_int_ptr < DWORD_PTR > t_time1;
 
@@ -53,7 +51,9 @@ void _001AddPacks(string_to_string & base64map, string & str)
       {
 
          ::str::base64 & b64 = System.base64();
+         
          index iBase64 = iEncoding + 1;
+         
          for (; iBase64 < str.get_length(); iBase64++)
          {
 
@@ -107,7 +107,6 @@ namespace user
 
 
    plain_edit::plain_edit() :
-      m_keymessageLast(get_app()),
       m_pmemorygraphics(allocer())
    {
 
@@ -118,8 +117,7 @@ namespace user
 
    plain_edit::plain_edit(::aura::application * papp) :
       ::object(papp),
-      ::user::interaction(papp),
-      m_keymessageLast(papp)
+      ::user::interaction(papp)
    {
 
       plain_edit_common_construct();
@@ -129,14 +127,11 @@ namespace user
    plain_edit::~plain_edit()
    {
 
-      //::aura::del(m_pcolorereditor);
-
-      //::aura::del(m_plines);
-
       ::aura::del(m_pinternal);
 
    }
 
+   
    void plain_edit::plain_edit_common_construct()
    {
 
@@ -210,7 +205,6 @@ namespace user
       IGUI_MSG_LINK(WM_MOUSELEAVE, pinterface, this, &plain_edit::_001OnMouseLeave);
       IGUI_MSG_LINK(WM_KEYDOWN, pinterface, this, &plain_edit::_001OnKeyDown);
       IGUI_MSG_LINK(WM_KEYUP, pinterface, this, &plain_edit::_001OnKeyUp);
-      //IGUI_MSG_LINK(WM_CHAR,pinterface,this,&plain_edit::_001OnChar);
       IGUI_MSG_LINK(WM_UNICHAR, pinterface, this, &plain_edit::_001OnUniChar);
 
       IGUI_MSG_LINK(WM_SIZE, pinterface, this, &::user::plain_edit::_001OnSize);
@@ -222,11 +216,6 @@ namespace user
       IGUI_MSG_LINK(WM_VSCROLL, pinterface, this, &::user::plain_edit::_001OnVScroll);
       IGUI_MSG_LINK(WM_HSCROLL, pinterface, this, &::user::plain_edit::_001OnHScroll);
 
-
-      //connect_command_probe("edit_undo", &plain_edit::_001OnUpdateEditUndo);
-      //connect_command("edit_undo", &plain_edit::_001OnEditUndo);
-      //connect_command_probe("edit_redo", &plain_edit::_001OnUpdateEditRedo);
-      //connect_command("edit_redo", &plain_edit::_001OnEditRedo);
 
       connect_command_probe("edit_cut", &plain_edit::_001OnUpdateEditCut);
       connect_command("edit_cut", &plain_edit::_001OnEditCut);
@@ -730,24 +719,13 @@ namespace user
 
       SCAST_PTR(::message::create, pcreate, pobj);
 
-
       pcreate->previous();
 
-
-
-
 #if !defined(APPLE_IOS) && !defined(VSNORD)
+      
       Session.keyboard(); // trigger keyboard creationg
+      
 #endif
-
-      //if (m_bColorerTake5)
-      //{
-
-      //   ::colorertake5::base_editor * pcolorer = colorertake5();
-      //   pcolorer->colorertake5::base_editor::initialize(m_plines);
-      //   pcolorer->colorertake5::base_editor::setRegionMapper("rgb", "default");
-
-      //}
 
       if (m_ptree == NULL)
       {
@@ -771,7 +749,6 @@ namespace user
       }
 
       SetTimer(100, 100, NULL);
-
 
    }
 
@@ -943,12 +920,18 @@ namespace user
       }
       else if (ptimer->m_nIDEvent == 500 || ptimer->m_nIDEvent == 501)
       {
+         
          if (ptimer->m_nIDEvent == 500)
          {
+            
             KillTimer(500);
+            
             SetTimer(501, 300, NULL);
+            
          }
-         key_to_char(&m_keymessageLast);
+         
+         key_to_char(m_pmessagekeyLast);
+         
       }
 
    }
@@ -956,8 +939,6 @@ namespace user
 
    void plain_edit::_001OnKeyDown(::message::message * pmessage)
    {
-
-      //synch_lock sl(m_pmutex);
 
       {
 
@@ -1053,13 +1034,7 @@ namespace user
             if(!ev.m_bRet && ev.m_bOk)
             {
 
-               //sp(::user::interaction) pui = keyboard_get_next_focusable();
-
-               //if (pui != NULL)
-               // pui->keyboard_set_focus();
-
                keyboard_set_focus_next();
-
 
             }
 
@@ -1162,11 +1137,9 @@ namespace user
       }
 
 
-      m_keymessageLast = *pkey;
+      m_pmessagekeyLast = pkey;
 
-      m_bKeyPressed = true;
-
-      key_to_char(&m_keymessageLast);
+      key_to_char(m_pmessagekeyLast);
 
       pkey->m_bRet = true;
 
@@ -1175,54 +1148,39 @@ namespace user
 
    void plain_edit::_001OnKeyUp(::message::message * pobj)
    {
+      
       SCAST_PTR(::message::key, pkey, pobj);
+      
       if (pkey->m_ekey == ::user::key_return)
       {
+         
          if (Session.is_key_pressed(::user::key_control)
-               && Session.is_key_pressed(::user::key_alt))
+             && Session.is_key_pressed(::user::key_alt))
          {
+            
             pkey->m_bRet = false;
+            
             return;
+            
          }
+         
       }
       else if (pkey->m_ekey == ::user::key_alt)
       {
+         
          pkey->m_bRet = false;
+         
+         return;
+         
       }
-      m_bKeyPressed = false;
+      
    }
+   
 
    void plain_edit::pre_translate_message(::message::message * pobj)
    {
 
       ::user::control::pre_translate_message(pobj);
-
-      //SCAST_PTR(::message::base, pbase, pobj);
-
-      //if (pbase->m_id == WM_KEYDOWN)
-      //{
-
-      //   pbase->m_bRet = true;
-
-      //   _001OnKeyDown(pbase);
-
-      //}
-      //else if (pbase->m_id == WM_KEYUP)
-      //{
-
-      //   pbase->m_bRet = true;
-
-      //   _001OnKeyUp(pbase);
-
-      //}
-      //else if (pbase->m_id == WM_CHAR)
-      //{
-
-      //   pbase->m_bRet = true;
-
-      //   ::user::interaction::_001OnChar(pbase);
-
-      //}
 
    }
 
@@ -1296,8 +1254,6 @@ namespace user
          return;
 
       synch_lock sl(m_pmutex);
-
-
 
       file_size_t iSize = m_ptree->m_editfile.get_length();
 
@@ -5619,13 +5575,7 @@ finished_update:
    }
 
 
-
-
 } // namespace core
-
-
-
-
 
 
 
