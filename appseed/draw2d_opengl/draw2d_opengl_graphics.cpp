@@ -319,7 +319,7 @@ namespace draw2d_opengl
 
       //m_pgraphics->SetPageUnit(plusplus::UnitPixel);
 
-      //set_text_rendering_hint_hint(::draw2d::text_rendering_hint_anti_alias_grid_fit);
+      //set_text_rendering_hint(::draw2d::text_rendering_hint_anti_alias_grid_fit);
 
       //set_smooth_mode(::draw2d::smooth_mode_high);
 
@@ -380,7 +380,7 @@ namespace draw2d_opengl
 
          //m_pgraphics->SetPageUnit(plusplus::UnitPixel);
 
-         //set_text_rendering_hint_hint(::draw2d::text_rendering_hint_anti_alias_grid_fit);
+         //set_text_rendering_hint(::draw2d::text_rendering_hint_anti_alias_grid_fit);
 
          return hbitmap;
 
@@ -3050,7 +3050,7 @@ namespace draw2d_opengl
 
       //   m_pgraphics->SetPageUnit(plusplus::UnitPixel);
 
-      //   set_text_rendering_hint_hint(::draw2d::text_rendering_hint_anti_alias_grid_fit);
+      //   set_text_rendering_hint(::draw2d::text_rendering_hint_anti_alias_grid_fit);
 
       //   m_hdc = (HDC) hdc;
 
@@ -4860,7 +4860,7 @@ namespace draw2d_opengl
    }
 
 
-   void graphics::set_text_rendering_hint_hint(::draw2d::e_text_rendering_hint_hint etextrendering)
+   void graphics::set_text_rendering_hint(::draw2d::e_text_rendering_hint_hint etextrendering)
    {
       m_etextrenderinghint = etextrendering;
 

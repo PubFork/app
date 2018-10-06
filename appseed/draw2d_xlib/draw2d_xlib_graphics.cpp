@@ -330,7 +330,7 @@ namespace draw2d_xlib
 
       m_pdc->m_gc          = ::XCreateGC(m_pdc->m_pdisplay, m_pdc->m_drawable, GCBackground | GCFillRule, &values);
 
-      set_text_rendering_hint_hint(::draw2d::text_rendering_hint_anti_alias_grid_fit);
+      set_text_rendering_hint(::draw2d::text_rendering_hint_anti_alias_grid_fit);
 
       m_spbitmap = pbitmap;
 
@@ -372,7 +372,7 @@ namespace draw2d_xlib
 
             m_pgraphics = new Gdiplus::Graphics((Gdiplus::Bitmap *) m_spbitmap->get_os_data());
 
-            set_text_rendering_hint_hint(::draw2d::text_rendering_hint_anti_alias_grid_fit);
+            set_text_rendering_hint(::draw2d::text_rendering_hint_anti_alias_grid_fit);
 
             return hbitmap;
 
@@ -3342,7 +3342,7 @@ namespace draw2d_xlib
 
             m_pgraphics = new ::Gdiplus::Graphics(hdc);
 
-            set_text_rendering_hint_hint(::draw2d::text_rendering_hint_anti_alias_grid_fit);
+            set_text_rendering_hint(::draw2d::text_rendering_hint_anti_alias_grid_fit);
 
             m_hdc = hdc;
 
@@ -5072,7 +5072,7 @@ namespace draw2d_xlib
    }
 
 
-   void graphics::set_text_rendering_hint_hint(::draw2d::e_text_rendering_hint_hint etextrendering)
+   void graphics::set_text_rendering_hint(::draw2d::e_text_rendering_hint_hint etextrendering)
    {
       m_etextrenderinghint = etextrendering;
 

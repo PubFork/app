@@ -531,7 +531,7 @@ namespace draw2d_cairo
 
       m_pdc = cairo_create((cairo_surface_t *)pbitmap->get_os_data());
 
-      set_text_rendering_hint_hint(::draw2d::text_rendering_hint_anti_alias_grid_fit);
+      set_text_rendering_hint(::draw2d::text_rendering_hint_anti_alias_grid_fit);
 
       m_spbitmap = pbitmap;
 
@@ -5509,10 +5509,10 @@ namespace draw2d_cairo
    }
 
 
-   bool graphics::set_text_rendering_hint_hint(::draw2d::e_text_rendering_hint_hint etextrenderinghint)
+   bool graphics::set_text_rendering_hint(::draw2d::e_text_rendering_hint_hint etextrenderinghint)
    {
 
-      return ::draw2d::graphics::set_text_rendering_hint_hint(etextrenderinghint);
+      return ::draw2d::graphics::set_text_rendering_hint(etextrenderinghint);
 
    }
 

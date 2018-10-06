@@ -708,7 +708,7 @@ namespace user
 
 
 
-               pgraphics->set_text_rendering_hint_hint(::draw2d::text_rendering_hint_anti_alias);
+               pgraphics->set_text_rendering_hint(::draw2d::text_rendering_hint_anti_alias);
 
                appearance * pappearance = m_pworkset->get_appearance();
 

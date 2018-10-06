@@ -111,12 +111,16 @@ END_EXTERN_C
 #endif
 
 
-//BEGIN_EXTERN_C
-//
-//CLASS_DECL_AURA void set_command_line_dup(const char * psz);
-//CLASS_DECL_AURA void get_command_line_dup(char * psz, int iBuffer);
-//
-//END_EXTERN_C
+BEGIN_EXTERN_C
+
+
+CLASS_DECL_AURA void set_command_line_dup(const char * psz);
+
+CLASS_DECL_AURA void get_command_line_dup(char * psz, int iBuffer);
+
+
+END_EXTERN_C
+
 
 #ifdef __cplusplus
 

@@ -3228,7 +3228,7 @@ namespace draw2d_quartz2d
 
     m_pgraphics = new ::Gdiplus::Graphics(hdc);
 
-    set_text_rendering_hint_hint(::draw2d::text_rendering_hint_anti_alias_grid_fit);
+    set_text_rendering_hint(::draw2d::text_rendering_hint_anti_alias_grid_fit);
 
     m_hdc = hdc;
 

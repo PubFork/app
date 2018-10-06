@@ -198,7 +198,7 @@ namespace turboc
 
          m_dib->Fill(0,0,0,0);
 
-         m_dib->get_graphics()->set_text_rendering_hint_hint(::draw2d::text_rendering_hint_anti_alias);
+         m_dib->get_graphics()->set_text_rendering_hint(::draw2d::text_rendering_hint_anti_alias);
 
          m_dib->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_blend);
 
@@ -245,7 +245,7 @@ namespace turboc
 
       }
 
-      pgraphics->set_text_rendering_hint_hint(::draw2d::text_rendering_hint_anti_alias);
+      pgraphics->set_text_rendering_hint(::draw2d::text_rendering_hint_anti_alias);
 
       if(Session.savings().is_trying_to_save(::aura::resource_display_bandwidth))
       {

@@ -208,7 +208,7 @@ namespace turboc
 
             pgraphics->set_font(m_font);
 
-            pgraphics->set_text_rendering_hint_hint(::draw2d::text_rendering_hint_anti_alias);
+            pgraphics->set_text_rendering_hint(::draw2d::text_rendering_hint_anti_alias);
 
             class size size = pgraphics->GetTextExtent(strHelloMultiverse);
 
@@ -261,7 +261,7 @@ namespace turboc
 
          pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 
-         pgraphics->set_text_rendering_hint_hint(::draw2d::text_rendering_hint_anti_alias);
+         pgraphics->set_text_rendering_hint(::draw2d::text_rendering_hint_anti_alias);
 
          ::size size = pgraphics->GetTextExtent(strHelloMultiverse);
 
@@ -432,7 +432,7 @@ namespace turboc
 
       pgraphics->set_font(m_font);
 
-      pgraphics->set_text_rendering_hint_hint(::draw2d::text_rendering_hint_anti_alias);
+      pgraphics->set_text_rendering_hint(::draw2d::text_rendering_hint_anti_alias);
 
       class size size = pgraphics->GetTextExtent(strHelloMultiverse);
 
