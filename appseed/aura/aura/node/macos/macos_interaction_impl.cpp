@@ -4438,7 +4438,7 @@ namespace macos
    void interaction_impl::_001BaseWndInterfaceMap()
    {
 
-      Session.window_map().set((int_ptr)get_handle(), this);
+      System.window_map().set((int_ptr)get_handle(), this);
 
    }
 
@@ -4970,7 +4970,7 @@ namespace macos
 
          m_rectParentClient.move_to(pt);
 
-         m_rectParentClient.size(rect.size.width, rect.size.height);
+         m_rectParentClient.set_size(rect.size.width, rect.size.height);
 
          sz = m_rectParentClient.get_size();
 
@@ -5340,6 +5340,37 @@ namespace macos
       get_handle()->iconify();
 
    }
+   
+   
+   bool interaction_impl::has_focus()
+   {
+      
+      if(is_null(m_pui))
+      {
+       
+         return false;
+         
+      }
+      
+      return ::get_focus() == get_handle();
+      
+   }
+   
+   
+   bool interaction_impl::is_active()
+   {
+      
+      if(is_null(m_pui))
+      {
+         
+         return false;
+         
+      }
+      
+      return ::get_active_window() == get_handle();
+
+   }
+
 
 
 } // namespace macos

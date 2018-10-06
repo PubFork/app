@@ -221,157 +221,158 @@ namespace file
    ::file::file_sp application::get_file(var varFile, UINT nOpenFlags, cres * pfesp)
    {
 
+      return System.file().get_file(varFile, nOpenFlags, pfesp, m_papp);
 
-   return System.file().get_file(varFile, nOpenFlags, pfesp, m_papp);
-
-      if(pfesp != NULL)
-      {
-         ::release(pfesp->m_p);
-      }
-
-      ::cres cres;
-
-      ::file::file_sp spfile;
-
-      ::file::path strPath;
-
-      if (varFile.get_type() == var::type_element)
-      {
-
-         spfile = varFile.cast < ::file::file >();
-
-         if (spfile.is_set())
-            return spfile;
-
-      }
-      else if(varFile.get_type() == var::type_string)
-      {
-
-         strPath = varFile;
-
-         strPath = System.defer_process_path(strPath, get_app());
-
+//      if(pfesp != NULL)
+//      {
+//
+//         ::release(pfesp->m_p);
+//
+//      }
+//
+//      ::cres cres;
+//
+//      ::file::file_sp spfile;
+//
+//      ::file::path strPath;
+//
+//      if (varFile.get_type() == var::type_element)
+//      {
+//
+//         spfile = varFile.cast < ::file::file >();
+//
+//         if (spfile.is_set())
+//            return spfile;
+//
+//      }
+//      else if(varFile.get_type() == var::type_string)
+//      {
+//
+//         strPath = varFile;
+//
+//         strPath = System.defer_process_path(strPath, get_app());
+//
+////         strPath.trim("\"'");
+////
+////         if (strPath.begins_ci("appmatter://"))
+////         {
+////
+////            strPath = System.get_matter_cache_path(strPath);
+////
+////         }
+////
+////#ifndef METROWIN
+////
+////         if (::str::begins_eat_ci(strPath, "music://"))
+////         {
+////
+////            strPath = System.dir().music() / strPath;
+////
+////         }
+////
+////#endif
+//
+//      }
+//      else if(varFile.get_type() == var::type_stra)
+//      {
+//
+//         if(varFile.stra().get_count() > 0)
+//         {
+//
+//            strPath = varFile.stra()[0];
+//
+//         }
+//
 //         strPath.trim("\"'");
 //
-//         if (strPath.begins_ci("appmatter://"))
+//      }
+//      else if(varFile.get_type() == var::type_propset)
+//      {
+//
+//         if(varFile.has_property("url"))
 //         {
 //
-//            strPath = System.get_matter_cache_path(strPath);
+//            strPath = varFile["url"];
+//
+//            strPath.trim("\"'");
 //
 //         }
 //
-//#ifndef METROWIN
+//      }
 //
-//         if (::str::begins_eat_ci(strPath, "music://"))
+//      if(varFile.get_type() == var::type_propset && varFile.propset()["file"].cast < ::file::binary_file >() != NULL)
+//      {
+//
+//         spfile = varFile.propset()["file"].cast < ::file::binary_file >();
+//
+//      }
+//      //else if(::str::find_file_extension("zip:", strPath) >= 0)
+//      //{
+//
+//      //   /* xxx
+//      //   zip::InFile * pinfile = new zip::InFile(get_app());
+//
+//      //   if(pinfile != NULL)
+//      //   {
+//
+//      //      if(!pinfile->unzip_open(strPath, 0))
+//      //      {
+//
+//      //         delete pinfile;
+//
+//      //         pinfile = NULL;
+//
+//      //      }
+//
+//      //   }
+//
+//      //   spfile = pinfile;
+//
+//      //   */
+//
+//      //}
+//      else if(::str::begins_eat_ci(strPath, "matter://"))
+//      {
+//
+//         spfile = get_file(App(m_papp).dir().matter(strPath), nOpenFlags);
+//
+//      }
+//      else
+//      {
+//
+//         if(strPath.is_empty())
+//         {
+//            TRACE("::application::get_file file with empty name!!");
+//            return spfile;
+//         }
+//
+//         if((nOpenFlags & ::file::mode_create) == 0 && !exists(strPath))
+//         {
+//            TRACE("::application::file does not exist!! : \"%s\"", strPath);
+//            return spfile;
+//         }
+//
+//         spfile = Application.alloc(System.type_info < ::file::file > ());
+//
+//         cres = spfile->open(strPath,nOpenFlags);
+//
+//      }
+//
+//      if(cres.failed())
+//      {
+//
+//         spfile.release();
+//
+//         if(pfesp != NULL)
 //         {
 //
-//            strPath = System.dir().music() / strPath;
+//            *pfesp = cres;
 //
 //         }
 //
-//#endif
-
-      }
-      else if(varFile.get_type() == var::type_stra)
-      {
-
-         if(varFile.stra().get_count() > 0)
-         {
-
-            strPath = varFile.stra()[0];
-
-         }
-
-         strPath.trim("\"'");
-
-      }
-      else if(varFile.get_type() == var::type_propset)
-      {
-
-         if(varFile.has_property("url"))
-         {
-
-            strPath = varFile["url"];
-
-            strPath.trim("\"'");
-
-         }
-
-      }
-
-      if(varFile.get_type() == var::type_propset && varFile.propset()["file"].cast < ::file::binary_file >() != NULL)
-      {
-
-         spfile = varFile.propset()["file"].cast < ::file::binary_file >();
-
-      }
-      //else if(::str::find_file_extension("zip:", strPath) >= 0)
-      //{
-
-      //   /* xxx
-      //   zip::InFile * pinfile = new zip::InFile(get_app());
-
-      //   if(pinfile != NULL)
-      //   {
-
-      //      if(!pinfile->unzip_open(strPath, 0))
-      //      {
-
-      //         delete pinfile;
-
-      //         pinfile = NULL;
-
-      //      }
-
-      //   }
-
-      //   spfile = pinfile;
-
-      //   */
-
-      //}
-      else if(::str::begins_eat_ci(strPath, "matter://"))
-      {
-
-         spfile = get_file(App(m_papp).dir().matter(strPath), nOpenFlags);
-
-      }
-      else
-      {
-
-         if(strPath.is_empty())
-         {
-            TRACE("::application::get_file file with empty name!!");
-            return spfile;
-         }
-
-         if((nOpenFlags & ::file::mode_create) == 0 && !exists(strPath))
-         {
-            TRACE("::application::file does not exist!! : \"%s\"", strPath);
-            return spfile;
-         }
-
-         spfile = Application.alloc(System.type_info < ::file::file > ());
-
-         cres = spfile->open(strPath,nOpenFlags);
-
-      }
-
-      if(cres.failed())
-      {
-
-         spfile.release();
-
-         if(pfesp != NULL)
-         {
-
-            *pfesp = cres;
-
-         }
-
-      }
-
-      return spfile;
+//      }
+//
+//      return spfile;
 
    }
 

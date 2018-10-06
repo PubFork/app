@@ -30,7 +30,7 @@ public:
    virtual void notify_icon_destroy();
 
 
-   virtual int notification_extra_action_count() = 0;
+   virtual int notification_area_action_count() = 0;
    virtual void notification_area_action_info(char ** ppszName, char ** ppszId, char ** ppszLabel, char ** ppszAccelerator, char ** ppszDescription, int iIndex) = 0;
    virtual void notification_area_action(const char * pszId) = 0;
 

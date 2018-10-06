@@ -1637,6 +1637,7 @@
 		9A706D7B1FFE62FA00A78618 /* RoundWindowFrameView.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A706D731FFE62F800A78618 /* RoundWindowFrameView.h */; };
 		9A706D7D1FFE62FA00A78618 /* RoundWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A706D751FFE62F900A78618 /* RoundWindow.h */; };
 		9A706D801FFE62FA00A78618 /* round_window.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A706D781FFE62FA00A78618 /* round_window.h */; };
+		9A7B32332168518B004AD1E9 /* aura_runnable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A7B322E2168518A004AD1E9 /* aura_runnable.cpp */; };
 		9A801868213E544700493D55 /* str_bstring.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AB169CC212230F900E84DDF /* str_bstring.cpp */; };
 		9A801870213E62ED00493D55 /* NSString+SymlinksAndAliases.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9AEDECE1212C486900952A06 /* NSString+SymlinksAndAliases.mm */; };
 		9A8087471DE1021A00F70A07 /* ios_library.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A8087451DE0FF3000F70A07 /* ios_library.cpp */; };
@@ -2965,7 +2966,6 @@
 		9A16414819C4A4CE00966C5E /* xml_xmlite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xml_xmlite.h; sourceTree = "<group>"; };
 		9A16414A19C4A4CE00966C5E /* base_iosTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "base_iosTests-Info.plist"; sourceTree = "<group>"; };
 		9A16414B19C4A4CE00966C5E /* base_iosTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = base_iosTests.m; sourceTree = "<group>"; };
-		9A16414D19C4A4CE00966C5E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		9A16453819C4A56200966C5E /* math_complex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = math_complex.h; sourceTree = "<group>"; };
 		9A16453C19C4A56200966C5E /* math_mkint_c.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = math_mkint_c.h; sourceTree = "<group>"; };
 		9A16453E19C4A56200966C5E /* math_std_template.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = math_std_template.h; sourceTree = "<group>"; };
@@ -3798,6 +3798,7 @@
 		9A706D761FFE62F900A78618 /* round_window.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = round_window.mm; path = ios/round_window.mm; sourceTree = "<group>"; };
 		9A706D771FFE62FA00A78618 /* RoundViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = RoundViewController.mm; path = ios/RoundViewController.mm; sourceTree = "<group>"; };
 		9A706D781FFE62FA00A78618 /* round_window.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = round_window.h; path = ios/round_window.h; sourceTree = "<group>"; };
+		9A7B322E2168518A004AD1E9 /* aura_runnable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = aura_runnable.cpp; sourceTree = "<group>"; };
 		9A8087451DE0FF3000F70A07 /* ios_library.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ios_library.cpp; sourceTree = "<group>"; };
 		9A813B4E2041ADCF00646A4C /* linux */ = {isa = PBXFileReference; lastKnownFileType = folder; path = linux; sourceTree = "<group>"; };
 		9A813B542041AEB100646A4C /* linux_process.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = linux_process.cpp; sourceTree = "<group>"; };
@@ -5873,7 +5874,6 @@
 				9AE24D431904CEFE001AEFFB /* aura_iosTests.xctest */,
 				9A16414A19C4A4CE00966C5E /* base_iosTests-Info.plist */,
 				9A16414B19C4A4CE00966C5E /* base_iosTests.m */,
-				9A16414C19C4A4CE00966C5E /* InfoPlist.strings */,
 			);
 			path = aura_iosTests;
 			sourceTree = "<group>";
@@ -6775,6 +6775,7 @@
 		9AF4C2381F836F8200197385 /* aura */ = {
 			isa = PBXGroup;
 			children = (
+				9A7B322E2168518A004AD1E9 /* aura_runnable.cpp */,
 				9AF4C3091F836F8200197385 /* os_alloc */,
 				9AF4C2391F836F8200197385 /* aura.cpp */,
 				9AF4C23A1F836F8200197385 /* aura.h */,
@@ -8353,7 +8354,6 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
 				English,
 			);
 			mainGroup = CEA754B914411F2B007E04DE;
@@ -9132,6 +9132,7 @@
 				9A6FADAF1F5C768E00AF31B2 /* primitive_memory_container.cpp in Sources */,
 				9A6FAF2A1F5C785C00AF31B2 /* sockets_http_put_socket.cpp in Sources */,
 				9A6FAE861F5C775100AF31B2 /* data_tree_item.cpp in Sources */,
+				9A7B32332168518B004AD1E9 /* aura_runnable.cpp in Sources */,
 				9AF4C3171F836F8300197385 /* aura_allocate_system_heap.cpp in Sources */,
 				9A6FABC21F5C70BE00AF31B2 /* exception_archive_exception.cpp in Sources */,
 				9A6FAFBC1F5C796800AF31B2 /* multithreading_critical_section.cpp in Sources */,
@@ -9643,17 +9644,6 @@
 		};
 /* End PBXTargetDependency section */
 
-/* Begin PBXVariantGroup section */
-		9A16414C19C4A4CE00966C5E /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				9A16414D19C4A4CE00966C5E /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
-
 /* Begin XCBuildConfiguration section */
 		077A08091B4D7403001C85FF /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -9782,6 +9772,7 @@
 		CEA754D014411F2C007E04DE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_DEADCODE_DEADSTORES = YES;
 				CLANG_ANALYZER_GCD = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
@@ -9856,6 +9847,7 @@
 		CEA754D114411F2C007E04DE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_DEADCODE_DEADSTORES = YES;
 				CLANG_ANALYZER_GCD = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;

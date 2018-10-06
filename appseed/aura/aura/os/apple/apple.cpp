@@ -11,7 +11,7 @@
 #include "aura/aura/os/os.h"
 #include "aura/aura/os/os_os.h"
 
-char * ns_realpath(const char * pszPath);
+//char * ns_realpath(const char * pszPath);
 char * mm_ca2_command_line();
 
 
@@ -260,7 +260,9 @@ bool __node_further_file_is_equal(file::path const & p1 , file::path const & p2)
       
    }
    
-   return ::str::from_strdup(ns_realpath(path));
+   //return ::str::from_strdup(ns_realpath(path));
+
+   return realpath(path);
    
 }
 

@@ -1,4 +1,4 @@
-﻿#include "framework.h"// from "base/user/user.h"
+#include "framework.h"// from "base/user/user.h"
 //#include "base/user/user.h"
 //#include "aura/user/colorertake5/colorertake5.h"
 
@@ -29,17 +29,12 @@ namespace simple_ui
    void password::_001OnDraw(::draw2d::graphics * pgraphics)
    {
 
-
-
-      //return;
-
-      pgraphics->set_text_rendering_hint_hint(::draw2d::text_rendering_hint_anti_alias);
+      pgraphics->set_text_rendering_hint(::draw2d::text_rendering_hint_anti_alias);
 
       COLORREF crBk;
       COLORREF crBkSel;
       COLORREF crSel;
       COLORREF cr;
-
 
       cr          = _001GetColor(::user::color_text);
       crBk        = _001GetColor(::user::color_background);

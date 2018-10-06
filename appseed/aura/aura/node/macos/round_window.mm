@@ -109,9 +109,14 @@ void round_window::round_window_destroy()
 void round_window::round_window_show()
 {
    
-   [[m_proundwindow->m_controller dd_invokeOnMainThreadAndWaitUntilDone:TRUE] showWindow : m_proundwindow];
-                        
-   [[m_proundwindow dd_invokeOnMainThreadAndWaitUntilDone:TRUE] windowDidExpose];
+   ns_main_async(^
+   {
+      
+      [m_proundwindow->m_controller showWindow : m_proundwindow];
+      
+      [m_proundwindow windowDidExpose];
+
+   });
    
 }
 

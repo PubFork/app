@@ -384,7 +384,7 @@ namespace draw2d
 
       virtual double pi() const;
 
-      virtual void io(stream & stream);
+      virtual void io(stream & stream) override;
 
       //virtual bool update_window(::aura::draw_interface * pui,::message::message * pobj,bool bTransferBuffer = true);
       //virtual bool print_window(::aura::draw_interface * pui,::message::message * pobj);

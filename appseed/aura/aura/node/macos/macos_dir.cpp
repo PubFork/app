@@ -300,7 +300,7 @@ namespace macos
         // return bIsDir;
 
 
-      if(papp->m_bZipIsDir && iLast >= 3  && !strnicmp_dup(&((const char *) str)[iLast - 3], ".zip", 4))
+      if(::thread_zip_is_dir() && iLast >= 3  && !strnicmp_dup(&((const char *) str)[iLast - 3], ".zip", 4))
       {
          //m_isdirmap.set(str.Left(iLast + 1), true, 0);
          return true;

@@ -58,8 +58,10 @@ namespace user
 
    void split_layout::_001OnShowWindow(::message::message * pobj)
    {
+      
+      UNREFERENCED_PARAMETER(pobj);
 
-      SCAST_PTR(::message::show_window, pshowwindow, pobj);
+      //SCAST_PTR(::message::show_window, pshowwindow, pobj);
 
       //bool bIsWindowVisible = pshowwindow->m_bShow;
 

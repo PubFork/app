@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 class CLASS_DECL_AURA error :
@@ -314,7 +314,7 @@ public:
 
    virtual bool init_thread();
    virtual bool on_pre_run_thread();
-   virtual void run();
+   virtual void run() override;
    virtual void on_pos_run_thread();
    virtual void term_thread();
 

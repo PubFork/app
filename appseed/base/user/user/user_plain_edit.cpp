@@ -295,7 +295,7 @@ namespace user
 
       m_dwLastDraw = ::get_tick_count();
 
-      pgraphics->set_text_rendering_hint_hint(::draw2d::text_rendering_hint_anti_alias);
+      pgraphics->set_text_rendering_hint(::draw2d::text_rendering_hint_anti_alias);
 
       COLORREF crBk;
       COLORREF crBkSel;
@@ -412,7 +412,7 @@ namespace user
 
       select_font(pgraphics, font_plain_edit);
 
-      pgraphics->set_text_rendering_hint_hint(::draw2d::text_rendering_hint_anti_alias);
+      pgraphics->set_text_rendering_hint(::draw2d::text_rendering_hint_anti_alias);
       //size size3;
       //size3 = pgraphics->GetTextExtent(unitext("gGYIﾍ"));
       int32_t iLineHeight = m_iLineHeight;
@@ -431,7 +431,7 @@ namespace user
       index i = 0;
       pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 
-      pgraphics->set_text_rendering_hint_hint(::draw2d::text_rendering_hint_anti_alias);
+      pgraphics->set_text_rendering_hint(::draw2d::text_rendering_hint_anti_alias);
 
       string strLineGraphics;
 
@@ -1709,7 +1709,7 @@ namespace user
 
       sized sizeUniText;
 
-      pgraphics->set_text_rendering_hint_hint(::draw2d::text_rendering_hint_anti_alias);
+      pgraphics->set_text_rendering_hint(::draw2d::text_rendering_hint_anti_alias);
 
       pgraphics->GetTextExtent(sizeUniText, unitext("gqYALÀWMÍÎÄÃÄÅ"));
 
@@ -2092,7 +2092,7 @@ namespace user
 
       }
 
-      pgraphics->set_text_rendering_hint_hint(::draw2d::text_rendering_hint_anti_alias);
+      pgraphics->set_text_rendering_hint(::draw2d::text_rendering_hint_anti_alias);
 
       wstring wstr = "gqYALﾍWMÍÎÄÃÄÅ";
 
@@ -2555,7 +2555,7 @@ namespace user
 
       select_font(pgraphics, font_plain_edit);
 
-      pgraphics->set_text_rendering_hint_hint(::draw2d::text_rendering_hint_anti_alias);
+      pgraphics->set_text_rendering_hint(::draw2d::text_rendering_hint_anti_alias);
 
       string strLine = get_expanded_line(iLine, { &iChar });
 
@@ -2702,7 +2702,7 @@ namespace user
 
       GetFocusRect(rectClient);
 
-      pgraphics->set_text_rendering_hint_hint(::draw2d::text_rendering_hint_anti_alias);
+      pgraphics->set_text_rendering_hint(::draw2d::text_rendering_hint_anti_alias);
 
       strsize iChar = line_char_hit_test(x, iLine);
 

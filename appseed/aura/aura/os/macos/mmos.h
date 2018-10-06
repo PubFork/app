@@ -1,14 +1,21 @@
+
+
+#include "aura/aura/aura_runnable.h"
+
+
 @interface mmos : NSObject
 {
-@public  char ** m_ppszWallpaper;
-@public   long long m_llWallpaper;
-@public  int m_iIcon;
-@public  unsigned int * m_picon;
-@public   int m_cxIcon;
-@public   int m_cyIcon;
-@public   int m_iScanIcon;
-@public  const char * m_pszIcon;
-@public NSRecursiveLock *theLock;
+   
+   @public  char ** m_ppszWallpaper;
+   @public   long long m_llWallpaper;
+   @public  int m_iIcon;
+   @public  unsigned int * m_picon;
+   @public   int m_cxIcon;
+   @public   int m_cyIcon;
+   @public   int m_iScanIcon;
+   @public  const char * m_pszIcon;
+   @public NSRecursiveLock *theLock;
+   
 }
 
 + (id)get;

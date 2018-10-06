@@ -1,6 +1,8 @@
 #pragma once
 
 
+class interlocked_long;
+
 
 class CLASS_DECL_AURA runnable
 {

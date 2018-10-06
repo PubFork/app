@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 namespace draw2d
@@ -137,7 +137,7 @@ namespace draw2d
       bool                    m_bStrikeout;
       char_set_array          m_echarseta;
       e_char_set              m_echarset;
-      e_text_rendering_hint_hint   m_etextrenderinghint;
+      e_text_rendering_hint   m_etextrenderinghint;
 
 
       font();

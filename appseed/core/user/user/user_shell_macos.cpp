@@ -55,6 +55,59 @@ namespace user
 
          }
 
+         
+         fork([&]()
+         {
+            
+            per_fork fork;
+            
+            
+            
+            
+            synch_lock sl(&m_mutexQueue);
+            
+            while (get_thread_run())
+            {
+               
+               if(m_keyptra.is_empty())
+               {
+                  
+                  sl.unlock();
+                  
+                  Sleep(100);
+                  
+               }
+               else
+               {
+                  
+                  image_key * pkey = m_keyptra.first();
+                  
+                  m_keyptra.remove_at(0);
+                  
+                  sl.unlock();
+                  
+                  int iImage = get_image(&fork, pkey->m_oswindow, *pkey, NULL, pkey->m_cr);
+                  
+                  {
+                     
+                     synch_lock s(m_pmutex);
+                     
+                     m_imagemap.set_at(*pkey, iImage);
+                     
+                  }
+                  
+                  delete pkey;
+                  
+               }
+               
+               sl.lock();
+               
+            }
+            
+            return 0;
+            
+         });
+
       }
 
       macos::~macos()
@@ -1437,57 +1490,6 @@ namespace user
 
       }
 
-      int macos::run()
-      {
-
-         per_fork fork;
-
-
-     
-
-         synch_lock sl(&m_mutexQueue);
-
-         while (get_thread_run())
-         {
-
-            if(m_keyptra.is_empty())
-            { 
-
-               sl.unlock();
-
-               Sleep(100);
-
-            }
-            else
-            {
-
-              image_key * pkey = m_keyptra.first();
-
-              m_keyptra.remove_at(0);
-
-              sl.unlock();
-
-              int iImage = get_image(&fork, pkey->m_oswindow, *pkey, NULL, pkey->m_cr);
-
-              {
-
-                 synch_lock s(m_pmutex);
-
-                 m_imagemap.set_at(*pkey, iImage);
-
-              }
-
-              delete pkey;
-
-            }
-
-            sl.lock();
-
-         }
-
-         return 0;
-
-      }
 
 
 

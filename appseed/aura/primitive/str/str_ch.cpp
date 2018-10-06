@@ -35,7 +35,7 @@ namespace str
 
       unichar32 u32[2];
 
-      u32[0] = u;
+      u32[0] = (unichar32) u;
 
       u32[1] = 0;
 

@@ -1121,7 +1121,12 @@ namespace macos
       
       path = System.defer_process_path(path, papp);
       
+      ns_main_async(^()
+                    {
+      
       ns_open_file(path.c_str());
+                       
+                    });
       
       return true;
       

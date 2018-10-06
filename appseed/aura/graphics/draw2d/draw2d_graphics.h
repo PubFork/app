@@ -33,7 +33,7 @@ namespace draw2d
 
       e_alpha_mode                  m_ealphamode;
       e_smooth_mode                 m_esmoothmode;
-      e_text_rendering_hint_hint         m_etextrenderinghint;
+      e_text_rendering_hint         m_etextrenderinghint;
       double                        m_dFontFactor;
 
       ::draw2d::matrix              m_matrixViewport;
@@ -91,7 +91,7 @@ namespace draw2d
 
       virtual bool set_smooth_mode(e_smooth_mode esmoothmode);
 
-      virtual bool set_text_rendering_hint_hint(e_text_rendering_hint_hint etextrendering);
+      virtual bool set_text_rendering_hint(e_text_rendering_hint etextrenderinghint);
 
       virtual bool blur(bool bExpand, double dRadius, const RECT & rect);
 

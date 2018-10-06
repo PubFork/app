@@ -4604,7 +4604,7 @@ namespace draw2d_quartz2d
    }
 
 
-   void graphics::set_alpha_mode(::draw2d::e_alpha_mode ealphamode)
+   bool graphics::set_alpha_mode(::draw2d::e_alpha_mode ealphamode)
    {
 
       try
@@ -4613,7 +4613,7 @@ namespace draw2d_quartz2d
          if(m_pdc == NULL)
          {
 
-            return;
+            return false;
 
          }
 
@@ -4637,14 +4637,16 @@ namespace draw2d_quartz2d
       {
 
       }
+      
+      return true;
 
    }
 
 
-   void graphics::set_text_rendering_hint_hint(::draw2d::e_text_rendering_hint_hint etextrendering)
+   bool graphics::set_text_rendering_hint(::draw2d::e_text_rendering_hint etextrenderinghint)
    {
 
-      m_etextrenderinghint = etextrendering;
+      return ::draw2d::graphics::set_text_rendering_hint(etextrenderinghint);
 
    }
 
@@ -5438,7 +5440,7 @@ namespace draw2d_quartz2d
          for(unsigned long ui = 0; ui < c; ui++)
          {
 
-            itema.add(canew(::draw2d::font::enum_item(p[ui], p[ui],::draw2d::font::cs_default)));
+            itema.add(canew(::draw2d::font::enum_item(p[ui], p[ui])));
 
             free(p[ui]);
 

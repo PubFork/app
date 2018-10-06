@@ -115,7 +115,7 @@ namespace macos
          
          bool bIsDir;
          
-         if(::get_thread() != NULL && ::get_thread()->m_bZipIsDir && iLast >= 3 && !strnicmp_dup(&((const char *)str)[iLast - 3],".zip",4))
+         if(::thread_zip_is_dir() && iLast >= 3 && !strnicmp_dup(&((const char *)str)[iLast - 3],".zip",4))
          {
 
             return true;
@@ -124,7 +124,7 @@ namespace macos
          
          strsize iFind = ::str::find_ci(".zip:", str);
          
-         if(::get_thread() != NULL && ::get_thread()->m_bZipIsDir && iFind >= 0 && iFind < iLast)
+         if(::thread_zip_is_dir() && iFind >= 0 && iFind < iLast)
          {
 
             bool bHasSubFolder;

@@ -143,15 +143,11 @@ namespace user
    void mesh::_001OnDraw(::draw2d::graphics * pgraphics)
    {
 
-
-
-      //single_lock sl(&m_mutex,true);
-
       m_penFocused->create_solid(2,ARGB(255,0,255,255));
 
       m_penHighlight->create_solid(2,ARGB(255,0,255,255));
 
-      pgraphics->set_text_rendering_hint_hint(::draw2d::text_rendering_hint_anti_alias_grid_fit);
+      pgraphics->set_text_rendering_hint(::draw2d::text_rendering_hint_anti_alias_grid_fit);
 
       if(m_bLockViewUpdate)
          return;

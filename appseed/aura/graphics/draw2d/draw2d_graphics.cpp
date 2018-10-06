@@ -4003,10 +4003,10 @@ namespace draw2d
    }
 
 
-   bool graphics::set_text_rendering_hint_hint(e_text_rendering_hint_hint etextrendering)
+   bool graphics::set_text_rendering_hint(e_text_rendering_hint etextrenderinghint)
    {
 
-      m_etextrenderinghint = etextrendering;
+      m_etextrenderinghint = etextrenderinghint;
 
       return true;
 
@@ -4015,8 +4015,11 @@ namespace draw2d
 
    bool graphics::blur(bool bExpand, double dRadius, const RECT & rect)
    {
+      
       _throw(interface_only_exception(get_app()));
+      
       return false;
+      
    }
 
 

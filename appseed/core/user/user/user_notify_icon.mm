@@ -31,7 +31,7 @@
    jcMenu = [[NSMenu alloc] initWithTitle:@"menubar_menu"];
    extraMenuItems = [[NSMutableArray alloc] init];
    extraMenuIds = [[NSMutableArray alloc] init];
-   for(int i = 0; i < pbridge->notification_extra_action_count(); i++)
+   for(int i = 0; i < pbridge->notification_area_action_count(); i++)
    {
       
       char * pszName = NULL;
@@ -87,19 +87,19 @@
 - (void) menuWillOpen:(NSMenu *)menu
 {
    
-   if(m_pbridge->notify_icon_frame_is_opened())
-   {
-    
-      [closeItem setTitle:@"Close"];
-      
-   }
-   else
-   {
-
-      [closeItem setTitle:@"Open"];
-
-   
-   }
+//   if(m_pbridge->notify_icon_frame_is_opened())
+//   {
+//
+//      [closeItem setTitle:@"Close"];
+//
+//   }
+//   else
+//   {
+//
+//      [closeItem setTitle:@"Open"];
+//
+//
+//   }
    
 }
 
@@ -115,7 +115,7 @@
 - (void)play:(id)sender
 {
    NSMenuItem * pitem = (NSMenuItem *) sender;
-   for(int i = 0; i < m_pbridge->notification_extra_action_count(); i++)
+   for(int i = 0; i < m_pbridge->notification_area_action_count(); i++)
    {
       
       if(pitem == [extraMenuItems objectAtIndex:i])
@@ -131,14 +131,7 @@
    
    if(pitem == closeItem)
    {
-      if(m_pbridge->notify_icon_frame_is_opened())
-      {
-         m_pbridge->notify_icon_play("close");
-      }
-      else
-      {
-         m_pbridge->notify_icon_play("open");
-      }
+      m_pbridge->notify_icon_play("notify_icon_topic");
    }
    else if(pitem == quitItem)
    {

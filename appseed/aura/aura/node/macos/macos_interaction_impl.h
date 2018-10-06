@@ -65,6 +65,11 @@ namespace macos
       virtual void on_control_event(::user::control_event * pevent) override;
 
       void _002OnDraw(::draw2d::dib * pdib);
+      
+      
+      virtual bool has_focus() override;
+      virtual bool is_active() override;
+      
 
       DECL_GEN_SIGNAL(_001OnEraseBkgnd);
       DECL_GEN_SIGNAL(_001OnMove);

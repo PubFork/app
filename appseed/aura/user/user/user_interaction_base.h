@@ -366,7 +366,7 @@ namespace user
 
 
 
-      virtual bool has_focus();
+      virtual bool has_focus() override;
       virtual bool SetFocus();
       virtual bool SetForegroundWindow();
       virtual bool is_active();

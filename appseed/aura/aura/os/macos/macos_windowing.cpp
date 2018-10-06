@@ -924,6 +924,21 @@ void os_term_windowing()
 
 
 
+void update_ui_impl_cursor(class user::interaction_impl * puiimpl)
+{
+   
+   sp(::macos::interaction_impl) pimpl = puiimpl;
+   
+   if (pimpl.is_set())
+   {
+      
+      return;
+      
+   }
+   
+   Sess(puiimpl->get_app()).get_cursor_pos(puiimpl->m_ptCursor);
+   
+}
 
 
 
