@@ -33,3 +33,11 @@
 #include "aura/os/macos/macos_mm.h"
 
 #endif
+
+
+#undef _
+
+#define _(str) (__ns_get_text(str))
+
+NSString * __ns_get_text(NSString * str);
+

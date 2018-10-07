@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 
@@ -82,7 +82,34 @@ namespace lemon
          return ::lemon::array::contains(t1, t2) && ::lemon::array::contains(t2, t1);
 
       }
+      
+      template < typename A, typename PTRA >
+      void ptra(PTRA & ptra, const A & a)
+      {
+         
+         for(auto & item : a)
+         {
+            
+            ptra.add((typename PTRA::BASE_TYPE) item);
+            
+         }
+         
+      }
 
+      
+      template < typename A >
+      ::array < const char * > psza(const A & a)
+      {
+        
+         ::array < const char * > pa;
+         
+         ptra(pa, a);
+         
+         pa.add(NULL);
+         
+         return pa;
+         
+      }
 
 
       template < typename A, typename PA >

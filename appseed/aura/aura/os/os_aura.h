@@ -19,6 +19,10 @@ END_EXTERN_C
 
 #include "cross.h"
 
+CLASS_DECL_AURA int __c_get_text_length(const char * psz);
+CLASS_DECL_AURA void __c_get_text(char * pszText, int iLen, const char * psz);
+
+
 /*
 #if _POSIX_C_SOURCE == 200809L
 #error "Only for test!! Good error!! _POSIX_C_SOURCE still 200809L"

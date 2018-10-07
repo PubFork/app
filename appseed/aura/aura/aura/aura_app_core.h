@@ -11,8 +11,8 @@ class STRLANGMAP
 {
 public:
 
-   int      m_iPo;
-   char *   m_pszLanguageCode;
+   int            m_iPo;
+   const char *   m_pszLanguageCode;
 
 };
 

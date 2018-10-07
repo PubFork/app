@@ -178,3 +178,23 @@ void main_sync_runnable(runnable * prunnable)
 
 
 
+
+
+NSString * __ns_get_text(NSString * str)
+{
+   
+   const char * psz = [str UTF8String];
+   
+   int iLen = __c_get_text_length(psz);
+   
+   char * p = (char *) malloc(iLen+1);
+   
+   __c_get_text(p, iLen + 1, psz);
+   
+   NSString * strText = [[NSString alloc] initWithUTF8String: p];
+   
+   free(p);
+   
+   return strText;
+   
+}

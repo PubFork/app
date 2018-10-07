@@ -427,7 +427,25 @@ string load_pofile(int iId)
 }
 
 
+#elif defined(MACOS)
+
+
+string load_pofile(string strLang)
+{
+   
+   ::file::path pathFolder = ::aura::system::g_p->dir().module();
+   
+   pathFolder -= 1;
+   
+   ::file::path path = pathFolder / "Resources/po" / (strLang + ".po");
+   
+   return file_as_string_dup(path);
+   
+}
+
+
 #else
+
 
 string load_pofile(string strLang)
 {
@@ -437,6 +455,5 @@ string load_pofile(string strLang)
    return file_as_string_dup(path);
 
 }
-
 
 #endif

@@ -69,3 +69,18 @@ END_EXTERN_C
 
 
 
+
+
+int __c_get_text_length(const char * psz)
+{
+   
+   return (int) __get_text(psz).get_length();
+   
+}
+
+void __c_get_text(char * pszText, int iLen, const char * psz)
+{
+   
+   strncpy(pszText, _(psz), iLen);
+   
+}
