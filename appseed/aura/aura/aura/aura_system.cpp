@@ -4119,7 +4119,15 @@ CLASS_DECL_AURA::file::path get_application_path(string strAppId, const char * p
 
    str.replace("-", "_");
 
-   ::file::path path = dir::stage(strAppId, pszPlatform, pszConfiguration) / str + ".exe";
+   ::file::path pathFolder;
+
+   pathFolder = dir::stage(strAppId, pszPlatform, pszConfiguration);
+
+   ::file::path path;
+
+   path = dir::stage(strAppId, pszPlatform, pszConfiguration);
+
+   path = pathFolder / (str + ".exe");
 
    return path;
 

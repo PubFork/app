@@ -281,7 +281,7 @@ int32_t call_async(const char * pszPath, const char * pszParam, const char * psz
 }
 
 
-uint32_t call_sync(const char * pszPath, const char * pszParam, const char * pszDir, int32_t iShow, int32_t iRetry, int32_t iSleep, PFNCALLSYNCONRETRY pfnOnRetry, uint_ptr dwParam, unsigned int * puiPid)
+uint32_t call_sync(const char * pszPath, const char * pszParam, const char * pszDir, int32_t iShow, int32_t iRetry, int32_t iSleep, PFNCALLSYNCONRETRY pfnOnRetry, uint_ptr dwParam, unsigned int * puiPid, bool bPrivileged)
 {
 
    SHELLEXECUTEINFOW infoa;
@@ -299,6 +299,13 @@ uint32_t call_sync(const char * pszPath, const char * pszParam, const char * psz
    infoa.nShow = iShow;
 
    infoa.fMask |= SEE_MASK_NOCLOSEPROCESS | SEE_MASK_NOASYNC | SEE_MASK_FLAG_NO_UI;
+
+   if (bPrivileged)
+   {
+
+      infoa.lpVerb = L"RunAs";
+
+   }
 
    if (!::ShellExecuteExW(&infoa))
    {
