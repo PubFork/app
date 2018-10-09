@@ -1202,7 +1202,7 @@ namespace user
 
       }
 
-      ::ShowWindow(get_handle(), nCmdShow);
+      ::show_window(get_handle(), nCmdShow);
 
       m_pui->set_need_redraw();
 

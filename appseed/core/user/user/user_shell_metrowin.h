@@ -94,10 +94,10 @@ namespace user
          //         ::windows::comptr < IShellFolder> _017GetShellFolder(per_fork * pfork, LPITEMIDLIST lpiidlChild);
          //         void _017ItemIDListParsePath(per_fork * pfork, oswindow oswindow, LPITEMIDLIST * lpiidl, const char * lpcsz);
 
-         int run();
+         virtual void shell_run();
 
 
-
+         virtual void do_initialize() override;
 
          //         virtual index GetCSIDLSort(index iCsidl);
          //         virtual index GetCSIDL(per_fork * pfork, LPITEMIDLIST lpiidl);

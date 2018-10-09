@@ -260,7 +260,7 @@ namespace metrowin
          return true; // assume empty string is root_ones directory
       }
 
-      if(papp->m_bZipIsDir && iLast >= 3 && !strnicmp_dup(&((const char *)str)[iLast - 3],".zip",4))
+      if(thread_zip_is_dir() && iLast >= 3 && !strnicmp_dup(&((const char *)str)[iLast - 3],".zip",4))
       {
 
          return true;

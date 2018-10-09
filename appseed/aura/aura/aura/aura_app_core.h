@@ -217,7 +217,7 @@ CLASS_DECL_AURA string transform_to_c_arg(const char * psz);
 CLASS_DECL_AURA stringa get_c_args(const char * psz);
 CLASS_DECL_AURA stringa get_c_args_for_c(const char * psz);
 CLASS_DECL_AURA stringa get_c_args(int argc, char ** argv);
-#ifdef WINDOWS
+#ifdef WINDOWSEX
 CLASS_DECL_AURA string ca2_command_line(HINSTANCE hinstance);
 #else
 CLASS_DECL_AURA string ca2_command_line();

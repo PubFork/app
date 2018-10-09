@@ -1439,7 +1439,7 @@ namespace user
 
       }
 
-      int metrowin::run()
+      void metrowin::shell_run()
       {
 
          per_fork fork;
@@ -1486,8 +1486,6 @@ namespace user
             sl.lock();
 
          }
-
-         return 0;
 
       }
 
@@ -1623,6 +1621,20 @@ namespace user
          return iImage;
 
       }
+
+
+      void metrowin::do_initialize()
+      {
+
+         fork([&]()
+         {
+
+            shell_run();
+
+         });
+
+      }
+
 
       int shell::add_hover_image(int iSize, int iImage, COLORREF crBk)
       {

@@ -6,7 +6,7 @@ class CLASS_DECL_AURA nano_timer
 {
 public:
 
-#ifdef WINDOWSEX
+#ifdef WINDOWS
 
    HANDLE      m_hTimer;
 
@@ -28,7 +28,7 @@ public:
    void wait(u64 uWait)
    {
 
-#ifdef WINDOWSEX
+#ifdef WINDOWS
 
       LARGE_INTEGER li = {};
 

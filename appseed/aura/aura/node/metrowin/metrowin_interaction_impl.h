@@ -701,6 +701,8 @@ namespace metrowin
 
 
       // void _001UpdateWindow();
+      virtual bool has_focus() override;
+      virtual bool is_active() override;
 
 
       void _001OnTriggerMouseInside();

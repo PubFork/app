@@ -118,3 +118,12 @@ namespace process
    return wszPath;
 
 }
+
+
+
+CLASS_DECL_AURA DWORD get_current_process_id()
+{
+
+   return ::GetCurrentProcessId();
+
+}

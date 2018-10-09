@@ -299,3 +299,10 @@ void update_ui_impl_cursor(class user::interaction_impl * puiimpl)
    Sess(puiimpl->get_app()).get_cursor_pos(puiimpl->m_ptCursor);
 
 }
+
+CLASS_DECL_AURA WINBOOL show_window(oswindow oswindow, int iShowCmd)
+{
+
+   return ShowWindow(oswindow, iShowCmd);
+
+}

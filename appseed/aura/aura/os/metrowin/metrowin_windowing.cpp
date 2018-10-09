@@ -315,14 +315,14 @@ Agile < Windows::UI::Core::CoreWindow > get_os_window(oswindow window)
 static oswindow g_oswindowCapture;
 
 
-oswindow WINAPI get_capture()
+oswindow get_capture()
 {
 
    return g_oswindowCapture;
 
 }
 
-oswindow WINAPI set_capture(oswindow __oswindow)
+oswindow set_capture(oswindow __oswindow)
 {
 
    ::oswindow oswindowOldCapture = g_oswindowCapture;
@@ -338,7 +338,7 @@ oswindow WINAPI set_capture(oswindow __oswindow)
 }
 
 
-oswindow WINAPI release_capture()
+WINBOOL release_capture()
 {
 
    ::oswindow oswindowOldCapture = g_oswindowCapture;
@@ -349,7 +349,7 @@ oswindow WINAPI release_capture()
    //SendMessage(__oswindow, WM_SETFOCUS, WPARAM, (LPARAM) (void *) oswindowOldFocus)
    //SendMessage(oswindowOldFocus, WM_KILLFOCUS, WPARAM, (LPARAM) (void *) __oswindow)
 
-   return oswindowOldCapture;
+   return true;
 
 }
 
@@ -357,14 +357,14 @@ oswindow WINAPI release_capture()
 static oswindow g_oswindowActive;
 
 
-oswindow WINAPI get_active_window()
+oswindow get_active_window()
 {
 
    return g_oswindowActive;
 
 }
 
-oswindow WINAPI set_active_window(oswindow __oswindow)
+oswindow  set_active_window(oswindow __oswindow)
 {
 
    ::oswindow oswindowOldActive = g_oswindowActive;
@@ -546,3 +546,31 @@ CLASS_DECL_AURA oswindow get_window(oswindow oswindow, int iWindow)
 
 
 
+
+
+CLASS_DECL_AURA WINBOOL show_window(oswindow oswindow, int iShowCmd)
+{
+
+   UNREFERENCED_PARAMETER(oswindow);
+   UNREFERENCED_PARAMETER( iShowCmd);
+
+   return TRUE;
+
+}
+
+
+void update_ui_impl_cursor(class user::interaction_impl * puiimpl)
+{
+
+   sp(::metrowin::interaction_impl) pimpl = puiimpl;
+
+   if (pimpl.is_set())
+   {
+
+      return;
+
+   }
+
+   Sess(puiimpl->get_app()).get_cursor_pos(puiimpl->m_ptCursor);
+
+}

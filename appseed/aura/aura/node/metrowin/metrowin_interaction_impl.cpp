@@ -568,10 +568,10 @@ namespace metrowin
    interaction_impl::~interaction_impl()
    {
 
-      if(m_papp != NULL && m_papp->m_psession != NULL && m_papp->m_psession->m_pwindowmap != NULL)
+      if(m_papp != NULL)
       {
 
-         m_papp->m_psession->m_pwindowmap->m_map.remove_key((int_ptr)(void *)get_handle());
+         Sys(m_papp).window_map().m_map.remove_key((int_ptr)(void *)get_handle());
 
       }
 
@@ -6354,7 +6354,7 @@ lCallNextHook:
    void interaction_impl::_001BaseWndInterfaceMap()
    {
 
-      m_papp->m_psession->m_pwindowmap->set((int_ptr)(void *)get_handle(),this);
+      Sys(m_papp).window_map().set((int_ptr)(void *)get_handle(),this);
 
    }
 
@@ -6991,6 +6991,20 @@ namespace metrowin
       m_messageaQueue.add(pbase);
 
       m_evQueue.set_event();
+
+   }
+
+   bool interaction_impl::has_focus()
+   {
+
+      return get_handle() == ::get_focus();
+
+   }
+
+   bool interaction_impl::is_active()
+   {
+
+      return get_handle() == ::get_active_window();
 
    }
 

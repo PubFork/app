@@ -206,9 +206,13 @@ namespace aura
 
 #ifdef WINDOWS
 
+#ifdef WINDOWSEX
+
          SetThreadLocale(65001);
 
          SetConsoleOutputCP(65001);
+
+#endif
 
          QueryPerformanceFrequency(&g_freq);
 
