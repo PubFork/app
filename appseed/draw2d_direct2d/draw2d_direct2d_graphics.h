@@ -507,7 +507,7 @@ namespace draw2d_direct2d
 
       virtual bool set_alpha_mode(::draw2d::e_alpha_mode ealphamode) override;
 
-      virtual bool set_text_rendering_hint(::draw2d::e_text_rendering_hint_hint etextrendering) override;
+      virtual bool set_text_rendering_hint(::draw2d::e_text_rendering_hint etextrendering) override;
 
       virtual void * get_os_data() const override;
       virtual void * get_os_data_ex(int i) const override;

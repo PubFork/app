@@ -4932,7 +4932,7 @@ namespace draw2d_direct2d
    }
 
 
-   bool graphics::set_text_rendering_hint(::draw2d::e_text_rendering_hint_hint etextrendering)
+   bool graphics::set_text_rendering_hint(::draw2d::e_text_rendering_hint etextrendering)
    {
 
       m_etextrenderinghint = etextrendering;
