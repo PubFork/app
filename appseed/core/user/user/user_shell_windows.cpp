@@ -562,6 +562,13 @@ namespace user
 
                      HICON hicon = (HICON)ExtractResourceIcon(strIconLocation, iSizeOut, iSizeOut, imagekey.m_iIcon);
 
+                     if (hicon == NULL && imagekey.m_iIcon == 0)
+                     {
+
+                        hicon = (HICON)ExtractResourceIcon(strIconLocation, iSizeOut, iSizeOut, 0x80000000);
+
+                     }
+
                      m_pshell->add_icon(iSize, hicon, crBk, iImage);
 
                      ::DestroyIcon(hicon);

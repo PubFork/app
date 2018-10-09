@@ -168,7 +168,20 @@ BOOL ExtractResourceIcon_EnumNamesFunc(HMODULE hModule, LPCWSTR lpType, LPWSTR l
 
    ULONG_PTR u = ULONG_PTR(lpName);
 
-   if (pi->iIcon < 0)
+   if (pi->iIcon < 0xC0000000)
+   {
+
+      if (pi->iIcon != 0x80000000)
+      {
+
+         pi->iIcon--;
+
+         return TRUE;
+
+      }
+
+   }
+   else if (pi->iIcon < 0)
    {
 
       if (-pi->iIcon != u)
@@ -186,7 +199,7 @@ BOOL ExtractResourceIcon_EnumNamesFunc(HMODULE hModule, LPCWSTR lpType, LPWSTR l
 
    GRPICONDIR * lpGrpIconDir = (LPGRPICONDIR)LockResource(hGroup);
 
-   if (pi->iIcon >= 0)
+   if (pi->iIcon >= 0 && pi->iIcon != 0x80000000)
    {
 
       if (lpGrpIconDir->idCount > 0)
