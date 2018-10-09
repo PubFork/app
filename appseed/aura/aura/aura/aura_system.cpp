@@ -230,6 +230,8 @@ namespace aura
       m_pfactory->creatable_large < ::int64_array >();
       m_pfactory->creatable_large < ::double_array >();
 
+      m_pfactory->creatable_small < ::aura::library >();
+
       factory().default_cloneable_large < stringa >();
       factory().default_cloneable_large < memory >();
       factory().default_cloneable_large < int_array >();
@@ -1003,7 +1005,7 @@ namespace aura
       try
       {
 
-         if (m_mapLibrary["draw2d"]->is_opened())
+         if (m_mapLibrary["draw2d"].is_set() && m_mapLibrary["draw2d"]->is_opened())
          {
 
             if (m_pDraw2dFactoryExchange != NULL)
@@ -1059,6 +1061,17 @@ namespace aura
          m_typemap.remove_all();
 
          m_typemap.release();
+
+      }
+
+      try
+      {
+
+         m_mapLibrary.remove_all();
+
+      }
+      catch (...)
+      {
 
       }
 

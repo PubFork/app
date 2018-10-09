@@ -77,8 +77,10 @@ namespace user
    }
 
 
-   void notify_icon_listener::notification_area_action_info(char ** ppszName, char ** ppszId, char ** ppszLabel, char ** ppszAccelerator, char ** ppszDescription, int iIndex)
+   bool notify_icon_listener::notification_area_action_info(char ** ppszName, char ** ppszId, char ** ppszLabel, char ** ppszAccelerator, char ** ppszDescription, int iIndex)
    {
+
+      return false;
 
    }
 

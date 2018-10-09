@@ -27,7 +27,7 @@ namespace dynamic_source
 
       uint32_t                                  m_dwLastLibraryVersionCheck;
       bool                                      m_bLastLibraryVersionCheck;
-      ::aura::library                           m_libraryLib;
+      sp(::aura::library)                       m_plibraryLib;
 
 
       raw_array < __time_t >                    m_ftaLibCreation;

@@ -2811,7 +2811,9 @@ ch_else:
 
       single_lock slLibrary(&m_mutex, TRUE);
 
-      if(!m_libraryLib.open(m_strLibraryPath))
+      m_plibraryLib.alloc(allocer());
+
+      if(!m_plibraryLib->open(m_strLibraryPath))
          return;
 
       m_ftaLibCreation.allocate(m_straLibSourcePath.get_size());
@@ -2844,20 +2846,22 @@ ch_else:
       object(papp),
       m_memfileError(papp),
       m_memfileLibError(papp),
-      m_mutex(papp),
-      m_libraryLib(papp)
-
+      m_mutex(papp)
    {
+
    }
+
+
    library::~library()
    {
+
    }
 
 
    void library::unload_library()
    {
       single_lock slLibrary(&m_mutex, TRUE);
-      m_libraryLib.close();
+      m_plibraryLib->close();
    }
 
    string script_compiler::get_ds_print(const char *psz)

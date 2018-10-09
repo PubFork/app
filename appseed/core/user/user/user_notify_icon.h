@@ -100,7 +100,7 @@ namespace user
       virtual void notify_icon_play(const char * action) override;
 #endif
       virtual int notification_area_action_count() override;
-      virtual void notification_area_action_info(char ** ppszName, char ** ppszId, char ** ppszLabel, char ** ppszAccelerator, char ** ppszDescription, int iIndex) override;
+      virtual bool notification_area_action_info(char ** ppszName, char ** ppszId, char ** ppszLabel, char ** ppszAccelerator, char ** ppszDescription, int iIndex) override;
       virtual void notification_area_action(const char * pszId) override;
 #endif
 

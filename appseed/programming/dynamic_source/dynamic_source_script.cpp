@@ -51,8 +51,7 @@ namespace dynamic_source
    ds_script::ds_script(::aura::application * papp) :
       ::object(papp),
       script(papp),
-      m_evCreationEnabled(papp),
-      m_library(papp)
+      m_evCreationEnabled(papp)
    {
 
       m_lpfnCreateInstance       = NULL;
@@ -282,8 +281,10 @@ namespace dynamic_source
          m_lpfnCreateInstance = NULL;
          return;
       }
-      if(m_library.is_closed())
+      if(m_plibrary.is_null() || m_plibrary->is_closed())
       {
+
+         m_plibrary.alloc(allocer());
 
          //if(m_strScriptPath.find("transactions") >= 0)
          //{
@@ -296,9 +297,9 @@ namespace dynamic_source
 
          ::file_copy_dup(strStagePath, m_strScriptPath, true);
 
-         m_library.open(strStagePath);
+         m_plibrary->open(strStagePath);
 
-         if(m_library.is_closed())
+         if(m_plibrary->is_closed())
          {
 #ifdef LINUX
             const char * psz = dlerror();
@@ -315,7 +316,7 @@ namespace dynamic_source
             m_memfileError << strStagePath << " : LoadLibrary, get_last_error : " << str << strError;
          }
       }
-      m_lpfnCreateInstance = m_library.get < NET_NODE_CREATE_INSTANCE_PROC > ("create_dynamic_source_script_instance");
+      m_lpfnCreateInstance = m_plibrary->get < NET_NODE_CREATE_INSTANCE_PROC > ("create_dynamic_source_script_instance");
       if(m_lpfnCreateInstance == NULL)
       {
          TRACE("create_dynamic_source_script_instance error");
@@ -338,10 +339,10 @@ namespace dynamic_source
 
       synch_lock sl(m_pmutex);
 
-      if(m_library.is_opened())
+      if(m_plibrary->is_opened())
       {
 
-         m_library.close();
+         m_plibrary->close();
 
          string strStagePath = m_pmanager->get_stage_path(m_strScriptPath);
          /*

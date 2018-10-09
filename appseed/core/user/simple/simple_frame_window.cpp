@@ -3682,12 +3682,12 @@ void simple_frame_window::_001OnNcCalcSize(::message::message * pmessage)
 int simple_frame_window::notification_area_action_count()
 {
 
-   int iCount = 2;
+   int iCount = 3;
 
    if (m_workset.m_pframeschema->get_control_box()->has_button(::user::wndfrm::frame::button_transparent_frame))
    {
 
-      iCount++;
+      iCount+=2;
 
    }
 
@@ -3695,7 +3695,7 @@ int simple_frame_window::notification_area_action_count()
 
 }
 
-void simple_frame_window::notification_area_action_info(char ** ppszName, char ** ppszId, char ** ppszLabel, char ** ppszAccelerator, char ** ppszDescription, int iIndex)
+bool simple_frame_window::notification_area_action_info(char ** ppszName, char ** ppszId, char ** ppszLabel, char ** ppszAccelerator, char ** ppszDescription, int iIndex)
 {
 
    if(iIndex == 0)
@@ -3726,16 +3726,35 @@ void simple_frame_window::notification_area_action_info(char ** ppszName, char *
       *ppszAccelerator = strdup("notify_icon_topic");
       *ppszDescription = strdup("notify_icon_topic");
 
-      return;
+      return true;
 
    }
 
-   iIndex--;
+   int iLast4 = notification_area_action_count() - 4;
+
+   int iLast3 = notification_area_action_count() - 3;
+
+   int iLast2 = notification_area_action_count() - 2;
+
+   int iLast1 = notification_area_action_count() - 1;
 
    if(m_workset.m_pframeschema->get_control_box()->has_button(::user::wndfrm::frame::button_transparent_frame))
    {
 
-      if(iIndex == 0)
+      if (iIndex == iLast4)
+      {
+
+         *ppszName = strdup(_("separator"));
+         *ppszId = strdup("separator");
+         *ppszLabel = strdup("separator");
+         *ppszAccelerator = strdup("separator");
+         *ppszDescription = strdup("separator");
+
+         return true;
+
+      }
+
+      if(iIndex == iLast3)
       {
 
          *ppszName = strdup(_("Transparent Frame"));
@@ -3744,15 +3763,26 @@ void simple_frame_window::notification_area_action_info(char ** ppszName, char *
          *ppszAccelerator = strdup("transparent_frame");
          *ppszDescription = strdup("transparent_frame");
 
-         return;
+         return true;
 
       }
 
-      iIndex--;
+   }
+
+   if(iIndex == iLast2)
+   {
+
+      *ppszName = strdup(_("separator"));
+      *ppszId = strdup("separator");
+      *ppszLabel = strdup("separator");
+      *ppszAccelerator = strdup("separator");
+      *ppszDescription = strdup("separator");
+
+      return true;
 
    }
 
-   if(iIndex == 0)
+   if (iIndex == iLast1)
    {
 
       *ppszName = strdup(_("Exit"));
@@ -3761,11 +3791,13 @@ void simple_frame_window::notification_area_action_info(char ** ppszName, char *
       *ppszAccelerator = strdup("app_exit");
       *ppszDescription = strdup("app_exit");
 
-      return;
+      return true;
 
    }
 
-   return;
+   iIndex -= 1; // only one item at beginning
+
+   return false;
 
 }
 

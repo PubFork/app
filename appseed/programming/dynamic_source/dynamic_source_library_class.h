@@ -24,44 +24,44 @@ namespace dynamic_source
 {
 
 
-class CLASS_DECL_PROGRAMMING library_class :
-   virtual public ::object
-{
-public:
+   class CLASS_DECL_PROGRAMMING library_class :
+      virtual public ::object
+   {
+   public:
 
 
-   ::file::plain_text_stream_memory_file  m_memfileError;
-   string                                 m_strName;
-   stringa                                m_straSourcePath;
-   stringa                                m_straCppPath;
-   string                                 m_strLibraryPath;
-   ::aura::library                        m_library;
+      ::file::plain_text_stream_memory_file  m_memfileError;
+      string                                 m_strName;
+      stringa                                m_straSourcePath;
+      stringa                                m_straCppPath;
+      string                                 m_strLibraryPath;
+      sp(::aura::library )                       m_plibrary;
 
-   array < __time_t, __time_t & >         m_ftaCreation;
-   array < __time_t, __time_t & >         m_ftaAccess;
-   array < __time_t, __time_t & >         m_ftaModified;
+      array < __time_t, __time_t & >         m_ftaCreation;
+      array < __time_t, __time_t & >         m_ftaAccess;
+      array < __time_t, __time_t & >         m_ftaModified;
 
-   sp(script_manager)                     m_pmanager;
-
-
-
-   library_class(::aura::application * papp);
-   ~library_class();
+      sp(script_manager)                     m_pmanager;
 
 
 
-
-
-   bool DoesMatchVersion();
-   void Load();
-   void Unload();
+      library_class(::aura::application * papp);
+      ~library_class();
 
 
 
 
-   sp(::aura::application) get_app() const;
 
-};
+      bool DoesMatchVersion();
+      void Load();
+      void Unload();
+
+
+
+
+      sp(::aura::application) get_app() const;
+
+   };
 
 
 } // namespace dynamic_source
