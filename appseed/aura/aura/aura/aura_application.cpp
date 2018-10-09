@@ -3099,7 +3099,7 @@ retry_license:
       if (strBuild.is_empty())
       {
 
-         return false;
+         strBuild = "0000-00-00 00:00:00";
 
       }
 
@@ -3110,6 +3110,25 @@ retry_license:
       string strSystemSchema = System.m_strSchema;
       stringa straLocale = m_phandler->m_varTopicQuery["locale"].stra();
       stringa straSchema = m_phandler->m_varTopicQuery["schema"].stra();
+
+      ::file::path pathExe = ::file::app_module();
+
+      straLocale.insert_at(0, strSystemLocale);
+      straLocale.insert_at(0, strSystemSchema);
+      straSchema.insert_at(0, "_std");
+      straSchema.insert_at(0, "_std");
+
+
+      for (index i = 0; i < straLocale.get_count() && i < straSchema.get_count(); i++)
+      {
+
+         string strLocale = straLocale[i];
+
+         string strSchema = straSchema[i];
+
+         set_application_installed(pathExe, strBuild, System.get_system_platform(), System.get_system_configuration(), strLocale, strSchema);
+
+      }
 
       //System.install().remove_spa_start(strId);
       //System.install().add_app_install(strId, strBuild, strSystemLocale, m_strSchema);

@@ -143,9 +143,20 @@ namespace aura
                                     System.get_system_configuration(), m_strLocale, m_strSchema))
       {
 
-         simple_message_box("Application \"" + strApp + "\"\nat path \"" + pathExe + "\"\n is not installed.", MB_OK);
+         if (is_debugger_attached())
+         {
 
-         return NULL;
+            on_install();
+
+         }
+         else
+         {
+
+            simple_message_box("Application \"" + strApp + "\"\nat path \"" + pathExe + "\"\n is not installed.", MB_OK);
+
+            return NULL;
+
+         }
 
       }
 
