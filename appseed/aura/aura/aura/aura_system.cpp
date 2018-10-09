@@ -4124,3 +4124,24 @@ CLASS_DECL_AURA::file::path get_application_path(string strAppId, const char * p
    return path;
 
 }
+
+
+CLASS_DECL_AURA ::file::path get_installed_application_path_file(string strAppId)
+{
+
+   ::file::path pathFile = ::dir::local() / "appdata" / strAppId / "path.txt";
+
+   return pathFile;
+
+}
+
+CLASS_DECL_AURA::file::path get_installed_application_path(string strAppId)
+{
+
+   ::file::path pathFile = get_installed_application_path_file(strAppId);
+
+   ::file::path path = ::file_as_string_dup(pathFile);
+
+   return path;
+
+}

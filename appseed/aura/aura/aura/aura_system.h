@@ -4,7 +4,9 @@
 CLASS_DECL_AURA ::file::path application_installer_folder(const ::file::path & pathExe, const char * pszPlatform, const char * pszConfiguration, const char * pszLocale, const char * pszSchema);
 CLASS_DECL_AURA bool is_application_installed(const ::file::path & pathExe, string & strBuild, const char * pszPlatform, const char * pszConfiguration, const char * pszLocale, const char * pszSchema);
 CLASS_DECL_AURA bool set_application_installed(const ::file::path & pathExe, const char * pszBuild, const char * pszPlatform, const char * pszConfiguration, const char * pszLocale, const char * pszSchema);
-CLASS_DECL_AURA ::file::path get_application_path(string strAppdId, const char * pszPlatform, const char * pszConfiguration);
+CLASS_DECL_AURA ::file::path get_application_path(string strAppId, const char * pszPlatform, const char * pszConfiguration);
+CLASS_DECL_AURA ::file::path get_installed_application_path_file(string strAppId);
+CLASS_DECL_AURA ::file::path get_installed_application_path(string strAppId);
 
 
 namespace aura

@@ -5851,7 +5851,9 @@ retry_license:
 
       ::file::path path = ::file::app_module();
 
-      Application.file().put_contents(::dir::local() / strAppId / "path.txt", path);
+      ::file::path pathFile = get_installed_application_path_file(strAppId);
+
+      Application.file().put_contents(pathFile, path);
 
       if(!os_on_start_application())
       {
