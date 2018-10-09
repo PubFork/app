@@ -5509,7 +5509,7 @@ namespace draw2d_cairo
    }
 
 
-   bool graphics::set_text_rendering_hint(::draw2d::e_text_rendering_hint_hint etextrenderinghint)
+   bool graphics::set_text_rendering_hint(::draw2d::e_text_rendering_hint etextrenderinghint)
    {
 
       return ::draw2d::graphics::set_text_rendering_hint(etextrenderinghint);

@@ -475,7 +475,7 @@ namespace draw2d_cairo
 
       virtual bool set_alpha_mode(::draw2d::e_alpha_mode ealphamode) override;
 
-      virtual bool set_text_rendering_hint(::draw2d::e_text_rendering_hint_hint etextrenderinghint) override;
+      virtual bool set_text_rendering_hint(::draw2d::e_text_rendering_hint etextrenderinghint) override;
 
       virtual void * get_os_data() const override;
       //      virtual HDC get_handle() override;
