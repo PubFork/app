@@ -74,7 +74,11 @@ namespace aura
       ::thread(NULL)
    {
 
+#if !defined(METROWIN)
+
       m_spmutexMatter = canew(mutex(papp, false, "Global\\ca2-appmatter"));
+
+#endif
 
       m_pappcore = pappcore;
 
