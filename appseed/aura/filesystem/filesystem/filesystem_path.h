@@ -49,7 +49,6 @@ namespace file
 
       }
 
-
    };
 
 
@@ -67,6 +66,13 @@ namespace file
       public path_meta
    {
    public:
+
+
+#ifdef WINDOWSEX
+
+      itemidlist        m_idlist;
+
+#endif
 
       //string m_strNameUser;
       //typedef ::string_array < ::file::path,string > patha;
@@ -229,6 +235,9 @@ namespace file
       path & operator /= (const string & str);
       path & operator /= (const char * psz);
 
+
+      bool is_empty() const;
+      bool has_char() const;
 
 
       //::file::path & file_cat(const string & str) { return *this + str; }

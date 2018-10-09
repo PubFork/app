@@ -23,6 +23,16 @@ itemidlist::itemidlist(const itemidlist & iidl) :
 }
 
 
+itemidlist::itemidlist(itemidlist && iidl)
+{
+
+   m_pidl = iidl.m_pidl;
+
+   iidl.m_pidl = NULL;
+
+}
+
+
 itemidlist::itemidlist(const char * pszPath) :
    m_pidl(NULL)
 {

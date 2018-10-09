@@ -28,6 +28,7 @@ public:
    itemidlist(const char * pcszPath);
    itemidlist(LPCITEMIDLIST pidl, bool bAttach = true);
    itemidlist(const itemidlist & iidl);
+   itemidlist(itemidlist && iidl);
    ~itemidlist();
 
    //comptr < IShellFolder> _017GetParentShellFolder(LPITEMIDLIST lpiidlChild);

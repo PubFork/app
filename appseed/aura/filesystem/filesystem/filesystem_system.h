@@ -111,7 +111,7 @@ namespace file
       virtual string nessie(file *  pfile);
       virtual string nessie(var varFile, ::aura::application * papp);
 
-      virtual bool resolve_link(string & strTarget, string & strFolder, string & strParams, const string & strSource, ::user::primitive * puiMessageParentOptional = NULL);
+      virtual bool resolve_link(::file::path & pathTarget, string & strFolder, string & strParams, const string & strSource, ::user::primitive * puiMessageParentOptional = NULL);
 
       virtual bool is_link(string strPath);
 

@@ -346,7 +346,7 @@ namespace aura
    }
 
 
-   bool os::resolve_link(string & strTarget, string & strDirectory, string & strParams, const string & pszSource,::user::primitive * puiMessageParentOptional)
+   bool os::resolve_link(::file::path & pathLink, string & strDirectory, string & strParams, const string & pszSource,::user::primitive * puiMessageParentOptional)
    {
 
       if(::str::ends_ci(pszSource, ".desktop"))
@@ -373,16 +373,16 @@ namespace aura
 
          }
 
-         strTarget = stra[0];
+         string strLink = stra[0];
 
-         ::str::begins_eat_ci(strTarget, "exec=");
+         ::str::begins_eat_ci(strLink, "exec=");
 
          while(true)
          {
 
             bool bAte = false;
 
-            if(::str::ends_eat_ci(strTarget, "%u"))
+            if(::str::ends_eat_ci(strLink, "%u"))
             {
 
                bAte = true;
@@ -398,13 +398,15 @@ namespace aura
 
          }
 
-         strTarget.trim();
+         strLink.trim();
 
-         strTarget.trim("\"");
+         strLink.trim("\"");
 
-         strTarget.trim("\'");
+         strLink.trim("\'");
 
-         strDirectory = ::file::path(strTarget).folder();
+         strDirectory = ::file::path(strLink).folder();
+
+         pathLink = strLink;
 
 //      #endif
 
@@ -417,31 +419,41 @@ namespace aura
 
 #ifdef WINDOWS
 
-         strTarget = pszSource;
+         pathLink = pszSource;
 
-         strDirectory = ::file::path(strTarget).folder();
+         strDirectory = ::file::path(pathLink).folder();
 
          return false;
 
 #else
 
-         char * psz = strTarget.GetBufferSetLength(4096);
+         string strLink;
+
+         char * psz = strLink.GetBufferSetLength(4096);
+
          int count = (int) readlink(pszSource, psz, 4096);
+
          if (count < 0)
          {
 
-            strTarget.ReleaseBuffer(0);
+            strLink.ReleaseBuffer(0);
 
-            strTarget = pszSource;
+            strLink = pszSource;
 
-            strDirectory = ::file::path(strTarget).folder();
+            strDirectory = ::file::path(strLink).folder();
+
+            pathLink = strLink;
 
             return true;
 
          }
-         strTarget.ReleaseBuffer(count);
 
-         strDirectory = ::file::path(strTarget).folder();
+         strLink.ReleaseBuffer(count);
+
+         strDirectory = ::file::path(strLink).folder();
+
+         pathLink = strLink;
+
          return true;
 #endif
       }

@@ -25,6 +25,7 @@
 #include "windows_graphics.cpp"
 #include "windows_internal.cpp"
 #include "windows_ipc.cpp"
+#include "windows_itemidlist.cpp"
 #include "windows_launcher.cpp"
 #include "windows_library.cpp"
 #include "windows_list_serial_ports.cpp"

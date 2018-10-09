@@ -23,6 +23,7 @@ CLASS_DECL_AURA ::file::path node_full_file_path(file::path path)
 namespace file
 {
 
+
    path::path(e_context_switcher_null)
    {
 
@@ -135,8 +136,9 @@ namespace file
    }
 
    path::path(const path & path) :
-      ::string((const string &) path),
-      path_meta((path_meta &) path)
+      ::string((const string &)path),
+      path_meta((path_meta &)path),
+      m_idlist(path.m_idlist)
    {
 
    }
@@ -144,7 +146,8 @@ namespace file
 
    path::path(path && path) :
       string(::move(path)),
-      path_meta((path_meta &) path)
+      path_meta((path_meta &) path),
+      m_idlist(::move(path.m_idlist))
    {
 
    }
@@ -628,6 +631,7 @@ namespace file
 
          string::operator  = ((const string &) path);
          *((path_meta *)this) = (const path_meta &)path;
+         m_idlist = path.m_idlist;
 
       }
 
@@ -1000,6 +1004,22 @@ namespace file
       return false;
 
    }
+
+   bool path::is_empty() const
+   {
+
+      return ::string::is_empty() && m_idlist.is_empty();
+
+   }
+
+
+   bool path::has_char() const
+   {
+
+      return !is_empty();
+
+   }
+
 
 } // namespace file
 

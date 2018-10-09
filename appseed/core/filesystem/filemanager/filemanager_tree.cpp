@@ -483,7 +483,7 @@ namespace filemanager
          //pitemChild->m_iImageSelected = -1;
 
          pitemChild->m_filepath = path;
-         
+
          pitemChild->m_filepathEx = System.defer_make_file_system_url(path, get_app());
 
          pitemChild->m_strName = name;
@@ -587,7 +587,7 @@ namespace filemanager
                   pitemChild = canew(::userfs::item(this));
 
                   pitemChild->m_filepath = path;
-                  
+
                   pitemChild->m_filepathEx = System.defer_make_file_system_url(path, get_app());
 
                   pitemChild->m_strName = pathName;
@@ -863,17 +863,17 @@ restart:
       if(p.is_set() && ::userfs::tree::get_document()->get_fs_data()->is_link(p->m_filepath))
       {
 
-         string strTarget;
+         ::file::path pathTarget;
 
          string strFolder;
 
          string strParams;
 
-         System.file().resolve_link(strTarget, strFolder, strParams, p->m_filepath);
+         System.file().resolve_link(pathTarget, strFolder, strParams, p->m_filepath);
 
-         pitem = find_item(strTarget);
+         pitem = find_item(pathTarget);
 
-         knowledge(strTarget,actioncontext);
+         knowledge(pathTarget,actioncontext);
 
       }
       else
@@ -918,15 +918,15 @@ restart:
       if(::userfs::tree::get_document()->get_fs_data()->is_link(pitem->m_filepath))
       {
 
-         string strTarget;
+         ::file::path pathTarget;
 
          string strFolder;
 
          string strParams;
 
-         System.file().resolve_link(strTarget, strFolder, strParams, pitem->m_filepath);
+         System.file().resolve_link(pathTarget, strFolder, strParams, pitem->m_filepath);
 
-         get_filemanager_manager()->FileManagerBrowse(strTarget,actioncontext);
+         get_filemanager_manager()->FileManagerBrowse(pathTarget,actioncontext);
 
       }
       else

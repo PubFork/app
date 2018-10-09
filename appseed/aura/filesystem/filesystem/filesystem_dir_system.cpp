@@ -493,16 +493,16 @@ namespace file
          {
 #endif
 
-            string strTarget;
+            ::file::path pathTarget;
 
             string strFolder;
 
             string strParams;
 
-            if(System.file().resolve_link(strTarget,strFolder, strParams, lpcszPath))
+            if(System.file().resolve_link(pathTarget,strFolder, strParams, lpcszPath))
             {
 
-               bIs = is(strTarget,papp);
+               bIs = is(pathTarget,papp);
 
                return true;
 

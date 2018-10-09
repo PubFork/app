@@ -79,7 +79,7 @@ namespace aura
 
       virtual void set_file_status(const char * lpszFileName, const ::file::file_status& status);
 
-      virtual bool resolve_link(string & strTarget,string & strDirectory,string & strParams, const string & pszSource,::user::primitive * puiMessageParentOptional = NULL);
+      virtual bool resolve_link(::file::path & path,string & strDirectory,string & strParams, const string & pszSource,::user::primitive * puiMessageParentOptional = NULL);
 
       virtual bool initialize_wallpaper_fileset(::file::set * pfileset, bool bAddSearch);
 

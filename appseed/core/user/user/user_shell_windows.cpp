@@ -341,7 +341,7 @@ namespace user
 
          }
 
-         string strTarget;
+         ::file::path pathTarget;
 
          if (((FAILED(hrIconLocation) && FAILED(hrGetLocation))
 
@@ -357,15 +357,15 @@ namespace user
 
             string strParams;
 
-            System.file().resolve_link(strTarget, strFolder, strParams, strFileParam, NULL);
+            System.file().resolve_link(pathTarget, strFolder, strParams, strFileParam, NULL);
 
-            if (!Application.file().exists(strTarget) && !Application.dir().is(strTarget))
+            if (!Application.file().exists(pathTarget) && !Application.dir().is(pathTarget))
             {
 
-               if (strTarget.ends_ci(".exe"))
+               if (pathTarget.ends_ci(".exe"))
                {
 
-                  imagekey.set_path(strTarget);
+                  imagekey.set_path(pathTarget);
 
                }
                else
@@ -384,7 +384,7 @@ namespace user
             if (FAILED(hrIconLocation) && FAILED(hrGetLocation))
             {
 
-               imagekey.set_path(strTarget);
+               imagekey.set_path(pathTarget);
 
                iImage = get_image(oswindow, imagekey, lpcszExtra, crBk);
 
@@ -396,7 +396,7 @@ namespace user
          else
          {
 
-            strTarget = strFileParam;
+            pathTarget = strFileParam;
 
          }
 
@@ -406,7 +406,7 @@ namespace user
             if (imagekey.m_strShellThemePrefix.has_char())
             {
 
-               string strExtension = file_extension_dup(strTarget);
+               string strExtension = file_extension_dup(pathTarget);
 
                image_key imagekeyTheme;
 
@@ -634,7 +634,7 @@ namespace user
 
          //}
 
-         imagekey.set_extension(strTarget);
+         imagekey.set_extension(pathTarget);
 
          imagekey.m_strPath = NULL;
 

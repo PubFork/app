@@ -1463,7 +1463,7 @@ retry:
    }
 
 
-   bool os::resolve_link(string & strTarget, string & strFolder, string & strParams, const string & strSource, ::user::primitive * puiMessageParentOptional)
+   bool os::resolve_link(::file::path & pathLink, string & strFolder, string & strParams, const string & strSource, ::user::primitive * puiMessageParentOptional)
    {
 
       sp(::user::primitive) pui = puiMessageParentOptional;
@@ -1471,7 +1471,7 @@ retry:
       if (!::str::ends_ci(strSource, ".lnk"))
       {
 
-         strTarget = strSource;
+         pathLink = strSource;
 
          return true;
 
@@ -1497,7 +1497,7 @@ retry:
       if(dw == 0 || !(info.dwAttributes & SFGAO_LINK))
       {
 
-         strTarget = wstrFileIn;
+         pathLink = wstrFileIn;
 
          return false;
 
@@ -1551,7 +1551,20 @@ retry:
 
                   wstr.release_buffer();
 
-                  strTarget = ::str::international::unicode_to_utf8((LPCWSTR)wstr);
+                  string strLink = ::str::international::unicode_to_utf8((LPCWSTR)wstr);
+
+                  if (strLink.is_empty())
+                  {
+
+                     pshelllink->GetIDList(&pathLink.m_idlist.m_pidl);
+
+                  }
+                  else
+                  {
+
+                     pathLink = strLink;
+
+                  }
 
                }
 
@@ -1766,7 +1779,20 @@ retry:
 
          si.lpVerb = NULL;
 
-         si.lpFile = wstrTarget;
+         if (wstrTarget.is_empty())
+         {
+
+            si.fMask |= SEE_MASK_IDLIST;
+
+            si.lpIDList = path.m_idlist.m_pidl;
+
+         }
+         else
+         {
+
+            si.lpFile = wstrTarget;
+
+         }
 
          si.lpParameters = pwszParams;
 
