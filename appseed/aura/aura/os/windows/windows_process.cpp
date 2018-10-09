@@ -284,19 +284,30 @@ int32_t call_async(const char * pszPath, const char * pszParam, const char * psz
 uint32_t call_sync(const char * pszPath, const char * pszParam, const char * pszDir, int32_t iShow, int32_t iRetry, int32_t iSleep, PFNCALLSYNCONRETRY pfnOnRetry, uint_ptr dwParam, unsigned int * puiPid)
 {
 
-   SHELLEXECUTEINFOA infoa;
+   SHELLEXECUTEINFOW infoa;
 
    memset_dup(&infoa, 0, sizeof(infoa));
 
+   wstring wstrFile(pszPath);
+   wstring wstrParam(pszParam);
+   wstring wstrDir(pszDir);
+
    infoa.cbSize = sizeof(infoa);
-   infoa.lpFile = pszPath;
-   infoa.lpParameters = pszParam;
-   infoa.lpDirectory = pszDir;
+   infoa.lpFile = wstrFile;
+   infoa.lpParameters = wstrParam;
+   infoa.lpDirectory = wstrDir;
    infoa.nShow = iShow;
 
    infoa.fMask |= SEE_MASK_NOCLOSEPROCESS | SEE_MASK_NOASYNC | SEE_MASK_FLAG_NO_UI;
 
-   ::ShellExecuteExA(&infoa);
+   if (!::ShellExecuteExW(&infoa))
+   {
+
+      DWORD dwLastError = ::GetLastError();
+
+      return -1;
+
+   }
 
    if (puiPid != NULL)
    {
