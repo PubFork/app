@@ -756,7 +756,9 @@ namespace plugin
 
                      strSchema.trim();
 
-                     if(strAppId.has_char() && !System.is_application_installed(strAppId, strBuild, strPlatform, strConfiguration, strLocale, strSchema))
+                     ::file::path pathExe = strAppId;
+
+                     if(strAppId.has_char() && !is_application_installed(pathExe, strBuild, strPlatform, strConfiguration, strLocale, strSchema))
                      {
 
                         string strCommandLine;
@@ -786,12 +788,12 @@ namespace plugin
 
                                  string strConfig = strConfiguration.trimmed().is_empty() ? "stage" : strConfiguration;
 
-                                 strBuild = System.get_latest_build_number(strConfiguration).trimmed();
+                                 strBuild = System.get_latest_build_number(strConfiguration, strAppId).trimmed();
 
                                  if(strBuild.is_empty())
                                  {
 
-                                    strBuild = System.get_latest_build_number(strConfig);
+                                    strBuild = System.get_latest_build_number(strConfig, strAppId);
 
                                     if(strBuild.is_empty())
                                     {

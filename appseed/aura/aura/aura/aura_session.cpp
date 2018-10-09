@@ -135,6 +135,20 @@ namespace aura
 
       }
 
+      string strBuild;
+
+      ::file::path pathExe = ::file::app_module();
+
+      if (!is_application_installed(pathExe, strBuild, System.get_system_platform(),
+                                    System.get_system_configuration(), m_strLocale, m_strSchema))
+      {
+
+         simple_message_box("Application \"" + strApp + "\"\nat path \"" + pathExe + "\"\n is not installed.", MB_OK);
+
+         return NULL;
+
+      }
+
       pcreate->m_spCommandLine->m_eventReady.ResetEvent();
 
       //Session.m_appptra.add(papp);

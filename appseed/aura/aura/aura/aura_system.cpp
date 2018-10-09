@@ -1843,7 +1843,7 @@ namespace aura
    }
 
 
-   string system::get_latest_build_number(const char * pszConfiguration)
+   string system::get_latest_build_number(const char * pszConfiguration, const char * pszAppId)
    {
 
       string strConfiguration(pszConfiguration);
@@ -1892,7 +1892,7 @@ RetryBuildNumber:
 
       iRetry++;
 
-      strBuild = http_get(strSpaIgnitionBaseUrl + "/query?node=build&configuration=" + strConfiguration);
+      strBuild = http_get(strSpaIgnitionBaseUrl + "/query?node=build&configuration=" + strConfiguration + "&id=" + string(pszAppId));
 
       ::str::_008Trim(strBuild);
 
@@ -1964,21 +1964,6 @@ RetryBuildNumber:
 
 
 
-   bool system::is_application_installed(const char * pszAppId, const char * pszBuild, const char * pszPlatform, const char * pszConfiguration, const char * pszLocale, const char * pszSchema)
-   {
-
-      synch_lock sl(m_pmutex);
-
-      ::file::path path;
-
-      path = dir().appdata() / pszAppId / pszBuild / pszPlatform / pszConfiguration / pszLocale / pszSchema / "installed.txt";
-
-      if(!Application.file().exists(path))
-         return false;
-
-      return true;
-
-   }
 
 
    void system::on_request(::create * pcreate)
@@ -4077,3 +4062,52 @@ success:
 
 
 
+
+CLASS_DECL_AURA ::file::path application_installer_folder(const ::file::path & pathExe, const char * pszPlatform, const char * pszConfiguration, const char * pszLocale, const char * pszSchema)
+{
+
+   return pathExe.folder() / pszPlatform / pszConfiguration / pszLocale / pszSchema;
+
+}
+
+CLASS_DECL_AURA bool is_application_installed(const ::file::path & pathExe, string & strBuild, const char * pszPlatform, const char * pszConfiguration, const char * pszLocale, const char * pszSchema)
+{
+
+   ::file::path path;
+
+   path = application_installer_folder(pathExe, pszPlatform, pszConfiguration, pszLocale, pszSchema) / "installed.txt";
+
+   strBuild = file_as_string_dup(path);
+
+   return strBuild.has_char();
+
+}
+
+
+CLASS_DECL_AURA bool set_application_installed(const ::file::path & pathExe, const char * pszBuild, const char * pszPlatform, const char * pszConfiguration, const char * pszLocale, const char * pszSchema)
+{
+
+   ::file::path path;
+
+   path = application_installer_folder(pathExe, pszPlatform, pszConfiguration, pszLocale, pszSchema) / "installed.txt";
+
+   return file_put_contents_dup(path, pszBuild);
+
+}
+
+
+
+CLASS_DECL_AURA::file::path get_application_path(string strAppId, const char * pszPlatform, const char * pszConfiguration)
+{
+
+   string str = strAppId;
+
+   str.replace("/", "_");
+
+   str.replace("-", "_");
+
+   ::file::path path = dir::stage(strAppId, pszPlatform, pszConfiguration) / str + ".exe";
+
+   return path;
+
+}

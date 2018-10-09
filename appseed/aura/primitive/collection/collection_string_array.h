@@ -2072,7 +2072,7 @@ index string_array < Type, RawType > ::add_unique(const string & lpcsz)
    if(find >= 0)
       return -1;
 
-   string_array::add((const Type &) lpcsz);
+   string_array::add((Type) lpcsz);
 
    return get_upper_bound();
 

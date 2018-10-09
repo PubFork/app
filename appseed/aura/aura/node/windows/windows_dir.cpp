@@ -1119,7 +1119,7 @@ namespace windows
 
          string strRelative = ::dir::app_relative();
 
-         m_strCa2AppData = m_strAppData / "ca2" / "appdata" / strRelative;
+         m_strCa2AppData = ::dir::ca2config() / "appdata" / strRelative;
 
          m_strCa2AppData /= System.get_system_platform();
 

@@ -1,6 +1,12 @@
 #pragma once
 
 
+CLASS_DECL_AURA ::file::path application_installer_folder(const ::file::path & pathExe, const char * pszPlatform, const char * pszConfiguration, const char * pszLocale, const char * pszSchema);
+CLASS_DECL_AURA bool is_application_installed(const ::file::path & pathExe, string & strBuild, const char * pszPlatform, const char * pszConfiguration, const char * pszLocale, const char * pszSchema);
+CLASS_DECL_AURA bool set_application_installed(const ::file::path & pathExe, const char * pszBuild, const char * pszPlatform, const char * pszConfiguration, const char * pszLocale, const char * pszSchema);
+CLASS_DECL_AURA ::file::path get_application_path(string strAppdId, const char * pszPlatform, const char * pszConfiguration);
+
+
 namespace aura
 {
 
@@ -469,8 +475,7 @@ namespace aura
 
       virtual string get_system_platform();
       virtual string get_system_configuration();
-      virtual bool is_application_installed(const char * pszAppId, const char * pszBuild = NULL, const char * pszPlatform = NULL, const char * pszConfiguration = NULL, const char * pszLocale = NULL, const char * pszSchema = NULL);
-      virtual string get_latest_build_number(const char * pszConfiguration);
+      virtual string get_latest_build_number(const char * pszConfiguration, const char * pszAppId);
 
 
       virtual void on_start_find_applications_from_cache();
