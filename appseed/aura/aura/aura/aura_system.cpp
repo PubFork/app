@@ -4113,21 +4113,17 @@ CLASS_DECL_AURA bool set_application_installed(const ::file::path & pathExe, con
 CLASS_DECL_AURA::file::path get_application_path(string strAppId, const char * pszPlatform, const char * pszConfiguration)
 {
 
-   string str = strAppId;
-
-   str.replace("/", "_");
-
-   str.replace("-", "_");
-
    ::file::path pathFolder;
 
    pathFolder = dir::stage(strAppId, pszPlatform, pszConfiguration);
 
+   string strName;
+
+   strName = ::process::app_id_to_app_name(strAppId);
+
    ::file::path path;
 
-   path = dir::stage(strAppId, pszPlatform, pszConfiguration);
-
-   path = pathFolder / (str + ".exe");
+   path = pathFolder / (strName + ".exe");
 
    return path;
 
