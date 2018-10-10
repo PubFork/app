@@ -3114,8 +3114,8 @@ retry_license:
       ::file::path pathExe = ::file::app_module();
 
       straLocale.insert_at(0, strSystemLocale);
-      straLocale.insert_at(0, strSystemSchema);
-      straSchema.insert_at(0, "_std");
+      straSchema.insert_at(0, strSystemSchema);
+      straLocale.insert_at(0, "_std");
       straSchema.insert_at(0, "_std");
 
 
