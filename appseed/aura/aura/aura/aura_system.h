@@ -456,6 +456,7 @@ namespace aura
       virtual ::file::path get_matter_path(string strMatter);
       virtual ::file::path get_matter_cache_path(string strMatter);
       virtual ::file::path local_get_matter_cache_path(string strMatter);
+      virtual ::file::path side_get_matter_path(string strMatter);
 
       virtual bool find_applications_from_cache();
       virtual bool find_applications_to_cache(bool bSave = true);

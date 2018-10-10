@@ -617,20 +617,24 @@ namespace aura
 
       bool bMatterFromHttpCache = false;
 
-      if(m_pappcore->m_iMatterFromHttpCache == -1)
-      {
+      //if(m_pappcore->m_iMatterFromHttpCache == -1)
+      //{
 
-         bMatterFromHttpCache = !::dir::is(local_get_matter_cache_path("app/appmatter/main"));
+      //   bMatterFromHttpCache = !::dir::is(local_get_matter_cache_path("app/appmatter/main"));
 
-      }
-      else
-      {
+      //}
+      //else
+      //{
 
-         bMatterFromHttpCache = m_pappcore->m_iMatterFromHttpCache != 0;
+      //   bMatterFromHttpCache = m_pappcore->m_iMatterFromHttpCache != 0;
 
-      }
+      //}
 
-      m_spdir->m_bMatterFromHttpCache = bMatterFromHttpCache;
+      m_pappcore->m_iMatterFromHttpCache = 1;
+
+      //m_spdir->m_bMatterFromHttpCache = bMatterFromHttpCache;
+
+      m_spdir->m_bMatterFromHttpCache = true;
 
       ::file::dir::system::g_pthis = m_spdir;
 
@@ -2158,6 +2162,22 @@ RetryBuildNumber:
    ::file::path system::local_get_matter_cache_path(string strMatter)
    {
 
+      ::file::path pathResource = ::dir::ca2config() / "appmatter";
+
+#ifdef APPLEOS
+
+      pathResource = (pathResource + ".app") / "Contents/Resources";
+
+#endif
+
+      return pathResource / strMatter;
+
+   }
+
+
+   ::file::path system::side_get_matter_path(string strMatter)
+   {
+
       ::file::path pathResource = dir().install();
 
 #ifdef APPLEOS
@@ -2179,75 +2199,82 @@ RetryBuildNumber:
       if (::str::begins_eat_ci(strMatter, "appmatter://"))
       {
 
-         if (dir().m_bMatterFromHttpCache)
+         ::file::path pathCache = local_get_matter_cache_path(strMatter);
+
+         if (file_exists_dup(pathCache))
          {
 
-            ::file::path path = "https://server.ca2.cc/matter" / strMatter;
+            return pathCache;
 
-            ::file::path pathCache = ::dir::ca2config() / "appmatter" / strMatter;
+         }
 
-            ::str::begins_eat_ci(strMatter, "appmatter://");
+         ::file::path pathSide = side_get_matter_path(strMatter);
 
-            ::file::path pathMeta = pathCache + ".meta_information";
+         if (file_exists_dup(pathSide))
+         {
 
-            string strFirstLine = file_line_dup(pathMeta, 0);
-
-            if (strFirstLine == "directory" && dir::is(pathCache))
-            {
-
-               return pathCache;
-
-            }
-            else if (strFirstLine == "file" && file_exists_dup(pathCache))
-            {
-
-               return pathCache;
-
-            }
-
-            if (file().exists(path, this))
-            {
-
-               file_set_line_dup(pathMeta, 0, "file");
-
-               property_set set;
-
-               set["raw_http"] = true;
-
-               set["disable_common_name_cert_check"] = true;
-
-               http().download(path, pathCache, set);
-
-            }
-            else if (dir().is(path, this))
-            {
-
-               file_set_line_dup(pathMeta, 0, "directory");
-
-               dir().mk(pathCache, this);
-
-            }
-            else
-            {
-
-               if (file_delete_dup(pathMeta))
-               {
-
-                  file_put_contents_dup(pathMeta, "");
-
-               }
-
-            }
+            file_copy_dup(pathCache, pathSide, true);
 
             return pathCache;
+
+         }
+
+         ::str::begins_eat_ci(strMatter, "appmatter://");
+
+         ::file::path pathMeta = pathCache + ".meta_information";
+
+         string strFirstLine = file_line_dup(pathMeta, 0);
+
+         ::file::path path = "https://server.ca2.cc/matter" / strMatter;
+
+         if (strFirstLine == "directory" && dir::is(pathCache))
+         {
+
+            return pathCache;
+
+         }
+         else if (strFirstLine == "file" && file_exists_dup(pathCache))
+         {
+
+            return pathCache;
+
+         }
+
+         if (file().exists(path, this))
+         {
+
+            file_set_line_dup(pathMeta, 0, "file");
+
+            property_set set;
+
+            set["raw_http"] = true;
+
+            set["disable_common_name_cert_check"] = true;
+
+            http().download(path, pathCache, set);
+
+         }
+         else if (dir().is(path, this))
+         {
+
+            file_set_line_dup(pathMeta, 0, "directory");
+
+            dir().mk(pathCache, this);
 
          }
          else
          {
 
-            return local_get_matter_cache_path(strMatter);
+            if (file_delete_dup(pathMeta))
+            {
+
+               file_put_contents_dup(pathMeta, "");
+
+            }
 
          }
+
+         return pathCache;
 
       }
 
