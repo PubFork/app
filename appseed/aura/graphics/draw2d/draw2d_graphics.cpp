@@ -3598,7 +3598,9 @@ namespace draw2d
    bool graphics::draw_text(const char * lpszString,strsize nCount,const RECT & lpRect,UINT nFormat)
    {
 
-      return draw_text(string(lpszString, nCount), lpRect, nFormat);
+      rectd r(lpRect);
+
+      return _001DrawText(string(lpszString, nCount), r, nFormat, false);
 
    }
 
@@ -3606,11 +3608,11 @@ namespace draw2d
    bool graphics::draw_text(const string & str,const RECT & lpRect,UINT nFormat)
    {
 
-      RECTD r;
+      rectd r;
 
       ::copy(&r, &lpRect);
 
-      return draw_text(str, r, nFormat);
+      return _001DrawText(str, r, nFormat, false);
 
    }
 
@@ -3618,12 +3620,24 @@ namespace draw2d
    bool graphics::draw_text(const char * lpszString,strsize nCount,const RECTD & lpRect,UINT nFormat)
    {
 
-      return draw_text(string(lpszString,nCount),lpRect,nFormat);
+      rectd r(lpRect);
+
+      return _001DrawText(string(lpszString,nCount),r,nFormat, false);
 
    }
 
 
-   bool graphics::draw_text(const string & strParam,const RECTD & lpRect,UINT nFormat)
+   bool graphics::draw_text(const string & strParam, const RECTD & lpRect, UINT nFormat)
+   {
+
+      rectd r(lpRect);
+
+      return _001DrawText(strParam, r, nFormat, false);
+
+   }
+
+
+   bool graphics::_001DrawText(const string & strParam,rectd & r,UINT nFormat, bool bMeasure)
    {
 
       string str(strParam);
@@ -3639,13 +3653,13 @@ namespace draw2d
       if(nFormat & DT_RIGHT)
       {
 
-         dx = lpRect.right - lpRect.left - sz.cx;
+         dx = r.right - r.left - sz.cx;
 
       }
       else if(nFormat & DT_CENTER)
       {
 
-         dx = ((lpRect.right - lpRect.left) - (sz.cx)) / 2.0;
+         dx = ((r.right - r.left) - (sz.cx)) / 2.0;
 
       }
       else
@@ -3658,13 +3672,13 @@ namespace draw2d
       if(nFormat & DT_BOTTOM)
       {
 
-         dy = lpRect.bottom - lpRect.top - sz.cy;
+         dy = r.bottom - r.top - sz.cy;
 
       }
       else if(nFormat & DT_VCENTER)
       {
 
-         dy = ((lpRect.bottom - lpRect.top) - (sz.cy)) / 2.0;
+         dy = ((r.bottom - r.top) - (sz.cy)) / 2.0;
 
       }
       else
@@ -3694,7 +3708,7 @@ namespace draw2d
 
          str.replace("\n", "");
 
-         text_out(lpRect.left + dx,lpRect.top + dy,str);
+         text_out(r.left + dx,r.top + dy,str);
 
       }
       else
@@ -3713,7 +3727,7 @@ namespace draw2d
 
             size s1 = GetTextExtent(str);
 
-            text_out(lpRect.left + dx,lpRect.top + dy + offsety,str);
+            text_out(r.left + dx,r.top + dy + offsety,str);
 
             offsety += s1.cy;
 
@@ -4015,11 +4029,11 @@ namespace draw2d
 
    bool graphics::blur(bool bExpand, double dRadius, const RECT & rect)
    {
-      
+
       _throw(interface_only_exception(get_app()));
-      
+
       return false;
-      
+
    }
 
 

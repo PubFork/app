@@ -472,6 +472,7 @@ namespace draw2d
       virtual bool TextOutRaw(double x, double y, const char * lpszString, strsize nCount);
       virtual bool TextOutAlphaBlend(double x, double y, const char * lpszString, strsize nCount);
 
+      virtual bool _001DrawText(const string & str, rectd & lpRect, UINT nFormat, bool bMeasure = false);
 
       virtual bool draw_text(const char * lpszString,strsize nCount,const RECT & lpRect,UINT nFormat);
       virtual bool draw_text(const string & str, const RECT & lpRect, UINT nFormat);
