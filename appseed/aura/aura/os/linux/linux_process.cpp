@@ -342,7 +342,7 @@ CLASS_DECL_AURA int32_t call_async(const char * pszPath, const char * pszParam, 
 }
 
 
-CLASS_DECL_AURA DWORD call_sync(const char * pszPath, const char * pszParam, const char * pszDir, int32_t iShow, int32_t iRetry, int32_t iSleep, PFNCALLSYNCONRETRY pfnOnRetry, uint_ptr dwParam, unsigned int * puiPid)
+CLASS_DECL_AURA DWORD call_sync(const char * pszPath, const char * pszParam, const char * pszDir, int32_t iShow, int32_t iRetry, int32_t iSleep, PFNCALLSYNCONRETRY pfnOnRetry, uint_ptr dwParam, unsigned int * puiPid, bool bPrivileged)
 {
 
    string strCmdLine;
@@ -744,11 +744,11 @@ int create_process2(const char * pszCommandLine, int * pprocessId)
 
 CLASS_DECL_AURA ::file::path core_app_path(string strApp)
 {
-   
+
    strApp.replace("-", "_");
-   
+
    strApp.replace("/", "_");
-   
+
    return "/xcore/time/x64/basis/" + strApp;
-   
+
 }

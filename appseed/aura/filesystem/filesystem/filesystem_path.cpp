@@ -137,8 +137,10 @@ namespace file
 
    path::path(const path & path) :
       ::string((const string &)path),
-      path_meta((path_meta &)path),
-      m_idlist(path.m_idlist)
+      path_meta((path_meta &)path)
+      #ifdef WINDOWS
+      , m_idlist(path.m_idlist)
+      #endif
    {
 
    }
@@ -146,8 +148,10 @@ namespace file
 
    path::path(path && path) :
       string(::move(path)),
-      path_meta((path_meta &) path),
-      m_idlist(::move(path.m_idlist))
+      path_meta((path_meta &) path)
+      #ifdef WINDOWS
+      , m_idlist(::move(path.m_idlist))
+      #endif
    {
 
    }
@@ -631,7 +635,9 @@ namespace file
 
          string::operator  = ((const string &) path);
          *((path_meta *)this) = (const path_meta &)path;
+         #ifdef WINDOWS
          m_idlist = path.m_idlist;
+         #endif
 
       }
 
@@ -1008,7 +1014,15 @@ namespace file
    bool path::is_empty() const
    {
 
-      return ::string::is_empty() && m_idlist.is_empty();
+      return ::string::is_empty()
+
+      #ifdef WINDOWS
+
+       && m_idlist.is_empty();
+       #else
+       ;
+
+       #endif
 
    }
 

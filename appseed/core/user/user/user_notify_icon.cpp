@@ -137,7 +137,7 @@ namespace user
 
       {
 
-         string strFolder(System.dir().install());
+         string strFolder("appmatter:/");
 
          strFolder += "/";
 
@@ -173,6 +173,19 @@ namespace user
          strFolder+= "/appmatter/" + str;
 
          strFolder += "/_std/_std/main/";
+
+
+         ::file::path pathFolder;
+
+         pathFolder = strFolder;
+
+         ::file::path path;
+
+         path = pathFolder / (str1 + "_128.png");
+
+         path = System.defer_process_path(path, get_app());
+
+         strFolder = path.folder();
 
          main_sync([&]()
          {
@@ -458,10 +471,10 @@ namespace user
    }
 
 
-   void notify_icon::notification_area_action_info(char ** ppszName, char ** ppszId, char ** ppszLabel, char ** ppszAccelerator, char ** ppszDescription, int iIndex)
+   bool notify_icon::notification_area_action_info(char ** ppszName, char ** ppszId, char ** ppszLabel, char ** ppszAccelerator, char ** ppszDescription, int iIndex)
    {
 
-      m_plistener->notification_area_action_info(ppszName, ppszId, ppszLabel, ppszAccelerator, ppszDescription, iIndex);
+      return m_plistener->notification_area_action_info(ppszName, ppszId, ppszLabel, ppszAccelerator, ppszDescription, iIndex);
 
    }
 

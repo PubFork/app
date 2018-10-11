@@ -968,13 +968,13 @@ namespace linux
          if(file_exists_dup(pathDesktop))
          {
 
-            string strTarget;
+            ::file::path pathTarget;
 
             string strDirectory;
 
-            resolve_link(strTarget, strDirectory, strParam, pathDesktop, NULL);
+            resolve_link(pathTarget, strDirectory, strParam, pathDesktop, NULL);
 
-            path = strTarget;
+            path = pathTarget;
 
          }
 

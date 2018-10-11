@@ -484,7 +484,7 @@ oswindow WINAPI SetParent(::oswindow oswindow, ::oswindow oswindowNewParent)
    return oswindow->set_parent(oswindowNewParent);
 }
 
-WINBOOL ShowWindow(::oswindow oswindow, int nCmdShow)
+WINBOOL show_window(::oswindow oswindow, int nCmdShow)
 {
    return oswindow->show_window(nCmdShow);
 }

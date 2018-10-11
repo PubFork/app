@@ -19,7 +19,7 @@ WINBOOL is_window(oswindow oswindow);
 WINBOOL IsChild(oswindow oswindowParent, oswindow oswindowcandidateChildOrDescendant);
 oswindow GetParent(oswindow oswindow);
 oswindow SetParent(oswindow oswindowChild, oswindow oswindowNewParent);
-WINBOOL ShowWindow(oswindow oswindow, int nCmdShow);
+WINBOOL show_window(oswindow oswindow, int nCmdShow);
 LONG GetWindowLongA(oswindow oswindow, int nIndex);
 LONG SetWindowLongA(oswindow oswindow, int nIndex, LONG l);
 WINBOOL ClientToScreen(oswindow oswindow, LPPOINT lppoint);

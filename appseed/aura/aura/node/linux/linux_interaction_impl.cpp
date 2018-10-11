@@ -4126,7 +4126,7 @@ namespace linux
 
       }
 
-      ::ShowWindow(m_oswindow, SW_RESTORE);
+      ::show_window(m_oswindow, SW_RESTORE);
 
    }
 
@@ -4141,7 +4141,7 @@ namespace linux
 
       }
 
-      ::ShowWindow(m_oswindow, nCmdShow);
+      ::show_window(m_oswindow, nCmdShow);
 
       return m_pui->IsWindowVisible();
 
