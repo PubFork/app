@@ -2164,11 +2164,9 @@ RetryBuildNumber:
 
       ::file::path pathResource = ::dir::ca2config() / "appmatter";
 
-#ifdef APPLEOS
-
-      pathResource = (pathResource + ".app") / "Contents/Resources";
-
-#endif
+// #ifdef APPLEOS
+//  pathResource = (pathResource + ".app") / "Contents/Resources";
+//   #endif
 
       return pathResource / strMatter;
 
