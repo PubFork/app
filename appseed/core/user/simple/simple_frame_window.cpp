@@ -254,6 +254,7 @@ void simple_frame_window::install_message_routing(::message::sender * pinterface
    IGUI_MSG_LINK(WM_APPEXIT, pinterface, this, &simple_frame_window::_001OnAppExit);
    IGUI_MSG_LINK(WM_ACTIVATEAPP, pinterface, this, &simple_frame_window::_001OnActivateApp);
    IGUI_MSG_LINK(WM_ACTIVATE, pinterface, this, &simple_frame_window::_001OnActivate);
+   IGUI_MSG_LINK(message_update_notify_icon, pinterface, this, &simple_frame_window::_001OnUpdateNotifyIcon);
 
 #ifdef WINDOWSEX
 
@@ -552,7 +553,8 @@ void simple_frame_window::_001OnCreate(::message::message * pobj)
 
    defer_set_icon();
 
-   defer_create_notification_icon();
+   post_message(message_update_notify_icon);
+   //defer_create_notification_icon();
 
    if (!m_bShowTask)
    {
@@ -675,6 +677,14 @@ void simple_frame_window::_001OnTaskbarCreated(::message::message * pobj)
 
    defer_create_notification_icon();
 
+}
+
+
+void simple_frame_window::_001OnUpdateNotifyIcon(::message::message * pobj)
+{
+   
+   defer_create_notification_icon();
+   
 }
 
 

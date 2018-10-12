@@ -146,6 +146,7 @@ public:
    DECL_GEN_SIGNAL(_001OnNcActivate);
    DECL_GEN_SIGNAL(_001OnDisplayChange);
    DECL_GEN_SIGNAL(_001OnTaskbarCreated);
+   DECL_GEN_SIGNAL(_001OnUpdateNotifyIcon);
 
    void _001OnDeferPaintLayeredWindowBackground(::draw2d::graphics * pgraphics) override;
 

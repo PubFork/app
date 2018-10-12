@@ -62,7 +62,7 @@ namespace macos
 
       virtual bool stop_service(sp(::aura::application) papp);
 
-      virtual bool resolve_link(string & strTarget, string & strFolder, string & strParams, const string & strSource, ::user::primitive * puiMessageParentOptional = NULL) override;
+      virtual bool resolve_link(::file::path & pathTarget, string & strFolder, string & strParams, const string & strSource, ::user::primitive * puiMessageParentOptional = NULL) override;
 
       void raise_exception( DWORD dwExceptionCode, DWORD dwExceptionFlags);
 

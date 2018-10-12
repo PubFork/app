@@ -37,7 +37,9 @@
    
    m_menuida = [[NSMutableArray alloc] init];
    
-   for(int i = 0; i < pbridge->notification_area_action_count(); i++)
+   int iCount = pbridge->_get_notification_area_action_count();
+   
+   for(int i = 0; i < iCount; i++)
    {
       
       char * pszName = NULL;
@@ -46,7 +48,7 @@
       char * pszAccelerator = NULL;
       char * pszDescription = NULL;
       
-      pbridge->notification_area_action_info(&pszName, &pszId, &pszLabel, &pszAccelerator, &pszDescription, i);
+      pbridge->_get_notification_area_action_info(&pszName, &pszId, &pszLabel, &pszAccelerator, &pszDescription, i);
       
       NSString * strTitle = NULL;
       
@@ -114,7 +116,7 @@
    
    NSMenuItem * pitem = (NSMenuItem *) sender;
    
-   for(int i = 0; i < m_pbridge->notification_area_action_count(); i++)
+   for(int i = 0; i < m_pbridge->_get_notification_area_action_count(); i++)
    {
       
       if(pitem == [m_menuitema objectAtIndex:i])

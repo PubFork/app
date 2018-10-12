@@ -2,6 +2,19 @@
 #include "macos.h"
 
 
+dispatch_source_t CreateDispatchTimer(double interval, dispatch_queue_t queue, dispatch_block_t block)
+{
+   dispatch_source_t timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);
+   if (timer)
+   {
+      dispatch_source_set_timer(timer, dispatch_time(DISPATCH_TIME_NOW, interval * NSEC_PER_SEC), interval * NSEC_PER_SEC, (1ull * NSEC_PER_SEC) / 10);
+      dispatch_source_set_event_handler(timer, block);
+      dispatch_resume(timer);
+   }
+   return timer;
+}
+
+
 int macos_clipboard_get_file_count();
 
 void macos_clipboard_get_filea(::file::patha & stra);
@@ -14,6 +27,10 @@ void macos_clipboard_set_plain_text(const char * pszPlainText);
 
 void * mm_clipboard_get_dib(int & cx, int & cy, int & iScan);
 
+bool mm_clipboard_has_dib();
+
+bool mm_clipboard_has_plain_text();
+
 namespace macos
 {
 
@@ -22,16 +39,48 @@ namespace macos
       ::object(papp),
       ::user::copydesk(papp)
    {
+      
+      m_bHasFile = false;
+      
+      m_bHasText = false;
+      
+      m_bHasDib = false;
+      
+      dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+
+      double secondsToFire = 0.33333333333333333;
+      
+      m_ds = CreateDispatchTimer(secondsToFire, queue, ^{ _os_step(); });
+
    }
 
    copydesk::~copydesk()
    {
+      
+      if (m_ds)
+      {
+         dispatch_source_cancel(m_ds);
+         // Remove this if you are on a Deployment Target of iOS6 or OSX 10.8 and above
+         dispatch_release(m_ds);
+         m_ds = nil;
+      }
+
+      
    }
 
+   
+   bool copydesk::_os_has_filea()
+   {
+      
+      return macos_clipboard_get_file_count() > 0;
+      
+   }
+
+   
    bool copydesk::_has_filea()
    {
-
-      return macos_clipboard_get_file_count() > 0;
+      
+      return m_bHasFile;
       
    }
 
@@ -127,13 +176,21 @@ namespace macos
    }
    
    
-   bool copydesk::_has_plain_text()
+   bool copydesk::_os_has_plain_text()
    {
       
-      return macos_clipboard_get_plain_text().length()>0;
+      return mm_clipboard_has_plain_text();
 
    }
 
+   
+   bool copydesk::_has_plain_text()
+   {
+      
+      return m_bHasText;
+      
+   }
+   
    
    bool copydesk::_desk_to_dib(::draw2d::dib * pdib)
    {
@@ -196,28 +253,34 @@ namespace macos
    }
    
    
+   bool copydesk::_os_has_dib()
+   {
+
+      return mm_clipboard_has_dib();
+      
+   }
+
+   
    bool copydesk::_has_dib()
    {
-      int w = 0;
       
-      int h = 0;
+      return m_bHasDib;
       
-      int iScan = 0;
-      
-      ::aura::malloc < COLORREF * > pcolorref = (COLORREF *) mm_clipboard_get_dib(w, h, iScan);
-      
-      if(pcolorref == NULL)
-      {
-         
-         return false;
-         
-      }
-      
-      return true;
-
    }
 
 
+   void copydesk::_os_step()
+   {
+      
+      m_bHasFile = _os_has_filea();
+      
+      m_bHasText = _os_has_plain_text();
+      
+      m_bHasDib = _os_has_dib();
+      
+   }
+
+   
 } // namespace macos
 
 

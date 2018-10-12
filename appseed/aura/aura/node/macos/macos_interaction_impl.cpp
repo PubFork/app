@@ -2742,7 +2742,7 @@ namespace macos
 
       }
 
-      ::ShowWindow(get_handle(), nCmdShow);
+      ::show_window(get_handle(), nCmdShow);
 
       //m_pui->send_message(WM_SHOWWINDOW, ::IsWindowVisible(get_handle()));
 

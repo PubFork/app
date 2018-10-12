@@ -27,8 +27,11 @@ int mm_clipboard_get_file_count()
    
    NSArray * filea = [pasteboard readObjectsForClasses:classes options:options];
    
-   return [filea count];
+   int iCount =  [filea count];
+
+   return iCount;
    
+
 }
 
 
@@ -110,6 +113,19 @@ char * mm_clipboard_get_plain_text()
    
 }
 
+
+bool mm_clipboard_has_plain_text()
+{
+   
+   NSPasteboard * pasteboard = [NSPasteboard generalPasteboard];
+   
+   NSString * strPasteboard = [pasteboard stringForType:NSPasteboardTypeString];
+   
+   return strPasteboard != nil;
+   
+}
+
+
 //https://stackoverflow.com/questions/3655038/how-to-copy-textfield-to-osx-clipboard
 //On OSX
 
@@ -128,6 +144,23 @@ void mm_clipboard_set_plain_text(const char * psz)
 
 
 void * get_dib(int & width, int & height, int & iScan, NSImage * pimage);
+
+
+bool mm_clipboard_has_dib()
+{
+   
+   NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
+   
+   NSArray *classArray = [NSArray arrayWithObject:[NSImage class]];
+   
+   NSDictionary *options = [NSDictionary dictionary];
+   
+   BOOL ok = [pasteboard canReadObjectForClasses:classArray options:options];
+   
+   return ok != FALSE;
+   
+}
+
 
 // http://findnerd.com/list/view/How-to-copy-image-in-NSPasteBoard/756/
 void * mm_clipboard_get_dib(int & cx, int & cy, int & iScan)

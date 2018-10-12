@@ -463,18 +463,18 @@ namespace user
 #if defined(LINUX) || defined(MACOS)
 
 
-   int notify_icon::notification_area_action_count()
+   int notify_icon::_get_notification_area_action_count()
    {
 
-      return m_plistener->notification_area_action_count();
+      return m_plistener->_get_notification_area_action_count();
 
    }
 
 
-   bool notify_icon::notification_area_action_info(char ** ppszName, char ** ppszId, char ** ppszLabel, char ** ppszAccelerator, char ** ppszDescription, int iIndex)
+   bool notify_icon::_get_notification_area_action_info(char ** ppszName, char ** ppszId, char ** ppszLabel, char ** ppszAccelerator, char ** ppszDescription, int iIndex)
    {
 
-      return m_plistener->notification_area_action_info(ppszName, ppszId, ppszLabel, ppszAccelerator, ppszDescription, iIndex);
+      return m_plistener->_get_notification_area_action_info(ppszName, ppszId, ppszLabel, ppszAccelerator, ppszDescription, iIndex);
 
    }
 

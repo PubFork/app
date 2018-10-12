@@ -774,10 +774,10 @@ namespace macos
    }
 
    
-   bool os::resolve_link(string & strTarget, string & strFolder, string & strParams, const string & strSource, ::user::primitive * puiMessageParentOptional)
+   bool os::resolve_link(::file::path & pathTarget, string & strFolder, string & strParams, const string & strSource, ::user::primitive * puiMessageParentOptional)
    {
 
-      strTarget = node_full_file_path(strSource);
+      pathTarget = node_full_file_path(strSource);
       
       return true;
 

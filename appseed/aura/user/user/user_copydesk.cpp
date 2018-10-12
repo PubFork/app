@@ -1,6 +1,8 @@
 #include "framework.h"
 
 
+
+
 namespace user
 {
 
@@ -8,6 +10,7 @@ namespace user
    copydesk::copydesk(::aura::application * papp) :
       object(papp)
    {
+      
 
    }
 
@@ -421,6 +424,8 @@ namespace user
       return 0;
 
    }
+   
+   
 
 } // namespace user
 

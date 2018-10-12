@@ -72,7 +72,7 @@ namespace user
    int notify_icon_listener::_get_notification_area_action_count()
    {
 
-      return m_notifyiconitema.get_count();
+      return (int) m_notifyiconitema.get_count();
 
    }
 

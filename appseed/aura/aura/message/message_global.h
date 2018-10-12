@@ -13,6 +13,7 @@ enum e_message
    message_simple_command,
    message_set_schema,
    message_post_user,
+   message_update_notify_icon,
 
 };
 

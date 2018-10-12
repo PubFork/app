@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 namespace user
@@ -67,3 +67,26 @@ string __get_text(string str)
    return Application.__get_text(str);
 
 }
+
+
+CLASS_DECL_AURA int __c_get_text_length(const char * psz)
+{
+ 
+   string str = __get_text(psz);
+
+   return (int) str.get_length();
+   
+}
+
+
+CLASS_DECL_AURA void __c_get_text(char * pszText, int iLen, const char * psz)
+{
+
+   string str = __get_text(psz);
+
+   iLen = MIN(iLen, (int) str.get_length());
+
+   return strncpy(pszText, str, iLen);
+   
+}
+
