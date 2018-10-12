@@ -484,10 +484,14 @@ oswindow WINAPI SetParent(::oswindow oswindow, ::oswindow oswindowNewParent)
    return oswindow->set_parent(oswindowNewParent);
 }
 
+#ifndef METROWIN
+
 WINBOOL show_window(::oswindow oswindow, int nCmdShow)
 {
    return oswindow->show_window(nCmdShow);
 }
+
+#endif
 
 LONG WINAPI GetWindowLongA(::oswindow oswindow, int nIndex)
 {
