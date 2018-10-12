@@ -2885,7 +2885,7 @@ restart:
       if(m_pimpl.is_set())
       {
 
-         m_pimpl->queue_message_handler(pbase);
+         m_pimpl->message_handler(pbase);
 
       }
 

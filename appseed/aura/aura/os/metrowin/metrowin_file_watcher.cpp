@@ -233,7 +233,7 @@ namespace file_watcher
       if (watchref == nullptr)
       {
 
-         _throw(file_not_found_exception(directory));
+         return -1;
 
       }
 

@@ -6988,11 +6988,14 @@ namespace metrowin
 
       synch_lock sl(&m_mutexQueue);
 
-      m_messageaQueue.add(pbase);
+      //m_messageaQueue.add(pbase);
 
-      m_evQueue.set_event();
+      //m_evQueue.set_event();
+
+      m_pui->message_handler(pbase);
 
    }
+
 
    bool interaction_impl::has_focus()
    {
