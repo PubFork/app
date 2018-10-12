@@ -1796,7 +1796,7 @@ namespace aura
       if (puiFocus.is_set())
       {
 
-         if (puiFocus->GetActiveWindow() != puiFocus->get_wnd())
+         if (!puiFocus->get_wnd()->is_active())
          {
 
             if (puiFocus->get_wnd() != NULL)

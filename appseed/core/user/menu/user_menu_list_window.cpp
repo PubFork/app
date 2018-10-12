@@ -238,11 +238,11 @@ namespace user
       for(int32_t i = 0; i < pitemParent->m_spitema->get_size(); i++)
       {
          menu_item * pitem = pitemParent->m_spitema->element_at(i);
-         if(pitem->m_id  == "separator")
+         //if(pitem->m_id  == "separator")
          {
-            lprect->bottom = lprect->top + 3;
+            // lprect->bottom = lprect->top + 3;
          }
-         else
+         //else
          {
             lprect->bottom = lprect->top + m_iItemHeight - 2;
          }
@@ -250,29 +250,25 @@ namespace user
          {
             lprect->left += iMaxWidth + 16;
             lprect->top = lpcrectBound->top;
-            if(pitem->m_id == "separator")
-               continue;
             lprect->bottom = lprect->top + m_iItemHeight - 2;
          }
 
-         if(pitem->m_pui == NULL)
+         if (pitem->m_id != "separator" && pitem->m_pui != NULL)
          {
 
-            continue;
+            pitem->m_pui->SetWindowPos(
+            0,
+            lprect->left + pitem->m_iLevel * g_base_menu_indent,
+            lprect->top,
+            iMaxWidth - pitem->m_iLevel * g_base_menu_indent,
+            lprect->bottom - lprect->top,
+            0);
+
+            layout_buttons(pitem, iMaxWidth, lprect, lpcrectBound);
 
          }
 
-         pitem->m_pui->SetWindowPos(
-         0,
-         lprect->left + pitem->m_iLevel * g_base_menu_indent,
-         lprect->top,
-         iMaxWidth - pitem->m_iLevel * g_base_menu_indent,
-         lprect->bottom - lprect->top,
-         0);
-
          lprect->top = lprect->bottom + 2;
-
-         layout_buttons(pitem, iMaxWidth, lprect, lpcrectBound);
 
       }
 

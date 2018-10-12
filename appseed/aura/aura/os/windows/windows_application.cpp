@@ -70,12 +70,18 @@ block_input::~block_input()
 
 bool is_good_active_w(oswindow w)
 {
+
    if (::GetForegroundWindow() == w || ::GetActiveWindow() == w || ::GetFocus() == w)
    {
+
       return true;
+
    }
+
    return false;
+
 }
+
 int SendCtrlShiftQToChrome(oswindow w, int iSleep, ::aura::application * papp)
 {
    /*HWND h = ::GetWindow(chrome, GW_CHILD);
@@ -917,7 +923,7 @@ DWORD TerminateGuiApp(DWORD dwPID, DWORD dwTimeout)
    // If we can't open the process with PROCESS_TERMINATE rights,
    // then we give up immediately.
    hProc = OpenProcess(SYNCHRONIZE | PROCESS_TERMINATE, FALSE,
-      dwPID);
+                       dwPID);
 
    if (hProc == NULL)
    {

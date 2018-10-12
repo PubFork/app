@@ -237,6 +237,7 @@ namespace user
       color_scrollbar_lite_border_hover,
       color_scrollbar_background,
       color_scrollbar_background_hover,
+      color_menu_background,
    };
 
    using color_map = map < e_color,e_color,COLORREF,COLORREF >;

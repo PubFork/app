@@ -67,8 +67,8 @@ namespace user
       button();
       button(::aura::application * papp);
       virtual ~button();
-      
-      
+
+
       void user_button_construct();
 
       virtual bool create_control(class control_descriptor * pdescriptor) override;
@@ -84,6 +84,8 @@ namespace user
       virtual void _001OnButtonDrawBackground(::draw2d::graphics * pgraphics);
       virtual void _001OnButtonDrawTextLayer(::draw2d::graphics * pgraphics, LPRECT lprectText);
       virtual void _001OnButtonDrawNormal(::draw2d::graphics * pgraphics);
+
+      virtual COLORREF _001GetButtonBackgroundColor();
 
       virtual void _001OnDraw(::draw2d::graphics * pgraphics) override;
       virtual void _002OnDraw(::draw2d::graphics * pgraphics);

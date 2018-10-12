@@ -66,19 +66,21 @@ namespace user
       if (m_id == "separator")
       {
 
-         pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
+         _001OnButtonDrawBackground(pgraphics);
 
-         pgraphics->fill_solid_rect(rectClient, _001GetColor(color_button_background));
+         //pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 
-         ::draw2d::pen_sp pen(allocer());
+         //pgraphics->fill_solid_rect(rectClient, _001GetButtonBackgroundColor());
 
-         pen->create_solid(1.0, ARGB(127, 80, 80, 80));
+         //::draw2d::pen_sp pen(allocer());
 
-         pgraphics->SelectObject(pen);
+         //pen->create_solid(1.0, _001GetColor(color_button_text));
 
-         pgraphics->move_to(rectClient.left + rectClient.width() / 8, (rectClient.top + rectClient.bottom) / 2);
+         //pgraphics->SelectObject(pen);
 
-         pgraphics->line_to(rectClient.right - rectClient.width() / 8, (rectClient.top + rectClient.bottom) / 2);
+         //pgraphics->move_to(rectClient.left + rectClient.width() / 8, (rectClient.top + rectClient.bottom) / 2);
+
+         ///pgraphics->line_to(rectClient.right - rectClient.width() / 8, (rectClient.top + rectClient.bottom) / 2);
 
          return;
 
@@ -110,6 +112,20 @@ namespace user
       }
 
       _001DrawCheck(pgraphics);
+
+   }
+
+
+   COLORREF menu_button::_001GetButtonBackgroundColor()
+   {
+
+      COLORREF crBackground = ::user::button::_001GetButtonBackgroundColor();
+
+      crBackground &= 0x00ffffff;
+
+      crBackground = crBackground | ARGB(200, 0, 0, 0);
+
+      return crBackground;
 
    }
 
@@ -156,10 +172,10 @@ namespace user
    void menu_button::_001OnNcDraw(::draw2d::graphics * pgraphics)
    {
 
-      if (m_id != "separator")
+      //if (m_id != "separator")
       {
 
-         ::user::button::_001OnNcDraw(pgraphics);
+         //::user::button::_001OnNcDraw(pgraphics);
 
       }
 
@@ -268,7 +284,25 @@ namespace user
 
       strButtonText = get_window_text();
 
+      bool bSeparator = false;
+
+      if (strButtonText.is_empty())
+      {
+
+         strButtonText = "separator";
+
+         bSeparator = true;
+
+      }
+
       class ::size size = pcalcsize->m_pgraphics->GetTextExtent(strButtonText);
+
+      if (bSeparator)
+      {
+
+         size.cy /= 2;
+
+      }
 
       rect rectMargin = _001GetRect(rect_menu_item_margin);
 

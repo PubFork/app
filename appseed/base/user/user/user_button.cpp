@@ -696,12 +696,8 @@ namespace user
    }
 
 
-   void button::_001OnButtonDrawBackground(::draw2d::graphics * pgraphics)
+   COLORREF button::_001GetButtonBackgroundColor()
    {
-
-      rect rectClient;
-
-      GetClientRect(rectClient);
 
       COLORREF crBackground;
 
@@ -729,6 +725,20 @@ namespace user
          crBackground = _001GetColor(color_button_background, ARGB(255, 240, 240, 240));
 
       }
+
+      return crBackground;
+
+   }
+
+
+   void button::_001OnButtonDrawBackground(::draw2d::graphics * pgraphics)
+   {
+
+      rect rectClient;
+
+      GetClientRect(rectClient);
+
+      COLORREF crBackground = _001GetButtonBackgroundColor();
 
       pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 

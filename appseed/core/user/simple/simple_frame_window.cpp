@@ -573,6 +573,45 @@ void simple_frame_window::_001OnCreate(::message::message * pobj)
 
    }
 
+
+   string strAppTitle = Application.m_strAppTitle;
+
+   if (strAppTitle.is_empty())
+   {
+
+      stringa stra;
+
+      stra.explode("/", Application.m_strAppId);
+
+      strAppTitle = stra.slice(1).implode(" ");
+
+      strAppTitle.replace("_", " ");
+
+      strAppTitle.replace("-", " ");
+
+      strAppTitle.replace(".", " ");
+
+   }
+
+   index iNotifyIconItem = 0;
+
+   notify_icon_insert_item(iNotifyIconItem++, strAppTitle, "notify_icon_topic");
+
+   if (m_workset.m_pframeschema != NULL
+         && m_workset.m_pframeschema->get_control_box() != NULL
+         && m_workset.m_pframeschema->get_control_box()->has_button(::user::wndfrm::frame::button_transparent_frame))
+   {
+
+      notify_icon_insert_item(iNotifyIconItem++, "separator");
+
+      notify_icon_insert_item(iNotifyIconItem++, _("Transparent Frame"), "transparent_frame");
+
+   }
+
+   notify_icon_insert_item(iNotifyIconItem++, "separator");
+
+   notify_icon_insert_item(iNotifyIconItem++, _("Exit"), "app_exit");
+
    pcreate->m_bRet = false;
 
 }
@@ -3492,50 +3531,29 @@ sp(::xml::document) simple_frame_window::notification_area_get_menu()
 //
 //   }
 
-   if(notification_area_action_count() > 0)
+
+   for (auto & item : m_notifyiconitema)
    {
 
-      for (int i = 0; i < notification_area_action_count(); i++)
+      string strName(item.m_strName);
+
+      strName.replace("_", "");
+
+      if (strName.compare_ci("separator") == 0)
       {
 
-         {
+         pdoc->get_root()->add_child("separator");
 
-            ::aura::malloc < char * > pszName;
-            ::aura::malloc < char * > pszId;
-            ::aura::malloc < char * > pszLabel;
-            ::aura::malloc < char * > pszAccelerator;
-            ::aura::malloc < char * > pszDescription;
+      }
+      else if (pdoc->rfind("item", { "id", item.m_strId }) == NULL)
+      {
 
-
-            notification_area_action_info(
-            &pszName.m_p,
-            &pszId.m_p,
-            &pszLabel.m_p,
-            &pszAccelerator.m_p,
-            &pszDescription.m_p, i);
-
-            string strName(pszName);
-
-            strName.replace("_", "");
-
-            if (strName.compare_ci("separator") == 0)
-            {
-
-               pdoc->get_root()->add_child("separator");
-
-            }
-            else if (pdoc->rfind("item", { "id", string(pszId) }) == NULL)
-            {
-
-               pdoc->get_root()->add_child("item", { "id", string(pszId) }, strName);
-
-            }
-
-         }
+         pdoc->get_root()->add_child("item", { "id", item.m_strId }, strName);
 
       }
 
    }
+
 
    return pdoc;
 
@@ -3679,127 +3697,6 @@ void simple_frame_window::_001OnNcCalcSize(::message::message * pmessage)
 
 
 
-int simple_frame_window::notification_area_action_count()
-{
-
-   int iCount = 3;
-
-   if (m_workset.m_pframeschema->get_control_box()->has_button(::user::wndfrm::frame::button_transparent_frame))
-   {
-
-      iCount+=2;
-
-   }
-
-   return iCount;
-
-}
-
-bool simple_frame_window::notification_area_action_info(char ** ppszName, char ** ppszId, char ** ppszLabel, char ** ppszAccelerator, char ** ppszDescription, int & iIndex)
-{
-
-   if(iIndex == 0)
-   {
-
-      string strAppTitle = Application.m_strAppTitle;
-
-      if(strAppTitle.is_empty())
-      {
-
-         stringa stra;
-
-         stra.explode("/", Application.m_strAppId);
-
-         strAppTitle = stra.slice(1).implode(" ");
-
-         strAppTitle.replace("_", " ");
-
-         strAppTitle.replace("-", " ");
-
-         strAppTitle.replace(".", " ");
-
-      }
-
-      *ppszName = strdup(strAppTitle);
-      *ppszId = strdup("notify_icon_topic");
-      *ppszLabel = strdup("notify_icon_topic");
-      *ppszAccelerator = strdup("notify_icon_topic");
-      *ppszDescription = strdup("notify_icon_topic");
-
-      return true;
-
-   }
-
-   int iLast4 = notification_area_action_count() - 4;
-
-   int iLast3 = notification_area_action_count() - 3;
-
-   int iLast2 = notification_area_action_count() - 2;
-
-   int iLast1 = notification_area_action_count() - 1;
-
-   if(m_workset.m_pframeschema->get_control_box()->has_button(::user::wndfrm::frame::button_transparent_frame))
-   {
-
-      if (iIndex == iLast4)
-      {
-
-         *ppszName = strdup(_("separator"));
-         *ppszId = strdup("separator");
-         *ppszLabel = strdup("separator");
-         *ppszAccelerator = strdup("separator");
-         *ppszDescription = strdup("separator");
-
-         return true;
-
-      }
-
-      if(iIndex == iLast3)
-      {
-
-         *ppszName = strdup(_("Transparent Frame"));
-         *ppszId = strdup("transparent_frame");
-         *ppszLabel = strdup("transparent_frame");
-         *ppszAccelerator = strdup("transparent_frame");
-         *ppszDescription = strdup("transparent_frame");
-
-         return true;
-
-      }
-
-   }
-
-   if(iIndex == iLast2)
-   {
-
-      *ppszName = strdup(_("separator"));
-      *ppszId = strdup("separator");
-      *ppszLabel = strdup("separator");
-      *ppszAccelerator = strdup("separator");
-      *ppszDescription = strdup("separator");
-
-      return true;
-
-   }
-
-   if (iIndex == iLast1)
-   {
-
-      *ppszName = strdup(_("Exit"));
-      *ppszId = strdup("app_exit");
-      *ppszLabel = strdup("app_exit");
-      *ppszAccelerator = strdup("app_exit");
-      *ppszDescription = strdup("app_exit");
-
-      return true;
-
-   }
-
-   iIndex -= 1; // only one item at beginning
-
-   return false;
-
-}
 
 
 

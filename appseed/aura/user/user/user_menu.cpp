@@ -748,7 +748,7 @@ namespace user
    void menu::_001OnDraw(::draw2d::graphics * pgraphics)
    {
 
-      COLORREF crBackground = _001GetColor(::user::color_background);
+      COLORREF crBackground = _001GetColor(::user::color_menu_background);
 
       if ((crBackground & ARGB(255, 0, 0, 0)) != 0)
       {

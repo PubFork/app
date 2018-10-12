@@ -8854,7 +8854,7 @@ restart:
 
       }
 
-      if (m_ptooltip->IsWindowVisible() && get_wnd() != GetActiveWindow())
+      if (m_ptooltip->IsWindowVisible() && !get_wnd()->is_active())
       {
 
          hide_tooltip();

@@ -28,7 +28,7 @@ void MetaControlBox::_001OnNcDraw(::draw2d::graphics * pgraphics)
 void MetaControlBox::_001OnDraw(::draw2d::graphics * pgraphics)
 {
 
-   if(GetTopLevel()->frame_is_transparent() && GetTopLevel() != GetActiveWindow())
+   if(GetTopLevel()->frame_is_transparent() && !GetTopLevel()->is_active())
    {
 
       return;

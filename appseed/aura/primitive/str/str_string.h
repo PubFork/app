@@ -1010,6 +1010,8 @@ public:
 #endif
 
 
+   string if_empty(string str) { return is_empty() ? str : *this; }
+
 
 };
 

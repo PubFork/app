@@ -62,6 +62,13 @@ namespace user
       create_color(color_scrollbar_lite_border, ARGB(255, 230, 230, 230));
       create_color(color_scrollbar_lite_border_hover, ARGB(255, 225, 225, 225));
 
+      create_rect_coord(rect_menu_margin, 4, 4, 4, 4, ::draw2d::unit_pixel);
+      create_rect_coord(rect_menu_border, 0, 0, 0, 0, ::draw2d::unit_pixel);
+      create_rect_coord(rect_menu_padding, 0, 0, 0, 0, ::draw2d::unit_pixel);
+      create_rect_coord(rect_menu_item_margin, 0, 0, 0, 1, ::draw2d::unit_pixel);
+      create_rect_coord(rect_menu_item_border, 0, 0, 0, 0, ::draw2d::unit_pixel);
+      create_rect_coord(rect_menu_item_padding, 2, 2, 2, 2, ::draw2d::unit_pixel);
+
    }
 
 
