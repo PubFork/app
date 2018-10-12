@@ -64,19 +64,7 @@ using namespace ::Windows::System;
 
 #if defined(ANDROID)
 
-   if (!br_init_lib(NULL))
-      return "";
-
-   char * lpszModule = br_find_exe(NULL);
-
-   if (lpszModule == NULL)
-      return "";
-
-   ::file::path path = lpszModule;
-
-   free(lpszModule);
-
-   return path;
+   return ::file::app_module().folder();
 
 #elif defined(METROWIN)
 

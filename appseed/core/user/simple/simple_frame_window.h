@@ -312,7 +312,7 @@ public:
 
    virtual int notification_area_action_count() override;
 
-   virtual bool notification_area_action_info(char ** ppszName, char ** ppszId, char ** ppszLabel, char ** ppszAccelerator, char ** ppszDescription, int iIndex) override;
+   virtual bool notification_area_action_info(char ** ppszName, char ** ppszId, char ** ppszLabel, char ** ppszAccelerator, char ** ppszDescription, int & iIndex) override;
 
 };
 

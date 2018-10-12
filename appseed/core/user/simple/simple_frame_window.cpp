@@ -3695,7 +3695,7 @@ int simple_frame_window::notification_area_action_count()
 
 }
 
-bool simple_frame_window::notification_area_action_info(char ** ppszName, char ** ppszId, char ** ppszLabel, char ** ppszAccelerator, char ** ppszDescription, int iIndex)
+bool simple_frame_window::notification_area_action_info(char ** ppszName, char ** ppszId, char ** ppszLabel, char ** ppszAccelerator, char ** ppszDescription, int & iIndex)
 {
 
    if(iIndex == 0)

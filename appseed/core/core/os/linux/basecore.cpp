@@ -163,7 +163,9 @@ GtkWidget * basecore_app_indicator_init(AppIndicator * pindicator, user_notify_i
          char * pszAccelerator = NULL;
          char * pszDescription = NULL;
 
-         pbridge->notification_area_action_info(&pszName, &pszId, &pszLabel, &pszAccelerator, &pszDescription, i);
+         int iIndex = i;
+
+         pbridge->notification_area_action_info(&pszName, &pszId, &pszLabel, &pszAccelerator, &pszDescription, iIndex);
 
          if(strcasecmp(pszName, "separator") == 0)
          {

@@ -26,26 +26,14 @@ namespace linux
 
    file_system::~file_system()
    {
+
    }
+
 
    bool file_system::update_module_path()
    {
 
-      {
-
-         if(!br_init_lib(NULL))
-            return false;
-
-         char * lpszModule = br_find_exe(NULL);
-
-         if(lpszModule == NULL)
-            return false;
-
-         m_pathModule = lpszModule;
-
-         free(lpszModule);
-
-      }
+      m_pathModule = ::file::app_module();
 
       {
 

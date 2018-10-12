@@ -189,9 +189,7 @@ END_EXTERN_C
 void linux_get_command_line(string & str, int argc, char ** argv)
 {
 
-   string strAppId(MAINAPPID);
-
-   str = string(argv[0]) + " : " + "app=" + strAppId;
+   str = string(argv[0]) + (" : app=" MAINAPPID);
 
 }
 

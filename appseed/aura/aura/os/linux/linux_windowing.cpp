@@ -2154,7 +2154,17 @@ bool x11_process_message(osdisplay_data * pdata, Display * display)
             pui->post_pred([=]()
             {
 
-               pui->ModifyStyle(WS_VISIBLE, 0, 0);
+               try
+               {
+
+                  pui->ModifyStyle(WS_VISIBLE, 0, 0);
+
+               }
+               catch(...)
+               {
+
+
+               }
 
             });
 

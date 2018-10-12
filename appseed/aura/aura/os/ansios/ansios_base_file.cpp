@@ -271,19 +271,41 @@ uint64_t file_length_dup(const char * path)
 
 #if defined(ANDROID) || defined(LINUX)
 
-   if (!br_init_lib(NULL))
+::file::path path;
+
+char * lpszModule = NULL;
+
+if(!br_init_lib(NULL) || (lpszModule = br_find_exe(NULL)) == NULL)
+{
+
+char path[PATH_MAX];
+
+char dest[PATH_MAX];
+
+pid_t pid = getpid();
+
+sprintf(path, "/proc/%d/exe", pid);
+
+if (readlink(path, dest, PATH_MAX) == -1)
+{
+
       return "";
 
-   char * lpszModule = br_find_exe(NULL);
+}
+else
+{
 
-   if (lpszModule == NULL)
-      return "";
+      lpszModule = strdup(dest);
 
-   ::file::path path = lpszModule;
+}
 
-   free(lpszModule);
+}
 
-   return path;
+path = lpszModule;
+
+free(lpszModule);
+
+return path;
 
 #elif defined(WINDOWS)
 
