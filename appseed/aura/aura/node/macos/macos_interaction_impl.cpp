@@ -2730,7 +2730,30 @@ namespace macos
       }
 
    }
+   
+   
+   void interaction_impl::show_task(bool bShow)
+   {
 
+      if(bShow)
+      {
+         
+         defer_dock_application(true);
+         
+         m_pui->set_need_layout();
+         
+         m_pui->set_need_redraw();
+         
+      }
+      else
+      {
+         
+         defer_dock_application(false);
+         
+      }
+
+   }
+   
 
    bool interaction_impl::ShowWindow(int32_t nCmdShow)
    {
@@ -2741,10 +2764,22 @@ namespace macos
          return false;
 
       }
+      
+      if(nCmdShow == SW_HIDE)
+      {
+         
+         round_window_hide();
+         
+         
+      }
+      else
+      {
 
       ::show_window(get_handle(), nCmdShow);
 
       //m_pui->send_message(WM_SHOWWINDOW, ::IsWindowVisible(get_handle()));
+         
+      }
 
       return m_pui->IsWindowVisible();
 
@@ -5080,6 +5115,8 @@ namespace macos
       }
 
       m_pui->message_call(WM_SHOWWINDOW, 1);
+      
+      m_pui->set_need_layout();
 
    }
 

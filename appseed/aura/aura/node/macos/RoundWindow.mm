@@ -73,7 +73,7 @@ NSWindow * get_os_window_ns_window(oswindow hwnd);
    
    [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector (windowDidMove:) name: NSWindowDidMoveNotification object: self];
 
-   //[[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(windowWillClose:) name: NSWindowWillCloseNotification object: self];
+   [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(windowWillClose:) name: NSWindowWillCloseNotification object: self];
 
    [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(windowDidExpose:) name: NSWindowDidExposeNotification object: self];
 

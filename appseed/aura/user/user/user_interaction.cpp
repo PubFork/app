@@ -1138,7 +1138,7 @@ restart:
                if (m_uiptraChild[i].is_set())
                {
 
-                  m_uiptraChild[i]->send_message(WM_SHOWWINDOW, 0, 0);
+                  m_uiptraChild[i]->send_message(WM_SHOWWINDOW, 0, 1);
 
                }
 

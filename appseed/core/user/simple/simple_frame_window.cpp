@@ -639,7 +639,8 @@ void simple_frame_window::_001OnShowWindow(::message::message * pobj)
    }
 
    defer_set_icon();
-
+   
+   
    if(m_bDefaultNotifyIcon)
    {
 
@@ -3315,13 +3316,6 @@ void simple_frame_window::OnUpdateToolWindow(bool bVisible)
    {
 
       return;
-
-   }
-
-   if(!bVisible)
-   {
-
-      defer_dock_application(false);
 
    }
 

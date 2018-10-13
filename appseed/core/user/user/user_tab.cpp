@@ -3416,25 +3416,25 @@ namespace user
 
       SCAST_PTR(::message::show_window, pshowwindow, pobj);
 
-      ::user::place_holder * pholder = tab_holder(_001GetSel());
-
-      if (pholder != NULL)
-      {
-
-         if (pshowwindow->m_bShow)
-         {
-
-            pholder->ShowWindow(SW_SHOW);
-
-         }
-         else
-         {
-
-            pholder->ShowWindow(SW_HIDE);
-
-         }
-
-      }
+//      ::user::place_holder * pholder = tab_holder(_001GetSel());
+//
+//      if (pholder != NULL)
+//      {
+//
+//         if (pshowwindow->m_bShow)
+//         {
+//
+//            pholder->ShowWindow(SW_SHOW);
+//
+//         }
+//         else
+//         {
+//
+//            pholder->ShowWindow(SW_HIDE);
+//
+//         }
+//
+//      }
 
    }
 

@@ -140,6 +140,8 @@ void round_window::round_window_hide()
                  
                  [m_proundwindow orderOut : m_proundwindow];
                  
+                 round_window_on_hide();
+                 
               });
    
 }
