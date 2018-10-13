@@ -1,20 +1,21 @@
-﻿#pragma once
-
+#pragma once
 
 namespace asphere
 {
 
 
    class CLASS_DECL_SPHERE application :
-      virtual public ::core::application
+   virtual public ::core::application,
+   virtual public ::file_watcher::listener
    {
    public:
-
-
+      void initialize_contextualized_theme();
+::file_watcher::id                           m_watchid;
       bool                                         m_bContextTheme;
       colorertake5::ParserFactory *                m_pparserfactory;
 
-
+      bool m_bSync;
+      int64_t m_iSyncCount;
       stringa                                      m_straTheme;
       string                                       m_strTheme;
       ::file::path                                 m_pathTheme;
@@ -43,10 +44,10 @@ namespace asphere
 
       virtual void get_theme_text_color(COLORREF & crText, COLORREF & crBack);
 
-      virtual void sync_context_theme();
-      virtual string get_theme_context();
-      virtual string get_context_default_theme();
-      virtual string get_current_context_theme();
+      virtual void sync_with_stored_theme();
+      virtual string get_current_weather();
+      virtual string get_default_theme();
+      virtual string stored_theme();
       virtual void set_context_theme(string strTheme);
       virtual void on_change_theme();
       virtual string get_theme();
@@ -62,6 +63,8 @@ namespace asphere
       virtual uint32_t guess_code_page(const string & str);
 
       ::colorertake5::ParserFactory                &  parser_factory();
+
+      virtual void handle_file_action(::file_watcher::id watchid, const char * dir, const char * filename, ::file_watcher::e_action action) override;
 
    };
 

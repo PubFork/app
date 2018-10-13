@@ -286,7 +286,7 @@ namespace aura
       virtual bool Ex2OnAppInstall();
       virtual bool Ex2OnAppUninstall();
 
-
+      virtual bool on_application_menu_action(const char * pszCommand);
       virtual void _001CloseApplication();
 
       virtual string get_license_id();

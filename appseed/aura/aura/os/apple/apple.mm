@@ -182,8 +182,16 @@ void main_sync_runnable(runnable * prunnable)
 
 NSString * __ns_get_text(NSString * str)
 {
-   
+
    const char * psz = [str UTF8String];
+   
+   return __ns_get_text(psz);
+
+}
+
+
+NSString * __ns_get_text(const char * psz)
+{
    
    int iLen = __c_get_text_length(psz);
    

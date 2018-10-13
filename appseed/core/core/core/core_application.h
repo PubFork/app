@@ -155,7 +155,7 @@ namespace core
 
       virtual sp(::user::interaction) uie_from_point(point pt);
 
-
+      virtual bool on_application_menu_action(const char * pszCommand) override;
 
       virtual bool on_install() override;
       virtual bool on_uninstall() override;

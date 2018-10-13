@@ -116,25 +116,20 @@ WINBOOL move_nswindow(oswindow hwnd, int x, int y);
 WINBOOL set_nswindow_frame(oswindow hwnd, LPCRECT lpcrect, int iDisplay)
 {
    
-   NSRect rect;
+   RECT r(*lpcrect);
    
-   NSRect rectScreen = [[[NSScreen screens] objectAtIndex:0] frame];
-   
-   rect.origin.x     = lpcrect->left;
-   rect.origin.y     = rectScreen.size.height   -     lpcrect->bottom;
-   rect.size.width   = lpcrect->right           -     lpcrect->left;
-   rect.size.height  = lpcrect->bottom          -     lpcrect->top;
-   
-   //rect.origin.x     = 500;
-   //rect.origin.y     = 100;
-   //rect.size.width   = 500;
-   //rect.size.height  = 500;
-   
-   //printf("\nset nswindow frame (%f, %f)[%f, %f]", rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
-
    ns_main_async(^
               {
       
+                 NSRect rect;
+                 
+                 NSRect rectScreen = [[[NSScreen screens] objectAtIndex:0] frame];
+                 
+                 rect.origin.x     = r.left;
+                 rect.origin.y     = rectScreen.size.height    -     r.bottom;
+                 rect.size.width   = r.right                   -     r.left;
+                 rect.size.height  = r.bottom                  -     r.top;
+                 
                  [hwnd->window() setFrame : rect display : iDisplay];
       
               });
@@ -147,19 +142,17 @@ WINBOOL set_nswindow_frame(oswindow hwnd, LPCRECT lpcrect, int iDisplay)
 WINBOOL move_nswindow(oswindow hwnd, int x, int y)
 {
    
-   NSPoint point;
-
-   NSRect rectScreen = [[[NSScreen screens] objectAtIndex:0] frame];
-   
-   point.x = x;
-   
-   point.y = rectScreen.size.height - y;
-   
-//   printf("\nmove nswindow (%f, %f)", point.x, point.y);
-   
    ns_main_async(^
               {
                         
+                 NSPoint point;
+                 
+                 NSRect rectScreen = [[[NSScreen screens] objectAtIndex:0] frame];
+                 
+                 point.x = x;
+                 
+                 point.y = rectScreen.size.height - y;
+                 
                  [hwnd->window() setFrameTopLeftPoint : point];
       
               });

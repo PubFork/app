@@ -21,15 +21,90 @@
 //
 
 
-@interface RoundWindowApp : NSObject<NSApplicationDelegate>
+@interface RoundWindowApp : NSObject<NSApplicationDelegate, NSMenuDelegate>
 {
 @public
 
-   
+     NSMenu *             m_menu;
+        NSMutableArray *     m_menuitema;
+NSMutableArray *     m_menuida;
+
 }
 
 
-@property(strong) NSWindowController *windowcontroller;
+   //////////////appDelegate->m_menu = [[NSMenu alloc] initWithTitle:@"menubar_menu"];
 
+///////appDelegate->m_menuitema = [[NSMutableArray alloc] init];
+
+////////////appDelegate->m_menuida = [[NSMutableArray alloc] init];
+
+//int iCount = pbridge->_get_notification_area_action_count();
+
+//int iCount = 1;
+//
+//for(int i = 0; i < iCount; i++)
+//{
+//   
+//   //      char * pszName = NULL;
+//   //      char * pszId = NULL;
+//   //      char * pszLabel = NULL;
+//   //      char * pszAccelerator = NULL;
+//   //      char * pszDescription = NULL;
+//   //
+//   //      pbridge->_get_notification_area_action_info(&pszName, &pszId, &pszLabel, &pszAccelerator, &pszDescription, i);
+//   
+//   char * pszName = strdup("TransparentFxxx");
+//   char * pszId = strdup("transparent_frame");
+//   char * pszLabel = strdup("TransparentFxxx");
+//   char * pszAccelerator = strdup("TransparentFxxx");
+//   char * pszDescription = strdup("TransparentFxxx");
+//   NSString * strTitle = NULL;
+//   
+//   NSString * strId = NULL;
+//   
+//   NSMenuItem * item = NULL;
+//   
+//   if(strcasecmp(pszName, "separator") == 0)
+//   {
+//      
+//      strTitle = [[NSString alloc] initWithUTF8String: pszName];
+//      
+//      strId = [[NSString alloc] initWithUTF8String: pszName];
+//      
+//      item = [NSMenuItem separatorItem];
+//      
+//   }
+//   else
+//   {
+//      
+//      strTitle = [[NSString alloc] initWithUTF8String: pszName];
+//      
+//      strId = [[NSString alloc] initWithUTF8String: pszId];
+//      
+//      item = [[NSMenuItem alloc] initWithTitle:  strTitle action: @selector(play:) keyEquivalent:@"" ];
+//      
+//   }
+//   
+//   [item setTarget:appDelegate];
+//   
+//   [appDelegate->m_menu addItem:item];
+//   
+//   [appDelegate->m_menuitema addObject: item];
+//   
+//   [appDelegate->m_menuida addObject: strId];
+//   
+//   if(pszName) free(pszName);
+//   if(pszId) free(pszId);
+//   if(pszLabel) free(pszLabel);
+//   if(pszAccelerator) free(pszAccelerator);
+//   if(pszDescription) free(pszDescription);
+//   
+//}
+
+//[appDelegate->m_menu setDelegate:NSApp];
+
+-(NSMenu *) applicationDockMenu:(NSApplication*)sender;
+@property(strong) NSWindowController *windowcontroller;
+- (void)play:(id)sender;
 
 @end

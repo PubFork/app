@@ -3262,6 +3262,33 @@ success:
       return true;
 
    }
+   
+   
+   bool system::on_application_menu_action(const char * pszCommand)
+   {
+      
+      for(auto & app : m_appptra)
+      {
+         
+         if(app == this)
+         {
+            
+            continue;
+            
+         }
+         
+         if(app->on_application_menu_action(pszCommand))
+         {
+            
+            return true;
+            
+         }
+         
+      }
+      
+      return false;
+      
+   }
 
 
    bool system::merge_accumulated_on_open_file(::create * pcreate)

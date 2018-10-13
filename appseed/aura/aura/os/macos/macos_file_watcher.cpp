@@ -299,7 +299,7 @@ namespace file_watcher
                                                            kCFStringEncodingUTF8);
             CFArrayRef pathsToWatch = CFArrayCreate(NULL, (const void **)&mypath, 1, NULL);
             void *callbackInfo = this; // could put stream-specific data here.
-            CFAbsoluteTime latency = 3.0; /* Latency in seconds */
+            CFAbsoluteTime latency = 0.3; /* Latency in seconds */
             FSEventStreamContext context;
             context.version = 0;
             context.info = (void*) this;

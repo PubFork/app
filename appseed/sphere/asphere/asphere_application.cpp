@@ -13,6 +13,10 @@ namespace asphere
 
    application::application()
    {
+      
+      m_bSync = false;
+      
+      m_iSyncCount = 0;
 
       m_bContextTheme = true;
 
@@ -38,83 +42,27 @@ namespace asphere
 
       if (m_bContextTheme)
       {
+         
+         initialize_contextualized_theme();
 
-         m_mapBg["dark"] = ARGB(160, 0x16, 0x19, 0x1e);
-         m_mapBg["blue"] = ARGB(160, 0xA0, 0xA8, 0xB8);
-         m_mapBg["lite"] = ARGB(160, 0xff, 0xff, 0xff);
-
-         m_mapIconGlow["dark"] = ARGB(255, 0x16, 0x19, 0x1e);
-         m_mapIconGlow["blue"] = ARGB(255, 0x48, 0x58, 0x88);
-         m_mapIconGlow["lite"] = ARGB(255, 0xff, 0xff, 0xff);
-
-         m_mapMg["dark"] = ARGB(151, 0x16, 0x19, 0x1e);
-         m_mapMg["blue"] = ARGB(151, 0xA0, 0xA8, 0xB8);
-         m_mapMg["lite"] = ARGB(140, 255, 255, 255);
-
-         m_mapFg["dark"] = ARGB(255, 223, 223, 208);
-         m_mapFg["blue"] = ARGB(255, 255, 255, 255);
-         m_mapFg["lite"] = ARGB(255, 0, 0, 0);
-
-         m_mapText["dark"] = ARGB(255, 155, 155, 155);
-         m_mapText["blue"] = ARGB(255, 55, 50, 80);
-         m_mapText["lite"] = ARGB(255, 0, 0, 0);
-
-         m_mapBack["dark"] = ARGB(160, 0, 0, 0);
-         m_mapBack["blue"] = ARGB(160, 205, 200, 250);
-         m_mapBack["lite"] = ARGB(160, 255, 255, 255);
-
-         Sess(this).userex()->shell()->m_straThemeableIconName.add("google-android.ico");
-      Sess(this).userex()->shell()->m_straThemeableIconName.add("Folders-OS-Windows-8-Metro.ico");
-      Sess(this).userex()->shell()->m_straThemeableIconName.add("firefox_weather.ico");
-
-      ::file::patha patha;
-
-      dir().matter_ls("sphere/theme", patha);
-
-      m_straTheme.add_unique("blue");
-      m_straTheme.add_unique("dark");
-      m_straTheme.add_unique("lite");
-
-      for (auto & path : patha)
-      {
-
-         if (dir().is(path))
-         {
-
-            string strTheme = path.name();
-
-            m_straTheme.add_unique(strTheme);
-
-         }
-
+       
       }
 
-      connect_command("theme", &application::_001OnTheme);
-
-         sync_context_theme();
-
-         // TODO: weather application should notify
-         // ca2 applications of "weather" changes
-         // try to quit these polling checks for
-         // "weather" changes and also, if possible,
-         // avoid polling.
-//         fork([&]()
+//      fork([&]()
+//      {
+//
+//         while (get_thread_run())
 //         {
 //
-//            while (get_thread_run())
-//            {
+//            sync_with_stored_theme();
 //
-//               sync_context_theme();
+//            Sleep(1000);
 //
-//               Sleep(1000);
+//         }
 //
-//            }
+//         TRACE("finished sync context theme thread");
 //
-//            TRACE("finished sync context theme thread");
-//
-//         });
-
-      }
+//      });
 
       return true;
 
@@ -242,15 +190,15 @@ namespace asphere
    }
 
 
-   void application::sync_context_theme()
+   void application::sync_with_stored_theme()
    {
 
-      set_context_theme(get_current_context_theme());
+      set_context_theme(stored_theme());
 
    }
 
 
-   string application::get_theme_context()
+   string application::get_current_weather()
    {
 
 #ifdef METROWIN
@@ -259,9 +207,9 @@ namespace asphere
 
 #endif
 
-      ::file::path path = ::dir::system() / "config/weather_state.txt";
+      ::file::path pathWeatherState = ::dir::system() / "config/weather_state.txt";
 
-      string strState = Application.file().as_string(path);
+      string strState = Application.file().as_string(pathWeatherState);
 
       if (strState.is_empty())
       {
@@ -303,26 +251,26 @@ namespace asphere
    }
 
 
-   string application::get_context_default_theme()
+   string application::get_default_theme()
    {
 
       string strTheme;
 
-      string strContext = get_theme_context();
+      string strWeather = get_current_weather();
 
-      if (strContext.find_ci(".night") >= 0 && m_straTheme.contains_ci("dark"))
+      if (strWeather.find_ci(".night") >= 0 && m_straTheme.contains_ci("dark"))
       {
 
          strTheme = "dark";
 
       }
-      else if (strContext.find_ci(".dampened") && m_straTheme.contains_ci("blue"))
+      else if (strWeather.find_ci(".dampened") && m_straTheme.contains_ci("blue"))
       {
 
          strTheme = "blue";
 
       }
-      else if (strContext.find_ci(".day") && m_straTheme.contains_ci("lite"))
+      else if (strWeather.find_ci(".day") && m_straTheme.contains_ci("lite"))
       {
 
          strTheme = "lite";
@@ -352,15 +300,17 @@ namespace asphere
    }
 
 
-   string application::get_current_context_theme()
+   string application::stored_theme()
    {
+      
+      string strCurrentWeather = get_current_weather();
 
-      string strTheme = app_get("theme-" + get_theme_context());
+      string strTheme = app_get("theme-" + strCurrentWeather);
 
       if (strTheme.is_empty())
       {
 
-         strTheme = get_context_default_theme();
+         strTheme = get_default_theme();
 
       }
 
@@ -381,12 +331,12 @@ namespace asphere
 
       string strContextTheme;
 
-      strContextTheme = get_current_context_theme();
+      strContextTheme = stored_theme();
 
       if (strContextTheme != strTheme)
       {
 
-         app_set("theme-" + get_theme_context(), strTheme);
+         app_set("theme-" + get_current_weather(), strTheme);
 
       }
 
@@ -461,9 +411,99 @@ namespace asphere
       return *m_pparserfactory;
 
    }
+      void application::handle_file_action(::file_watcher::id watchid, const char * dir, const char * filename, ::file_watcher::e_action action)
+      {
+         
+         ::file::path path;
+         
+         path = dir;
+         
+         path /= filename;
+         
+               ::file::path pathWeatherState = ::dir::system() / "config/weather_state.txt";
+         
+         if (path.is_equal_full(pathWeatherState))
+         {
+            
+            delay_fork(&m_bSync, &m_iSyncCount, millis(300),
+                         [=]
+                         ()
+                         {
+
+            sync_with_stored_theme();
+                         });
+            
+         }
+         
+         
+      }
+
+   void application::initialize_contextualized_theme()
+   {
+      
+      m_mapBg["dark"] = ARGB(160, 0x16, 0x19, 0x1e);
+      m_mapBg["blue"] = ARGB(160, 0xA0, 0xA8, 0xB8);
+      m_mapBg["lite"] = ARGB(160, 0xff, 0xff, 0xff);
+      
+      m_mapIconGlow["dark"] = ARGB(255, 0x16, 0x19, 0x1e);
+      m_mapIconGlow["blue"] = ARGB(255, 0x48, 0x58, 0x88);
+      m_mapIconGlow["lite"] = ARGB(255, 0xff, 0xff, 0xff);
+      
+      m_mapMg["dark"] = ARGB(151, 0x16, 0x19, 0x1e);
+      m_mapMg["blue"] = ARGB(151, 0xA0, 0xA8, 0xB8);
+      m_mapMg["lite"] = ARGB(140, 255, 255, 255);
+      
+      m_mapFg["dark"] = ARGB(255, 223, 223, 208);
+      m_mapFg["blue"] = ARGB(255, 255, 255, 255);
+      m_mapFg["lite"] = ARGB(255, 0, 0, 0);
+      
+      m_mapText["dark"] = ARGB(255, 155, 155, 155);
+      m_mapText["blue"] = ARGB(255, 55, 50, 80);
+      m_mapText["lite"] = ARGB(255, 0, 0, 0);
+      
+      m_mapBack["dark"] = ARGB(160, 0, 0, 0);
+      m_mapBack["blue"] = ARGB(160, 205, 200, 250);
+      m_mapBack["lite"] = ARGB(160, 255, 255, 255);
+      
+      Sess(this).userex()->shell()->m_straThemeableIconName.add("google-android.ico");
+      Sess(this).userex()->shell()->m_straThemeableIconName.add("Folders-OS-Windows-8-Metro.ico");
+      Sess(this).userex()->shell()->m_straThemeableIconName.add("firefox_weather.ico");
+      
+      ::file::patha patha;
+      
+      dir().matter_ls("sphere/theme", patha);
+      
+      m_straTheme.add_unique("blue");
+      m_straTheme.add_unique("dark");
+      m_straTheme.add_unique("lite");
+      
+      for (auto & path : patha)
+      {
+         
+         if (dir().is(path))
+         {
+            
+            string strTheme = path.name();
+            
+            m_straTheme.add_unique(strTheme);
+            
+         }
+         
+      }
+      
+      connect_command("theme", &application::_001OnTheme);
+      
+      sync_with_stored_theme();
+      m_watchid = System.dir().add_watch(::dir::system()/"config", this, false);
+
+      
+   }
+   
+   
 
 
 } //namespace sphere
+
 
 
 

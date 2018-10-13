@@ -345,3 +345,7 @@ namespace aura
 
 
 
+bool on_application_menu_action(const char * pszCommand)
+{
+   ::aura::system::g_p->on_application_menu_action(pszCommand);
+}

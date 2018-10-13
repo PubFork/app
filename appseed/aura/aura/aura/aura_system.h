@@ -21,7 +21,7 @@ namespace aura
    {
    public:
 
-
+      bool on_application_menu_action(const char * pszCommand) override;
 #ifdef WINDOWSEX
 
       ::user::system_interaction_impl *      m_psystemwindow;

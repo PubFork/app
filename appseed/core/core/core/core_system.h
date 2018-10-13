@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 namespace core
@@ -106,6 +106,9 @@ namespace core
 
 
       bool set_history(::core::history * phistory);
+      
+      
+      virtual bool on_application_menu_action(const char * pszCommand) override;
 
 
       virtual ::core::session *  get_platform(index iEdge,application_bias * pbiasCreation = NULL);

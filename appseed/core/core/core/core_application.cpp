@@ -99,7 +99,33 @@ namespace core
 
    }
 
-
+   
+   bool application::on_application_menu_action(const char * pszCommand)
+   {
+      
+      if(m_puiMain != NULL)
+      {
+         
+         ::user::command command;
+         
+         command.m_id=::id(pszCommand);
+         
+         m_puiMain->route_command_message(&command);
+         
+         if(command.m_bRet)
+         {
+            
+            return true;
+            
+         }
+         
+      }
+      
+      return false;
+      
+   }
+   
+   
    application * application::get_app() const
    {
 

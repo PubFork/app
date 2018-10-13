@@ -1004,9 +1004,9 @@ void simple_frame_window::_001OnUpdateToggleCustomFrame(::message::message * pob
 void simple_frame_window::_001OnToggleTransparentFrame(::message::message * pobj)
 {
 
-   UNREFERENCED_PARAMETER(pobj);
-
    WfiToggleTransparentFrame();
+   
+   pobj->m_bRet = true;
 
 }
 

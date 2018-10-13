@@ -24,7 +24,10 @@ typedef void BASECORE_INIT();
 
 namespace core
 {
-
+   bool system::on_application_menu_action(const char * pszCommand)
+   {
+      return ::base::system::on_application_menu_action(pszCommand);
+   }
 
    system::system(::aura::application * papp, app_core * pappcore):
       ::object(papp),

@@ -7,7 +7,7 @@
 //
 
 #import "macos_mm.h"
-int file_put_contents_dup(const char * path, const char * contents);
+bool on_application_menu_action(const char * pszCommand);int file_put_contents_dup(const char * path, const char * contents);
 void file_add_contents_raw(const char * path, const char * psz);
 int32_t defer_run_system();
 uint32_t __start_system_with_file(const char * pszFileName);
@@ -23,7 +23,131 @@ void set_aura_system_as_thread();
 
 
 @synthesize windowcontroller;
+- (id)init
+{
 
+   self = [super init];
+   
+   m_menu = [[NSMenu alloc] initWithTitle:@"menubar_menu"];
+   
+   m_menuitema = [[NSMutableArray alloc] init];
+   
+   m_menuida = [[NSMutableArray alloc] init];
+   
+   //int iCount = pbridge->_get_notification_area_action_count();
+   
+   int iCount = 1;
+   
+   for(int i = 0; i < iCount; i++)
+   {
+      
+      //      char * pszName = NULL;
+      //      char * pszId = NULL;
+      //      char * pszLabel = NULL;
+      //      char * pszAccelerator = NULL;
+      //      char * pszDescription = NULL;
+      //
+      //      pbridge->_get_notification_area_action_info(&pszName, &pszId, &pszLabel, &pszAccelerator, &pszDescription, i);
+      
+      char * pszName = strdup("TransparentFxxx");
+      char * pszId = strdup("transparent_frame");
+      char * pszLabel = strdup("TransparentFxxx");
+      char * pszAccelerator = strdup("TransparentFxxx");
+      char * pszDescription = strdup("TransparentFxxx");
+      NSString * strTitle = NULL;
+      
+      NSString * strId = NULL;
+      
+      NSMenuItem * item = NULL;
+      
+      if(strcasecmp(pszName, "separator") == 0)
+      {
+         
+         strTitle = [[NSString alloc] initWithUTF8String: pszName];
+         
+         strId = [[NSString alloc] initWithUTF8String: pszName];
+         
+         item = [NSMenuItem separatorItem];
+         
+      }
+      else
+      {
+         
+         strTitle = [[NSString alloc] initWithUTF8String: pszName];
+         
+         strId = [[NSString alloc] initWithUTF8String: pszId];
+         
+         item = [[NSMenuItem alloc] initWithTitle:  strTitle action: @selector(play:) keyEquivalent:@"" ];
+         
+      }
+      
+      [item setTarget:self];
+      
+      [m_menu addItem:item];
+      
+      [m_menuitema addObject: item];
+      
+      [m_menuida addObject: strId];
+      
+      if(pszName) free(pszName);
+      if(pszId) free(pszId);
+      if(pszLabel) free(pszLabel);
+      if(pszAccelerator) free(pszAccelerator);
+      if(pszDescription) free(pszDescription);
+   }
+   
+   [m_menu setDelegate:self];
+   
+
+   return self;
+}
+
+- (void)play:(id)sender
+{
+   
+   NSMenuItem * pitem = (NSMenuItem *) sender;
+   
+   for(int i = 0; i < [m_menuitema count]; i++)
+   {
+      
+      if(pitem == [m_menuitema objectAtIndex:i])
+      {
+         
+         const char * psz = [[m_menuida objectAtIndex:i] UTF8String];
+         
+         //m_pbridge->notification_area_action(psz);
+         
+         on_application_menu_action(psz);
+         
+         return;
+         
+      }
+      
+   }
+   
+}
+
+- (void)on_command:(id)sender
+{
+   
+   NSMenuItem * pitem = (NSMenuItem *) sender;
+   
+   NSString * str = (NSString *)[pitem representedObject];
+if(str != nil)
+{
+         const char * psz = [str UTF8String];
+         
+         //m_pbridge->notification_area_action(psz);
+         
+         on_application_menu_action(psz);
+         
+         return;
+         
+      //}
+      
+   }
+   
+}
 - (void)applicationWillFinishLaunching:(NSNotification *)notification
 {
 NSAppleEventManager *appleEventManager = [NSAppleEventManager sharedAppleEventManager];// 1
@@ -227,6 +351,17 @@ NSAppleEventManager *appleEventManager = [NSAppleEventManager sharedAppleEventMa
    
    defer_run_system([url UTF8String]);
 }
+-(NSMenu *) applicationDockMenu:(NSApplication*)sender
+{
+
+   
+   return m_menu;
+   
+}
+
+//[appDelegate->m_menu setDelegate:NSApp];
+
+
 @end
 
 
@@ -239,30 +374,62 @@ void ns_application_main(int argc, char *argv[])
    
    [application setDelegate:appDelegate];
    
+   
+   
+   //[m_statusitem setEnabled:YES];
+
+   
    [NSApplication sharedApplication];
    
    [NSApp setActivationPolicy:NSApplicationActivationPolicyRegular];
    
-   id menubar = [NSMenu alloc];
+   id menuMain = [NSMenu alloc];
    
-   id appMenuItem = [NSMenuItem alloc];
+   {
+      
+      id menuitemApp = [NSMenuItem alloc];
+      
+      [menuMain addItem: menuitemApp];
+      
+      id menuApp = [NSMenu alloc];
+      
+      [menuitemApp setSubmenu: menuApp];
+      
+      id strAppName = [[NSProcessInfo processInfo] processName];
+      
+      id strQuitTitle = [[_("Quit") stringByAppendingString: @" "] stringByAppendingString: strAppName];
+      
+      id menuitemQuit = [[NSMenuItem alloc] initWithTitle:strQuitTitle
+                                                   action:@selector(terminate:) keyEquivalent:@"q"];
+      
+      [menuApp addItem: menuitemQuit];
+      
+   }
    
-   [menubar addItem:appMenuItem];
-   
-   [NSApp setMainMenu:menubar];
-   
-   id appMenu = [NSMenu alloc];
-   
-   id appName = [[NSProcessInfo processInfo] processName];
-   
-   id quitTitle = [@"Quit " stringByAppendingString:appName];
-   
-   id quitMenuItem = [[NSMenuItem alloc] initWithTitle:quitTitle
-                                                action:@selector(terminate:) keyEquivalent:@"q"];
-   
-   [appMenu addItem:quitMenuItem];
-   
-   [appMenuItem setSubmenu:appMenu];
+   {
+      
+      id menuitemView = [NSMenuItem alloc];
+      
+      [menuMain addItem: menuitemView];
+      
+      id menuView = [[NSMenu alloc] initWithTitle:_("View")];
+      
+      [menuView setDelegate:appDelegate];
+      
+      [menuitemView setSubmenu: menuView];
+      
+      id strFxxTitle = _("Trasparentt(snowballeffect_smallerror>>>)Fxx");
+      
+      NSMenuItem * menuitemFxx = [[NSMenuItem alloc] initWithTitle:strFxxTitle
+                                                   action:@selector(on_command:) keyEquivalent:@"f"];
+      
+      [menuitemFxx setRepresentedObject: @"transparent_frame"];
+      
+      [menuView addItem: menuitemFxx];
+      
+   }
+      
+   [NSApp setMainMenu:menuMain];
    
    [NSApp activateIgnoringOtherApps:YES];
    

@@ -5345,6 +5345,108 @@ namespace macos
 
    }
 
+   
+   bool interaction_impl::SetWindowPos(int_ptr z,int32_t x,int32_t y,int32_t cx,int32_t cy,UINT nFlags)
+   {
+      
+      if(is_null(m_pui))
+      {
+         
+         return false;
+         
+      }
+      
+      synch_lock sl(m_pui->m_pmutex);
+      
+      if (!(nFlags & SWP_NOZORDER))
+      {
+         
+         m_bZ = true;
+         
+         m_iZ = z;
+         
+      }
+      
+      LONG lNoZ = ~(SWP_NOZORDER);
+      
+      if(m_bShowFlags)
+      {
+         
+         m_iShowFlags |= nFlags & lNoZ;
+         
+      }
+      else
+      {
+         
+         m_iShowFlags = nFlags & lNoZ;
+         
+      }
+      
+      if(strstr(typeid(*m_pui).name(), "main_frame") != NULL)
+      {
+         
+         output_debug_string("\nmainframe m_iShowFlags = 0x" + ::hex::upper_from(m_iShowFlags));
+         
+      }
+      
+      bool bShowFlags = m_bShowFlags;
+      
+      if (!(nFlags & SWP_NOREDRAW) && (IsWindowVisible() || (nFlags & SWP_SHOWWINDOW)))
+      {
+         
+         bShowFlags = !is_this_visible();
+         
+         if (nFlags & SWP_SHOWWINDOW)
+         {
+            
+            if (m_iShowWindow <= SW_HIDE)
+            {
+               
+               m_iShowWindow = SW_NORMAL;
+               
+            }
+            
+         }
+         
+      }
+      
+      ::rect64 rect = m_rectParentClientRequest;
+      
+      if (!(nFlags & SWP_NOMOVE) && (rect.left != x || rect.top != y))
+      {
+         
+         rect.move_to(x, y);
+         
+      }
+      
+      if (!(nFlags & SWP_NOSIZE) && (rect.width() != cx || rect.height() != cy))
+      {
+         
+         rect.set_size(cx, cy);
+         
+      }
+      
+      m_rectParentClientRequest = rect;
+      
+      if(m_rectParentClient != m_rectParentClientRequest)
+      {
+         
+         ::SetWindowPos(m_oswindow,
+            NULL,
+                        (i32) m_rectParentClientRequest.left,
+                        (i32) m_rectParentClientRequest.top,
+                        (i32) m_rectParentClientRequest.width(),
+                        (i32) m_rectParentClientRequest.height(), m_iShowFlags);
+         
+      }
+      
+      m_bShowFlags = bShowFlags;
+      
+      set_need_redraw();
+      
+      return true;
+      
+   }
 
 
 } // namespace macos

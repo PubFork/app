@@ -83,6 +83,10 @@ NSWindow * get_os_window_ns_window(oswindow hwnd);
    
    [self create_view];
    
+   
+   
+
+   
    m_pwindow->round_window_add_ref();
    
    return self;
