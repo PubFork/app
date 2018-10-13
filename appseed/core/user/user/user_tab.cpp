@@ -3413,8 +3413,10 @@ namespace user
 
    void tab::_001OnShowWindow(::message::message * pobj)
    {
+      
+      UNREFERENCED_PARAMETER(pobj);
 
-      SCAST_PTR(::message::show_window, pshowwindow, pobj);
+//      SCAST_PTR(::message::show_window, pshowwindow, pobj);
 
 //      ::user::place_holder * pholder = tab_holder(_001GetSel());
 //
