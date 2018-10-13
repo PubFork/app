@@ -211,62 +211,68 @@ namespace user
 
 #elif defined(MACOS)
 
-      string strFolder;
-
-      string str1 = pvisualicon->m_strAppTrayIcon;
-
-      str1.replace("-", "_");
-
-      str1.replace("/", "_");
-
-      str1.replace("\\", "_");
-
-      string str(str1);
-
-      if(::str::begins_eat_ci(str, "app_veriwell_"))
-      {
-
-         strFolder+="app-veriwell";
-
-      }
-      else if(::str::begins_eat_ci(str, "app_core_"))
-      {
-
-         strFolder+="app-core";
-
-      }
-      else
-      {
-
-         strFolder+="app";
-
-      }
-
-      strFolder+= "/appmatter/" + str;
-
-      strFolder += "/_std/_std/main/";
-
-      string strFile = "menubar-icon-22.png";
-
-      string strUrl = "https://server.ca2.cc/matter/" + strFolder + strFile;
-
-      strFile = System.dir().appdata() / strFolder / strFile;
-
-      int iRetry = 3;
-
-      while(iRetry >= 0 && (!Application.file().exists(strFile) || Application.file().length(strFile) <= 0))
-      {
-
-         ::property_set set;
-
-         set["raw_http"] = true;
-         set["disable_common_name_cert_check"] = true;
-
-         Application.http().download(strUrl, strFile, set);
-
-         iRetry--;
-
-      }
+//      string strFolder;
+//
+//      string str1 = pvisualicon->m_strAppTrayIcon;
+//
+//      str1.replace("-", "_");
+//
+//      str1.replace("/", "_");
+//
+//      str1.replace("\\", "_");
+//
+//      string str(str1);
+//
+//      if(::str::begins_eat_ci(str, "app_veriwell_"))
+//      {
+//
+//         strFolder+="app-veriwell";
+//
+//      }
+//      else if(::str::begins_eat_ci(str, "app_core_"))
+//      {
+//
+//         strFolder+="app-core";
+//
+//      }
+//      else
+//      {
+//
+//         strFolder+="app";
+//
+//      }
+//
+//      //str
+//
+//      strFolder+= "/appmatter/" + str;
+//
+//      strFolder += "/_std/_std/main/";
+//
+//      string strFile = "menubar-icon-22.png";
+//
+//      string strUrl = "https://server.ca2.cc/matter/" + strFolder + strFile;
+//
+//      strFile = System.dir().appdata() / strFolder / strFile;
+//
+//      int iRetry = 3;
+//
+//      while(iRetry >= 0 && (!Application.file().exists(strFile) || Application.file().length(strFile) <= 0))
+//      {
+//
+//         ::property_set set;
+//
+//         set["raw_http"] = true;
+//         set["disable_common_name_cert_check"] = true;
+//
+//         Application.http().download(strUrl, strFile, set);
+//
+//         iRetry--;
+//
+//      }
+      
+      string strFile;
+      
+      strFile = System.defer_process_matter_path("matter://main/menubar-icon-22.png", get_app());
 
       notify_icon_init(strFile);
 
