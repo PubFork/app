@@ -2211,7 +2211,7 @@ RetryBuildNumber:
          if (file_exists_dup(pathSide))
          {
 
-            file_copy_dup(pathCache, pathSide, true);
+            Application.file().copy(pathCache, pathSide, true);
 
             return pathCache;
 
