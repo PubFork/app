@@ -3,6 +3,15 @@
 #include "aura/user/user/user_interaction.h"
 #include "aura/user/user/user.h"
 
+class raw_key :
+virtual public ::object
+{
+public:
+   raw_key(){}
+   
+   ~raw_key(){}
+   
+};
 
 void ns_main_async(dispatch_block_t block);
 
@@ -5545,9 +5554,11 @@ namespace ios
    bool interaction_impl::round_window_on_text(const char * pszText)
    {
 
+      sp(raw_key) prawkey = Session.get_keyboard_focus();
+      
       sp(::user::edit_text) ptext = Session.get_keyboard_focus();
 
-      if(ptext.is_set())
+      if(ptext.is_set() && !prawkey.is_set())
       {
 
          string strText;
@@ -5602,19 +5613,59 @@ namespace ios
             pkey->m_ekey = ::user::key_return;
 
          }
-         else
+         else if(strText[0] >= 'a' && strText[0] <= 'z')
          {
 
-            pkey->m_ekey = ::user::key_refer_to_text_member;
+            pkey->m_ekey = (::user::e_key)(::user::key_a + strText[0] - 'a');
 
-            pkey->m_strText = strText;
+         }
+         else if(strText[0] >= '0' && strText[0] <= '9')
+         {
+            
+            pkey->m_ekey = (::user::e_key)(::user::key_0 + strText[0] - '0');
+            
+         }
+         else if(strText[0] >= 'A' && strText[0] <= 'Z')
+         {
+            
+            pkey->m_ekey = ::user::key_lshift;
 
+            spbase = pkey;
+            
+            send(spbase);
+
+            Sleep(100);
+
+            pkey->m_ekey = (::user::e_key)(::user::key_a + strText[0] - 'A');
+
+            send(spbase);
+
+            Sleep(100);
+            
+            pkey->m_id = WM_KEYUP;
+            
+            send(spbase);
+
+            pkey->m_ekey = ::user::key_lshift;
+            
+            send(spbase);
+
+            round_window_set_text("");
+
+            return true;
+            
          }
 
          round_window_set_text("");
 
          spbase = pkey;
 
+         send(spbase);
+         
+         Sleep(100);
+         
+         pkey->m_id = WM_KEYUP;
+         
          send(spbase);
 
          return spbase->m_bRet;

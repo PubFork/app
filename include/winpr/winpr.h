@@ -50,12 +50,13 @@
 #else
 #define WINPR_TLS __declspec(thread)
 #endif
-#elif !defined(__IOS__)
-#define WINPR_TLS __thread
+//#elif !defined(__IOS__)
 #else
-#warning "Target iOS does not support Thread Local Storage!"
-#warning "Multi Instance support is disabled!"
-#define WINPR_TLS
+#define WINPR_TLS __thread
+//#else
+//#warning "Target iOS does not support Thread Local Storage!"
+//#warning "Multi Instance support is disabled!"
+//#define WINPR_TLS
 #endif
 
 
