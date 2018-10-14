@@ -487,18 +487,39 @@ void defer_dock_application(bool bDock)
 WINBOOL destroy_window(oswindow w)
 {
    
-   if(w->m_pimpl->m_pui->has_focus())
+   if(is_null(w))
    {
       
-      set_focus(NULL);
+      return FALSE;
       
    }
-   if(w->m_pimpl->m_pui->is_active())
+   
+   if(is_null(w->m_pimpl))
    {
       
-      set_active_window(NULL);
+      return FALSE;
       
    }
+   
+   if(!is_null(w->m_pimpl->m_pui))
+   {
+      
+      if(w->m_pimpl->m_pui->has_focus())
+      {
+         
+         set_focus(NULL);
+         
+      }
+      
+      if(w->m_pimpl->m_pui->is_active())
+      {
+         
+         set_active_window(NULL);
+         
+      }
+      
+   }
+   
    if(w == get_capture())
    {
       
@@ -507,7 +528,6 @@ WINBOOL destroy_window(oswindow w)
    }
    
    dynamic_cast < ::macos::interaction_impl* > (w->m_pimpl)->round_window_destroy();
-
    
    return 1;
    

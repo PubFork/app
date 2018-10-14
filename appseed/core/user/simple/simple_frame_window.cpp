@@ -2283,10 +2283,16 @@ void simple_frame_window::WfiOnDown()
 
 void simple_frame_window::WfiOnUp()
 {
+   
+   fork([=]()
+   {
 
-   frame_Detach();
+      frame_Detach();
+     
+   });
 
 }
+
 
 bool simple_frame_window::WfiIsMoving()
 {

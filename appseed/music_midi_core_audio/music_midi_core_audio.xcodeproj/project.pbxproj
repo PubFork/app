@@ -108,12 +108,12 @@
 			remoteGlobalIDString = 07B6583B190F3CE7002DAADE;
 			remoteInfo = ios_veriwell_multimedia;
 		};
-		9A77FD39213F1D2800B3A133 /* PBXContainerItemProxy */ = {
+		9AB2966F2172CEAD00943CAD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0730B0161BA11863001D28DB /* veriwell_multimedia.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 07B6583B190F3CE7002DAADE;
-			remoteInfo = ios_veriwell_multimedia;
+			remoteGlobalIDString = 9AEB75A216F78DF10085103B;
+			remoteInfo = veriwell_multimedia;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -370,7 +370,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				9A77FD3A213F1D2800B3A133 /* PBXTargetDependency */,
+				9AB296702172CEAD00943CAD /* PBXTargetDependency */,
 			);
 			name = music_midi_core_audio;
 			productName = os;
@@ -488,10 +488,10 @@
 			name = ios_veriwell_multimedia;
 			targetProxy = 9A21199C1D833D11000C4336 /* PBXContainerItemProxy */;
 		};
-		9A77FD3A213F1D2800B3A133 /* PBXTargetDependency */ = {
+		9AB296702172CEAD00943CAD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = ios_veriwell_multimedia;
-			targetProxy = 9A77FD39213F1D2800B3A133 /* PBXContainerItemProxy */;
+			name = veriwell_multimedia;
+			targetProxy = 9AB2966F2172CEAD00943CAD /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

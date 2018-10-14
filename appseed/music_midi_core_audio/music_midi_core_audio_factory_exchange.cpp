@@ -9,7 +9,7 @@ namespace music
    {
 
 
-      factory_exchange::factory_exchange(sp(::aura::application) papp) :
+      factory_exchange::factory_exchange(::aura::application * papp) :
          object(papp)
       {
 

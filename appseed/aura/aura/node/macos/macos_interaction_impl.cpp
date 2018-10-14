@@ -5465,7 +5465,7 @@ namespace macos
       
       m_rectParentClientRequest = rect;
       
-      if(m_rectParentClient != m_rectParentClientRequest)
+      //if(m_rectParentClient != m_rectParentClientRequest)
       {
          
          ::SetWindowPos(m_oswindow,

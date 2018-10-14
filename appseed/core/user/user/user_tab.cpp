@@ -1857,6 +1857,9 @@ namespace user
 
    index tab::hit_test(point pt, e_element & eelement)
    {
+      
+      synch_lock sl(m_pmutex);
+      
       ScreenToClient(&pt);
       rect rect;
       for(int32_t iPane = 0; iPane < get_data()->m_panea.get_size(); iPane++)

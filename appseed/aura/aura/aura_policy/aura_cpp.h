@@ -960,9 +960,9 @@ namespace file
 
 #include "aura/primitive/primitive_interlocked_long.h"
 #include "aura/primitive/primitive_interlocked_long_pulse.h"
-#include "aura/aura/aura_runnable.h"
+#include "aura/aura/aura/aura_runnable.h"
 #include "aura/primitive/primitive_object.h"
-#include "aura/aura/aura_runnable_pred.h"
+#include "aura/aura/aura/aura_runnable_pred.h"
 
 
 #include "aura/aura/aura/aura_debug.h"
