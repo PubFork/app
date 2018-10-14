@@ -76,7 +76,11 @@ namespace file_watcher
       int fd = open(name, O_RDONLY);
       
       if(fd == -1)
-         _throw(file_not_found_exception(name));
+      {
+       
+         return;
+         
+      }
       
       ++m_iChangeCount;
       
@@ -222,9 +226,16 @@ namespace file_watcher
       //fprintf(stderr, "ADDED: %s\n", m_strDirName.c_str());
       
       // scan directory and call addFile(name, false) on each file
-      DIR* dir = opendir(m_strDirName);
-      if(!dir)
-         _throw(file_not_found_exception(m_strDirName));
+      DIR * dir = opendir(m_strDirName);
+      //if(!dir)
+        // _throw(file_not_found_exception(m_strDirName));
+      
+      if(dir == NULL)
+      {
+         
+         return -1;
+         
+      }
       
       struct dirent* entry;
       struct stat attrib;

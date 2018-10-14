@@ -1,4 +1,5 @@
 #include "framework.h"
+#include <sqlite3.h>
 
 
 aura_level auralevelAxis(::aura_level::level_axis, &defer_axis_init);
@@ -16,7 +17,7 @@ namespace axis
 
          xxdebug_box("axis.dll axis_static_start (0)", "box", MB_OK);
 
-
+         sqlite3_config(SQLITE_CONFIG_MULTITHREAD) ;
 
 #if defined(LINUX)
 
