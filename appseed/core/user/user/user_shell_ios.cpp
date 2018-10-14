@@ -52,7 +52,7 @@ namespace user
             {
 
                ::multithreading::set_priority(::multithreading::priority_highest);
-               run();
+               shell_run();
 
             }));
 
@@ -1440,7 +1440,8 @@ namespace user
 
       }
 
-      int ios::run()
+      
+      void ios::shell_run()
       {
 
          per_fork fork;
@@ -1488,10 +1489,7 @@ namespace user
 
          }
 
-         return 0;
-
       }
-
 
 
       int32_t ios::get_image(oswindow oswindow, const string & strPath, e_file_attribute eattribute, e_icon eicon, COLORREF crBk)

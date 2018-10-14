@@ -1637,6 +1637,8 @@
 		9A706D7B1FFE62FA00A78618 /* RoundWindowFrameView.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A706D731FFE62F800A78618 /* RoundWindowFrameView.h */; };
 		9A706D7D1FFE62FA00A78618 /* RoundWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A706D751FFE62F900A78618 /* RoundWindow.h */; };
 		9A706D801FFE62FA00A78618 /* round_window.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A706D781FFE62FA00A78618 /* round_window.h */; };
+		9A7867C92173BCE9008A1B6D /* aura_runnable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A7B322E2168518A004AD1E9 /* aura_runnable.cpp */; };
+		9A7867CA2173BD0E008A1B6D /* compress_zip_is_dir.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A7B33B021686499004AD1E9 /* compress_zip_is_dir.cpp */; };
 		9A7B32332168518B004AD1E9 /* aura_runnable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A7B322E2168518A004AD1E9 /* aura_runnable.cpp */; };
 		9A7B33B12168649A004AD1E9 /* compress_zip_is_dir.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A7B33AB21686498004AD1E9 /* compress_zip_is_dir.h */; };
 		9A7B33B22168649A004AD1E9 /* compress_zip_is_dir.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A7B33B021686499004AD1E9 /* compress_zip_is_dir.cpp */; };
@@ -3800,6 +3802,7 @@
 		9A706D761FFE62F900A78618 /* round_window.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = round_window.mm; path = ios/round_window.mm; sourceTree = "<group>"; };
 		9A706D771FFE62FA00A78618 /* RoundViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = RoundViewController.mm; path = ios/RoundViewController.mm; sourceTree = "<group>"; };
 		9A706D781FFE62FA00A78618 /* round_window.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = round_window.h; path = ios/round_window.h; sourceTree = "<group>"; };
+		9A7867CB2173C1B9008A1B6D /* metrowin_interaction_impl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = metrowin_interaction_impl.cpp; sourceTree = "<group>"; };
 		9A7B322E2168518A004AD1E9 /* aura_runnable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = aura_runnable.cpp; sourceTree = "<group>"; };
 		9A7B33AB21686498004AD1E9 /* compress_zip_is_dir.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = compress_zip_is_dir.h; sourceTree = "<group>"; };
 		9A7B33B021686499004AD1E9 /* compress_zip_is_dir.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = compress_zip_is_dir.cpp; sourceTree = "<group>"; };
@@ -5093,8 +5096,6 @@
 		9A0254891EA59238003C82CF /* compress */ = {
 			isa = PBXGroup;
 			children = (
-				9A7B33B021686499004AD1E9 /* compress_zip_is_dir.cpp */,
-				9A7B33AB21686498004AD1E9 /* compress_zip_is_dir.h */,
 				9A02548B1EA59238003C82CF /* bsdiff */,
 				9A0254A81EA59238003C82CF /* zip */,
 				9A0254EB1EA5927C003C82CF /* compress_bz.cpp */,
@@ -5104,6 +5105,8 @@
 				9A0254A01EA59238003C82CF /* compress_bz.h */,
 				9A0254A41EA59238003C82CF /* compress_department.h */,
 				9A0254A61EA59238003C82CF /* compress_gz.h */,
+				9A7B33B021686499004AD1E9 /* compress_zip_is_dir.cpp */,
+				9A7B33AB21686498004AD1E9 /* compress_zip_is_dir.h */,
 			);
 			path = compress;
 			sourceTree = "<group>";
@@ -6391,6 +6394,7 @@
 		9A81D9E21F448B500030C6E8 /* metrowin(just_for_browsing) */ = {
 			isa = PBXGroup;
 			children = (
+				9A7867CB2173C1B9008A1B6D /* metrowin_interaction_impl.cpp */,
 				9A81D9E31F448B500030C6E8 /* _metrowin_node.cpp */,
 				9A81D9E41F448B500030C6E8 /* metrowin.h */,
 				9A81D9E51F448B500030C6E8 /* metrowin1.h */,
@@ -6781,7 +6785,6 @@
 		9AF4C2381F836F8200197385 /* aura */ = {
 			isa = PBXGroup;
 			children = (
-				9A7B322E2168518A004AD1E9 /* aura_runnable.cpp */,
 				9AF4C3091F836F8200197385 /* os_alloc */,
 				9AF4C2391F836F8200197385 /* aura.cpp */,
 				9AF4C23A1F836F8200197385 /* aura.h */,
@@ -6932,6 +6935,7 @@
 				9AF4C2D01F836F8200197385 /* aura_progress.cpp */,
 				9AF4C2D11F836F8200197385 /* aura_progress.h */,
 				9AF4C2D21F836F8200197385 /* aura_restore.h */,
+				9A7B322E2168518A004AD1E9 /* aura_runnable.cpp */,
 				9AF4C2D31F836F8200197385 /* aura_savings.cpp */,
 				9AF4C2D41F836F8200197385 /* aura_savings.h */,
 				9AF4C2D51F836F8200197385 /* aura_serial.h */,
@@ -8609,6 +8613,7 @@
 				9A957A7A1F6225B900623508 /* xml_xmlite.cpp in Sources */,
 				9AF4C3DD1F836FD100197385 /* aura_allocate_x86_cache_oriented.cpp in Sources */,
 				9A957A7B1F6225B900623508 /* xml.cpp in Sources */,
+				9A7867C92173BCE9008A1B6D /* aura_runnable.cpp in Sources */,
 				9A41A59E200416470095D13C /* audio_wave_out.cpp in Sources */,
 				9A957A7C1F6225B900623508 /* multithreading_condition.cpp in Sources */,
 				9A957A7D1F6225B900623508 /* multithreading_core.cpp in Sources */,
@@ -8969,6 +8974,7 @@
 				9A6FB1901F5C9FE300AF31B2 /* sockets_http_socket.cpp in Sources */,
 				9A6FB1491F5C9DEF00AF31B2 /* draw3d_ortho.cpp in Sources */,
 				9AF4C3DC1F836FD100197385 /* aura_allocate_system_heap.cpp in Sources */,
+				9A7867CA2173BD0E008A1B6D /* compress_zip_is_dir.cpp in Sources */,
 				9A6FB1111F5C9C5D00AF31B2 /* primitive_interlocked_long_pulse.cpp in Sources */,
 				9A95793F1F62250800623508 /* collection_point_array.cpp in Sources */,
 				9A6FB0CE1F5C7D5400AF31B2 /* ios_win_base.cpp in Sources */,

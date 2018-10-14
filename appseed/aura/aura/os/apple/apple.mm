@@ -6,6 +6,7 @@
 //
 
 #import "NSString+SymlinksAndAliases.h"
+#import "aura/aura/aura/aura_runnable.h"
 
 char * ns_string(NSString * str)
 {
@@ -177,7 +178,7 @@ void main_sync_runnable(runnable * prunnable)
 }
 
 
-
+NSString * __ns_get_text(const char * psz);
 
 
 NSString * __ns_get_text(NSString * str)

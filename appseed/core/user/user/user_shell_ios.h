@@ -94,7 +94,7 @@ namespace user
 //         ::windows::comptr < IShellFolder> _017GetShellFolder(per_fork * pfork, LPITEMIDLIST lpiidlChild);
 //         void _017ItemIDListParsePath(per_fork * pfork, oswindow oswindow, LPITEMIDLIST * lpiidl, const char * lpcsz);
 
-         int run();
+         void shell_run();
 
 
 

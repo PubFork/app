@@ -132,7 +132,7 @@ CLASS_DECL_AURA DWORD call_sync(
                              int iSleep, 
                              int (* pfnOnRetry)(int iTry, uint_ptr dwParam),
                              uint_ptr dwParam,
-                                unsigned int * puiPid)
+                                unsigned int * puiPid, bool bpriv)
 {
 
    string strCmdLine;

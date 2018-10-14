@@ -5269,10 +5269,11 @@ namespace ios
       perasebkgnd->set_result(TRUE);
    }
 
+   
    void interaction_impl::_001BaseWndInterfaceMap()
    {
 
-      Session.window_map().set((int_ptr)get_handle(), this);
+      System.window_map().set((int_ptr)get_handle(), this);
 
    }
 
@@ -5380,9 +5381,9 @@ namespace ios
 
          single_lock sl(m_pui->m_pmutex, true);
          
-         m_rectParentClientRequest.size(cx, cy);
+         m_rectParentClientRequest.set_size(cx, cy);
          
-         m_rectParentClient.size(cx, cy);
+         m_rectParentClient.set_size(cx, cy);
 
          if(m_bUpdateGraphics)
          {
@@ -5826,7 +5827,7 @@ namespace ios
 
          m_rectParentClientRequest.move_to(pt);
 
-         m_rectParentClientRequest.size(rect.size.width, rect.size.height);
+         m_rectParentClientRequest.set_size(rect.size.width, rect.size.height);
 
          sz = m_rectParentClientRequest.get_size();
 
@@ -5851,6 +5852,19 @@ namespace ios
 
    }
 
+   bool interaction_impl::has_focus()
+   {
+      
+      return get_handle() == ::get_focus();
+      
+   }
+   
+   bool interaction_impl::is_active()
+   {
+      
+      return get_handle() == ::get_active_window();
+      
+   }
 
    void interaction_impl::round_window_moved(CGPoint point)
    {

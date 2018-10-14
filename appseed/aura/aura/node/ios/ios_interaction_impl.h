@@ -20,7 +20,6 @@ namespace ios
    {
    public:
 
-
       string                           m_strWindowText;
       ::user::interaction_base *       m_pbasewnd;
       bool                             m_bNeedsUpdate;
@@ -227,9 +226,13 @@ namespace ios
 //      virtual bool round_window_key_up(unsigned int uiKeyCode);
 
 
-      bool SetFocus() override;
+      virtual bool SetFocus() override;
+      
+      virtual bool has_focus() override;
+      virtual bool is_active() override;
 
-      void set_viewport_org(::draw2d::graphics * pgraphics) override;
+
+      virtual void set_viewport_org(::draw2d::graphics * pgraphics) override;
       void offset_viewport_org(LPRECT lprectScreen);
 
 
