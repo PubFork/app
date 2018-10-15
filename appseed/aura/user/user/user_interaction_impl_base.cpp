@@ -324,8 +324,13 @@ namespace user
       {
 
          ModifyStyle(WS_VISIBLE, 0);
+         
+         if(m_pui != NULL)
+         {
 
-         m_pui->message_call(WM_SHOWWINDOW, 0);
+            m_pui->message_call(WM_SHOWWINDOW, 0);
+            
+         }
 
       }
 
