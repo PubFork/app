@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 // ::ca::null_class back link to operational system oswindow.h

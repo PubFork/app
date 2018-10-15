@@ -3145,6 +3145,7 @@
 		9A4BE10A20001F6000DED594 /* os_os.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = os_os.h; sourceTree = "<group>"; };
 		9A4BE10B2000250300DED594 /* os.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = os.h; sourceTree = "<group>"; };
 		9A4BE10C2000264500DED594 /* apple_apple.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = apple_apple.h; sourceTree = "<group>"; };
+		9A4D718B2173F18D007CDF98 /* user_theme.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = user_theme.cpp; sourceTree = "<group>"; };
 		9A51A7111F9BE2FC004D02D4 /* user_scroll_info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = user_scroll_info.h; sourceTree = "<group>"; };
 		9A51A7121F9BE2FC004D02D4 /* user_key_enum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = user_key_enum.h; sourceTree = "<group>"; };
 		9A51A7131F9BE2FD004D02D4 /* user_menu_item.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = user_menu_item.cpp; sourceTree = "<group>"; };
@@ -4861,6 +4862,7 @@
 		07CABC0F1B3DFF200009F5B9 /* user */ = {
 			isa = PBXGroup;
 			children = (
+				9A4D718B2173F18D007CDF98 /* user_theme.cpp */,
 				9AE47F9720D098E700648DFD /* user_edit_text.h */,
 				9AE47F9320D098E600648DFD /* user_menu_interaction.cpp */,
 				9AE47F9820D098E700648DFD /* user_menu_interaction.h */,

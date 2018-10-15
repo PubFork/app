@@ -298,10 +298,10 @@ namespace user
       pgraphics->fill_solid_rect(rectClient, _001GetColor(::user::color_edit_background));
 
 
-      cr = _001GetColor(color_edit_text);
-      crBk = _001GetColor(color_edit_background);
-      crSel = _001GetColor(color_edit_text_selected);
-      crBkSel = _001GetColor(color_edit_background_selected);
+      cr = _001GetColor(color_edit_text, ARGB(255, 0, 0, 0));
+      crBk = _001GetColor(color_edit_background, 0);
+      crSel = _001GetColor(color_edit_text_selected, ARGB(255, 255, 255, 255));
+      crBkSel = _001GetColor(color_edit_background_selected, ARGB(255, 100, 150, 180));
 
 
       m_pinternal->update(this);
@@ -5556,13 +5556,19 @@ finished_update:
 
       m_brushTextEmpty.alloc(pedit->allocer());
 
-      m_penCaret->create_solid(1.0, pedit->_001GetColor(color_edit_text));
+      COLORREF cr = pedit->_001GetColor(color_edit_text, ARGB(255, 0, 0, 0));
+      
+      m_penCaret->create_solid(1.0, cr);
+      
+      m_brushTextCr->create_solid(cr);
 
-      m_brushTextCr->create_solid(pedit->_001GetColor(color_edit_text));
+      cr = pedit->_001GetColor(color_edit_text_selected, ARGB(255, 255, 255, 255));
+      
+      m_brushTextSel->create_solid(cr);
 
-      m_brushTextSel->create_solid(pedit->_001GetColor(color_edit_text_selected));
-
-      m_brushTextEmpty->create_solid(pedit->_001GetColor(color_edit_text_empty));
+      cr = pedit->_001GetColor(color_edit_text_empty, ARGB(255, 180, 180, 180));
+      
+      m_brushTextEmpty->create_solid(cr);
 
    }
 

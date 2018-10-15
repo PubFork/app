@@ -30,8 +30,6 @@ namespace multimedia
 } // namespace multimedia
 
 
-#ifdef CUBE
-
 extern "C"
 void audio_core_audio_ca2_factory_exchange(::aura::application * papp)
 {
@@ -40,17 +38,6 @@ void audio_core_audio_ca2_factory_exchange(::aura::application * papp)
 
 }
 
-#else
-
-extern "C"
-void ca2_factory_exchange(::aura::application * papp)
-{
-   
-   ::multimedia::audio_core_audio::factory_exchange factoryexchange(papp);
-   
-}
-
-#endif
 
 
 
