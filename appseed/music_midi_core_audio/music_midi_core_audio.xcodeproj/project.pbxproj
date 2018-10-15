@@ -16,8 +16,6 @@
 		9A038D0621312610004C97FA /* libcore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A038D0521312610004C97FA /* libcore.dylib */; };
 		9A1B496416A494A600875A94 /* framework.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A1B496316A494A600875A94 /* framework.h */; };
 		9A1B496716A4A10100875A94 /* framework.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A1B496616A4A10100875A94 /* framework.cpp */; };
-		9A210CB51D81AB23000C4336 /* AudioUnitOutput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A210CB31D81AB23000C4336 /* AudioUnitOutput.cpp */; };
-		9A210CB61D81AB23000C4336 /* AudioUnitOutput.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A210CB41D81AB23000C4336 /* AudioUnitOutput.h */; };
 		9A210CBB1D81AB9B000C4336 /* CAStreamBasicDescription.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A210CB91D81AB9B000C4336 /* CAStreamBasicDescription.cpp */; };
 		9A210CBC1D81AB9B000C4336 /* CAStreamBasicDescription.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A210CBA1D81AB9B000C4336 /* CAStreamBasicDescription.h */; };
 		9A210CBF1D81AC21000C4336 /* OutputBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A210CBD1D81AC21000C4336 /* OutputBase.cpp */; };
@@ -28,7 +26,6 @@
 		9A210CD71D81E3E8000C4336 /* CoreMIDIOutput.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A210CD51D81E3E8000C4336 /* CoreMIDIOutput.h */; };
 		9A210CD91D81ED72000C4336 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A210CD81D81ED72000C4336 /* AudioToolbox.framework */; };
 		9A210CDB1D81ED91000C4336 /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A210CDA1D81ED91000C4336 /* CoreMIDI.framework */; };
-		9A2119631D833C09000C4336 /* AudioUnitOutput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A210CB31D81AB23000C4336 /* AudioUnitOutput.cpp */; };
 		9A2119641D833C09000C4336 /* framework.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A1B496616A4A10100875A94 /* framework.cpp */; };
 		9A2119651D833C09000C4336 /* music_midi_core_audio_midi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07884EB7189866D300DC6CEB /* music_midi_core_audio_midi.cpp */; };
 		9A2119661D833C09000C4336 /* music_midi_core_audio_player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07D6C9AA18986C6E00CB8AA8 /* music_midi_core_audio_player.cpp */; };
@@ -57,7 +54,6 @@
 		9A2119851D833C09000C4336 /* music_midi_core_audio_translation.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A8EAF7717C5640300C458D1 /* music_midi_core_audio_translation.h */; };
 		9A2119861D833C09000C4336 /* music_midi_core_audio.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A8EAF7A17C5640300C458D1 /* music_midi_core_audio.h */; };
 		9A2119871D833C09000C4336 /* OutputBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A210CBE1D81AC21000C4336 /* OutputBase.h */; };
-		9A2119881D833C09000C4336 /* AudioUnitOutput.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A210CB41D81AB23000C4336 /* AudioUnitOutput.h */; };
 		9A8997BD177D0E7F00C7761E /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A8997BC177D0E7D00C7761E /* Carbon.framework */; };
 		9A8EAF7B17C5640300C458D1 /* music_midi_core_audio_exception.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A8EAF6C17C5640300C458D1 /* music_midi_core_audio_exception.cpp */; };
 		9A8EAF7C17C5640300C458D1 /* music_midi_core_audio_exception.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A8EAF6D17C5640300C458D1 /* music_midi_core_audio_exception.h */; };
@@ -127,8 +123,6 @@
 		9A038D0521312610004C97FA /* libcore.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; path = libcore.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A1B496316A494A600875A94 /* framework.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = framework.h; sourceTree = "<group>"; };
 		9A1B496616A4A10100875A94 /* framework.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = framework.cpp; sourceTree = "<group>"; };
-		9A210CB31D81AB23000C4336 /* AudioUnitOutput.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AudioUnitOutput.cpp; sourceTree = "<group>"; };
-		9A210CB41D81AB23000C4336 /* AudioUnitOutput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioUnitOutput.h; sourceTree = "<group>"; };
 		9A210CB91D81AB9B000C4336 /* CAStreamBasicDescription.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAStreamBasicDescription.cpp; sourceTree = "<group>"; };
 		9A210CBA1D81AB9B000C4336 /* CAStreamBasicDescription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAStreamBasicDescription.h; sourceTree = "<group>"; };
 		9A210CBD1D81AC21000C4336 /* OutputBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OutputBase.cpp; sourceTree = "<group>"; };
@@ -276,8 +270,6 @@
 				9A8EAF7A17C5640300C458D1 /* music_midi_core_audio.h */,
 				9A1B496316A494A600875A94 /* framework.h */,
 				9A1B496616A4A10100875A94 /* framework.cpp */,
-				9A210CB31D81AB23000C4336 /* AudioUnitOutput.cpp */,
-				9A210CB41D81AB23000C4336 /* AudioUnitOutput.h */,
 				9A210CB91D81AB9B000C4336 /* CAStreamBasicDescription.cpp */,
 				9A210CBA1D81AB9B000C4336 /* CAStreamBasicDescription.h */,
 				9A210CBD1D81AC21000C4336 /* OutputBase.cpp */,
@@ -311,7 +303,6 @@
 				9A2119851D833C09000C4336 /* music_midi_core_audio_translation.h in Headers */,
 				9A2119861D833C09000C4336 /* music_midi_core_audio.h in Headers */,
 				9A2119871D833C09000C4336 /* OutputBase.h in Headers */,
-				9A2119881D833C09000C4336 /* AudioUnitOutput.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -334,7 +325,6 @@
 				9A8EAF8617C5640300C458D1 /* music_midi_core_audio_translation.h in Headers */,
 				9A8EAF8817C5640300C458D1 /* music_midi_core_audio.h in Headers */,
 				9A210CC01D81AC21000C4336 /* OutputBase.h in Headers */,
-				9A210CB61D81AB23000C4336 /* AudioUnitOutput.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -439,7 +429,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9A2119631D833C09000C4336 /* AudioUnitOutput.cpp in Sources */,
 				9A2119641D833C09000C4336 /* framework.cpp in Sources */,
 				9A2119651D833C09000C4336 /* music_midi_core_audio_midi.cpp in Sources */,
 				9A2119661D833C09000C4336 /* music_midi_core_audio_player.cpp in Sources */,
@@ -461,7 +450,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9A210CB51D81AB23000C4336 /* AudioUnitOutput.cpp in Sources */,
 				9A1B496716A4A10100875A94 /* framework.cpp in Sources */,
 				07884EB9189866D300DC6CEB /* music_midi_core_audio_midi.cpp in Sources */,
 				07D6C9B218986C6E00CB8AA8 /* music_midi_core_audio_player.cpp in Sources */,
