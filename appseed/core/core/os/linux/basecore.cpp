@@ -128,7 +128,7 @@ GtkWidget * basecore_app_indicator_init(AppIndicator * pindicator, user_notify_i
 
    AppIndicator * m_pappindicator = pindicator;
 
-   int iCount = pbridge->notification_area_action_count();
+   int iCount = pbridge->_get_notification_area_action_count();
 
    GtkWidget *  indicator_menu = NULL;
 
@@ -145,7 +145,7 @@ GtkWidget * basecore_app_indicator_init(AppIndicator * pindicator, user_notify_i
    {
 
 
-      GtkActionEntry * entries = new GtkActionEntry[pbridge->notification_area_action_count()];
+      GtkActionEntry * entries = new GtkActionEntry[pbridge->_get_notification_area_action_count()];
 
       gchar * ui_info = (gchar *) malloc(1024 * 1024);
 
@@ -165,7 +165,7 @@ GtkWidget * basecore_app_indicator_init(AppIndicator * pindicator, user_notify_i
 
          int iIndex = i;
 
-         pbridge->notification_area_action_info(&pszName, &pszId, &pszLabel, &pszAccelerator, &pszDescription, iIndex);
+         pbridge->_get_notification_area_action_info(&pszName, &pszId, &pszLabel, &pszAccelerator, &pszDescription, iIndex);
 
          if(strcasecmp(pszName, "separator") == 0)
          {
