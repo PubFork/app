@@ -86,7 +86,9 @@ CLASS_DECL_AURA void __c_get_text(char * pszText, int iLen, const char * psz)
 
    iLen = MIN(iLen, (int) str.get_length());
 
-   return strncpy(pszText, str, iLen);
+   strncpy(pszText, str, iLen);
+   
+   pszText[iLen] = '\0';
    
 }
 

@@ -198,6 +198,8 @@ NSString * __ns_get_text(const char * psz)
    
    char * p = (char *) malloc(iLen+1);
    
+   memset(p, 0, iLen+1);
+   
    __c_get_text(p, iLen + 1, psz);
    
    NSString * strText = [[NSString alloc] initWithUTF8String: p];
