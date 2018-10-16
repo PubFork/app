@@ -500,13 +500,20 @@ namespace sqlite
 
    }
 
-   var & set::FieldValueAt(index iFieldIndex)
+   var set::FieldValueAt(index iFieldIndex)
    {
       //if(ds_state == dsSelect)
       {
          if(iFieldIndex >= 0 && iFieldIndex < result.m_record_header.get_size())
          {
-            return result.m_records[frecno][iFieldIndex];
+            if(frecno >= 0 && frecno < result.m_records.get_size())
+            {
+               if(iFieldIndex >= 0 && iFieldIndex < result.m_records[frecno].get_size())
+               {
+                  return result.m_records[frecno][iFieldIndex];
+               }
+            }
+            return false;
          }
          else
          {

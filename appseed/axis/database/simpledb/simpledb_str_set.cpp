@@ -469,7 +469,7 @@ bool db_str_set::load(const ::database::key & key, string & strValue)
 
       sync_object * pmutex = pdb->m_pmutex;
 
-      sl.unlock();
+      //sl.unlock();
 
       synch_lock slDatabase(pmutex);
 
@@ -484,6 +484,8 @@ bool db_str_set::load(const ::database::key & key, string & strValue)
                          -1,
                          &pcore->m_pstmtSelect, NULL)) != SQLITE_OK)
          {
+            
+            pcore->m_pstmtSelect = NULL;
 
             return false;
 
@@ -515,7 +517,7 @@ bool db_str_set::load(const ::database::key & key, string & strValue)
       if (res != SQLITE_ROW)
       {
 
-         var var = pdb->query_item("select `value` FROM stringvalue WHERE `id` = '" + pdb->escape(strKey) + "'");
+         var var = pdb->query_item("select `value` FROM stringtable WHERE `id` = '" + pdb->escape(strKey) + "'");
 
          if (!(bool)var)
             return false;
@@ -530,7 +532,7 @@ bool db_str_set::load(const ::database::key & key, string & strValue)
 
       strValue = string(psz, iLen);
 
-      sqlite3_reset(pcore->m_pstmtSelect);
+      //sqlite3_reset(pcore->m_pstmtSelect);
 
    }
 
