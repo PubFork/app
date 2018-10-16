@@ -5,7 +5,8 @@
 //  Created by Camilo Sasuke Tsumanuma on 8/3/15.
 //
 //
-
+#import "aura/aura/node/ios/RoundWindowApp.h"
+#import "aura/aura/node/ios/RoundWindowFrameView.h"
 
 bool GetImagePixelData(unsigned int * pcr, int cx, int cy, int iScan, CGImageRef inImage);;
 
@@ -138,4 +139,68 @@ bool _ui_library_dir(char * psz, unsigned int * puiSize)
 }
 
 
+
+
+
+bool ns_open_file(const char * psz)
+{
+   
+   NSString * path = [NSString stringWithUTF8String:psz];
+   
+   if(path == NULL)
+   {
+      
+      return false;
+      
+   }
+   
+   NSURL * url = [NSURL fileURLWithPath: path];
+   
+   //https://stackoverflow.com/questions/20869815/open-file-from-local-file-system-with-default-application-ios
+   
+   BOOL canOpenResource = [ [UIApplication sharedApplication] canOpenURL: url];
+   
+   if (!canOpenResource)
+   {
+      
+      return false;
+      
+   }
+      
+   if([[UIApplication sharedApplication] openURL: url])
+   {
+      
+      return true;
+      
+   }
+   
+   
+   RoundWindowApp * papp = (RoundWindowApp *)[ [UIApplication sharedApplication] delegate];
+   
+   UIDocumentInteractionController *documentController = [UIDocumentInteractionController interactionControllerWithURL: url];
+   documentController.delegate = papp;
+   if([documentController presentOpenInMenuFromRect:CGRectZero inView: [papp view] animated:YES])
+   {
+      
+      return false;
+
+   }
+   //https://www.infragistics.com/community/blogs/b/stevez/posts/ios-tips-and-tricks-associate-a-file-type-with-your-app-part-3
+//
+//   NSFileManager *filemgr = [NSFileManager defaultManager];
+//   NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//   NSString *documentsDirectory = [paths objectAtIndex:0];
+//   NSString* inboxPath = [documentsDirectory stringByAppendingPathComponent:@"Inbox"];
+//   NSArray *dirFiles = [filemgr contentsOfDirectoryAtPath:inboxPath error:nil];
+
+      
+   
+   //(However,) if your wish to present the user with a list of apps that have registered with the appropriate UTI for that file type you can do something like this-
+   //UIDocumentInteractionController *documentController = [UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:filePath]];
+   //documentController.delegate = self;
+   //[documentController presentOpenInMenuFromRect:CGRectZero inView:self.view animated:YES];
+   
+   return true;
+   
+}
 

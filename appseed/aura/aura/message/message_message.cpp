@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 namespace message
@@ -49,7 +49,7 @@ namespace message
 
          //m_bRet = true;
 
-         return true;
+         return false;
 
       }
 
@@ -65,7 +65,7 @@ namespace message
 
          //m_bRet = true;
 
-         return true;
+         return false;
 
       }
 

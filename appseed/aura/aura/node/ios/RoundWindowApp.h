@@ -8,7 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface RoundWindowApp : UIResponder <UIApplicationDelegate>
+
+@class RoundWindowFrameView;
+
+@interface RoundWindowApp : UIResponder <UIApplicationDelegate, UIDocumentInteractionControllerDelegate>
 {
    
 @public
@@ -18,5 +21,6 @@
 }
 
 @property (strong, nonatomic) UIWindow * window;
+@property (strong, nonatomic) RoundWindowFrameView * view;
 
 @end

@@ -64,6 +64,9 @@ namespace ios
       virtual void post_to_all_threads(UINT message, WPARAM wParam, LPARAM lParam);
       
       
+      bool file_open(::aura::application * papp, ::file::path path, string strParams, string strFolder);
+
+      
       virtual bool initialize_wallpaper_fileset(::file::set * pfileset, bool bAddSearch);
       
    };

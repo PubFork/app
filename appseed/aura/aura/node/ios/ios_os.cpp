@@ -1,5 +1,6 @@
 #include "framework.h"
 
+void ns_open_file(const char * );
 
 namespace ios
 {
@@ -817,6 +818,24 @@ namespace ios
       return true;
       
    }
+   
+   
+   bool os::file_open(::aura::application * papp, ::file::path path, string strParams, string strFolder)
+   {
+      
+      path = System.defer_process_path(path, papp);
+      
+      ns_main_async(^
+                    {
+                       
+                       ns_open_file(path.c_str());
+                       
+                    });
+      
+      return true;
+      
+   }
+   
 
 } // namespace ios
 

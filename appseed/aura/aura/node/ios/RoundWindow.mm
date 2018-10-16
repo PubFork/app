@@ -12,6 +12,7 @@
 //  appreciated but not required.
 //
 #import "ios_mm.h"
+#import "RoundWindowApp.h"
 
 
 @implementation RoundWindow
@@ -183,6 +184,12 @@
 	[frameView setAutoresizingMask: 0];
    
    [m_controller.view addSubview: frameView];
+   
+   RoundWindowApp * papp = (RoundWindowApp *) [[UIApplication sharedApplication] delegate];
+   
+   [papp setView: frameView];
+   
+
    
    //
    // setContentView:

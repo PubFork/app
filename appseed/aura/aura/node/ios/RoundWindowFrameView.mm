@@ -12,6 +12,7 @@
 //  appreciated but not required.
 //
 #import "ios_mm.h"
+#import "RoundWindowApp.h"
 
 
 @implementation RoundWindowFrameView
@@ -19,8 +20,11 @@
 
 - (id)initWithFrame:(CGRect)frame
 {
+   
    self = [super initWithFrame:frame];
-   if (self) {
+   
+   if (self)
+   {
       
 //      UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(detectPan:)];
 //      self.gestureRecognizers = @[panRecognizer];
@@ -32,8 +36,11 @@
 //      UIColor *color = [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:1];
 //
 //      self.backgroundColor = color;
+      
    }
+   
    return self;
+   
 }
 
 - (CGRect)resizeRect

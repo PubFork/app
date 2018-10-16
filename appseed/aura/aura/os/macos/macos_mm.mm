@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 
 
-
 char * ns_get_default_browser_path()
 {
    
