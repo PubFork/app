@@ -177,7 +177,15 @@ namespace aura
       raw_array < HMONITOR >                       m_hmonitora;
       raw_array < MONITORINFO >                    m_monitorinfoaDesk;
 
+#else
+
+      rect_array                                   m_rectaMonitor;
+      rect_array                                   m_rectaWork;
+
 #endif
+
+
+
       map < ::file::path, const ::file::path &, ::visual::dib_sp > m_mapDib;
 
       sp(::user::window_map)                       m_pwindowmap;

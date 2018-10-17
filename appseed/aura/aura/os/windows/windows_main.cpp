@@ -309,13 +309,13 @@ void os_post_quit()
 }
 
 
-CLASS_DECL_AURA void main_async_runnable(object * prunnable)
+CLASS_DECL_AURA void main_async_runnable(::object * pobjectRunnable)
 {
 
-   ::aura::system::g_p->post_pred([prunnable]()
+   ::aura::system::g_p->post_pred([pobjectRunnable]()
    {
 
-      sp(object) pobject = prunnable;
+      sp(object) pobject = pobjectRunnable;
 
       pobject->run();
 
@@ -323,16 +323,20 @@ CLASS_DECL_AURA void main_async_runnable(object * prunnable)
 
 }
 
-CLASS_DECL_AURA void main_sync_runnable(object * prunnable)
+
+CLASS_DECL_AURA void main_sync_runnable(::object * pobjectRunnable)
 {
 
-   ::aura::system::g_p->send_pred([prunnable]()
+   ::aura::system::g_p->send_pred([pobjectRunnable]()
    {
 
-      sp(object) pobject = prunnable;
+      sp(object) pobject = pobjectRunnable;
 
       pobject->run();
 
    });
 
 }
+
+
+

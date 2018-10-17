@@ -172,9 +172,7 @@ uint64_t get_nanos()
 }
 
 
-
-
-CLASS_DECL_AURA void main_sync_runnable(runnable * prunnable)
+CLASS_DECL_AURA void main_sync_runnable(::object * pobjectRunnable)
 {
 
    manual_reset_event ev(::aura::system::g_p);
@@ -184,7 +182,7 @@ CLASS_DECL_AURA void main_sync_runnable(runnable * prunnable)
    gdk_fork([&]()
    {
 
-      prunnable->run();
+      one_shot_run(pobjectRunnable);
 
       ev.SetEvent();
 
@@ -193,3 +191,19 @@ CLASS_DECL_AURA void main_sync_runnable(runnable * prunnable)
    ev.wait();
 
 }
+
+
+CLASS_DECL_AURA void main_async_runnable(::object * pobjectRunnable)
+{
+
+   gdk_fork([pobjectRunnable]()
+   {
+
+      one_shot_run(pobjectRunnable);
+
+   });
+
+}
+
+
+

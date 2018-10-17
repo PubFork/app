@@ -1087,3 +1087,14 @@ string object::__get_text(string str)
 
 
 
+CLASS_DECL_AURA void one_shot_run(::object * pobjectRunnable)
+{
+
+   pobjectRunnable->run();
+
+   ::release(pobjectRunnable);
+
+}
+
+
+

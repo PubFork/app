@@ -373,3 +373,4 @@ inline int64_t ref_count(c_derived * pca)
 
 
 
+CLASS_DECL_AURA void one_shot_run(::object * pobjectRunnable);

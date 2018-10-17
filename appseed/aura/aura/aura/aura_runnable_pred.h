@@ -4,8 +4,8 @@
 
 
 
-CLASS_DECL_AURA void main_async_runnable(runnable * prunnable);
-CLASS_DECL_AURA void main_sync_runnable(runnable * prunnable);
+CLASS_DECL_AURA void main_async_runnable(::object * pobjectRunnable);
+CLASS_DECL_AURA void main_sync_runnable(::object * pobjectRunnable);
 
 
 template < typename PRED >
@@ -52,9 +52,9 @@ template < typename PRED >
 inline void main_async(PRED pred)
 {
 
-   object * pobject = create_runnable_pred(pred);
+   object * pobjectRunnable = create_runnable_pred(pred);
 
-   main_async_runnable(pobject);
+   main_async_runnable(pobjectRunnable);
 
 }
 
@@ -63,8 +63,8 @@ template < typename PRED >
 inline void main_sync(PRED pred)
 {
 
-   object * pobject = create_runnable_pred(pred);
+   object * pobjectRunnable = create_runnable_pred(pred);
 
-   main_sync_runnable(pobject);
+   main_sync_runnable(pobjectRunnable);
 
 }

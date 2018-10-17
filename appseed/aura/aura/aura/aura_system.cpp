@@ -25,7 +25,6 @@ Display * x11_get_display();
 #endif
 
 
-
 #if defined(LINUX) || defined(ANDROID)
 
 //#include <fcntl.h>
@@ -40,6 +39,17 @@ Display * x11_get_display();
 #endif
 
 #ifdef LINUX
+
+void copy(LPRECT lprect, GdkRectangle r)
+{
+
+   lprect->left = r.x;
+   lprect->top = r.y;
+   lprect->right = r.x + r.width;
+   lprect->bottom = r.y + r.height;
+
+}
+
 UINT __x11_thread(void * pparam);
 #endif
 
@@ -3262,32 +3272,32 @@ success:
       return true;
 
    }
-   
-   
+
+
    bool system::on_application_menu_action(const char * pszCommand)
    {
-      
+
       for(auto & app : m_appptra)
       {
-         
+
          if(app == this)
          {
-            
+
             continue;
-            
+
          }
-         
+
          if(app->on_application_menu_action(pszCommand))
          {
-            
+
             return true;
-            
+
          }
-         
+
       }
-      
+
       return false;
-      
+
    }
 
 
@@ -3550,6 +3560,8 @@ success:
       return *m_spemaildepartment;
 
    }
+
+
    void system::enum_display_monitors()
    {
 
@@ -3559,11 +3571,67 @@ success:
 
       ::EnumDisplayMonitors(NULL, NULL, &system::monitor_enum_proc, (LPARAM)(dynamic_cast < ::aura::system * > (this)));
 
-#else
+#elif defined(LINUX)
 
-      // todo
-      //      m_monitorinfoa.remove_all();
+      main_async([&]
+      {
 
+         synch_lock sl(m_pmutex);
+
+         xdisplay d(x11_get_display());
+
+         GdkDisplay * pdisplay = gdk_display_get_default();
+
+         if(pdisplay == NULL)
+         {
+
+            return false;
+
+         }
+
+         ::count iMonitorCount = gdk_display_get_n_monitors(pdisplay);
+
+         m_rectaWork.set_size(iMonitorCount);
+
+         m_rectaMonitor.set_size(iMonitorCount);
+
+         for(index iMonitor = 0; iMonitor < iMonitorCount; iMonitor++)
+         {
+
+            GdkMonitor * pmonitor = gdk_display_get_monitor(pdisplay, iMonitor);
+
+            auto & rectWork = m_rectaWork[iMonitor];
+
+            auto & rectMonitor = m_rectaMonitor[iMonitor];
+
+            if(pmonitor == NULL)
+            {
+
+               rectWork.null();
+
+               rectMonitor.null();
+
+               continue;
+
+            }
+
+            GdkRectangle r;
+
+            ZERO(r);
+
+            gdk_monitor_get_workarea(pmonitor, &r);
+
+            ::copy(rectWork, r);
+
+            ZERO(r);
+
+            gdk_monitor_get_geometry(pmonitor, &r);
+
+            ::copy(rectMonitor, r);
+
+         }
+
+      });
 
 #endif
 
@@ -3663,20 +3731,9 @@ success:
 
 #elif defined(LINUX)
 
-      xdisplay d(x11_get_display());
+      synch_lock sl(m_pmutex);
 
-      GdkDisplay * pdisplay = gdk_display_get_default();
-
-      if(pdisplay == NULL)
-      {
-
-         return 1;
-
-      }
-
-      int iMonitorCount = gdk_display_get_n_monitors(pdisplay);
-
-      return iMonitorCount;
+      return m_rectaMonitor.get_count();
 
 #else
 
@@ -3693,7 +3750,11 @@ success:
 #ifdef WINDOWSEX
 
       if (iMonitor < 0 || iMonitor >= get_monitor_count())
+      {
+
          return false;
+
+      }
 
       *lprect = m_monitorinfoa[iMonitor].rcMonitor;
 
@@ -3705,44 +3766,25 @@ success:
 
 #elif defined(LINUX)
 
-      xdisplay d(x11_get_display());
+      synch_lock sl(m_pmutex);
 
-      GdkDisplay * pdisplay = gdk_display_get_default();
-
-      if(pdisplay == NULL)
+      if (iMonitor < 0 || iMonitor >= get_monitor_count())
       {
 
-         return false;
+        return false;
 
       }
 
-      GdkMonitor * pmonitor = gdk_display_get_monitor (pdisplay, iMonitor);
-
-      if(pmonitor == NULL)
-      {
-
-         return false;
-
-      }
-
-      GdkRectangle r;
-
-      ZERO(r);
-
-      gdk_monitor_get_geometry(pmonitor, &r);
-
-      lprect->left = r.x;
-      lprect->top = r.y;
-      lprect->right = r.x + r.width;
-      lprect->bottom = r.y + r.height;
-
-      return true;
-
+      *lprect = m_rectaMonitor[iMonitor];
 
 #elif defined(APPLEOS)
 
       if (iMonitor < 0 || iMonitor >= get_monitor_count())
+      {
+
          return false;
+
+      }
 
       GetScreenRect(lprect, (int) iMonitor);
 
@@ -3774,8 +3816,6 @@ success:
       return get_monitor_rect(iMonitor, lprect);
 
    }
-
-
 
 
    index system::get_main_wkspace(LPRECT lprect)
@@ -3853,7 +3893,11 @@ success:
 #elif defined(APPLEOS)
 
       if (iWkspace < 0 || iWkspace >= get_wkspace_count())
+      {
+
          return false;
+
+      }
 
       GetWkspaceRect(lprect, (int) iWkspace);
 
@@ -3861,36 +3905,16 @@ success:
       //    lprect->bottom -= ::mac::get_system_dock_height();
 #elif defined(LINUX)
 
-      xdisplay d(x11_get_display());
+      synch_lock sl(m_pmutex);
 
-      GdkDisplay * pdisplay = gdk_display_get_default();
-
-      if(pdisplay == NULL)
+      if (iWkspace < 0 || iWkspace >= get_wkspace_count())
       {
 
          return false;
 
       }
 
-      GdkMonitor * pmonitor = gdk_display_get_monitor (pdisplay, iWkspace);
-
-      if(pmonitor == NULL)
-      {
-
-         return false;
-
-      }
-
-      GdkRectangle r;
-
-      ZERO(r);
-
-      gdk_monitor_get_workarea(pmonitor, &r);
-
-      lprect->left = r.x;
-      lprect->top = r.y;
-      lprect->right = r.x + r.width;
-      lprect->bottom = r.y + r.height;
+      *lprect = m_rectaWork[iWkspace];
 
       return true;
 

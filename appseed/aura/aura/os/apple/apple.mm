@@ -148,13 +148,13 @@ void ns_main_sync(dispatch_block_t block)
 
 
 
-void main_async_runnable(runnable * prunnable)
+void main_async_runnable(::object * pobjectRunnable)
 {
    
    ns_main_async(^
                  {
-                    
-                    prunnable->run();
+
+                    one_shot_run(pobjectRunnable);
                     
                  });
    
@@ -163,13 +163,13 @@ void main_async_runnable(runnable * prunnable)
 }
 
 
-void main_sync_runnable(runnable * prunnable)
+void main_sync_runnable(::object * pobjectRunnable)
 {
    
    ns_main_sync(^
                 {
                    
-                   prunnable->run();
+                    one_shot_run(pobjectRunnable);
                    
                 });
    
