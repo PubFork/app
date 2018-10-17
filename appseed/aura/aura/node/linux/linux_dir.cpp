@@ -1350,6 +1350,7 @@ namespace linux
 
    ::file::path dir::appdata()
    {
+
       ::file::path str;
       /*SHGetSpecialFolderPath(
          NULL,
@@ -1359,7 +1360,7 @@ namespace linux
 
       str = ::file::path(getenv("HOME")) / ".config/ca2/appdata";
       string strRelative;
-      strRelative = install();
+      strRelative = System.dir().module() / System.file().module().title();
       //index iFind = strRelative.find(':');
       //if(iFind >= 0)
       {

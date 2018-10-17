@@ -114,79 +114,92 @@ namespace draw2d_cairo
    bool bitmap::CreateDIBSection(::draw2d::graphics * pgraphics, int cx, int cy, UINT usage, void ** ppdata, int * pstride, HANDLE hSection, uint32_t offset)
    {
 
-      synch_lock ml(cairo_mutex());
-
-      if(m_psurface != NULL)
+      try
       {
 
-         destroy();
+         synch_lock ml(cairo_mutex());
 
-      }
-
-      int32_t iStride = cairo_format_stride_for_width(CAIRO_FORMAT_ARGB32, cx);
-
-#if MEMDLEAK
-      m_mem.m_strTag = "dib_section=" + ::str::from(cx) + "x" + ::str::from(cy);
-#endif
-
-      m_mem.allocate(iStride * cy);
-
-      if(*ppdata != NULL)
-      {
-
-         if(cx * 4 != iStride)
+         if(m_psurface != NULL)
          {
 
-            int32_t iW = cx * 4;
+            destroy();
 
-            for(int32_t i = 0; i < cy; i++)
+         }
+
+         int32_t iStride = cairo_format_stride_for_width(CAIRO_FORMAT_ARGB32, cx);
+
+   #if MEMDLEAK
+         m_mem.m_strTag = "dib_section=" + ::str::from(cx) + "x" + ::str::from(cy);
+   #endif
+
+         m_mem.allocate(iStride * cy);
+
+         if(*ppdata != NULL)
+         {
+
+            if(cx * 4 != iStride)
             {
 
-               memcpy(&m_mem.get_data()[iStride * i], &((byte *) *ppdata)[iW * i], iW);
+               int32_t iW = cx * 4;
+
+               for(int32_t i = 0; i < cy; i++)
+               {
+
+                  memcpy(&m_mem.get_data()[iStride * i], &((byte *) *ppdata)[iW * i], iW);
+
+               }
+
+            }
+            else
+            {
+
+               memcpy(m_mem.get_data(), *ppdata, iStride * cy);
 
             }
 
          }
-         else
+
+
+         m_psurface = cairo_image_surface_create_for_data(m_mem.get_data(), CAIRO_FORMAT_ARGB32, cx, cy, iStride);
+
+         if(m_psurface == NULL)
          {
 
-            memcpy(m_mem.get_data(), *ppdata, iStride * cy);
+            return false;
 
          }
 
+
+         if(ppdata != NULL)
+         {
+
+            *ppdata = (COLORREF *) m_mem.get_data();
+
+         }
+
+         if(pstride != NULL)
+         {
+
+            *pstride = iStride;
+
+         }
+
+         m_size.cx = cx;
+         m_size.cy = cy;
+
+
+
+         return true;
+
       }
-
-
-      m_psurface = cairo_image_surface_create_for_data(m_mem.get_data(), CAIRO_FORMAT_ARGB32, cx, cy, iStride);
-
-      if(m_psurface == NULL)
+      catch(...)
       {
 
-         return false;
-
       }
 
+      destroy();
 
-      if(ppdata != NULL)
-      {
-
-         *ppdata = (COLORREF *) m_mem.get_data();
-
-      }
-
-      if(pstride != NULL)
-      {
-
-         *pstride = iStride;
-
-      }
-
-      m_size.cx = cx;
-      m_size.cy = cy;
-
-
-
-      return true;
+      return false;
 
    }
 
