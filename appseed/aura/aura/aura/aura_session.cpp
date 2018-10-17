@@ -1904,9 +1904,9 @@ namespace aura
 
          m_ptCursor.y = (LONG)p.Y;
 
-#else
+#elif !defined(LINUX)
 
-         ::GetCursorPos(&m_ptCursor);
+         ::get_cursor_pos(&m_ptCursor);
 
 #endif
 

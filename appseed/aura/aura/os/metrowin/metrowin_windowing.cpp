@@ -559,18 +559,18 @@ CLASS_DECL_AURA WINBOOL show_window(oswindow oswindow, int iShowCmd)
 }
 
 
-void update_ui_impl_cursor(class user::interaction_impl * puiimpl)
-{
+// void update_session_cursor(class user::interaction_impl * puiimpl)
+// {
 
-   sp(::metrowin::interaction_impl) pimpl = puiimpl;
+//    sp(::metrowin::interaction_impl) pimpl = puiimpl;
 
-   if (pimpl.is_set())
-   {
+//    if (pimpl.is_set())
+//    {
 
-      return;
+//       return;
 
-   }
+//    }
 
-   Sess(puiimpl->get_app()).get_cursor_pos(puiimpl->m_ptCursor);
+//    Sess(puiimpl->get_app()).get_cursor_pos(puiimpl->m_ptCursor);
 
-}
+// }

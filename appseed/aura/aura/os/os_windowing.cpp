@@ -39,3 +39,15 @@ void windowing_output_debug_string(const char * pszDebugString)
 }
 
 
+
+CLASS_DECL_AURA void update_application_session_cursor(void * pvoidApp, POINT ptCursor)
+{
+
+   ::aura::application * papp = (::aura::application *) pvoidApp;
+
+   Sess(papp).m_ptCursor = ptCursor;
+
+}
+
+
+

@@ -130,7 +130,7 @@ public:
    Window                        m_parent;
    RECT64                        m_rect;
    bool                          m_bHasFocus;
-   point                         m_ptCursor;
+   //point                         m_ptCursor;
 
 
    //ref_array < bool >            m_bptraTellMeDestroyed; // Telmo why!! :-)

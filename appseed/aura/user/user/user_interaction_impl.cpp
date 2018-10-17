@@ -1,9 +1,6 @@
 #include "framework.h"
 
 
-CLASS_DECL_AURA void update_ui_impl_cursor(::user::interaction_impl * pimpl);
-
-
 void windowing_output_debug_string(const char * pszDebugString);
 
 
@@ -3276,12 +3273,12 @@ namespace user
 
       windowing_output_debug_string("\non_after_graphical_update before Session.get_cursor_pos");
 
-      if(is_set(m_pui))
-      {
+      // if(is_set(m_pui))
+      // {
 
-         update_ui_impl_cursor(this);
+      //    update_session_cursor(this);
 
-      }
+      // }
 
       windowing_output_debug_string("\non_after_graphical_update after Session.get_cursor_pos");
 
@@ -3289,9 +3286,6 @@ namespace user
 
 
 } // namespace user
-
-
-
 
 
 

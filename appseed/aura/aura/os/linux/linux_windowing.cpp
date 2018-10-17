@@ -5,10 +5,14 @@
 #include <X11/extensions/xf86vmode.h> // libxxf86vm-dev
 
 
+CLASS_DECL_AURA void update_application_session_cursor(void * pvoidApp, POINT ptCursor);
+
+
 // Tutor Exilius Q(t)List streaming contribution
 mutex * g_pmutexX11 = NULL;
 list < sp(object) > * g_prunnableptrlX11 = NULL;
 
+WINBOOL _x11_get_cursor_pos(Display * d, LPPOINT lpptCursor);
 
 mutex * g_pmutexX = NULL;
 
@@ -1807,14 +1811,17 @@ void x11_idle(int iSleep)
 
          point ptCursor(0, 0);
 
-         x11_get_cursor_pos(ptCursor);
-
-         synch_lock sl(::oswindow_data::s_pmutex);
-
-         for(auto & p : *::oswindow_data::s_pdataptra)
+         if(x11_get_cursor_pos(&ptCursor))
          {
 
-            p->m_ptCursor = ptCursor;
+            synch_lock sl(::oswindow_data::s_pmutex);
+
+            for(auto & p : *::oswindow_data::s_pdataptra)
+            {
+
+               update_application_session_cursor(p->m_pimpl->get_app(), ptCursor);
+
+            }
 
          }
 
@@ -2816,6 +2823,7 @@ WINBOOL ca2_GetClientRect(oswindow window, LPRECT lprect)
 }
 
 
+
 WINBOOL x11_get_cursor_pos(LPPOINT lpptCursor)
 {
 
@@ -2852,12 +2860,20 @@ WINBOOL x11_get_cursor_pos(LPPOINT lpptCursor)
 }
 
 
+
 WINBOOL GetCursorPos(LPPOINT lpptCursor)
 {
 
-   synch_lock sl(g_pmutexX);
+   main_sync([&]()
+   {
 
-   return x11_get_cursor_pos(lpptCursor);
+      synch_lock sl(g_pmutexX);
+
+      return x11_get_cursor_pos(lpptCursor);
+
+   });
+
+   return TRUE;
 
 }
 

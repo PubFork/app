@@ -5875,26 +5875,26 @@ namespace linux
 
 
 
-CLASS_DECL_AURA void update_ui_impl_cursor(::user::interaction_impl * puiimpl)
-{
+// CLASS_DECL_AURA void update_session_cursor(::user::interaction_impl * puiimpl)
+// {
 
-   if(is_null(puiimpl))
-   {
+//    if(is_null(puiimpl))
+//    {
 
-      return;
+//       return;
 
-   }
+//    }
 
-   sp(::linux::interaction_impl) pimpl = puiimpl;
+//    sp(::linux::interaction_impl) pimpl = puiimpl;
 
-   if(pimpl.is_null())
-   {
+//    if(pimpl.is_null())
+//    {
 
-      return;
+//       return;
 
-   }
+//    }
 
-   Sess(pimpl->get_app()).m_ptCursor = pimpl->m_oswindow->m_ptCursor;
+//    Sess(pimpl->get_app()).m_ptCursor = pimpl->m_oswindow->m_ptCursor;
 
-}
+// }
 
