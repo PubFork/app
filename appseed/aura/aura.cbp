@@ -1024,6 +1024,7 @@
 		<Unit filename="graphics/visual/visual_rgb_quad_array.h" />
 		<Unit filename="graphics/visual/visual_visual.h" />
 		<Unit filename="graphics/visual/visual_water_routine.h" />
+		<Unit filename="multimedia/audio/audio_wave_out.cpp" />
 		<Unit filename="multithreading/_multithreading.cpp" />
 		<Unit filename="multithreading/multithreading.h" />
 		<Unit filename="multithreading/multithreading_common.h" />
