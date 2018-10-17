@@ -437,14 +437,14 @@ namespace aura
 
 //    }
 
-   
+
    bool application::on_application_menu_action(const char * pszCommand)
    {
-   
-      
-      
+
+
+      return true;
    }
-   
+
 
    void application::on_create(::create * pcreate)
    {
