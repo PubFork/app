@@ -1906,7 +1906,7 @@ namespace aura
 
 #elif !defined(LINUX)
 
-         ::get_cursor_pos(&m_ptCursor);
+         ::GetCursorPos(&m_ptCursor);
 
 #endif
 
