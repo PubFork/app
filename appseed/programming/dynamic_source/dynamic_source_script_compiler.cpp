@@ -1419,6 +1419,10 @@ namespace dynamic_source
       else if(defer_run_persistent(str))
       {
       }
+      else
+      {
+         m_pmanager->m_pcache->set_out_of_date(str);
+      }
 
    }
 

@@ -24,6 +24,8 @@ public:
 
    void set_all_out_of_date();
 
+   void set_out_of_date(string str);
+
    void cache(script * pscript);
 
    script * get(const char * lpcszName);

@@ -339,8 +339,10 @@ namespace dynamic_source
 
       synch_lock sl(m_pmutex);
 
-      if(m_plibrary->is_opened())
+      if(m_plibrary != NULL && m_plibrary->is_opened())
       {
+
+         m_plibrary->m_bAutoUnload = true;
 
          m_plibrary->close();
 
