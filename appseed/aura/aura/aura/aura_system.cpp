@@ -86,7 +86,7 @@ namespace aura
 
 #if !defined(METROWIN)
 
-      m_spmutexMatter = canew(mutex(papp, false, "Global\\ca2-appmatter"));
+      m_spmutexMatter = canew(mutex(papp, false, "Local\\ca2-appmatter"));
 
 #endif
 
@@ -627,24 +627,24 @@ namespace aura
 
       bool bMatterFromHttpCache = false;
 
-      //if(m_pappcore->m_iMatterFromHttpCache == -1)
-      //{
+      if(m_pappcore->m_iMatterFromHttpCache == -1)
+      {
 
-      //   bMatterFromHttpCache = !::dir::is(local_get_matter_cache_path("app/appmatter/main"));
+         bMatterFromHttpCache = !::dir::is(local_get_matter_cache_path("app/appmatter/main"));
 
-      //}
-      //else
-      //{
+      }
+      else
+      {
 
-      //   bMatterFromHttpCache = m_pappcore->m_iMatterFromHttpCache != 0;
+         bMatterFromHttpCache = m_pappcore->m_iMatterFromHttpCache != 0;
 
-      //}
+      }
 
       m_pappcore->m_iMatterFromHttpCache = 1;
 
-      //m_spdir->m_bMatterFromHttpCache = bMatterFromHttpCache;
+      m_spdir->m_bMatterFromHttpCache = bMatterFromHttpCache;
 
-      m_spdir->m_bMatterFromHttpCache = true;
+      //m_spdir->m_bMatterFromHttpCache = true;
 
       ::file::dir::system::g_pthis = m_spdir;
 
@@ -3771,7 +3771,7 @@ success:
       if (iMonitor < 0 || iMonitor >= get_monitor_count())
       {
 
-        return false;
+         return false;
 
       }
 
