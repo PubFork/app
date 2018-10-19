@@ -58,23 +58,44 @@ namespace file
    }
 
 
-   bool system::exists(::file::path path, ::aura::application * papp)
+   bool system::exists(::file::path path, ::aura::application * papp, bool bOptional, bool bNoCache)
    {
 
-      path = Sys(papp).defer_process_matter_path(path, papp);
+      path = Sys(papp).defer_process_matter_path(path, papp, bOptional, bNoCache);
 
-      return exists(path, NULL, papp);
+      if (bOptional && path.is_empty())
+      {
+
+         return false;
+
+      }
+
+      return exists(path, NULL, papp, bOptional, bNoCache);
 
    }
 
 
-   bool system::exists(::file::path path,var * pvarQuery,::aura::application * papp)
+   bool system::exists(::file::path path,var * pvarQuery,::aura::application * papp, bool bOptional, bool bNoCache)
    {
 
       if (::str::begins(path, astr.strHttpProtocol) || ::str::begins(path, astr.strHttpsProtocol))
       {
 
          property_set set(papp);
+
+         if (bOptional)
+         {
+
+            set["optional"] = true;
+
+         }
+
+         if (bNoCache)
+         {
+
+            set["nocache"] = true;
+
+         }
 
          return App(papp).http().exists(path, pvarQuery, set);
 
@@ -509,14 +530,25 @@ restart:
       else
       {
 
-         string strFilePath(varFile.get_file_path());
+         bool bOptional = !varQuery.has_property("optional") || varQuery["optional"].get_bool();
 
-         strFilePath = System.defer_process_path(strFilePath, papp);
+         bool bNoCache = varQuery["nocache"];
+
+         string strFilePath;
+
+         strFilePath = System.defer_process_path(varFile.get_file_path(), papp, bOptional, bNoCache);
+
+         if (!bOptional && strFilePath.is_empty() && !bNoCache)
+         {
+
+            strFilePath = System.defer_process_path(varFile.get_file_path(), papp, bOptional, true);
+
+         }
 
          if (::thread_zip_is_dir() && (::str::find_file_extension("zip:", strFilePath) >= 0))
          {
 
-            if (!exists(strFilePath, papp))
+            if (!exists(strFilePath, papp, bOptional, bNoCache))
             {
 
                return "";
@@ -545,7 +577,7 @@ restart:
          else if (::str::begins_eat(strFilePath, "file:///"))
          {
 
-            if (!exists(strFilePath, papp))
+            if (!exists(strFilePath, papp, bOptional, bNoCache))
             {
 
                return "";
@@ -558,7 +590,7 @@ restart:
          else if (::str::begins_eat(strFilePath, "file:\\\\\\"))
          {
 
-            if (!exists(strFilePath, papp))
+            if (!exists(strFilePath, papp, bOptional, bNoCache))
             {
 
                return "";
@@ -572,7 +604,7 @@ restart:
                   || ::str::begins(strFilePath, astr.strHttpsProtocol))
          {
 
-            if (!exists(strFilePath, &varQuery, papp))
+            if (!exists(strFilePath, &varQuery, papp, bOptional, bNoCache))
             {
 
                return "";

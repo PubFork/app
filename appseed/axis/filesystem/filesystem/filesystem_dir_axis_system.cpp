@@ -458,7 +458,7 @@ namespace file
          }
 
 
-         bool system::is_impl(const ::file::path & strPath, ::aura::application * papp)
+         bool system::is_impl(const ::file::path & strPath, ::aura::application * papp, bool bOptional, bool bNoCache)
          {
 
             return false;

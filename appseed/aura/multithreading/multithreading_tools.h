@@ -161,7 +161,7 @@ template < typename PRED >
 
    auto ptools = ::get_thread_tools(epriority);
 
-   if (ptools == NULL || ptools->get_count() <= 0)
+   if (ptools == NULL || ptools->get_count() <= 1)
    {
 
       for (index i = iStart; i < iCount; i++)

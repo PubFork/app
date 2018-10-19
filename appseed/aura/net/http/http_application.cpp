@@ -8,6 +8,7 @@ namespace http
 
    application::application()
    {
+
       m_setHttp["max_http_post"] = 5 * 1024 * 1024; // 5MB;
 
    }
@@ -200,18 +201,31 @@ namespace http
       strFile.replace("?", "%19");
       strFile = System.dir().cache() / strFile + ".exists_question";
 
-      string strCache = Application.file().as_string(strFile);
+      string strCache;
 
-      if(strCache.has_char())
+      if (!set["nocache"].get_bool())
       {
-         if(strCache == "yes")
+
+         Application.file().as_string(strFile);
+
+         if (strCache.has_char())
          {
-            return true;
+
+            if (strCache == "yes")
+            {
+
+               return true;
+
+            }
+            else if (strCache == "no")
+            {
+
+               return false;
+
+            }
+
          }
-         else if(strCache == "no")
-         {
-            return false;
-         }
+
       }
 
       if(::str::find_wwci("ca2", System.url().get_server(pszUrl)) < 0 && System.url().get_object(pszUrl).find_ci("/matter/") < 0)
@@ -250,26 +264,49 @@ namespace http
       strFile.replace("?", "%19");
       strFile = System.dir().cache() / strFile + ".length_question";
 
-      string strCache = Application.file().as_string(strFile);
+      bool bNoCache = set["nocache"].get_bool();
 
-      if (strCache.has_char())
+      string strCache;
+
+      if (!bNoCache)
       {
-         if (strCache == "-1")
+
+         strCache = Application.file().as_string(strFile);
+
+         if (strCache.has_char())
          {
-            return -1;
+
+            if (strCache == "-1")
+            {
+
+               return -1;
+
+            }
+            else if (strCache == "no")
+            {
+
+               return ::str::to_int64(strCache);
+
+            }
+
          }
-         else if (strCache == "no")
-         {
-            return ::str::to_int64(strCache);
-         }
+
       }
 
       var len = System.http().length(strUrl, process_set(set, pszUrl));
 
       if (len.is_empty())
+      {
+
          strCache = "-1";
+
+      }
       else
+      {
+
          strCache = ::str::from(len.i64());
+
+      }
 
       Application.file().put_contents(strFile, strCache);
 

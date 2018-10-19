@@ -611,10 +611,10 @@ namespace android
 
    //}
 
-   bool dir::is(const ::file::path & lpcszPath, ::aura::application * papp)
+   bool dir::is(const ::file::path & lpcszPath, ::aura::application * papp, bool bOptional, bool bNoCache)
    {
 
-      if (::file::dir::system::is(lpcszPath, papp))
+      if (::file::dir::system::is(lpcszPath, papp, bNoCache))
       {
 
          return true;

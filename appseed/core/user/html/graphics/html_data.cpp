@@ -614,7 +614,9 @@ restart:
       if(strPathName.Mid(3) == "wb:")
          return FALSE;
 
+      var varQuery = m_propset["http_propset"].propset();
 
+      bool bNoCache = varQuery["nocache"].get_bool();
 
       byte_array ba;
       bool bCancel = FALSE;
@@ -652,7 +654,6 @@ restart:
          string strResponse = Application.file().as_string(filename);
       }
 
-      var varQuery = m_propset["http_propset"].propset();
       varQuery.propset()["app"] = get_app();
 
       //varQuery.propset()["headers"].propset()[__id(accept)] = "text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,video/x-mng,image/png,image/jpeg,image/gif;q=0.2,*/*;q=0.1";
@@ -662,7 +663,26 @@ restart:
 //      varQuery.propset()["headers"].propset()["Accept-Charset"] = "ISO-8859-1,utf-8;q=0.7,*;q=0.7";
       varQuery.propset()["headers"].propset()["Cache-Control"] = "MAX-age=0";
 
-      string str = Application.file().as_string(varFile, varQuery);
+      string str;
+
+repeat:
+
+      if (varFile.has_property("optional") && (bool)varFile["optional"])
+      {
+
+         varQuery["optional"] = true;
+
+      }
+      else
+      {
+
+         varQuery["optional"] = false;
+
+      }
+
+      varQuery["nocache"] = bNoCache;
+
+      str = Application.file().as_string(varFile, varQuery);
 
       if(!varQuery.propset()["get_headers"].propset()["Location"].is_empty())
       {
@@ -691,7 +711,18 @@ restart:
          str = Application.file().as_string(strCandidate);
          if(str.is_empty())
          {
-            return FALSE;
+
+            if (!bNoCache)
+            {
+
+               bNoCache = true;
+
+               goto repeat;
+
+            }
+
+            return false;
+
          }
          strPathName = strCandidate;
          /*         string strPath(lpszPathName);
@@ -719,8 +750,10 @@ restart:
          load(str);
       }
 
-      return TRUE;
+      return true;
+
    }
+
 
    void data::OnBeforeNavigate2(var & varFile, uint32_t nFlags, const char * lpszTargetFrameName, byte_array& baPostedData, const char * lpszHeaders, bool* pbCancel)
    {

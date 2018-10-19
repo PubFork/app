@@ -458,11 +458,11 @@ namespace aura
 
       virtual ::file::path defer_make_file_system_url(string str, ::aura::application * papp);
 
-      virtual ::file::path defer_process_path(::file::path path, ::aura::application * papp);
+      virtual ::file::path defer_process_path(::file::path path, ::aura::application * papp, bool bOptional = true, bool bNoCache = false);
 
-      virtual ::file::path defer_process_matter_path(::file::path path, ::aura::application * papp);
+      virtual ::file::path defer_process_matter_path(::file::path path, ::aura::application * papp, bool bOptional = true, bool bNoCache = false);
       virtual ::file::path get_matter_path(string strMatter);
-      virtual ::file::path get_matter_cache_path(string strMatter);
+      virtual ::file::path get_matter_cache_path(string strMatter, bool bOptional = true, bool bNoCache = false);
       virtual ::file::path local_get_matter_cache_path(string strMatter);
       virtual ::file::path side_get_matter_path(string strMatter);
 

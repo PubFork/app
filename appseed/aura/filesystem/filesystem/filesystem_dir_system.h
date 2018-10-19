@@ -92,9 +92,9 @@ namespace file
          virtual ::file::listing & ls_relative_name(::aura::application * papp, listing & listing);
 
 
-         virtual bool  is(const ::file::path & lpcsz,::aura::application * papp);
+         virtual bool  is(const ::file::path & lpcsz,::aura::application * papp, bool bOptional = true, bool bNoCache = false);
 
-         virtual bool  is_impl(const ::file::path & lpcsz, ::aura::application * papp);
+         virtual bool  is_impl(const ::file::path & lpcsz, ::aura::application * papp, bool bOptional = true, bool bNoCache = false);
 
          virtual bool  is_cached(bool & bIs, const ::file::path & lpcsz,::aura::application * papp);
 
@@ -127,28 +127,16 @@ namespace file
          virtual string locale_schema_matter(::aura::application * papp, const string & strLocale, const string & strSchema, const ::file::path & pathRoot, const ::file::path & pathDomain);
          virtual string matter(const ::file::path & path, bool bDir, const ::file::path & pathRoot, const ::file::path & pathDomain);
 
-         virtual string matter(::aura::application * papp, const ::file::patha & patha, bool bDir = false);
-         virtual string matter(::aura::application * papp, ::file::path path, bool bDir = false);
+         virtual string matter(::aura::application * papp, const ::file::patha & patha, bool bDir = false, bool bOptional = true, bool bNoCache = false);
+         virtual string matter(::aura::application * papp, ::file::path path, bool bDir = false, bool bOptional = true, bool bNoCache = false);
 
-         virtual string matter_from_locator(::aura::application * papp, const ::file::patha & patha, const stringa & straMatterLocator, bool bDir = false);
-         virtual string matter_from_locator(::aura::application * papp, ::file::path path, const stringa & straMatterLocator, bool bDir = false);
+         virtual string matter_from_locator(::aura::application * papp, const ::file::patha & patha, const stringa & straMatterLocator, bool bDir = false, bool bOptional = true, bool bNoCache = false);
+         virtual string matter_from_locator(::aura::application * papp, ::file::path path, const stringa & straMatterLocator, bool bDir = false, bool bOptional = true, bool bNoCache = false);
 
          virtual ::file::path appmatter(string strApp, ::file::path pathRel);
 
          virtual void   matter_ls(::aura::application * papp, const ::file::path & str, ::file::patha & stra);
          virtual void   matter_ls_file(::aura::application * papp,const ::file::path & str,::file::patha & stra);
-
-         //virtual ::file::path matter(::aura::application * papp);
-
-         //virtual ::file::path matter_from_locator(::aura::str_context * pcontext,const string & strLocator,const ::file::path & str);
-         //virtual void appmatter_locator(::file::path & strRoot,::file::path & strDomain,::aura::application * papp);
-         //virtual void appmatter_locator(::file::path & strRoot,::file::path & strDomain,const string & strLibraryName,const string & strAppName);
-         //virtual void appmatter_locator(::file::path & strRoot,::file::path & strDomain,const string & strAppName);
-         //virtual string appmatter_locator(::aura::application * papp);
-         //virtual string appmatter_locator(const string & strLibraryName, const string & strAppName);
-         //virtual string appmatter_locator(const string & strAppName);
-         //virtual ::file::path base_appmatter_locator(const ::file::path & strBase,const string & strLibraryName,const string & strAppName);
-         //virtual ::file::path base_appmatter_locator(const ::file::path & strBase,const string & strAppName);
 
          virtual ::file::path commonappdata(const char * pszAppId, const char * pszBuild = NULL, const char * pszPlatform = NULL, const char * pszConfiguration = NULL);
          virtual ::file::path commonappdata_locale_schema(const char * pszAppId, const char * pszBuild = NULL, const char * pszPlatform = NULL, const char * pszConfiguration = NULL, const char * pszLocale = NULL, const char * pszSchema = NULL);
@@ -161,14 +149,6 @@ namespace file
          virtual ::file::path commonappdata();
          virtual ::file::path element_commonappdata(const string & strElement);
 
-         //virtual ::file::path usersystemappdata(::aura::application * papp,const string & lpcszPrefix);
-         //virtual ::file::path userappdata(::aura::application * papp);
-         //virtual ::file::path userdata(::aura::application * papp);
-         //virtual ::file::path userfolder(::aura::application * papp);
-         //virtual ::file::path default_os_user_path_prefix(::aura::application * papp);
-         //virtual ::file::path default_userappdata(::aura::application * papp,const string & lpcszPrefix,const string & lpcszLogin);
-         //virtual ::file::path default_userdata(::aura::application * papp,const string & lpcszPrefix,const string & lpcszLogin);
-         //virtual ::file::path default_userfolder(::aura::application * papp,const string & lpcszPrefix,const string & lpcszLogin);
          virtual ::file::path userquicklaunch(::aura::application * papp);
          virtual ::file::path userprograms(::aura::application * papp);
 
@@ -194,11 +174,7 @@ namespace file
 
          virtual ::file::path dropbox(::aura::application * papp);
 
-
          virtual ::file::path standalone();
-
-
-
 
 
       };
@@ -211,19 +187,6 @@ namespace file
 
 
 } // namespace file
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

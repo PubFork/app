@@ -600,7 +600,7 @@ namespace file
       }
 
 
-      bool system::is(const ::file::path & pathParam,::aura::application * papp)
+      bool system::is(const ::file::path & pathParam,::aura::application * papp, bool bOptional, bool bNoCache)
       {
 
          ::file::path path;
@@ -620,7 +620,7 @@ namespace file
 
          bool bIs;
 
-         if (is_cached(bIs, path, papp))
+         if (!bNoCache && is_cached(bIs, path, papp))
          {
 
             return bIs;
@@ -632,7 +632,7 @@ namespace file
       }
 
 
-      bool system::is_impl(const ::file::path & path, ::aura::application * papp)
+      bool system::is_impl(const ::file::path & path, ::aura::application * papp, bool bOptional, bool bNoCache)
       {
 
          if (path.ends_ci("://") || path.ends_ci(":/") || path.ends_ci(":"))
@@ -646,6 +646,13 @@ namespace file
          {
 
             property_set set(get_app());
+
+            if (bNoCache)
+            {
+
+               set["nocache"] = true;
+
+            }
 
             return Sess(papp).http().exists(path, set);
 
@@ -1426,7 +1433,7 @@ namespace file
       }
 
 
-      string system::matter_from_locator(::aura::application * papp, const ::file::patha & patha, const stringa & straMatterLocator, bool bDir)
+      string system::matter_from_locator(::aura::application * papp, const ::file::patha & patha, const stringa & straMatterLocator, bool bDir, bool bOptional, bool bNoCache)
       {
 
          if (patha.is_empty())
@@ -1472,7 +1479,7 @@ namespace file
 
             strMatter = Application.file().as_string(pathAppMatter);
 
-            if(strMatter.has_char())
+            if(!bNoCache && strMatter.has_char())
             {
 
                // todo: keep cache timeout information;
@@ -1500,6 +1507,20 @@ namespace file
             set["raw_http"] = true;
 
             set["disable_common_name_cert_check"] = true;
+
+            if (bOptional)
+            {
+
+               set["optional"] = true;
+
+            }
+
+            if (bNoCache)
+            {
+
+               set["nocache"] = true;
+
+            }
 
             string strCandidate = stra.implode("|");
 
@@ -1590,7 +1611,7 @@ ret:
       }
 
 
-      string system::matter_from_locator(::aura::application * papp, ::file::path path, const stringa & straMatterLocator, bool bDir)
+      string system::matter_from_locator(::aura::application * papp, ::file::path path, const stringa & straMatterLocator, bool bDir, bool bOptional, bool bNoCache)
       {
 
          ::file::patha patha;
@@ -1599,12 +1620,12 @@ ret:
 
          patha.add(path);
 
-         return matter_from_locator(papp, patha, straMatterLocator, bDir);
+         return matter_from_locator(papp, patha, straMatterLocator, bDir, bOptional, bNoCache);
 
       }
 
 
-      string system::matter(::aura::application * papp, const ::file::patha & patha, bool bDir)
+      string system::matter(::aura::application * papp, const ::file::patha & patha, bool bDir, bool bOptional, bool bNoCache)
       {
 
          stringa straMatterLocator;
@@ -1616,12 +1637,12 @@ ret:
 
          }
 
-         return matter_from_locator(papp, patha, straMatterLocator, bDir);
+         return matter_from_locator(papp, patha, straMatterLocator, bDir, bOptional, bNoCache);
 
       }
 
 
-      string system::matter(::aura::application * papp, ::file::path path, bool bDir)
+      string system::matter(::aura::application * papp, ::file::path path, bool bDir, bool bOptional, bool bNoCache)
       {
 
          stringa straMatterLocator;
@@ -1633,7 +1654,7 @@ ret:
 
          }
 
-         return matter_from_locator(papp, path, straMatterLocator, bDir);
+         return matter_from_locator(papp, path, straMatterLocator, bDir, bOptional, bNoCache);
 
       }
 
@@ -2007,7 +2028,7 @@ ret:
       ::file::path system::cache()
       {
 
-         return ::dir::system() / "cache";
+         return ::dir::ca2config() / "cache";
 
       }
 

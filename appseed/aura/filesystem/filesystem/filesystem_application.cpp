@@ -144,10 +144,14 @@ namespace file
       return m_papp->m_psystem->m_spfile->as_string(varFile, m_papp);
    }
 
+
    string application::as_string(var varFile, var & varQuery)
    {
+
       return m_papp->m_psystem->m_spfile->as_string(varFile, varQuery, m_papp);
+
    }
+
 
    void application::as_memory(var varFile, memory & mem)
    {

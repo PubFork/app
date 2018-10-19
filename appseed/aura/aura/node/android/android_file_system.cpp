@@ -1,13 +1,14 @@
 #include "framework.h"
-//#include "android.h"
-//#include <sys/stat.h>
-//#include <ctype.h>
 
 
 struct PROCESS_INFO_t
 {
-    string csProcess;
-    uint32_t dwImageListIndex;
+
+
+   string csProcess;
+   uint32_t dwImageListIndex;
+
+
 };
 
 
@@ -19,74 +20,29 @@ namespace android
       ::object(papp),
       ::file::system(papp)
    {
+
    }
 
-	
-	bool file_system::update_module_path()
-	{
 
-		m_pathModule = ::file::app_module();
+   file_system::~file_system()
+   {
 
-	{
+   }
 
-		//void * handle = dlopen("libca.so", RTLD_NOW);
 
-		//if(handle == NULL)
-		{
+   bool file_system::update_module_path()
+   {
 
-			m_pathCa2Module = m_pathModule;
+      m_pathModule = ::file::app_module();
 
-		}
-		/*else
-		{
+      m_pathCa2Module = m_pathModule;
 
-		link_map * plm;
+      return true;
 
-		dlinfo(handle, RTLD_DI_LINKMAP, &plm);
-
-		m_strCa2ModuleFolder = ::dir::name(plm->l_name);
-
-		if(m_strCa2ModuleFolder.is_empty() || m_strCa2ModuleFolder[0] != '/')
-		{
-
-		m_strCa2ModuleFolder = m_strModuleFolder;
-
-		}
-
-		dlclose(handle);
-
-		}*/
-
-	}
-
-	return true;
-
-}
+   }
 
 
 } // namespace android
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

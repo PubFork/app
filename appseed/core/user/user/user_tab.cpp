@@ -1526,18 +1526,23 @@ namespace user
       if(iTab >= 0 && iClickTab == iTab && m_eelementClick == eelement)
       {
 
-         if(eelement == element_close_tab_button)
+         fork([this, eelement, iTab]()
          {
 
-            _001OnTabClose(iTab);
+            if (eelement == element_close_tab_button)
+            {
 
-         }
-         else
-         {
+               _001OnTabClose(iTab);
 
-            _001OnTabClick(iTab);
+            }
+            else
+            {
 
-         }
+               _001OnTabClick(iTab);
+
+            }
+
+         });
 
          pmouse->m_bRet = true;
 
@@ -1857,9 +1862,9 @@ namespace user
 
    index tab::hit_test(point pt, e_element & eelement)
    {
-      
+
       synch_lock sl(m_pmutex);
-      
+
       ScreenToClient(&pt);
       rect rect;
       for(int32_t iPane = 0; iPane < get_data()->m_panea.get_size(); iPane++)
@@ -3416,7 +3421,7 @@ namespace user
 
    void tab::_001OnShowWindow(::message::message * pobj)
    {
-      
+
       UNREFERENCED_PARAMETER(pobj);
 
 //      SCAST_PTR(::message::show_window, pshowwindow, pobj);

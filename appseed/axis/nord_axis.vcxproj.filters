@@ -468,9 +468,6 @@
     <ClInclude Include="axis\node\ansios\ansios.h">
       <Filter>Header Files\axis\node\ansios</Filter>
     </ClInclude>
-    <ClInclude Include="filesystem\filesystem.h">
-      <Filter>Header Files\filesystem</Filter>
-    </ClInclude>
     <ClInclude Include="filesystem\fs\fs.h">
       <Filter>Header Files\filesystem\fs</Filter>
     </ClInclude>
@@ -672,6 +669,21 @@
     <ClInclude Include="html_lite\html_lite\html_lite_html_tag.h">
       <Filter>Header Files\html_lite\html_lite</Filter>
     </ClInclude>
+    <ClInclude Include="filesystem\filesystem.h">
+      <Filter>Header Files\filesystem\filesystem</Filter>
+    </ClInclude>
+    <ClInclude Include="filesystem\filesystem\filesystem_axis_application.h">
+      <Filter>Header Files\filesystem\filesystem</Filter>
+    </ClInclude>
+    <ClInclude Include="filesystem\filesystem\filesystem_axis_system.h">
+      <Filter>Header Files\filesystem\filesystem</Filter>
+    </ClInclude>
+    <ClInclude Include="filesystem\filesystem\filesystem_dir_axis_application.h">
+      <Filter>Header Files\filesystem\filesystem</Filter>
+    </ClInclude>
+    <ClInclude Include="filesystem\filesystem\filesystem_dir_axis_system.h">
+      <Filter>Header Files\filesystem\filesystem</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
@@ -814,6 +826,9 @@
     </Filter>
     <Filter Include="Source Files\html_lite\html_lite">
       <UniqueIdentifier>{8366dbf8-2620-4f52-b7ea-1f861a4bfec5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\filesystem\filesystem">
+      <UniqueIdentifier>{4b4036b7-861a-4c51-a336-f2fa641d9ae7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -92,18 +92,21 @@ namespace file_watcher
 
       if (wd < 0)
       {
-         if (errno == ENOENT)
-         {
 
-            _throw(file_not_found_exception(directory));
+         return -1;
 
-         }
-         else
-         {
+         //if (errno == ENOENT)
+         //{
 
-            _throw(exception(strerror(errno)));
+         //   _throw(file_not_found_exception(directory));
 
-         }
+         //}
+         //else
+         //{
+
+         //   _throw(exception(strerror(errno)));
+
+         //}
 
       }
 

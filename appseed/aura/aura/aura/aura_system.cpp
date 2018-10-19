@@ -630,7 +630,9 @@ namespace aura
       if(m_pappcore->m_iMatterFromHttpCache == -1)
       {
 
-         bMatterFromHttpCache = !::dir::is(local_get_matter_cache_path("app/appmatter/main"));
+         ::file::path path = side_get_matter_path("app/appmatter/main");
+
+         bMatterFromHttpCache = !::dir::is(path);
 
       }
       else
@@ -2075,10 +2077,10 @@ RetryBuildNumber:
    }
 
 
-   ::file::path system::defer_process_path(::file::path path, ::aura::application * papp)
+   ::file::path system::defer_process_path(::file::path path, ::aura::application * papp, bool bOptional, bool bNoCache)
    {
 
-      path = defer_process_matter_path(path, papp);
+      path = defer_process_matter_path(path, papp, bOptional, bNoCache);
 
 #ifndef METROWIN
 
@@ -2132,20 +2134,20 @@ RetryBuildNumber:
    }
 
 
-   ::file::path system::defer_process_matter_path(::file::path path, ::aura::application * papp)
+   ::file::path system::defer_process_matter_path(::file::path path, ::aura::application * papp, bool bOptional, bool bNoCache)
    {
 
       if (::str::begins_eat_ci(path, "matter://"))
       {
 
-         path = dir().matter(papp, path);
+         path = dir().matter(papp, path, false, bOptional, bNoCache);
 
       }
 
       if (path.begins_ci("appmatter://"))
       {
 
-         path = get_matter_cache_path(path);
+         path = get_matter_cache_path(path, bOptional, bNoCache);
 
       }
 
@@ -2174,10 +2176,6 @@ RetryBuildNumber:
 
       ::file::path pathResource = ::dir::ca2config() / "appmatter";
 
-// #ifdef APPLEOS
-//  pathResource = (pathResource + ".app") / "Contents/Resources";
-//   #endif
-
       return pathResource / strMatter;
 
    }
@@ -2199,7 +2197,7 @@ RetryBuildNumber:
    }
 
 
-   ::file::path system::get_matter_cache_path(string strMatter)
+   ::file::path system::get_matter_cache_path(string strMatter, bool bOptional, bool bNoCache)
    {
 
       synch_lock sl(m_spmutexMatter);
@@ -2209,7 +2207,7 @@ RetryBuildNumber:
 
          ::file::path pathCache = local_get_matter_cache_path(strMatter);
 
-         if (file_exists_dup(pathCache))
+         if (!bNoCache && file_exists_dup(pathCache))
          {
 
             return pathCache;
@@ -2231,24 +2229,35 @@ RetryBuildNumber:
 
          ::file::path pathMeta = pathCache + ".meta_information";
 
-         string strFirstLine = file_line_dup(pathMeta, 0);
-
          ::file::path path = "https://server.ca2.cc/matter" / strMatter;
 
-         if (strFirstLine == "directory" && dir::is(pathCache))
+         if (!bNoCache)
          {
 
-            return pathCache;
+            string strFirstLine = file_line_dup(pathMeta, 0);
+
+            if (strFirstLine == "directory" && dir::is(pathCache))
+            {
+
+               return pathCache;
+
+            }
+            else if (strFirstLine == "file" && file_exists_dup(pathCache))
+            {
+
+               return pathCache;
+
+            }
+            else if (strFirstLine == "itdoesntexist" && bOptional)
+            {
+
+               return "";
+
+            }
 
          }
-         else if (strFirstLine == "file" && file_exists_dup(pathCache))
-         {
 
-            return pathCache;
-
-         }
-
-         if (file().exists(path, this))
+         if (file().exists(path, this, bOptional, bNoCache))
          {
 
             file_set_line_dup(pathMeta, 0, "file");
@@ -2262,7 +2271,7 @@ RetryBuildNumber:
             http().download(path, pathCache, set);
 
          }
-         else if (dir().is(path, this))
+         else if (dir().is(path, this, bOptional, bNoCache))
          {
 
             file_set_line_dup(pathMeta, 0, "directory");
@@ -2273,12 +2282,9 @@ RetryBuildNumber:
          else
          {
 
-            if (file_delete_dup(pathMeta))
-            {
+            file_set_line_dup(pathMeta, 0, "itdoesntexist");
 
-               file_put_contents_dup(pathMeta, "");
-
-            }
+            return "";
 
          }
 

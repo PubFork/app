@@ -901,6 +901,10 @@
     <ClInclude Include="database\sqlitedb\sqlitedb_set.h" />
     <ClInclude Include="fiasco_finder.h" />
     <ClInclude Include="filesystem\filesystem.h" />
+    <ClInclude Include="filesystem\filesystem\filesystem_axis_application.h" />
+    <ClInclude Include="filesystem\filesystem\filesystem_axis_system.h" />
+    <ClInclude Include="filesystem\filesystem\filesystem_dir_axis_application.h" />
+    <ClInclude Include="filesystem\filesystem\filesystem_dir_axis_system.h" />
     <ClInclude Include="filesystem\fs\fs.h" />
     <ClInclude Include="filesystem\fs\fs_data.h" />
     <ClInclude Include="filesystem\fs\fs_fs.h" />
