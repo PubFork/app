@@ -1224,6 +1224,22 @@ void android_key_down(int keyCode, int iUni)
 
 }
 
+int g_iAndroidSampleRate = -2;
+
+int g_iAndroidBufferSize = -2;
+
+extern "C"
+void android_audio_parameters(int iSampleRate, int iBufferSize)
+{
+
+   output_debug_string("here???555.1");
+
+   g_iAndroidSampleRate = iSampleRate;
+
+   g_iAndroidBufferSize = iBufferSize;
+
+}
+
 // aPokemon : oh_Isee_a_pattern_and_I_am_clown_describing_exactly_pay_attention_exactly_as_inphysical_mirror_that_is_surely_a_perfect_human_mirror_than_another_person
 
 void _android_size(float xScreen, float yScreen, float aPok, float yBitmap);
