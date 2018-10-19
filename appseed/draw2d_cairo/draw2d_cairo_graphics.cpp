@@ -899,6 +899,8 @@ namespace draw2d_cairo
 
       fill(pbrush);
 
+      return true;
+
    }
 
 
@@ -6454,7 +6456,7 @@ namespace draw2d_cairo
 
       sp(::draw2d::font::enum_item) item = canew(::draw2d::font::enum_item);
 
-      item->m_ecs = ::draw2d::font::cs_default;
+      //item->m_ecs = ::draw2d::font::cs_default;
 
       item->m_strFile = "monospace";
 

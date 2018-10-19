@@ -75,3 +75,11 @@ CLASS_DECL_AURA void dll_processes(uint_array & dwa, stringa & straProcesses, co
 }
 
 
+
+
+bool __node_further_file_is_equal(const ::file::path &, const ::file::path &)
+{
+
+   return false;
+
+}

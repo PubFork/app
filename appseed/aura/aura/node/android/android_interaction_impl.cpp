@@ -85,10 +85,10 @@ namespace android
       if(m_papp != NULL &&  m_papp->m_psession != NULL &&  m_papp->m_psession)
       {
 
-         if(Session.m_pwindowmap != NULL)
+         if(System.m_pwindowmap != NULL)
          {
 
-            Session.m_pwindowmap->m_map.remove_key((int_ptr)get_handle());
+            System.m_pwindowmap->m_map.remove_key((int_ptr)get_handle());
 
          }
 
@@ -2983,7 +2983,7 @@ namespace android
 
             /*XMapWindow(m_oswindow->display(), m_oswindow->window());*/
 
-            ::ShowWindow(get_handle(), SW_SHOW);
+            ::show_window(get_handle(), SW_SHOW);
 
          }
 
@@ -3253,20 +3253,33 @@ namespace android
       ::user::interaction_impl::_001WindowMaximize();
    }
 
+
    void interaction_impl::_001WindowRestore()
    {
+
       if (m_pui != NULL)
+      {
+
          m_pui->m_eappearance = ::user::appearance_normal;
-      ::ShowWindow((oswindow)get_handle(), SW_RESTORE);
+
+      }
+
+      ::show_window((oswindow)get_handle(), SW_RESTORE);
+
    }
+
 
    bool interaction_impl::ShowWindow(int32_t nCmdShow)
    {
 
       if (!::is_window((oswindow)get_handle()))
+      {
+
          return false;
 
-      ::ShowWindow((oswindow)get_handle(), nCmdShow);
+      }
+
+      ::show_window((oswindow)get_handle(), nCmdShow);
 
       return m_pui->IsWindowVisible();
 
@@ -3986,6 +3999,22 @@ namespace android
          return NULL;
 
       return w->get_user_interaction();
+
+   }
+
+
+   bool interaction_impl::has_focus()
+   {
+
+      return get_handle() == ::get_focus();
+
+   }
+
+
+   bool interaction_impl::is_active()
+   {
+
+      return get_handle() == ::get_active_window();
 
    }
 
@@ -5033,7 +5062,9 @@ namespace android
 
    void interaction_impl::_001BaseWndInterfaceMap()
    {
-      Session.window_map().set((int_ptr)get_handle(), this);
+
+      System.window_map().set((int_ptr)get_handle(), this);
+
    }
 
 
@@ -5190,6 +5221,7 @@ namespace android
       return false;
 
    }
+
 
 
 } // namespace android

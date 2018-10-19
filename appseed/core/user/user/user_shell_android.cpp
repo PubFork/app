@@ -52,7 +52,7 @@ namespace user
             {
 
                ::multithreading::set_priority(::multithreading::priority_highest);
-               run();
+               shell_run();
 
             }));
 
@@ -1440,7 +1440,8 @@ namespace user
 
       }
 
-      int android::run()
+
+      void android::shell_run()
       {
 
          per_fork fork;
@@ -1487,8 +1488,6 @@ namespace user
             sl.lock();
 
          }
-
-         return 0;
 
       }
 

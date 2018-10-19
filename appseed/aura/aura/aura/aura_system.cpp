@@ -84,7 +84,7 @@ namespace aura
       ::thread(NULL)
    {
 
-#if !defined(METROWIN)
+#if !defined(METROWIN) && !defined(ANDROID)
 
       m_spmutexMatter = canew(mutex(papp, false, "Local\\ca2-appmatter"));
 

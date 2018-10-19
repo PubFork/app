@@ -55,9 +55,6 @@
     <ClCompile Include="aura\os\cross\windows\cross_windows_crt.cpp">
       <Filter>Source Files\aura\os\cross\windows</Filter>
     </ClCompile>
-    <ClCompile Include="aura\os\android\android_base_file.cpp">
-      <Filter>Source Files\aura\os\android</Filter>
-    </ClCompile>
     <ClCompile Include="aura\os\android\android_c.cpp">
       <Filter>Source Files\aura\os\android</Filter>
     </ClCompile>
@@ -1992,6 +1989,9 @@
     </ClCompile>
     <ClCompile Include="aura\node\ios\ios_interaction_impl.cpp">
       <Filter>Source Files\aura\node</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\android\android_file.cpp">
+      <Filter>Source Files\aura\os\android</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

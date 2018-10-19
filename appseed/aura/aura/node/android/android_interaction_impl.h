@@ -270,6 +270,9 @@ namespace android
       //virtual ::user::interaction * GetCapture();
       virtual bool SetFocus();
 
+      virtual bool has_focus() override;
+      virtual bool is_active() override;
+
       virtual ::user::interaction * GetFocus();
 
       virtual ::user::interaction * get_desktop_window();
