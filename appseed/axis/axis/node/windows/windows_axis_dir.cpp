@@ -51,10 +51,10 @@ namespace windows
       }
 
 
-      bool dir::is_impl(const ::file::path & path,::aura::application * papp)
+      bool dir::is_impl(const ::file::path & path,::aura::application * papp, bool bOptional, bool bNoCache)
       {
 
-         if (::file::dir::axis::system::is_impl(path, papp))
+         if (::file::dir::axis::system::is_impl(path, papp, bOptional, bNoCache))
          {
 
             return true;

@@ -588,12 +588,15 @@ namespace windows
    }
 
 
-
-   bool dir::is_impl(const ::file::path & lpcszPath, ::aura::application * papp)
+   bool dir::is_impl(const ::file::path & lpcszPath, ::aura::application * papp, bool bOptional, bool bNoCache)
    {
 
-      if(::file::dir::system::is_impl(lpcszPath, papp))
+      if (::file::dir::system::is_impl(lpcszPath, papp, bOptional, bNoCache))
+      {
+
          return true;
+
+      }
 
       string strPath(lpcszPath);
 
@@ -621,61 +624,10 @@ namespace windows
 
       bool bIsDir = (dwAttrib != INVALID_FILE_ATTRIBUTES) && (dwAttrib & FILE_ATTRIBUTE_DIRECTORY);
 
-//      m_isdirmap.set(lpcszPath, bIsDir, bIsDir ? 0 : ::get_last_error());
-
       return bIsDir;
 
    }
 
-
-   //bool dir::is(const ::file::path & strPath, ::aura::application * papp)
-   //{
-   //
-   //   if(::file::dir::system::is(strPath, papp))
-   //      return true;
-
-   //   bool bIsDir;
-
-   //   uint32_t uiLastError;
-
-   //   if(m_isdirmap.lookup(strPath, bIsDir, uiLastError))
-   //   {
-   //      if(!bIsDir)
-   //      {
-   //         ::set_last_error(uiLastError);
-   //      }
-   //      return bIsDir;
-   //   }
-
-   //   wstring wstrPath;
-   //
-   //   //strsize iLen = ::str::international::utf8_to_unicode_count(strPath);
-   //   //wstrPath.alloc(iLen + 32);
-   //   wstrPath = ::str::international::utf8_to_unicode(strPath);
-   //   if(wstrPath.get_length() >= MAX_PATH)
-   //   {
-   //      if(::str::begins(wstrPath, L"\\\\"))
-   //      {
-   //         ::str::begin(wstrPath, L"\\\\?\\UNC");
-   //      }
-   //      else
-   //      {
-   //         ::str::begin(wstrPath, L"\\\\?\\");
-   //      }
-   //   }
-   //   DWORD dwAttrib;
-   //   dwAttrib = GetFileAttributesW(wstrPath);
-   //   /*if(dwAttrib == INVALID_FILE_ATTRIBUTES)
-   //   {
-   //      dwAttrib = GetFileAttributes(strPath);
-   //   }*/
-   //
-   //   bIsDir = (dwAttrib != INVALID_FILE_ATTRIBUTES) && (dwAttrib & FILE_ATTRIBUTE_DIRECTORY);
-   //
-   //   m_isdirmap.set(strPath, bIsDir, bIsDir ? 0 : ::get_last_error());
-
-   //   return bIsDir;
-   //}
 
    bool dir::name_is(const ::file::path & str, ::aura::application * papp)
    {
