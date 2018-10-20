@@ -2220,56 +2220,21 @@ RetryBuildNumber:
 
          ::file::path pathCache = local_get_matter_cache_path(strMatter);
 
-         if (!bNoCache && is_file_or_dir_dup(pathCache))
+         if (!bNoCache && is_file_or_dir_dup(pathCache, NULL))
          {
 
             return pathCache;
 
          }
-
-         ::file::path pathSide = side_get_matter_path(strMatter);
-
-         if (file_exists_dup(pathSide))
-         {
-
-            Application.file().copy(pathCache, pathSide, true);
-
-            return pathCache;
-
-         }
-         else if (::dir::_is(pathSide))
-         {
-
-            Application.dir().mk(pathCache);
-
-            return pathCache;
-
-         }
-
-         ::str::begins_eat_ci(strMatter, "appmatter://");
 
          ::file::path pathMeta = pathCache + ".meta_information";
-
-         ::file::path path = "https://server.ca2.cc/matter" / strMatter;
 
          if (!bNoCache)
          {
 
             string strFirstLine = file_line_dup(pathMeta, 0);
 
-            if (strFirstLine == "directory" && dir::is(pathCache))
-            {
-
-               return pathCache;
-
-            }
-            else if (strFirstLine == "file" && file_exists_dup(pathCache))
-            {
-
-               return pathCache;
-
-            }
-            else if (strFirstLine == "itdoesntexist" && bOptional)
+            if (strFirstLine == "itdoesntexist" && bOptional)
             {
 
                return "";
@@ -2277,6 +2242,34 @@ RetryBuildNumber:
             }
 
          }
+
+         ::file::path pathSide = side_get_matter_path(strMatter);
+
+         ::file::e_type etype = ::file::type_none;
+
+         if (is_file_or_dir_dup(pathSide, &etype))
+         {
+
+            if (etype == ::file::type_file)
+            {
+
+               Application.file().copy(pathCache, pathSide, true);
+
+            }
+            else if (etype == ::file::type_folder)
+            {
+
+               Application.dir().mk(pathCache);
+
+            }
+
+            return pathCache;
+
+         }
+
+         ::str::begins_eat_ci(strMatter, "appmatter://");
+
+         ::file::path path = "https://server.ca2.cc/matter" / strMatter;
 
          if (file().exists(path, this, bOptional, bNoCache))
          {
@@ -2289,7 +2282,42 @@ RetryBuildNumber:
 
             set["disable_common_name_cert_check"] = true;
 
-            http().download(path, pathCache, set);
+            ::file::file_sp pfile;
+
+            int iTry = 49;
+
+            while(iTry > 0)
+            {
+
+               pfile = Application.file().get_file(
+                       pathCache,
+                       ::file::type_binary |
+                       ::file::mode_create |
+                       ::file::mode_write |
+                       ::file::share_exclusive |
+                       ::file::defer_create_directory |
+                       ::file::no_share_violation_wait);
+
+               sl.unlock();
+
+               if (pfile.is_set())
+               {
+
+                  break;
+
+               }
+
+               Sleep(300);
+
+               iTry--;
+
+               sl.lock();
+
+            }
+
+            http().download(path, pfile, set);
+
+            sl.lock();
 
          }
          else if (dir().is(path, this, bOptional, bNoCache))
@@ -2303,7 +2331,27 @@ RetryBuildNumber:
          else
          {
 
-            file_set_line_dup(pathMeta, 0, "itdoesntexist");
+            int iTry = 49;
+
+            while (iTry > 0)
+            {
+
+               if (file_set_line_dup(pathMeta, 0, "itdoesntexist"))
+               {
+
+                  break;
+
+               }
+
+               sl.unlock();
+
+               Sleep(300);
+
+               sl.lock();
+
+               iTry--;
+
+            }
 
             return "";
 

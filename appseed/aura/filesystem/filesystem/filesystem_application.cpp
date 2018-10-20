@@ -53,10 +53,19 @@ namespace file
       return m_papp->m_psystem->m_spfile->replace(pszContext, pszFind, pszReplace, m_papp);
    }
 
+
    bool application::exists(const ::file::path & pszPath)
    {
 
       return m_papp->m_psystem->m_spfile->exists(pszPath, m_papp);
+
+   }
+
+
+   bool application::is_file_or_dir(const ::file::path & pszPath, e_type * petype)
+   {
+
+      return m_papp->m_psystem->m_spfile->is_file_or_dir(pszPath, NULL, petype, m_papp);
 
    }
 

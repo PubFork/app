@@ -194,12 +194,17 @@ retry:
 
          DWORD dwLastError = ::get_last_error();
 
-         if(dwLastError == ERROR_SHARING_VIOLATION && ::get_thread_run() &&  (::get_tick_count() - dwStart) < m_dwErrorBlockTimeout)
+         if (!(nOpenFlags & ::file::no_share_violation_wait))
          {
 
-            Sleep(MAX(m_dwErrorBlockTimeout / 10, 50));
+            if (dwLastError == ERROR_SHARING_VIOLATION && ::get_thread_run() && (::get_tick_count() - dwStart) < m_dwErrorBlockTimeout)
+            {
 
-            goto retry;
+               Sleep(MAX(m_dwErrorBlockTimeout / 10, 50));
+
+               goto retry;
+
+            }
 
          }
 

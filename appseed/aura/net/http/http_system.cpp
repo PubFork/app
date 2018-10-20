@@ -2295,6 +2295,18 @@ retry_session:
    bool system::exists(const char * pszUrl, ::property_set & set)
    {
 
+      ::file::e_type etype = ::file::type_none;
+
+      bool bExists = is_file_or_dir(pszUrl, set, &etype);
+
+      return bExists && etype != ::file::type_none;
+
+   }
+
+
+   bool system::is_file_or_dir(const char * pszUrl, ::property_set & set, ::file::e_type * petype)
+   {
+
       single_lock sl(m_pmutexDownload, true);
 
       int32_t iStatusCode = 0;
@@ -2304,9 +2316,13 @@ retry_session:
 
          while (m_straExists.contains(pszUrl))
          {
+
             sl.unlock();
+
             Sleep(100);
+
             sl.lock();
+
          }
 
          m_straExists.add(pszUrl);
@@ -2332,9 +2348,20 @@ retry_session:
 
          if (!get(handler, psocket, pszUrl, set))
          {
+
             sl.lock();
+
             m_straExists.remove(pszUrl);
+
+            if (is_set(petype))
+            {
+
+               *petype = ::file::type_none;
+
+            }
+
             return false;
+
          }
 
          iStatusCode = psocket->outattr("http_status_code");
@@ -2349,7 +2376,27 @@ retry_session:
 
       m_straExists.remove(pszUrl);
 
-      return iStatusCode == 200;
+      bool bExists = iStatusCode == 200;
+
+      if (is_set(petype))
+      {
+
+         if (bExists)
+         {
+
+            *petype = ::file::type_element;
+
+         }
+         else
+         {
+
+            *petype = ::file::type_none;
+
+         }
+
+      }
+
+      return bExists;
 
    }
 

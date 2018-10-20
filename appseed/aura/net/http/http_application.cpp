@@ -181,15 +181,20 @@ namespace http
 
    }
 
+
    bool application::exists(const char * pszUrl, property_set & set)
    {
 
-      return exists(pszUrl, NULL, set);
+      ::file::e_type etype = ::file::type_none;
+
+      bool bExists = is_file_or_dir(pszUrl, NULL, &etype, set);
+
+      return bExists && etype != ::file::type_none;
 
    }
 
 
-   bool application::exists(const char * pszUrl, var * pvarQuery, property_set & set)
+   bool application::is_file_or_dir(const char * pszUrl, var * pvarQuery, ::file::e_type * petype, property_set & set)
    {
 
       string strUrl(pszUrl);
@@ -199,7 +204,7 @@ namespace http
       strFile.replace(":", "_");
       strFile.replace("//", "/");
       strFile.replace("?", "%19");
-      strFile = System.dir().cache() / strFile + ".exists_question";
+      strFile = System.dir().cache() / strFile + ".meta_information";
 
       string strCache;
 
@@ -211,14 +216,54 @@ namespace http
          if (strCache.has_char())
          {
 
-            if (strCache == "yes")
+            if (strCache == "file")
             {
+
+               if (is_set(petype))
+               {
+
+                  *petype = ::file::type_file;
+
+               }
 
                return true;
 
             }
-            else if (strCache == "no")
+            else if (strCache == "folder")
             {
+
+               if (is_set(petype))
+               {
+
+                  *petype = ::file::type_folder;
+
+               }
+
+               return true;
+
+            }
+            else if (strCache == "element")
+            {
+
+               if (is_set(petype))
+               {
+
+                  *petype = ::file::type_element;
+
+               }
+
+               return true;
+
+            }
+            else if (strCache == "itdoesntexist")
+            {
+
+               if (is_set(petype))
+               {
+
+                  *petype = ::file::type_none;
+
+               }
 
                return false;
 
@@ -230,17 +275,62 @@ namespace http
 
       if(::str::find_wwci("ca2", System.url().get_server(pszUrl)) < 0 && System.url().get_object(pszUrl).find_ci("/matter/") < 0)
       {
+
          set["raw_http"] = true;
+
       }
 
-      bool bExists = System.http().exists(strUrl, process_set(set, pszUrl));
+      ::file::e_type etype = ::file::type_none;
 
-      if(bExists)
-         strCache = "yes";
+      bool bExists = System.http().is_file_or_dir(strUrl, process_set(set, pszUrl), &etype);
+
+      if (bExists)
+      {
+
+         if (etype == ::file::type_folder)
+         {
+
+            strCache = "folder";
+
+         }
+         else if (etype == ::file::type_file)
+         {
+
+            strCache = "file";
+
+         }
+         else if (etype == ::file::type_element)
+         {
+
+            strCache = "element";
+
+         }
+         else
+         {
+
+            strCache = "itdoesntexist";
+
+         }
+
+      }
       else
-         strCache = "no";
+      {
+
+         strCache = "itdoesntexist";
+
+      }
+
       Application.file().put_contents(strFile, strCache);
+
+      if (is_set(petype))
+      {
+
+         *petype = etype;
+
+      }
+
       return bExists;
+
    }
 
 

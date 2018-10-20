@@ -358,6 +358,15 @@ namespace file
    typedef CLASS_DECL_AURA ::string_array < ::file::path,string > patha;
    class file;
 
+   enum e_type
+   {
+
+      type_none,
+      type_folder,
+      type_file,
+      type_element,
+
+   };
 
 } // namespace file
 

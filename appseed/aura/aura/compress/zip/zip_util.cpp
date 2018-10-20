@@ -138,14 +138,14 @@ namespace zip
             CHAR szTitle[_MAX_PATH];
 
             unzGetCurrentFileInfo(
-               pf,
-               &fi,
-               szTitle,
-               _MAX_PATH,
-               NULL, // extra Field
-               0,
-               NULL, // comment
-               0);
+            pf,
+            &fi,
+            szTitle,
+            _MAX_PATH,
+            NULL, // extra Field
+            0,
+            NULL, // comment
+            0);
 
             string strTitle(szTitle);
 
@@ -305,23 +305,40 @@ namespace zip
       return false;
    }
 
-   bool util::exists(::aura::application * papp, const char * pszPath)
+
+   bool util::is_file_or_dir(::aura::application * papp, const char * pszPath, ::file::e_type * petype)
    {
-      return extract(papp, pszPath, NULL);
+
+      return extract(papp, pszPath, NULL, petype);
+
    }
 
-   bool util::extract(::aura::application * papp, const char * lpszFileName, const char * lpszExtractFileName)
+
+   bool util::extract(::aura::application * papp, const char * lpszFileName, const char * lpszExtractFileName, ::file::e_type * petype)
    {
 
       in_file infile(papp);
 
-      if(!infile.unzip_open(lpszFileName, 0))
+      if(!infile.unzip_open(lpszFileName, petype))
       {
+
+         if (is_set(petype))
+         {
+
+            *petype = ::file::type_none;
+
+         }
+
          return false;
+
       }
 
-      if(lpszExtractFileName == NULL)
+      if (lpszExtractFileName == NULL)
+      {
+
          return true;
+
+      }
 
       ::file::file_sp spfile = Sess(papp).file().get_file(lpszExtractFileName, ::file::mode_create | ::file::mode_write | ::file::defer_create_directory);
 
@@ -384,14 +401,14 @@ namespace zip
             CHAR szTitle[_MAX_PATH];
 
             unzGetCurrentFileInfo(
-               pf,
-               &fi,
-               szTitle,
-               _MAX_PATH,
-               NULL, // extra Field
-               0,
-               NULL, // comment
-               0);
+            pf,
+            &fi,
+            szTitle,
+            _MAX_PATH,
+            NULL, // extra Field
+            0,
+            NULL, // comment
+            0);
             string strTitle(szTitle);
             if(::str::ends(szTitle, "/") || ::str::ends(szTitle, "\\"))
             {
@@ -400,8 +417,8 @@ namespace zip
             {
 
                ::file::file_sp spfile = Sess(pfile->get_app()).file().get_file(
-                                           ::file::path(pszDir) / strTitle,
-                                           ::file::mode_create | ::file::mode_write | ::file::defer_create_directory);
+                                        ::file::path(pszDir) / strTitle,
+                                        ::file::mode_create | ::file::mode_write | ::file::defer_create_directory);
 
 
                if(spfile.is_set())

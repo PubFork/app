@@ -207,7 +207,7 @@ string file_line_dup(const char * path, index iLine)
 }
 
 
-bool file_set_line_dup(const char * path, index iLine, const char * pszLine)
+bool file_set_line_dup(const char * pszPath, index iLine, const char * pszLine)
 {
 
    if (iLine < 0)
@@ -218,6 +218,10 @@ bool file_set_line_dup(const char * path, index iLine, const char * pszLine)
    }
 
    string str;
+
+   ::file::path path(pszPath);
+
+   ::dir::mk(path.folder());
 
    FILE * file = ::fopen_dup(path, "a+", _SH_DENYWR);
 

@@ -35,7 +35,11 @@ namespace file
 
          }
 
-         return ::file::system::exists(path, pvarQuery, papp);
+         ::file::e_type etype = ::file::type_none;
+
+         bool bExists = ::file::system::is_file_or_dir(path, pvarQuery, &etype, papp);
+
+         return bExists && (etype == ::file::type_file || etype == ::file::type_element);
 
       }
 

@@ -13,7 +13,7 @@ namespace zip
       ::object(papp)
    {
 
-    m_punzfileinfo = new unz_file_info;
+      m_punzfileinfo = new unz_file_info;
 
    }
 
@@ -23,7 +23,7 @@ namespace zip
       if(get_zip_file() != NULL)
          close();
 
-     delete UNZ_FILE_INFO;
+      delete UNZ_FILE_INFO;
    }
 
 
@@ -184,7 +184,7 @@ namespace zip
    }
 
 
-   bool in_file::unzip_open(const char * lpszFileName,UINT)
+   bool in_file::unzip_open(const char * lpszFileName, ::file::e_type * petype)
    {
 
       m_filea.remove_all();
@@ -285,7 +285,6 @@ namespace zip
 
       }
 
-
       iFind = strFile.reverse_find(L':');
 
       strFile = strFile.Mid(iFind + 1);
@@ -294,20 +293,34 @@ namespace zip
 
       ::str::begins_eat(strFile,"\\");
 
-      if(!locate(strFile))
+      if (locate(strFile))
       {
 
-         if(!locate(strFile + "/"))
+         if (is_set(petype))
          {
 
-            return false;
+            *petype = ::file::type_file;
 
          }
 
+         return true;
+
+      }
+      else if(!locate(strFile + "/"))
+      {
+
+         if (is_set(petype))
+         {
+
+            *petype = ::file::type_folder;
+
+         }
+
+         return true;
 
       }
 
-      return true;
+      return false;
 
    }
 
@@ -824,14 +837,14 @@ namespace zip
             CHAR szTitle[_MAX_PATH];
 
             unzGetCurrentFileInfo(
-               pf,
-               &fi,
-               szTitle,
-               _MAX_PATH,
-               NULL, // extra Field
-               0,
-               NULL, // comment
-               0);
+            pf,
+            &fi,
+            szTitle,
+            _MAX_PATH,
+            NULL, // extra Field
+            0,
+            NULL, // comment
+            0);
             string strTitle(szTitle);
             if(listing.m_bRecursive || strTitle.find("/") < 0 || strTitle.find("/") == (strTitle.get_length() - 1))
             {
@@ -894,14 +907,14 @@ namespace zip
             CHAR szTitle[_MAX_PATH];
 
             unzGetCurrentFileInfo(
-               pf,
-               &fi,
-               szTitle,
-               _MAX_PATH,
-               NULL, // extra Field
-               0,
-               NULL, // comment
-               0);
+            pf,
+            &fi,
+            szTitle,
+            _MAX_PATH,
+            NULL, // extra Field
+            0,
+            NULL, // comment
+            0);
             string strTitle(szTitle);
             if (listing.m_bRecursive || strTitle.find("/") < 0 || strTitle.find("/") == (strTitle.get_length() - 1))
             {

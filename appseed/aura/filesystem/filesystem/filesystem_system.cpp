@@ -70,12 +70,33 @@ namespace file
 
       }
 
-      return exists(path, NULL, papp, bOptional, bNoCache);
+      ::file::e_type etype = ::file::type_none;
+
+      bool bExists = is_file_or_dir(path, NULL, &etype, papp, bOptional, bNoCache);
+
+      return bExists && (etype == ::file::type_file || etype == ::file::type_element);
 
    }
 
 
-   bool system::exists(::file::path path,var * pvarQuery,::aura::application * papp, bool bOptional, bool bNoCache)
+   //bool system::is_file_or_dir(::file::path path, ::aura::application * papp, ::file::e_type * petype, bool bOptional, bool bNoCache)
+   //{
+
+   //   path = Sys(papp).defer_process_matter_path(path, papp, bOptional, bNoCache);
+
+   //   if (bOptional && path.is_empty())
+   //   {
+
+   //      return false;
+
+   //   }
+
+   //   return exists(path, NULL, papp, petype, bOptional, bNoCache);
+
+   //}
+
+
+   bool system::is_file_or_dir(::file::path path, var * pvarQuery, ::file::e_type * petype, ::aura::application * papp, bool bOptional, bool bNoCache)
    {
 
       if (::str::begins(path, astr.strHttpProtocol) || ::str::begins(path, astr.strHttpsProtocol))
@@ -97,7 +118,7 @@ namespace file
 
          }
 
-         return App(papp).http().exists(path, pvarQuery, set);
+         return App(papp).http().is_file_or_dir(path, pvarQuery, petype, set);
 
       }
 
@@ -112,15 +133,19 @@ namespace file
          {
 
             if (!exists(path.Mid(0, iFind + 4), papp))
+            {
+
                return false;
 
-            return ziputil.exists(papp, path);
+            }
+
+            return ziputil.is_file_or_dir(papp, path, petype);
 
          }
 
       }
 
-      return file_exists_dup(path) != FALSE;
+      return is_file_or_dir_dup(path, petype) != FALSE;
 
    }
 
@@ -604,7 +629,7 @@ restart:
                   || ::str::begins(strFilePath, astr.strHttpsProtocol))
          {
 
-            if (!exists(strFilePath, &varQuery, papp, bOptional, bNoCache))
+            if (!is_file_or_dir(strFilePath, &varQuery, NULL, papp, bOptional, bNoCache))
             {
 
                return "";
@@ -2603,7 +2628,7 @@ restart:
                   sl.lock();
                }
 
-               if (!Sys(papp).http().m_straDownloading.contains(strPath) && Sess(papp).m_http.exists(strPath, &varQuery, set))
+               if (!Sys(papp).http().m_straDownloading.contains(strPath) && Sess(papp).m_http.is_file_or_dir(strPath, &varQuery, NULL, set))
                {
 
                   System.http().m_straDownloading.add(strPath);

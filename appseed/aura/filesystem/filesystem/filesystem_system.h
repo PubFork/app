@@ -36,16 +36,15 @@ namespace file
 
       virtual bool exists(path path, ::aura::application * papp, bool bOptional = true, bool bNoCache = false);
 
-      virtual bool exists(path path, var * pvarQuery,::aura::application * papp, bool bOptional = true, bool bNoCache = false);
+      virtual bool is_file_or_dir(path path, var * pvarQuery, e_type * petype, ::aura::application * papp, bool bOptional = true, bool bNoCache = false);
 
       virtual var length(const path & path,::aura::application * papp);
 
       virtual var length(const path & path,var * pvarQuery,::aura::application * papp);
 
-
       virtual path module();
-      virtual path ca2module();
 
+      virtual path ca2module();
 
       virtual bool update_module_path();
 

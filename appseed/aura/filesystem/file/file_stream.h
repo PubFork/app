@@ -64,6 +64,7 @@ namespace file
       mode_truncate = (i32)0x040000,
       no_call_stack = (i32)0x080000,
       no_cache = (i32)0x100000,
+      no_share_violation_wait = (i32)0x200000,
       binary = type_binary,
       out = mode_write,
       in = mode_read,

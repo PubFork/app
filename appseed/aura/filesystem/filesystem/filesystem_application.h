@@ -29,6 +29,8 @@ namespace file
 
       virtual bool exists(const ::file::path & pszPath);
 
+      virtual bool is_file_or_dir(const ::file::path & pszPath, e_type * petype = NULL);
+
       virtual var length(const ::file::path & pszPath);
 
       ::file::path time(const ::file::path & pszBasePath,int32_t iDepth = 1,const string & pszPrefix = cnull,const string & pszSuffix = cnull);
