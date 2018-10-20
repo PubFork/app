@@ -1251,6 +1251,13 @@ void android_on_size(float xScreen, float yScreen, float pikachu, float yBitmap)
 
    output_debug_string("android_on_size\n");
 
+   if (::aura::system::g_p == NULL)
+   {
+
+      return;
+
+   }
+
    ::fork(::aura::system::g_p, [=]()
    {
 
