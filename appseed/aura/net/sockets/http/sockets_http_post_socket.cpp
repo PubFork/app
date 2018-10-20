@@ -48,7 +48,7 @@ namespace sockets
 
          char c = Session.sockets().m_countHttpPostBoundary++ % 128;
 
-         while (!isalnum((unsigned char)c))
+         while (!isalnum_dup((unsigned char)c))
          {
 
             c = Session.sockets().m_countHttpPostBoundary++ % 128;

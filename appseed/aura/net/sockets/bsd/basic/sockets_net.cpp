@@ -102,7 +102,7 @@ namespace sockets
       string dst;
       for (int32_t i = 0; i < src.get_length(); i++)
       {
-         if (isalnum((uchar) src[i]))
+         if (isalnum_dup((uchar) src[i]))
          {
             dst += src[i];
          }

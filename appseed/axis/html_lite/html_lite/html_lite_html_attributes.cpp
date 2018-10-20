@@ -57,7 +57,7 @@ uint_ptr LiteHTMLElemAttr::parseFromStr(::lite_html_reader * preader, const char
    {
       // attribute name may contain letters (a-z, A-Z), digits (0-9),
       // underscores '_', hyphen '-', colons ':', and periods '.'
-      if ( (!::isalnum((uchar) *lpszEnd)) &&
+      if ( (!::isalnum_dup((uchar) *lpszEnd)) &&
             (*lpszEnd != '-') && (*lpszEnd != ':') &&
             (*lpszEnd != '_') && (*lpszEnd != '.') )
       {
