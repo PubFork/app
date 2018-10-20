@@ -211,8 +211,8 @@ namespace user
 
             }
             else if(m_workset.GetAppearance() == appearance_iconic
-               || (m_workset.GetAppearance() == appearance_full_screen
-               && m_eappearanceBefore != appearance_iconic))
+                    || (m_workset.GetAppearance() == appearance_full_screen
+                        && m_eappearanceBefore != appearance_iconic))
             {
 
                eappearanceRestore = m_eappearanceBefore;
@@ -664,25 +664,30 @@ namespace user
          }
 
 
-         //WorkSetClientInterface::CWorkSetDownUpInterface()
-         //{
-         //
-         //}
          void WorkSetClientInterface::frame_Attach()
          {
+
             if(m_pupdowntarget != NULL)
             {
+
                m_pupdowntarget->UpDownTargetAttach(this);
+
             }
-         }
-         void WorkSetClientInterface::frame_Detach()
-         {
-            if(m_pupdowntarget != NULL)
-            {
-               m_pupdowntarget->UpDownTargetDetach(this);
-            }
+
          }
 
+
+         void WorkSetClientInterface::frame_Detach()
+         {
+
+            if(m_pupdowntarget != NULL)
+            {
+
+               m_pupdowntarget->UpDownTargetDetach(this);
+
+            }
+
+         }
 
 
          void WorkSetClientInterface::_001OnTimer(::timer * ptimer)

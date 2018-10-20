@@ -160,8 +160,12 @@ namespace user
    void place_holder::on_layout()
    {
 
-      if(m_uiptraChild.get_count() <= 0)
+      if (m_uiptraChild.get_count() <= 0)
+      {
+
          return;
+
+      }
 
       ::user::interaction * puiHold = m_uiptraChild[0];
 
@@ -169,8 +173,12 @@ namespace user
 
       GetClientRect(rectClient);
 
-      if(rectClient.area() <= 0)
+      if (rectClient.area() <= 0)
+      {
+
          return;
+
+      }
 
       rect rectWindow;
 
