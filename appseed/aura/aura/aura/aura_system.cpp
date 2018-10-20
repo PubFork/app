@@ -1140,10 +1140,13 @@ namespace aura
 
    }
 
+
    object * system::clone()
    {
+
       // by the time, it is not possible to clone a system
       return NULL;
+
    }
 
 
@@ -1158,13 +1161,16 @@ namespace aura
    void system::discard_to_factory(object * pca)
    {
 
-      if(m_pfactory == NULL)
+      if (m_pfactory == NULL)
+      {
+
          return;
+
+      }
 
       m_pfactory->discard(pca);
 
    }
-
 
 
    bool system::is_system()
@@ -1181,7 +1187,6 @@ namespace aura
       return _debug_logging_report(i1,psz1,i2,psz2,psz3,args);
 
    }
-
 
 
    int32_t system::_debug_logging_report(int32_t iReportType, const char * pszFileName, int32_t iLineNumber, const char * pszModuleName, const char * pszFormat,va_list list)
@@ -1201,11 +1206,19 @@ namespace aura
 
          stringa stra;
 
-         if(pszFileName != NULL)
+         if (pszFileName != NULL)
+         {
+
             stra.add(pszFileName);
 
-         if(pszModuleName != NULL)
+         }
+
+         if (pszModuleName != NULL)
+         {
+
             stra.add(pszFileName);
+
+         }
 
          str += stra.implode(", ");
 
@@ -2207,7 +2220,7 @@ RetryBuildNumber:
 
          ::file::path pathCache = local_get_matter_cache_path(strMatter);
 
-         if (!bNoCache && file_exists_dup(pathCache))
+         if (!bNoCache && is_file_or_dir_dup(pathCache))
          {
 
             return pathCache;
@@ -2220,6 +2233,14 @@ RetryBuildNumber:
          {
 
             Application.file().copy(pathCache, pathSide, true);
+
+            return pathCache;
+
+         }
+         else if (::dir::_is(pathSide))
+         {
+
+            Application.dir().mk(pathCache);
 
             return pathCache;
 

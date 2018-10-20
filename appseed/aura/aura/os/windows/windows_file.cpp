@@ -92,6 +92,47 @@ int_bool file_exists_dup(const char * path1)
 
 }
 
+int_bool is_file_or_dir_dup(const char * path1)
+{
+
+   wstring wstr;
+
+   wstr.alloc(strlen_dup(path1) + 256);
+
+   wcscat(wstr, L"\\\\?\\");
+
+   utf8_to_utf16((unichar *)wstr + wcslen(wstr), path1);
+
+   wstr.set_length(wcslen(wstr));
+
+   unichar * pwsz = (unichar *)wstr;
+
+   while (*pwsz != L'\0')
+   {
+
+      if (*pwsz == '/')
+      {
+
+         *pwsz = '\\';
+
+      }
+
+      pwsz++;
+
+   }
+
+   uint32_t dwFileAttributes = GetFileAttributesW(wstr);
+
+   if (dwFileAttributes == INVALID_FILE_ATTRIBUTES)
+   {
+
+      return FALSE;
+
+   }
+
+   return TRUE;
+
+}
 
 
 int_bool file_put_contents_dup(const char * path, const char * contents, count len)

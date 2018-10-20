@@ -26,7 +26,10 @@ CLASS_DECL_AURA int_bool file_path_is_relative_dup(const char * psz);
 
 
 
-CLASS_DECL_AURA int_bool file_exists_dup(const char * path1);
+CLASS_DECL_AURA int_bool file_exists_dup(const char * path);
+
+CLASS_DECL_AURA int_bool is_file_or_dir_dup(const char * path);
+
 #ifdef WINDOWS
 CLASS_DECL_AURA int_bool read_resource_as_file_dup(const char * pszFile, HINSTANCE hinst, UINT nID, LPCTSTR lpcszType);
 #endif
