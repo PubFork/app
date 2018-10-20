@@ -4,19 +4,17 @@
 // PARTICULAR PURPOSE.
 //
 // Copyright (c) Microsoft Corporation. All rights reserved.
-
 #include "framework.h"
 #include "metrowin.h"
-//#include "metrowin_metrowin.h"
 
 #undef System
-
 
 #pragma push_macro("System")
 #undef System
 using namespace Windows::Foundation;
 using namespace Windows::System::Threading;
 #pragma pop_macro("System")
+
 
 mutex * g_pmutexThreadIdHandleLock = NULL;
 mutex * g_pmutexThreadIdLock = NULL;
@@ -54,9 +52,6 @@ void thread_data::set(void * p)
 }
 
 
-
-
-
 // Converts a Win32 thread priority to WinRT format.
 WorkItemPriority GetWorkItemPriority(int nPriority)
 {
@@ -69,8 +64,6 @@ WorkItemPriority GetWorkItemPriority(int nPriority)
 }
 
 
-
-
 HTHREAD start_thread(uint32_t ( * pfn)(void *), void * pv, int iPriority)
 {
 
@@ -81,18 +74,8 @@ HTHREAD start_thread(uint32_t ( * pfn)(void *), void * pv, int iPriority)
 }
 
 
-
 void attach_thread_input_to_main_thread(int_bool bAttach)
 {
-   return;
-   //   MSG msg;
-
-   // metrowin todo
-   _throw(simple_exception(get_app(), "todo")); // PeekMessage function used to create message queue Windows Desktop
-
-   //PeekMessage(&msg, NULL, 0, 0xffffffff, FALSE);
-
-   //   AttachThreadInput(::GetCurrentThreadId(), get_main_thread_id(), bAttach ? TRUE : FALSE); // AttachThreadInput function used to attach thread input to main thread in Windows Desktop
 
 }
 
@@ -100,14 +83,7 @@ void attach_thread_input_to_main_thread(int_bool bAttach)
 void _on_aura_thread_detach()
 {
 
-   //synch_lock mlThreadId(g_pmutexThreadIdLock);
-   //
-   //HTHREAD hthread = ::GetCurrentThread();
-
-   //thread_id_map().remove_key(hthread);
-
 }
-
 
 
 BOOL WINAPI PostThreadMessageW(IDTHREAD iThreadId,UINT message,WPARAM wparam,LPARAM lparam)
@@ -116,7 +92,11 @@ BOOL WINAPI PostThreadMessageW(IDTHREAD iThreadId,UINT message,WPARAM wparam,LPA
    mq * pmq = __get_mq(iThreadId, message != WM_QUIT);
 
    if(pmq == NULL)
+   {
+
       return FALSE;
+
+   }
 
    synch_lock ml(&pmq->m_mutex);
 
@@ -139,35 +119,27 @@ BOOL WINAPI PostThreadMessageW(IDTHREAD iThreadId,UINT message,WPARAM wparam,LPA
 }
 
 
-
-
-namespace core
+namespace multithreading
 {
 
-///  \brief		global function to set thread priority for current thread
-   ///  \param		new priority
-   bool set_thread_priority(int32_t priority)
+
+   bool set_priority(int32_t priority)
    {
-      return ( ::SetThreadPriority(::get_current_thread(), priority) != 0 );
+
+      return ::SetThreadPriority(::GetCurrentThread(), priority) != FALSE;
 
    }
 
 
-   ///  \brief		global function to get thread priority for current thread
-   ///  \return	priority of current thread
-
-   int32_t thread_priority()
+   int32_t priority()
    {
 
-      return ::GetThreadPriority(::get_current_thread());
+      return ::GetThreadPriority(::GetCurrentThread());
 
    }
 
 
-} // namespace core
-
-
-
+} // namespace multithreading
 
 
 bool on_init_thread()
@@ -195,16 +167,12 @@ bool on_term_thread()
 }
 
 
-
-
-
 void __node_init_multithreading()
 {
 
    __node_init_cross_windows_threading();
 
 }
-
 
 
 void __node_term_multithreading()
@@ -214,25 +182,14 @@ void __node_term_multithreading()
 
 }
 
-
-
-
 thread_int_ptr < HRESULT > t_hresultCoInitialize;
-
-//CLASS_DECL_AURA void __clear_mq();
 
 bool __os_init_thread()
 {
 
-   //__clear_mq();
-
-   //if(!defer_co_initialize_ex())
-   // return false;
-
    return true;
 
 }
-
 
 
 bool __os_term_thread()
@@ -254,77 +211,6 @@ bool __os_term_thread()
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//DWORD MsgWaitForMultipleObjects(DWORD dwSize,const HANDLE * lphandles,DWORD dwTimeout,DWORD dwWakeMask,DWORD dwFlags)
-//{
-//
-//   HANDLE * ph = new HANDLE[dwSize + 1];
-//
-//   memcpy(ph,lphandles,sizeof(HANDLE) *dwSize);
-//
-//   ph[dwSize] = (HANDLE)__get_mq()->m_eventNewMessage.m_object;
-//
-//   DWORD r = ::WaitForMultipleObjectsEx(dwSize + 1,lphandles,dwFlags & MWMO_WAITALL,dwTimeout,dwWakeMask & MWMO_ALERTABLE);
-//
-//   delete ph;
-//
-//   return r;
-//
-//}
-
-
-
-
-
-
 DWORD WinMsgWaitForMultipleObjects(DWORD dwSize,const HANDLE * lphandles,DWORD dwTimeout,DWORD dwWakeMask,DWORD dwFlags)
 {
 
@@ -343,14 +229,10 @@ DWORD WinMsgWaitForMultipleObjects(DWORD dwSize,const HANDLE * lphandles,DWORD d
 }
 
 
-
-
-
 void _on_os_hthread_end()
 {
 
 }
-
 
 
 IDTHREAD get_current_thread_id()
@@ -371,42 +253,38 @@ HTHREAD get_current_thread()
 
 HTHREAD g_hMainThread = NULL;
 UINT g_uiMainThread = -1;
-//
+
+
 void set_main_thread(HTHREAD hThread)
 {
-   //
-   //   //   MSG msg;
-   //
-   //   _throw(simple_exception(get_app(), "todo")); // PeekMessage function used to create message queue Windows Desktop
-   //
-   //   //PeekMessage(&msg, NULL, 0, 0xffffffff, FALSE);
-   //
+
    g_hMainThread = hThread;
 
 }
-//
+
+
 void set_main_thread_id(UINT uiThread)
 {
-
-   //   //   MSG msg;
-   //
-   //   _throw(simple_exception(get_app(), "todo")); // PeekMessage function used to create message queue Windows Desktop
-   //
-   //   //PeekMessage(&msg, NULL, 0, 0xffffffff, FALSE);
 
    g_uiMainThread = uiThread;
 
 }
-//
-//
+
+
 HTHREAD get_main_thread()
 {
+
    return g_hMainThread;
 
 }
+
+
 UINT   get_main_thread_id()
 {
+
    return g_uiMainThread;
+
 }
+
 
 

@@ -3268,7 +3268,11 @@ void thread::set_priority(int32_t priority)
 {
 
    if (::SetThreadPriority(m_hthread, get_os_thread_priority(priority)) == 0)
+   {
+
       _throw(runtime_error(get_app(), "Thread::set_priority: Couldn't set thread priority."));
+
+   }
 
 }
 

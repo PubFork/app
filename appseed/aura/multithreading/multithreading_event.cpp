@@ -23,17 +23,17 @@ void clock_getrealtime(struct timespec * pts)
 
 #ifdef __MACH__ // OS X does not have clock_gettime, use clock_get_time
 
-    clock_serv_t cclock;
-    mach_timespec_t mts;
-    host_get_clock_service(mach_host_self(), CALENDAR_CLOCK, &cclock);
-    clock_get_time(cclock, &mts);
-    mach_port_deallocate(mach_task_self(), cclock);
-    pts->tv_sec = mts.tv_sec;
-    pts->tv_nsec = mts.tv_nsec;
+   clock_serv_t cclock;
+   mach_timespec_t mts;
+   host_get_clock_service(mach_host_self(), CALENDAR_CLOCK, &cclock);
+   clock_get_time(cclock, &mts);
+   mach_port_deallocate(mach_task_self(), cclock);
+   pts->tv_sec = mts.tv_sec;
+   pts->tv_nsec = mts.tv_nsec;
 
 #else
 
-    clock_gettime(CLOCK_REALTIME, pts);
+   clock_gettime(CLOCK_REALTIME, pts);
 
 #endif
 
@@ -48,7 +48,7 @@ event::event(::aura::application * papp, bool bInitiallyOwn, bool bManualReset, 
 {
 
    //if(papp == NULL)
-      //_throw(invalid_argument_exception(get_app()));
+   //_throw(invalid_argument_exception(get_app()));
 
 #ifdef WINDOWSEX
 
@@ -247,9 +247,7 @@ bool event::SetEvent()
 
    pthread_mutex_unlock((pthread_mutex_t *) m_pmutex);
 
-
    return true;
-
 
 #else
 
@@ -385,12 +383,14 @@ wait_result event::wait ()
 
 #ifdef WINDOWS
 
+   if (::WaitForSingleObjectEx((HANDLE)item(), INFINITE, FALSE) != WAIT_OBJECT_0)
+   {
 
-   if(::WaitForSingleObjectEx((HANDLE)item(),INFINITE,FALSE) != WAIT_OBJECT_0)
-		_throw(runtime_error(get_app(), "::core::pal::Event::wait: failure"));
+      _throw(runtime_error(get_app(), "::core::pal::Event::wait: failure"));
+
+   }
 
 #elif defined(ANDROID)
-
 
    pthread_mutex_lock((pthread_mutex_t *) m_pmutex);
 
@@ -600,7 +600,7 @@ wait_result event::wait (const duration & durationTimeout)
    else
    {
 
-    	timespec delay;
+      timespec delay;
 
       delay.tv_sec = 0;
 

@@ -30,110 +30,92 @@ map < IDTHREAD,IDTHREAD,ThreadLocalData *,ThreadLocalData * > * allthreaddata = 
 
 mutex * g_pmutexMq = NULL;
 
-CLASS_DECL_AURA int_bool WINAPI GetMessageW(LPMESSAGE lpMsg,oswindow oswindow,UINT wMsgFilterMin,UINT wMsgFilterMax)
+
+CLASS_DECL_AURA int_bool WINAPI GetMessageW(LPMESSAGE lpMsg, oswindow oswindow, UINT wMsgFilterMin, UINT wMsgFilterMax)
 {
 
    bool bFirst = true;
 
    mq * pmq = __get_mq(GetCurrentThreadId(), true);
 
-   if(pmq == NULL)
+   if (pmq == NULL)
+   {
+
       return FALSE;
+
+   }
 
    synch_lock sl(&pmq->m_mutex);
 
-   if(wMsgFilterMax == 0)
+   if (wMsgFilterMax == 0)
+   {
+
       wMsgFilterMax = (UINT)-1;
+
+   }
 
 #if defined(LINUX) || defined(ANDROID)
 
    HTHREAD hthread = ::GetCurrentThread();
 
-   DWORD idThre = ::GetCurrentThreadId();
+   DWORD idThread = ::GetCurrentThreadId();
 
 #endif
 
-restart:
-
-   for(int32_t i = 0; i < pmq->ma.get_count(); i++)
+   while (true)
    {
 
-      MESSAGE & msg = pmq->ma[i];
-
-      if(msg.message == WM_QUIT)
-      {
-         *lpMsg = msg;
-         pmq->ma.remove_at(i);
-
-         //pmq->ma.remove_all();
-
-         //         __clear_mq();
-
-         return FALSE;
-      }
-
-      if(oswindow != NULL && oswindow_get(oswindow) == NULL)
+      for (int32_t i = 0; i < pmq->ma.get_count(); i++)
       {
 
-         pmq->ma.remove_at(i);
+         MESSAGE & msg = pmq->ma[i];
 
-         continue;
+         if (msg.message == WM_QUIT)
+         {
+
+            *lpMsg = msg;
+
+            pmq->ma.remove_at(i);
+
+            return FALSE;
+
+         }
+
+         if (oswindow != NULL && oswindow_get(oswindow) == NULL)
+         {
+
+            pmq->ma.remove_at(i);
+
+            continue;
+
+         }
+
+         if ((oswindow == NULL || msg.hwnd == oswindow) && msg.message >= wMsgFilterMin && msg.message <= wMsgFilterMax)
+         {
+
+            *lpMsg = msg;
+
+            pmq->ma.remove_at(i);
+
+            return TRUE;
+
+         }
 
       }
 
-      if((oswindow == NULL || msg.hwnd == oswindow) && msg.message >= wMsgFilterMin && msg.message <= wMsgFilterMax)
       {
-         *lpMsg = msg;
-         pmq->ma.remove_at(i);
-         return TRUE;
+
+         sl.unlock();
+
+         pmq->m_eventNewMessage.wait();
+
+         sl.lock();
+
+         pmq->m_eventNewMessage.ResetEvent();
+
       }
-   }
-
-#if defined(LINUX) // || defined(ANDROID)
-
-   //if(aura_defer_process_x_message(hthread,lpMsg,oswindow,false))
-   // return TRUE;
-
-#endif
-
-   //if(bFirst)
-   {
-
-      //pmq->m_eventNewMessage.wait(millis(11));
-
-      sl.unlock();
-
-      pmq->m_eventNewMessage.wait();
-
-      sl.lock();
-
-      pmq->m_eventNewMessage.ResetEvent();
-
-
-
-      //bFirst = false;
-
-      goto restart;
 
    }
-//   else
-//   {
-//
-//      lpMsg->message = 0xffffffff;
-//      lpMsg->hwnd    = NULL;
-//      lpMsg->wParam  = 0;
-//      lpMsg->lParam  = 0;
-//      lpMsg->pt.x    = 0x80000000;
-//      lpMsg->pt.y    = 0x80000000;
-
-//      return TRUE;
-//
-//   }
-
-
-
-
-
 
 }
 

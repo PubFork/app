@@ -1,7 +1,5 @@
 #include "framework.h"
-//#include <sched.h>
-//#include <time.h>
-//#include <pthread.h>
+
 
 CLASS_DECL_AURA void thread_get_os_priority(int32_t * piOsPolicy, sched_param * pparam, int32_t iCa2Priority);
 
@@ -19,7 +17,9 @@ DWORD MsgWaitForMultipleObjectsEx(DWORD dwSize, sync_object * * pobjectptra, DWO
 
    if(dwTimeout != (DWORD) INFINITE)
    {
+
       start = ::get_tick_count();
+
    }
 
    mq * pmq = NULL;
@@ -29,20 +29,14 @@ DWORD MsgWaitForMultipleObjectsEx(DWORD dwSize, sync_object * * pobjectptra, DWO
 
       pmq = __get_mq(GetCurrentThreadId(), false);
 
-      //if(pmq == NULL)
-      // return 0;
-
    }
 
-
-
    int_bool bWaitForAll        = dwFlags & MWMO_WAITALL;
-//   int_bool bAlertable         = dwFlags & MWMO_ALERTABLE;
-//   int_bool bInputAvailable    =  dwFlags & MWMO_INPUTAVAILABLE;
 
    timespec delay;
 
    delay.tv_sec = 0;
+
    delay.tv_nsec = 1000000;
 
    if(bWaitForAll)
@@ -50,9 +44,13 @@ DWORD MsgWaitForMultipleObjectsEx(DWORD dwSize, sync_object * * pobjectptra, DWO
 
       while(true)
       {
+         
          int32_t i;
+         
          int32_t j;
+         
          i = 0;
+
          for(; comparison::lt(i, dwSize);)
          {
 
@@ -98,10 +96,6 @@ DWORD MsgWaitForMultipleObjectsEx(DWORD dwSize, sync_object * * pobjectptra, DWO
             }
 
          }
-         //      for(j = 0; j < dwSize; j++)
-         //    {
-         //     pobjectptra[j]->unlock();
-         //}
 
          return WAIT_OBJECT_0;
 
@@ -112,7 +106,7 @@ DWORD MsgWaitForMultipleObjectsEx(DWORD dwSize, sync_object * * pobjectptra, DWO
    {
 
       int32_t i;
-//      int32_t j;
+
       while(true)
       {
 
@@ -198,8 +192,6 @@ DWORD WaitForSingleObject(sync_object * pobject, DWORD dwTimeout)
 }
 
 
-
-
 thread_data::thread_data()
 {
 
@@ -210,8 +202,6 @@ thread_data::thread_data()
 
 thread_data::~thread_data()
 {
-
-   //pthread_key_destroy(&m_key);
 
 }
 
@@ -231,7 +221,6 @@ void thread_data::set(void * p)
 }
 
 
-
 CLASS_DECL_AURA HTHREAD get_current_thread()
 {
 
@@ -248,27 +237,12 @@ CLASS_DECL_AURA IDTHREAD get_current_thread_id()
 }
 
 
-
-
-
-
-
-
-
 void __node_init_multithreading()
 {
 
-   //s_pmapHthreadHthread = new map < HTHREAD,HTHREAD,HTHREAD,HTHREAD >();
-
-   //s_pmapDwordHthread = new map < DWORD,DWORD,HTHREAD,HTHREAD >();
-
-   //s_pmapHthreadDword = new map < HTHREAD,HTHREAD,DWORD,DWORD >();
-
    __node_init_cross_windows_threading();
 
-
 }
-
 
 
 void __node_term_multithreading()
@@ -276,27 +250,7 @@ void __node_term_multithreading()
 
    __node_term_cross_windows_threading();
 
-   //delete s_pmapHthreadDword;
-
-   //s_pmapHthreadDword = NULL;
-
-   //delete s_pmapDwordHthread;
-
-   //s_pmapDwordHthread = NULL;
-
-   //delete s_pmapHthreadHthread;
-
-   //s_pmapHthreadHthread = NULL;
-
 }
-
-
-
-
-
-
-
-
 
 
 #if defined(LINUX) // || defined(ANDROID)
@@ -334,30 +288,8 @@ UINT __x11_thread(void * pparam)
 #endif
 
 
-
 extern "C"
 void * os_thread_thread_proc(LPVOID lpparameter);
-
-
-
-
-
-
-
-
-
-// Converts a Win32 thread priority to WinRT format.
-int32_t GetWorkItemPriority(int32_t nPriority)
-{
-   if(nPriority < 0)
-      return nPriority; // WorkItemPriority::Low;
-   else if(nPriority > 0)
-      return nPriority; // WorkItemPriority::High;
-   else
-      return nPriority; // WorkItemPriority::Normal;
-}
-
-
 
 
 int_bool WINAPI SetThreadPriority(HTHREAD hThread,int32_t nCa2Priority)
@@ -376,11 +308,6 @@ int_bool WINAPI SetThreadPriority(HTHREAD hThread,int32_t nCa2Priority)
 }
 
 
-
-
-
-
-
 int32_t WINAPI GetThreadPriority(HTHREAD  hthread)
 {
 
@@ -397,8 +324,6 @@ int32_t WINAPI GetThreadPriority(HTHREAD  hthread)
 }
 
 
-
-
 static HTHREAD g_hMainThread = NULL;
 
 static IDTHREAD g_uiMainThread = (IDTHREAD) -1;
@@ -407,22 +332,13 @@ static IDTHREAD g_uiMainThread = (IDTHREAD) -1;
 CLASS_DECL_AURA void set_main_thread(HTHREAD hThread)
 {
 
-   // MESSAGE msg;
-
-   // PeekMessage function used to create message queue Windows Desktop
-   // PeekMessage(&msg, NULL, 0, 0xffffffff, FALSE);
-
    g_hMainThread = hThread;
 
 }
 
+
 CLASS_DECL_AURA void set_main_thread_id(IDTHREAD uiThread)
 {
-
-   //   MESSAGE msg;
-
-   // PeekMessage function used to create message queue Windows Desktop
-   // PeekMessage(&msg, NULL, 0, 0xffffffff, FALSE);
 
    g_uiMainThread = uiThread;
 
@@ -451,15 +367,12 @@ CLASS_DECL_AURA void attach_thread_input_to_main_thread(bool bAttach)
 }
 
 
-
 LPVOID WINAPI thread_get_data(HTHREAD hthread,DWORD dwIndex);
-
 
 int_bool WINAPI thread_set_data(HTHREAD hthread,DWORD dwIndex,LPVOID lpTlsValue);
 
-
-
 DWORD g_dwDebug_post_thread_msg_time;
+
 int g_iDebug_post_thread_msg_time;
 
 CLASS_DECL_AURA int_bool WINAPI PostThreadMessageW(IDTHREAD iThreadId,UINT Msg,WPARAM wParam,LPARAM lParam)
@@ -468,49 +381,50 @@ CLASS_DECL_AURA int_bool WINAPI PostThreadMessageW(IDTHREAD iThreadId,UINT Msg,W
    mq * pmq = __get_mq(iThreadId, Msg != WM_QUIT);
 
    if(pmq == NULL)
+   {
+
       return FALSE;
+
+   }
 
    synch_lock ml(&pmq->m_mutex);
 
    MESSAGE msg;
 
-   //zero(&msg, sizeof(msg));
-
    if(Msg == WM_QUIT)
    {
+
       ::output_debug_string("\n\n\nWM_QUIT posted to thread " + ::str::from((uint64_t)iThreadId) + "\n\n\n");
-   }
-
-
-   DWORD dwNow = get_tick_count();
-
-   if(dwNow - g_dwDebug_post_thread_msg_time < 1)
-   {
-
-      if(g_iDebug_post_thread_msg_time > 10)
-      {
-
-//         writeln("PostThreadMessage" flooded?");
-
-      }
-      else
-      {
-
-         g_iDebug_post_thread_msg_time++;
-
-      }
-
-   }
-   else
-   {
-
-      g_iDebug_post_thread_msg_time = 0;
 
    }
 
-   g_dwDebug_post_thread_msg_time = dwNow;
+//    DWORD dwNow = get_tick_count();
 
+//    if(dwNow - g_dwDebug_post_thread_msg_time < 1)
+//    {
 
+//       if(g_iDebug_post_thread_msg_time > 10)
+//       {
+
+// //         writeln("PostThreadMessage" flooded?");
+
+//       }
+//       else
+//       {
+
+//          g_iDebug_post_thread_msg_time++;
+
+//       }
+
+//    }
+//    else
+//    {
+
+//       g_iDebug_post_thread_msg_time = 0;
+
+//    }
+
+//    g_dwDebug_post_thread_msg_time = dwNow;
 
    msg.message = Msg;
    msg.wParam  = wParam;
@@ -521,49 +435,11 @@ CLASS_DECL_AURA int_bool WINAPI PostThreadMessageW(IDTHREAD iThreadId,UINT Msg,W
 
    pmq->ma.add(msg);
 
-   //   void * p = pmq->ma[pmq->ma.get_count() -1].hwnd;
-
    pmq->m_eventNewMessage.set_event();
 
    return true;
 
 }
-
-
-
-
-
-
-
-
-//void thread_layer::wait_thread(DWORD dwMillis)
-//{
-//
-//   try
-//   {
-//
-//      m_hthread->m_pevent->wait(millis(dwMillis));
-//
-//   }
-//   catch(...)
-//   {
-//
-//   }
-//
-//}
-//
-//
-//
-//
-//
-//thread_layer::~thread_layer()
-//{
-//
-//   delete m_hthread;
-//
-//}
-//
-//
 
 
 CLASS_DECL_AURA HTHREAD GetCurrentThread()
@@ -572,6 +448,7 @@ CLASS_DECL_AURA HTHREAD GetCurrentThread()
    return pthread_self();
 
 }
+
 
 CLASS_DECL_AURA IDTHREAD GetCurrentThreadId()
 {
@@ -584,34 +461,35 @@ CLASS_DECL_AURA IDTHREAD GetCurrentThreadId()
 namespace multithreading
 {
 
+
    CLASS_DECL_AURA bool set_priority(int32_t priority)
    {
 
       return (::SetThreadPriority(::GetCurrentThread(),priority) != 0);
+
    }
 
 
-   CLASS_DECL_AURA int32_t thread_priority()
+   CLASS_DECL_AURA int32_t priority()
    {
+
       return ::GetThreadPriority(::GetCurrentThread());
+
    }
 
 
 } // namespace aura
 
 
-
-
-
-
-
 bool on_init_thread()
 {
 
-   //attach_thread_input_to_main_thread();
-
    if(!__os_init_thread())
+   {
+         
       return false;
+
+   }
 
    return true;
 
@@ -628,22 +506,12 @@ bool on_term_thread()
 }
 
 
-
-
-
-
-
-//CLASS_DECL_AURA IDTHREAD get_current_thread_id()
-//{
-//   return ::GetCurrentThreadId();
-//}
-
-
-
-
 CLASS_DECL_AURA DWORD_PTR translate_processor_affinity(int iOrder)
 {
 
    return 1 << iOrder;
 
 }
+
+
+
