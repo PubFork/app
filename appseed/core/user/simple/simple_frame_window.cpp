@@ -1769,7 +1769,17 @@ bool simple_frame_window::WindowDataLoadWindowRect(bool bForceRestore, bool bIni
    if (m_bWindowFrame)
    {
 
-      m_workset.m_pframeschema->get_control_box()->set_need_layout();
+      if (m_workset.m_pframeschema != NULL)
+      {
+
+         if (m_workset.m_pframeschema->get_control_box() != NULL)
+         {
+
+            m_workset.m_pframeschema->get_control_box()->set_need_layout();
+
+         }
+
+      }
 
    }
 
