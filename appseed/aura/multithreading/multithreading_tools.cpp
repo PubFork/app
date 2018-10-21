@@ -230,7 +230,7 @@ void tool_thread::run()
    while (get_thread_run())
    {
 
-      if(!m_evStart.wait(millis(100)).succeeded())
+      if(!m_evStart.wait(millis(300)).succeeded())
       {
 
          continue;
@@ -255,6 +255,8 @@ void tool_thread::run()
       m_evReady.SetEvent();
 
    }
+
+   m_evReady.SetEvent();
 
 }
 

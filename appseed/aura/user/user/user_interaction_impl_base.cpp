@@ -1264,6 +1264,13 @@ namespace user
    ::user::interaction * interaction_impl_base::GetParent() const
    {
 
+      if (m_pui == NULL)
+      {
+
+         return NULL;
+
+      }
+
       return m_pui->GetParent();
 
    }

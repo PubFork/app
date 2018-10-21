@@ -4412,9 +4412,20 @@ restart:
 
             single_lock sl(puiParent->m_pmutex, true);
 
-            puiParent->on_remove_child(this);
+            if (puiParent->m_bUserElementalOk)
+            {
 
-            puiParent->m_uiptraChild.remove(this);
+               puiParent->on_remove_child(this);
+
+               puiParent->m_uiptraChild.remove(this);
+
+            }
+            else
+            {
+
+               TRACE("Parent being destroyed");
+
+            }
 
          }
          catch (...)

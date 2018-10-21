@@ -352,7 +352,18 @@ public:
          if (m_prunnableEnd->interlockedlong() <= 0)
          {
 
-            m_prunnableEnd->run();
+            if (::get_thread_run())
+            {
+
+               m_prunnableEnd->run();
+
+            }
+            else
+            {
+
+               output_debug_string("optimized m_prunnableEnd->run()");
+
+            }
 
             delete m_prunnableEnd;
 
