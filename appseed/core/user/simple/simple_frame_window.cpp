@@ -1764,6 +1764,7 @@ void simple_frame_window::InitialFramePosition(bool bForceRestore)
 bool simple_frame_window::WindowDataLoadWindowRect(bool bForceRestore, bool bInitialFramePosition)
 {
 
+   bool bOk = ::user::frame_window::WindowDataLoadWindowRect(bForceRestore, bInitialFramePosition);
 
    if (m_bWindowFrame)
    {
@@ -1771,6 +1772,8 @@ bool simple_frame_window::WindowDataLoadWindowRect(bool bForceRestore, bool bIni
       m_workset.m_pframeschema->get_control_box()->set_need_layout();
 
    }
+
+   return bOk;
 
 }
 
