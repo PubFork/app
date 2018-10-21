@@ -161,7 +161,23 @@ bool command_target::has_command_handler(::user::command * pcommand)
 
    }
 
-   return m_idroute[pcommand->m_id]->has_elements();
+   sp(::message::route_array) & proutea = m_idroute[pcommand->m_id];
+
+   if (proutea.is_null())
+   {
+
+      return false;
+
+   }
+
+   if (proutea->is_empty())
+   {
+
+      return false;
+
+   }
+
+   return true;
 
 }
 

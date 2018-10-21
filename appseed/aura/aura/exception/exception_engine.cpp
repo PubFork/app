@@ -1028,7 +1028,8 @@ namespace exception
       uint32_t  dwPid = get_current_process_id();
 
       // initializes
-      SymSetOptions(SymGetOptions()|SYMOPT_DEFERRED_LOADS|SYMOPT_LOAD_LINES);
+      //SymSetOptions(SymGetOptions()|SYMOPT_DEFERRED_LOADS|SYMOPT_LOAD_LINES);
+      SymSetOptions(SymGetOptions() | SYMOPT_LOAD_LINES);
       //   SymSetOptions (SYMOPT_UNDNAME|SYMOPT_LOAD_LINES);
       if (!::SymInitialize(hprocess, 0, TRUE))
       {
