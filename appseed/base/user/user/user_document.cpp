@@ -749,15 +749,6 @@ end:;
 
                pframe->ShowWindow(SW_HIDE);
 
-               if (pframe->GetParent() != NULL)
-               {
-
-                  synch_lock sl(pframe->GetParent()->m_pmutex);
-
-                  pframe->GetParent()->m_uiptraChild.remove(pframe);
-
-               }
-
             }
 
             sl.lock();
