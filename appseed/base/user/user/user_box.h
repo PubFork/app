@@ -37,9 +37,9 @@ namespace user
       virtual void defer_update_display();
 
       virtual bool IsFullScreen();
-      void WindowDataEnableSaveWindowRect(bool bEnable);
-      bool WindowDataSaveWindowRect();
-      bool WindowDataLoadWindowRect(bool bForceRestore = false, bool bInitialFramePosition = false);
+      virtual void WindowDataEnableSaveWindowRect(bool bEnable);
+      virtual bool WindowDataSaveWindowRect();
+      virtual bool WindowDataLoadWindowRect(bool bForceRestore = false, bool bInitialFramePosition = false);
 
       virtual bool LoadWindowRect_(class ::database::key id, sp(::user::box) pwindow, bool bForceRestore = false, bool bInitialFramePosition = false);
       virtual bool SaveWindowRect_(class ::database::key id, sp(::user::box) pwindow);

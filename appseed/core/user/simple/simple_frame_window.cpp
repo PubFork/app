@@ -1719,13 +1719,6 @@ void simple_frame_window::InitialFramePosition(bool bForceRestore)
 
             WindowDataLoadWindowRect(bForceRestore,true);
 
-            if (m_workset.IsAppearanceEnabled())
-            {
-
-               GetWindowRect(m_workset.m_pframeschema->get_control_box_rect());
-
-            }
-
          }
 
       }
@@ -1764,6 +1757,20 @@ void simple_frame_window::InitialFramePosition(bool bForceRestore)
    m_bLayoutEnable = true;
 
    output_debug_string("\nm_bLayoutEnable TRUE");
+
+}
+
+
+bool simple_frame_window::WindowDataLoadWindowRect(bool bForceRestore, bool bInitialFramePosition)
+{
+
+
+   if (m_bWindowFrame)
+   {
+
+      m_workset.m_pframeschema->get_control_box()->set_need_layout();
+
+   }
 
 }
 

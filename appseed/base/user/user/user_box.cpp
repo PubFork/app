@@ -115,8 +115,6 @@ namespace user
    bool box::WindowDataLoadWindowRect(bool bForceRestore, bool bInitialFramePosition)
    {
 
-      //single_lock sl(m_pmutex, true);
-
       bool bLoad = false;
 
       keep < bool > keepEnable(&m_bEnableSaveWindowRect, false, m_bEnableSaveWindowRect, true);
@@ -133,7 +131,7 @@ namespace user
          if (!bRestore)
          {
 
-            on_layout(); // did not changed size, but appearance may have change (e.g., Full Screen to Normal)
+            set_need_layout();
 
             ShowWindow(SW_SHOW);
 
