@@ -30,6 +30,13 @@ namespace message
       for (auto & id_route_array : m_idroute)
       {
 
+         if (id_route_array.m_element2.is_null())
+         {
+
+            continue;
+
+         }
+
          id_route_array.m_element2->pred_remove([=](auto & pitem)
          {
 

@@ -674,17 +674,17 @@ restart:
 
                {
 
-                  {
+                  //{
 
-                     single_lock sl(m_pmutex);
+                  //   single_lock sl(m_pmutex);
 
-                     pimplNew->m_pui = this;
+                  //   pimplNew->m_pui = this;
 
-                     m_pimpl = pimplNew;
+                  //   m_pimpl = pimplNew;
 
-                     pimplNew->install_message_routing(pimplNew);
+                  //   pimplNew->install_message_routing(pimplNew);
 
-                  }
+                  //}
 
                   on_set_parent(puiParent);
 

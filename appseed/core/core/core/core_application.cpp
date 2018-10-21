@@ -99,33 +99,33 @@ namespace core
 
    }
 
-   
+
    bool application::on_application_menu_action(const char * pszCommand)
    {
-      
+
       if(m_puiMain != NULL)
       {
-         
+
          ::user::command command;
-         
+
          command.m_id=::id(pszCommand);
-         
+
          m_puiMain->route_command_message(&command);
-         
+
          if(command.m_bRet)
          {
-            
+
             return true;
-            
+
          }
-         
+
       }
-      
+
       return false;
-      
+
    }
-   
-   
+
+
    application * application::get_app() const
    {
 
@@ -3178,10 +3178,12 @@ namespace core
       for (int32_t i = 0; i < wnda.get_size(); i++)
       {
          sp(::user::interaction) pwnd = wnda.element_at(i);
+         sp(simple_frame_window) pframewindow = pwnd;
+         bool bDefaultNotifyIcon = (pframewindow.is_set() && pframewindow->m_bDefaultNotifyIcon);
          if (pwnd != NULL &&
                pwnd != pwndExcept &&
                pwnd->IsWindow() &&
-               pwnd->IsWindowVisible() &&
+               (pwnd->IsWindowVisible()|| bDefaultNotifyIcon) &&
                pwnd->get_window_type() == ::user::interaction::type_frame &&
                !(pwnd->GetStyle() & WS_CHILD))
          {

@@ -316,9 +316,11 @@ namespace user
                if(iPane <= 0)
                {
 
-                  _001OnRemoveTab(get_data()->m_panea[iPane]);
+                  sp(::user::tab_pane) ppane = get_data()->m_panea[iPane];
 
-                  get_data()->m_panea.remove_at(i);
+                  get_data()->m_panea.remove_at(iPane);
+
+                  _001OnRemoveTab(ppane);
 
                   on_change_pane_count();
 
@@ -340,9 +342,11 @@ namespace user
       else
       {
 
-         _001OnRemoveTab(get_data()->m_panea[iPane]);
+         sp(::user::tab_pane) ppane = get_data()->m_panea[iPane];
 
          get_data()->m_panea.remove_at(iPane);
+
+         _001OnRemoveTab(ppane);
 
          on_change_pane_count();
 
