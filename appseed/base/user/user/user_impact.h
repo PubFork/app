@@ -8,6 +8,14 @@
 namespace user
 {
 
+   enum e_view_message
+   {
+
+      view_message_update,
+      view_message_close_document,
+
+   };
+
 
    class view_creator_data;
 
@@ -255,7 +263,7 @@ namespace user
    {
    public:
 
-      
+
       show()
       {
 
@@ -265,13 +273,13 @@ namespace user
       show(::aura::application * papp) :
          ::object(papp)
       {
-         
+
       }
-      
-      
+
+
       virtual ~show()
       {
-         
+
       }
 
 

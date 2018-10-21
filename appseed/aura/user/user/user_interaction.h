@@ -47,6 +47,7 @@ namespace user
 
    };
 
+
    class CLASS_DECL_AURA interaction:
       virtual public interaction_base
    {
@@ -174,7 +175,7 @@ namespace user
       bool                                m_bModal;
       ::thread *                          m_pthreadModal;
 
-      sp(::thread)                        m_pthread;
+      sp(::thread)                        m_pthreadUserInteraction;
 
       id                                  m_idModalResult; // for return values from interaction_impl::RunModalLoop
 
@@ -260,7 +261,7 @@ namespace user
       void set_timer(spa(::aura::timer_item) timera);
 
       virtual bool set_prodevian(bool bSet = true);
-      virtual void prodevian_task();
+      virtual void defer_start_prodevian();
 
       virtual bool IsWindow() const override;
 
@@ -1183,45 +1184,30 @@ namespace user
 
       virtual void nextstyle(style_context * pcontext) override;
 
+      virtual void post_runnable(::object * pobjectRunnable);
+
+      virtual void send_runnable(::object * pobjectRunnable, ::duration durationTimeout = ::duration::infinite());
+
       template < typename PRED >
       void post_pred(PRED pred)
       {
 
-         if (get_wnd() == NULL || get_wnd()->m_pthread == NULL
-               || get_wnd()->m_pthread == ::get_thread())
-         {
+         auto pobjectRunnable = create_runnable_pred(pred);
 
-            pred();
-
-         }
-         else
-         {
-
-            get_wnd()->m_pthread->post_pred(pred);
-
-         }
+         post_runnable(pobjectRunnable);
 
       }
 
       template < typename PRED >
-      void send_pred(PRED pred)
+      void send_pred(PRED pred, ::duration durationTimeout = ::duration::infinite())
       {
 
-         if (get_wnd() == NULL || get_wnd()->m_pthread == NULL
-               || get_wnd()->m_pthread == ::get_thread())
-         {
+         auto pobjectRunnable = create_runnable_pred(pred);
 
-            pred();
-
-         }
-         else
-         {
-
-            get_wnd()->m_pthread->send_pred(pred);
-
-         }
+         send_runnable(pobjectRunnable, durationTimeout);
 
       }
+
 
    };
 

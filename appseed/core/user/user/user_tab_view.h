@@ -22,6 +22,8 @@ namespace user
       ::user::view_creator_data *            m_pviewdata;
       ::user::view_creator_data *            m_pviewdataOld;
       ::user::view_creator *                 m_pviewcreator;
+      bool                                   m_bCloseDocumentIfNoTabs;
+
 
 
       tab_view(::aura::application * papp);
@@ -40,13 +42,14 @@ namespace user
       DECL_GEN_SIGNAL(_001OnSetFocus);
 
 
+      virtual void on_change_pane_count(::array < ::user::tab_pane * > array = ::array < ::user::tab_pane * >()) override;
+
+
       virtual id get_view_id() override;
 
       virtual ::user::interaction * get_view_uie() override;
       virtual ::user::view_creator_data * get_view_creator_data();
       virtual ::user::document * get_view_document() override;
-
-      virtual void on_remove_tab(index iPane) override;
 
       void _000OnDraw(::draw2d::graphics * pgraphics) override;
 

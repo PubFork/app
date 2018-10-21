@@ -868,7 +868,7 @@ Restart:
    bool interaction_base::is_this_visible()
    {
 
-      return (GetStyle() & WS_VISIBLE) != 0;
+      return (GetStyle() & WS_VISIBLE) != 0 && m_bUserElementalOk;
 
    }
 

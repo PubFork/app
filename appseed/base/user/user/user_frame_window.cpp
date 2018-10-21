@@ -1909,15 +1909,23 @@ namespace user
 
    bool frame_window::ShowWindow(int32_t nCmdShow)
    {
-      bool bResult = interaction::ShowWindow(nCmdShow);
-      if (GetParent() != NULL
-            && nCmdShow == SW_RESTORE)
-      {
-         InitialFramePosition(true);
-      }
-      return bResult;
-   }
 
+      if (nCmdShow == SW_RESTORE)
+      {
+
+         InitialFramePosition(true);
+
+         return true;
+
+      }
+      else
+      {
+
+         return interaction::ShowWindow(nCmdShow);
+
+      }
+
+   }
 
 
    void frame_window::_001OnSysCommand(::message::message * pobj)

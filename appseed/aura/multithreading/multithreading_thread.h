@@ -93,7 +93,10 @@ public:
    map < ::multithreading::e_priority,
        ::multithreading::e_priority,
        sp(::thread_tools) >               m_toolmap;
-   user_interaction_ptr_array *           m_puiptra;
+
+   user_interaction_ptr_array *           m_puiptraThread;
+   mutex *                                m_pmutexThreadUiPtra;
+
 
    single_lock *                          m_pslUser;
    static bool                            s_bAllocReady;
@@ -147,7 +150,6 @@ public:
 
    manual_reset_event *                      m_pevReady;
    UINT                                      m_nDisablePumpCount;
-   mutex                                     m_mutexUiPtra;
 
    UINT                                      m_dwFinishTimeout;
 
@@ -170,6 +172,9 @@ public:
 
    virtual void assert_valid() const override;
    virtual void dump(dump_context & dumpcontext) const override;
+
+
+   user_interaction_ptr_array & uiptra();
 
 
    thread_tools * tools(::multithreading::e_priority epriority);
@@ -237,6 +242,10 @@ public:
    virtual bool post_object(UINT message, WPARAM wParam, lparam lParam);
    virtual bool send_object(UINT message, WPARAM wParam, lparam lParam, ::duration durationTimeout = ::duration::infinite());
    virtual bool post_message(::user::primitive * pui, UINT message, WPARAM wParam = 0, lparam lParam = 0);
+
+   virtual bool post_runnable(::object * pobjectRunnable);
+
+   virtual bool send_runnable(::object * pobjectRunnable, ::duration durationTimeout = ::duration::infinite());
 
    template < typename PRED >
    bool post_pred(sp(object) phold, PRED pred)
@@ -459,6 +468,38 @@ namespace multithreading
 
    CLASS_DECL_AURA void post_quit(::thread * pthread);
    CLASS_DECL_AURA void post_quit_and_wait(::thread * pthread, const duration & duration);
+
+
+   template < typename THREAD >
+   void post_quit(sp(THREAD) & spthread)
+   {
+
+      if (spthread.is_set())
+      {
+
+         ::multithreading::post_quit(spthread.m_p);
+
+         spthread.release();
+
+      }
+
+   }
+
+
+   template < typename THREAD >
+   void post_quit_and_wait(sp(THREAD) & spthread, const duration & duration)
+   {
+
+      if (spthread.is_set())
+      {
+
+         ::multithreading::post_quit_and_wait(spthread.m_p, duration);
+
+         spthread.release();
+
+      }
+
+   }
 
 
 } // namespace multithreading

@@ -1201,6 +1201,18 @@ namespace user
 
       ::show_window(get_handle(), nCmdShow);
 
+      if (GetParent() == NULL)
+      {
+
+         if (is_this_visible() && !WfiIsIconic())
+         {
+
+            defer_start_prodevian();
+
+         }
+
+      }
+
       m_pui->set_need_redraw();
 
       return m_pui->IsWindowVisible();
@@ -2207,6 +2219,8 @@ namespace user
       else
       {
 
+         ::multithreading::post_quit(m_pthreadProDevian);
+
          {
 
             ::user::interaction_spa uia;
@@ -2361,7 +2375,7 @@ namespace user
    void interaction_impl::_001BaseWndInterfaceMap()
    {
 
-      System.window_map().set((int_ptr)get_handle(), this);
+      System.window_map().set(get_handle(), this);
 
    }
 
@@ -2569,7 +2583,15 @@ namespace user
    }
 
 
-   void interaction_impl::prodevian_task()
+   //void interaction_impl::defer_start_prodevian()
+   //{
+
+   //
+
+   //}
+
+
+   void interaction_impl::_defer_start_prodevian()
    {
 
       if (m_pthreadProDevian.is_null())
@@ -2578,8 +2600,17 @@ namespace user
          m_pthreadProDevian = fork([&]()
          {
 
-            _prodevian_loop();
+            try
+            {
 
+               _thread_prodevian();
+
+            }
+            catch (...)
+            {
+
+
+            }
 
             m_pthreadProDevian.release();
 
@@ -2590,7 +2621,7 @@ namespace user
    }
 
 
-   void interaction_impl::_prodevian_loop()
+   void interaction_impl::_thread_prodevian()
    {
 
       ::multithreading::set_priority(::multithreading::priority_normal);
@@ -2617,7 +2648,7 @@ namespace user
 
       bool bUpdateScreen;
 
-      while (::get_thread_run())
+      while (::get_thread_run() && m_pui->m_bUserElementalOk)
       {
 
          bUpdateScreen = false;
@@ -2925,7 +2956,6 @@ namespace user
 
       if(oswindow != NULL)
       {
-
 
          oswindow_remove(this);
 

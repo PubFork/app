@@ -28,7 +28,6 @@ namespace user
 
       ::user::box::install_message_routing(pinterface);
 
-
       IGUI_MSG_LINK(WM_VIEW, pinterface, this, &impact::_001OnView);
       IGUI_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &impact::_001OnLButtonDown);
       IGUI_MSG_LINK(WM_LBUTTONUP, pinterface, this, &impact::_001OnLButtonUp);
@@ -583,12 +582,24 @@ namespace user
 
    void impact::_001OnView(::message::message * pobj)
    {
+
       SCAST_PTR(::message::base, pbase, pobj);
-      if (pbase->m_wparam == 0)
+
+      if (pbase->m_wparam == ::user::view_message_update)
       {
+
          ::user::document::update * pupdate = (::user::document::update *) pbase->m_lparam.m_lparam;
+
          on_update(pupdate->m_pSender, pupdate->m_lHint, pupdate->m_pHint);
+
       }
+      else if (pbase->m_wparam == ::user::view_message_close_document)
+      {
+
+         get_document()->close_document();
+
+      }
+
    }
 
 

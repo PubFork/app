@@ -12,39 +12,48 @@ namespace user
 
       m_flagNonClient.unsignalize(non_client_background);
       m_flagNonClient.unsignalize(non_client_focus_rect);
+
       get_data()->m_pcallback       = this;
       m_pviewdata                   = NULL;
       m_pviewdataOld                = NULL;
+      m_bCloseDocumentIfNoTabs      = false;
 
    }
 
 
    tab_view::~tab_view()
    {
+
    }
+
 
    void tab_view::assert_valid() const
    {
+
       impact::assert_valid();
+
    }
+
 
    void tab_view::dump(dump_context & dumpcontext) const
    {
+
       impact::dump(dumpcontext);
+
    }
 
 
    void tab_view::_001OnCreate(::message::message * pobj)
    {
-//      SCAST_PTR(::message::create, pcreate, pobj);
-      if(pobj->previous())
+
+      if (pobj->previous())
+      {
+
          return;
 
-      //on_create_tabs();
+      }
 
    }
-
-
 
 
    void tab_view::on_update(::user::impact * pSender, LPARAM lHint, object* pHint)
@@ -192,7 +201,31 @@ namespace user
    void tab_view::_001OnRemoveTab(class tab_pane * ptab)
    {
 
+      ::user::tab::_001OnRemoveTab(ptab);
+
       m_holdera.remove(ptab->m_pholder);
+
+      id idTab = ptab->m_id;
+
+      ::user::view_creator_data * pcreatordata = m_pviewcreator->m_viewmap[idTab];
+
+      if (m_pviewdata == pcreatordata)
+      {
+
+         m_pviewdata = NULL;
+
+      }
+
+      if (m_pviewdataOld == pcreatordata)
+      {
+
+         m_pviewdataOld = NULL;
+
+      }
+
+      m_pviewcreator->m_viewmap.remove_key(idTab);
+
+
 
    }
 
@@ -725,6 +758,27 @@ namespace user
 
    }
 
+
+   void tab_view::on_change_pane_count(::array < ::user::tab_pane * > array)
+   {
+
+      ::user::tab::on_change_pane_count(array);
+
+      if (m_bCloseDocumentIfNoTabs && get_pane_count() <= 0)
+      {
+
+         if (get_document() != NULL)
+         {
+
+            post_message(WM_VIEW, ::user::view_message_close_document);
+
+         }
+
+      }
+
+   }
+
+
    ::user::view_creator_data * tab_view::create_impact(id id, LPCRECT lpcrectCreate, ::user::frame_window * pframewindow)
    {
 
@@ -801,16 +855,6 @@ namespace user
    }
 
 
-   void tab_view::on_remove_tab(index iPane)
-   {
-
-      id idTab = get_data()->m_panea[iPane]->m_id;
-
-      m_pviewcreator->m_viewmap.remove_key(idTab);
-
-   }
-
-
    ::user::interaction * tab_view::get_view_uie()
    {
 
@@ -855,8 +899,12 @@ namespace user
 
       defer_check_zorder();
 
-      if(!is_this_visible())
+      if (!is_this_visible())
+      {
+
          return;
+
+      }
 
       if (m_bDrawTabAtBackground)
       {

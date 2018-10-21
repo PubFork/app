@@ -741,6 +741,14 @@ namespace user
                prectControlBox->width(),
                prectControlBox->height(),(bShow ? SWP_SHOWWINDOW : 0) | SWP_NOZORDER);
 
+               if (bInitialControlBoxPosition)
+               {
+
+                  get_control_box()->GetWindowRect(get_control_box()->m_pimpl->m_rectParentClient);
+
+               }
+
+
             }
             else
             {
@@ -752,6 +760,13 @@ namespace user
                prectControlBox->width(),
                prectControlBox->height(), (bShow ? SWP_SHOWWINDOW : 0) | SWP_NOZORDER);
 
+               if (bInitialControlBoxPosition)
+               {
+
+                  get_control_box()->GetWindowRect(get_control_box()->m_pimpl->m_rectParentClient);
+
+               }
+
                if(get_control_box()->m_eappearance != pappearance->GetAppearance())
                {
 
@@ -762,6 +777,7 @@ namespace user
                }
 
             }
+
 
             m_rectWindow = rectClient;
 

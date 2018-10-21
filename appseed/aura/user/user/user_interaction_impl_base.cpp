@@ -23,6 +23,7 @@ namespace user
       m_iShowWindow        = -1;
       m_bShowFlags         = false;
       m_iShowFlags         = 0;
+      m_bUserElementalOk   = true;
 
    }
 
@@ -253,6 +254,13 @@ namespace user
    void interaction_impl_base::on_layout()
    {
 
+      if (!m_bUserElementalOk)
+      {
+
+         return;
+
+      }
+
       ::rect64 rectOld = m_rectParentClient;
 
       ::rect64 rectNew = m_rectParentClientRequest;
@@ -286,6 +294,13 @@ namespace user
 
    void interaction_impl_base::on_translate()
    {
+
+      if (::is_null(m_pui))
+      {
+
+         return;
+
+      }
 
       m_rectParentClient.move_to(m_rectParentClientRequest.top_left());
 
@@ -324,12 +339,12 @@ namespace user
       {
 
          ModifyStyle(WS_VISIBLE, 0);
-         
+
          if(m_pui != NULL)
          {
 
             m_pui->message_call(WM_SHOWWINDOW, 0);
-            
+
          }
 
       }
@@ -421,6 +436,13 @@ namespace user
 
    void interaction_impl_base::RepositionBars(UINT nIDFirst,UINT nIDLast, id idLeft, UINT nFlags,LPRECT lpRectParam,LPCRECT lpRectClient,bool bStretch)
    {
+
+      if (!IsWindow())
+      {
+
+         return;
+
+      }
 
       UNREFERENCED_PARAMETER(nIDFirst);
       UNREFERENCED_PARAMETER(nIDLast);
@@ -588,7 +610,7 @@ namespace user
       //if(!m_pui->GetClientRect(lprect))
       //{
 
-        // return false;
+      // return false;
 
       //}
 
@@ -801,6 +823,18 @@ namespace user
       m_rectParentClientRequest = rect;
 
       m_bShowFlags = bShowFlags;
+
+      if (GetParent() == NULL)
+      {
+
+         if ((nFlags & SWP_SHOWWINDOW) && !WfiIsIconic())
+         {
+
+            defer_start_prodevian();
+
+         }
+
+      }
 
       set_need_redraw();
 
@@ -1497,9 +1531,16 @@ namespace user
    }
 
 
-   void interaction_impl_base::prodevian_task()
+   void interaction_impl_base::defer_start_prodevian()
    {
 
+      m_pui->post_simple_command(simple_command_defer_start_prodevian);
+
+   }
+
+
+   void interaction_impl_base::_defer_start_prodevian()
+   {
 
    }
 
@@ -1507,11 +1548,14 @@ namespace user
    bool interaction_impl_base::DestroyWindow()
    {
 
-      if(!IsWindow())
+      m_bUserElementalOk = false;
+
+      if (m_pui == NULL)
+      {
+
          return false;
 
-      if(m_pui == NULL)
-         return false;
+      }
 
       try
       {
@@ -1545,7 +1589,6 @@ namespace user
       {
 
       }
-
 
       return true;
 

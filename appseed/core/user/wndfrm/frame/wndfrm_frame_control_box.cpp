@@ -1002,16 +1002,21 @@ namespace user
 
             m_pworkset->m_pframeschema->m_bControlBoxAlignRight = rect.center().x > (rectWindow.width() / 2);
 
-            *m_pworkset->m_pframeschema->get_control_box_rect() = rect;
-
-            m_pworkset->GetWndDraw()->m_dwLastSizeMove = get_tick_count();
-
-            sp(simple_frame_window) pframe = m_pworkset->GetWndDraw();
-
-            if (pframe.is_set())
+            if (rect != *m_pworkset->m_pframeschema->get_control_box_rect())
             {
 
-               pframe->m_bPendingSaveWindowPlacement = true;
+               *m_pworkset->m_pframeschema->get_control_box_rect() = rect;
+
+               m_pworkset->GetWndDraw()->m_dwLastSizeMove = get_tick_count();
+
+               sp(simple_frame_window) pframe = m_pworkset->GetWndDraw();
+
+               if (pframe.is_set())
+               {
+
+                  pframe->defer_save_window_placement();
+
+               }
 
             }
 

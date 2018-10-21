@@ -141,6 +141,15 @@ namespace user
    bool interaction::defer_check_layout()
    {
 
+      synch_lock sl(m_pmutex);
+
+      if (m_pimpl->m_pui == NULL)
+      {
+
+         return false;
+
+      }
+
       if(!m_bLayoutEnable)
       {
 
@@ -190,7 +199,7 @@ namespace user
    void interaction::clear_need_layout()
    {
 
-      if (m_pimpl.is_null())
+      if (m_pimpl.is_null() || m_pimpl->m_pui == NULL)
       {
 
          return;
@@ -542,6 +551,16 @@ namespace user
 
       }
 
+      if (m_pthreadUserInteraction.is_set()
+            && ::is_set(m_pthreadUserInteraction->m_puiptraThread))
+      {
+
+         m_pthreadUserInteraction->m_puiptraThread->remove(this);
+
+      }
+
+      m_pthreadUserInteraction.release();
+
       sp(::user::interaction_impl_base) pimplOld = m_pimpl;
 
       sp(interaction) pparentOld = GetParent();
@@ -611,6 +630,15 @@ restart:
 
             cs.style &= ~WS_CHILD;
 
+            m_pthreadUserInteraction = ::get_thread();
+
+            if (m_pthreadUserInteraction.is_set())
+            {
+
+               m_pthreadUserInteraction->uiptra().add(this);
+
+            }
+
             if(!pre_create_window(cs))
             {
 
@@ -625,6 +653,16 @@ restart:
             {
 
                pimplNew.release();
+
+               if (m_pthreadUserInteraction.is_set()
+                     && ::is_set(m_pthreadUserInteraction->m_puiptraThread))
+               {
+
+                  m_pthreadUserInteraction->m_puiptraThread->remove(this);
+
+               }
+
+               m_pthreadUserInteraction.release();
 
                pimplNew = NULL;
 
@@ -674,7 +712,7 @@ restart:
 
                }
 
-               prodevian_task();
+               defer_start_prodevian();
 
             }
 
@@ -741,6 +779,14 @@ restart:
 
                         oswindow oswindow = oswindow_remove(pimpl);
 
+                        {
+
+                           synch_lock slSystem(System.m_pmutex);
+
+                           System.m_pwindowmap->m_map.remove_key(oswindow);
+
+                        }
+
                         pimpl->m_pui = NULL;
 
                         if (oswindow != NULL)
@@ -779,8 +825,6 @@ restart:
                }
 
                on_set_parent(puiParent);
-
-
 
             }
 
@@ -1078,7 +1122,7 @@ restart:
 
 
       IGUI_MSG_LINK(WM_COMMAND, pinterface, this, &interaction::_001OnCommand);
-      MSG_TYPE_LINK(message_simple_command, pinterface, this, &interaction::_001OnSimpleCommand);
+      IGUI_MSG_LINK(message_simple_command, pinterface, this, &interaction::_001OnSimpleCommand);
 
    }
 
@@ -1475,9 +1519,16 @@ restart:
    void interaction::layout()
    {
 
-      m_pimpl->on_layout();
-
       single_lock sl(m_pmutex, true);
+
+      if (m_pimpl->m_pui == NULL)
+      {
+
+         return;
+
+      }
+
+      m_pimpl->on_layout();
 
       on_layout();
 
@@ -1971,11 +2022,18 @@ restart:
 
       }
 
+      if (!m_bUserElementalOk)
+      {
+
+         return false;
+
+      }
+
       if ((m_pimpl->m_bShowFlags && m_pimpl->m_iShowFlags & SWP_HIDEWINDOW)
             || (m_pimpl->m_bShowWindow && m_pimpl->m_iShowWindow == SW_HIDE))
       {
 
-         set_need_redraw();
+         //set_need_redraw();
 
          return false;
 
@@ -1985,7 +2043,7 @@ restart:
             || (m_pimpl->m_bShowWindow && m_pimpl->m_iShowWindow != SW_HIDE))
       {
 
-         set_need_redraw();
+         //set_need_redraw();
 
          return true;
 
@@ -2178,13 +2236,24 @@ restart:
    }
 
 
-   void interaction::prodevian_task()
+   void interaction::defer_start_prodevian()
    {
+
+#if defined(WINDOWSEX) || defined(MACOS) || defined(LINUX)
+
+      if (this == System.m_psystemwindow)
+      {
+
+         return;
+
+      }
+
+#endif
 
       if (m_pimpl.is_set())
       {
 
-         m_pimpl->prodevian_task();
+         m_pimpl->defer_start_prodevian();
 
       }
 
@@ -2199,14 +2268,18 @@ restart:
       m_bUserElementalOk = true;
 
       if (m_papp == NULL)
+      {
+
          _throw(simple_exception(get_app(), "m_papp cannot be null"));
 
-      prodevian_task();
+      }
+
 
       {
 
          //m_papp->add(this);
          ::user::interaction * puiSystem = NULL;
+
 #if !defined(LINUX) && !defined(METROWIN) && !defined(APPLEOS) && !defined(VSNORD)
          puiSystem = dynamic_cast < ::user::interaction * > (System.m_psystemwindow);
 #endif
@@ -3247,6 +3320,8 @@ restart:
    bool interaction::subclass_window(oswindow posdata)
    {
 
+      synch_lock sl(m_pmutex);
+
       if (IsWindow())
       {
 
@@ -3389,6 +3464,15 @@ restart:
 
       }
 
+      m_pthreadUserInteraction = ::get_thread();
+
+      if (m_pthreadUserInteraction.is_set())
+      {
+
+         m_pthreadUserInteraction->uiptra().add(this);
+
+      }
+
       try
       {
 
@@ -3458,6 +3542,16 @@ restart:
 
                m_bUserElementalOk = false;
 
+               if (m_pthreadUserInteraction.is_set()
+                     && ::is_set(m_pthreadUserInteraction->m_puiptraThread))
+               {
+
+                  m_pthreadUserInteraction->m_puiptraThread->remove(this);
+
+               }
+
+               m_pthreadUserInteraction.release();
+
                return false;
 
             }
@@ -3470,6 +3564,16 @@ restart:
 
          m_bUserElementalOk = false;
 
+         if (m_pthreadUserInteraction.is_set()
+               && ::is_set(m_pthreadUserInteraction->m_puiptraThread))
+         {
+
+            m_pthreadUserInteraction->m_puiptraThread->remove(this);
+
+         }
+
+         m_pthreadUserInteraction.release();
+
          return false;
 
       }
@@ -3481,6 +3585,15 @@ restart:
 
    bool interaction::create_window_ex(::user::create_struct & cs, ::user::interaction * puiParent, id id)
    {
+
+      m_pthreadUserInteraction = ::get_thread();
+
+      if (m_pthreadUserInteraction.is_set())
+      {
+
+         m_pthreadUserInteraction->uiptra().add(this);
+
+      }
 
       cs.hMenu = NULL;
 
@@ -3498,7 +3611,17 @@ restart:
 
          PostNcDestroy();
 
-         return FALSE;
+         if (m_pthreadUserInteraction.is_set()
+               && ::is_set(m_pthreadUserInteraction->m_puiptraThread))
+         {
+
+            m_pthreadUserInteraction->m_puiptraThread->remove(this);
+
+         }
+
+         m_pthreadUserInteraction.release();
+
+         return false;
 
       }
 
@@ -3567,6 +3690,16 @@ restart:
 
                m_pimpl.release();
 
+               if (m_pthreadUserInteraction.is_set()
+                     && ::is_set(m_pthreadUserInteraction->m_puiptraThread))
+               {
+
+                  m_pthreadUserInteraction->m_puiptraThread->remove(this);
+
+               }
+
+               m_pthreadUserInteraction.release();
+
                return false;
 
             }
@@ -3625,6 +3758,16 @@ restart:
 
                m_pimpl.release();
 
+               if (m_pthreadUserInteraction.is_set()
+                     && ::is_set(m_pthreadUserInteraction->m_puiptraThread))
+               {
+
+                  m_pthreadUserInteraction->m_puiptraThread->remove(this);
+
+               }
+
+               m_pthreadUserInteraction.release();
+
                return false;
 
             }
@@ -3640,6 +3783,16 @@ restart:
       {
 
          m_bUserElementalOk = false;
+
+         if (m_pthreadUserInteraction.is_set()
+               && ::is_set(m_pthreadUserInteraction->m_puiptraThread))
+         {
+
+            m_pthreadUserInteraction->m_puiptraThread->remove(this);
+
+         }
+
+         m_pthreadUserInteraction.release();
 
          return false;
 
@@ -4212,13 +4365,6 @@ restart:
 
    bool interaction::DestroyWindow()
    {
-
-      if (!IsWindow())
-      {
-
-         return false;
-
-      }
 
       m_bUserElementalOk = false;
 
@@ -5409,6 +5555,7 @@ restart:
 
       try
       {
+
          if (m_pparent != NULL)
          {
 
@@ -5419,6 +5566,7 @@ restart:
             m_pparent->m_uiptraChild.remove(this);
 
          }
+
       }
       catch (...)
       {
@@ -5432,7 +5580,15 @@ restart:
          if (puiParent != NULL)
          {
 
-            m_pthread.release();
+            if (m_pthreadUserInteraction.is_set()
+                  && ::is_set(m_pthreadUserInteraction->m_puiptraThread))
+            {
+
+               m_pthreadUserInteraction->m_puiptraThread->remove(this);
+
+            }
+
+            m_pthreadUserInteraction.release();
 
             single_lock sl(puiParent->m_pmutex, TRUE);
 
@@ -5445,6 +5601,7 @@ restart:
       }
       catch (...)
       {
+
       }
 
    }
@@ -6349,7 +6506,14 @@ restart:
 
       }
       break;
+      case simple_command_defer_start_prodevian:
+      {
 
+         m_pimpl->_defer_start_prodevian();
+
+
+      }
+      break;
       default:
 
          break;
@@ -9531,186 +9695,13 @@ restart:
    }
 
 
-   //COLORREF interaction::_001GetColor(e_color ecolor, COLORREF crDefault)
-   //{
-
-   //   return _001GetColor(ecolor, this, crDefault);
-
-   //}
-
-
-   //COLORREF interaction::_001GetColor(e_color ecolor)
-   //{
-
-   //   return _001GetColor(ecolor, this);
-
-   //}
-
-
-   //e_translucency interaction::_001GetTranslucency(e_element eelement, e_translucency etranslucencyDefault)
-   //{
-
-   //   return _001GetTranslucency(this, eelement, etranslucencyDefault);
-
-   //}
-
-
-   //bool interaction::_001IsBackgroundBypass(e_element eelement)
-   //{
-
-   //   return _001IsBackgroundBypass(this, eelement);
-
-   //}
-
-
-   //bool interaction::_001IsTransparent(e_element eelement)
-   //{
-
-   //   return _001IsTransparent(this, eelement);
-
-   //}
-
-
-   //bool interaction::_001IsTranslucent(e_element eelement)
-   //{
-
-   //   return _001IsTranslucent(this, eelement);
-
-   //}
-
-
-   //bool interaction::_001HasTranslucency(e_element eelement)
-   //{
-
-   //   return _001HasTranslucency(this, eelement);
-
-   //}
-
-
-   //COLORREF interaction::_001GetColor(e_color ecolor, COLORREF crDefault)
-   //{
-
-   //   return _001GetColor(this, ecolor, crDefault);
-
-   //}
-
-
-   //::draw2d::font_sp interaction::_001GetFont(e_font efont, ::draw2d::font * pfont)
-   //{
-
-   //   return _001GetFont(this, efont, pfont);
-
-   //}
-
-
-   //e_translucency interaction::_001GetTranslucency(e_element eelement, e_translucency etranslucencyDefault)
-   //{
-
-   //   return _001GetTranslucency(this, eelement, etranslucencyDefault);
-
-   //}
-
-
-   //bool interaction::_001GetFlag(::user::e_flag eflag, bool bDefault)
-   //{
-
-   //   return _001GetFlag(this, eflag, bDefault);
-
-   //}
-
-
-   //RECT interaction::_001GetRect(::user::e_rect erect, rect rectDefault)
-   //{
-
-   //   return _001GetRect(this, erect, rectDefault);
-
-   //}
-
-
-   //int interaction::_001GetInt(::user::e_int eint, int iDefault)
-   //{
-
-   //   return _001GetInt(this, eint, iDefault);
-
-   //}
-
-
-   //double interaction::_001GetDouble(::user::e_double edouble, double dDefault)
-   //{
-
-   //   return _001GetDouble(this, edouble, dDefault);
-
-   //}
-
-   //// e_style composition
-   //bool interaction::style_color(COLORREF & cr, e_color ecolor)
-   //{
-
-   //   return style_color(cr, ecolor, this);
-
-   //}
-
-
-   //bool interaction::style_font(::draw2d::font_sp & font, e_font efont)
-   //{
-
-   //   return style_font(font, efont, this);
-
-   //}
-
-
-   //bool interaction::style_translucency(e_translucency & etranslucency, e_element eelement)
-   //{
-
-   //   return style_translucency(etranslucency, eelement, this);
-
-   //}
-
-
-   //bool interaction::style_flag(bool & bSet, ::user::e_flag eflag)
-   //{
-
-   //   return style_flag(bSet, eflag, this);
-
-   //}
-
-
-   //bool interaction::style_rect(RECT & rect, ::user::e_rect erect)
-   //{
-
-   //   return style_rect(rect, erect, this);
-
-   //}
-
-
-   //bool interaction::style_int(int & i, ::user::e_int eint)
-   //{
-
-   //   return style_int(i, eint, this);
-
-   //}
-
-
-   //bool interaction::style_double(double & d, ::user::e_double edouble)
-   //{
-
-   //   return style_double(d, edouble, this);
-
-   //}
-
-   //::user::e_control_type interaction::get_control_type()
-   //{
-
-   //   return m_econtroltype;
-
-   //}
-
    void interaction::set_stock_icon(e_stock_icon eicon)
    {
 
       _throw(interface_only_exception(get_app()));
 
    }
+
 
    e_stock_icon interaction::get_stock_icon()
    {
@@ -9860,6 +9851,52 @@ restart:
       }
 
       m_pimpl->show_software_keyboard(bShow, str, iBeg, iEnd);
+
+   }
+
+
+   void interaction::post_runnable(::object * pobjectRunnable)
+   {
+
+      ::thread * pthread = get_wnd() == NULL ? NULL : get_wnd()->m_pthreadUserInteraction;
+
+      ::thread * pthreadCurrent = ::get_thread();
+
+      if (pthread == NULL || pthread == pthreadCurrent)
+      {
+
+         one_shot_run(pobjectRunnable);
+
+      }
+      else
+      {
+
+         pthread->post_runnable(pobjectRunnable);
+
+      }
+
+   }
+
+
+   void interaction::send_runnable(::object * pobjectRunnable, ::duration durationTimeout)
+   {
+
+      ::thread * pthread = get_wnd() == NULL ? NULL : get_wnd()->m_pthreadUserInteraction;
+
+      ::thread * pthreadCurrent = ::get_thread();
+
+      if (pthread == NULL || pthread == pthreadCurrent)
+      {
+
+         one_shot_run(pobjectRunnable);
+
+      }
+      else
+      {
+
+         pthread->send_runnable(pobjectRunnable, durationTimeout);
+
+      }
 
    }
 

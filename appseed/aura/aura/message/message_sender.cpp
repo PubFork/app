@@ -215,6 +215,8 @@ namespace message
          return PrototypeWindowPos;
       case WM_NCCALCSIZE:
          return PrototypeNcCalcSize;
+      case message_simple_command:
+         return PrototypeSimpleCommand;
       case WM_PAINT:
          return PrototypeNone;
       default:

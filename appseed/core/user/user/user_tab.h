@@ -277,8 +277,6 @@ namespace user
       virtual void on_hide_child(::user::interaction * pui) override;
       virtual void on_hide_place_holder_child(::user::interaction * pui) override;
 
-      virtual void on_remove_tab(index iPane);
-
       virtual ::index id_tab(id id);
       virtual id tab_id(::index iTab);
       virtual ::index id_pane(id id);

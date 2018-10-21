@@ -99,8 +99,9 @@ namespace user
       virtual void assert_valid() const override;
       virtual void dump(dump_context & dumpcontext) const override;
 
-      virtual void prodevian_task() override;
-      virtual void _prodevian_loop();
+      // virtual void defer_start_prodevian() override;
+      virtual void _defer_start_prodevian() override;
+      virtual void _thread_prodevian();
 
       void user_common_construct();
 

@@ -5391,52 +5391,33 @@ retry_license:
    }
 
 
-
-   //void application::window_graphics_update_window(window_graphics ** ppdata,oswindow interaction_impl,COLORREF * pOsBitmapData,const RECT & rect,int cxParam,int cyParam,int iStride,bool bTransferBuffer)
-   //{
-
-   //   // derived classes should implement this function in order to update window
-
-   //}
-
-   //sp(::message::base) application::get_message_base(LPMESSAGE lpmsg)
-   //{
-
-   //   sp(::message::base) pbase = canew(::message::base(get_app()));
-
-   //   if (pbase == NULL)
-   //      return NULL;
-
-   //   pbase->set(NULL, lpmsg->message, lpmsg->wParam, lpmsg->lParam);
-
-   //   return pbase;
-
-   //}
-
-
-   //void application::process_message(::message::base * pbase)
-   //{
-
-   //   message_handler(pbase);
-
-   //}
-
-
    void application::set_locale(const string & lpcsz, ::action::context actioncontext)
    {
+
       string strLocale(lpcsz);
+
       strLocale.trim();
+
       m_strLocale = strLocale;
+
       on_set_locale(m_strLocale, actioncontext);
+
    }
+
 
    void application::set_schema(const string & lpcsz, ::action::context actioncontext)
    {
+
       string strSchema(lpcsz);
+
       strSchema.trim();
+
       m_strSchema = strSchema;
+
       on_set_schema(m_strSchema, actioncontext);
+
    }
+
 
    void application::on_set_locale(const string & lpcsz, ::action::context actioncontext)
    {
@@ -7304,10 +7285,18 @@ finalize:
             TRACE("application::process_message : error processing application thread message (const ::exception::exception & )");
 
             if (App(this).on_run_exception(esp))
+            {
+
                goto run;
 
+            }
+
             if (App(this).final_handle_exception(esp))
+            {
+
                goto run;
+
+            }
 
             __post_quit_message(-1);
 
@@ -7343,10 +7332,18 @@ finalize:
          TRACE("application::process_message : error processing window message (const ::exception::exception & )");
 
          if (App(this).on_run_exception(esp))
+         {
+
             goto run;
 
+         }
+
          if (App(this).final_handle_exception(esp))
+         {
+
             goto run;
+
+         }
 
          __post_quit_message(-1);
 

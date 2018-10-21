@@ -36,39 +36,38 @@ public:
 
 
 
-   class helper_task:
-      public thread
-   {
-   public:
+   //class helper_task:
+   //   public thread
+   //{
+   //public:
 
-      static manual_reset_event * g_pevent;
-      simple_frame_window *         m_pframe;
-      //bool                          m_bSizeMove;
-      //manual_reset_event            m_ev;
-      //DWORD                         m_dwLastSizeMoveRequest;
-
-
-
-      helper_task(simple_frame_window * pframe);
+   //   static manual_reset_event * g_pevent;
+   //   simple_frame_window *         m_pframe;
+   //   //bool                          m_bSizeMove;
+   //   //manual_reset_event            m_ev;
+   //   //DWORD                         m_dwLastSizeMoveRequest;
 
 
-      virtual void run() override;
 
-      // very loose defer - "I know what you are doing and how you are performing, I have confidence on you!!"
-      // but this _new implementation which does not respond promptly on set event cat daemons relying on manual_reset_event consuming resources
-      // can loose a save event if move window and suddenly fastly switch to keyboard and press ALT+F4 or fastly target close button and press it...
-      // the real looser: the tester that will be happy that unplugging a computer without UPS is good, or maybe short circuit his astounding untouchable thing...
-      // (many times a year, oh God, or at least, Satan the God of earth, this astounding or in someones mind, outstanding planet, thank you for your spiritual ministers: we should learn something with this phase here meating in these bodies surrounded by astounding subproducts...)
-      void defer_save_window_rect();
+   //   helper_task(simple_frame_window * pframe);
 
 
-   };
+   //   virtual void run() override;
+
+   //   // very loose defer - "I know what you are doing and how you are performing, I have confidence on you!!"
+   //   // but this _new implementation which does not respond promptly on set event cat daemons relying on manual_reset_event consuming resources
+   //   // can loose a save event if move window and suddenly fastly switch to keyboard and press ALT+F4 or fastly target close button and press it...
+   //   // the real looser: the tester that will be happy that unplugging a computer without UPS is good, or maybe short circuit his astounding untouchable thing...
+   //   // (many times a year, oh God, or at least, Satan the God of earth, this astounding or in someones mind, outstanding planet, thank you for your spiritual ministers: we should learn something with this phase here meating in these bodies surrounded by astounding subproducts...)
+   //   void defer_save_window_rect();
 
 
-   bool                                m_bPendingSaveWindowPlacement;
+   //};
+
+
    bool                                m_bDefaultCreateToolbar;
    bool                                m_bTransparentFrameEnable;
-   sp(helper_task)                     m_phelpertask;
+   sp(::thread)                        m_pthreadSaveWindowRect;
    bool                                m_bFullScreenAlt;
    bool                                m_bFullScreenCtrl;
    visual::dib_sp                      m_dibBk;
@@ -104,6 +103,11 @@ public:
 
 
    void simple_frame_window_common_construct(bool bProdevian, bool bTranslucent);
+
+
+   virtual void defer_save_window_placement();
+
+   virtual void _thread_save_window_placement();
 
 
    using ::user::frame_window::create_window;
@@ -274,7 +278,7 @@ public:
 
    virtual void data_on_after_change(::message::message * pobj);
 
-
+   virtual void on_after_graphical_update() override;
 
    virtual bool set_appearance(::user::e_appearance eappearance) override;
 

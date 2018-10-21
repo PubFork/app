@@ -282,6 +282,8 @@ namespace user
 
             }
 
+            pwindow->GetWindowRect(pwindow->m_pimpl->m_rectParentClient);
+
          }
 
          return true;
@@ -425,6 +427,8 @@ namespace user
    string box::calc_display()
    {
 
+      synch_lock sl(m_pmutex);
+
       string strDisplay;
 
       rect rectNormal;
@@ -456,6 +460,8 @@ namespace user
 
    void box::defer_update_display()
    {
+
+      synch_lock sl(m_pmutex);
 
       m_strDisplay = calc_display();
 

@@ -681,16 +681,18 @@ namespace user
 
                   pre_close_frame(pframe);
 
-                  pframe->send_pred([=]()
-                  {
-
-                     pframe->DestroyWindow();
-
-                  });
+                  pframe->DestroyWindow();
 
                }
 
                sl.lock();
+
+               if (m_viewspa.get_count() <= 0)
+               {
+
+                  goto end;
+
+               }
 
                if (i >= m_viewspa.get_count())
                {
@@ -711,6 +713,7 @@ namespace user
             iTry--;
 
          }
+end:;
 
          m_viewspa.remove_all();
 
@@ -741,7 +744,12 @@ namespace user
 
          on_close_document();
 
-         m_pimpactsystem->remove_document(this);
+         if (m_pimpactsystem != NULL)
+         {
+
+            m_pimpactsystem->remove_document(this);
+
+         }
 
       }
       catch(...)

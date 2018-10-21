@@ -720,8 +720,6 @@ namespace windows
    }
 
 
-
-
    void interaction_impl::_001OnDestroy(::message::message * pobj)
    {
 
@@ -729,10 +727,11 @@ namespace windows
 
       ::multithreading::post_quit_and_wait(m_pthreadProDevian, seconds(10));
 
-      if (m_pui->m_pthread != NULL)
+      if (m_pui->m_pthreadUserInteraction != NULL
+            && m_pui->m_pthreadUserInteraction->m_puiptraThread != NULL)
       {
 
-         m_pui->m_pthread->m_puiptra->remove(m_pui);
+         m_pui->m_pthreadUserInteraction->m_puiptraThread->remove(m_pui);
 
       }
 
@@ -843,13 +842,25 @@ namespace windows
       //}
    }
 
+
    void interaction_impl::on_final_release()
    {
+
       if (get_handle() != NULL)
+      {
+
          DestroyWindow();    // will call PostNcDestroy
+
+      }
       else
+      {
+
          PostNcDestroy();
+
+      }
+
    }
+
 
    void interaction_impl::assert_valid() const
    {
@@ -929,20 +940,13 @@ namespace windows
    void interaction_impl::on_set_parent(::user::interaction * pui)
    {
 
-      if (pui != NULL)
-      {
-
-         ::multithreading::post_quit_and_wait(m_pthreadProDevian, seconds(10));
-
-         detach();
-
-      }
-
    }
 
 
    bool interaction_impl::DestroyWindow()
    {
+
+      ::multithreading::post_quit_and_wait(m_pthreadProDevian, seconds(5));
 
       bool bResult = false;
 
@@ -1068,7 +1072,12 @@ namespace windows
    bool interaction_impl::GetWindowPlacement(WINDOWPLACEMENT* lpwndpl)
    {
 
-      ASSERT(::is_window(get_handle()));
+      if (!::is_window(get_handle()))
+      {
+
+         return false;
+
+      }
 
       lpwndpl->length = sizeof(WINDOWPLACEMENT);
 
@@ -2465,11 +2474,11 @@ namespace windows
    }
 
 
-   void interaction_impl::prodevian_task()
+   void interaction_impl::defer_start_prodevian()
    {
 
 
-      ::user::interaction_impl::prodevian_task();
+      ::user::interaction_impl::defer_start_prodevian();
 
 
    }
@@ -3395,7 +3404,28 @@ namespace windows
    bool interaction_impl::IsWindow() const
    {
 
-      return ::is_window(get_handle()) != FALSE;
+      if (!m_bUserElementalOk)
+      {
+
+         return false;
+
+      }
+
+      if (m_pui == NULL)
+      {
+
+         return false;
+
+      }
+
+      if (!::is_window(get_handle()))
+      {
+
+         return false;
+
+      }
+
+      return true;
 
    }
 
@@ -3711,43 +3741,55 @@ namespace windows
 
       }
 
-      if (nCmdShow == SW_MAXIMIZE)
+      m_pui->post_pred([=]()
       {
 
-         m_pui->_001WindowMaximize();
-
-      }
-      else if (nCmdShow == SW_RESTORE)
-      {
-
-         m_pui->_001WindowRestore();
-
-      }
-      else if (nCmdShow == SW_MINIMIZE)
-      {
-
-         m_pui->_001WindowMinimize(false);
-
-      }
-      else if (nCmdShow == SW_SHOWMINNOACTIVE)
-      {
-
-         m_pui->_001WindowMinimize(true);
-
-      }
-      else if (nCmdShow == SW_HIDE)
-      {
-
-         if(GetExStyle() & WS_EX_LAYERED)
+         if (nCmdShow == SW_MAXIMIZE)
          {
 
-            m_iShowWindow = SW_HIDE;
+            m_pui->_001WindowMaximize();
 
-            m_iShowFlags = SWP_HIDEWINDOW;
+         }
+         else if (nCmdShow == SW_RESTORE)
+         {
 
-            m_bShowWindow = true;
+            m_pui->_001WindowRestore();
 
-            m_bShowFlags = true;
+         }
+         else if (nCmdShow == SW_MINIMIZE)
+         {
+
+            m_pui->_001WindowMinimize(false);
+
+         }
+         else if (nCmdShow == SW_SHOWMINNOACTIVE)
+         {
+
+            m_pui->_001WindowMinimize(true);
+
+         }
+         else if (nCmdShow == SW_HIDE)
+         {
+
+            if (GetExStyle() & WS_EX_LAYERED)
+            {
+
+               m_iShowWindow = SW_HIDE;
+
+               m_iShowFlags = SWP_HIDEWINDOW;
+
+               m_bShowWindow = true;
+
+               m_bShowFlags = true;
+
+            }
+            else
+            {
+
+               ::ShowWindow(get_handle(), nCmdShow);
+
+            }
+
 
          }
          else
@@ -3757,18 +3799,11 @@ namespace windows
 
          }
 
+         m_pui->set_need_redraw();
 
-      }
-      else
-      {
+      });
 
-         ::ShowWindow(get_handle(), nCmdShow);
-
-      }
-
-      m_pui->set_need_redraw();
-
-      return m_pui->IsWindowVisible();
+      return true;
 
    }
 
@@ -5703,6 +5738,7 @@ lCallNextHook:
 
    DWORD WINAPI drop_target(LPVOID lp)
    {
+
       interaction_impl* p = (interaction_impl *)lp;
 
       HRESULT hr = OleInitialize(NULL);
@@ -5718,15 +5754,20 @@ lCallNextHook:
       }
 
       MSG msg;
+
       while (GetMessage(&msg, NULL, 0, 0xffffffffu))
       {
 
          TranslateMessage(&msg);
+
          DispatchMessage(&msg);
+
       }
 
       return 0;
+
    }
+
 
    void interaction_impl::register_drop_target()
    {
@@ -5736,6 +5777,7 @@ lCallNextHook:
 
 
    }
+
 
    void interaction_impl::show_task(bool bShow)
    {
@@ -5757,9 +5799,7 @@ lCallNextHook:
 
       }
 
-
       defer_co_initialize_ex(false);
-
 
       HRESULT Result = S_OK;
 
@@ -5777,8 +5817,6 @@ lCallNextHook:
          }
 
       }
-
-
 
       if (SUCCEEDED(Result))
       {
@@ -5802,6 +5840,8 @@ lCallNextHook:
       }
 
    }
+
+
    bool interaction_impl::SetWindowPos(int_ptr z, int32_t x, int32_t y, int32_t cx, int32_t cy, UINT nFlags)
    {
 
@@ -5927,24 +5967,30 @@ LRESULT CALLBACK __window_procedure(oswindow oswindow, UINT message, WPARAM wpar
 }
 
 
-// always indirectly accessed via __get_window_procedure
 WNDPROC CLASS_DECL_AURA __get_window_procedure()
 {
-   //return __get_module_state()->m_pfn_window_procedure;
+
    return &::__window_procedure;
+
 }
-
-
 
 
 CLASS_DECL_AURA bool hook_window_create(::windows::interaction_impl * pwindow)
 {
 
    if (pwindow == NULL)
+   {
+
       return false;
 
+   }
+
    if (pwindow->get_handle() != NULL)
+   {
+
       return false;
+
+   }
 
    if (t_hHookOldCbtFilter == NULL)
    {
@@ -5961,34 +6007,53 @@ CLASS_DECL_AURA bool hook_window_create(::windows::interaction_impl * pwindow)
    }
 
    if (t_hHookOldCbtFilter == NULL)
+   {
+
       return false;
 
+   }
 
    t_pwndInit = pwindow;
 
    if (t_pwndInit == NULL)   // hook not already in progress
+   {
+
       return false;
 
+   }
+
    if (t_pwndInit != pwindow)
+   {
+
       return false;
+
+   }
 
    return true;
 
 }
+
 
 CLASS_DECL_AURA bool unhook_window_create()
 {
 
    if (t_pwndInit != NULL)
    {
+
       t_pwndInit = NULL;
-      return FALSE;   // was not successfully hooked
+
+      return false;   // was not successfully hooked
+
    }
-   return TRUE;
+
+   return true;
+
 }
+
 
 void CLASS_DECL_AURA _handle_activate(::window_sp pwindow, WPARAM nState, ::window_sp pWndOther)
 {
+
    ASSERT(pwindow != NULL);
 
    // send WM_ACTIVATETOPLEVEL when top-level parents change
@@ -6007,35 +6072,19 @@ void CLASS_DECL_AURA _handle_activate(::window_sp pwindow, WPARAM nState, ::wind
          }
          else
          {
+
             oswindow_2[1] = (pWndOther)->get_handle();
+
          }
+
          // send it...
          pTopLevel->send_message(WM_ACTIVATETOPLEVEL, nState, (LPARAM)&oswindow_2[0]);
-      }
-   }
-}
 
-//__STATIC bool CLASS_DECL_AURA
-//__handle_set_cursor(::window_sp pwindow,UINT nHitTest,UINT nMsg)
-//{
-//   if(nHitTest == HTERROR &&
-//      (nMsg == WM_LBUTTONDOWN || nMsg == WM_MBUTTONDOWN ||
-//      nMsg == WM_RBUTTONDOWN))
-//   {
-//      // activate the last active interaction_impl if not active
-//      sp(::user::interaction) pLastActive = (pwindow)->GetTopLevel();
-//      if(pLastActive != NULL)
-//         pLastActive = pLastActive->GetLastActivePopup();
-//      if(pLastActive != NULL &&
-//         pLastActive != ::windows::interaction_impl::GetForegroundWindow() &&
-//         pLastActive->is_window_enabled())
-//      {
-//         pLastActive->SetForegroundWindow();
-//         return TRUE;
-//      }
-//   }
-//   return FALSE;
-//}
+      }
+
+   }
+
+}
 
 
 void __term_windowing()
@@ -6043,18 +6092,20 @@ void __term_windowing()
 
    if (t_hHookOldCbtFilter != NULL)
    {
+
       ::UnhookWindowsHookEx(t_hHookOldCbtFilter);
+
       t_hHookOldCbtFilter = NULL;
+
    }
 
 }
 
 
-
-::user::interaction_impl * oswindow_get(HWND hwnd)
+::user::interaction_impl * oswindow_get(oswindow oswindow)
 {
 
-   if (hwnd == NULL)
+   if (oswindow == NULL)
    {
 
       return NULL;
@@ -6062,6 +6113,7 @@ void __term_windowing()
    }
 
    auto psystem = ::aura::system::g_p;
+
    if (psystem == NULL)
    {
 
@@ -6084,7 +6136,7 @@ void __term_windowing()
 
    ::user::interaction_base * pbase;
 
-   if (!pmap->m_map.Lookup((int_ptr)hwnd, pbase))
+   if (!pmap->m_map.Lookup(oswindow, pbase))
    {
 
       return NULL;

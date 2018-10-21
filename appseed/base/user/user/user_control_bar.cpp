@@ -453,11 +453,11 @@ namespace user
 
    bool control_bar::DestroyWindow()
    {
-      /* trans if(get_handle() != NULL && IsFloating())
-         return GetDockingFrame()->DestroyWindow();
-      else */
+
       return ::user::interaction::DestroyWindow();
+
    }
+
 
    void control_bar::_001OnMouseActivate(::message::message * pobj)
    {

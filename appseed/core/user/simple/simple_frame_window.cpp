@@ -41,46 +41,79 @@ static bool has_autohide_appbar(UINT edge, RECT mon) // Interface Update - Infin
 extern CLASS_DECL_CORE thread_int_ptr < DWORD_PTR > t_time1;
 
 
-simple_frame_window::helper_task::helper_task(simple_frame_window * pframe) :
-   ::object(pframe->get_app()),
-   ::thread(pframe->get_app()),
-   m_pframe(pframe)
+//simple_frame_window::helper_task::helper_task(simple_frame_window * pframe) :
+//   ::object(pframe->get_app()),
+//   ::thread(pframe->get_app()),
+//   m_pframe(pframe)
+//{
+//
+//   begin();
+//
+//}
+
+
+
+void simple_frame_window::defer_save_window_placement()
 {
 
-   begin();
+   synch_lock sl(m_pmutex);
+
+   if (!m_bEnableSaveWindowRect)
+   {
+
+      return;
+
+   }
+
+   if (m_pthreadSaveWindowRect.is_null())
+   {
+
+      m_pthreadSaveWindowRect = fork([&]()
+      {
+
+         _thread_save_window_placement();
+
+      });
+
+   }
 
 }
 
 
-void simple_frame_window::helper_task::run()
+void simple_frame_window::_thread_save_window_placement()
 {
 
-   while(thread_get_run())
+   try
    {
 
-      Sleep(500);
-
-      if(m_pframe->m_bPendingSaveWindowPlacement && m_pframe->m_bEnableSaveWindowRect)
+      while (::get_thread_run())
       {
 
-         if(::get_tick_count() - m_pframe->m_dwLastSizeMove > 300)
+         Sleep(300);
+
+         if (m_bEnableSaveWindowRect)
          {
 
-            m_pframe->m_bSizeMove = false;
-
-            try
+            if (::get_tick_count() - m_dwLastSizeMove > 300)
             {
 
-               if(m_pframe->WindowDataSaveWindowRect())
+               m_bSizeMove = false;
+
+               try
                {
 
-                  m_pframe->m_bPendingSaveWindowPlacement = false;
+                  if (WindowDataSaveWindowRect())
+                  {
+
+                     break;
+
+                  }
 
                }
+               catch (...)
+               {
 
-            }
-            catch(...)
-            {
+               }
 
             }
 
@@ -89,14 +122,21 @@ void simple_frame_window::helper_task::run()
       }
 
    }
+   catch (...)
+   {
+
+   }
+
+   {
+
+      synch_lock sl(m_pmutex);
+
+      m_pthreadSaveWindowRect.release();
+
+   }
 
 }
 
-
-void simple_frame_window::helper_task::defer_save_window_rect()
-{
-
-}
 
 prodevian_translucent_simple_frame_window::prodevian_translucent_simple_frame_window(::aura::application * papp) :
    object(papp),
@@ -144,8 +184,6 @@ void simple_frame_window::simple_frame_window_common_construct(bool bProdevian, 
       set_translucent();
 
    }
-
-   m_bPendingSaveWindowPlacement = false;
 
    m_bDefaultCreateToolbar = true;
 
@@ -215,6 +253,7 @@ void simple_frame_window::assert_valid() const
 
 }
 
+
 void simple_frame_window::dump(dump_context & dumpcontext) const
 {
 
@@ -222,9 +261,12 @@ void simple_frame_window::dump(dump_context & dumpcontext) const
 
 }
 
+
 void simple_frame_window::install_message_routing(::message::sender * pinterface)
 {
+
    ::user::frame_window::install_message_routing(pinterface);
+
    IGUI_MSG_LINK(WM_CREATE, pinterface, this, &simple_frame_window::_001OnCreate);
    IGUI_MSG_LINK(WM_NCACTIVATE, pinterface, this, &simple_frame_window::_001OnNcActivate);
 #ifdef WINDOWSEX
@@ -286,34 +328,33 @@ sp(::user::interaction) simple_frame_window::WindowDataGetWnd()
 void simple_frame_window::_001OnDestroy(::message::message * pobj)
 {
 
-   pobj->previous();
-
-   try
    {
 
-      if (m_pnotifyicon.is_set())
+      synch_lock sl(m_pmutex);
+
+      pobj->previous();
+
+      try
       {
 
-         m_pnotifyicon->Destroy();
+         if (m_pnotifyicon.is_set())
+         {
 
-         m_pnotifyicon.release();
+            m_pnotifyicon->Destroy();
+
+            m_pnotifyicon.release();
+
+         }
+
+      }
+      catch (...)
+      {
 
       }
 
    }
-   catch(...)
-   {
 
-   }
-
-   if(m_phelpertask.is_set())
-   {
-
-      ::multithreading::post_quit_and_wait(m_phelpertask, seconds(5));
-
-      m_phelpertask.release();
-
-   }
+   ::multithreading::post_quit_and_wait(m_pthreadSaveWindowRect, seconds(5));
 
 }
 
@@ -563,19 +604,6 @@ void simple_frame_window::_001OnCreate(::message::message * pobj)
 
    }
 
-   if(GetParent() == NULL)
-   {
-
-      if(m_phelpertask.is_null())
-      {
-
-         m_phelpertask = canew(helper_task(this));
-
-      }
-
-   }
-
-
    string strAppTitle = Application.m_strAppTitle;
 
    if (strAppTitle.is_empty())
@@ -639,8 +667,8 @@ void simple_frame_window::_001OnShowWindow(::message::message * pobj)
    }
 
    defer_set_icon();
-   
-   
+
+
    if(m_bDefaultNotifyIcon)
    {
 
@@ -683,9 +711,9 @@ void simple_frame_window::_001OnTaskbarCreated(::message::message * pobj)
 
 void simple_frame_window::_001OnUpdateNotifyIcon(::message::message * pobj)
 {
-   
+
    defer_create_notification_icon();
-   
+
 }
 
 
@@ -696,7 +724,12 @@ void simple_frame_window::_001OnSize(::message::message * pobj)
 
    m_dwLastSizeMove = get_tick_count();
 
-   m_bPendingSaveWindowPlacement = true;
+   if (GetParent() == NULL)
+   {
+
+      defer_save_window_placement();
+
+   }
 
 }
 
@@ -708,7 +741,12 @@ void simple_frame_window::_001OnMove(::message::message * pobj)
 
    m_dwLastSizeMove = get_tick_count();
 
-   m_bPendingSaveWindowPlacement = true;
+   if (GetParent() == NULL)
+   {
+
+      defer_save_window_placement();
+
+   }
 
 }
 
@@ -1006,7 +1044,7 @@ void simple_frame_window::_001OnToggleTransparentFrame(::message::message * pobj
 {
 
    WfiToggleTransparentFrame();
-   
+
    pobj->m_bRet = true;
 
 }
@@ -1079,16 +1117,6 @@ void simple_frame_window::_001OnAppExit(::message::message * pobj)
       return;
 
    }
-
-   //if (!m_bDefaultNotifyIcon)
-   //m_bDefaultNotifyIcon = false;
-   //{
-
-   //_001OnClose(pobj);
-
-   // return;
-
-   //}
 
    if(pobj != NULL)
    {
@@ -1496,6 +1524,8 @@ bool simple_frame_window::LoadFrame(const char * pszMatter, uint32_t dwDefaultSt
 
    ::user::create_struct cs(0L, NULL, lpszTitle, dwDefaultStyle, rectFrame, pcreate);
 
+   WindowDataEnableSaveWindowRect(false);
+
    if (!create_window_ex(cs, pParentWnd))
    {
 
@@ -1685,9 +1715,16 @@ void simple_frame_window::InitialFramePosition(bool bForceRestore)
          else
          {
 
+            m_bInitialFramePosition = true;
+
             WindowDataLoadWindowRect(bForceRestore,true);
 
-            WindowDataEnableSaveWindowRect(true);
+            if (m_workset.IsAppearanceEnabled())
+            {
+
+               GetWindowRect(m_workset.m_pframeschema->get_control_box_rect());
+
+            }
 
          }
 
@@ -1728,8 +1765,22 @@ void simple_frame_window::InitialFramePosition(bool bForceRestore)
 
    output_debug_string("\nm_bLayoutEnable TRUE");
 
-   m_bInitialFramePosition = false;
+}
 
+
+void simple_frame_window::on_after_graphical_update()
+{
+
+   ::user::frame_window::on_after_graphical_update();
+
+   if (m_bInitialFramePosition)
+   {
+
+      m_bInitialFramePosition = false;
+
+      WindowDataEnableSaveWindowRect(true);
+
+   }
 
 }
 
@@ -1770,14 +1821,31 @@ void simple_frame_window::_001OnDeferPaintLayeredWindowBackground(::draw2d::grap
 void simple_frame_window::_000OnDraw(::draw2d::graphics * pgraphicsParam)
 {
 
-   defer_check_layout();
+   {
 
-   defer_check_zorder();
+      synch_lock sl(m_pmutex);
 
-   windowing_output_debug_string("\nsimple_frame_window::_000OnDraw A");
+      if (m_pimpl->m_pui == NULL)
+      {
 
-   if (!IsWindowVisible() || WfiIsIconic())
-      return;
+         return;
+
+      }
+
+      defer_check_layout();
+
+      defer_check_zorder();
+
+      windowing_output_debug_string("\nsimple_frame_window::_000OnDraw A");
+
+      if (!IsWindowVisible() || WfiIsIconic())
+      {
+
+         return;
+
+      }
+
+   }
 
    windowing_output_debug_string("\nsimple_frame_window::_000OnDraw B");
 
@@ -1998,32 +2066,13 @@ void simple_frame_window::on_set_parent(::user::interaction * puiParent)
 
    }
 
-
-   if(puiParent == NULL)
+   if(puiParent != NULL)
    {
 
-      if(m_phelpertask.is_null())
-      {
-
-         m_phelpertask = canew(helper_task(this));
-
-      }
+      ::multithreading::post_quit_and_wait(m_pthreadSaveWindowRect, seconds(5));
 
    }
-   else
-   {
 
-      if(m_phelpertask.is_set())
-      {
-
-         m_phelpertask->post_quit();
-
-         m_phelpertask.release();
-
-      }
-
-
-   }
    m_workset.m_pwndEvent = this;
 
    if (m_pupdowntarget != NULL && wfi_is_up_down())
@@ -2276,19 +2325,24 @@ bool simple_frame_window::WndFrameworkDownUpGetDownEnable()
 void simple_frame_window::WfiOnDown()
 {
 
-   frame_Attach();
+   fork([&]()
+   {
+
+      frame_Attach();
+
+   });
 
 }
 
 
 void simple_frame_window::WfiOnUp()
 {
-   
-   fork([=]()
+
+   fork([&]()
    {
 
       frame_Detach();
-     
+
    });
 
 }
@@ -3244,13 +3298,19 @@ void simple_frame_window::OnNotifyIconContextMenu(UINT uiNotifyIcon)
 
 void simple_frame_window::OnNotifyIconLButtonDblClk(UINT uiNotifyIcon)
 {
+
    UNREFERENCED_PARAMETER(uiNotifyIcon);
+
 }
+
 
 void simple_frame_window::OnNotifyIconLButtonDown(UINT uiNotifyIcon)
 {
+
    InitialFramePosition(true);
+
    UNREFERENCED_PARAMETER(uiNotifyIcon);
+
 }
 
 

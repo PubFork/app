@@ -8,7 +8,8 @@ enum e_simple_command
    simple_command_update_frame_title,
    simple_command_set_edit_file,
    simple_command_layout,
-   simple_command_full_screen
+   simple_command_full_screen,
+   simple_command_defer_start_prodevian,
 
 };
 

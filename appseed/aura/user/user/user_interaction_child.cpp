@@ -542,7 +542,28 @@ namespace user
    bool interaction_child::IsWindow() const
    {
 
-      return m_bCreate && m_pui != NULL;
+      if (!m_bUserElementalOk)
+      {
+
+         return false;
+
+      }
+
+      if (!m_bCreate)
+      {
+
+         return false;
+
+      }
+
+      if (m_pui == NULL)
+      {
+
+         return false;
+
+      }
+
+      return true;
 
    }
 
@@ -704,15 +725,15 @@ namespace user
 
       if(m_pui->m_papp != NULL)
       {
-         
-         
+
+
          if(uiMessage == WM_KEYDOWN)
          {
-            
+
             output_debug_string("interaction_child::post_message WM_KEYDOWN");
-            
+
          }
-         
+
          return m_pui->m_papp->post_message(m_pui,uiMessage,wparam,lparam);
       }
       else

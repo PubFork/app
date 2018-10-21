@@ -254,29 +254,21 @@ DWORD thread::get_file_sharing_violation_timeout_total_milliseconds()
 }
 
 
-thread::thread() :
-   m_mutexUiPtra(get_app())
+thread::thread()
 {
 
    construct();
-
-   m_puiptra = NULL;
 
    memcnts_inc(this);
 
 }
 
 
-
-
 thread::thread(::aura::application * papp) :
-   object(papp),
-   m_mutexUiPtra(papp)
+   object(papp)
 {
 
    construct();
-
-   m_puiptra = NULL;
 
    if(m_papp != NULL && m_papp->m_psession != NULL)
    {
@@ -291,8 +283,7 @@ thread::thread(::aura::application * papp) :
 
 
 thread::thread(::aura::application * papp, __THREADPROC pfnThreadProc, LPVOID pParam) :
-   object(papp),
-   m_mutexUiPtra(papp)
+   object(papp)
 {
 
    memcnts_inc(this);
@@ -313,6 +304,8 @@ CLASS_DECL_AURA ::thread * get_thread_raw();
 void thread::CommonConstruct()
 {
 
+   m_pmutexThreadUiPtra = NULL;
+   m_puiptraThread = NULL;
    m_bThreadToolsForIncreasedFps = false;
    m_bTemporary = false;
    m_bSimpleMessageLoop = true;
@@ -374,8 +367,6 @@ void thread::CommonConstruct()
 
    m_nDisablePumpCount  = 0;
 
-   m_puiptra = NULL;
-
 }
 
 
@@ -402,7 +393,9 @@ thread::~thread()
 
    memcnts_dec(this);
 
-   ::aura::del(m_puiptra);
+   ::aura::del(m_puiptraThread);
+
+   ::aura::del(m_pmutexThreadUiPtra);
 
 }
 
@@ -572,6 +565,7 @@ bool thread::pump_message()
    {
 
       MESSAGE msg;
+
       if(!::GetMessage(&msg,NULL,0,0))
       {
 
@@ -606,8 +600,12 @@ bool thread::pump_message()
          return true;
 
       // get_app() may be it self, it is ok...
-      if(Application.final_handle_exception(esp))
+      if (Application.final_handle_exception(esp))
+      {
+
          return true;
+
+      }
 
    }
    catch(...)
@@ -2279,6 +2277,22 @@ void thread::post_to_all_threads(UINT message,WPARAM wparam,LPARAM lparam)
 }
 
 
+bool thread::post_runnable(::object * pobjectRunnable)
+{
+
+   return post_object(message_system, system_message_runnable, pobjectRunnable);
+
+}
+
+
+bool thread::send_runnable(::object * pobjectRunnable, ::duration durationTimeout)
+{
+
+   return send_object(message_system, system_message_runnable, pobjectRunnable, durationTimeout);
+
+}
+
+
 bool thread::post_message(::user::primitive * pui,UINT uiMessage,WPARAM wparam,lparam lparam)
 {
 
@@ -2701,12 +2715,16 @@ void thread::threadrefa_add(::thread * pthread)
 int32_t thread::thread_exit()
 {
 
-
    {
 
-      synch_lock sl(m_pmutex);
+      synch_lock sl(m_pmutexThreadUiPtra);
 
-      ::aura::del(m_puiptra);
+      if (is_set(m_puiptraThread))
+      {
+
+         m_puiptraThread->remove_all();
+
+      }
 
    }
 
@@ -2843,7 +2861,12 @@ bool thread::initialize_message_queue()
 void thread::message_handler(::message::base * pbase)
 {
 
-   Application.message_handler(pbase);
+   if (m_papp != this)
+   {
+
+      m_papp->message_handler(pbase);
+
+   }
 
 }
 
@@ -2891,6 +2914,14 @@ bool thread::process_message(LPMESSAGE lpmessage)
             sp(::pred_holder_base) ppred((lparam)msg.lParam);
 
             ppred->run();
+
+         }
+         else if (msg.wParam == system_message_runnable)
+         {
+
+            sp(::object) pobjectRunnable((lparam)msg.lParam);
+
+            pobjectRunnable->run();
 
          }
          else if (msg.wParam == system_message_meta)
@@ -3494,6 +3525,36 @@ CLASS_DECL_AURA void set_thread_off(IDTHREAD id)
 CLASS_DECL_AURA void forking_count_thread_null_end(int iOrder)
 {
 
+
+}
+
+
+user_interaction_ptr_array & thread::uiptra()
+{
+
+   {
+
+      synch_lock sl(m_pmutex);
+
+      if (m_pmutexThreadUiPtra == NULL)
+      {
+
+         m_pmutexThreadUiPtra = new mutex(get_app());
+
+      }
+
+   }
+
+   synch_lock sl(m_pmutexThreadUiPtra);
+
+   if (m_puiptraThread == NULL)
+   {
+
+      m_puiptraThread = new ::user_interaction_ptr_array();
+
+   }
+
+   return *m_puiptraThread;
 
 }
 

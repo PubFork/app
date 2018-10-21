@@ -2207,7 +2207,12 @@ size simple_toolbar::CalcLayout(uint32_t dwMode, int32_t nLength)
 
    ASSERT_VALID(this);
 
-   ASSERT(IsWindow());
+   if (!IsWindow())
+   {
+
+      return ::size(0, 0);
+
+   }
 
    if (dwMode & LM_HORZDOCK)
    {

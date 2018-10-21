@@ -26,20 +26,20 @@ namespace user
    class CLASS_DECL_AURA window_map :
       virtual public ::object
    {
-      public:
+   public:
 
 
-         map < int_ptr, int_ptr, ::user::interaction_base *, ::user::interaction_base * > m_map;
+      map < oswindow, oswindow, ::user::interaction_base *, ::user::interaction_base * > m_map;
 
 
-         window_map(::aura::application * papp);
-         virtual ~window_map();
+      window_map(::aura::application * papp);
+      virtual ~window_map();
 
 
-         ::user::interaction_base * get(int_ptr iWindow);
+      ::user::interaction_base * get(oswindow oswindow);
 
 
-         void set(int_ptr iWindow, const ::user::interaction_base * pinterface);
+      void set(oswindow oswindow, const ::user::interaction_base * pinterface);
 
    };
 

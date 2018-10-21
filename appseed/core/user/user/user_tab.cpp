@@ -90,14 +90,9 @@ namespace user
 
       m_bDrawTabAtBackground = false;
 
-
-
       m_bNoTabs = System.handler()->m_varTopicQuery.has_property("no_tabs");
 
-
       //m_rectBorder.set(7, 1, 7, 0);
-
-
 
       _001SetVertical(false);
 
@@ -235,22 +230,25 @@ namespace user
 
             }
 
-            _001OnRemoveTab(get_data()->m_panea[i]);
+            remove_tab(i, false);
 
-            get_data()->m_panea.remove_at(i);
+            break;
 
          }
 
       }
 
-      if(bRestorableMatch)
+      if (bRestorableMatch)
       {
 
          on_change_pane_count({ NULL });
 
       }
 
+      on_change_pane_count();
+
       return true;
+
    }
 
 
@@ -299,35 +297,57 @@ namespace user
    void tab::remove_tab(::index iPane, bool bVisible)
    {
 
-      if(iPane < 0 || iPane >= get_data()->m_panea.get_size())
+      if (iPane < 0 || iPane >= get_data()->m_panea.get_size())
+      {
+
          return;
+
+      }
 
       if(bVisible)
       {
+
          for(int32_t i = 0; iPane >= 0 && i < get_data()->m_panea.get_count(); i++)
          {
+
             if(get_data()->m_panea[i]->m_bTabPaneVisible)
             {
+
                if(iPane <= 0)
                {
-                  on_remove_tab(i);
+
+                  _001OnRemoveTab(get_data()->m_panea[iPane]);
+
                   get_data()->m_panea.remove_at(i);
+
                   on_change_pane_count();
+
                   break;
+
                }
                else
                {
+
                   iPane--;
+
                }
+
             }
+
          }
+
       }
       else
       {
-         on_remove_tab(iPane);
+
+         _001OnRemoveTab(get_data()->m_panea[iPane]);
+
          get_data()->m_panea.remove_at(iPane);
+
          on_change_pane_count();
+
       }
+
    }
 
 
@@ -1850,12 +1870,6 @@ namespace user
          defer_remove_child_pane(pui);
 
       }
-
-   }
-
-
-   void tab::on_remove_tab(index iPane)
-   {
 
    }
 
