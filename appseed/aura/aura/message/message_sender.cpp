@@ -30,7 +30,7 @@ namespace message
       for (auto & id_route_array : m_idroute)
       {
 
-         id_route_array.m_element2.pred_remove([=](auto & pitem)
+         id_route_array.m_element2->pred_remove([=](auto & pitem)
          {
 
             return pitem->m_preceiver == preceiver;
@@ -51,11 +51,18 @@ namespace message
 
          synch_lock sl(m_pmutexIdRoute);
 
-         ::lemon::ptra::ptrcopy(pmessage->m_routea, m_idroute[pmessage->m_id]);
+         pmessage->m_routea = m_idroute[pmessage->m_id];
 
       }
 
-      pmessage->m_iRouteIndex = pmessage->m_routea.get_upper_bound();
+      if (pmessage->m_routea.is_null())
+      {
+
+         return;
+
+      }
+
+      pmessage->m_iRouteIndex = pmessage->m_routea->get_upper_bound();
 
       pmessage->m_psender = this;
 
@@ -87,7 +94,7 @@ namespace message
          for (auto & id_route_array : m_idroute)
          {
 
-            id_route_array.m_element2.pred_each([=](auto & route)
+            id_route_array.m_element2->pred_each([=](auto & route)
             {
 
                try
@@ -105,6 +112,8 @@ namespace message
 
             });
 
+            id_route_array.m_element2->remove_all();
+
          }
 
          m_idroute.remove_all();
@@ -114,6 +123,8 @@ namespace message
       {
 
       }
+
+
 
    }
 

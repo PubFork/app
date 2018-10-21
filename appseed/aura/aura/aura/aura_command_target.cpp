@@ -161,7 +161,7 @@ bool command_target::has_command_handler(::user::command * pcommand)
 
    }
 
-   return m_idroute[pcommand->m_id].has_elements();
+   return m_idroute[pcommand->m_id]->has_elements();
 
 }
 

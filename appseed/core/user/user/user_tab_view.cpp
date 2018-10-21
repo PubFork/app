@@ -203,6 +203,24 @@ namespace user
 
       ::user::tab::_001OnRemoveTab(ptab);
 
+      if (ptab->m_pholder.is_set())
+      {
+
+         sp(::user::interaction) puiChild;
+
+         ptab->m_pholder->get_child(puiChild);
+
+         if (puiChild.is_set())
+         {
+
+            puiChild->ShowWindow(SW_HIDE);
+
+            puiChild->SetParent(NULL);
+
+         }
+
+      }
+
       m_holdera.remove(ptab->m_pholder);
 
       id idTab = ptab->m_id;

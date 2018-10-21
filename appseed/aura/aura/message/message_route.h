@@ -7,7 +7,7 @@
 namespace message
 {
 
-   
+
    class route :
       virtual public simple_object
    {
@@ -85,7 +85,7 @@ namespace message
 
    using route_array = spa(route);
 
-   using id_route = ::map < ::message::id, const ::message::id &, route_array >;
+   using id_route = ::map < ::message::id, const ::message::id &, sp(route_array) >;
 
    using type_id_route = ::map < e_type, e_type, id_route >;
 

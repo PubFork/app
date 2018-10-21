@@ -712,8 +712,6 @@ restart:
 
                }
 
-               defer_start_prodevian();
-
             }
 
          }

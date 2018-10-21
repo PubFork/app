@@ -44,7 +44,7 @@ namespace message
    bool message::route_message()
    {
 
-      if (m_routea.is_empty())
+      if (m_routea->is_empty())
       {
 
          //m_bRet = true;
@@ -53,10 +53,10 @@ namespace message
 
       }
 
-      if (m_iRouteIndex >= m_routea.get_count())
+      if (m_iRouteIndex >= m_routea->get_count())
       {
 
-         m_iRouteIndex = m_routea.get_upper_bound();
+         m_iRouteIndex = m_routea->get_upper_bound();
 
       }
 
@@ -69,7 +69,7 @@ namespace message
 
       }
 
-      ::message::route * proute = m_routea[m_iRouteIndex];
+      ::message::route * proute = (*m_routea)[m_iRouteIndex];
 
       ASSERT(proute != NULL);
 

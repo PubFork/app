@@ -2152,12 +2152,10 @@ void simple_frame_window::on_set_parent(::user::interaction * puiParent)
 
    }
 
-   if (puiParent == NULL || puiParent->is_frame_window())
+   if (IsWindowVisible() && (puiParent == NULL || puiParent->is_frame_window()))
    {
 
-      WindowDataLoadWindowRect(false);
-
-      WindowDataEnableSaveWindowRect(true);
+      InitialFramePosition();
 
    }
 

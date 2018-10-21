@@ -727,6 +727,45 @@ end:;
    void document::pre_close_document()
    {
 
+      sp(::object) pthis = this;
+
+      {
+
+         synch_lock sl(m_pmutex);
+
+         for (index i = 0; i < m_viewspa.get_count(); i++)
+         {
+
+            auto pview = m_viewspa[i];
+
+            sl.unlock();
+
+            ASSERT_VALID(pview);
+
+            ::user::frame_window * pframe = dynamic_cast <::user::frame_window *> (pview->GetParentFrame());
+
+            if (pframe != NULL)
+            {
+
+               pframe->ShowWindow(SW_HIDE);
+
+               if (pframe->GetParent() != NULL)
+               {
+
+                  synch_lock sl(pframe->GetParent()->m_pmutex);
+
+                  pframe->GetParent()->m_uiptraChild.remove(pframe);
+
+               }
+
+            }
+
+            sl.lock();
+
+         }
+
+      }
+
       view_update_hint uh(get_app());
 
       uh.m_ehint = view_update_hint::hint_pre_close_document;

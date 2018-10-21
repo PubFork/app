@@ -401,15 +401,22 @@ namespace message
 
       sp(type) ptypeReceiver = System.type_info < RECEIVER >();
 
-      if (m_idroute[id].pred_find_first([=](auto & proute)
-   {
+      sp(route_array) & proutea = m_idroute[id];
 
-      return proute->m_pobjectReceiver == pobjectReceiver && proute->m_ptypeReceiver == ptypeReceiver;
-
-   }) >= 0)
+      if (proutea.is_set())
       {
 
-         return;
+         if (proutea->pred_find_first([=](auto & proute)
+      {
+
+         return proute->m_pobjectReceiver == pobjectReceiver && proute->m_ptypeReceiver == ptypeReceiver;
+
+      }) >= 0)
+         {
+
+            return;
+
+         }
 
       }
 
@@ -433,7 +440,14 @@ namespace message
 
       route * proute = create_pred_route(preceiver, pobjectReceiver, pred, ptypeReceiver);
 
-      m_idroute[id].add(proute);
+      if (proutea.is_null())
+      {
+
+         proutea = canew(route_array);
+
+      }
+
+      proutea->add(proute);
 
       preceiver->m_sendera.add_unique(this);
 
