@@ -2910,7 +2910,12 @@ bool thread::process_message(LPMESSAGE lpmessage)
 
             sp(::command::command) pcommand((lparam)msg.lParam);
 
-            m_phandler->on_handle(pcommand);
+            if (m_phandler.is_set())
+            {
+
+               m_phandler->on_handle(pcommand);
+
+            }
 
          }
          else if (msg.wParam == system_message_pred)

@@ -105,6 +105,8 @@ namespace user
       virtual void _defer_start_prodevian() override;
       virtual void _thread_prodevian();
 
+      virtual void on_make_visible() override;
+
       void user_common_construct();
 
 

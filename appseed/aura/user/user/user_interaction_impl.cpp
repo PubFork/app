@@ -1210,7 +1210,7 @@ namespace user
          if (is_this_visible() && !WfiIsIconic())
          {
 
-            defer_start_prodevian();
+            on_make_visible();
 
          }
 
@@ -1219,6 +1219,16 @@ namespace user
       m_pui->set_need_redraw();
 
       return m_pui->IsWindowVisible();
+
+   }
+
+
+   void interaction_impl::on_make_visible()
+   {
+
+      defer_start_prodevian();
+
+      post_message(WM_SHOWWINDOW, 1);
 
    }
 
@@ -2587,14 +2597,6 @@ namespace user
    }
 
 
-   //void interaction_impl::defer_start_prodevian()
-   //{
-
-   //
-
-   //}
-
-
    void interaction_impl::_defer_start_prodevian()
    {
 
@@ -3332,7 +3334,7 @@ namespace user
 
          {
 
-            sp(::user::interaction) spui = this;
+            sp(::user::interaction) spui = m_pui;
 
             spui->defer_notify_mouse_move(bPointInside, pt);
 

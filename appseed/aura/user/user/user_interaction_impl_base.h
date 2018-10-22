@@ -79,6 +79,9 @@ namespace user
       virtual bool has_pending_redraw_flags() override;
 
 
+      virtual void on_make_visible();
+
+
 //      virtual void _001UpdateScreen(bool bUpdateBuffer = true);
 //      virtual void _001UpdateBuffer();
       virtual bool create_message_queue(::user::interaction * pui, const char * pszName);

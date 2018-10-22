@@ -830,7 +830,7 @@ namespace user
          if ((nFlags & SWP_SHOWWINDOW) && !WfiIsIconic())
          {
 
-            defer_start_prodevian();
+            on_make_visible();
 
          }
 
@@ -1841,17 +1841,13 @@ namespace user
    }
 
 
+   void interaction_impl_base::on_make_visible()
+   {
+
+   }
+
+
 } // namespace user
-
-
-
-
-
-
-
-
-
-
 
 
 
