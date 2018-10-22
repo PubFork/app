@@ -13,7 +13,6 @@ ON_WM_ERASEBKGND()
 //}}__MSG_MAP
 // Standard printing commands
 ON_MESSAGE(WM_USER + 177, OnTabClick)
-ON_MESSAGE(WM_APP + 119, OnWavePlayerEvent)
 ON_COMMAND(ID_FILE_PRINT, ::user::impact::OnFilePrint)
 ON_COMMAND(ID_FILE_PRINT_DIRECT, ::user::impact::OnFilePrint)
 ON_COMMAND(ID_FILE_PRINT_PREVIEW, ::user::impact::OnFilePrintPreview)

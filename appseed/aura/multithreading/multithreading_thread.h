@@ -197,6 +197,7 @@ public:
 
    virtual HTHREAD get_os_handle() const;
 
+   virtual bool is_thread() const;
 
    virtual void set_os_data(void * pvoidOsData);
    virtual void set_os_int(IDTHREAD iData);

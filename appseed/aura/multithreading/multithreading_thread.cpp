@@ -415,7 +415,12 @@ HTHREAD thread::get_os_handle() const
 }
 
 
+bool thread::is_thread() const
+{
 
+   return get_os_handle() != NULL;
+
+}
 
 void thread::on_pos_run_thread()
 {

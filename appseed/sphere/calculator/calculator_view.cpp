@@ -31,16 +31,6 @@ namespace calculator
       IGUI_MSG_LINK(WM_CONTEXTMENU, pinterface, this, &view::_001OnContextMenu);
       IGUI_MSG_LINK(WM_SETCURSOR, pinterface, this, &view::_001OnSetCursor);
 
-      //   IGUI_MSG_LINK(WM_USER + 177     , this, this, &view::_001OnTabClick);
-      IGUI_MSG_LINK(WM_APP + 119      , this, this, &view::_001OnWavePlayerEvent);
-      //connect_command(ID_FILE_PRINT, ::user::impact::OnFilePrint)
-      //connect_command(ID_FILE_PRINT_DIRECT, ::user::impact::OnFilePrint)
-      //connect_command(ID_FILE_PRINT_PREVIEW, ::user::impact::OnFilePrintPreview)
-      //IGUI_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &::user::interaction::_001OnLButtonDown);
-      //IGUI_MSG_LINK(WM_LBUTTONUP, pinterface, this, &::user::interaction::_001OnLButtonUp);
-      //IGUI_MSG_LINK(WM_KEYDOWN, pinterface, this, &::user::interaction::_001OnKeyDown);
-      //IGUI_MSG_LINK(WM_KEYUP, pinterface, this, &::user::interaction::_001OnKeyUp);
-
 
    }
 
@@ -105,7 +95,7 @@ namespace calculator
 
    void view::_001OnSize(::message::message * pobj)
    {
-      
+
       UNREFERENCED_PARAMETER(pobj);
 
    }
@@ -120,7 +110,7 @@ namespace calculator
 
    void view:: _001OnDraw(::draw2d::graphics * pgraphics)
    {
-      
+
       UNREFERENCED_PARAMETER(pgraphics);
 
    }
