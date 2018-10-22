@@ -18,71 +18,81 @@ single_lock::single_lock(sync_object * psyncobject, bool bInitialLock)
 }
 
 
-bool single_lock::lock()
+wait_result single_lock::wait()
 {
+
+   ::wait_result result(::wait_result::Event0);
 
    if(m_bAcquired)
    {
 
-      return true;
+      return result;
 
    }
 
    if(m_pobjectSync == NULL)
    {
 
-      return true;
+      return result;
 
    }
 
    try
    {
 
-      m_bAcquired = m_pobjectSync->lock();
+      result = m_pobjectSync->wait();
 
    }
    catch(...)
    {
 
-      m_bAcquired = false;
+      result = ::wait_result(::wait_result::Failure);
 
    }
 
-   return m_bAcquired;
+   m_bAcquired = result.succeeded();
+
+   return result;
 
 }
 
 
-bool single_lock::lock(const duration & durationTimeOut)
+::wait_result single_lock::wait(const duration & durationTimeOut)
 {
+
+   ::wait_result result(::wait_result::Event0);
 
    if(m_bAcquired)
    {
-      
-      return true;
-      
+
+      return result;
+
    }
-   
+
    if(m_pobjectSync == NULL)
    {
-      
-      return false;
-      
+
+      return result;
+
    }
-   
+
    try
    {
 
-      m_bAcquired = m_pobjectSync->lock(durationTimeOut);
-      
+      result = m_pobjectSync->wait(durationTimeOut);
+
    }
    catch(...)
    {
-      
+
+      result = ::wait_result(::wait_result::Failure);
+
    }
-   
-   return m_bAcquired;
-   
+
+   m_bAcquired = result.succeeded();
+
+   return result;
+
 }
 
 
@@ -91,35 +101,35 @@ bool single_lock::unlock()
 
    if(m_pobjectSync == NULL)
    {
-      
+
       return true;
-      
+
    }
 
    if (m_bAcquired)
    {
-      
+
       try
       {
-         
+
          if(m_pobjectSync->unlock())
          {
-            
+
             m_bAcquired = false;
-            
+
          }
-         
+
       }
       catch(...)
       {
-         
+
       }
-      
+
    }
 
    // successfully unlocking means it isn't acquired
    return !m_bAcquired;
-   
+
 }
 
 
@@ -154,9 +164,9 @@ single_lock::~single_lock()
 
 bool single_lock::IsLocked()
 {
-   
+
    return m_bAcquired;
-   
+
 }
 
 

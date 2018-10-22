@@ -245,8 +245,12 @@ namespace windows
 
       bool bSetWindowPos = false;
 
+      bool bWasVisible = false;
+
       if (m_pimpl != NULL && m_pimpl->m_pui != NULL)
       {
+
+         bWasVisible = m_pimpl->m_pui->GetStyle() & WS_VISIBLE;
 
          if (m_rectLast != rectWindow || m_pimpl->m_bZ || m_pimpl->m_bShowFlags || m_pimpl->m_bShowWindow)
          {
@@ -351,16 +355,20 @@ namespace windows
             try
             {
 
-               if (m_pimpl->m_iShowWindow == SW_HIDE && m_pimpl->m_pui->is_this_visible())
+               if (m_pimpl->m_iShowWindow == SW_HIDE && bWasVisible)
                {
 
                   m_pimpl->m_pui->ModifyStyle(WS_VISIBLE, 0);
 
+                  m_pimpl->m_pui->send_message(WM_SHOWWINDOW, 0);
+
                }
-               else if (m_pimpl->m_iShowWindow != SW_HIDE && !m_pimpl->m_pui->is_this_visible())
+               else if (m_pimpl->m_iShowWindow != SW_HIDE && !bWasVisible)
                {
 
                   m_pimpl->m_pui->ModifyStyle(0, WS_VISIBLE);
+
+                  m_pimpl->m_pui->send_message(WM_SHOWWINDOW, 1);
 
                }
 

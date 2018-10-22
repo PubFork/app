@@ -56,6 +56,8 @@ namespace user
    public:
 
 
+      sp(::thread)                  m_pthreadTransparentMouseEvents;
+      bool                          m_bTransparentMouseEvents;
       bool                          m_bOfflineRender;
       bool                          m_bFocus;
       bool                          m_bCursorRedraw;
@@ -495,6 +497,9 @@ namespace user
       // dialog support
       virtual void UpdateDialogControls(command_target* pTarget,bool bDisableIfNoHndler);
       virtual void CenterWindow(::user::interaction * pAlternateOwner = NULL) override;
+
+
+      virtual void _thread_transparent_mouse_events();
 
 
 //      virtual bool OnCommand(::message::base * pbase);

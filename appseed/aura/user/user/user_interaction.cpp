@@ -64,7 +64,6 @@ namespace user
       m_flagNonClient.signalize(non_client_focus_rect);
 
       m_bMouseHover = false;
-      m_bTransparentMouseEvents = false;
       m_bRedraw = false;
 
       m_bRedraw = false;
@@ -9209,46 +9208,120 @@ restart:
    }
 
 
-   void interaction::transparent_mouse_events()
+   bool interaction::enable_transparent_mouse_events(bool bEnable)
    {
 
-      m_bTransparentMouseEvents = true;
+      ::user::interaction * puiTop = get_wnd();
 
-#ifdef WINDOWSEX
-
-      fork([&]()
+      if (puiTop == NULL)
       {
 
-         point pt;
+         return false;
 
-         while (get_thread_run())
-         {
+      }
 
-            {
+      synch_lock sl(puiTop->m_pmutex);
 
-               sp(::user::interaction) spui = this;
+      sp(::user::interaction_impl) pimpl = puiTop->m_pimpl;
 
-               if (spui->IsWindowVisible())
-               {
+      if (pimpl.is_null())
+      {
 
-                  spui->defer_notify_mouse_move(pt);
+         return false;
 
-               }
+      }
 
-            }
+      pimpl->m_bTransparentMouseEvents = bEnable;
 
-            Sleep(5);
+      check_transparent_mouse_events();
 
-         }
-
-      });
-
-#endif
+      return true;
 
    }
 
 
-   void interaction::defer_notify_mouse_move(point & ptLast)
+   void interaction::check_transparent_mouse_events()
+   {
+
+      ::user::interaction * puiTop = get_wnd();
+
+      bool bStart = true;
+
+      if (puiTop == NULL)
+      {
+
+         bStart = false;
+
+      }
+
+      synch_lock sl(bStart ? puiTop->m_pmutex : NULL);
+
+      sp(::user::interaction_impl) pimpl = puiTop->m_pimpl;
+
+      if (bStart)
+      {
+
+         synch_lock sl(puiTop->m_pmutex);
+
+         if (pimpl.is_null())
+         {
+
+            bStart = false;
+
+         }
+
+         if (bStart)
+         {
+
+            bStart = pimpl->m_bTransparentMouseEvents && puiTop->IsWindowVisible();
+
+         }
+
+      }
+
+      if (bStart)
+      {
+
+         if (pimpl->m_pthreadTransparentMouseEvents.is_null())
+         {
+
+            pimpl->m_pthreadTransparentMouseEvents = fork([pimpl]()
+            {
+
+               try
+               {
+
+                  pimpl->_thread_transparent_mouse_events();
+
+               }
+               catch (...)
+               {
+
+               }
+
+               pimpl->m_pthreadTransparentMouseEvents.release();
+
+            });
+
+         }
+
+      }
+      else
+      {
+
+         if (pimpl.is_set() && pimpl->m_pthreadTransparentMouseEvents.is_set())
+         {
+
+            ::multithreading::post_quit(pimpl->m_pthreadTransparentMouseEvents);
+
+         }
+
+      }
+
+   }
+
+
+   void interaction::defer_notify_mouse_move(bool & bPointInside, point & ptLast)
    {
 
       if (Session.get_capture() != NULL)
@@ -9267,7 +9340,7 @@ restart:
 
          ptLast = ptCurrent;
 
-         bool bPointInside = _001IsPointInside(ptCurrent);
+         bPointInside = _001IsPointInside(ptCurrent);
 
          if (bPointInside || m_bMouseHover)
          {
@@ -9298,7 +9371,6 @@ restart:
                set_need_redraw();
 
             }
-
 
          }
 

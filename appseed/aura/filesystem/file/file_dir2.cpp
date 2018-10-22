@@ -80,6 +80,20 @@ namespace windows
 ::file::path dir::config()
 {
 
+   if (::aura::system::g_p != NULL)
+   {
+
+      synch_lock sl(::aura::system::g_p->m_pmutex);
+
+      if (::aura::system::g_p->m_pathConfig.has_char())
+      {
+
+         return ::aura::system::g_p->m_pathConfig;
+
+      }
+
+   }
+
    ::file::path path;
 
 #ifdef WINDOWSEX
@@ -138,6 +152,20 @@ namespace windows
    path = ::file::path(getenv("HOME")) / ".config";
 
 #endif
+
+   if (::aura::system::g_p != NULL)
+   {
+
+      synch_lock sl(::aura::system::g_p->m_pmutex);
+
+      if (::aura::system::g_p->m_pathConfig.has_char())
+      {
+
+         ::aura::system::g_p->m_pathConfig = path;
+
+      }
+
+   }
 
    return path;
 

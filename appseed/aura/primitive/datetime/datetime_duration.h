@@ -33,18 +33,21 @@ public:
    int64_t        m_iSeconds;
 
 
+   explicit duration(double dSeconds);
    duration(int64_t iSeconds = 0, int64_t iNanoSeconds = 0);
+   duration(int32_t iSeconds, int32_t iNanoSeconds = 0) :duration((i64)iSeconds, (i64)iNanoSeconds) {}
+   duration(uint32_t uiSeconds, uint32_t uiNanoSeconds = 0) :duration((i64)uiSeconds, (i64)uiNanoSeconds) {}
+   duration(DWORD dwSeconds, DWORD dwNanoSeconds = 0) :duration((i64)dwSeconds, (i64)dwNanoSeconds) {}
    duration(e_duration eduration);
 
-
-   inline void raw_set(int64_t iSeconds, int64_t iNanoseconds);
+   inline void raw_set(int64_t iSeconds, int64_t iNanoseconds = 0);
    inline void set(int64_t iSeconds, int64_t iNanoseconds);
    inline void set_null();
    static inline duration raw_create(int64_t iSeconds, int64_t iNanoseconds);
    static inline duration create(int64_t iSeconds, int64_t iNanoseconds);
    static inline duration create_null();
 
-
+   void fset(double dSeconds);
    void fset(double dSeconds, double dNanoseconds);
    static inline duration fcreate(double dSeconds, double dNanoseconds);
 
@@ -84,6 +87,26 @@ public:
    void sleep();
 
 };
+
+
+inline duration::duration(int64_t iSeconds, int64_t iNanoSeconds)
+{
+
+   m_eduration = duration_finite;
+
+   m_iSeconds = iSeconds;
+
+   m_iNanoseconds = iNanoSeconds;
+
+}
+
+
+inline duration::duration(double dSeconds)
+{
+
+   fset(dSeconds);
+
+}
 
 
 inline void duration::raw_set(int64_t iSeconds,int64_t iNanoseconds)
@@ -325,7 +348,7 @@ public:
 
 
 class CLASS_DECL_AURA seconds :
-   public millis
+   public duration
 {
 public:
 
@@ -333,18 +356,18 @@ public:
    inline seconds(int64_t iSeconds = 0);
    inline seconds(int32_t iSeconds);
    inline seconds(uint32_t dwSeconds);
-   inline seconds(double dSeconds);
+   seconds(double dSeconds);
 
 
 };
 
 class CLASS_DECL_AURA one_second :
-   public seconds
+   public duration
 {
 public:
 
 
-   one_second() : seconds(1) {}
+   one_second() : duration(1) {}
 
 
 };
@@ -352,7 +375,7 @@ public:
 
 
 class CLASS_DECL_AURA minutes :
-   public seconds
+   public duration
 {
 public:
 
@@ -367,12 +390,12 @@ public:
 
 
 class CLASS_DECL_AURA one_minute :
-   public minutes
+   public duration
 {
 public:
 
 
-   one_minute() : minutes(1) {}
+   one_minute() : duration(60) {}
 
 
 };
@@ -381,7 +404,7 @@ public:
 
 
 class CLASS_DECL_AURA hours :
-   public minutes
+   public duration
 {
 public:
 
@@ -396,18 +419,18 @@ public:
 
 
 class CLASS_DECL_AURA one_hour :
-   public hours
+   public duration
 {
 public:
 
 
-   one_hour() : hours(1) {}
+   one_hour() : duration(3600) {}
 
 
 };
 
 class CLASS_DECL_AURA days :
-   public hours
+   public duration
 {
 public:
 
@@ -422,156 +445,166 @@ public:
 
 
 
-nanos::nanos(int64_t i)
+inline nanos::nanos(int64_t i) :
+   duration(i / (1000 * 1000 * 1000), (i % (1000 * 1000 * 1000)))
 {
-
-   raw_set(i / (1000 * 1000 * 1000), (i % (1000 * 1000 * 1000)));
 
 }
 
 
-nanos::nanos(int32_t i)
+inline nanos::nanos(int32_t i) :
+   duration(i / (1000 * 1000 * 1000), (i % (1000 * 1000 * 1000)))
 {
-
-   raw_set(i / (1000 * 1000 * 1000), (i % (1000 * 1000 * 1000)));
 
 }
 
 
-nanos::nanos(uint32_t dw)
+inline nanos::nanos(uint32_t dw) :
+   duration(dw / (1000 * 1000 * 1000), (dw % (1000 * 1000 * 1000)))
 {
-
-   raw_set(dw / (1000 * 1000 * 1000), (dw % (1000 * 1000 * 1000)));
 
 }
 
 
-micros::micros(int64_t i)
+inline micros::micros(int64_t i) :
+   duration(i / (1000 * 1000), (i % (1000 * 1000)) * 1000)
 {
-
-   raw_set(i / (1000 * 1000), (i % (1000 * 1000)) * 1000);
 
 }
 
 
-micros::micros(int32_t i)
+inline micros::micros(int32_t i) :
+   duration(i / (1000 * 1000), (i % (1000 * 1000)) * 1000)
 {
-
-   raw_set(i / (1000 * 1000), (i % (1000 * 1000)) * 1000);
 
 }
 
 
-micros::micros(uint32_t dw)
+inline micros::micros(uint32_t dw) :
+   duration(dw / (1000 * 1000), (dw % (1000 * 1000)) * 1000)
 {
-
-   raw_set(dw / (1000 * 1000), (dw % (1000 * 1000)) * 1000);
 
 }
 
 
-millis::millis(int64_t i)
+inline millis::millis(int64_t i) :
+   duration(i / 1000, (i % 1000) * 1000000)
 {
-
-   raw_set(i / 1000, (i % 1000) * 1000000);
 
 }
 
 
-millis::millis(int32_t i)
+inline millis::millis(int32_t i) :
+   duration(i / 1000, (i % 1000) * 1000000)
 {
-
-   raw_set(i / 1000, (i % 1000) * 1000000);
 
 }
 
 
-millis::millis(uint32_t dw)
+inline millis::millis(uint32_t dw) :
+   duration(dw / 1000, (dw % 1000) * 1000000)
 {
-
-   raw_set(dw / 1000, (dw % 1000) * 1000000);
 
 }
 
 
-seconds::seconds(int64_t i) :
-   millis(i * 1000)
+inline seconds::seconds(int64_t i) :
+   duration(i)
 {
+
 }
 
-seconds::seconds(int32_t i) :
-   millis(i * 1000)
+inline seconds::seconds(int32_t i) :
+   duration(i)
 {
+
 }
 
-seconds::seconds(uint32_t dw) :
-   millis(dw * 1000)
+inline seconds::seconds(uint32_t dw) :
+   duration(dw)
 {
+
 }
 
-seconds::seconds(double d) :
-   millis(d * 1000.0)
+
+inline seconds::seconds(double d) :
+   duration(d)
 {
+
 }
 
-minutes::minutes(int64_t i) :
-   seconds(i * 60)
+
+
+inline minutes::minutes(int64_t i) :
+   duration(i * 60)
 {
+
 }
 
-minutes::minutes(int32_t i) :
-   seconds(i * 60)
+inline minutes::minutes(int32_t i) :
+   duration(i * 60)
 {
+
 }
 
-minutes::minutes(uint32_t dw) :
-   seconds(dw * 60)
+inline minutes::minutes(uint32_t dw) :
+   duration(dw * 60)
 {
+
 }
 
-minutes::minutes(double d) :
-   seconds(d * 60.0)
+inline minutes::minutes(double d) :
+   duration(d * 60.0)
 {
+
 }
 
-hours::hours(int64_t i) :
-   minutes(i * 60)
+inline hours::hours(int64_t i) :
+   duration(i * 3600)
 {
+
 }
 
-hours::hours(int32_t i) :
-   minutes(i * 60)
+inline hours::hours(int32_t i) :
+   duration(i * 3600)
 {
+
 }
 
-hours::hours(uint32_t dw) :
-   minutes(dw * 60)
+inline hours::hours(uint32_t dw) :
+   duration(dw * 3600)
 {
+
 }
 
-hours::hours(double d) :
-   minutes(d * 60.0)
+inline hours::hours(double d) :
+   duration(d * 3600.0)
 {
+
 }
 
-days::days(int64_t i) :
-   hours(i * 24)
+inline days::days(int64_t i) :
+   duration(i * 86400)
 {
+
 }
 
-days::days(int32_t i) :
-   hours(i * 24)
+inline days::days(int32_t i) :
+   duration(i * 86400)
 {
+
 }
 
-days::days(uint32_t dw) :
-   hours(dw * 24)
+inline days::days(uint32_t dw) :
+   duration(dw * 86400)
 {
+
 }
 
-days::days(double d) :
-   hours(d * 24.0)
+inline days::days(double d) :
+   duration(d * 86400.0)
 {
+
 }
 
 inline __time64_t duration::GetTimeSpan() const

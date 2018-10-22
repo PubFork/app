@@ -49,7 +49,8 @@ namespace aura
       ::object *                                   m_pDraw2dFactoryExchange;
       sp(::visual::visual)                         m_pvisual;
 
-
+      ::file::path                                 m_pathConfig;
+      ::file::path                                 m_pathCa2Config;
       pointer_array < ::aura::application * >      m_appptra;
 
 

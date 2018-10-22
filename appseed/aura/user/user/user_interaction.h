@@ -105,7 +105,6 @@ namespace user
 
       bool                                m_bMouseHover;
 
-      bool                                m_bTransparentMouseEvents;
       bool                                m_bRedraw;
       DWORD                               m_dwLastRedraw;
       string                              m_strView;
@@ -1042,11 +1041,14 @@ namespace user
 
       virtual void defer_notify_mouse_move();
 
-      virtual void defer_notify_mouse_move(point & ptLast);
+      virtual void defer_notify_mouse_move(bool & bPointInside, point & ptLast);
 
       virtual bool has_pending_graphical_update() override;
 
-      virtual void transparent_mouse_events();
+      virtual bool enable_transparent_mouse_events(bool bEnable = true);
+
+      virtual void check_transparent_mouse_events();
+
 
       template < typename T >
       inline void redraw_add(T * p);

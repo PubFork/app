@@ -37,16 +37,6 @@ millis::millis(double d)
 
 
 
-duration::duration(int64_t iSeconds, int64_t iNanoSeconds)
-{
-
-   m_eduration = duration_finite;
-
-   m_iSeconds = iSeconds;
-
-   m_iNanoseconds = iNanoSeconds;
-
-}
 
 duration::duration(e_duration eduration)
 {
@@ -125,6 +115,14 @@ void duration::fset(double d, double dNano)
    dNano += fmod(d, 1.0) * 1000.0 * 1000.0 * 1000.0;
 
    raw_set((int64_t)(floor(d) + floor((dNano / (1000.0 * 1000.0 * 1000.0)))), (int64_t)fmod(dNano, 1000.0 * 1000.0 * 1000.0));
+
+}
+
+
+void duration::fset(double d)
+{
+
+   raw_set(floor(d), fmod(d, 1.0) * 1000.0 * 1000.0 * 1000.0);
 
 }
 

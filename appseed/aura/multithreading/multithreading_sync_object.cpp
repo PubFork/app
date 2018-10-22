@@ -4,7 +4,7 @@
 bool sync_interface::lock()
 {
 
-   return false;
+   return wait().succeeded();
 
 }
 
@@ -12,7 +12,7 @@ bool sync_interface::lock()
 bool sync_interface::lock(const duration & durationTimeout)
 {
 
-   return false;
+   return wait(durationTimeout).succeeded();
 
 }
 
@@ -20,7 +20,7 @@ bool sync_interface::lock(const duration & durationTimeout)
 wait_result sync_interface::wait()
 {
 
-   return wait_result(wait_result::Failure);
+   return wait(::duration::infinite());
 
 }
 
@@ -28,7 +28,7 @@ wait_result sync_interface::wait()
 wait_result sync_interface::wait(const duration & durationTimeout)
 {
 
-   return wait_result(wait_result::Failure);
+   return wait();
 
 }
 
@@ -103,19 +103,19 @@ sync_object::~sync_object()
 }
 
 
-bool sync_object::lock(const duration & durationTimeout)
-{
-
-   if(!wait(durationTimeout).signaled())
-   {
-
-      return false;
-
-   }
-
-   return true;
-
-}
+//bool sync_object::lock(const duration & durationTimeout)
+//{
+//
+//   if(!wait(durationTimeout).signaled())
+//   {
+//
+//      return false;
+//
+//   }
+//
+//   return true;
+//
+//}
 
 
 wait_result sync_object::wait(const duration & durationTimeout)

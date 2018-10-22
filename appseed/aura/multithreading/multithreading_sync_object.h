@@ -55,8 +55,8 @@ public:
 
    operator HANDLE() const;
 
-   virtual bool lock() override;
-   virtual bool lock(const duration & durationTimeout) override;
+   //virtual bool lock() override;
+   //virtual bool lock(const duration & durationTimeout) override;
 
    virtual wait_result wait() override;
    virtual wait_result wait(const duration & durationTimeout) override;

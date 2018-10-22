@@ -52,6 +52,7 @@ namespace user
       m_oswindow                             = NULL;
       m_pelementalFocus                      = NULL;
       m_bPendingRedraw                       = false;
+      m_bTransparentMouseEvents              = false;
 
 
 
@@ -360,9 +361,14 @@ namespace user
 
       ::user::interaction_impl_base::last_install_message_routing(pinterface);
 
-      IGUI_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &interaction_impl::_001OnShowWindow);
-      IGUI_MSG_LINK(WM_KILLFOCUS, pinterface, this, &interaction_impl::_001OnKillFocus);
-      IGUI_MSG_LINK(WM_SETFOCUS, pinterface, this, &interaction_impl::_001OnSetFocus);
+      if (!m_pui->m_bMessageWindow)
+      {
+
+         IGUI_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &interaction_impl::_001OnShowWindow);
+         IGUI_MSG_LINK(WM_KILLFOCUS, pinterface, this, &interaction_impl::_001OnKillFocus);
+         IGUI_MSG_LINK(WM_SETFOCUS, pinterface, this, &interaction_impl::_001OnSetFocus);
+
+      }
 
    }
 
@@ -372,7 +378,7 @@ namespace user
 
       m_pui->m_bMouseHover = false;
 
-      if (!m_pui->m_bTransparentMouseEvents)
+      if (!m_bTransparentMouseEvents)
       {
 
          sp(::user::interaction) pui;
@@ -411,12 +417,9 @@ namespace user
 
          }
 
-
       }
 
    }
-
-
 
 
    void interaction_impl::_001OnTriggerMouseInside()
@@ -2215,6 +2218,8 @@ namespace user
       if (pshowwindow->m_bShow)
       {
 
+         output_debug_string("interaction_impl::_001OnShowWindows bShow = true");
+
       }
       else
       {
@@ -2290,12 +2295,11 @@ namespace user
 
          }
 
-
       }
 
+      m_pui->check_transparent_mouse_events();
 
    }
-
 
 
 #ifdef WINDOWSEX
@@ -3314,6 +3318,44 @@ namespace user
 
    }
 
+   void interaction_impl::_thread_transparent_mouse_events()
+   {
+
+#ifdef WINDOWSEX
+
+      point pt;
+
+      bool bPointInside = true;
+
+      while (get_thread_run() && m_bTransparentMouseEvents && m_pui->IsWindowVisible())
+      {
+
+         {
+
+            sp(::user::interaction) spui = this;
+
+            spui->defer_notify_mouse_move(bPointInside, pt);
+
+         }
+
+         if (bPointInside)
+         {
+
+            Sleep(5);
+
+         }
+         else
+         {
+
+            Sleep(100);
+
+         }
+
+      }
+
+#endif
+
+   }
 
 } // namespace user
 

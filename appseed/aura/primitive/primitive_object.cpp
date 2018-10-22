@@ -363,12 +363,12 @@ Sleep((uint32_t)duration.total_milliseconds());
 //
 //}
 
-bool sync_object::lock()
-{
-
-   return lock(duration::infinite());
-
-}
+//bool sync_object::lock()
+//{
+//
+//   return lock(duration::infinite());
+//
+//}
 
 //bool object::lock(const duration & duration)
 //{
