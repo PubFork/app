@@ -431,7 +431,7 @@ namespace message
 
       }
 
-      auto pred = [=](::message::message * pmessage)
+      auto pred = [preceiverDerived, phandler](::message::message * pmessage)
       {
 
          (preceiverDerived->*phandler)(pmessage);
