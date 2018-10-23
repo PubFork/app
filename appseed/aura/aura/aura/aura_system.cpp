@@ -2303,6 +2303,8 @@ RetryBuildNumber:
                if (pfile.is_set())
                {
 
+                  sl.lock();
+
                   break;
 
                }
@@ -2313,7 +2315,16 @@ RetryBuildNumber:
 
                sl.lock();
 
+               if (file_exists_dup(pathCache))
+               {
+
+                  return pathCache;
+
+               }
+
             }
+
+            sl.unlock();
 
             http().download(path, pfile, set);
 
