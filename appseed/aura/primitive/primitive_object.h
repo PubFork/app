@@ -209,6 +209,9 @@ public:
    }
 
 
+   virtual bool enable_system_events(bool bEnable = true);
+
+
    object & operator = (const object & o);
 
    void copy_this(const object & o);
@@ -253,6 +256,9 @@ public:
 
    virtual void on_handle(::command::command * pcommand);
    virtual void on_handle(::create * pcreate);
+
+
+   virtual void on_system_event(e_system_event eevent, lparam lparam);
 
    virtual void threadrefa_add(::thread * pthread);
    virtual void threadrefa_post_quit();

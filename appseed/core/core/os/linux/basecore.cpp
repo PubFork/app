@@ -1,6 +1,7 @@
 #include "basecore.h"
 #include "basecore_shared.h"
 #include "basecore_internal_glue.h"
+#include "aura/aura/message/message_global.h"
 
 // apt-get install libgtk2.0-dev
 // and restart codeblocks/IDE
@@ -31,6 +32,50 @@
 //#endif
 
 #include <stdlib.h>
+
+class pmutex_lock
+{
+public:
+
+   pthread_mutex_t * m_pmutex;
+
+   bool m_bLock;
+
+   pmutex_lock(pthread_mutex_t * pmutex, bool bStartLocked = true) :
+      m_pmutex(pmutex)
+   {
+
+      if(bStartLocked)
+      {
+
+         lock();
+
+
+      }
+
+
+   }
+
+   ~pmutex_lock()
+   {
+
+
+   }
+
+   void lock()
+   {
+
+      pthread_mutex_lock(m_pmutex);
+
+   }
+   void unlock()
+   {
+
+      pthread_mutex_unlock(m_pmutex);
+
+   }
+
+};
 
 
 void os_post_quit();
@@ -288,6 +333,9 @@ GtkWidget * basecore_app_indicator_init(AppIndicator * pindicator, user_notify_i
 namespace user
 {
 
+   bool g_bGInitialized = false;
+   pthread_mutex_t g_mutexG;
+
 
    bool gsettings_set(const char * pszSchema, const char * pszKey, const char * pszValue)
    {
@@ -500,6 +548,99 @@ namespace user
    }
 
 
+   void wallpaper_change_notification (GSettings   *settings,             const gchar *key,             gpointer     data)
+   {
+
+      c_post_system_event(system_event_wallpaper_change);
+
+   }
+
+
+   GAction * g_pactionWallpaper = NULL;
+
+
+   bool g_enable_wallpaper_change_notification(const char * pszSchema, const char * pszKey)
+   {
+
+      if(!g_bGInitialized)
+      {
+
+         return false;
+
+      }
+
+      pmutex_lock lock(&g_mutexG);
+
+      if(g_pactionWallpaper != NULL)
+      {
+
+         return true;
+
+      }
+
+      GSettings * settings = g_settings_new(pszSchema);
+
+      if(settings == NULL)
+      {
+
+         return false;
+
+      }
+
+      g_pactionWallpaper = g_settings_create_action (settings, pszKey);
+
+      g_object_unref (settings);
+
+      g_signal_connect (g_pactionWallpaper, "notify::state", G_CALLBACK (wallpaper_change_notification), NULL);
+
+      return true;
+
+   }
+
+
+   void g_defer_init()
+   {
+
+      if(g_bGInitialized)
+      {
+
+         return;
+
+      }
+
+      g_bGInitialized = true;
+
+      pthread_mutex_init(&g_mutexG, NULL);
+
+   }
+
+   void g_defer_term()
+   {
+
+      if(!g_bGInitialized)
+      {
+
+         return;
+
+      }
+
+      g_bGInitialized = false;
+
+      if(g_pactionWallpaper != NULL)
+      {
+
+         g_object_unref(g_pactionWallpaper);
+
+         g_pactionWallpaper = NULL;
+
+      }
+
+      pthread_mutex_destroy(&g_mutexG);
+
+
+   }
+
+
 } // namespace user
 
 
@@ -643,6 +784,7 @@ const char * basecore_get_file_content_type(const char * pszPath)
    return p;
 
 }
+
 
 
 

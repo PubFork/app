@@ -1,9 +1,7 @@
 #pragma once
 
 
-#ifdef LINUX
-#include "basecore/basecore.h"
-#elif defined (__APPLE__)
+#if defined (__APPLE__)
 #include "user_notify_icon_mm_bridge.h"
 #endif
 

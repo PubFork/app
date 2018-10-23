@@ -4233,6 +4233,26 @@ success:
    }
 
 
+   void system::on_system_event(e_system_event eevent, lparam lparam)
+   {
+
+      for(auto & papp : m_appptra)
+      {
+
+         if(papp == this)
+         {
+
+            continue;
+
+         }
+
+         papp->post_message(message_system_event, (WPARAM) eevent, lparam);
+
+      }
+
+   }
+
+
 } // namespace aura
 
 
@@ -4309,5 +4329,16 @@ CLASS_DECL_AURA::file::path get_installed_application_path(string strAppId)
    ::file::path path = ::file_as_string_dup(pathFile);
 
    return path;
+
+}
+
+
+
+void c_post_system_event(e_system_event eevent, void * pparam)
+{
+
+   LPARAM lparam = (LPARAM) pparam;
+
+   ::aura::system::g_p->post_message(message_system_event, (WPARAM) eevent, lparam);
 
 }

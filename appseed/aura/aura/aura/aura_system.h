@@ -563,6 +563,9 @@ namespace aura
       virtual bool set_standalone_setting(string str, string strSetting);
 
 
+      virtual void on_system_event(e_system_event eevent, lparam lparam) override;
+
+
    };
 
 

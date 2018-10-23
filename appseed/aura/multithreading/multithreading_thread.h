@@ -436,6 +436,10 @@ public:
 
    virtual int get_exit_code();
 
+
+   virtual void on_system_event(e_system_event eevent, lparam lparam);
+
+
 };
 
 

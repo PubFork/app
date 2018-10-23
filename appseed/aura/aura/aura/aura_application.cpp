@@ -278,6 +278,36 @@ namespace aura
    }
 
 
+   bool application::enable_system_events(::object * pobject, bool bEnable)
+   {
+
+      synch_lock sl(m_pmutex);
+
+      if(bEnable)
+      {
+
+         if(pobject == this)
+         {
+
+            return;
+
+         }
+
+         m_objectptraSystemEvents.add_unique(pobject);
+
+      }
+      else
+      {
+
+         m_objectptraSystemEvents.remove(pobject);
+
+      }
+
+      return true;
+
+   }
+
+
    string application::get_title()
    {
 
@@ -7562,14 +7592,31 @@ run:
    }
 
 
+   void application::on_system_event(e_system_event eevent, lparam lparam)
+   {
+
+      object_ptra ptra;
+
+      {
+
+         synch_lock sl(m_pmutex);
+
+         ptra = m_objectptraSystemEvents;
+
+      }
+
+      for(auto & pobject : ptra)
+      {
+
+         pobject->on_system_event(eevent, lparam);
+
+      }
+
+
+   }
+
+
 } // namespace aura
-
-
-
-
-
-
-
 
 
 

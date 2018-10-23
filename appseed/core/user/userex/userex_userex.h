@@ -120,6 +120,9 @@ namespace userex
       virtual bool impl_set_wallpaper(index iScreen, string strWallpaper);
 
 
+      virtual void enable_wallpaper_change_notification();
+
+
    };
 
 

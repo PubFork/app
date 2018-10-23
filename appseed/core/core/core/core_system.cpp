@@ -12,7 +12,6 @@
 #endif
 
 #ifdef LINUX
-#include "basecore/basecore.h"
 #include <dlfcn.h>
 
 void * g_pbasecore = NULL;
@@ -210,6 +209,13 @@ namespace core
       }
 
       ::aura::profiler::initialize();
+
+
+      #ifdef LINUX
+
+      ::user::g_defer_init();
+
+      #endif // LINUX
 
 
       //m_phtml = create_html();
@@ -437,6 +443,22 @@ namespace core
          m_error.set_if_not_set();
 
       }
+
+#ifdef LINUX
+
+      try
+      {
+
+         ::user::g_defer_term();
+
+      }
+      catch(...)
+      {
+
+      }
+
+      #endif // LINUX
+
 
    }
 

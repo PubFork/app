@@ -98,3 +98,26 @@ c_class::c_class(const c_class &)
 c_class::~c_class()
 {
 }
+
+
+namespace heap
+{
+
+
+   void heap_base::zero()
+   {
+
+      if(size() > 0 && m_p != NULL)
+      {
+
+         ::zero(m_p, size());
+
+      }
+
+   }
+
+
+} // namespace heap
+
+
+

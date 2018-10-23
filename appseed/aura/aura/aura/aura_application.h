@@ -29,6 +29,8 @@ namespace aura
       string                                          m_strInstallTraceLabel;
       string                                          m_strInstallBuild;
 
+      object_ptra                                     m_objectptraSystemEvents;
+
 
 
       stringa                                         m_straMatterLocatorPriority;
@@ -177,6 +179,7 @@ namespace aura
       }
 
 
+      virtual void on_system_event(e_system_event eevent, lparam lparam) override;
       //virtual void tellme_destroyed(::user::primitive * pui, bool * pDestroyed, bool bTell = true);
       virtual ::thread_toolset * create_thread_toolset(::thread::e_tool etool);
 
@@ -216,6 +219,8 @@ namespace aura
       virtual string get_title();
       virtual stringa get_categories();
 
+
+      virtual bool enable_system_events(::object * pobject, bool bEnable);
 
       virtual bool is_equal_file_path(const ::file::path & p1, const ::file::path & p2);
 

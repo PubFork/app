@@ -1,5 +1,12 @@
 #pragma once
 
+#ifndef WM_USER
+#define WM_USER 0x0400
+#endif // WM_USER
+
+#ifndef CLASS_DECL_AURA
+#define CLASS_DECL_AURA
+#endif // CLASS_DECL_AURA
 
 enum e_message
 {
@@ -10,6 +17,7 @@ enum e_message
    message_display_change,
    message_property,
    message_event,
+   message_system_event,
    message_simple_command,
    message_set_schema,
    message_post_user,
@@ -34,6 +42,17 @@ enum e_system_message
 
 };
 
+
+enum e_system_event
+{
+
+   system_event_none,
+   system_event_wallpaper_change,
+
+};
+
+
+CLASS_DECL_AURA void c_post_system_event(e_system_event eevent, void * pparam = 0);
 
 
 

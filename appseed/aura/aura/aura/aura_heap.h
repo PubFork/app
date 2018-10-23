@@ -206,6 +206,10 @@ namespace heap
 
       }
 
+
+      void zero();
+
+
       virtual uint_ptr size(uint_ptr uiSize)
       {
 

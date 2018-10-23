@@ -694,6 +694,28 @@ void object::add_fork_uri(const char * pszCommandFork,application_bias * pbiasCr
 }
 
 
+bool object::enable_system_events(bool bEnable)
+{
+
+   if(::is_null(m_papp))
+   {
+
+      return false;
+
+   }
+
+   if(!m_papp->enable_system_events(this, bEnable))
+   {
+
+      return false;
+
+   }
+
+   return true;
+
+}
+
+
 void object::request_file(var & varFile)
 {
 
@@ -943,6 +965,12 @@ void object::on_handle(::command::command * pcommand)
 }
 
 
+void object::on_system_event(e_system_event eevent, lparam lparam)
+{
+
+
+
+}
 
 
 void object::on_handle(::create * pcreate)

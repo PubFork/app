@@ -2894,7 +2894,22 @@ bool thread::process_message(LPMESSAGE lpmessage)
 
       MESSAGE & msg = *lpmessage;
 
-      if (msg.message == message_system)
+      if (msg.message == message_system_event)
+      {
+
+         on_system_event((e_system_event) msg.wParam, msg.lParam);
+
+      //    if (msg.wParam == system_message_user)
+      //    {
+
+      //       sp(::object) pobject((lparam) msg.lParam);
+
+      //       Application.dispatch_user_message_object(pobject);
+
+      //    }
+
+      }
+      else if (msg.message == message_system)
       {
 
          if (msg.wParam == system_message_user)
@@ -3779,3 +3794,11 @@ int thread::get_exit_code()
    return m_error.get_exit_code();
 
 }
+
+
+void thread::on_system_event(e_system_event eevent, lparam lparam)
+{
+
+}
+
+
