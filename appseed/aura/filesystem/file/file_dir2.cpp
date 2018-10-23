@@ -158,12 +158,7 @@ namespace windows
 
       synch_lock sl(::aura::system::g_p->m_pmutex);
 
-      if (::aura::system::g_p->m_pathConfig.has_char())
-      {
-
-         ::aura::system::g_p->m_pathConfig = path;
-
-      }
+     ::aura::system::g_p->m_pathConfig = path;
 
    }
 

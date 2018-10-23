@@ -772,10 +772,10 @@ namespace linux
 //
 //   }
 
-   bool dir::is(const ::file::path & path, ::aura::application *  papp)
+   bool dir::is(const ::file::path & path, ::aura::application * papp, bool bOptional, bool bNoCache)
    {
 
-      if(::file::dir::system::is(path, papp))
+      if(::file::dir::system::is(path, papp, bOptional, bNoCache))
       {
 
          return true;

@@ -40,7 +40,7 @@ namespace linux
       virtual ::file::listing & ls(::aura::application * papp, ::file::listing & ls);
 
 
-      virtual bool  is(const ::file::path & path, ::aura::application * papp);
+      virtual bool  is(const ::file::path & path, ::aura::application * papp, bool bOptional = true, bool bNoCache = false) override;
       virtual bool  is_inside(const ::file::path & lpcszDir, const ::file::path & lpcszPath, ::aura::application * papp);
       virtual bool  is_inside_time(const ::file::path & lpcsz, ::aura::application * papp);
       virtual bool  name_is(const ::file::path & path,::aura::application * papp);

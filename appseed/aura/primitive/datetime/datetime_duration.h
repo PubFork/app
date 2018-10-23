@@ -37,7 +37,9 @@ public:
    duration(int64_t iSeconds = 0, int64_t iNanoSeconds = 0);
    duration(int32_t iSeconds, int32_t iNanoSeconds = 0) :duration((i64)iSeconds, (i64)iNanoSeconds) {}
    duration(uint32_t uiSeconds, uint32_t uiNanoSeconds = 0) :duration((i64)uiSeconds, (i64)uiNanoSeconds) {}
+   #if !defined(__GNUC__)
    duration(DWORD dwSeconds, DWORD dwNanoSeconds = 0) :duration((i64)dwSeconds, (i64)dwNanoSeconds) {}
+   #endif
    duration(e_duration eduration);
 
    inline void raw_set(int64_t iSeconds, int64_t iNanoseconds = 0);

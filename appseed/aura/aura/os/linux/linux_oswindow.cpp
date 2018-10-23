@@ -6,6 +6,8 @@ extern bool b_prevent_xdisplay_lock_log;
 
 void windowing_output_debug_string(const char * pszDebugString);
 void wm_state_below_raw(oswindow w, bool bSet);
+void x11_post_message(MESSAGE & msg);
+
 
 oswindow_data::oswindow_data()
 {
@@ -834,6 +836,17 @@ void oswindow_data::full_screen(LPCRECT lpcrect)
    windowing_output_debug_string("\n::oswindow_data::full_screen 2");
 
    fflush(stdout);
+
+   //MESSAGE msg = {};
+
+   //msg.hwnd = this;
+   //msg.message = WM_SHOWWINDOW;
+   //msg.wParam = 1; // Showing Window = 1 (TRUE)
+
+   //x11_post_message(msg);
+
+   m_pimpl->m_pui->defer_start_prodevian();
+
 
 }
 

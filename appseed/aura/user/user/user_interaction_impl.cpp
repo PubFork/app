@@ -2230,6 +2230,12 @@ namespace user
 
          output_debug_string("interaction_impl::_001OnShowWindows bShow = true");
 
+         #ifndef WINDOWSEX
+
+         m_pui->defer_start_prodevian();
+
+         #endif // WINDOWS
+
       }
       else
       {
@@ -2654,8 +2660,35 @@ namespace user
 
       bool bUpdateScreen;
 
-      while (::get_thread_run() && m_pui->m_bUserElementalOk)
+      while (::get_thread_run())
       {
+
+         if(!m_pui->m_bUserElementalOk)
+         {
+
+            output_debug_string("exiting _thread_prodevian: !m_pui->m_bUserElementalOk");
+
+            break;
+
+         }
+
+         if(!m_pui->IsWindowVisible())
+         {
+
+            output_debug_string("exiting _thread_prodevian: !m_pui->IsWindowVisible()");
+
+            break;
+
+         }
+
+         if(m_pui->WfiIsIconic())
+         {
+
+            output_debug_string("exiting _thread_prodevian: m_pui->WfiIsIconic()");
+
+            break;
+
+         }
 
          bUpdateScreen = false;
 

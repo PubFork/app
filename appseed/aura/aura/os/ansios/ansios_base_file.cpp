@@ -87,6 +87,47 @@ int_bool file_exists_dup(const char * path1)
 }
 
 
+int_bool is_file_or_dir_dup(const char * path1, ::file::e_type * petype)
+{
+
+   struct stat st;
+
+   if(stat(path1, &st))
+   {
+
+      if (is_set(petype))
+      {
+
+         *petype = ::file::type_none;
+
+      }
+
+      return FALSE;
+
+   }
+
+   if (is_set(petype))
+   {
+
+      if ((st.st_mode & S_IFDIR))
+      {
+
+         *petype = ::file::type_folder;
+
+      }
+      else
+      {
+
+         *petype = ::file::type_file;
+
+      }
+
+   }
+
+   return TRUE;
+
+}
+
 
 int_bool file_put_contents_dup(const char * path, const char * contents, ::count len)
 {

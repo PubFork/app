@@ -466,21 +466,21 @@ namespace linux
 
          m_pui->add_ref();
 
-         m_pui->m_pthread = ::get_thread();
-
-         if (m_pui->m_pthread != NULL)
-         {
-
-            if (m_pui->m_pthread->m_puiptra == NULL)
-            {
-
-               m_pui->m_pthread->m_puiptra = new user_interaction_ptr_array();
-
-            }
-
-            m_pui->m_pthread->m_puiptra->add(m_pui);
-
-         }
+//         m_pui->m_pthread = ::get_thread();
+//
+//         if (m_pui->m_pthread != NULL)
+//         {
+//
+//            if (m_pui->m_pthread->m_puiptra == NULL)
+//            {
+//
+//               m_pui->m_pthread->m_puiptra = new user_interaction_ptr_array();
+//
+//            }
+//
+//            m_pui->m_pthread->m_puiptra->add(m_pui);
+//
+//         }
 
          {
 
@@ -738,19 +738,19 @@ namespace linux
 
       ::multithreading::post_quit_and_wait(m_pthreadProDevian, seconds(10));
 
-      if (m_pui->m_pthread != NULL)
-      {
-
-         synch_lock sl(m_pui->m_pthread->m_pmutex);
-
-         if(m_pui->m_pthread->m_puiptra != NULL)
-         {
-
-            m_pui->m_pthread->m_puiptra->remove(m_pui);
-
-         }
-
-      }
+//      if (m_pui->m_pthread != NULL)
+//      {
+//
+//         synch_lock sl(m_pui->m_pthread->m_pmutex);
+//
+//         if(m_pui->m_pthread->m_puiptra != NULL)
+//         {
+//
+//            m_pui->m_pthread->m_puiptra->remove(m_pui);
+//
+//         }
+//
+//      }
 
       Default();
 

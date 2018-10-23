@@ -2236,7 +2236,7 @@ restart:
    void interaction::defer_start_prodevian()
    {
 
-#if defined(WINDOWSEX) || defined(MACOS) || defined(LINUX)
+#if defined(WINDOWSEX) || defined(MACOS) //|| defined(LINUX)
 
       if (this == System.m_psystemwindow)
       {
