@@ -1188,6 +1188,8 @@ void simple_frame_window::_001OnClose(::message::message * pobj)
 
 #endif // LINUX
 
+      ModifyStyleEx(0, WS_EX_TOOLWINDOW);
+
 //      else
 //      {
 //
@@ -3328,10 +3330,12 @@ void simple_frame_window::_001OnNotifyIconTopic(::message::message * pmessage)
    if(m_bDefaultNotifyIcon)
    {
 
-      if(IsWindowVisible() && is_active() && has_focus())
+      if(IsWindowVisible() && !::is_window_occluded(get_handle()))
       {
 
          ShowWindow(SW_HIDE);
+
+         ModifyStyleEx(0, WS_EX_TOOLWINDOW);
 
       }
       else
@@ -3349,6 +3353,8 @@ void simple_frame_window::_001OnNotifyIconTopic(::message::message * pmessage)
          BringWindowToTop();
 
          SetForegroundWindow();
+
+         ModifyStyleEx(WS_EX_TOOLWINDOW, 0);
 
       }
 
@@ -3771,11 +3777,6 @@ void simple_frame_window::_001OnNcCalcSize(::message::message * pmessage)
 #endif
 
 }
-
-
-
-
-
 
 
 

@@ -9,6 +9,7 @@ void wm_state_below_raw(oswindow w, bool bSet);
 void x11_post_message(MESSAGE & msg);
 
 
+
 oswindow_data::oswindow_data()
 {
 
@@ -1192,4 +1193,6 @@ bool oswindow_data::set_window_pos(oswindow hwndInsertAfter, int32_t x, int32_t 
    return 1;
 
 }
+
+
 

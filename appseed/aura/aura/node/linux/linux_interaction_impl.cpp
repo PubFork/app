@@ -5864,7 +5864,14 @@ namespace linux
    bool interaction_impl::is_active()
    {
 
-      return has_focus();
+      if(!::is_window(m_oswindow))
+      {
+
+         return false;
+
+      }
+
+      return get_handle() == ::get_active_window();
 
    }
 

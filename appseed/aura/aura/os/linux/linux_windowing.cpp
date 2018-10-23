@@ -239,6 +239,45 @@ void unmapped_net_state_raw(Display * d, Window w, ...)
 }
 
 
+WINBOOL x11_get_window_rect(Display * d, Window window, LPRECT lprect)
+{
+
+   XWindowAttributes attrs;
+
+   if(!XGetWindowAttributes(d, window, &attrs))
+   {
+
+      windowing_output_debug_string("\n::x11_get_window_rect 1.1");
+
+      return FALSE;
+
+   }
+
+   int x = 0;
+
+   int y = 0;
+
+   int screen = XDefaultScreen((Display *) d);
+
+   Window windowRoot = RootWindow((Display *) d, screen);
+
+   Window child;
+
+   XTranslateCoordinates( d, window, windowRoot, 0, 0, &x, &y, &child );
+
+   lprect->left      = x + attrs.x;
+   lprect->top       = y + attrs.y;
+   lprect->right     = x + attrs.x    + attrs.width;
+   lprect->bottom    = y + attrs.y    + attrs.height;
+
+
+   windowing_output_debug_string("\n::x11_get_window_rect 2");
+
+   return TRUE;
+
+}
+
+
 static oswindow g_oswindowCapture;
 
 
@@ -377,6 +416,247 @@ oswindow set_focus(oswindow window)
 }
 
 
+void x11_check_status(int status, unsigned long window)
+{
+    if (status == BadWindow) {
+        printf("window id # 0x%lx does not exists!", window);
+     //   exit(1);
+    }
+
+    if (status != Success) {
+        printf("XGetWindowProperty failed!");
+       // exit(2);
+    }
+}
+#define MAXSTR 1000
+unsigned char* x11_get_string_property(Display * display, Window window, char* property_name)
+{
+
+   unsigned char * prop;
+   Atom actual_type, filter_atom;
+   int actual_format, status;
+   unsigned long nitems, bytes_after;
+
+   filter_atom = XInternAtom(display, property_name, True);
+   status = XGetWindowProperty(display, window, filter_atom, 0, MAXSTR, False, AnyPropertyType,
+                                &actual_type, &actual_format, &nitems, &bytes_after, &prop);
+   x11_check_status(status, window);
+   return prop;
+
+}
+
+unsigned long x11_get_long_property(Display * d, Window w, char* property_name)
+{
+   unsigned char * prop =x11_get_string_property(d, w, property_name);
+   unsigned long long_property = prop[0] + (prop[1]<<8) + (prop[2]<<16) + (prop[3]<<24);
+   return long_property;
+}
+
+string x11_get_name(Display * display, Window w)
+{
+
+string str;
+
+char* name = '\0';
+int status = XFetchName(display, w, &name);
+if (status >= Success)
+{
+    str =name;
+}
+XFree(name);
+return str;
+
+}
+
+
+
+
+oswindow get_active_window()
+{
+
+   synch_lock sl(g_pmutexX);
+
+   oswindow pwindow = NULL;
+
+   windowing_output_debug_string("\n::GetFocus 1");
+
+   b_prevent_xdisplay_lock_log = false;
+
+   xdisplay d(x11_get_display());
+
+   windowing_output_debug_string("\n::GetFocus 1.01");
+
+   if(d.is_null())
+   {
+
+      windowing_output_debug_string("\n::GetFocus 1.1");
+
+      return pwindow;
+
+   }
+
+   int screen = XDefaultScreen((Display *) d);
+
+   Window windowRoot = RootWindow((Display *) d, screen);
+
+   Window window = x11_get_long_property(d, windowRoot, "_NET_ACTIVE_WINDOW");
+
+   pwindow = oswindow_defer_get(window);
+
+   windowing_output_debug_string("\n::GetActiveWindow 2");
+
+   return pwindow;
+
+}
+
+
+Window * x11_window_list(Display *disp, unsigned long * len)
+{
+
+   Atom prop = XInternAtom(disp,"_NET_CLIENT_LIST_STACKING",False);
+
+   if(prop == NULL)
+   {
+
+      prop = XInternAtom(disp,"_NET_CLIENT_LIST",False);
+
+   }
+   if(prop == NULL)
+   {
+
+      return NULL;
+
+   }
+
+   Atom type;
+   int form;
+   unsigned long remain;
+   unsigned char *list;
+
+   errno = 0;
+   if (XGetWindowProperty(disp,XDefaultRootWindow(disp),prop,0,1024,False,XA_WINDOW,
+                &type,&form,len,&remain,&list) != Success) {
+        output_debug_string("winlist() -- GetWinProp");
+        return NULL;
+    }
+
+    return (Window*)list;
+}
+
+
+
+bool x11_window_list(Display *disp, array < Window > & windowa)
+{
+
+   unsigned long len = 0;
+
+   Window * list = (Window*)x11_window_list(disp,&len);
+
+
+   if(list == NULL)
+   {
+
+      return false;
+
+   }
+
+   for (int i=0;i<(int)len;i++)
+   {
+
+      windowa.add(list[i]);
+
+   }
+
+   XFree(list);
+
+   return true;
+
+}
+
+int_bool is_window_occluded(oswindow oswindow)
+{
+
+
+   synch_lock sl(g_pmutexX);
+
+   windowing_output_debug_string("\n::GetFocus 1");
+
+   b_prevent_xdisplay_lock_log = false;
+
+   xdisplay d(oswindow->display());
+
+   windowing_output_debug_string("\n::GetFocus 1.01");
+
+   if(d.is_null())
+   {
+
+      windowing_output_debug_string("\n::GetFocus 1.1");
+
+      return false;
+
+   }
+
+   comparable_array < Window > windowa;
+
+   if(!x11_window_list(d, windowa))
+   {
+
+      return true;
+
+   }
+
+   if(windowa.last() == oswindow->window())
+   {
+
+      return false;
+
+   }
+
+   index iFind = windowa.find_last(oswindow->window());
+
+   if(iFind < 0)
+   {
+
+      return true;
+
+   }
+
+   ::rect r;
+
+   x11_get_window_rect(d, oswindow->window(), r);
+
+   r = oswindow->m_pimpl->m_rectParentClient;
+
+   string strTopic = x11_get_name(d, oswindow->window());
+
+   ::rect rTest;
+
+   for(iFind++; iFind < windowa.get_size(); iFind++)
+   {
+
+   string strItem = x11_get_name(d, windowa[iFind]);
+      ::rect rHigher;
+
+      if(x11_get_window_rect(d, windowa[iFind], rHigher))
+      {
+
+         if(rTest.intersect(rHigher, r))
+         {
+
+            return true;
+
+         }
+
+      }
+
+   }
+
+
+   return false;
+
+}
+
+
 oswindow get_focus()
 {
 
@@ -397,7 +677,7 @@ oswindow get_focus()
 
       windowing_output_debug_string("\n::GetFocus 1.1");
 
-      return;
+      return NULL;
 
    }
 
@@ -430,14 +710,6 @@ oswindow get_focus()
    windowing_output_debug_string("\n::GetFocus 2");
 
    return pwindow;
-
-}
-
-
-oswindow get_active_window()
-{
-
-   return get_focus();
 
 }
 
@@ -2736,6 +3008,9 @@ WINBOOL SetWindowPos(oswindow hwnd, oswindow hwndInsertAfter, int32_t x, int32_t
 }
 
 
+
+
+
 WINBOOL GetWindowRect(oswindow hwnd, LPRECT lprect)
 {
 
@@ -2745,25 +3020,17 @@ WINBOOL GetWindowRect(oswindow hwnd, LPRECT lprect)
 
    xdisplay d(hwnd->display());
 
-   XWindowAttributes attrs;
-
-   if(!XGetWindowAttributes(hwnd->display(), hwnd->window(), &attrs))
+   if(d.is_null())
    {
 
-      windowing_output_debug_string("\n::GetWindowRect 1.1");
+      windowing_output_debug_string("\n::x11_GetWindowRect 1.1");
 
       return FALSE;
 
    }
 
-   lprect->left      = attrs.x;
-   lprect->top       = attrs.y;
-   lprect->right     = attrs.x    + attrs.width;
-   lprect->bottom    = attrs.y    + attrs.height;
+   return x11_get_window_rect(d, hwnd->window(), lprect);
 
-   windowing_output_debug_string("\n::GetWindowRect 2");
-
-   return TRUE;
 
 }
 

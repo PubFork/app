@@ -490,6 +490,25 @@ namespace linux
    }
 
 
+   bool copydesk::set_plain_text(const string & strParam)
+   {
+
+      string str(strParam);
+
+      gdk_fork([this, str]
+               {
+
+                  string strText(str);
+
+                  ::user::copydesk::set_plain_text(strText);
+
+               });
+
+      return true;
+
+   }
+
+
    bool copydesk::_set_plain_text(const string & str)
    {
 
