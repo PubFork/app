@@ -2519,6 +2519,8 @@ bool x11_process_message(osdisplay_data * pdata, Display * display)
 
                pimpl->m_pui->set_need_redraw();
 
+               pimpl->m_pui->set_need_layout();
+
             }
 
             if(pui->m_eappearanceRequest == ::user::appearance_full_screen

@@ -58,9 +58,9 @@ namespace simple_ui
    {
 
       sp(::simple_ui::tap) ptap = canew(::simple_ui::tap(get_app()));
-      
+
       ptap->create_window(null_rect(), this, id);
-      
+
       ptap->set_window_text(pszText);
 
       tapa.add(ptap);
@@ -97,9 +97,9 @@ namespace simple_ui
          Session.get_main_monitor(rectDesktop);
 
       }
-      
+
       string strTitle = m_strTitle;
-      
+
       set_window_text(strTitle);
 
       rect rectFontopus;
@@ -138,13 +138,13 @@ namespace simple_ui
 
       if(!create_window_ex(cs, puiParent))
       {
-         
+
          _throw(simple_exception(get_app(),"not excepted! Failing Message box!!"));
-         
+
       }
 
       TRACE("(1) Just after create_window_ex for simple_message_box (m_pimpl.m_p) : %d",m_pimpl.m_p);
-      
+
       TRACE("(2) Just after create_window_ex for simple_message_box (m_pimpl->m_pui) : %d",m_pimpl->m_pui);
 
       uint32_t uiType = m_uiFlags & MB_TYPEMASK;
@@ -184,7 +184,7 @@ namespace simple_ui
       }
 
       TRACE("(3) Just after create_window_ex for simple_message_box (m_pimpl.m_p) : %d",m_pimpl.m_p);
-      
+
       TRACE("(4) Just after create_window_ex for simple_message_box (m_pimpl->m_pui) : %d",m_pimpl->m_pui);
 
       SetWindowPos(ZORDER_TOP,rectFontopus,SWP_SHOWWINDOW);
@@ -272,6 +272,13 @@ namespace simple_ui
       rect rectClient;
 
       GetClientRect(rectClient);
+
+      if(rectClient.area() <= 0)
+      {
+
+         return;
+
+      }
 
       int cx = 100;
 
