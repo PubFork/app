@@ -156,7 +156,7 @@ namespace user
       sp(interaction_impl_base)           m_pimpl;
 
 
-      interaction_spa                     m_uiptraOwned;
+      interaction_ptra                    m_uiptraOwned;
       interaction_spa                     m_uiptraChild;
       string                              m_strName;
       interaction *                       m_puiOwner;

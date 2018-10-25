@@ -1212,7 +1212,7 @@ restart:
             try
             {
 
-               if (m_uiptraOwned[i].is_set())
+               if (::is_set(m_uiptraOwned[i]))
                {
 
                   m_uiptraOwned[i]->ShowWindow(SW_HIDE);
