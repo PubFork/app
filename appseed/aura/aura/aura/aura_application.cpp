@@ -289,7 +289,7 @@ namespace aura
          if(pobject == this)
          {
 
-            return;
+            return true;
 
          }
 

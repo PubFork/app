@@ -15,6 +15,7 @@ CLASS_DECL_AURA i64 oswindow_id(oswindow w);
 
 
 CLASS_DECL_AURA WINBOOL is_window(oswindow oswindow);
+CLASS_DECL_AURA WINBOOL is_window_occluded(oswindow oswindow);
 CLASS_DECL_AURA oswindow get_focus();
 CLASS_DECL_AURA oswindow set_focus(oswindow oswindow);
 CLASS_DECL_AURA oswindow get_active_window();

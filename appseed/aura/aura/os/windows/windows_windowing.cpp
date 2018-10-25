@@ -306,3 +306,102 @@ CLASS_DECL_AURA WINBOOL show_window(oswindow oswindow, int iShowCmd)
    return ShowWindow(oswindow, iShowCmd);
 
 }
+
+
+CLASS_DECL_AURA oswindow_array get_top_level_windows()
+{
+
+   enum_windows enumwindows;
+
+   return enumwindows.m_oswindowa;
+
+}
+
+
+enum_windows::enum_windows()
+{
+
+   ::EnumWindows(&::enum_windows::EnumWindowsProc, (LPARAM) this);
+
+}
+
+
+enum_windows::~enum_windows()
+{
+
+
+}
+
+
+BOOL CALLBACK enum_windows::EnumWindowsProc(oswindow oswindow, LPARAM lParam)
+{
+
+   enum_windows * penumwindows = (enum_windows *) lParam;
+
+   penumwindows->m_oswindowa.add(oswindow);
+
+   return true;
+
+}
+
+
+
+
+
+
+int_bool is_window_occluded(oswindow oswindow)
+{
+
+   oswindow_array oswindowa = get_top_level_windows();
+
+   if(oswindowa.is_empty())
+   {
+
+      return false;
+
+   }
+
+   if(oswindowa.first() == oswindow)
+   {
+
+      return false;
+
+   }
+
+   index iFind = oswindowa.find_first(oswindow);
+
+   if(iFind < 0)
+   {
+
+      return true;
+
+   }
+
+   ::rect r;
+
+   ::GetWindowRect(oswindow, r);
+
+   ::rect rHigher;
+
+   ::rect rTest;
+
+   for(iFind--; iFind >= 0; iFind--)
+   {
+
+      if(::GetWindowRect(oswindowa[iFind], rHigher))
+      {
+
+         if(rTest.intersect(rHigher, r))
+         {
+
+            return true;
+
+         }
+
+      }
+
+   }
+
+   return false;
+
+}

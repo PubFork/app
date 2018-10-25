@@ -1311,6 +1311,13 @@ retry_license:
 
 #ifdef WINDOWSEX
 
+
+   void userex::enable_wallpaper_change_notification()
+   {
+
+   }
+
+
    bool userex::impl_set_wallpaper(index iScreen, string strLocalImagePath)
    {
 
