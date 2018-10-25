@@ -210,12 +210,30 @@ namespace user
 
       string str;
 
+//      #ifdef LINUX
+//
+//      //if(!m_mapCode.Lookup((int) pkey->m_ekey,str))
+//      {
+//
+//         if(!m_mapCode.Lookup((int) pkey->m_iCode,str))
+//         {
+//
+//            str = (char)(pkey->m_nChar & 0xff);
+//
+//         }
+//
+//      }
+//
+//      #else
+
       if(!m_mapCode.Lookup((int) pkey->m_iCode,str))
       {
 
          str = (char)(pkey->m_nChar & 0xff);
 
       }
+
+//      #endif // LINUX
 
       if(::str::begins_eat(str,"escape="))
       {
