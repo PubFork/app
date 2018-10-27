@@ -3766,6 +3766,15 @@ retry_license:
 
          bool bHandled = false;
 
+         if(System.handler()->m_varTopicQuery.has_property("post"))
+         {
+
+            on_exclusive_instance_conflict(ExclusiveInstanceLocal);
+
+            _throw(exit_exception(m_psession, ::exit_application));
+
+         }
+
          if (!check_exclusive(bHandled))
          {
 
@@ -4854,6 +4863,33 @@ retry_license:
 
    bool application::on_exclusive_instance_local_conflict(string strModule, int iPid, string strCommandLine)
    {
+
+      property_set set;
+
+      var varFile;
+
+      string strApp;
+
+      set._008ParseCommandFork(strCommandLine, varFile, strApp);
+
+      if(set.has_property("transparent_frame"))
+      {
+
+         ::user::command command;
+
+         command.m_id = ::message::type_command;
+
+         command.m_id.::id::operator = ("transparent_frame");
+
+         if(m_puiMain != NULL)
+         {
+
+            m_puiMain->on_command(&command);
+
+         }
+
+
+      }
 
       return false;
 

@@ -202,6 +202,12 @@ namespace linux
 
       stringa & straLine = m_straLine;
 
+      string strPrgName = Application.m_strAppId;
+
+      strPrgName.replace("/", ".");
+
+      strPrgName.replace("_", "-");
+
       straLine.add("[Desktop Entry]");
       straLine.add("Version=1.0");
       straLine.add("Type=Application");
@@ -212,7 +218,7 @@ namespace linux
       straLine.add("Icon=");
       straLine.add("Terminal=false");
       straLine.add("X-MultipleArgs=false");
-      straLine.add("Categories=Utilities;");
+      straLine.add("Categories=Network;");
       straLine.add("StartupNotify=true");
       straLine.add("MimeType=");
 
@@ -286,12 +292,18 @@ namespace linux
 
       chmod(pathLaunch, 0755);
 
-      straLine._007SetLine("GenericName", strTitle);
-      straLine._007SetLine("Name", strTitle);
-      straLine._007SetLine("Comment", strTitle + " Comment");
-      straLine._007SetLine("Exec", pathLaunch + " %U");
+      straLine._007SetLine("[Desktop Entry]", "GenericName", strTitle);
+      straLine._007SetLine("[Desktop Entry]", "Name", strTitle);
+      straLine._007SetLine("[Desktop Entry]", "Comment", strTitle + " Comment");
+      straLine._007SetLine("[Desktop Entry]", "Exec", pathLaunch + " %U");
       //straLine._007SetLine("Path", string(System.file().module().folder()));
-      straLine._007SetLine("StartupWMClass", "cc.ca2." + strPrgName);
+      straLine._007SetLine("[Desktop Entry]", "StartupWMClass", "cc.ca2." + strPrgName);
+
+      straLine._007SetLine("[Desktop Entry]", "Actions", "transparent-frame;");
+
+      straLine._007SetLine("[Desktop Action transparent-frame]", "Name", "Transparent Frame");
+      //straLine._007SetLine("[Desktop Action transparent-frame]", "StartupWMClass", "cc.ca2." + strPrgName);
+      straLine._007SetLine("[Desktop Action transparent-frame]", "Exec", pathLaunch + " : post transparent_frame");
 
       if(Application.file().exists(pathIcon))
       {
@@ -304,6 +316,13 @@ namespace linux
       {
 
          straLine._007SetLine("Categories", straCategories.implode(";") + ";");
+
+      }
+
+      if(straLine.last().has_char())
+      {
+
+         straLine.add("");
 
       }
 

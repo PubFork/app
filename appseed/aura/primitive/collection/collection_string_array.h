@@ -58,9 +58,18 @@ public:
    //void remove_all();
    //void clear();
 
-   void _007SetLine(const RawType & strKey, const RawType & strValue);
-   index _007GetLine(RawType & rawtype, const RawType & strKey) const;
-   RawType _007GetLine(const RawType & strKey) const;
+   index _007FindLine(const RawType & strKey, index iStart = 0) const;
+   void _007SetLine(const RawType & strKey, const RawType & strValue, index iStart = 0);
+   index _007GetLine(RawType & rawtype, const RawType & strKey, index iStart = 0) const;
+   RawType _007GetLine(const RawType & strKey, index iStart = 0) const;
+
+
+   index _007FindSection(const RawType & strSection) const;
+   index _007FindLine(const RawType & strSection, const RawType & strKey) const;
+   index _007OpenSection(const RawType & strSection);
+   void _007SetLine(const RawType & strSection, const RawType & strKey, const RawType & strValue);
+   index _007GetLine(RawType & rawtype, const RawType & strSection, const RawType & strKey) const;
+   RawType _007GetLine(const RawType & strSection, const RawType & strKey) const;
 
 
    void sort();
@@ -926,10 +935,38 @@ Type & string_array < Type, RawType >::set_at_grow(index nIndex,const char * new
 
 
 template < typename Type, typename RawType >
-void string_array < Type, RawType >::_007SetLine(const RawType & strKey, const RawType & strValue)
+index string_array < Type, RawType >::_007FindLine(const RawType & strKey, index iStart) const
 {
 
-   index iKeyIndex = this->find_first_begins_ci(strKey + "=");
+   for(index i = iStart; i < get_count(); i++)
+   {
+
+      if(element_at(i).trimmed().begins_ci("[") && i > 0)
+      {
+
+         return -1;
+
+      }
+
+      if(element_at(i).begins_ci(strKey + "="))
+      {
+
+         return i;
+
+      }
+
+   }
+
+   return -1;
+
+}
+
+
+template < typename Type, typename RawType >
+void string_array < Type, RawType >::_007SetLine(const RawType & strKey, const RawType & strValue, index iStart)
+{
+
+   index iKeyIndex = _007FindLine(strKey, iStart);
 
    Type strNewLine = strKey + "=" + strValue;
 
@@ -950,41 +987,136 @@ void string_array < Type, RawType >::_007SetLine(const RawType & strKey, const R
 
 
 template < typename Type, typename RawType >
-index string_array < Type, RawType >::_007GetLine(RawType & strValue, const RawType & strKey) const
+index string_array < Type, RawType >::_007GetLine(RawType & strValue, const RawType & strKey, index iStart) const
 {
 
-   string strPrefix;
+   index iKeyIndex = _007FindLine(strKey, iStart);
 
-   strPrefix = strKey + "=";
-
-   index iFind = this->pred_find_first([&strPrefix](auto & str)
-   {
-
-      return ::str::begins_ci(str, strPrefix);
-
-
-   });
-
-   if(iFind < 0)
+   if(iKeyIndex < 0)
    {
 
       return -1;
 
    }
 
-   strValue = this->operator[](iFind).Mid(strPrefix.length());
+   strValue = this->operator[](iKeyIndex).Mid(strKey.length() + 1);
 
-   return iFind;
+   return iKeyIndex;
 
 }
 
+
 template < typename Type, typename RawType >
-RawType string_array < Type, RawType >::_007GetLine(const RawType & strKey) const
+RawType string_array < Type, RawType >::_007GetLine(const RawType & strKey, index iStart) const
 {
 
    RawType strValue;
 
-   if(_007GetLine(strValue, strKey) < 0)
+   if(_007GetLine(strValue, strKey, iStart) < 0)
+   {
+
+      return "";
+
+   }
+
+   return strValue;
+
+}
+
+
+template < typename Type, typename RawType >
+index string_array < Type, RawType >::_007FindSection(const RawType & strSection) const
+{
+
+   index iSectionIndex = this->find_first_begins_ci(strSection);
+
+   return iSectionIndex;
+
+}
+
+
+template < typename Type, typename RawType >
+index string_array < Type, RawType >::_007FindLine(const RawType & strSection, const RawType & strKey) const
+{
+
+   index iSectionIndex = this->_007FindSection(strSection);
+
+   if(iSectionIndex < 0)
+   {
+
+      return -1;
+
+   }
+
+   return this->_007FindLine(strKey, iSectionIndex + 1);
+
+}
+
+
+template < typename Type, typename RawType >
+index string_array < Type, RawType >::_007OpenSection(const RawType & strSection)
+{
+
+   index iSectionIndex = this->find_first_begins_ci(strSection);
+
+   if(iSectionIndex < 0)
+   {
+
+      this->add("");
+
+      iSectionIndex = this->add((const Type &) strSection);
+
+   }
+
+   return iSectionIndex;
+
+}
+
+
+template < typename Type, typename RawType >
+void string_array < Type, RawType >::_007SetLine(const RawType & strSection, const RawType & strKey, const RawType & strValue)
+{
+
+   index iSectionIndex = this->_007OpenSection(strSection);
+
+   if(iSectionIndex < 0)
+   {
+
+      this->add("");
+
+      iSectionIndex = this->add((const Type &) strSection);
+
+   }
+
+   this->_007SetLine(strKey, strValue, iSectionIndex + 1);
+
+}
+
+
+template < typename Type, typename RawType >
+index string_array < Type, RawType >::_007GetLine(RawType & strValue, const RawType & strSection, const RawType & strKey) const
+{
+
+   index iSectionIndex = this->_007FindLine(strSection);
+
+   if(iSectionIndex < 0)
+   {
+
+      return -1;
+
+   }
+
+   return _007GetLine(strValue, strKey, iSectionIndex + 1);
+
+}
+
+template < typename Type, typename RawType >
+RawType string_array < Type, RawType >::_007GetLine(const RawType & strSection, const RawType & strKey) const
+{
+
+   RawType strValue;
+
+   if(_007GetLine(strValue, strSection, strKey) < 0)
    {
 
       return "";
