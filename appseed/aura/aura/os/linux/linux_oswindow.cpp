@@ -1188,6 +1188,8 @@ bool oswindow_data::set_window_pos(oswindow hwndInsertAfter, int32_t x, int32_t 
 
    }
 
+   m_pimpl->deferred_on_change_visibility();
+
    windowing_output_debug_string("\n::oswindow_data::set_window_pos 2");
 
    return 1;

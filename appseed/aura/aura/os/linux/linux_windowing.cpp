@@ -692,7 +692,7 @@ oswindow get_focus()
 
       windowing_output_debug_string("\n::GetFocus 1.2");
 
-      return;
+      return NULL;
 
    }
 
@@ -701,7 +701,7 @@ oswindow get_focus()
 
       windowing_output_debug_string("\n::GetFocus 1.3");
 
-      return;
+      return NULL;
 
    }
 
@@ -2428,22 +2428,12 @@ bool x11_process_message(osdisplay_data * pdata, Display * display)
          if(msg.hwnd != NULL && msg.hwnd->m_pimpl != NULL)
          {
 
-            ::user::interaction * pui = msg.hwnd->m_pimpl->m_pui;
+            sp(::user::interaction) pui = msg.hwnd->m_pimpl->m_pui;
 
             pui->post_pred([=]()
             {
 
-               try
-               {
-
-                  pui->ModifyStyle(WS_VISIBLE, 0, 0);
-
-               }
-               catch(...)
-               {
-
-
-               }
+               pui->ModifyStyle(WS_VISIBLE, 0, 0);
 
             });
 

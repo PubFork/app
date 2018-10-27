@@ -152,6 +152,11 @@ class smart_pointer;
 #define sp(TYPE) ::smart_pointer < TYPE >
 
 
+template < class T >
+class guard_pointer;
+
+
+#define gp(TYPE) ::guard_pointer < TYPE >
 
 
 class string;

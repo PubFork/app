@@ -1204,17 +1204,7 @@ namespace user
 
       ::show_window(get_handle(), nCmdShow);
 
-      if (GetParent() == NULL)
-      {
-
-         if (is_this_visible() && !WfiIsIconic())
-         {
-
-            on_make_visible();
-
-         }
-
-      }
+      deferred_on_change_visibility();
 
       m_pui->set_need_redraw();
 
@@ -1223,12 +1213,26 @@ namespace user
    }
 
 
-   void interaction_impl::on_make_visible()
+   void interaction_impl::deferred_on_change_visibility()
    {
 
-      defer_start_prodevian();
+      if (is_this_visible() && !WfiIsIconic())
+      {
 
-      post_message(WM_SHOWWINDOW, 1);
+         if (GetParent() == NULL)
+         {
+
+            defer_start_prodevian();
+
+         }
+
+      }
+      else
+      {
+
+         ::multithreading::post_quit(m_pthreadProDevian);
+
+      }
 
    }
 

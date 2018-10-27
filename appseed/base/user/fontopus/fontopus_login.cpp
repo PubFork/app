@@ -12,12 +12,12 @@ namespace fontopus
 
       m_strRequestUrl      = strRequestUrl;
 
-      m_plabelUser         = new ::simple_ui::label(papp);
-      m_peditUser          = new ::simple_ui::edit_box(papp);
-      m_plabelPassword     = new ::simple_ui::label(papp);
-      m_ppassword          = new ::simple_ui::password(papp);
-      m_ptap               = new ::simple_ui::tap(papp);
-      m_ptapClose          = new ::simple_ui::tap(papp);
+      m_plabelUser         = canew(::simple_ui::label(papp));
+      m_peditUser          = canew(::simple_ui::edit_box(papp));
+      m_plabelPassword     = canew(::simple_ui::label(papp));
+      m_ppassword          = canew(::simple_ui::password(papp));
+      m_ptap               = canew(::simple_ui::tap(papp));
+      m_ptapClose          = canew(::simple_ui::tap(papp));
 
       m_bSelfLayout = false;
 
@@ -41,36 +41,11 @@ namespace fontopus
 #endif
       m_bCred = false;
 
-
    }
+
 
    login::~login()
    {
-      /*
-            if(m_pploginDeferTranslate != NULL)
-            {
-
-               try
-               {
-
-                  *m_pploginDeferTranslate = NULL;
-
-               }
-               catch(...)
-               {
-
-               }
-
-            }
-
-            Sleep(49);*/
-
-      ::aura::del(m_plabelUser);
-      ::aura::del(m_peditUser);
-      ::aura::del(m_plabelPassword);
-      ::aura::del(m_ppassword);
-      ::aura::del(m_ptap);
-      ::aura::del(m_ptapClose);
 
    }
 
@@ -89,13 +64,25 @@ namespace fontopus
    {
 
       if (strUser.has_char())
+      {
+
          m_plabelUser->set_window_text(strUser);
 
+      }
+
       if (strPass.has_char())
+      {
+
          m_plabelPassword->set_window_text(strPass);
 
+      }
+
       if (strOpen.has_char())
+      {
+
          m_ptap->set_window_text(strOpen);
+
+      }
 
    }
 
@@ -109,68 +96,17 @@ namespace fontopus
    void login::on_layout()
    {
 
-
       int stdw = 800;
+
       int stdh = 400;
 
       int h;
+
       int w;
 
       rect rectClient;
 
       GetClientRect(rectClient);
-
-      /*
-      if (m_bSelfLayout)
-      {
-
-
-         double dwh = (double)stdw / (double)stdh;
-
-         int availw = (int) (rectClient.width() * (1.0 - 0.14));
-         int availh = (int) (rectClient.height() * (1.0 - 0.14));
-
-         double davailwh;
-
-         if (availh == 0.0)
-         {
-            davailwh = 1.0;
-         }
-         else
-         {
-            davailwh = (double)availw / (double)availh;
-         }
-
-
-         if (davailwh > dwh) // remaining width
-         {
-
-            h = (int) MIN(stdh, availh);
-            w = (int) MIN(stdw, h  * dwh);
-
-         }
-         else // remaining height
-         {
-
-            w = (int) MIN(stdw, availw);
-            h = (int) MIN(stdh, w / dwh);
-
-         }
-
-         rectClient.left = (rectClient.width() - w) / 2;
-         rectClient.top = (rectClient.height() - h) / 3;
-         rectClient.right = rectClient.left + w;
-         rectClient.bottom = rectClient.top + h;
-
-         SetPlacement(rectClient);
-
-      }
-      else
-      {
-
-         GetClientRect(rectClient);
-
-      }*/
 
       w = (int)(rectClient.width());
 
@@ -185,20 +121,33 @@ namespace fontopus
       double ry = m_dRateY;
 
       int32_t x1 = (int) (49 * rx);
+
       int32_t w2 = (int) ((rectClient.width() - 49 * 2 * rx));
+
       int32_t h1 = (int) (23 * ry);
+
       int32_t pad = (int) (5 * ry);
 
       int32_t y = (int) ((49 + 86) * ry);
+
       m_plabelUser->RepositionWindow(x1,y,w2,h1);
+
       y += h1 + pad;
+
       m_peditUser->RepositionWindow(x1,y,w2, h1);
+
       y += h1 + pad;
+
       m_plabelPassword->RepositionWindow(x1,y,w2, h1);
+
       y += h1 + pad;
+
       m_ppassword->RepositionWindow(x1,y,w2,h1);
+
       y += h1 + pad;
+
       y += pad + h1 + pad;
+
       m_ptap->RepositionWindow(x1,y,w2,h1 * 3);;
 
       m_ptapClose->RepositionWindow(w - 36,12,24,24);
@@ -208,7 +157,6 @@ namespace fontopus
 
    void login::_001OnDraw(::draw2d::graphics * pgraphics)
    {
-
 
       simple_ui_draw_frame_window_rect(pgraphics);
 
@@ -344,7 +292,6 @@ namespace fontopus
 
       }
 
-
    }
 
 
@@ -353,15 +300,22 @@ namespace fontopus
 
       if (!strcmp(pszId, "submit"))
       {
+
          GetParent()->ShowWindow(SW_HIDE);
 
          if(!m_bCred)
          {
+
             string strText;
+
             m_ppassword->_001GetText(strText);
+
             strText = System.crypto().nessie(strText);
+
             m_ppassword->_001SetText(strText,::action::source::database());
+
          }
+
          GetParent()->EndModalLoop("ok");
 
          return true;
@@ -371,7 +325,9 @@ namespace fontopus
       {
 
          GetParent()->ShowWindow(SW_HIDE);
+
          m_ppassword->_001SetText("",::action::source::database());
+
          GetParent()->EndModalLoop("cancel");
 
          return true;
@@ -380,9 +336,7 @@ namespace fontopus
 
       return false;
 
-
    }
-
 
 
    void login::_001OnCreate(::message::message * pobj)
@@ -391,7 +345,11 @@ namespace fontopus
       SCAST_PTR(::message::create,pcreate,pobj);
 
       if(pcreate->previous())
+      {
+
          return;
+
+      }
 
       if(!m_plabelUser->create_window(null_rect(), this,"label_user")
             || !m_peditUser->create_window(null_rect(),this,"edit_user")
@@ -400,9 +358,13 @@ namespace fontopus
             || !m_ptap->create_window(null_rect(),this,"submit")
             || !m_ptapClose->create_window(null_rect(),this,"escape"))
       {
+
          pcreate->set_lresult(-1);
+
          pcreate->m_bRet = true;
+
          return;
+
       }
 
       m_ptapClose->m_estockicon = stock_icon_close;
@@ -446,7 +408,6 @@ namespace fontopus
 
 
 } // namespace fontopus
-
 
 
 

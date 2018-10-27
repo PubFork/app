@@ -222,4 +222,71 @@ public:
 
 };
 
+// It must not free memory directly allocated to object pointed by 'p'.
+// It is recommended to let final deletion and destruction happens at normal destructor.
+// 'destruct' semantics gives a class the ability to use the scoped guard_pointer
+// to release outer references (from operating system for example) that would prevent
+// the object to be deleted/destroyed when the object is released by a conventional smart_pointer.
+template < class T >
+void destruct(T * p)
+{
+
+   try
+   {
+
+      p->destruct();
+
+   }
+   catch(...)
+   {
+
+   }
+
+}
+
+
+template < class T >
+class guard_pointer :
+public ::smart_pointer < T >
+{
+   public:
+   guard_pointer() {}
+   guard_pointer(const lparam & lparam) : ::smart_pointer<T>(lparam){}
+   guard_pointer(const smart_pointer < T > & t): ::smart_pointer< T>(t){}
+   guard_pointer(guard_pointer < T > && t): ::smart_pointer<T>(::move(t)){}
+   guard_pointer(const ::aura::allocatorsp & t): ::smart_pointer<T>(t){}
+   guard_pointer(::aura::allocatorsp && t): ::smart_pointer<T>(::move(t)){}
+   template < class T2 >
+   guard_pointer(T2 * p) : ::smart_pointer <T>(p){}
+   guard_pointer(T * p) : ::smart_pointer <T>(p){}
+
+   template < class T2 >
+   guard_pointer(const T2 * p): ::smart_pointer <T>(p){}
+
+   template < class T2 >
+   guard_pointer(const smart_pointer < T2 > & t): ::smart_pointer <T>(t){}
+
+
+   template < class T2 >
+   guard_pointer(guard_pointer < T2 > && t) :
+   ::smart_pointer <T>(::move(t)) {}
+
+   ~guard_pointer()
+   {
+
+      if(::is_set(this->m_p))
+      {
+
+         ::destruct(this->m_p);
+
+      }
+
+      ::smart_pointer<T>::~smart_pointer();
+
+   }
+
+
+};
+
+
 

@@ -79,7 +79,7 @@ namespace user
       virtual bool has_pending_redraw_flags() override;
 
 
-      virtual void on_make_visible();
+      virtual void deferred_on_change_visibility();
 
 
 //      virtual void _001UpdateScreen(bool bUpdateBuffer = true);

@@ -807,6 +807,14 @@ void object::set_app(::aura::application * papp)
 }
 
 
+void object::destruct()
+{
+
+
+
+}
+
+
 void object::system(const char * pszProjectName)
 {
 

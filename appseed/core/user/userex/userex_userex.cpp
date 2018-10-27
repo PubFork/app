@@ -486,13 +486,13 @@ retry_license:
 
       UNREFERENCED_PARAMETER(puiOwner);
 
-      class ::userex::message_box box(papp == NULL ? get_app() : papp);
+      gp(class ::userex::message_box) pbox = canew(class ::userex::message_box(papp == NULL ? get_app() : papp));
 
       property_set propertyset;
 
       propertyset["message"] = pszMessage;
 
-      box.m_dwDelay = (DWORD) durationTimeout.get_total_milliseconds();
+      pbox->m_dwDelay = (DWORD) durationTimeout.get_total_milliseconds();
 
       string strMatter;
 
@@ -509,32 +509,32 @@ retry_license:
 
       }
 
-      if (!box.show(strMatter, &propertyset))
+      if (!pbox->show(strMatter, &propertyset))
       {
 
          _throw(resource_exception(get_app()));
 
       }
 
-      if(box.m_strResponse == "ok")
+      if(pbox->m_strResponse == "ok")
       {
 
          return IDOK;
 
       }
-      else if(box.m_strResponse == "yes")
+      else if(pbox->m_strResponse == "yes")
       {
 
          return IDYES;
 
       }
-      else if(box.m_strResponse == "no")
+      else if(pbox->m_strResponse == "no")
       {
 
          return IDNO;
 
       }
-      else if(box.m_strResponse == "cancel")
+      else if(pbox->m_strResponse == "cancel")
       {
 
          return IDCANCEL;
@@ -553,6 +553,8 @@ retry_license:
          return 0;
 
       }
+
+
 
    }
 

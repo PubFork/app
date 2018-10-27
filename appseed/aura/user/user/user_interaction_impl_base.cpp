@@ -824,17 +824,7 @@ namespace user
 
       m_bShowFlags = bShowFlags;
 
-      if (GetParent() == NULL)
-      {
-
-         if ((nFlags & SWP_SHOWWINDOW) && !WfiIsIconic())
-         {
-
-            on_make_visible();
-
-         }
-
-      }
+      deferred_on_change_visibility();
 
       set_need_redraw();
 
@@ -1841,7 +1831,7 @@ namespace user
    }
 
 
-   void interaction_impl_base::on_make_visible()
+   void interaction_impl_base::deferred_on_change_visibility()
    {
 
    }

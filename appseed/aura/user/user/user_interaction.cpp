@@ -5203,7 +5203,12 @@ restart:
       // make sure a message goes through to exit the modal loop
       m_bModal = false;
 
-      m_pthreadModal->kick_thread();
+      if(::is_set(m_pthreadModal))
+      {
+
+         m_pthreadModal->kick_thread();
+
+      }
 
    }
 
@@ -9375,6 +9380,24 @@ restart:
          }
 
       }
+
+   }
+
+
+   void interaction::destruct()
+   {
+
+      // If this is a "top level" or "operating system" window,
+      // the operating system may keep reference to this object,
+      // preventing it from being fully released.
+      // If the window DestroyWindow member is called in interaction::~interaction destructor,
+      // derived classes from interaction::~interaction may have deleted object resources
+      // that could be used to correctly destroy window, as DestroyWindow generally require
+      // that the object be a full valid object before being disposed.
+
+      DestroyWindow();
+
+      ::user::interaction_base::destruct();
 
    }
 

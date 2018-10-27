@@ -55,9 +55,11 @@ namespace fontopus
       SCAST_PTR(::message::create,pcreate,pobj);
 
       if(pcreate->previous())
+      {
+
          return;
 
-//      m_puserstyle = this;
+      }
 
       if(!m_login.create_window(null_rect(), this,"pane_first"))
       {

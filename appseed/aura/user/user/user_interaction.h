@@ -1037,7 +1037,10 @@ namespace user
       virtual double get_alpha();
 
 
-      //virtual void delete_this();
+
+      virtual void destruct() override;
+
+      //virtual void delete_this() override;
 
       virtual void defer_notify_mouse_move();
 

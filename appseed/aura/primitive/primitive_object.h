@@ -181,6 +181,9 @@ public:
    virtual object * clone();
 
 
+   virtual void destruct();
+
+
    static void system(const char * pszProjectName);
 
    inline ::aura::allocatorsp & allocer();
