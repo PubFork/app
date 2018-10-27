@@ -4,7 +4,27 @@
 namespace aura
 {
 
+      class application_menu_item
+      {
+         public:
 
+            string m_strName;
+            string m_strId;
+
+            application_menu_item() {}
+            application_menu_item(string strName, string strId):m_strName(strName), m_strId(strId) {}
+
+      };
+
+
+      class application_menu :
+         public array < application_menu_item >
+      {
+         public:
+
+         void add_item(index iIndex, string strName, string strId);
+
+      };
    class CLASS_DECL_AURA application :
       virtual public ::thread,
       virtual public int_scalar_source,
@@ -13,6 +33,11 @@ namespace aura
       virtual public ::user::style
    {
    public:
+
+
+
+
+      sp(application_menu)                            m_papplicationmenu;
 
       // former ::aura::application_interface // moved on 2015-05-23 Sammstag while listening to RocketBeansTV (a German channel?) at TwitchTV
       class imaging *                                 m_pimaging;
@@ -127,6 +152,9 @@ namespace aura
       virtual ~application();
 
 
+      application_menu & applicationmenu();
+
+
       ::visual::dib_sp & dib(::file::path path, bool bAsync = false);
 
       ::visual::dib_sp & matter_dib(string strMatter, bool bAsync = false);
@@ -142,6 +170,10 @@ namespace aura
       virtual bool app_data_get(::id id, ::object & obj);
 
       virtual void install_message_routing(::message::sender * psender) override;
+
+
+      virtual void application_menu_update();
+
 
 
       virtual object * alloc(sp(type) info);

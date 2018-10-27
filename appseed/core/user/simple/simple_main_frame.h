@@ -7,8 +7,8 @@ class CLASS_DECL_CORE simple_main_frame :
 public:
 
 
-
    bool           m_bPlacing;
+
 
    simple_main_frame(::aura::application * papp);
    virtual ~simple_main_frame();
@@ -23,5 +23,6 @@ public:
 
 
    DECL_GEN_SIGNAL(_001OnCreate);
+
 
 };

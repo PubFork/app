@@ -205,7 +205,6 @@ namespace core
       virtual int32_t simple_message_box(::user::primitive * puiOwner,const char * pszMessage,UINT fuStyle = MB_OK) override;
 
 
-
       virtual bool on_run_exception(::exception::exception * pexception) override;
 
 

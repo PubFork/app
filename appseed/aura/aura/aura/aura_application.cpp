@@ -204,6 +204,37 @@ namespace aura
    }
 
 
+   application_menu & application::applicationmenu()
+   {
+
+      if(m_papplicationmenu.is_null())
+      {
+
+         m_papplicationmenu = canew(application_menu);
+
+      }
+
+      return *m_papplicationmenu;
+
+   }
+
+
+   void application_menu::add_item(index iIndex, string strName, string strId)
+   {
+
+      this->set_at_grow(iIndex, application_menu_item(strName, strId));
+
+   }
+
+
+   void application::application_menu_update()
+   {
+
+
+
+   }
+
+
    void application::set_has_installer(bool bSet)
    {
 

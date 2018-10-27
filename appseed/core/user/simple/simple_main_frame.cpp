@@ -35,6 +35,7 @@ void simple_main_frame::install_message_routing(::message::sender * pinterface)
    IGUI_MSG_LINK(WM_CREATE,pinterface,this,&simple_main_frame::_001OnCreate);
 }
 
+
 void simple_main_frame::_001OnCreate(::message::message * pobj)
 {
 

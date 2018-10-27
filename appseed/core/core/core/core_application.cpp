@@ -550,6 +550,12 @@ namespace core
 
          thisok << 1.1;
 
+         index i = applicationmenu().get_count();
+
+         applicationmenu().add_item(i++, _("Transparent Frame"), "transparent_frame");
+
+         application_menu_update();
+
       }
 
       thisend;
@@ -3131,6 +3137,8 @@ namespace core
    //   return pbaseapp;
 
    //}
+
+
 
 
    ::user::document * application::place_hold(::user::interaction * pui)
