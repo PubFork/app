@@ -32,7 +32,7 @@ namespace aura
       point                                                    m_ptCursor;
 
       ::user::interaction_impl *       m_pimplPendingSetFocus;
-
+      ::user::interaction *            m_puiLastUserInputPopup;
       ::visual::cursor *               m_pcursor;
       ::visual::cursor *               m_pcursorCursor;
       ::visual::e_cursor               m_ecursorDefault;
@@ -293,6 +293,8 @@ namespace aura
       virtual void set_bound_ui(string strView, ::user::interaction * pui);
       virtual ::user::interaction * get_bound_ui(string strView);
 
+
+      virtual void on_show_user_input_popup(::user::interaction * pui);
 
    };
 

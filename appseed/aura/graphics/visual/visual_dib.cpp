@@ -293,6 +293,8 @@ namespace visual
 
       m_iQuality = 100;
 
+      m_iDpi = 96;
+
    }
 
 

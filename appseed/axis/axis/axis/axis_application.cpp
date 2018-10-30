@@ -73,6 +73,7 @@ namespace axis
 
    }
 
+
    string application::load_string(id id)
    {
 
@@ -87,12 +88,18 @@ namespace axis
 
       }
 
+      sl.unlock();
+
       if(!load_string(str,id))
       {
 
          id.to_string(str);
 
+         return str;
+
       }
+
+      sl.lock();
 
       m_stringmap.set_at(id, str);
 
@@ -103,8 +110,6 @@ namespace axis
 
    bool application::load_string(string & str,id id)
    {
-
-      synch_lock sl(&m_mutexStr);
 
       if(!load_cached_string(str,id,true))
       {
@@ -120,8 +125,6 @@ namespace axis
 
    bool application::load_cached_string(string & str,id id,bool bLoadStringTable)
    {
-
-      synch_lock sl(&m_mutexStr);
 
       ::xml::document doc(this);
 
@@ -158,41 +161,66 @@ namespace axis
    bool application::load_cached_string_by_id(string & str,id id,bool bLoadStringTable)
    {
 
-      synch_lock sl(&m_mutexStr);
-
       string strId(id.str());
+
       string strTable;
+
       string strString;
-      string_to_string * pmap = NULL;
+
       index iFind = 0;
+
       if((iFind = strId.find(':')) <= 0)
       {
+
          strTable = "";
+
          strString = strId;
+
       }
       else
       {
+
          strTable = strId.Mid(0,iFind);
+
          strString = strId.Mid(iFind + 1);
+
       }
+
+      synch_lock sl(&m_mutexStr);
+
+      string_to_string * pmap = NULL;
+
       if(m_stringtableStd.Lookup(strTable,pmap))
       {
-         if(pmap->Lookup(strString,str))
+
+         if(pmap != NULL && pmap->Lookup(strString,str))
          {
+
             return true;
+
          }
+
       }
       else if(m_stringtable.Lookup(strTable,pmap))
       {
-         if(pmap->Lookup(strString,str))
+
+         if(pmap != NULL && pmap->Lookup(strString,str))
          {
+
             return true;
+
          }
+
       }
       else if(bLoadStringTable)
       {
+
+         sl.unlock();
+
          load_string_table(strTable,"");
+
          return load_cached_string_by_id(str,id,false);
+
       }
 
       return false;
@@ -203,10 +231,10 @@ namespace axis
    void application::load_string_table(const string & pszApp,const string & pszId)
    {
 
-      synch_lock sl(&m_mutexStr);
-
       string strApp(pszApp);
+
       string strMatter;
+
       string strLocator;
 
       if(strApp.is_empty())
@@ -235,60 +263,79 @@ namespace axis
 
       if(pszId.has_char() && *pszId != '\0')
       {
+
          strTableId += "\\";
+
          strTableId += pszId;
+
       }
 
-      ::xml::document doc(get_app());
+      string_to_string * pmapOld = NULL;
 
-      string strFilePath = System.dir().matter_from_locator(this, strLocator, { strLocator }, strMatter);
+      {
 
-      if(!System.file().exists(strFilePath,this))
-      {
-         //try
-         //{
-         //   if(m_stringtable[pszId] != NULL)
-         //      delete m_stringtable[pszId];
-         //}
-         //catch(...)
-         //{
-         //}
-         //m_stringtable.set_at(pszId,new string_to_string);
-         return;
-      }
-      string strFile = Application.file().as_string(strFilePath);
-      if(!doc.load(strFile))
-         return;
-      string_to_string * pmapNew = new string_to_string;
-      for(int32_t i = 0; i < doc.get_root()->children().get_count(); i++)
-      {
-         string strId = doc.get_root()->child_at(i)->attr("id");
-         string strValue = doc.get_root()->child_at(i)->get_value();
-         pmapNew->set_at(strId,strValue);
+         synch_lock sl(&m_mutexStr);
+
+         pmapOld = m_stringtable[strTableId];
+
+         m_stringtable[strTableId] = NULL;
+
       }
 
-      string_to_string * pmapOld = m_stringtable[strTableId];
+      ::aura::del(pmapOld);
 
-      m_stringtable[strTableId] = NULL;
-
-      if(pmapOld != NULL)
+      fork([this, strTableId, strLocator, strMatter]()
       {
 
-         try
+         ::xml::document doc(get_app());
+
+         string strFilePath = System.dir().matter_from_locator(this, strLocator, { strLocator }, strMatter);
+
+         if (!System.file().exists(strFilePath, this))
          {
 
-            delete pmapOld;
-
-         }
-         catch(...)
-         {
+            return;
 
          }
 
-      }
+         string strFile = Application.file().as_string(strFilePath);
 
-      m_stringtable[strTableId] = pmapNew;
-      ASSERT(m_stringtable[strTableId] == pmapNew);
+         if (!doc.load(strFile))
+         {
+
+            return;
+
+         }
+
+         string_to_string * pmapNew = new string_to_string;
+
+         for (int32_t i = 0; i < doc.get_root()->children().get_count(); i++)
+         {
+
+            string strId = doc.get_root()->child_at(i)->attr("id");
+
+            string strValue = doc.get_root()->child_at(i)->get_value();
+
+            pmapNew->set_at(strId, strValue);
+
+         }
+
+         string_to_string * pmapOld = NULL;
+
+         {
+
+            synch_lock sl(&m_mutexStr);
+
+            pmapOld = m_stringtable[strTableId];
+
+            m_stringtable[strTableId] = pmapNew;
+
+         }
+
+         ::aura::del(pmapOld);
+
+      });
+
    }
 
 

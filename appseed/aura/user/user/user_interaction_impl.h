@@ -5,6 +5,16 @@ using window_sp = sp(::user::interaction_impl);
 #include "user_interaction_impl_base.h"
 
 
+#ifdef _DEBUG
+
+#define PRODEVIAN_QUIT_TIMEOUT_SECONDS 180
+
+#else
+
+#define PRODEVIAN_QUIT_TIMEOUT_SECONDS 5
+
+#endif
+
 #if defined METROWIN && defined(__cplusplus_winrt)
 
 

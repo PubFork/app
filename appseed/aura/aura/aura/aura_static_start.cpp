@@ -287,7 +287,7 @@ namespace aura
 
 #endif
 
-         ::thread::s_pmutexDependencies = new mutex();
+//         ::thread::s_pmutexDependencies = new mutex();
 
          g_pmutexThreadWaitClose = new mutex();
 
@@ -564,7 +564,7 @@ namespace aura
 
          del(g_pmapThreadOn);
 
-         del(::thread::s_pmutexDependencies);
+//         del(::thread::s_pmutexDependencies);
 
          del(g_pmutexThreadWaitClose);
 

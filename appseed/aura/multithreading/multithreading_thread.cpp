@@ -173,7 +173,7 @@ int SetThreadAffinityMask(HTHREAD h, unsigned int dwThreadAffinityMask);
 #endif
 
 
-mutex * thread::s_pmutexDependencies = NULL;
+//mutex * thread::s_pmutexDependencies = NULL;
 
 
 struct send_thread_message :
@@ -448,7 +448,12 @@ void thread::on_pos_run_thread()
 
    }
 
-   close_dependent_threads(minutes(1));
+
+   threadrefa_post_quit();
+
+   threadrefa_wait(one_minute());
+
+   //close_dependent_threads(minutes(1));
 
    //return true;
 
@@ -799,293 +804,295 @@ void thread::Delete()
 
 }
 
-bool thread::register_dependent_thread(::thread * pthreadDependent)
-{
 
-   if (pthreadDependent == this)
-   {
-
-      return true;
-
-   }
-
-   //post_thread_message(message_system, 90, (LPARAM) pthreadDependent);
-   return on_register_dependent_thread(pthreadDependent);
-
-}
-
-void thread::unregister_dependent_thread(::thread * pthreadDependent)
-{
-
-   //post_thread_message(message_system, 91, (LPARAM)pthreadDependent);
-   on_unregister_dependent_thread(pthreadDependent);
-
-}
-
-
-bool thread::on_register_dependent_thread(::thread * pthreadDependent)
-{
-
-   if (pthreadDependent == this)
-   {
-
-      return false;
-
-   }
-
-   if (pthreadDependent == NULL)
-   {
-
-      return false;
-
-   }
-
-   {
-
-      synch_lock slDependent(m_pmutex);
-
-      synch_lock slRequired(pthreadDependent->m_pmutex);
-
-      m_threadrefaDependent.add_unique(pthreadDependent);
-
-      pthreadDependent->m_threadrefaRequired.add_unique(this);
-
-   }
-
-   return true;
-
-}
-
-
-void thread::on_unregister_dependent_thread(::thread * pthreadDependent)
-{
-
-   string strThread = string(demangle(typeid(*this).name()));
-
-   string strDependentThread = string(demangle(typeid(*pthreadDependent).name()));
-
-   {
-
-      synch_lock slDependent(m_pmutex);
-
-      synch_lock slRequired(pthreadDependent->m_pmutex);
-
-      m_threadrefaDependent.remove(pthreadDependent);
-
-      pthreadDependent->m_threadrefaRequired.remove(this);
-
-   }
-
-   // the system may do some extra processing (like quitting system in case pthreadDependent is the last thread virgin in America (North, most especifically US) ?!?!), so do a kick
-   // (do not apply virgin to your self...)
-   kick_thread();
-
-}
-
-
-void thread::close_dependent_threads(const ::duration & dur)
-{
-
-   signal_close_dependent_threads();
-
-   wait_close_dependent_threads(minutes(1));
-
-}
-
-
-void thread::signal_close_dependent_threads()
-{
-
-   synch_lock sl(m_pmutex);
-
-   for(auto & pthread : m_threadrefaDependent)
-   {
-
-      try
-      {
-
-         if (pthread == NULL)
-         {
-
-            continue;
-
-         }
-
-         pthread->post_quit();
-
-      }
-      catch(...)
-      {
-
-      }
-
-   }
-
-}
-
-
-void thread::wait_close_dependent_threads(const duration & duration)
-{
-
-   DWORD dwStart = ::get_tick_count();
-
-   while(::get_tick_count() - dwStart < duration.get_total_milliseconds())
-   {
-
-      {
-
-         synch_lock sl(m_pmutex);
-
-         if (m_threadrefaDependent.get_count() <= 0)
-         {
-
-            break;
-
-         }
-
-         string strReport;
-
-         strReport += "-------------------------\n";
-
-         DWORD dwTime = ::get_tick_count() - dwStart;
-
-         string strTime = ::str::from(dwTime);
-
-         strReport += strTime + string("ms\n");
-
-         for(index i = 0; i < m_threadrefaDependent.get_count(); i++)
-         {
-
-            ::thread * pthread = m_threadrefaDependent[i];
-
-            string strSupporter;
-
-            string strDependent;
-
-            try
-            {
-
-               strSupporter.Format("supporter : " STRFPTR " Id=%d %s\n", (int_ptr)(::thread *)this, m_uiThread, typeid(*this).name());
-
-               strDependent.Format("dependent : " STRFPTR " Id=%d %s\n", (int_ptr)pthread, pthread->m_uiThread, typeid(*pthread).name());
-
-            }
-            catch(...)
-            {
-
-            }
-
-            strReport += "---\n";
-
-            strReport += strSupporter;
-
-            strReport += strDependent;
-
-         }
-
-         strReport += "-------------------------\n\n";
-
-         output_debug_string(strReport);
-
-      }
-
-      thread_pump_sleep(200);
-
-   }
-
-}
-
-
-bool thread::register_at_required_threads()
-{
-
-   if(is_system())
-   {
-
-      return true;
-
-   }
-
-   // register default dependencies
-
-   try
-   {
-
-      if(&System != NULL)
-      {
-
-         System.register_dependent_thread(this);
-
-      }
-
-      if(&Session != NULL)
-      {
-
-         Session.register_dependent_thread(this);
-
-      }
-
-      if(&Application != NULL)
-      {
-
-         Application.register_dependent_thread(this);
-
-      }
-
-      return true;
-
-   }
-   catch(...)
-   {
-
-   }
-
-   return false;
-
-}
-
-
-void thread::unregister_from_required_threads()
-{
-
-   synch_lock sl(m_pmutex);
-
-   thread_ptra threadrefaRequired;
-
-   threadrefaRequired = m_threadrefaRequired;
-
-   sl.unlock();
-
-   for(index i = threadrefaRequired.get_upper_bound(); i >= 0;)
-   {
-
-      try
-      {
-
-         ::thread * pthread = threadrefaRequired[i];
-
-         if (pthread != this)
-         {
-
-            sl.unlock();
-
-            pthread->unregister_dependent_thread(this);
-
-            sl.lock();
-
-         }
-
-      }
-      catch(...)
-      {
-
-      }
-
-      i--;
-
-   }
-
-}
+//bool thread::register_dependent_thread(::thread * pthreadDependent)
+//{
+//
+//   if (pthreadDependent == this)
+//   {
+//
+//      return true;
+//
+//   }
+//
+//   //post_thread_message(message_system, 90, (LPARAM) pthreadDependent);
+//   return on_register_dependent_thread(pthreadDependent);
+//
+//}
+
+
+//void thread::unregister_dependent_thread(::thread * pthreadDependent)
+//{
+//
+//   //post_thread_message(message_system, 91, (LPARAM)pthreadDependent);
+//   on_unregister_dependent_thread(pthreadDependent);
+//
+//}
+
+
+//bool thread::on_register_dependent_thread(::thread * pthreadDependent)
+//{
+//
+//   if (pthreadDependent == this)
+//   {
+//
+//      return false;
+//
+//   }
+//
+//   if (pthreadDependent == NULL)
+//   {
+//
+//      return false;
+//
+//   }
+//
+//   {
+//
+//      synch_lock slDependent(m_pmutex);
+//
+//      synch_lock slRequired(pthreadDependent->m_pmutex);
+//
+//      m_threadrefaDependent.add_unique(pthreadDependent);
+//
+//      pthreadDependent->m_threadrefaRequired.add_unique(this);
+//
+//   }
+//
+//   return true;
+//
+//}
+
+
+//void thread::on_unregister_dependent_thread(::thread * pthreadDependent)
+//{
+//
+//   string strThread = string(demangle(typeid(*this).name()));
+//
+//   string strDependentThread = string(demangle(typeid(*pthreadDependent).name()));
+//
+//   {
+//
+//      synch_lock slDependent(m_pmutex);
+//
+//      synch_lock slRequired(pthreadDependent->m_pmutex);
+//
+//      m_threadrefaDependent.remove(pthreadDependent);
+//
+//      pthreadDependent->m_threadrefaRequired.remove(this);
+//
+//   }
+//
+//   // the system may do some extra processing (like quitting system in case pthreadDependent is the last thread virgin in America (North, most especifically US) ?!?!), so do a kick
+//   // (do not apply virgin to your self...)
+//   kick_thread();
+//
+//}
+
+
+//void thread::close_dependent_threads(const ::duration & dur)
+//{
+//
+//   signal_close_dependent_threads();
+//
+//   wait_close_dependent_threads(minutes(1));
+//
+//}
+
+
+//void thread::signal_close_dependent_threads()
+//{
+//
+//   synch_lock sl(m_pmutex);
+//
+//   for(auto & pthread : m_threadrefaDependent)
+//   {
+//
+//      try
+//      {
+//
+//         if (pthread == NULL)
+//         {
+//
+//            continue;
+//
+//         }
+//
+//         pthread->post_quit();
+//
+//      }
+//      catch(...)
+//      {
+//
+//      }
+//
+//   }
+//
+//}
+
+
+//void thread::wait_close_dependent_threads(const duration & duration)
+//{
+//
+//   DWORD dwStart = ::get_tick_count();
+//
+//   while(::get_tick_count() - dwStart < duration.get_total_milliseconds())
+//   {
+//
+//      {
+//
+//         synch_lock sl(m_pmutex);
+//
+//         if (m_threadrefaDependent.get_count() <= 0)
+//         {
+//
+//            break;
+//
+//         }
+//
+//         string strReport;
+//
+//         strReport += "-------------------------\n";
+//
+//         DWORD dwTime = ::get_tick_count() - dwStart;
+//
+//         string strTime = ::str::from(dwTime);
+//
+//         strReport += strTime + string("ms\n");
+//
+//         for(index i = 0; i < m_threadrefaDependent.get_count(); i++)
+//         {
+//
+//            ::thread * pthread = m_threadrefaDependent[i];
+//
+//            string strSupporter;
+//
+//            string strDependent;
+//
+//            try
+//            {
+//
+//               strSupporter.Format("supporter : " STRFPTR " Id=%d %s\n", (int_ptr)(::thread *)this, m_uiThread, typeid(*this).name());
+//
+//               strDependent.Format("dependent : " STRFPTR " Id=%d %s\n", (int_ptr)pthread, pthread->m_uiThread, typeid(*pthread).name());
+//
+//            }
+//            catch(...)
+//            {
+//
+//            }
+//
+//            strReport += "---\n";
+//
+//            strReport += strSupporter;
+//
+//            strReport += strDependent;
+//
+//         }
+//
+//         strReport += "-------------------------\n\n";
+//
+//         output_debug_string(strReport);
+//
+//      }
+//
+//      thread_pump_sleep(200);
+//
+//   }
+//
+//}
+
+
+//bool thread::register_at_required_threads()
+//{
+//
+//   if(is_system())
+//   {
+//
+//      return true;
+//
+//   }
+//
+//   // register default dependencies
+//
+//   try
+//   {
+//
+//      if(&System != NULL)
+//      {
+//
+//         System.register_dependent_thread(this);
+//
+//      }
+//
+//      if(&Session != NULL)
+//      {
+//
+//         Session.register_dependent_thread(this);
+//
+//      }
+//
+//      if(&Application != NULL)
+//      {
+//
+//         Application.register_dependent_thread(this);
+//
+//      }
+//
+//      return true;
+//
+//   }
+//   catch(...)
+//   {
+//
+//   }
+//
+//   return false;
+//
+//}
+
+
+//void thread::unregister_from_required_threads()
+//{
+//
+//   synch_lock sl(m_pmutex);
+//
+//   thread_ptra threadrefaRequired;
+//
+//   threadrefaRequired = m_threadrefaRequired;
+//
+//   sl.unlock();
+//
+//   for(index i = threadrefaRequired.get_upper_bound(); i >= 0;)
+//   {
+//
+//      try
+//      {
+//
+//         ::thread * pthread = threadrefaRequired[i];
+//
+//         if (pthread != this)
+//         {
+//
+//            sl.unlock();
+//
+//            pthread->unregister_dependent_thread(this);
+//
+//            sl.lock();
+//
+//         }
+//
+//      }
+//      catch(...)
+//      {
+//
+//      }
+//
+//      i--;
+//
+//   }
+//
+//}
 
 
 
@@ -1376,12 +1383,12 @@ bool thread::init_thread()
 bool thread::on_pre_run_thread()
 {
 
-   if(!register_at_required_threads())
-   {
+   //if(!register_at_required_threads())
+   //{
 
-      return false;
+   //   return false;
 
-   }
+   //}
 
    return true;
 
@@ -2899,14 +2906,14 @@ bool thread::process_message(LPMESSAGE lpmessage)
 
          on_system_event((e_system_event) msg.wParam, msg.lParam);
 
-      //    if (msg.wParam == system_message_user)
-      //    {
+         //    if (msg.wParam == system_message_user)
+         //    {
 
-      //       sp(::object) pobject((lparam) msg.lParam);
+         //       sp(::object) pobject((lparam) msg.lParam);
 
-      //       Application.dispatch_user_message_object(pobject);
+         //       Application.dispatch_user_message_object(pobject);
 
-      //    }
+         //    }
 
       }
       else if (msg.message == message_system)
@@ -2959,18 +2966,18 @@ bool thread::process_message(LPMESSAGE lpmessage)
             process_message(&message);
 
          }
-         else if (msg.wParam == system_message_register_dependent_thread)
-         {
+         //else if (msg.wParam == system_message_register_dependent_thread)
+         //{
 
-            on_register_dependent_thread((thread*)msg.lParam);
+         //   on_register_dependent_thread((thread*)msg.lParam);
 
-         }
-         else if (msg.wParam == system_message_unregister_dependent_thread)
-         {
+         //}
+         //else if (msg.wParam == system_message_unregister_dependent_thread)
+         //{
 
-            on_unregister_dependent_thread((thread*)msg.lParam);
+         //   on_unregister_dependent_thread((thread*)msg.lParam);
 
-         }
+         //}
          else
          {
          }
@@ -3608,7 +3615,7 @@ user_interaction_ptr_array & thread::uiptra()
       for (auto & pthread : ptools->m_threada)
       {
 
-         register_dependent_thread(pthread);
+         threadrefa_add(pthread);
 
       }
 

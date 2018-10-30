@@ -144,7 +144,7 @@ namespace fs
 
             m_mapfileTimeout.remove_key(listing.m_path);
 
-            ::file::path & path = listing.add_child(child.attr("name"));
+            auto & path = listing.add_child_get(child.attr("name"));
 
             path.m_iSize = 0;
 
@@ -168,7 +168,7 @@ namespace fs
 
             m_mapdirTimeout.remove_key(listing.m_path);
 
-            ::file::path & path = listing.add_child(child.attr("name"));
+            auto & path = listing.add_child_get(child.attr("name"));
 
             path.m_iSize = child.attr("size");
 

@@ -181,6 +181,12 @@ bool imaging::_save_image(::file::file * pfile, ::draw2d::dib * pdib, ::visual::
       }
    }
 
+   if (psaveimage != NULL && psaveimage->m_iDpi > 0)
+   {
+      piBitmapFrame->SetResolution(psaveimage->m_iDpi, psaveimage->m_iDpi);
+
+   }
+
    if (SUCCEEDED(hr))
    {
       hr = piBitmapFrame->SetSize(uiWidth, uiHeight);

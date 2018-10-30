@@ -2240,6 +2240,39 @@ RetryBuildNumber:
                return "";
 
             }
+            else if (strFirstLine == "processing")
+            {
+
+               int iTry = 0;
+
+               while (iTry < 100)
+               {
+
+                  sl.unlock();
+
+                  Sleep(300);
+
+                  sl.lock();
+
+                  strFirstLine = file_line_dup(pathMeta, 0);
+
+                  if (strFirstLine != "processing")
+                  {
+
+                     break;
+
+                  }
+
+               }
+
+               if (strFirstLine != "processing")
+               {
+
+                  return "";
+
+               }
+
+            }
 
          }
 
@@ -2253,11 +2286,15 @@ RetryBuildNumber:
             if (etype == ::file::type_file)
             {
 
+               sl.unlock();
+
                Application.file().copy(pathCache, pathSide, true);
 
             }
             else if (etype == ::file::type_folder)
             {
+
+               sl.unlock();
 
                Application.dir().mk(pathCache);
 
@@ -2267,12 +2304,23 @@ RetryBuildNumber:
 
          }
 
+         sl.unlock();
+
+         if (!System.dir().m_bMatterFromHttpCache)
+         {
+
+            return "";
+
+         }
+
          ::str::begins_eat_ci(strMatter, "appmatter://");
 
          ::file::path path = "https://server.ca2.cc/matter" / strMatter;
 
          if (file().exists(path, this, bOptional, bNoCache))
          {
+
+            sl.lock();
 
             file_set_line_dup(pathMeta, 0, "file");
 
@@ -2333,6 +2381,8 @@ RetryBuildNumber:
          }
          else if (dir().is(path, this, bOptional, bNoCache))
          {
+
+            sl.lock();
 
             file_set_line_dup(pathMeta, 0, "directory");
 

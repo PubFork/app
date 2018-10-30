@@ -32,7 +32,7 @@ namespace file
 
 
    class CLASS_DECL_AURA listing:
-      // recursive fetchings should set a meaningful m_iRelative value at each returned path
+   // recursive fetchings should set a meaningful m_iRelative value at each returned path
       virtual public ::file::patha,
       public listing_meta
    {
@@ -58,9 +58,18 @@ namespace file
       listing(const listing & listing):patha(listing) { m_nGrowBy = 128; }
       virtual ~listing();
 
-      path  & add_child(const ::file::path & path)
+      index add_child(const ::file::path & path)
       {
+
          return add(m_path / path);
+
+      }
+
+      ::file::path & add_child_get(const ::file::path & path)
+      {
+
+         return add_get(m_path / path);
+
       }
 
 
@@ -93,10 +102,10 @@ namespace file
          return ls();
       }
 
-      
+
       listing & rls(const ::file::path & path = cnull, e_extract eextract = extract_first)
       {
-         
+
          m_path = path;
 
          m_bRecursive = true;
@@ -107,7 +116,7 @@ namespace file
 
       }
 
-      
+
       listing & rls_file(const ::file::path & path)
       {
          m_path = path;

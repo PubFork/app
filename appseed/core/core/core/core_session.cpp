@@ -25,6 +25,8 @@ namespace core
       ::thread(papp)
    {
 
+      m_puiLastUserInputPopup = NULL;
+
       m_pfontlist = NULL;
 
       m_pdocs = create_session_docs();

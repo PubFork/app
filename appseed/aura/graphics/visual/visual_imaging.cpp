@@ -6088,12 +6088,16 @@ bool imaging::load_from_file(::visual::cursor * pcursor,var varFile, bool bFromC
 
    }
 
-   if(!load_from_file(pcursor->m_dib,varFile,bFromCache))
+   ::draw2d::dib_sp dib(allocer());
+
+   if(!load_from_file(dib,varFile,bFromCache))
    {
 
       return false;
 
    }
+
+   pcursor->m_dib = dib;
 
    str += ".xml";
 

@@ -54,7 +54,7 @@ private:
 
 public:
 
-   static mutex *                         s_pmutexDependencies;
+   //static mutex *                         s_pmutexDependencies;
 
    enum e_op
    {
@@ -116,8 +116,8 @@ public:
    ::user::primitive *                    m_puiActive;         // active main interaction_impl (may not be m_puiMain)
    //property_set                           m_set;
    string                                 m_strWorkUrl;
-   thread_ptra                            m_threadrefaDependent;
-   thread_ptra                            m_threadrefaRequired;
+   //thread_ptra                            m_threadrefaDependent;
+   //thread_ptra                            m_threadrefaRequired;
    ::user::interactive *                  m_pinteractive;
    bool                                   m_bSimpleMessageLoop;
    bool                                   m_bZipIsDir2;
@@ -328,8 +328,6 @@ public:
    virtual void on_pos_run_thread();
    virtual void term_thread();
 
-   virtual void close_dependent_threads(const ::duration & dur);
-
    virtual void process_window_procedure_exception(::exception::exception *, ::message::message * pobj);
 
    virtual void process_message_filter(int32_t code, ::message::message * pobj);
@@ -371,14 +369,16 @@ public:
    virtual void post_to_all_threads(UINT message,WPARAM wparam,LPARAM lparam);
 
 
-   virtual bool register_dependent_thread(::thread * pthread);
-   virtual void unregister_dependent_thread(::thread * pthread);
-   virtual bool on_register_dependent_thread(::thread * pthread);
-   virtual void on_unregister_dependent_thread(::thread * pthread);
-   virtual void signal_close_dependent_threads();
-   virtual void wait_close_dependent_threads(const duration & duration);
-   virtual bool register_at_required_threads();
-   virtual void unregister_from_required_threads();
+   //virtual bool register_dependent_thread(::thread * pthread);
+   //virtual void unregister_dependent_thread(::thread * pthread);
+   //virtual bool on_register_dependent_thread(::thread * pthread);
+   //virtual void on_unregister_dependent_thread(::thread * pthread);
+   //virtual void signal_close_dependent_threads();
+   //virtual void wait_close_dependent_threads(const duration & duration);
+   //virtual bool register_at_required_threads();
+   //virtual void unregister_from_required_threads();
+   //virtual void close_dependent_threads(const ::duration & dur);
+
 
    virtual void do_events();
    virtual void do_events(const duration & duration);
@@ -468,11 +468,11 @@ namespace multithreading
 
 
    CLASS_DECL_AURA void post_quit();
-   CLASS_DECL_AURA void post_quit_and_wait(const duration & duration);
+   CLASS_DECL_AURA bool post_quit_and_wait(const duration & duration);
 
 
    CLASS_DECL_AURA void post_quit(::thread * pthread);
-   CLASS_DECL_AURA void post_quit_and_wait(::thread * pthread, const duration & duration);
+   CLASS_DECL_AURA bool post_quit_and_wait(::thread * pthread, const duration & duration);
 
 
    template < typename THREAD >
@@ -492,17 +492,24 @@ namespace multithreading
 
 
    template < typename THREAD >
-   void post_quit_and_wait(sp(THREAD) & spthread, const duration & duration)
+   bool post_quit_and_wait(sp(THREAD) & spthread, const duration & duration)
    {
 
       if (spthread.is_set())
       {
 
-         ::multithreading::post_quit_and_wait(spthread.m_p, duration);
+         if (!::multithreading::post_quit_and_wait(spthread.m_p, duration))
+         {
+
+            return false;
+
+         }
 
          spthread.release();
 
       }
+
+      return true;
 
    }
 

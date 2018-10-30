@@ -75,7 +75,7 @@ namespace filemanager
 
          strDir = strPath.folder();
 
-         ::file::path & path = listing.add(strPath);
+         auto & path = listing.add_get(strPath);
 
          path.m_iDir = 1;
 

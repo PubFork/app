@@ -87,35 +87,35 @@ namespace multithreading
 
          sp(::thread) pthread = thread;
 
-         try
-         {
+         //try
+         //{
 
-            pthread->unregister_from_required_threads();
+         //   pthread->unregister_from_required_threads();
 
-         }
-         catch(...)
-         {
+         //}
+         //catch(...)
+         //{
 
 
-         }
+         //}
 
-         try
-         {
+         //try
+         //{
 
-            synch_lock sl(pthread->m_pmutex);
+         //   synch_lock sl(pthread->m_pmutex);
 
-            for (auto pobject : pthread->m_objectptraDependent)
-            {
+         //   for (auto pobject : pthread->m_objectptraDependent)
+         //   {
 
-               pobject->threadrefa_remove(pthread);
+         //      pobject->threadrefa_remove(pthread);
 
-            }
+         //   }
 
-         }
-         catch (...)
-         {
+         //}
+         //catch (...)
+         //{
 
-         }
+         //}
 
          try
          {
@@ -343,10 +343,10 @@ namespace multithreading
    }
 
 
-   CLASS_DECL_AURA void post_quit_and_wait(const duration & duration)
+   CLASS_DECL_AURA bool post_quit_and_wait(const duration & duration)
    {
 
-      post_quit_and_wait(t_pthread, duration);
+      return post_quit_and_wait(t_pthread, duration);
 
    }
 
@@ -377,13 +377,28 @@ namespace multithreading
    }
 
 
-   void post_quit_and_wait(::thread * pthread, const duration & duration)
+   bool post_quit_and_wait(::thread * pthreadParam, const duration & duration)
    {
 
-      if (pthread == NULL)
+      sp(::thread) pthread;
+
+      try
       {
 
-         return;
+         pthread = pthreadParam;
+
+      }
+      catch (...)
+      {
+
+         return true;
+
+      }
+
+      if (pthread.is_null())
+      {
+
+         return true;
 
       }
 
@@ -401,18 +416,15 @@ namespace multithreading
       try
       {
 
-         if (pthread != NULL)
-         {
-
-            pthread->wait(duration).succeeded();
-
-         }
+         return pthread->wait(duration).succeeded();
 
       }
       catch (...)
       {
 
       }
+
+      return true;
 
    }
 

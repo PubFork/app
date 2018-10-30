@@ -766,6 +766,19 @@ namespace user
       if(m_bShowFlags)
       {
 
+         if (nFlags & SWP_SHOWWINDOW)
+         {
+
+            m_iShowFlags &= ~SWP_HIDEWINDOW;
+
+         }
+         else if (nFlags & SWP_HIDEWINDOW)
+         {
+
+            m_iShowFlags &= ~SWP_SHOWWINDOW;
+
+         }
+
          m_iShowFlags |= nFlags & lNoZ;
 
       }

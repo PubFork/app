@@ -329,6 +329,15 @@ namespace user
 
    }
 
+
+   void combo_list::on_change_combo_sel(index iSel)
+   {
+
+
+
+   }
+
+
    int32_t combo_list::_001GetItemHeight() const
    {
 

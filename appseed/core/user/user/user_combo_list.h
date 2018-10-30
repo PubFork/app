@@ -51,6 +51,8 @@ namespace user
 
       virtual int32_t _001GetItemHeight() const;
 
+      virtual void on_change_combo_sel(index iSel);
+
       bool pre_create_window(::user::create_struct & cs) override;
 
 

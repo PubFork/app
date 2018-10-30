@@ -298,7 +298,7 @@ namespace windows
    interaction_impl::~interaction_impl()
    {
 
-      ::multithreading::post_quit_and_wait(m_pthreadProDevian, seconds(10));
+      ::multithreading::post_quit_and_wait(m_pthreadProDevian, seconds(PRODEVIAN_QUIT_TIMEOUT_SECONDS));
 
    }
 
@@ -725,7 +725,7 @@ namespace windows
 
       UNREFERENCED_PARAMETER(pobj);
 
-      ::multithreading::post_quit_and_wait(m_pthreadProDevian, seconds(10));
+      ::multithreading::post_quit_and_wait(m_pthreadProDevian, seconds(PRODEVIAN_QUIT_TIMEOUT_SECONDS));
 
       if (m_pui->m_pthreadUserInteraction != NULL
             && m_pui->m_pthreadUserInteraction->m_puiptraThread != NULL)
@@ -756,54 +756,41 @@ namespace windows
    void interaction_impl::_001OnNcDestroy(::message::message * pobj)
    {
 
-      single_lock sl(m_pui->m_papp->m_pmutex, TRUE);
-
-      //::window_sp pwindow;
-
-      //if(m_pui->m_papp != NULL)
-      //{
-
-      //   synch_lock sl(&m_pui->m_papp->m_mutexUiPtra);
-
-      //   if(m_pui->m_papp->m_spuiptra.is_set())
-      //   {
-
-      //      m_pui->m_papp->m_spuiptra->remove(m_pui);
-
-      //   }
-
-      //}
-
-
-
-      pobj->m_bRet = true;
-      // cleanup main and active windows
-      ::thread* pThread = ::get_thread();
-      if (pThread != NULL)
       {
-         if (pThread->get_active_ui() == m_pui)
-            pThread->set_active_ui(NULL);
+
+         synch_lock sl(m_pui->m_pmutex);
+
+         pobj->m_bRet = true;
+         // cleanup main and active windows
+         ::thread* pThread = ::get_thread();
+         if (pThread != NULL)
+         {
+            if (pThread->get_active_ui() == m_pui)
+               pThread->set_active_ui(NULL);
+         }
+
+         // cleanup tooltip support
+         //if (m_pui != NULL)
+         //{
+         //   if (m_pui->m_nFlags & WF_TOOLTIPS)
+         //   {
+         //   }
+         //}
+
+         // call default, unsubclass, and detach from the map
+         WNDPROC pfnWndProc = WNDPROC(::GetWindowLongPtr(get_handle(), GWLP_WNDPROC));
+         Default();
+         if (WNDPROC(::GetWindowLongPtr(get_handle(), GWLP_WNDPROC)) == pfnWndProc)
+         {
+            WNDPROC pfnSuper = *GetSuperWndProcAddr();
+            if (pfnSuper != NULL)
+               ::SetWindowLongPtr(get_handle(), GWLP_WNDPROC, reinterpret_cast<int_ptr>(pfnSuper));
+         }
+
+         detach();
+
       }
 
-      // cleanup tooltip support
-      //if (m_pui != NULL)
-      //{
-      //   if (m_pui->m_nFlags & WF_TOOLTIPS)
-      //   {
-      //   }
-      //}
-
-      // call default, unsubclass, and detach from the map
-      WNDPROC pfnWndProc = WNDPROC(::GetWindowLongPtr(get_handle(), GWLP_WNDPROC));
-      Default();
-      if (WNDPROC(::GetWindowLongPtr(get_handle(), GWLP_WNDPROC)) == pfnWndProc)
-      {
-         WNDPROC pfnSuper = *GetSuperWndProcAddr();
-         if (pfnSuper != NULL)
-            ::SetWindowLongPtr(get_handle(), GWLP_WNDPROC, reinterpret_cast<int_ptr>(pfnSuper));
-      }
-
-      detach();
       //ASSERT(get_handle() == NULL);
       //m_pfnDispatchWindowProc = &interaction_impl::_start_user_message_handler;
       // call special post-cleanup routine
@@ -946,7 +933,7 @@ namespace windows
    bool interaction_impl::DestroyWindow()
    {
 
-      ::multithreading::post_quit_and_wait(m_pthreadProDevian, seconds(5));
+      ::multithreading::post_quit_and_wait(m_pthreadProDevian, seconds(PRODEVIAN_QUIT_TIMEOUT_SECONDS));
 
       bool bResult = false;
 

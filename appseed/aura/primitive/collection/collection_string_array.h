@@ -89,7 +89,7 @@ public:
    Type & element_at(index nIndex);
    const Type & element_at(index nIndex) const;
 
-   Type & add_new(const char * psz = NULL, index i = -1);
+   index add_new(const char * psz = NULL, index i = -1);
    Type & new_element(index i = -1);
 
    Type & first(index count = 0);
@@ -114,13 +114,15 @@ public:
 
    index add(unichar wch);
 
-   void add(const var & var);
+   index add(const var & var);
 
-   void add(const property & prop);
+   index add(const property & prop);
 
-   void add(const id & id);
+   index add(const id & id);
 
-   Type & add(const Type & newElement);
+   index add(const Type & newElement);
+
+   Type & add_get(const Type & newElement);
 
    void push_back(const Type & newElement);
 
@@ -1464,92 +1466,145 @@ string_array < Type, RawType > & string_array < Type, RawType >::operator =(cons
 
 
 template < typename Type, typename RawType >
-Type & string_array < Type, RawType >::add_new(const char * psz,index i)
+index string_array < Type, RawType >::add_new(const char * psz,index i)
 {
+
    if(i == -1)
    {
+
       return add(Type(psz));
+
    }
    else
    {
-      return insert_at(i,Type(psz));
+
+      insert_at(i,Type(psz));
+
+      return get_upper_bound();
 
    }
-}
 
+}
 
 
 template < typename Type, typename RawType >
 Type & string_array < Type, RawType >::new_element(index i)
 {
+
    add_new(NULL,i);
+
    if(i == -1)
    {
+
       return last();
+
    }
    else
    {
+
       return this->element_at(i);
+
    }
+
 }
 
 
 template < typename Type, typename RawType >
 index string_array < Type, RawType >::add(const char * psz)
 {
+
    index nIndex = this->m_nSize;
+
    set_at_grow(nIndex,psz);
+
    return nIndex;
+
 }
 
 
 template < typename Type, typename RawType >
 index string_array < Type, RawType >::add(const unichar * pwsz)
 {
-   index nIndex = this->m_nSize;
-   set_at_grow(nIndex,(Type)::str::international::unicode_to_utf8(pwsz));
-   return nIndex;
-}
 
+   index nIndex = this->m_nSize;
+
+   set_at_grow(nIndex,(Type)::str::international::unicode_to_utf8(pwsz));
+
+   return nIndex;
+
+}
 
 
 template < typename Type, typename RawType >
 index string_array < Type, RawType >::add(char ch)
 {
-   if(ch == '\0')
+   if (ch == '\0')
+   {
+
       return add("");
+
+   }
    else
    {
+
       char str[16];
+
       str[0] = ch;
+
       str[1] = '\0';
+
       return add(str);
+
    }
+
 }
 
 
 template < typename Type, typename RawType >
 index string_array < Type, RawType >::add(unichar wch)
 {
-   if(wch == L'\0')
+
+   if (wch == L'\0')
+   {
+
       return add("");
+
+   }
    else
    {
+
       unichar wstr[16];
+
       wstr[0] = wch;
+
       wstr[1] = L'\0';
+
       return add(wstr);
+
    }
+
 }
 
 
 template < typename Type, typename RawType >
-Type & string_array < Type, RawType >::add(const Type & newElement)
+index string_array < Type, RawType >::add(const Type & newElement)
 {
 
    index nIndex = this->m_nSize;
 
-   return set_at_grow(nIndex,newElement);
+   set_at_grow(nIndex,newElement);
+
+   return nIndex;
+
+}
+
+template < typename Type, typename RawType >
+Type & string_array < Type, RawType >::add_get(const Type & newElement)
+{
+
+   index nIndex = this->m_nSize;
+
+   return set_at_grow(nIndex, newElement);
 
 }
 
@@ -1557,24 +1612,31 @@ Type & string_array < Type, RawType >::add(const Type & newElement)
 template < typename Type, typename RawType >
 void string_array < Type, RawType >::push_back(const Type & newElement)
 {
+
    index nIndex = this->m_nSize;
+
    set_at_grow(nIndex,newElement);
+
 }
 
 
 
 
 template < typename Type, typename RawType >
-void string_array < Type, RawType >::add(const id & id)
+index string_array < Type, RawType >::add(const id & id)
 {
-   if(id.is_null())
+
+   if (id.is_null())
    {
+
+      return -1;
+
    }
-   else
-   {
-      add(id);
-   }
+
+   return add(id);
+
 }
+
 
 template < typename Type, typename RawType >
 void string_array < Type, RawType >::remove_duplicates()

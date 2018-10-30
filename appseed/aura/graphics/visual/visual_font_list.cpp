@@ -362,7 +362,7 @@ namespace visual
 
          synch_lock slLayout(playout->m_pmutex);
 
-         if (m_rectClient.area() <= 0)
+         if (m_rectClient.area() <= 0 && playout->m_elayout != layout_single_column)
          {
 
             return;
@@ -371,7 +371,8 @@ namespace visual
 
          if (playout->get_count() == m_itema.get_count()
                && playout->m_iUpdate == m_iUpdate
-               && m_rectClient == m_rectLayout)
+               && (playout->m_elayout == layout_single_column ||
+                   m_rectClient == m_rectLayout))
          {
 
             return;
@@ -394,6 +395,11 @@ namespace visual
 
       }
 
+      manual_reset_event ev(get_app());
+
+      ev.ResetEvent();
+
+
       ::fork_count_end_pred(get_app(), iCount, [=](index iOrder, index i, index iCount, index iScan)
       {
 
@@ -412,6 +418,7 @@ namespace visual
          rect r;
 
          int_array iaSize;
+
 
          if (layout.m_elayout == layout_wide)
          {
@@ -593,7 +600,7 @@ namespace visual
 
       },
 
-      [=]()
+      [=, &ev]()
       {
 
          on_layout(playout);
@@ -613,6 +620,7 @@ namespace visual
 
             }
 
+            ev.SetEvent();
 
          }
 
@@ -620,7 +628,7 @@ namespace visual
                            );
 
 
-
+      ev.wait(seconds(30));
    }
 
 

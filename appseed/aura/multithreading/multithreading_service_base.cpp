@@ -27,7 +27,7 @@ service_base* service_base::s_pservice = 0;
 //
 //*****************************************************************************
 service_base::service_base(::aura::application * papp, uint32_t controlsAccepted) :
-object(papp),
+   object(papp),
    m_stopped(papp),
    m_bStopping(false)
 #ifdef WINDOWSEX
@@ -42,9 +42,9 @@ object(papp),
    papp->m_psystem->m_serviceptra.add(this);
 
 #ifdef WINDOWSEX
-    m_status.dwServiceType = SERVICE_WIN32_OWN_PROCESS;
-    m_status.dwCurrentState = SERVICE_START_PENDING;
-    m_status.dwControlsAccepted = controlsAccepted;
+   m_status.dwServiceType = SERVICE_WIN32_OWN_PROCESS;
+   m_status.dwCurrentState = SERVICE_START_PENDING;
+   m_status.dwControlsAccepted = controlsAccepted;
 #endif
 
 
@@ -58,7 +58,7 @@ object(papp),
 //*****************************************************************************
 service_base::~service_base()
 {
-    // Do nothing
+   // Do nothing
 }
 
 //*****************************************************************************
@@ -107,9 +107,9 @@ void service_base::serve(service_base& service)
 uint32_t Win32FromHResult(HRESULT value)
 {
 
-    ASSERT(FACILITY_WIN32 == HRESULT_FACILITY(value));
+   ASSERT(FACILITY_WIN32 == HRESULT_FACILITY(value));
 
-    return value & ~0x80070000;
+   return value & ~0x80070000;
 
 }
 
@@ -128,25 +128,25 @@ void service_base::UpdateState(uint32_t state, HRESULT errorCode)
 #ifdef WINDOWSEX
 
 
-    m_status.dwCurrentState = state;
+   m_status.dwCurrentState = state;
 
-    ASSERT(0 == m_status.dwWin32ExitCode);
-    ASSERT(0 == m_status.dwServiceSpecificExitCode);
+   ASSERT(0 == m_status.dwWin32ExitCode);
+   ASSERT(0 == m_status.dwServiceSpecificExitCode);
 
-    if (FAILED(errorCode))
-    {
-        if (FACILITY_WIN32 == HRESULT_FACILITY(errorCode))
-        {
-            m_status.dwWin32ExitCode = Win32FromHResult(errorCode);
-        }
-        else
-        {
-            m_status.dwWin32ExitCode = ERROR_SERVICE_SPECIFIC_ERROR;
-            m_status.dwServiceSpecificExitCode = errorCode;
-        }
-    }
+   if (FAILED(errorCode))
+   {
+      if (FACILITY_WIN32 == HRESULT_FACILITY(errorCode))
+      {
+         m_status.dwWin32ExitCode = Win32FromHResult(errorCode);
+      }
+      else
+      {
+         m_status.dwWin32ExitCode = ERROR_SERVICE_SPECIFIC_ERROR;
+         m_status.dwServiceSpecificExitCode = errorCode;
+      }
+   }
 
-    SetServiceStatus();
+   SetServiceStatus();
 
 
 #endif
@@ -163,30 +163,30 @@ void service_base::UpdateState(uint32_t state, HRESULT errorCode)
 void service_base::SetServiceStatus()
 {
 
-    // If m_service is zero it means we're not running as a service but
-    // rather from the console. This is possible in debug mode.
+   // If m_service is zero it means we're not running as a service but
+   // rather from the console. This is possible in debug mode.
 
 #ifdef DEBUG
 
-    if(s_pservice != NULL)
-    {
+   if(s_pservice != NULL)
+   {
 
 #endif
 
-        ASSERT(s_pservice != NULL);
+      ASSERT(s_pservice != NULL);
 
 #ifdef WINDOWSEX
 
-        if (!::SetServiceStatus(m_handle, &m_status))
-        {
-           _throw(last_error_exception(s_pservice->get_app()));
-        }
+      if (!::SetServiceStatus(m_handle, &m_status))
+      {
+         _throw(last_error_exception(s_pservice->get_app()));
+      }
 
 #endif
 
 #ifdef DEBUG
 
-    }
+   }
 
 #endif
 
@@ -202,7 +202,7 @@ void service_base::SetServiceStatus()
 //*****************************************************************************
 string service_base::get_service_name() const
 {
-    return m_serviceName;
+   return m_serviceName;
 }
 
 
@@ -217,50 +217,50 @@ string service_base::get_service_name() const
 void WINAPI service_base::ServiceMain(DWORD argumentCount, PWSTR * arguments)
 {
 
-    // Since there's no way to inform the SCM of failure before a successful
-    // call to RegisterServiceCtrlHandler, if an error occurs before we have
-    // a service status handle we don't catch any exceptions and let the
-    // process terminate. The SCM will diligently log this event.
-    //
+   // Since there's no way to inform the SCM of failure before a successful
+   // call to RegisterServiceCtrlHandler, if an error occurs before we have
+   // a service status handle we don't catch any exceptions and let the
+   // process terminate. The SCM will diligently log this event.
+   //
 
-    ASSERT(s_pservice != NULL);
+   ASSERT(s_pservice != NULL);
 
-    if (1 != argumentCount || 0 == arguments || 0 == arguments[0])
-    {
+   if (1 != argumentCount || 0 == arguments || 0 == arguments[0])
+   {
 
       _throw(invalid_argument_exception(s_pservice->get_app()));
 
-    }
+   }
 
-    s_pservice->m_serviceName = arguments[0];
+   s_pservice->m_serviceName = arguments[0];
 
-    s_pservice->m_handle = ::RegisterServiceCtrlHandler("", ServiceHandler);
+   s_pservice->m_handle = ::RegisterServiceCtrlHandler("", ServiceHandler);
 
-    if(s_pservice->m_handle == NULL)
-    {
-       _throw(last_error_exception(s_pservice->get_app()));
-    }
+   if(s_pservice->m_handle == NULL)
+   {
+      _throw(last_error_exception(s_pservice->get_app()));
+   }
 
-    s_pservice->SetServiceStatus();
+   s_pservice->SetServiceStatus();
 
-    try
-    {
+   try
+   {
 
-        s_pservice->Start(0);
+      s_pservice->Start(0);
 
-        s_pservice->UpdateState(SERVICE_RUNNING);
+      s_pservice->UpdateState(SERVICE_RUNNING);
 
-    }
-    catch (const hresult_exception& e)
-    {
-        //
-        // If the service can't start it should _throw( an exception from the
-        // Start method. If this happens, we catch it here and notify the
-        // SCM so that it can log the error code.
-        //
+   }
+   catch (const hresult_exception& e)
+   {
+      //
+      // If the service can't start it should _throw( an exception from the
+      // Start method. If this happens, we catch it here and notify the
+      // SCM so that it can log the error code.
+      //
 
-        s_pservice->UpdateState(SERVICE_STOPPED, e);
-    }
+      s_pservice->UpdateState(SERVICE_STOPPED, e);
+   }
 
 
 }
@@ -276,40 +276,40 @@ void WINAPI service_base::ServiceHandler(DWORD control)
 {
 
 
-    try
-    {
-        switch (control)
-        {
-            case SERVICE_CONTROL_CONTINUE :
-            {
-                s_pservice->UpdateState(SERVICE_CONTINUE_PENDING);
-                s_pservice->Start(control);
-                s_pservice->UpdateState(SERVICE_RUNNING);
-                break;
-            }
-            case SERVICE_CONTROL_PAUSE :
-            {
-                s_pservice->UpdateState(SERVICE_PAUSE_PENDING);
-                s_pservice->Stop(control);
-                s_pservice->UpdateState(SERVICE_PAUSED);
-                break;
-            }
-            case SERVICE_CONTROL_SHUTDOWN :
-            case SERVICE_CONTROL_STOP :
-            {
-                s_pservice->UpdateState(SERVICE_STOP_PENDING);
-                s_pservice->Stop(control);
-                s_pservice->UpdateState(SERVICE_STOPPED);
+   try
+   {
+      switch (control)
+      {
+      case SERVICE_CONTROL_CONTINUE :
+      {
+         s_pservice->UpdateState(SERVICE_CONTINUE_PENDING);
+         s_pservice->Start(control);
+         s_pservice->UpdateState(SERVICE_RUNNING);
+         break;
+      }
+      case SERVICE_CONTROL_PAUSE :
+      {
+         s_pservice->UpdateState(SERVICE_PAUSE_PENDING);
+         s_pservice->Stop(control);
+         s_pservice->UpdateState(SERVICE_PAUSED);
+         break;
+      }
+      case SERVICE_CONTROL_SHUTDOWN :
+      case SERVICE_CONTROL_STOP :
+      {
+         s_pservice->UpdateState(SERVICE_STOP_PENDING);
+         s_pservice->Stop(control);
+         s_pservice->UpdateState(SERVICE_STOPPED);
 
-                Sys(s_pservice->get_app()).post_quit();
-                break;
-            }
-        }
-    }
-    catch (const hresult_exception& e)
-    {
-        s_pservice->UpdateState(SERVICE_STOPPED, e);
-    }
+         Sys(s_pservice->get_app()).post_quit();
+         break;
+      }
+      }
+   }
+   catch (const hresult_exception& e)
+   {
+      s_pservice->UpdateState(SERVICE_STOPPED, e);
+   }
 
 
 }
@@ -345,28 +345,28 @@ void service_base::call_server()
 
    Application.post_quit();
 
-   try
-   {
+   //try
+   //{
 
-      Application.signal_close_dependent_threads();
+   //   Application.signal_close_dependent_threads();
 
-   }
-   catch (...)
-   {
+   //}
+   //catch (...)
+   //{
 
-   }
+   //}
 
 
-   try
-   {
+   //try
+   //{
 
-      Application.wait_close_dependent_threads(seconds(30));
+   //   Application.wait_close_dependent_threads(seconds(30));
 
-   }
-   catch (...)
-   {
+   //}
+   //catch (...)
+   //{
 
-   }
+   //}
 
    //if(posthreadNew != NULL)
    //{

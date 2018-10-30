@@ -217,7 +217,7 @@ namespace draw2d
       virtual size GetViewportExt();
       virtual size SetViewportExt(i32 cx, i32 cy);
       virtual size SetViewportExt(SIZE size);
-      virtual size ScaleViewportExt(i32 xNum, i32 xDenom, i32 yNum, i32 yDenom);
+      virtual size ScaleViewportExt(double xNum, double xDenom, double yNum, double yDenom);
 
       // Window Origin
       virtual point GetWindowOrg();
@@ -407,12 +407,15 @@ namespace draw2d
 
       virtual bool draw(LPCRECT lpcrectDst, ::draw2d::graphics * pgraphicsSrc, LPCRECT lpcrectSrc, u32 dwRop = SRCCOPY);
 
-      virtual bool StretchBlt(rect rectDst, ::draw2d::graphics * pgraphicsSrc, rect rectSrc, u32 dwRop = SRCCOPY);
+      virtual bool draw(LPCRECTD lpcrectDst, ::draw2d::graphics * pgraphicsSrc, LPCRECT lpcrectSrc, u32 dwRop = SRCCOPY);
 
-      virtual bool StretchBlt(i32 x, i32 y, i32 nWidth, i32 nHeight, ::draw2d::graphics * pgraphicsSrc, i32 xSrc, i32 ySrc, i32 nSrcWidth, i32 nSrcHeight, u32 dwRop = SRCCOPY);
+      virtual bool StretchBlt(rectd rectDst, ::draw2d::graphics * pgraphicsSrc, rect rectSrc, u32 dwRop = SRCCOPY);
 
-      virtual bool StretchBltRaw(i32 x, i32 y, i32 nWidth, i32 nHeight, ::draw2d::graphics * pgraphicsSrc, i32 xSrc, i32 ySrc, i32 nSrcWidth, i32 nSrcHeight, u32 dwRop = SRCCOPY);
-      virtual bool StretchBltAlphaBlend(i32 x, i32 y, i32 nWidth, i32 nHeight, ::draw2d::graphics * pgraphicsSrc, i32 xSrc, i32 ySrc, i32 nSrcWidth, i32 nSrcHeight, u32 dwRop = SRCCOPY);
+
+      virtual bool StretchBlt(double x, double y, double nWidth, double nHeight, ::draw2d::graphics * pgraphicsSrc, i32 xSrc, i32 ySrc, i32 nSrcWidth, i32 nSrcHeight, u32 dwRop = SRCCOPY);
+
+      virtual bool StretchBltRaw(double x, double y, double nWidth, double nHeight, ::draw2d::graphics * pgraphicsSrc, i32 xSrc, i32 ySrc, i32 nSrcWidth, i32 nSrcHeight, u32 dwRop = SRCCOPY);
+      virtual bool StretchBltAlphaBlend(double x, double y, double nWidth, double nHeight, ::draw2d::graphics * pgraphicsSrc, i32 xSrc, i32 ySrc, i32 nSrcWidth, i32 nSrcHeight, u32 dwRop = SRCCOPY);
 
       virtual COLORREF GetPixel(i32 x, i32 y);
       virtual COLORREF GetPixel(POINT point);

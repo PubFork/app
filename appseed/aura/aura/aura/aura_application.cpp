@@ -219,6 +219,20 @@ namespace aura
    }
 
 
+   application_menu_item::application_menu_item()
+   {
+
+   }
+
+
+   application_menu_item::application_menu_item(string strName, string strId) :
+      m_strName(strName),
+      m_strId(strId)
+   {
+
+   }
+
+
    void application_menu::add_item(index iIndex, string strName, string strId)
    {
 
@@ -721,8 +735,6 @@ namespace aura
    bool application::load_cached_string_by_id(string & str, id id, bool bLoadStringTable)
    {
 
-      synch_lock sl(&m_mutexStr);
-
       string strId(id.str());
 
       string strTable;
@@ -750,6 +762,8 @@ namespace aura
 
       }
 
+      synch_lock sl(&m_mutexStr);
+
       if (m_stringtableStd.Lookup(strTable, pmap))
       {
 
@@ -774,6 +788,8 @@ namespace aura
       }
       else if (bLoadStringTable)
       {
+
+         sl.unlock();
 
          load_string_table(strTable, "");
 

@@ -72,51 +72,77 @@ const Type & string_array < Type, RawType >::element_at(index nIndex) const
 
 
 template < typename Type, typename RawType >
-void string_array < Type, RawType >::add(const var & var)
+index string_array < Type, RawType >::add(const var & var)
 {
+
    if (var.is_empty())
    {
+
+      return -1;
+
    }
    else if (var.get_type() == var::type_stra)
    {
+
       ::lemon::array::add(*this, var.stra());
+
    }
    else if (var.cast < string_array < Type, RawType > >() != NULL)
    {
+
       ::lemon::array::add(*this, *var.cast < string_array < Type, RawType > >());
+
    }
    else if (var.get_type() == var::type_vara)
    {
+
       for (int32_t i = 0; i < var.vara().get_count(); i++)
       {
+
          ::lemon::array::add(*this, var.vara()[i].get_string());
+
       }
+
    }
    else if (var.get_type() == var::type_inta)
    {
+
       for (int32_t i = 0; i < var.inta().get_count(); i++)
       {
+
          ::lemon::array::add(*this, ::str::from(var.inta()[i]));
+
       }
+
    }
    else if (var.get_type() == var::type_propset)
    {
+
       for (auto assoc : var.propset())
       {
+
          ::lemon::array::add(*this, assoc.get_value().get_string());
+
       }
+
    }
    else
    {
       ::lemon::array::add(*this, var.get_string());
+
    }
+
+   return get_upper_bound();
+
 }
 
 
 template < typename Type, typename RawType >
-void string_array < Type, RawType >::add(const property & prop)
+index string_array < Type, RawType >::add(const property & prop)
 {
-   add(prop.get_value());
+
+   return add(prop.get_value());
+
 }
 
 

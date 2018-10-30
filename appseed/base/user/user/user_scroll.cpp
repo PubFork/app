@@ -50,7 +50,7 @@ namespace user
             rectNewPos.right = rectNewPos.left + rectClient.width() - get_final_y_scroll_bar_width();
             rectNewPos.bottom = rectNewPos.top + GetSystemMetrics(SM_CYHSCROLL);
 
-            m_pscrollbarHorz->defer_set_window_pos(ZORDER_TOP, rectNewPos, ifswp);
+            m_pscrollbarHorz->SetWindowPos(ZORDER_TOP, rectNewPos, ifswp);
 
          }
          else
@@ -59,7 +59,7 @@ namespace user
             m_pscrollbarHorz->ShowWindow(SW_HIDE);
 
          }
-         
+
          set_need_redraw();
 
       }
@@ -340,7 +340,7 @@ namespace user
             rectNewPos.right = rectNewPos.left + GetSystemMetrics(SM_CXVSCROLL);
             rectNewPos.bottom = rectNewPos.top+ rectClient.height() - get_final_x_scroll_bar_width();
 
-            m_pscrollbarVert->defer_set_window_pos(ZORDER_TOP, rectNewPos, ifswp);
+            m_pscrollbarVert->SetWindowPos(ZORDER_TOP, rectNewPos, ifswp);
 
          }
          else
@@ -349,7 +349,7 @@ namespace user
             m_pscrollbarVert->ShowWindow(SW_HIDE);
 
          }
-         
+
          set_need_redraw();
 
       }
@@ -697,13 +697,13 @@ namespace user
 
    void scroll::layout_scroll_bar()
    {
-      
+
       scroll_x::layout_scroll_bar();
-      
+
       scroll_y::layout_scroll_bar();
-      
+
    }
-   
+
 
    void scroll::on_change_view_size()
    {
@@ -717,12 +717,12 @@ namespace user
       rect rectClient;
 
       GetClientRect(rectClient);
-      
+
       if(rectClient.area() <= 0)
       {
-         
+
          return;
-         
+
       }
 
       LONG iTotalHeight = sizeTotal.cy;
@@ -802,9 +802,9 @@ namespace user
       }
       else
       {
-         
+
          layout_scroll_bar();
-         
+
       }
 
    }

@@ -188,7 +188,7 @@ bool ifs::has_subdir(const ::file::path & path)
          if(pchild->get_name() != "folder")
             continue;
 
-         ::file::path & path = dir.add(::file::path(listing.m_path / pchild->attr("name").get_string(),::file::path_url));
+         auto & path = dir.add_get(::file::path(listing.m_path / pchild->attr("name").get_string(),::file::path_url));
 
          path.m_iDir = 1;
 
@@ -209,7 +209,7 @@ bool ifs::has_subdir(const ::file::path & path)
 
          string strExtension = pchild->attr("extension");
 
-         ::file::path & path = dir.add(::file::path(listing.m_path / pchild->attr("name").get_string(),::file::path_url));
+         auto & path = dir.add_get(::file::path(listing.m_path / pchild->attr("name").get_string(),::file::path_url));
 
          path.m_iSize = pchild->attr("size");
 

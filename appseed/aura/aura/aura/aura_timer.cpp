@@ -5,6 +5,8 @@ timer::timer(::aura::application * papp, uint_ptr uiTimer, PFN_TIMER pfnTimer, v
    ::object(papp)
 {
 
+//   m_bThreadInit = false;
+
    impl_init();
 
    m_nIDEvent = uiTimer;
@@ -41,6 +43,8 @@ bool timer::start(int millis, bool bPeriodic)
 
    synch_lock sl(m_pmutex);
 
+//   m_bThreadInit = false;
+
    m_bPeriodic = bPeriodic;
 
    m_dwMillis = millis;
@@ -75,8 +79,6 @@ bool timer::start(int millis, bool bPeriodic)
       return false;
 
    }
-
-   register_at_required_threads();
 
    return true;
 
@@ -138,6 +140,24 @@ void timer::call_on_timer()
    {
 
       bRepeat = false;
+
+   }
+
+   try
+   {
+
+      //if (!m_bThreadInit)
+      //{
+
+      //   m_bThreadInit = true;
+
+      //   register_at_required_threads();
+
+      //}
+
+   }
+   catch (...)
+   {
 
    }
 
@@ -210,7 +230,7 @@ void timer::call_on_timer()
 
       //}
 
-      try
+      /*try
       {
 
          unregister_from_required_threads();
@@ -219,7 +239,7 @@ void timer::call_on_timer()
       catch(...)
       {
 
-      }
+      }*/
 
       try
       {

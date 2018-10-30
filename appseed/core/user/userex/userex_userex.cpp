@@ -2017,7 +2017,7 @@ finished:
          fork([&]()
          {
 
-            ::multithreading::set_priority(::multithreading::priority_idle);
+            //::multithreading::set_priority(::multithreading::priority_idle);
 
             System.visual().fonts().update_font_enumeration();
 

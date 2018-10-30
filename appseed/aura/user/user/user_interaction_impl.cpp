@@ -1216,10 +1216,10 @@ namespace user
    void interaction_impl::deferred_on_change_visibility()
    {
 
-      if (is_this_visible() && !WfiIsIconic())
+      if (m_pui->is_this_visible() && !m_pui->WfiIsIconic())
       {
 
-         if (GetParent() == NULL)
+         if (m_pui->GetParent() == NULL)
          {
 
             defer_start_prodevian();
@@ -2234,11 +2234,11 @@ namespace user
 
          output_debug_string("interaction_impl::_001OnShowWindows bShow = true");
 
-         #ifndef WINDOWSEX
+#ifndef WINDOWSEX
 
          m_pui->defer_start_prodevian();
 
-         #endif // WINDOWS
+#endif // WINDOWS
 
       }
       else
@@ -2418,52 +2418,56 @@ namespace user
    void interaction_impl::_001UpdateBuffer()
    {
 
-      synch_lock sl(m_pui->m_pmutex);
-
-      keep < bool > keepUpdatingBuffer(&m_bUpdatingBuffer, true, false, true);
-
-      thread_set_fast_path();
-
-      m_pui->m_bRedraw = false;
-
-      windowing_output_debug_string("\n_001UpdateBuffer : before draw2d::lock");
-
-      windowing_output_debug_string("\n_001UpdateBuffer : D");
-
-      m_pui->defer_check_layout();
-
-      windowing_output_debug_string("\n_001UpdateBuffer : N");
-
-      if(m_pui == NULL)
       {
 
-         return;
+         synch_lock sl(m_pui->m_pmutex);
 
-      }
+         keep < bool > keepUpdatingBuffer(&m_bUpdatingBuffer, true, false, true);
 
-      m_pui->defer_check_zorder();
+         thread_set_fast_path();
 
-      windowing_output_debug_string("\n_001UpdateBuffer : A");
+         m_pui->m_bRedraw = false;
 
-      update_graphics_resources();
+         windowing_output_debug_string("\n_001UpdateBuffer : before draw2d::lock");
 
-      windowing_output_debug_string("\n_001UpdateBuffer : updated graphics resources");
+         windowing_output_debug_string("\n_001UpdateBuffer : D");
 
-      if (m_spgraphics.is_null())
-      {
+         m_pui->defer_check_layout();
 
-         windowing_output_debug_string("\n_001UpdateBuffer : m_spgraphics.is_null()");
+         windowing_output_debug_string("\n_001UpdateBuffer : N");
 
-         return;
+         if (m_pui == NULL)
+         {
 
-      }
+            return;
 
-      if(!m_pui->IsWindowVisible())
-      {
+         }
 
-         windowing_output_debug_string("\n_001UpdateBuffer : !IsWindowVisible");
+         m_pui->defer_check_zorder();
 
-         return;
+         windowing_output_debug_string("\n_001UpdateBuffer : A");
+
+         update_graphics_resources();
+
+         windowing_output_debug_string("\n_001UpdateBuffer : updated graphics resources");
+
+         if (m_spgraphics.is_null())
+         {
+
+            windowing_output_debug_string("\n_001UpdateBuffer : m_spgraphics.is_null()");
+
+            return;
+
+         }
+
+         if (!m_pui->IsWindowVisible())
+         {
+
+            windowing_output_debug_string("\n_001UpdateBuffer : !IsWindowVisible");
+
+            return;
+
+         }
 
       }
 
@@ -2472,112 +2476,110 @@ namespace user
       if (bUpdateBuffer)
       {
 
+         rect64 rectWindow;
+
+         m_pui->GetWindowRect(rectWindow);
+
+         windowing_output_debug_string("\n_001UpdateBuffer : after GetWindowRect");
+
+         ::draw2d::graphics * pgraphics = m_spgraphics->on_begin_draw();
+
          windowing_output_debug_string("\n_001UpdateBuffer : before graphics lock");
 
-         synch_lock sl(m_spgraphics->m_pmutex);
+         synch_lock sl(pgraphics->m_pmutex);
 
          windowing_output_debug_string("\n_001UpdateBuffer : after graphics lock");
 
+         windowing_output_debug_string("\n_001UpdateBuffer : after on_begin_draw");
+
+         if (pgraphics == NULL || pgraphics->get_os_data() == NULL)
          {
 
-            rect64 rectWindow;
+            return;
 
-            m_pui->GetWindowRect(rectWindow);
+         }
 
-            windowing_output_debug_string("\n_001UpdateBuffer : after GetWindowRect");
+         windowing_output_debug_string("\n_001UpdateBuffer : after check1");
 
-            ::draw2d::graphics * pgraphics = m_spgraphics->on_begin_draw();
+         pgraphics->SelectClipRgn(NULL);
 
-            windowing_output_debug_string("\n_001UpdateBuffer : after on_begin_draw");
+         ::draw2d::savedc savedc(pgraphics);
 
-            if (pgraphics == NULL || pgraphics->get_os_data() == NULL)
+         windowing_output_debug_string("\n_001UpdateBuffer : after savedc");
+
+         if (m_pui->m_bProDevian)
+         {
+
+            if (!pgraphics->is_valid_update_window_thread())
             {
 
                return;
 
             }
 
-            windowing_output_debug_string("\n_001UpdateBuffer : after check1");
+         }
 
-            pgraphics->SelectClipRgn(NULL);
+         windowing_output_debug_string("\n_001UpdateBuffer : after check2");
 
-            ::draw2d::savedc savedc(pgraphics);
+         rect r;
 
-            windowing_output_debug_string("\n_001UpdateBuffer : after savedc");
+         r = rectWindow;
 
-            if (m_pui->m_bProDevian)
+         r.offset(-r.top_left());
+
+         pgraphics->set_alpha_mode(::draw2d::alpha_mode_set);
+
+         windowing_output_debug_string("\n_001UpdateBuffer : after set alphamode");
+
+         if (pgraphics->m_pdibDraw2dGraphics != NULL)
+         {
+
+            if (m_bComposite)
             {
 
-               if (!pgraphics->is_valid_update_window_thread())
-               {
-
-                  return;
-
-               }
-
-            }
-
-            windowing_output_debug_string("\n_001UpdateBuffer : after check2");
-
-            rect r;
-
-            r = rectWindow;
-
-            r.offset(-r.top_left());
-
-            pgraphics->set_alpha_mode(::draw2d::alpha_mode_set);
-
-            windowing_output_debug_string("\n_001UpdateBuffer : after set alphamode");
-
-            if (pgraphics->m_pdibDraw2dGraphics != NULL)
-            {
-
-               if (m_bComposite)
-               {
-
-                  pgraphics->m_pdibDraw2dGraphics->Fill(0);
-
-               }
-               else
-               {
-
-                  pgraphics->m_pdibDraw2dGraphics->Fill(255, 192, 192, 192);
-
-               }
+               pgraphics->m_pdibDraw2dGraphics->Fill(0);
 
             }
             else
             {
 
-               if (m_bComposite)
-               {
-
-                  pgraphics->fill_solid_rect(r, ARGB(0, 0, 0, 0));
-
-               }
-               else
-               {
-
-                  pgraphics->fill_solid_rect(r, ARGB(255, 192, 192, 192));
-
-               }
+               pgraphics->m_pdibDraw2dGraphics->Fill(255, 192, 192, 192);
 
             }
 
-            windowing_output_debug_string("\n_001UpdateBuffer : before Print");
+         }
+         else
+         {
 
-            //if(m_pui->IsWindowVisible())
-            try
+            if (m_bComposite)
             {
 
-               _001Print(pgraphics);
+               pgraphics->fill_solid_rect(r, ARGB(0, 0, 0, 0));
 
             }
-            catch (...)
+            else
             {
 
+               pgraphics->fill_solid_rect(r, ARGB(255, 192, 192, 192));
 
             }
+
+         }
+
+         windowing_output_debug_string("\n_001UpdateBuffer : before Print");
+
+         //if(m_pui->IsWindowVisible())
+         try
+         {
+
+            _001Print(pgraphics);
+
+         }
+         catch (...)
+         {
+
+
+         }
 
 //            pgraphics->fill_solid_rect_dim(100, 100, 450, 120, ARGB(255, 255, 0, 0));
 //
@@ -2586,21 +2588,20 @@ namespace user
 //            pgraphics->fill_solid_rect_dim(100 + 225, 220, 225, 120, ARGB(255, 155, 190, 200));
 
 
-            windowing_output_debug_string("\n_001UpdateBuffer : after Print");
+         windowing_output_debug_string("\n_001UpdateBuffer : after Print");
 
 #if HARD_DEBUG
 
-            ::draw2d::graphics_sp g(allocer());
+         ::draw2d::graphics_sp g(allocer());
 
-            g->debug();
+         g->debug();
 
-            m_size.cx = 0;
+         m_size.cx = 0;
 
-            m_size.cy = 0;
+         m_size.cy = 0;
 
 #endif
 
-         }
 
       }
 

@@ -696,6 +696,8 @@ namespace user
 
          defer_create_combo_list();
 
+         Session.on_show_user_input_popup(m_plist);
+
          ::draw2d::font_sp spfont = _001GetFont(font_plain_edit);
 
          m_plist->query_full_size(m_sizeFull);
@@ -875,6 +877,13 @@ namespace user
       }
 
       m_iSel = _001FindListText(str);
+
+      if (m_plist.is_set())
+      {
+
+         m_plist->on_change_combo_sel(m_iSel);
+
+      }
 
    }
 

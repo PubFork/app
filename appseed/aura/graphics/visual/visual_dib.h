@@ -27,6 +27,7 @@ namespace visual
 
       image::e_format         m_eformat;
       int                     m_iQuality;
+      int                     m_iDpi;
 
       save_image();
 

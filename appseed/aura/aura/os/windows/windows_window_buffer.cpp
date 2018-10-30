@@ -255,135 +255,145 @@ namespace windows
          if (m_rectLast != rectWindow || m_pimpl->m_bZ || m_pimpl->m_bShowFlags || m_pimpl->m_bShowWindow)
          {
 
-            keep < bool > keepLockWindowUpdate(&m_pimpl->m_pui->m_bLockWindowUpdate, true, false, true);
-
-            keep < bool > keepIgnoreSizeEvent(&m_pimpl->m_bIgnoreSizeEvent, true, false, true);
-
-            keep < bool > keepIgnoreMoveEvent(&m_pimpl->m_bIgnoreMoveEvent, true, false, true);
-
-            keep < bool > keepDisableSaveWindowRect(&m_pimpl->m_pui->m_bEnableSaveWindowRect, false, m_pimpl->m_pui->m_bEnableSaveWindowRect, true);
-
-
-            UINT uiFlags;
-
-            if (bLayered)
+            m_pimpl->m_pui->post_pred([=]()
             {
 
-               uiFlags = SWP_NOREDRAW
-                         | SWP_NOCOPYBITS
-                         | SWP_NOACTIVATE
-                         | SWP_NOOWNERZORDER
-                         | SWP_DEFERERASE;
+               keep < bool > keepLockWindowUpdate(&m_pimpl->m_pui->m_bLockWindowUpdate, true, false, true);
 
-            }
-            else
-            {
+               keep < bool > keepIgnoreSizeEvent(&m_pimpl->m_bIgnoreSizeEvent, true, false, true);
 
-               //         uiFlags = SWP_FRAMECHANGED | SWP_NOREDRAW;
+               keep < bool > keepIgnoreMoveEvent(&m_pimpl->m_bIgnoreMoveEvent, true, false, true);
 
-               uiFlags = SWP_NOREDRAW
-                         | SWP_NOCOPYBITS
-                         | SWP_NOACTIVATE
-                         | SWP_NOOWNERZORDER
-                         | SWP_DEFERERASE;
+               keep < bool > keepDisableSaveWindowRect(&m_pimpl->m_pui->m_bEnableSaveWindowRect, false, m_pimpl->m_pui->m_bEnableSaveWindowRect, true);
 
 
-            }
+               UINT uiFlags;
 
-            ::SetWindowPos(m_pimpl->m_oswindow, (m_pimpl->m_bZ ? (HWND)m_pimpl->m_iZ : 0),
-                           rectWindow.left,
-                           rectWindow.top,
-                           rectWindow.width(),
-                           rectWindow.height(),
-                           (m_pimpl->m_bZ ? 0 : SWP_NOZORDER)
-                           | (m_pimpl->m_bShowFlags ? m_pimpl->m_iShowFlags : 0)
-                           | uiFlags);
-
-
-            if (bLayered && !m_pimpl->m_bShowWindow)
-            {
-
-               if (m_pimpl->m_iShowFlags & SWP_SHOWWINDOW)
+               if (bLayered)
                {
 
-                  ::ShowWindow(m_pimpl->m_oswindow, SW_NORMAL);
+                  uiFlags = SWP_NOREDRAW
+                            | SWP_NOCOPYBITS
+                            | SWP_NOACTIVATE
+                            | SWP_NOOWNERZORDER
+                            | SWP_DEFERERASE;
 
-                  if (bLayered)
+               }
+               else
+               {
+
+                  //         uiFlags = SWP_FRAMECHANGED | SWP_NOREDRAW;
+
+                  uiFlags = SWP_NOREDRAW
+                            | SWP_NOCOPYBITS
+                            | SWP_NOACTIVATE
+                            | SWP_NOOWNERZORDER
+                            | SWP_DEFERERASE;
+
+
+               }
+
+               ::SetWindowPos(m_pimpl->m_oswindow, (m_pimpl->m_bZ ? (HWND)m_pimpl->m_iZ : 0),
+                              rectWindow.left,
+                              rectWindow.top,
+                              rectWindow.width(),
+                              rectWindow.height(),
+                              (m_pimpl->m_bZ ? 0 : SWP_NOZORDER)
+                              | (m_pimpl->m_bShowFlags ? m_pimpl->m_iShowFlags : 0)
+                              | uiFlags);
+
+
+               if (bLayered && !m_pimpl->m_bShowWindow)
+               {
+
+                  if (m_pimpl->m_iShowFlags & SWP_SHOWWINDOW)
                   {
 
-                     m_pimpl->m_pui->ModifyStyle(0, WS_VISIBLE);
+                     ::ShowWindow(m_pimpl->m_oswindow, SW_NORMAL);
+
+                     if (bLayered)
+                     {
+
+                        m_pimpl->m_pui->ModifyStyle(0, WS_VISIBLE);
+
+                     }
+
+                  }
+                  else if (m_pimpl->m_iShowFlags & SWP_HIDEWINDOW)
+                  {
+
+                     ::ShowWindow(m_pimpl->m_oswindow, SW_HIDE);
+
+                     if (bLayered)
+                     {
+
+                        m_pimpl->m_pui->ModifyStyle(WS_VISIBLE, 0);
+
+                     }
 
                   }
 
                }
-               else if (m_pimpl->m_iShowFlags & SWP_HIDEWINDOW)
-               {
 
-                  ::ShowWindow(m_pimpl->m_oswindow, SW_HIDE);
+               m_rectLast = rectWindow;
 
-                  if (bLayered)
-                  {
+               m_pimpl->m_bZ = false;
 
-                     m_pimpl->m_pui->ModifyStyle(WS_VISIBLE, 0);
+               m_pimpl->m_bShowFlags = false;
 
-                  }
-
-               }
-
-            }
-
-            m_rectLast = rectWindow;
-
-            m_pimpl->m_bZ = false;
-
-            m_pimpl->m_bShowFlags = false;
+            });
 
             bSetWindowPos = true;
 
          }
 
-      }
-
-      if (m_pimpl->m_bShowWindow)
-      {
-
-         ::ShowWindow(m_pimpl->m_oswindow, m_pimpl->m_iShowWindow);
-
-         if (bLayered && m_pimpl->m_pui != NULL)
+         if (m_pimpl->m_bShowWindow)
          {
 
-            try
+            m_pimpl->m_pui->post_pred([=]()
             {
 
-               if (m_pimpl->m_iShowWindow == SW_HIDE && bWasVisible)
+               ::ShowWindow(m_pimpl->m_oswindow, m_pimpl->m_iShowWindow);
+
+               if (bLayered && m_pimpl->m_pui != NULL)
                {
 
-                  m_pimpl->m_pui->ModifyStyle(WS_VISIBLE, 0);
+                  try
+                  {
 
-                  m_pimpl->m_pui->send_message(WM_SHOWWINDOW, 0);
+                     if (m_pimpl->m_iShowWindow == SW_HIDE && bWasVisible)
+                     {
+
+                        m_pimpl->m_pui->ModifyStyle(WS_VISIBLE, 0);
+
+                        m_pimpl->m_pui->send_message(WM_SHOWWINDOW, 0);
+
+                     }
+                     else if (m_pimpl->m_iShowWindow != SW_HIDE && !bWasVisible)
+                     {
+
+                        m_pimpl->m_pui->ModifyStyle(0, WS_VISIBLE);
+
+                        m_pimpl->m_pui->send_message(WM_SHOWWINDOW, 1);
+
+                     }
+
+                  }
+                  catch (...)
+                  {
+
+
+                  }
 
                }
-               else if (m_pimpl->m_iShowWindow != SW_HIDE && !bWasVisible)
-               {
 
-                  m_pimpl->m_pui->ModifyStyle(0, WS_VISIBLE);
+               m_pimpl->m_bShowWindow = false;
 
-                  m_pimpl->m_pui->send_message(WM_SHOWWINDOW, 1);
+               m_pimpl->m_iShowWindow = -1;
 
-               }
-
-            }
-            catch (...)
-            {
-
-
-            }
+            });
 
          }
-
-         m_pimpl->m_bShowWindow = false;
-
-         m_pimpl->m_iShowWindow = -1;
 
       }
 

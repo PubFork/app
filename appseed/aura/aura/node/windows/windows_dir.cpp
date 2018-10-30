@@ -229,7 +229,8 @@ namespace windows
             str += *lpsz;
             lpsz++;
          }
-         ::file::path & path = listing.add(::file::path(str));
+         listing.add(::file::path(str));
+         ::file::path & path = listing.last();
          path.m_iDir = 1;
          str.trim(":/\\");
          listing.m_straTitle.add("Drive " + str);

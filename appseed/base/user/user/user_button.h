@@ -92,6 +92,7 @@ namespace user
 
       virtual bool is_custom_draw() override;
 
+      using ::user::check::_001SetCheck;
       virtual void _001SetCheck(::check::e_check check, ::action::context actioncontext) override;
       virtual ::check::e_check _001GetCheck() override;
 

@@ -37,8 +37,8 @@ enum e_system_message
    system_message_meta,
    system_message_pred,
    system_message_runnable,
-   system_message_register_dependent_thread,
-   system_message_unregister_dependent_thread,
+   //system_message_register_dependent_thread,
+   //system_message_unregister_dependent_thread,
 
 };
 

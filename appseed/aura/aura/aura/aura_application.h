@@ -4,27 +4,29 @@
 namespace aura
 {
 
-      class application_menu_item
-      {
-         public:
+   class CLASS_DECL_AURA  application_menu_item
+   {
+   public:
 
-            string m_strName;
-            string m_strId;
+      string m_strName;
+      string m_strId;
 
-            application_menu_item() {}
-            application_menu_item(string strName, string strId):m_strName(strName), m_strId(strId) {}
+      application_menu_item();
+      application_menu_item(string strName, string strId);
 
-      };
+   };
 
 
-      class application_menu :
-         public array < application_menu_item >
-      {
-         public:
+   class CLASS_DECL_AURA application_menu :
+      public array < application_menu_item >
+   {
+   public:
 
-         void add_item(index iIndex, string strName, string strId);
+      void add_item(index iIndex, string strName, string strId);
 
-      };
+   };
+
+
    class CLASS_DECL_AURA application :
       virtual public ::thread,
       virtual public int_scalar_source,

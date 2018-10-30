@@ -33,7 +33,7 @@ namespace user
       virtual ~font_list();
 
 
-
+      virtual void on_change_combo_sel(index iSel) override;
 
       void attach_visual_font_list(::visual::font_list * pdata);
       //virtual void on_update_data(::visual::font_list * pdata, int32_t iHint);
@@ -61,9 +61,9 @@ namespace user
       index       get_cur_hover();
 
       DECL_GEN_SIGNAL(_001OnCreate);
-
       DECL_GEN_SIGNAL(_001OnLButtonDown);
       DECL_GEN_SIGNAL(_001OnMouseMove);
+      DECL_GEN_SIGNAL(_001OnClose);
 
       virtual void _001OnTimer(::timer * ptimer) override;
 
@@ -76,6 +76,8 @@ namespace user
       virtual void query_full_size(LPSIZE lpsize) override;
 
       virtual bool update_data(bool bSaveAndValidate) override;
+
+      virtual void set_layout(::visual::font_list::e_layout elayout);
 
 
    };

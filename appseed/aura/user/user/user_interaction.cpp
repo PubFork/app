@@ -142,7 +142,7 @@ namespace user
 
       synch_lock sl(m_pmutex);
 
-      if (m_pimpl->m_pui == NULL)
+      if (m_pimpl.is_null() || m_pimpl->m_pui == NULL)
       {
 
          return false;
@@ -1329,6 +1329,28 @@ restart:
          {
 
             puiParent->on_hide_child(this);
+
+         }
+         catch (...)
+         {
+
+         }
+
+      }
+
+      {
+
+         synch_lock sl(Session.m_pmutex);
+
+         try
+         {
+
+            if (Session.m_puiLastUserInputPopup == this)
+            {
+
+               Session.m_puiLastUserInputPopup = NULL;
+
+            }
 
          }
          catch (...)

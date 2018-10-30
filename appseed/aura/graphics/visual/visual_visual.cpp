@@ -214,9 +214,15 @@ namespace visual
    cursor * visual::set_cursor_file(e_cursor ecursor, const ::file::path & psz, bool bFromCache)
    {
 
-      synch_lock sl(m_pmutex);
+      cursor * pcursor = NULL;
 
-      cursor * pcursor = get_cursor(ecursor);
+      {
+
+         synch_lock sl(m_pmutex);
+
+         pcursor = get_cursor(ecursor);
+
+      }
 
       if (Application.imaging().load_from_file(pcursor, psz, bFromCache))
       {

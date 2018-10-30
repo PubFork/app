@@ -3306,6 +3306,34 @@ ret:
 
    }
 
+
+   void session::on_show_user_input_popup(::user::interaction * pui)
+   {
+
+      synch_lock sl(m_pmutex);
+
+      try
+      {
+
+         if (m_puiLastUserInputPopup != NULL
+               && m_puiLastUserInputPopup != pui)
+         {
+
+            m_puiLastUserInputPopup->ShowWindow(SW_HIDE);
+
+         }
+
+      }
+      catch (...)
+      {
+
+      }
+
+      m_puiLastUserInputPopup = pui;
+
+   }
+
+
 } // namespace aura
 
 

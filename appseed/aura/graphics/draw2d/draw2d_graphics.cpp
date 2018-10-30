@@ -1442,7 +1442,6 @@ namespace draw2d
    bool graphics::draw(LPCRECT lpcrect, ::draw2d::graphics * pgraphicsSrc, LPCPOINT ppt, u32 dwRop)
    {
 
-
       i32 x = lpcrect->left;
       i32 y = lpcrect->top;
       i32 xSrc = ppt->x;
@@ -1558,6 +1557,7 @@ namespace draw2d
    }
 
 
+
    bool graphics::BitBltRaw(i32 x, i32 y, i32 nWidth, i32 nHeight, ::draw2d::graphics * pgraphicsSrc, i32 xSrc, i32 ySrc, u32 dwRop)
    {
 
@@ -1665,7 +1665,17 @@ namespace draw2d
    }
 
 
-   bool graphics::StretchBlt(rect rectDst, ::draw2d::graphics * pgraphicsSrc, rect rectSrc, u32 dwRop)
+
+
+   bool graphics::draw(LPCRECTD lpcrectDst, ::draw2d::graphics * pgraphicsSrc, LPCRECT lpcrectSrc, u32 dwRop)
+   {
+
+      return StretchBlt(lpcrectDst, pgraphicsSrc, lpcrectSrc, dwRop);
+
+   }
+
+
+   bool graphics::StretchBlt(rectd rectDst, ::draw2d::graphics * pgraphicsSrc, rect rectSrc, u32 dwRop)
    {
 
       return StretchBlt(
@@ -1682,8 +1692,7 @@ namespace draw2d
 
    }
 
-
-   bool graphics::StretchBlt(i32 x, i32 y, i32 nWidth, i32 nHeight, ::draw2d::graphics * pgraphicsSrc, i32 xSrc, i32 ySrc, i32 nSrcWidth, i32 nSrcHeight, u32 dwRop)
+   bool graphics::StretchBlt(double x, double y, double nWidth, double nHeight, ::draw2d::graphics * pgraphicsSrc, i32 xSrc, i32 ySrc, i32 nSrcWidth, i32 nSrcHeight, u32 dwRop)
    {
 
       if (StretchBltAlphaBlend(x, y, nWidth, nHeight, pgraphicsSrc, xSrc, ySrc, nSrcWidth, nSrcHeight, dwRop))
@@ -1705,7 +1714,7 @@ namespace draw2d
    }
 
 
-   bool graphics::StretchBltAlphaBlend(i32 xDst, i32 yDst, i32 nDstWidth, i32 nDstHeight, ::draw2d::graphics * pgraphicsSrc, i32 xSrc, i32 ySrc, i32 nSrcWidth, i32 nSrcHeight, u32 dwRop)
+   bool graphics::StretchBltAlphaBlend(double xDst, double yDst, double nDstWidth, double nDstHeight, ::draw2d::graphics * pgraphicsSrc, i32 xSrc, i32 ySrc, i32 nSrcWidth, i32 nSrcHeight, u32 dwRop)
    {
 
       if (m_pdibAlphaBlend != NULL)
@@ -1793,7 +1802,7 @@ namespace draw2d
    }
 
 
-   bool graphics::StretchBltRaw(i32 x, i32 y, i32 nWidth, i32 nHeight, ::draw2d::graphics * pgraphicsSrc, i32 xSrc, i32 ySrc, i32 nSrcWidth, i32 nSrcHeight, u32 dwRop)
+   bool graphics::StretchBltRaw(double x, double y, double nWidth, double nHeight, ::draw2d::graphics * pgraphicsSrc, i32 xSrc, i32 ySrc, i32 nSrcWidth, i32 nSrcHeight, u32 dwRop)
    {
 
       return false;
@@ -3113,12 +3122,12 @@ namespace draw2d
    }
 
 
-   size graphics::ScaleViewportExt(i32 xNum, i32 xDenom, i32 yNum, i32 yDenom)
+   size graphics::ScaleViewportExt(double xNum, double xDenom, double yNum, double yDenom)
    {
 
-      m_matrixViewport.a1 *= (double)xNum / (double)xDenom;
+      m_matrixViewport.a1 *= xNum / xDenom;
 
-      m_matrixViewport.b2 *= (double)yNum / (double)yDenom;
+      m_matrixViewport.b2 *= yNum / yDenom;
 
       update_matrix();
 

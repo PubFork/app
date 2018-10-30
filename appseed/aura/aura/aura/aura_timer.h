@@ -108,6 +108,8 @@ public:
    sp(timer)            m_ptimerRunning;
    DWORD                m_dwMillis;
 
+   //bool                 m_bThreadInit;
+
    bool                 m_bRet; // for event handlers ( _001OnTimer() )
 
 

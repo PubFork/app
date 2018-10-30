@@ -69,6 +69,7 @@ namespace user
       IGUI_MSG_LINK(WM_CREATE, psender, this, &font_list::_001OnCreate);
       IGUI_MSG_LINK(WM_LBUTTONDOWN, psender, this, &font_list::_001OnLButtonDown);
       IGUI_MSG_LINK(WM_MOUSEMOVE, psender, this, &font_list::_001OnMouseMove);
+      IGUI_MSG_LINK(WM_CLOSE, psender, this, &font_list::_001OnClose);
 
    }
 
@@ -83,6 +84,8 @@ namespace user
       if (pcreate->m_bRet)
          return;
 
+      Session.will_use_view_hint("font_sel");
+
       attach_visual_font_list(Session.m_pfontlist);
 
       update_data(false);
@@ -90,6 +93,23 @@ namespace user
       SetTimer(timer_update_font, 10 * 1000, NULL);
 
       set_window_text("Font");
+
+   }
+
+
+   void font_list::set_layout(::visual::font_list::e_layout elayout)
+   {
+
+      m_layout.m_elayout = elayout;
+
+      fork([this]()
+      {
+
+         m_pfontlist->defer_update_layout(&m_layout);
+
+         m_pfontlist->on_layout(&m_layout);
+
+      });
 
    }
 
@@ -108,8 +128,6 @@ namespace user
          {
 
             m_pfontlist->update();
-
-            m_pfontlist->defer_update_layout(&m_layout);
 
          }
 
@@ -270,8 +288,6 @@ namespace user
    void font_list::query_full_size(LPSIZE lpsize)
    {
 
-      m_pfontlist->on_layout(&m_layout);
-
       *lpsize = m_layout.m_size + ::size(
                 GetSystemMetrics(SM_CXVSCROLL),
                 GetSystemMetrics(SM_CYHSCROLL));
@@ -285,13 +301,6 @@ namespace user
       rect rectClient;
 
       GetClientRect(rectClient);
-
-      if (rectClient.area() <= 0)
-      {
-
-         return;
-
-      }
 
       if (m_pfontlist.is_null())
       {
@@ -309,8 +318,6 @@ namespace user
       rectFontList.right -= GetSystemMetrics(SM_CXVSCROLL);
 
       m_pfontlist->m_rectClient = rectFontList;
-
-      m_pfontlist->defer_update_layout(&m_layout);
 
       m_sizeTotal = m_layout.m_size -
                     ::size(
@@ -436,6 +443,29 @@ namespace user
       m_pfontlist->m_iSel = iSel;
 
       return true;
+
+   }
+
+
+   void font_list::on_change_combo_sel(index iSel)
+   {
+
+      if (m_pfontlist.is_set())
+      {
+
+         m_pfontlist->m_iSel = iSel;
+
+      }
+
+   }
+
+
+   void font_list::_001OnClose(::message::message * pobj)
+   {
+
+      pobj->m_bRet = true;
+
+      ShowWindow(SW_HIDE);
 
    }
 
