@@ -312,81 +312,192 @@ namespace draw2d_direct2d
    bool graphics::BitBltAlphaBlend(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, ::draw2d::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, uint32_t dwRop)
    {
 
+      //return ::draw2d::graphics::BitBltAlphaBlend(x, y, nWidth, nHeight, pgraphicsSrc, xSrc, ySrc, dwRop);
+
+      //if (m_pdibAlphaBlend != NULL)
+      //{
+      //   //return true;
+
+      //   // Reference implementation
+
+      //   rect rectAlphaBlend(m_ptAlphaBlend, m_pdibAlphaBlend->size());
+
+      //   if (x < 0)
+      //   {
+
+      //      xSrc -= x;
+
+      //      nWidth += x;
+
+      //      x = 0;
+
+      //   }
+
+      //   if (y < 0)
+      //   {
+
+      //      ySrc -= y;
+
+      //      nHeight += y;
+
+      //      y = 0;
+
+      //   }
+
+      //   point pt(x, y);
+
+      //   size size(nWidth, nHeight);
+
+      //   rect rectBlend(pt, size);
+
+      //   rect rectIntersect;
+
+      //   if (rectIntersect.intersect(rectAlphaBlend, rectBlend))
+      //   {
+
+      //      synch_lock sl(m_pmutex);
+
+      //      ::draw2d::dib_sp dib1(allocer());
+
+      //      dib1->create(size);
+
+      //      ::rect rectDib1(null_point(), dib1->m_size);
+
+      //      dib1->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_set);
+
+      //      dib1->get_graphics()->fill_solid_rect(rectDib1, ARGB(0, 0, 0, 0));
+
+      //      if (!dib1->from(null_point(), pgraphicsSrc, point(xSrc, ySrc), size))
+      //      {
+
+      //         return false;
+
+      //      }
+
+      //      ::draw2d::dib_sp dib2(allocer());
+
+      //      dib2->create(size);
+
+      //      dib2->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_set);
+
+      //      dib2->get_graphics()->fill_solid_rect(rectDib1, ARGB(255, 0, 0, 0));
+
+      //      if (!dib2->from(null_point(), m_pdibAlphaBlend, pt - m_ptAlphaBlend, rectIntersect.get_size()))
+      //      {
+
+      //         return false;
+
+      //      }
+
+      //      sp(::draw2d_direct2d::graphics) pgraphicsDib1 = dib1->get_graphics();
+
+      //      sp(::draw2d_direct2d::graphics) pgraphicsDib2 = dib2->get_graphics();
+
+      //      HRESULT hr = ((ID2D1DeviceContext *)pgraphicsDib2->get_os_data())->EndDraw();
+
+      //      pgraphicsDib2->m_pdevicecontext->DrawImage(
+      //      (ID2D1Bitmap *)pgraphicsDib1->get_current_bitmap()->get_os_data(),
+      //      D2D1::Point2F(0.f, 0.f),
+      //      d2d1::rectf(rectDib1),
+      //      D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR,
+      //      D2D1_COMPOSITE_MODE_SOURCE_OVER);
+
+      //      if (SUCCEEDED(hr))
+      //      {
+
+      //         ((ID2D1DeviceContext *)pgraphicsDib2->get_os_data())->BeginDraw();
+
+      //      }
+
+      //      set_alpha_mode(::draw2d::alpha_mode_blend);
+
+      //      BitBltRaw(x, y, nWidth, nHeight, dib2->get_graphics(), 0, 0, dwRop);
+
+      //      return true;
+
+      //   }
+
+      //}
+
+      //return false;
+
       if (m_pdibAlphaBlend != NULL)
       {
 
-         // Reference implementation
-
-         rect rectAlphaBlend(m_ptAlphaBlend, m_pdibAlphaBlend->size());
-
-         point pt(x, y);
-
-         size size(nWidth, nHeight);
-
-         rect rectBlend(pt, size);
-
-         rect rectIntersect;
-
-         if (rectIntersect.intersect(rectAlphaBlend, rectBlend))
+         if (x < 0)
          {
 
-            synch_lock sl(m_pmutex);
+            xSrc -= x;
 
-            ::draw2d::dib_sp dib1(allocer());
+            nWidth += x;
 
-            dib1->create(size);
+            x = 0;
 
-            ::rect rectDib1(null_point(), dib1->m_size);
+         }
 
-            dib1->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_set);
+         if (y < 0)
+         {
 
-            dib1->get_graphics()->fill_solid_rect(rectDib1, ARGB(0, 0, 0, 0));
+            ySrc -= y;
 
-            if (!dib1->from(null_point(), pgraphicsSrc, point(xSrc, ySrc), size))
+            nHeight += y;
+
+            y = 0;
+
+         }
+
+
+         rect rectIntersect(m_ptAlphaBlend, m_pdibAlphaBlend->size());
+
+         rect rectBlt(point((int64_t)x, (int64_t)y), size(nWidth, nHeight));
+
+         if (rectIntersect.intersect(rectIntersect, rectBlt))
+         {
+
+            //if (m_ptAlphaBlend.x < 0)
+            //{
+
+            //   xSrc += -m_ptAlphaBlend.x;
+
+            //}
+            //if (m_ptAlphaBlend.y < 0)
+            //{
+
+            //   ySrc += -m_ptAlphaBlend.y;
+
+            //}
+
+            // The following commented out code does not work well when there is clipping
+            // and some calculations are not precise
+            //if (m_pdibDraw2dGraphics != NULL && pgraphicsSrc->m_pdibDraw2dGraphics != NULL)
+            //{
+
+            //   point ptOff = GetViewportOrg();
+
+            //   x += ptOff.x;
+
+            //   y += ptOff.y;
+
+            //   return m_pdibDraw2dGraphics->blend(point(x, y), pgraphicsSrc->m_pdibDraw2dGraphics, point(xSrc, ySrc), m_pdibAlphaBlend, point(m_ptAlphaBlend.x - x, m_ptAlphaBlend.y - y), rectBlt.size());
+
+            //}
+            //else
             {
 
-               return false;
+               ::draw2d::dib_sp dib1(allocer());
+
+               dib1->create(rectBlt.get_size());
+
+               dib1->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_set);
+
+               if (!dib1->from(null_point(), pgraphicsSrc, point(xSrc, ySrc), rectBlt.get_size()))
+                  return false;
+
+               dib1->blend2(point(0, 0), m_pdibAlphaBlend, point(x - m_ptAlphaBlend.x, y - m_ptAlphaBlend.y), rectBlt.get_size(), 255);
+
+               BitBltRaw(x, y, nWidth, nHeight, dib1->get_graphics(), 0, 0, dwRop);
 
             }
-
-            ::draw2d::dib_sp dib2(allocer());
-
-            dib2->create(size);
-
-            dib2->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_set);
-
-            dib2->get_graphics()->fill_solid_rect(rectDib1, ARGB(255, 0, 0, 0));
-
-            if (!dib2->from(null_point(), m_pdibAlphaBlend, pt - m_ptAlphaBlend, rectIntersect.get_size()))
-            {
-
-               return false;
-
-            }
-
-            sp(::draw2d_direct2d::graphics) pgraphicsDib1 = dib1->get_graphics();
-
-            sp(::draw2d_direct2d::graphics) pgraphicsDib2 = dib2->get_graphics();
-
-            HRESULT hr = ((ID2D1DeviceContext *)pgraphicsDib2->get_os_data())->EndDraw();
-
-            pgraphicsDib1->m_pdevicecontext->DrawImage(
-            (ID2D1Bitmap *)pgraphicsDib2->get_current_bitmap()->get_os_data(),
-            D2D1::Point2F(0.f, 0.f),
-            d2d1::rectf(rectDib1),
-            D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR,
-            D2D1_COMPOSITE_MODE_DESTINATION_IN);
-
-            if (SUCCEEDED(hr))
-            {
-
-               ((ID2D1DeviceContext *)pgraphicsDib2->get_os_data())->BeginDraw();
-
-            }
-
-            set_alpha_mode(::draw2d::alpha_mode_blend);
-
-            BitBltRaw(x, y, nWidth, nHeight, dib1->get_graphics(), 0, 0, dwRop);
 
             return true;
 
@@ -395,7 +506,6 @@ namespace draw2d_direct2d
       }
 
       return false;
-
    }
 
 
@@ -1584,6 +1694,29 @@ namespace draw2d_direct2d
          if(pgraphicsSrc->get_current_bitmap()->get_os_data() == NULL)
             return FALSE;
 
+
+         if (x < 0)
+         {
+
+            xSrc -= x;
+
+            nWidth += x;
+
+            x = 0;
+
+         }
+
+         if (y < 0)
+         {
+
+            ySrc -= y;
+
+            nHeight += y;
+
+            y = 0;
+
+         }
+
          if (get_current_bitmap() != NULL && get_current_bitmap()->get_os_data() != NULL)
          {
 
@@ -1608,6 +1741,7 @@ namespace draw2d_direct2d
                nHeight = sz.height - ySrc;
 
          }
+
 
          D2D1_RECT_F rectDst = D2D1::RectF((float) x, (float) y, (float) (x + nWidth), (float) (y + nHeight));
 
@@ -1689,6 +1823,13 @@ namespace draw2d_direct2d
             ((ID2D1DeviceContext *)pgraphicsSrc->get_os_data())->BeginDraw();
 
          }
+         else
+         {
+
+            output_debug_string("direct2d graphics::StretchBltRaw hr failed");
+
+         }
+
 
          return true;
 

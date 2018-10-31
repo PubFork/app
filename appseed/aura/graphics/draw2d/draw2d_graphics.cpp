@@ -1576,6 +1576,29 @@ namespace draw2d
 
          // Reference implementation
 
+         if (x < 0)
+         {
+
+            xSrc -= x;
+
+            nWidth += x;
+
+            x = 0;
+
+         }
+
+         if (y < 0)
+         {
+
+            ySrc -= y;
+
+            nHeight += y;
+
+            y = 0;
+
+         }
+
+
          rect rectIntersect(m_ptAlphaBlend, m_pdibAlphaBlend->size());
 
          rect rectBlt(point((int64_t)x, (int64_t)y), size(nWidth, nHeight));
