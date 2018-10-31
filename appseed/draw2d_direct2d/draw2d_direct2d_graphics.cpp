@@ -1637,7 +1637,7 @@ namespace draw2d_direct2d
    }
 
 
-   bool graphics::StretchBltRaw(int xDst, int yDst, int nDstWidth, int nDstHeight, ::draw2d::graphics * pgraphicsSrc, int xSrc, int ySrc, int nSrcWidth, int nSrcHeight, uint32_t dwRop)
+   bool graphics::StretchBltRaw(double xDst, double yDst, double nDstWidth, double nDstHeight, ::draw2d::graphics * pgraphicsSrc, int xSrc, int ySrc, int nSrcWidth, int nSrcHeight, uint32_t dwRop)
    {
 
       try
@@ -3658,7 +3658,7 @@ namespace draw2d_direct2d
    }
 
 
-   size graphics::ScaleViewportExt(int xNum, int xDenom, int yNum, int yDenom)
+   size graphics::ScaleViewportExt(double xNum, double xDenom, double yNum, double yDenom)
    {
 
       return ::draw2d::graphics::ScaleViewportExt(xNum, xDenom, yNum, yDenom);
