@@ -64,7 +64,7 @@ public:
 
       m_p->threadrefa_add(this);
 
-      register_at_required_threads();
+      //register_at_required_threads();
 
       array < void (TYPE::*)() > & a = *this;
 
@@ -107,8 +107,8 @@ public:
 
       }
 
-      unregister_from_required_threads();
-
+  //    unregister_from_required_threads();
+//
       m_p->threadrefa_remove(this);
 
    }
@@ -121,7 +121,7 @@ public:
 
       m_p->threadrefa_add(this);
 
-      register_at_required_threads();
+      //register_at_required_threads();
 
       array < void (TYPE::*)() > & a = *this;
 
@@ -180,7 +180,7 @@ public:
 
       }
 
-      unregister_from_required_threads();
+      //unregister_from_required_threads();
 
       m_p->threadrefa_remove(this);
 

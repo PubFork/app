@@ -361,7 +361,7 @@ bool oswindow_data::set_icon(::draw2d::dib * pdib)
 
    d1->get_graphics()->SetStretchBltMode(HALFTONE);
 
-   d1->get_graphics()->StretchBlt(d1->m_size, pdib->get_graphics(), pdib->m_size);
+   d1->get_graphics()->StretchBlt(::rectd(d1->m_size), pdib->get_graphics(), pdib->m_size);
 
    memory m(m_pimpl->m_pui->get_app());
 

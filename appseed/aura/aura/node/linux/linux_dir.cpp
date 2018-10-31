@@ -388,7 +388,7 @@ namespace linux
                if(listing.m_bDir)
                {
 
-                  ::file::path & path = listing.add(::file::path(strDir));
+                  ::file::path & path = listing.add_get(::file::path(strDir));
 
                   path.m_iSize = 0;
 
@@ -450,7 +450,7 @@ namespace linux
             if((bIsDir && !listing.m_bDir) || (!bIsDir && !listing.m_bFile))
                continue;
 
-            ::file::path & path = listing.add(strPath);
+            ::file::path & path = listing.add_get(strPath);
 
             path.m_iDir = bIsDir ? 1 : 0;
 

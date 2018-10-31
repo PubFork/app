@@ -149,7 +149,7 @@ namespace draw2d_cairo
       virtual size GetViewportExt() override;
       virtual size SetViewportExt(int32_t cx, int32_t cy) override;
       virtual size SetViewportExt(SIZE size) override;
-      virtual size ScaleViewportExt(int32_t xNum, int32_t xDenom, int32_t yNum, int32_t yDenom) override;
+      virtual size ScaleViewportExt(double xNum, double xDenom, double yNum, double yDenom) override;
 
       // Window Origin
       point GetWindowOrg() override;
@@ -287,7 +287,7 @@ namespace draw2d_cairo
       bool PatBlt(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, uint32_t dwRop) override;
       bool BitBltRaw(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, ::draw2d::graphics * pgraphicsSrc,
                      int32_t xSrc, int32_t ySrc, uint32_t dwRop) override;
-      bool StretchBltRaw(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, ::draw2d::graphics * pgraphicsSrc,
+      bool StretchBltRaw(double x, double y, double nWidth, double nHeight, ::draw2d::graphics * pgraphicsSrc,
                          int32_t xSrc, int32_t ySrc, int32_t nSrcWidth, int32_t nSrcHeight, uint32_t dwRop) override;
       COLORREF GetPixel(int32_t x, int32_t y) override;
       COLORREF GetPixel(POINT point) override;

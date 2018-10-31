@@ -110,7 +110,7 @@ bool timer::impl_restart()
 
       m_ptimerRunning.release();
 
-      unregister_from_required_threads();
+      //unregister_from_required_threads();
 
       return false;
 
