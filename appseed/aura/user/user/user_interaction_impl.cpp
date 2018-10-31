@@ -1224,6 +1224,8 @@ namespace user
 
             defer_start_prodevian();
 
+            m_pui->check_transparent_mouse_events();
+
          }
 
       }
