@@ -9,7 +9,7 @@ namespace visual
       object(papp)
    {
 
-      defer_create_mutex();
+      m_iUpdateId = -1;
 
    }
 
@@ -20,20 +20,31 @@ namespace visual
    }
 
 
-   void font_enumeration::update()
+   bool font_enumeration::check_need_update()
    {
 
       ::draw2d::graphics_sp g(allocer());
 
       g->CreateCompatibleDC(NULL);
 
+      sp(::draw2d::font::enum_item_array) pitema;
+
+      pitema = canew(::draw2d::font::enum_item_array);
+
+      g->sorted_fonts(*pitema);
+
+      if (m_pitema.is_set() && ::lemon::array::are_all_elements_equal(*pitema, *m_pitema))
       {
 
-         synch_lock sl(m_pmutex);
-
-         g->sorted_fonts(m_itema);
+         return false;
 
       }
+
+      m_pitema = pitema;
+
+      m_iUpdateId++;
+
+      return true;
 
    }
 

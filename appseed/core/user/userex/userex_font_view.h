@@ -14,11 +14,11 @@ namespace userex
       top_view *                    m_ptopview;
       ::user::font_list_view *      m_pview;
 
-      
+
       font_view(::aura::application * papp);
       virtual ~font_view();
-      
-      
+
+
       virtual void install_message_routing(::message::sender * psender) override;
 
       virtual void assert_valid() const override;
@@ -30,6 +30,8 @@ namespace userex
       virtual void on_update(::user::impact * pSender, LPARAM lHint, object* pHint) override;
 
       virtual void on_control_event(::user::control_event * pevent) override;
+
+      virtual void on_layout() override;
 
       DECL_GEN_SIGNAL(_001OnCreate);
 

@@ -1,8 +1,4 @@
 #include "framework.h"
-//#include <math.h>
-
-
-
 
 
 namespace user
@@ -32,7 +28,7 @@ namespace user
    {
 
       m_strView = "font_sel";
-      m_layout.m_puserstyle = this;
+      m_puserstyle = this;
       m_econtroltype = control_type_list;
       m_scrolldataVert.m_bScrollEnable = true;
 
@@ -86,30 +82,43 @@ namespace user
 
       Session.will_use_view_hint("font_sel");
 
-      attach_visual_font_list(Session.m_pfontlist);
-
-      update_data(false);
-
-      SetTimer(timer_update_font, 10 * 1000, NULL);
-
       set_window_text("Font");
 
    }
 
 
-   void font_list::set_layout(::visual::font_list::e_layout elayout)
+   void font_list::set_font_list_type(::visual::font_list::e_type etype)
    {
 
-      m_layout.m_elayout = elayout;
-
-      fork([this]()
+      if (etype == ::visual::font_list::type_single_column)
       {
 
-         m_pfontlist->defer_update_layout(&m_layout);
+         m_pfontlist = Session.get_single_column_font_list();
 
-         m_pfontlist->on_layout(&m_layout);
+         m_pfontlist->m_uiptra.add_unique(this);
 
-      });
+      }
+      else if (etype == ::visual::font_list::type_wide)
+      {
+
+         if (m_pfontlist.is_null() || m_pfontlist->m_etype != ::visual::font_list::type_wide)
+         {
+
+            m_pfontlist = canew(::visual::font_list(get_app()));
+
+            m_pfontlist->m_etype = ::visual::font_list::type_wide;
+
+         }
+
+         m_pfontlist->m_uiptra.add_unique(this);
+
+      }
+      else
+      {
+
+         _throw(todo(get_app()));
+
+      }
 
    }
 
@@ -127,7 +136,7 @@ namespace user
          if (m_pfontlist.is_set())
          {
 
-            m_pfontlist->update();
+            m_pfontlist->layout(false);
 
          }
 
@@ -140,13 +149,6 @@ namespace user
 
    void font_list::_001OnTimer(::timer * ptimer)
    {
-
-      if (ptimer->m_nIDEvent == timer_update_font)
-      {
-
-         update_data(false);
-
-      }
 
       ::user::combo_list::_001OnTimer(ptimer);
 
@@ -270,17 +272,7 @@ namespace user
 
       }
 
-      m_pfontlist->_001OnDraw(pgraphics, &m_layout);
-
-   }
-
-
-   void font_list::attach_visual_font_list(::visual::font_list * pdata)
-   {
-
-      m_pfontlist = pdata;
-
-      pdata->m_uiptra.add(this);
+      m_pfontlist->_001OnDraw(pgraphics);
 
    }
 
@@ -288,19 +280,31 @@ namespace user
    void font_list::query_full_size(LPSIZE lpsize)
    {
 
-      *lpsize = m_layout.m_size + ::size(
+      *lpsize = m_pfontlist->m_size + ::size(
                 GetSystemMetrics(SM_CXVSCROLL),
                 GetSystemMetrics(SM_CYHSCROLL));
 
    }
 
 
+   void font_list::font_list_update_layout()
+   {
+
+      synch_lock sl(m_pmutex);
+
+      m_pfontlist->update();
+
+   }
+
+
+
+
    void font_list::on_layout()
    {
 
-      rect rectClient;
+      rect rectFontList;
 
-      GetClientRect(rectClient);
+      GetClientRect(rectFontList);
 
       if (m_pfontlist.is_null())
       {
@@ -311,15 +315,13 @@ namespace user
 
       synch_lock sl(m_pfontlist->m_pmutex);
 
-      ::rect rectFontList;
-
-      GetClientRect(rectFontList);
-
       rectFontList.right -= GetSystemMetrics(SM_CXVSCROLL);
 
       m_pfontlist->m_rectClient = rectFontList;
 
-      m_sizeTotal = m_layout.m_size -
+      m_pfontlist->layout(false);
+
+      m_sizeTotal = m_pfontlist->m_size -
                     ::size(
                     ::GetSystemMetrics(SM_CXVSCROLL),
                     ::GetSystemMetrics(SM_CYHSCROLL));
@@ -341,7 +343,9 @@ namespace user
 
       }
 
-      return m_layout[iSel]->m_strFont;
+      synch_lock sl(m_pfontlist->m_pmutex);
+
+      return m_pfontlist->m_itema[iSel]->m_strFont;
 
    }
 
@@ -358,13 +362,17 @@ namespace user
 
       }
 
-      return m_layout[iHover]->m_strFont;
+      synch_lock sl(m_pfontlist->m_pmutex);
+
+      return m_pfontlist->m_itema[iHover]->m_strFont;
 
    }
 
 
    index font_list::get_cur_sel()
    {
+
+      synch_lock sl(m_pfontlist->m_pmutex);
 
       if (m_pfontlist->m_iSel < 0)
       {
@@ -373,7 +381,7 @@ namespace user
 
       }
 
-      if (m_pfontlist->m_iSel >= m_layout.get_count())
+      if (m_pfontlist->m_iSel >= m_pfontlist->m_itema.get_count())
       {
 
          return -1;
@@ -388,6 +396,8 @@ namespace user
    index font_list::get_cur_hover()
    {
 
+      synch_lock sl(m_pfontlist->m_pmutex);
+
       if (m_pfontlist->m_iHover < 0)
       {
 
@@ -395,7 +405,7 @@ namespace user
 
       }
 
-      if (m_pfontlist->m_iHover >= m_layout.get_count())
+      if (m_pfontlist->m_iHover >= m_pfontlist->m_itema.get_count())
       {
 
          return -1;
@@ -414,7 +424,7 @@ namespace user
 
       pt += m_ptScrollPassword1;
 
-      index iItem = m_pfontlist->hit_test(pt, &m_layout);
+      index iItem = m_pfontlist->hit_test(pt);
 
       if(iItem < 0)
       {
@@ -435,10 +445,14 @@ namespace user
    bool font_list::set_sel_by_name(string str)
    {
 
-      index iSel = m_pfontlist->find_name(str, &m_layout);
+      index iSel = m_pfontlist->find_name(str);
 
       if (iSel < 0)
+      {
+
          return false;
+
+      }
 
       m_pfontlist->m_iSel = iSel;
 

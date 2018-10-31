@@ -1,6 +1,8 @@
 #pragma once
 
+
 #define platform_parent session( )
+
 
 namespace core
 {
@@ -22,17 +24,21 @@ namespace core
       class run_application
       {
       public:
-         run_application();
-         index                   m_iEdge;
-         string                  m_strApp;
-         string                  m_strQuery;
-         sp(::core::session)      m_pbergedgeParent;
-         sp(::aura::application)   m_papp;
-         bool                    m_bMakeVisible;
-         sp(::user::interaction) m_puiParent;
-         property_set      m_setParameters;
-      };
 
+
+         run_application();
+
+         index                      m_iEdge;
+         string                     m_strApp;
+         string                     m_strQuery;
+         sp(::core::session)        m_pbergedgeParent;
+         sp(::aura::application)    m_papp;
+         bool                       m_bMakeVisible;
+         sp(::user::interaction)    m_puiParent;
+         property_set               m_setParameters;
+
+
+      };
 
 
       class CLASS_DECL_CORE map :
@@ -46,18 +52,14 @@ namespace core
       sp(::filemanager::filemanager)                     m_pfilemanager;
 
       session_docs *                                     m_pdocs;
-      //nature::database *                                 m_pdatabase;
 
 
-      string_map < sp(::object) >                          m_mapUinteraction; // ::user::wndfrm::wndfrm
+      string_map < sp(::object) >                        m_mapUinteraction; // ::user::wndfrm::wndfrm
 
       sp(::object)                                       m_pobjectUserex;
       ::userex::userex *                                 m_puserex;
-
-      ::visual::font_list *                         m_pfontlist;
-
-
-
+      bool                                               m_bFontSelInitialized;
+      sp(::visual::font_list)                            m_pfontlistSingleColumn;
 
 
       session(::aura::application * papp);
@@ -107,6 +109,7 @@ namespace core
 
       virtual void on_app_request_bergedge_callback(::aura::application * papp);
 
+      virtual ::visual::font_list * get_single_column_font_list();
 
       virtual void on_frame_window_drop_files(::user::interaction * pui, ::file::patha & patha);
 

@@ -22,10 +22,9 @@ namespace user
       };
 
 
-      ::visual::font_list::layout      m_layout;
+      sp(::visual::font_list)          m_pfontlist;
       rect                             m_rectMargin;
       int                              m_iSel;
-      sp(::visual::font_list)          m_pfontlist;
 
 
       font_list();
@@ -35,10 +34,12 @@ namespace user
 
       virtual void on_change_combo_sel(index iSel) override;
 
-      void attach_visual_font_list(::visual::font_list * pdata);
+      //void attach_visual_font_list(::visual::font_list * pdata);
       //virtual void on_update_data(::visual::font_list * pdata, int32_t iHint);
 
       void font_list_common_construct();
+
+      virtual void font_list_update_layout();
 
       //virtual void assert_valid() const;
       //virtual void dump(dump_context & dumpcontext) const;
@@ -77,7 +78,7 @@ namespace user
 
       virtual bool update_data(bool bSaveAndValidate) override;
 
-      virtual void set_layout(::visual::font_list::e_layout elayout);
+      virtual void set_font_list_type(::visual::font_list::e_type etype);
 
 
    };

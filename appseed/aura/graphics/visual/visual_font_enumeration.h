@@ -11,33 +11,18 @@ namespace visual
    public:
 
 
-      ::draw2d::font::enum_item_array     m_itema;
+      int                                       m_iUpdateId;
+      sp(::draw2d::font::enum_item_array)       m_pitema;
 
 
       font_enumeration(::aura::application * papp);
-
       virtual ~font_enumeration();
 
-      template < typename PRED >
-      void start_update(PRED predRunAfterEnumeration = []() {})
-      {
 
-         fork([&]()
-         {
+      virtual bool check_need_update();
 
-            update();
-
-            predRunAfterEnumeration();
-
-         });
-
-      }
-
-
-      void update();
 
    };
-
 
 
 } // namespace visual

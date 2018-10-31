@@ -623,8 +623,6 @@ namespace user
 
                   }
 
-                  class font_department & fonts = System.visual().fonts();
-
                   string wstrWindowText;
 
                   pwndiDraw->get_window_text(wstrWindowText);
@@ -635,12 +633,7 @@ namespace user
 
                   pgraphics->SelectObject(brushText);
 
-                  if(!::is_null(&fonts))
-                  {
-
-                     pgraphics->SelectObject(fonts.GetCaptionFont());
-
-                  }
+                  pgraphics->SelectObject(_001GetFont(::user::font_window_title));
 
                   pgraphics->_DrawText(wstrWindowText, m_rectWindowText, DT_LEFT | DT_VCENTER | DT_NOPREFIX);
 

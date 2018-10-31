@@ -45,5 +45,6 @@
 #include "visual_image_list.cpp"
 #include "visual_imaging.cpp"
 #include "visual_rgb_quad_array.cpp"
+#include "visual_text_box.cpp"
 #include "visual_visual.cpp"
 #include "visual_water_routine.cpp"

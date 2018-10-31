@@ -7,16 +7,28 @@
 #define BOX_HOVER 2
 
 
-
 namespace visual
 {
+
+
+   font_list_item::font_list_item()
+   {
+
+   }
+
+
+   font_list_item::~font_list_item()
+   {
+
+   }
 
 
    font_list::font_list(::aura::application * papp) :
       object(papp)
    {
 
-      m_iUpdate = -1;
+      m_pevLayoutReady = NULL;
+      m_iLayoutId = -1;
       m_rectMargin = rect(5, 5, 5, 5);
       m_iSel = -1;
       m_iHover = -1;
@@ -31,6 +43,8 @@ namespace visual
       m_dwaBg.add(ARGB(128, 128, 200, 152));
       m_dwaBg.add(ARGB(128, 80, 80, 80));
 
+      m_etype = type_single_column;
+
    }
 
 
@@ -40,86 +54,46 @@ namespace visual
 
    }
 
-   font_list::text_box::text_box()
+
+   void font_list::update()
    {
 
-      m_bOk = false;
+      try
+      {
+
+         synch_lock sl(m_pmutex);
+
+         if (m_pfontenumeration.is_null())
+         {
+
+            System.visual().fonts().defer_create_font_enumeration();
+
+            m_pfontenumeration = System.visual().fonts().m_pfontenumeration;
+
+         }
+
+         m_pitema = m_pfontenumeration->m_pitema;
+
+      }
+      catch (...)
+      {
+
+      }
 
    }
 
 
-   font_list::text_box::~text_box()
-   {
-
-   }
-
-
-   void font_list ::text_box::update(font_list * pdata, int iBox, string strText)
-   {
-
-      m_dib->create(m_size);
-
-      m_dib->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_set);
-
-      m_dib->get_graphics()->fill_solid_rect(rect(m_size), pdata->m_dwaBg[iBox]);
-
-      m_dib->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_blend);
-
-      m_dib->get_graphics()->selectFont(m_font);
-
-      m_dib->get_graphics()->set_text_color(pdata->m_dwaFg[iBox]);
-
-      m_dib->get_graphics()->text_out(pdata->m_rectMargin.left, pdata->m_rectMargin.top, strText);
-
-      m_bOk = true;
-
-   }
-
-
-   font_list::item::item()
-   {
-
-   }
-
-
-   font_list::item::~item()
-   {
-
-   }
-
-
-   font_list::layout::layout()
-   {
-
-      defer_create_mutex();
-      m_iUpdate = -1;
-      m_elayout = layout_wide;
-
-   }
-
-
-   font_list::layout::~layout()
-   {
-
-
-   }
-
-
-   void font_list::_001OnDrawWide(::draw2d::graphics * pgraphics, layout * playout)
+   void font_list::_001OnDrawWide(::draw2d::graphics * pgraphics)
    {
 
       synch_lock sl(m_pmutex);
 
-      layout & layout = *playout;
-
       pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 
-      //rect rectClient = m_rectClient;
-
-      for (int i = 0; i < layout.get_count(); i++)
+      for (int i = 0; i < m_itema.get_count(); i++)
       {
 
-         if (layout[i] == NULL)
+         if (m_itema[i].is_null())
          {
 
             continue;
@@ -143,12 +117,12 @@ namespace visual
             iBox = BOX;
          }
 
-         text_box * pbox = &layout[i]->m_box[iBox];
+         text_box * pbox = &m_itema[i]->m_box[iBox];
 
          if (!pbox->m_bOk)
          {
 
-            pbox->update(this, iBox, layout[i]->m_strSample);
+            pbox->update(this, iBox, m_itema[i]->m_strSample);
 
          }
 
@@ -159,12 +133,12 @@ namespace visual
       if (m_iSel >= 0)
       {
 
-         text_box * pbox = &layout[m_iSel]->m_box[BOX_SEL];
+         text_box * pbox = &m_itema[m_iSel]->m_box[BOX_SEL];
 
          if (!pbox->m_bOk)
          {
 
-            pbox->update(this, BOX_SEL, layout[m_iSel]->m_strSample);
+            pbox->update(this, BOX_SEL, m_itema[m_iSel]->m_strSample);
 
          }
 
@@ -175,12 +149,12 @@ namespace visual
       if (m_iHover >= 0 && m_iHover != m_iSel)
       {
 
-         text_box * pbox = &layout[m_iHover]->m_box[BOX_HOVER];
+         text_box * pbox = &m_itema[m_iHover]->m_box[BOX_HOVER];
 
          if (!pbox->m_bOk)
          {
 
-            pbox->update(this, BOX_HOVER, layout[m_iHover]->m_strSample);
+            pbox->update(this, BOX_HOVER, m_itema[m_iHover]->m_strSample);
 
          }
 
@@ -191,21 +165,17 @@ namespace visual
    }
 
 
-   void font_list::_001OnDrawSingleColumn(::draw2d::graphics * pgraphics, layout * playout)
+   void font_list::_001OnDrawSingleColumn(::draw2d::graphics * pgraphics)
    {
 
       synch_lock sl(m_pmutex);
 
-      layout & layout = *playout;
-
       pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 
-      //rect rectClient = m_rectClient;
-
-      for (int i = 0; i < layout.get_count(); i++)
+      for (int i = 0; i < m_itema.get_count(); i++)
       {
 
-         if (layout[i] == NULL)
+         if (m_itema[i] == NULL)
          {
 
             continue;
@@ -216,17 +186,17 @@ namespace visual
          iBox = BOX;
 
 
-         text_box * pbox = &layout[i]->m_box[iBox];
+         text_box * pbox = &m_itema[i]->m_box[iBox];
 
 
          rect r = pbox->m_rect;
 
-         r.right = r.left + playout->m_size.cx;
+         r.right = r.left + m_size.cx;
 
          if (!pbox->m_bOk)
          {
 
-            pbox->update(this, iBox, layout[i]->m_strSample);
+            pbox->update(this, iBox, m_itema[i]->m_strSample);
 
          }
          if (i == m_iSel)
@@ -235,13 +205,13 @@ namespace visual
             if (i == m_iHover)
             {
 
-               pgraphics->fill_solid_rect(r, playout->_001GetColor(::user::color_background_selected_hover));
+               pgraphics->fill_solid_rect(r, _001GetColor(::user::color_background_selected_hover));
 
             }
             else
             {
 
-               pgraphics->fill_solid_rect(r, playout->_001GetColor(::user::color_background_selected));
+               pgraphics->fill_solid_rect(r, _001GetColor(::user::color_background_selected));
 
             }
 
@@ -249,7 +219,7 @@ namespace visual
          else if (i == m_iHover)
          {
 
-            pgraphics->fill_solid_rect(r, playout->_001GetColor(::user::color_background_hover));
+            pgraphics->fill_solid_rect(r, _001GetColor(::user::color_background_hover));
 
          }
 
@@ -291,87 +261,53 @@ namespace visual
 
    }
 
-   void font_list::_001OnDraw(::draw2d::graphics * pgraphics, layout * playout)
+
+   void font_list::_001OnDraw(::draw2d::graphics * pgraphics)
    {
 
       synch_lock sl(m_pmutex);
 
-      if (playout->m_elayout == layout_wide)
+      if (m_etype == type_wide)
       {
 
-         _001OnDrawWide(pgraphics, playout);
+         _001OnDrawWide(pgraphics);
 
       }
       else
       {
 
-         _001OnDrawSingleColumn(pgraphics, playout);
-
-      }
-
-
-   }
-
-
-   void font_list::update()
-   {
-
-      try
-      {
-
-         synch_lock sl(m_pmutex);
-
-         if (m_pfontenumeration.is_null())
-         {
-
-            m_pfontenumeration = System.visual().fonts().m_pfontenumeration;
-
-         }
-
-         synch_lock slEnum(m_pfontenumeration->m_pmutex);
-
-         if (::lemon::array::are_all_elements_equal(m_pfontenumeration->m_itema, m_itema))
-         {
-
-            return;
-
-         }
-
-         m_itema = m_pfontenumeration->m_itema;
-
-         m_iUpdate++;
-
-      }
-      catch (...)
-      {
-
+         _001OnDrawSingleColumn(pgraphics);
 
       }
 
    }
 
 
-   void font_list::defer_update_layout(layout * playout)
+   void font_list::start_layout()
    {
 
       index iCount;
 
+      int iBaseSize = 18;
+
+      bool bFork = true;
+
+      int_array iaSize;
+
       {
 
          synch_lock sl(m_pmutex);
 
-         synch_lock slLayout(playout->m_pmutex);
-
-         if (m_rectClient.area() <= 0 && playout->m_elayout != layout_single_column)
+         if (m_rectClient.area() <= 0 && m_etype != type_single_column)
          {
 
             return;
 
          }
 
-         if (playout->get_count() == m_itema.get_count()
-               && playout->m_iUpdate == m_iUpdate
-               && (playout->m_elayout == layout_single_column ||
+         if (m_itema.get_count() == m_pitema->get_count()
+               && m_iLayoutId == m_pfontenumeration->m_iUpdateId
+               && (m_etype == type_single_column ||
                    m_rectClient == m_rectLayout))
          {
 
@@ -379,13 +315,44 @@ namespace visual
 
          }
 
+         if (m_bOnLayout)
+         {
+
+            if (m_pthreadDelayedLayout.is_null())
+            {
+
+               m_pthreadDelayedLayout = fork([this]()
+               {
+
+                  Sleep(300);
+
+                  {
+
+                     synch_lock sl(m_pmutex);
+
+                     m_pthreadDelayedLayout.release();
+
+                  }
+
+                  start_layout();
+
+               });
+
+            }
+
+            return;
+
+         }
+
+         m_bOnLayout = true;
+
          m_rectLayout = m_rectClient;
 
-         playout->m_iUpdate = m_iUpdate;
+         m_iLayoutId = m_pfontenumeration->m_iUpdateId;
 
-         iCount = m_itema.get_count();
+         iCount = m_pitema->get_count();
 
-         playout->set_size(iCount);
+         m_itema.set_size(iCount);
 
          output_debug_string("Middle");
 
@@ -393,39 +360,23 @@ namespace visual
 
          output_debug_string("End");
 
-      }
-
-      manual_reset_event ev(get_app());
-
-      ev.ResetEvent();
-
-
-      ::fork_count_end_pred(get_app(), iCount, [=](index iOrder, index i, index iCount, index iScan)
-      {
-
-         layout & layout = *playout;
-
-         ::draw2d::graphics_sp g(allocer());
-
-         g->CreateCompatibleDC(NULL);
-
-         ::draw2d::graphics * pgraphics = g;
-
-         string strText = m_strTextLayout;
-
-         size s;
-
-         rect r;
-
-         int_array iaSize;
-
-
-         if (layout.m_elayout == layout_wide)
+         if (m_etype == type_wide)
          {
 
-            int iBaseSize = m_rectClient.height() / 10;
+            iBaseSize = ((m_rectClient.height() / 10) / 4) * 4;
 
-            iBaseSize = MIN(iBaseSize, 80);
+            iBaseSize = MAX(18, MIN(iBaseSize, 80));
+
+         }
+         else
+         {
+
+            iBaseSize = 18;
+
+         }
+
+         if (m_etype == type_wide)
+         {
 
             int i = 18;
 
@@ -445,22 +396,78 @@ namespace visual
 
          }
 
+         if (m_iLayoutId == m_pfontenumeration->m_iUpdateId
+               && iBaseSize == m_iBaseSizeLayout)
+         {
+
+            bFork = false;
+
+         }
+         else
+         {
+
+            output_debug_string("It would do extra unneeded fork with just this condition.");
+
+         }
+
+         if (m_iLayoutId == m_pfontenumeration->m_iUpdateId
+               && iaSize == m_iaSizeLayout)
+         {
+
+            bFork = false;
+
+         }
+
+      }
+
+      if (!bFork)
+      {
+
+         _on_end_layout();
+
+         return;
+
+      }
+
+      m_iBaseSizeLayout = iBaseSize;
+
+      m_iaSizeLayout = iaSize;
+
+      fork_count_end_pred(this, iCount, [this, iBaseSize, iaSize](index iOrder, index i, index iCount, index iScan)
+      {
+
+         ::draw2d::graphics_sp g(allocer());
+
+         g->CreateCompatibleDC(NULL);
+
+         ::draw2d::graphics * pgraphics = g;
+
+         string strText = m_strTextLayout;
+
+         size s;
+
+         rect r;
+
+         sp(font_list_item) pitem;
+
          for (; i < iCount; i += iScan)
          {
 
             {
 
-               synch_lock sl(m_pmutex);
+               pitem = canew(font_list_item());
 
-               synch_lock slLayout(playout->m_pmutex);
+               {
 
-               item * pitem = canew(item());
+                  synch_lock sl(m_pmutex);
 
-               layout[i] = pitem;
+                  pitem->m_strFont     = m_pitema->ptr_at(i)->m_strFile;
 
-               pitem->m_strFont = m_itema[i]->m_strFile;
+                  pitem->m_strName     = m_pitema->ptr_at(i)->m_strName;
 
-               pitem->m_strName = m_itema[i]->m_strName;
+                  pitem->m_echarseta   = m_pitema->ptr_at(i)->m_echarseta;
+
+               }
 
                string str = pitem->m_strFont;
 
@@ -484,7 +491,7 @@ namespace visual
 
                   pgraphics->SelectFont(pbox->m_font);
 
-                  pbox->m_font->m_echarseta = m_itema[i]->m_echarseta;
+                  pbox->m_font->m_echarseta = pitem->m_echarseta;
 
                   if (j == 0)
                   {
@@ -513,8 +520,11 @@ namespace visual
                      {
 
                         string strSample;
+
                         int maxarea = 0;
+
                         ::draw2d::font::e_char_set echarsetFound = pbox->m_font->get_char_set(pgraphics);
+
                         size sSample;
 
                         if (maxarea <= 0)
@@ -569,8 +579,8 @@ namespace visual
 
                         pbox->m_font->m_echarset = echarsetFound;
 
-
                      }
+
                      pitem->m_strSample = strText;
 
                   }
@@ -584,13 +594,40 @@ namespace visual
                   }
 
                   s.cx += m_rectMargin.left + m_rectMargin.right;
+
                   s.cy += m_rectMargin.top + m_rectMargin.bottom;
 
                   pbox->m_size = s;
 
                   pbox->m_bOk = false;
 
-                  m_iUpdated++;
+                  {
+
+                     synch_lock sl(m_pmutex);
+
+                     m_itema[i] = pitem;
+
+                     m_iUpdated++;
+
+                     _on_end_layout();
+
+                     //for (auto * pui : m_uiptra)
+                     //{
+
+                     //   try
+                     //   {
+
+                     //      pui->set_need_layout();
+
+                     //   }
+                     //   catch (...)
+                     //   {
+
+                     //   }
+
+                     //}
+
+                  }
 
                }
 
@@ -600,11 +637,25 @@ namespace visual
 
       },
 
-      [=, &ev]()
+      [this]()
       {
 
-         on_layout(playout);
+         _on_end_layout();
 
+      });
+
+   }
+
+
+   void font_list::_on_end_layout()
+   {
+
+      synch_lock sl(m_pmutex);
+
+      try
+      {
+
+         on_layout();
 
          for (auto * pui : m_uiptra)
          {
@@ -620,43 +671,65 @@ namespace visual
 
             }
 
-            ev.SetEvent();
+         }
+
+         if (m_pevLayoutReady != NULL)
+         {
+
+            try
+            {
+
+               m_pevLayoutReady->set_event();
+
+            }
+            catch (...)
+
+            {
+
+
+            }
+
+            m_pevLayoutReady = NULL;
 
          }
 
       }
-                           );
+      catch (...)
+      {
 
 
-      ev.wait(seconds(30));
+      }
+
+      m_bOnLayout = false;
+
    }
 
 
-   bool font_list::on_layout(layout * playout)
+   void font_list::on_layout()
    {
 
       synch_lock sl(m_pmutex);
 
-      if (playout->m_elayout == layout_wide)
+      if (m_etype == type_wide)
       {
 
-         return on_layout_wide(playout);
+         return on_layout_wide();
 
       }
       else
       {
 
-         return on_layout_single_column(playout);
+         return on_layout_single_column();
 
       }
 
    }
 
 
-   bool font_list::on_layout_wide(layout * playout)
+   void font_list::on_layout_wide()
    {
 
-      layout & layout = *playout;
+      synch_lock sl(m_pmutex);
 
       string strText = m_strTextLayout;
 
@@ -672,19 +745,19 @@ namespace visual
 
       int nextx;
 
-      playout->m_size.cx = m_rectClient.width();
+      m_size.cx = m_rectClient.width();
 
-      for (int i = 0; i < layout.get_count(); i++)
+      for (int i = 0; i < m_itema.get_count(); i++)
       {
 
-         item * pitem = layout[i];
+         font_list_item * pitem = m_itema[i];
 
          if (pitem == NULL)
          {
 
-            playout->m_size.cy = y + hExtra + 5;
+            m_size.cy = y + hExtra + 5;
 
-            return false;
+            return;
 
          }
 
@@ -736,17 +809,16 @@ namespace visual
 
       }
 
-      playout->m_size.cy = y + hExtra + 5;
+      m_size.cy = y + hExtra + 5;
 
-      return true;
 
    }
 
 
-   bool font_list::on_layout_single_column(layout * playout)
+   void font_list::on_layout_single_column()
    {
 
-      layout & layout = *playout;
+      synch_lock sl(m_pmutex);
 
       string strText = m_strTextLayout;
 
@@ -754,22 +826,22 @@ namespace visual
 
       int h = 0;
 
-      playout->m_size.cx = 0;
+      m_size.cx = 0;
 
       int xSingleColumn = 0;
       int ySingleColumn = 0;
 
-      for (int i = 0; i < layout.get_count(); i++)
+      for (int i = 0; i < m_itema.get_count(); i++)
       {
 
-         item * pitem = layout[i];
+         font_list_item * pitem = m_itema[i];
 
          if (pitem == NULL)
          {
 
-            playout->m_size.cy = ySingleColumn;
+            m_size.cy = ySingleColumn;
 
-            return false;
+            return;
 
          }
 
@@ -784,7 +856,7 @@ namespace visual
          pitem->m_box[0].m_rect.right = xSingleColumn + s.cx;
          pitem->m_box[0].m_rect.bottom = ySingleColumn + s.cy;
 
-         playout->m_size.cx = MAX(playout->m_size.cx, pitem->m_box[0].m_rect.right + 4);
+         m_size.cx = MAX(m_size.cx, pitem->m_box[0].m_rect.right + 4);
 
          ySingleColumn += s.cy;
 
@@ -792,31 +864,27 @@ namespace visual
 
       }
 
-      playout->m_size.cy = ySingleColumn;
-
-      return true;
+      m_size.cy = ySingleColumn;
 
    }
 
 
 
-   index font_list::hit_test(point pt, layout * playout)
+   index font_list::hit_test(point pt)
    {
 
       synch_lock sl(m_pmutex);
 
-      layout & layout = *playout;
-
-      if (layout.m_elayout == layout_wide)
+      if (m_etype == type_wide)
       {
 
-         return hit_test_wide(pt, playout);
+         return hit_test_wide(pt);
 
       }
       else
       {
 
-         return hit_test_single_column(pt, playout);
+         return hit_test_single_column(pt);
 
       }
 
@@ -825,70 +893,53 @@ namespace visual
    }
 
 
-   index font_list::hit_test_wide(point pt, layout * playout)
+   index font_list::hit_test_wide(point pt)
    {
 
-      layout & layout = *playout;
+      synch_lock sl(m_pmutex);
 
-      for (index i = 0; i < layout.get_size(); i++)
+      for (index i = 0; i < m_itema.get_size(); i++)
       {
 
-         if (layout[i] == NULL)
+         if (m_itema[i] == NULL)
          {
 
             continue;
 
          }
 
-         //if (i == m_iSel)
-         //{
-         //   if (layout[i]->m_box[BOX_SEL].m_rect.contains(pt))
-         //   {
 
-         //      return i;
-         //   }
-         //}
-         //else if (i == m_iHover)
-         //{
-         //   if (layout[i]->m_box[BOX_HOVER].m_rect.contains(pt))
-         //   {
-
-         //      return i;
-         //   }
-         //}
-         //else
+         if (m_itema[i]->m_box[BOX].m_rect.contains(pt))
          {
-            if (layout[i]->m_box[BOX].m_rect.contains(pt))
-            {
 
-               return i;
-            }
+            return i;
          }
 
       }
 
       return -1;
+
    }
 
 
-   index font_list::hit_test_single_column(point pt, layout * playout)
+   index font_list::hit_test_single_column(point pt)
    {
 
-      layout & layout = *playout;
+      synch_lock sl(m_pmutex);
 
-      for (index i = 0; i < layout.get_size(); i++)
+      for (index i = 0; i < m_itema.get_size(); i++)
       {
 
-         if (layout[i] == NULL)
+         if (m_itema[i] == NULL)
          {
 
             continue;
 
          }
 
-         rect r(layout[i]->m_box[BOX].m_rect);
+         rect r(m_itema[i]->m_box[BOX].m_rect);
 
-         r.right = r.left + layout.m_size.cx;
+         r.right = r.left + m_size.cx;
 
          if (r.contains(pt))
          {
@@ -903,12 +954,12 @@ namespace visual
    }
 
 
-   index font_list::find_name(string str, layout * playout)
+   index font_list::find_name(string str)
    {
 
-      layout & layout = *playout;
+      synch_lock sl(m_pmutex);
 
-      return layout.pred_find_first([&](item *pitem)
+      return m_itema.pred_find_first([&](font_list_item *pitem)
       {
 
          return pitem != NULL && pitem->m_strName.compare_ci(str) == 0;
@@ -918,22 +969,37 @@ namespace visual
    }
 
 
+   void font_list::layout(bool bSynch)
+   {
+
+      update();
+
+      if (!bSynch)
+      {
+
+         start_layout();
+
+         return;
+
+      }
+
+      manual_reset_event ev(get_app());
+
+      m_pevLayoutReady = &ev;
+
+      ev.ResetEvent();
+
+      start_layout();
+
+      ev.wait(seconds(30));
+
+      m_pevLayoutReady = NULL;
+
+
+   }
+
 
 } // namespace user
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

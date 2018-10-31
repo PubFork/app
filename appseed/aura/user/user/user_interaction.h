@@ -1,51 +1,8 @@
 #pragma once
 
 
-#include "user_interaction_base.h"
-#include "user_interaction_impl_base.h"
-
-#define SWP_CHANGEVIEWPORTOFFSET  0x100000
-
-namespace message
-{
-
-
-   class key;
-   class drag_and_drop;
-
-
-} // namespace message
-
-
 namespace user
 {
-
-   class form;
-   class tooltip;
-
-
-   class CLASS_DECL_AURA calc_size
-   {
-   public:
-
-
-      ::draw2d::graphics *    m_pgraphics;
-      size                    m_size;
-
-
-   };
-
-
-   class CLASS_DECL_AURA alpha_source
-   {
-   public:
-
-
-      virtual double get_alpha(::user::interaction * puiTarget);
-      virtual void on_alpha_target_initial_frame_position();
-
-
-   };
 
 
    class CLASS_DECL_AURA interaction:

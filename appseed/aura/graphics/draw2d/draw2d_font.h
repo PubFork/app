@@ -72,7 +72,7 @@ namespace draw2d
 
 
       class CLASS_DECL_AURA enum_item :
-         virtual public object
+         virtual public simple_object
       {
       public:
 

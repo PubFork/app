@@ -100,7 +100,11 @@ namespace userex
    {
 
       if (get_pane_count() > 0)
+      {
+
          return;
+
+      }
 
       SetPaneCount(2);
 
@@ -119,8 +123,6 @@ namespace userex
 
       }
 
-      //SetPane(0,m_ptopview,false);
-
       m_pview = create_view < ::user::font_list_view >(NULL, ::null_rect(), get_pane_holder(1), "font_sel");
 
       if (m_pview == NULL)
@@ -137,6 +139,15 @@ namespace userex
 
       }
 
+      m_pview->set_font_list_type(::visual::font_list::type_wide);
+
+   }
+
+
+   void font_view::on_layout()
+   {
+
+      ::user::split_view::on_layout();
 
    }
 
@@ -144,40 +155,9 @@ namespace userex
    void font_view::on_control_event(::user::control_event * pevent)
    {
 
-      //if(m_puiViewNotify != NULL)
-      //{
-
-      //   m_puiViewNotify->on_control_event(pevent);
-
-      //}
-
       ::user::impact::on_control_event(pevent);
 
-//      if (pevent->m_eevent == ::user::event_after_change_cur_sel
-//            || pevent->m_eevent == ::user::event_after_change_cur_hover)
-//      {
-//
-//         if (m_pview == pevent->m_puie)
-//         {
-//
-//            ::user::view_update_hint uh(get_app());
-//
-//            uh.m_ehint = ::user::view_update_hint::hint_control_event;
-//            uh.m_pusercontrolevent = pevent;
-//            uh.m_pui =this;
-//
-//            GetTypedParent<::userex::pane_tab_view>()->get_document()->update_all_views(this, 0, &uh);
-//
-//         }
-//
-//         pevent->m_bRet = true;
-//
-//      }
-
    }
-
-
-
 
 
 } // namespace userex

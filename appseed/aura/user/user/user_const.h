@@ -258,7 +258,8 @@ namespace user
       font_tab_hover,
       font_tab_sel,
       font_tab_sel_hover,
-      font_tab_big_bold
+      font_tab_big_bold,
+      font_window_title,
 
    };
 

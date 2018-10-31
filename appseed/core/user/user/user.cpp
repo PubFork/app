@@ -273,6 +273,25 @@ namespace core
    }
 
 
+   ::visual::font_list * session::get_single_column_font_list()
+   {
+
+      if (m_pfontlistSingleColumn.is_null())
+      {
+
+         m_pfontlistSingleColumn = canew(::visual::font_list(get_app()));
+
+         m_pfontlistSingleColumn->m_etype = ::visual::font_list::type_single_column;
+
+         m_pfontlistSingleColumn->layout(false);
+
+      }
+
+      return m_pfontlistSingleColumn;
+
+   }
+
+
    void session::on_app_request_bergedge_callback(::aura::application * papp)
    {
 

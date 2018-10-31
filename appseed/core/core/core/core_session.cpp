@@ -27,8 +27,6 @@ namespace core
 
       m_puiLastUserInputPopup = NULL;
 
-      m_pfontlist = NULL;
-
       m_pdocs = create_session_docs();
 
       m_bLicense				               = false;

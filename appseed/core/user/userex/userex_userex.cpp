@@ -26,7 +26,6 @@ namespace userex
       m_ptemplateChildForm = NULL;
       m_ptemplatePlaceHolder = NULL;
 
-
    }
 
 
@@ -1884,8 +1883,6 @@ finished:
 
       m_puserex = NULL;
 
-      ::aura::del(m_pfontlist);
-
       m_pobjectUserex.release();
 
    }
@@ -1990,12 +1987,14 @@ finished:
       else if (strView == "font_sel")
       {
 
-         if (m_pfontlist != NULL)
+         if (m_bFontSelInitialized)
          {
 
             return;
 
          }
+
+         m_bFontSelInitialized = true;
 
          System.factory().creatable_small < ::user::font_list >();
          System.factory().creatable_small < ::user::font_list_view >();
@@ -2010,20 +2009,12 @@ finished:
 
          add_document_template(userex()->m_mapimpactsystem["font_sel"]);
 
-         m_pfontlist = new ::visual::font_list(this);
-
          System.visual().fonts().defer_create_font_enumeration();
 
          fork([&]()
          {
 
-            //::multithreading::set_priority(::multithreading::priority_idle);
-
-            System.visual().fonts().update_font_enumeration();
-
-            m_pfontlist->update();
-
-            output_debug_string("fork with idle");
+            System.visual().fonts().m_pfontenumeration->check_need_update();
 
          });
 

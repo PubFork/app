@@ -1,6 +1,16 @@
 #pragma once
 
 
+namespace visual
+{
+
+
+   class font_list;
+
+
+} // namespace visual
+
+
 #include "aura/graphics/visual/visual_const.h"
 
 

@@ -6,8 +6,26 @@
 #include "user_const.h"
 
 
+#define SWP_CHANGEVIEWPORTOFFSET  0x100000
+
+
+namespace message
+{
+
+
+   class key;
+   class drag_and_drop;
+
+
+} // namespace message
+
+
 namespace user
 {
+   class form;
+   class tooltip;
+
+
 
    class copydesk;
    class create_struct;
@@ -56,6 +74,36 @@ class simple_scroll_bar;
 
 CLASS_DECL_AURA string __get_text(string str);
 
+
+namespace user
+{
+
+   class CLASS_DECL_AURA calc_size
+   {
+   public:
+
+
+      ::draw2d::graphics *    m_pgraphics;
+      size                    m_size;
+
+
+   };
+
+
+   class CLASS_DECL_AURA alpha_source
+   {
+   public:
+
+
+      virtual double get_alpha(::user::interaction * puiTarget);
+      virtual void on_alpha_target_initial_frame_position();
+
+
+   };
+
+
+}
+
 #include "aura/user/user/user_builtin_strlangmap.h"
 
 #include "aura/user/user/user_primitive.h"
@@ -68,6 +116,18 @@ CLASS_DECL_AURA string __get_text(string str);
 #include "aura/aura/message/message_user.h"
 #include "aura/user/user/user_style_base.h"
 #include "aura/user/user/user_style_composite.h"
+
+#include "user_elemental.h"
+#include "user_window_util.h"
+#include "user_style.h"
+#include "user_theme.h"
+#include "aura/graphics/visual/visual_text_box.h"
+#include "aura/graphics/visual/visual_font_list.h"
+#include "aura/user/user/user_interaction_base.h"
+#include "aura/user/user/user_interaction_impl_base.h"
+
+
+
 #include "aura/user/user/user_interaction.h"
 #include "aura/user/user/user_interaction_impl.h"
 #include "aura/user/user/user_copydesk.h"

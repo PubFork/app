@@ -1633,6 +1633,14 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='cover|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="graphics\visual\visual_text_box.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='cover|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='cover|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="graphics\visual\visual_visual.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
@@ -3745,7 +3753,6 @@
     <ClInclude Include="graphics\graphics.h" />
     <ClInclude Include="graphics\graphics_double_pass_scale.h" />
     <ClInclude Include="graphics\graphics_filters.h" />
-    <ClInclude Include="graphics\visual\visual (2).h" />
     <ClInclude Include="graphics\visual\visual.h" />
     <ClInclude Include="graphics\visual\visual_api.h" />
     <ClInclude Include="graphics\visual\visual_buffered_graphics.h" />
@@ -3766,6 +3773,7 @@
     <ClInclude Include="graphics\visual\visual_image_list.h" />
     <ClInclude Include="graphics\visual\visual_imaging.h" />
     <ClInclude Include="graphics\visual\visual_rgb_quad_array.h" />
+    <ClInclude Include="graphics\visual\visual_text_box.h" />
     <ClInclude Include="graphics\visual\visual_visual.h" />
     <ClInclude Include="graphics\visual\visual_water_routine.h" />
     <ClInclude Include="multimedia\audio\audio.h" />

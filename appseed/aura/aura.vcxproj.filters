@@ -2678,9 +2678,6 @@
     <ClInclude Include="user\user\user_style_coord.h">
       <Filter>Header Files\user\user</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\visual\visual (2).h">
-      <Filter>Header Files\graphics\visual</Filter>
-    </ClInclude>
     <ClInclude Include="graphics\visual\visual_api.h">
       <Filter>Header Files\graphics\visual</Filter>
     </ClInclude>
@@ -2738,9 +2735,6 @@
     <ClInclude Include="graphics\draw2d\draw2d_matrix.h">
       <Filter>Header Files\graphics\draw2d</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\visual\visual_font_list.h">
-      <Filter>Header Files\graphics\visual</Filter>
-    </ClInclude>
     <ClInclude Include="aura\os\windows\windows_windowing.h">
       <Filter>Header Files\aura\os\windows</Filter>
     </ClInclude>
@@ -2788,6 +2782,12 @@
     </ClInclude>
     <ClInclude Include="primitive\collection\collection_lemon_weak.h">
       <Filter>Header Files\primitive\collection</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\visual\visual_font_list.h">
+      <Filter>Header Files\graphics\visual</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\visual\visual_text_box.h">
+      <Filter>Header Files\graphics\visual</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -4809,6 +4809,9 @@
     </ClCompile>
     <ClCompile Include="aura\aura\aura_runnable.cpp">
       <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\visual\visual_text_box.cpp">
+      <Filter>Source Files\graphics\visual</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -93,7 +93,7 @@ namespace visual
          if (m_pfontdepartment == NULL)
             return false;
 
-         if (!m_pfontdepartment->Initialize())
+         if (!m_pfontdepartment->initialize())
             return false;
 
       }
@@ -179,7 +179,7 @@ namespace visual
          if (m_pfontdepartment != NULL)
          {
 
-            m_pfontdepartment->Finalize();
+            m_pfontdepartment->finalize();
 
          }
 

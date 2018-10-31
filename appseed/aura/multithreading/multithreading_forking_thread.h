@@ -342,7 +342,16 @@ public:
    void run()
    {
 
-      m_pred(m_iOrder, m_iIndex, m_iCount, m_iScan);
+      try
+      {
+
+         m_pred(m_iOrder, m_iIndex, m_iCount, m_iScan);
+
+      }
+      catch (...)
+      {
+
+      }
 
       if (m_prunnableEnd != NULL)
       {
@@ -410,8 +419,10 @@ template < typename PRED >
 
 
 template < typename PRED, typename PRED_END >
-::count fork_count_end_pred(::aura::application * papp, ::count iCount, PRED pred, PRED_END predEnd, ::duration duration = ::duration::infinite(), index iStart = 0)
+::count fork_count_end_pred(::object * pobject, ::count iCount, PRED pred, PRED_END predEnd, ::duration duration = ::duration::infinite(), index iStart = 0)
 {
+
+   ASSERT(pobject != NULL && pobject->get_app() != NULL);
 
    int iAffinityOrder = get_current_process_affinity_order();
 
@@ -431,9 +442,11 @@ template < typename PRED, typename PRED_END >
    for (index iOrder = 0; iOrder < iScan; iOrder++)
    {
 
-      auto pforkingthread = canew(forking_count_thread < PRED >(papp, iOrder, iOrder + iStart, iScan, iCount, pred, prunnableEnd));
+      auto pforkingthread = canew(forking_count_thread < PRED >(pobject->get_app(), iOrder, iOrder + iStart, iScan, iCount, pred, prunnableEnd));
 
       ::thread * pthread = dynamic_cast <::thread *> (pforkingthread);
+
+      pobject->threadrefa_add(pthread);
 
       pthread->begin();
 
