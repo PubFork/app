@@ -25,9 +25,7 @@ namespace user
                m_penFace1(allocer()),
                m_penHilight1(allocer()),
                m_penShadow1(allocer()),
-               m_penDkShadow1(allocer()),
-               m_fontButton(allocer()),
-               m_fontCaption(allocer())
+               m_penDkShadow1(allocer())
             {
                m_crActiveCaptionTextBk = 0;
                m_rectControlBoxMarginNormal = null_rect();
@@ -40,12 +38,13 @@ namespace user
 
                //               m_iMargin = 7;
 
-               class font_department & fonts = System.visual().fonts();
+               //class font_department & fonts = System.visual().fonts();
 
-               fonts.GetCaptionFont()->create_point_font("MS Sans Serif", 9.0);
+               //
+               //fonts.GetCaptionFont()->create_point_font("MS Sans Serif", 9.0);
 
-               m_fontButton->create_point_font("MS Sans Serif", 9.0);
-               m_fontCaption->create_point_font("MS Sans Serif", 12.0);
+               create_point_font(::user::font_button, "MS Sans Serif", 9.0);
+               create_point_font(::user::font_window_title, "MS Sans Serif", 12.0);
 
                //m_fontEdit->m_etextrenderinghint = ::draw2d::text_rendering_hint_anti_alias_grid_fit;
                //m_fontList->m_etextrenderinghint = ::draw2d::text_rendering_hint_anti_alias_grid_fit;
@@ -939,7 +938,7 @@ namespace user
 
                   pgraphics->SelectObject(brushText);
 
-                  pgraphics->SelectObject(m_fontCaption);
+                  pgraphics->SelectObject(_001GetFont(::user::font_window_title));
 
                   pgraphics->draw_text(wstrWindowText, m_rectWindowText, DT_LEFT | DT_VCENTER | DT_NOPREFIX);
 

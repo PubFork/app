@@ -5088,7 +5088,7 @@ namespace windows
       if (pcursor != NULL && pcursor->m_ecursor != ::visual::cursor_system)
       {
 
-         pcursor->set_current(&Session);
+         pcursor->set_current(m_pui, &Session);
 
       }
 

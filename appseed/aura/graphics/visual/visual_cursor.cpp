@@ -52,7 +52,7 @@ namespace visual
 
 #if defined(MACOS) || defined(WINDOWSEX)
 
-      ::SetCursor(get_HCURSOR());
+      ::SetCursor(get_HCURSOR(pui));
 
 #else
 
@@ -185,7 +185,7 @@ namespace visual
       if(m_hcursor == NULL)
       {
 
-      #ifdef LINUX
+#ifdef LINUX
 
          if(::is_null(pui))
          {
@@ -196,11 +196,11 @@ namespace visual
 
          m_hcursor = ::CreateAlphaCursor(pui->get_handle(), m_dib,m_szHotspotOffset.cx,m_szHotspotOffset.cy);
 
-      #else
+#else
 
          m_hcursor = ::CreateAlphaCursor(m_dib,m_szHotspotOffset.cx,m_szHotspotOffset.cy);
 
-      #endif
+#endif
 
       }
 
