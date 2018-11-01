@@ -1367,7 +1367,8 @@ namespace aura
 
    }
 
-   void session::set_cursor(::visual::cursor * pcursor)
+
+   void session::set_cursor(::user::interaction * pui, ::visual::cursor * pcursor)
    {
 
       m_ecursor = ::visual::cursor_visual;
@@ -1377,21 +1378,20 @@ namespace aura
       if (pcursor != NULL)
       {
 
-         pcursor->set_current(this);
+         pcursor->set_current(pui, this);
 
       }
       else
       {
 
-         ::visual::cursor::reset(this);
+         ::visual::cursor::reset(pui, this);
 
       }
-
 
    }
 
 
-   void session::set_cursor(::visual::e_cursor ecursor)
+   void session::set_cursor(::user::interaction * pui, ::visual::e_cursor ecursor)
    {
 
       m_ecursor = ecursor;
@@ -1416,20 +1416,20 @@ namespace aura
       if (pcursor != NULL)
       {
 
-         pcursor->set_current(this);
+         pcursor->set_current(pui, this);
 
       }
       else
       {
 
-         ::visual::cursor::reset(this);
+         ::visual::cursor::reset(pui, this);
 
       }
 
    }
 
 
-   void session::set_default_cursor(::visual::e_cursor ecursor)
+   void session::set_default_cursor(::user::interaction * pui, ::visual::e_cursor ecursor)
    {
 
       if (ecursor == ::visual::cursor_default)
@@ -1932,14 +1932,14 @@ namespace aura
    bool session::ReleaseCapture()
    {
 
-      oswindow oswindowCapture = ::get_capture();
+      // oswindow oswindowCapture = ::get_capture();
 
-      if (oswindowCapture == NULL)
-      {
+      // if (oswindowCapture == NULL)
+      // {
 
-         return false;
+      //    return false;
 
-      }
+      // }
 
       ::release_capture();
 

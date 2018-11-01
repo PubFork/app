@@ -530,12 +530,20 @@
 		<Unit filename="aura/message/message_definition.h" />
 		<Unit filename="aura/message/message_id.h" />
 		<Unit filename="aura/message/message_listener_smart_pointer_array.h" />
+		<Unit filename="aura/message/message_message.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="aura/message/message_message.h" />
 		<Unit filename="aura/message/message_receiver.h" />
 		<Unit filename="aura/message/message_route.h" />
 		<Unit filename="aura/message/message_sender.h" />
 		<Unit filename="aura/message/message_simple_command.h" />
 		<Unit filename="aura/message/message_timer.h" />
+		<Unit filename="aura/message/message_user.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="aura/node/android/android_process.cpp">
 			<Option compile="0" />
 			<Option link="0" />
@@ -1020,8 +1028,16 @@
 		<Unit filename="graphics/visual/visual_graphics_extension.h" />
 		<Unit filename="graphics/visual/visual_icon.h" />
 		<Unit filename="graphics/visual/visual_image_list.h" />
+		<Unit filename="graphics/visual/visual_imaging.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="graphics/visual/visual_imaging.h" />
 		<Unit filename="graphics/visual/visual_rgb_quad_array.h" />
+		<Unit filename="graphics/visual/visual_visual.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="graphics/visual/visual_visual.h" />
 		<Unit filename="graphics/visual/visual_water_routine.h" />
 		<Unit filename="multimedia/audio/audio_wave_out.cpp" />

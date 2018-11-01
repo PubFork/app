@@ -3,7 +3,10 @@
 #include <X11/Xatom.h>
 #include <sys/stat.h>
 #include <X11/extensions/xf86vmode.h> // libxxf86vm-dev
+#include <X11/extensions/Xrender.h>
 
+
+void oswindow_set_active_window(oswindow oswindow);
 
 CLASS_DECL_AURA void update_application_session_cursor(void * pvoidApp, POINT ptCursor);
 
@@ -337,20 +340,20 @@ WINBOOL release_capture()
 
    synch_lock sl(g_pmutexX);
 
-   if(g_oswindowCapture == NULL)
-   {
+//    if(g_oswindowCapture == NULL)
+//    {
 
-      return FALSE;
+//       return FALSE;
 
-   }
+//    }
 
    windowing_output_debug_string("\noswindow_data::ReleaseCapture 1");
 
-   xdisplay d(g_oswindowCapture->display());
+   xdisplay d(x11_get_display());
 
-   WINBOOL bRet = XUngrabPointer(g_oswindowCapture->display(), CurrentTime) != FALSE;
+   WINBOOL bRet = XUngrabPointer(d, CurrentTime) != FALSE;
 
-   if(bRet)
+   //if(bRet)
    {
 
       g_oswindowCapture = NULL;
@@ -2099,6 +2102,8 @@ void x11_idle(int iSleep)
 
       }
 
+      oswindow_set_active_window(get_active_window());
+
    }
 
 
@@ -2128,6 +2133,23 @@ void __axis_x11_thread(osdisplay_data * pdata)
    bool bPending;
 
    bool bCa2Processed = true;
+
+//   {
+//
+//      xdisplay d(display);
+//
+//
+//bool      bPending = XPending(display);
+//
+////      XSetWindowAttributes attributes = {};
+//
+////      attributes.event_mask = PropertyChangeMask;
+//
+////      XChangeWindowAttributes(d, d.default_root_window(), CWEventMask, &attributes);
+//
+//      XSelectInput(d, d.default_root_window(), PropertyChangeMask);
+//
+//   }
 
    XEvent e;
 
@@ -2292,6 +2314,28 @@ bool x11_process_message(osdisplay_data * pdata, Display * display)
    }
    else if(e.type == PropertyNotify)
    {
+
+//      {
+//
+//         xdisplay d(display);
+//
+//         if(e.xany.window == d.default_root_window())
+//         {
+//
+//            Atom atom = XInternAtom(d, "_NET_ACTIVE_WINDOW", False);
+//
+//            if(atom == e.xproperty.atom)
+//            {
+//
+//               oswindow_set_active_window(get_active_window());
+//
+//            }
+//
+//            return true;
+//
+//         }
+//
+//      }
 
       if(msg.hwnd != NULL && msg.hwnd->m_pimpl != NULL)
       {
@@ -3242,4 +3286,235 @@ i64 oswindow_id(oswindow w)
    return w->window();
 
 }
+
+
+WINBOOL SetCursor(oswindow window, HCURSOR hcursor)
+{
+
+   synch_lock sl(g_pmutexX);
+
+   windowing_output_debug_string("\n::x11_GetWindowRect 1");
+
+   xdisplay d(window->display());
+
+   if(d.is_null())
+   {
+
+      windowing_output_debug_string("\n::x11_GetWindowRect 1.1");
+
+      return FALSE;
+
+   }
+
+   XDefineCursor(d, window->window(), hcursor);
+
+   return TRUE;
+
+}
+
+
+XImage * _x11_create_image(Display * pdisplay, ::draw2d::dib * pdib)
+{
+
+   unsigned char * image32 = (unsigned char *) pdib->m_pcolorref;
+
+   int width = pdib->m_size.cx;
+
+   int height = pdib->m_size.cy;
+
+   int depth = 32; // works fine with depth = 24
+
+   int bitmap_pad = 32; // 32 for 24 and 32 bpp, 16, for 15&16
+
+   int bytes_per_line = pdib->m_iScan; // number of bytes in the client image between the start of one scanline and the start of the next
+
+   XImage * pimage = XCreateImage(pdisplay, CopyFromParent, depth, ZPixmap, 0, image32, width, height, bitmap_pad, bytes_per_line);
+
+   return pimage;
+
+}
+
+
+XImage * x11_create_image(::draw2d::dib * pdib)
+{
+
+   synch_lock sl(g_pmutexX);
+
+   windowing_output_debug_string("\n::x11_GetWindowRect 1");
+
+   xdisplay d(x11_get_display());
+
+   if(d.is_null())
+   {
+
+      windowing_output_debug_string("\n::x11_GetWindowRect 1.1");
+
+      return NULL;
+
+   }
+
+   return _x11_create_image(d, pdib);
+
+}
+
+
+Pixmap _x11_create_pixmap(Display * pdisplay, ::draw2d::dib * pdib)
+{
+
+   XImage * pimage = _x11_create_image(pdisplay, pdib);
+
+   if(pimage == NULL)
+   {
+
+      return NULL;
+
+   }
+
+   int depth = 32; // works fine with depth = 24
+
+   Pixmap pixmap = XCreatePixmap(pdisplay, XDefaultRootWindow(pdisplay), pdib->m_size.cx, pdib->m_size.cy, depth);
+
+   XGCValues gcvalues;
+
+   GC gc = XCreateGC(pdisplay, pixmap, 0, &gcvalues);
+
+   XPutImage(pdisplay, pixmap, gc, pimage, 0, 0, 0, 0,pdib->m_size.cx, pdib->m_size.cy);
+
+   XFreeGC(pdisplay, gc);
+
+   return pixmap;
+
+}
+
+
+Pixmap x11_create_pixmap(::draw2d::dib * pdib)
+{
+
+   synch_lock sl(g_pmutexX);
+
+   windowing_output_debug_string("\n::x11_GetWindowRect 1");
+
+   xdisplay d(x11_get_display());
+
+   if(d.is_null())
+   {
+
+      windowing_output_debug_string("\n::x11_GetWindowRect 1.1");
+
+      return NULL;
+
+   }
+
+   return _x11_create_pixmap(d, pdib);
+
+}
+
+
+Picture _xrender_create_picture(oswindow window, ::draw2d::dib * pdib)
+{
+
+   Pixmap pixmap = _x11_create_pixmap(window->display(), pdib);
+
+   if(pixmap == NULL)
+   {
+
+      return NULL;
+
+   }
+
+
+//	bool hasNamePixmap = false;
+//
+//	int event_base, error_base;
+//
+//	if (XCompositeQueryExtension(window->display(), &event_base, &error_base))
+//	{
+//
+//		int major = 0;
+//
+//		int minor = 2;
+//
+//		XCompositeQueryVersion(window->display(), &major, &minor);
+//
+//		if(major > 0 || minor >= 2 )
+//		{
+//
+//         hasNamePixmap = true;
+//
+//      }
+//
+//	}
+
+	XWindowAttributes attr;
+
+	XGetWindowAttributes(window->display(), window->window(), &attr);
+
+	XRenderPictFormat * pformat = XRenderFindVisualFormat(window->display(), attr.visual);
+
+	bool hasAlpha             = (pformat->type == PictTypeDirect && pformat->direct.alphaMask);
+	int x                     = 0;
+	int y                     = 0;
+	int width                 = pdib->m_size.cx;
+	int height                = pdib->m_size.cy;
+
+	XRenderPictureAttributes pa = {};
+	//pa.subwindow_mode = IncludeInferiors; // Don't clip child widgets
+
+	Picture picture = XRenderCreatePicture(window->display(), pixmap, pformat, CPSubwindowMode, &pa);
+
+	return picture;
+
+}
+
+
+Picture xrender_create_picture(oswindow window, ::draw2d::dib * pdib)
+{
+
+   synch_lock sl(g_pmutexX);
+
+   windowing_output_debug_string("\n::x11_GetWindowRect 1");
+
+   xdisplay d(window->display());
+
+   if(d.is_null())
+   {
+
+      windowing_output_debug_string("\n::x11_GetWindowRect 1.1");
+
+      return NULL;
+
+   }
+
+   return _xrender_create_picture(window, pdib);
+
+}
+
+
+HCURSOR CreateAlphaCursor(oswindow window, ::draw2d::dib * pdib, int xHotSpot, int yHotSpot)
+{
+
+   synch_lock sl(g_pmutexX);
+
+   windowing_output_debug_string("\n::x11_GetWindowRect 1");
+
+   xdisplay d(window->display());
+
+   if(d.is_null())
+   {
+
+      windowing_output_debug_string("\n::x11_GetWindowRect 1.1");
+
+      return NULL;
+
+   }
+
+   Picture picture = _xrender_create_picture(window, pdib);
+
+   HCURSOR hcursor = XRenderCreateCursor(d, picture, xHotSpot, yHotSpot);
+
+   return hcursor;
+
+}
+
+
 

@@ -3201,7 +3201,11 @@ namespace linux
    void interaction_impl::_001OnPaint(::message::message * pobj)
    {
 
-      _001UpdateWindow();
+      //_001UpdateWindow();
+
+      set_need_redraw();
+
+      m_pui->defer_start_prodevian();
 
    }
 
@@ -3209,7 +3213,11 @@ namespace linux
    void interaction_impl::_001OnPrint(::message::message * pobj)
    {
 
-      _001UpdateWindow();
+      // _001UpdateWindow();
+
+      set_need_redraw();
+
+      m_pui->defer_start_prodevian();
 
    }
 
@@ -5871,7 +5879,7 @@ namespace linux
 
       }
 
-      return get_handle() == ::get_active_window();
+      return m_oswindow->m_bIsActive;
 
    }
 

@@ -9,6 +9,11 @@ void SetCursor(void * pnscursor);
 
 void * CreateAlphaCursor(void * dib, int xHotSpot, int yHotSpot);
 
+#elif defined(LINUX)
+
+void SetCursor(oswindow window, HCURSOR hcursor);
+
+HCURSOR CreateAlphaCursor(oswindow window, ::draw2d::dib * dib, int xHotSpot, int yHotSpot);
 
 #endif
 
@@ -39,37 +44,61 @@ namespace visual
 
    }
 
-   void cursor::set_current(::aura::session * psession)
+
+   bool cursor::set_current(::user::interaction * pui, ::aura::session * psession)
    {
-      
+
       synch_lock sl(psession->m_pmutex);
-      
+
 #if defined(MACOS) || defined(WINDOWSEX)
-      
+
       ::SetCursor(get_HCURSOR());
-      
+
+#else
+
+      if(::is_null(pui))
+      {
+
+         return false;
+
+      }
+
+      ::SetCursor(pui->get_handle(), get_HCURSOR(pui));
+
 #endif
-      
+
       //psession->m_pcursorCursor = this;
-      
+
+      return true;
+
    }
-   
-   
-   void cursor::reset(::aura::session * psession)
+
+
+   bool cursor::reset(::user::interaction * pui, ::aura::session * psession)
    {
-      
+
       synch_lock sl(psession->m_pmutex);
-      
+
 #if defined(MACOS) || defined(WINDOWSEX)
-         
+
       ::SetCursor(NULL);
-         
+
+#else
+
+      if(::is_null(pui))
+      {
+
+         return false;
+
+      }
+
+      ::SetCursor(pui->get_handle(), NULL);
+
 #endif
-         
-      //psession->m_pcursorCursor = NULL;
-         
+
+      return true;
+
    }
-   
 
 #ifdef WINDOWSEX
 
@@ -148,26 +177,36 @@ namespace visual
    }
 
 #endif
-   
-   
-#if defined(MACOS) || defined(WINDOWSEX)
 
-   HCURSOR cursor::get_HCURSOR()
+
+   HCURSOR cursor::get_HCURSOR(::user::interaction * pui)
    {
 
       if(m_hcursor == NULL)
       {
 
+      #ifdef LINUX
+
+         if(::is_null(pui))
+         {
+
+            return NULL;
+
+         }
+
+         m_hcursor = ::CreateAlphaCursor(pui->get_handle(), m_dib,m_szHotspotOffset.cx,m_szHotspotOffset.cy);
+
+      #else
+
          m_hcursor = ::CreateAlphaCursor(m_dib,m_szHotspotOffset.cx,m_szHotspotOffset.cy);
+
+      #endif
 
       }
 
       return m_hcursor;
 
    }
-
-#endif
-
 
 
    void cursor_alloc(::aura::application * papp,cursor * & pdib,int xHotspot,int yHotspot)

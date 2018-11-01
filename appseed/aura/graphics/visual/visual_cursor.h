@@ -16,11 +16,7 @@ namespace visual
       size                    m_szHotspotOffset;
 
 
-#if defined(MACOS) || defined(WINDOWSEX)
-
       HCURSOR                 m_hcursor;
-      
-#endif
 
 
       cursor(::aura::application * papp);
@@ -29,15 +25,11 @@ namespace visual
 
       bool initialize_system_default();
 
-#if defined(MACOS) || defined(WINDOWSEX) 
+      HCURSOR get_HCURSOR(::user::interaction * pui);
 
-      HCURSOR get_HCURSOR();
+      bool set_current(::user::interaction * pui, ::aura::session * psession);
 
-#endif
-
-      void set_current(::aura::session * psession);
-
-      static void reset(::aura::session * psession);
+      static bool reset(::user::interaction * pui, ::aura::session * psession);
 
 
    };

@@ -35,6 +35,8 @@ oswindow_data::oswindow_data()
 
    m_bHasFocus             = false;
 
+   m_bIsActive             = false;
+
 }
 
 
@@ -287,6 +289,33 @@ oswindow_data * oswindow_get(Window window)
    return ::oswindow_data::s_pdataptra->element_at(iFind);
 
 }
+
+
+void oswindow_set_active_window(oswindow oswindow)
+{
+
+   single_lock slOsWindow(::oswindow_data::s_pmutex, true);
+
+   for(auto & p : *::oswindow_data::s_pdataptra)
+   {
+
+      if(p == oswindow)
+      {
+
+         p->m_bIsActive = true;
+
+      }
+      else
+      {
+
+         p->m_bIsActive = false;
+
+      }
+
+   }
+
+}
+
 
 bool oswindow_data::bamf_set_icon()
 {

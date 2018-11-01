@@ -62,13 +62,21 @@ void cairo_keep::save()
 void cairo_keep::restore()
 {
 
+   synch_lock ml(cairo_mutex());
+
    if(m_pdc == NULL)
+   {
+
       return;
+
+   }
 
    if(!m_bSave)
+   {
+
       return;
 
-   synch_lock sl(cairo_mutex());
+   }
 
    cairo_restore(m_pdc);
 
@@ -80,8 +88,11 @@ void cairo_keep::restore()
 void cairo_keep::pulse()
 {
 
+   synch_lock ml(cairo_mutex());
+
    restore();
 
    save();
 
 }
+

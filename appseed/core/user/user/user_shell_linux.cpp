@@ -57,11 +57,11 @@ namespace user
          for (index i = 0; i < get_processor_count() * 2; i++)
          {
 
-            m_threadaGetImage.add(::fork(get_app(),
-               [&]()
+            m_threadaGetImage.add(fork([&]()
             {
 
                ::multithreading::set_priority(::multithreading::priority_highest);
+
                shell_run();
 
             }));

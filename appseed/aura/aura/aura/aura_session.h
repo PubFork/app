@@ -221,9 +221,9 @@ namespace aura
 
       virtual oswindow get_capture();
 
-      virtual void set_cursor(::visual::cursor * pcursor);
-      virtual void set_cursor(::visual::e_cursor ecursor);
-      virtual void set_default_cursor(::visual::e_cursor ecursor);
+      virtual void set_cursor(::user::interaction * pui, ::visual::cursor * pcursor);
+      virtual void set_cursor(::user::interaction * pui, ::visual::e_cursor ecursor);
+      virtual void set_default_cursor(::user::interaction * pui, ::visual::e_cursor ecursor);
       virtual ::visual::cursor * get_cursor();
       virtual ::visual::cursor * get_default_cursor();
 

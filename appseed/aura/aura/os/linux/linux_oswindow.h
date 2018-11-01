@@ -130,6 +130,7 @@ public:
    Window                        m_parent;
    RECT64                        m_rect;
    bool                          m_bHasFocus;
+   bool                          m_bIsActive;
    //point                         m_ptCursor;
 
 
@@ -293,3 +294,7 @@ public:
 };
 
 extern oswindow g_oswindowDesktop;
+
+
+
+

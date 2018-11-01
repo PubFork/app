@@ -226,6 +226,8 @@ namespace user
 
             }
 
+            Session.ReleaseCapture();
+
             ASSERT(pmouse->m_id == WM_LBUTTONUP || pmouse->m_id == WM_NCLBUTTONUP);
 
             if(m_ehittestMode != HitTestNone)
@@ -239,9 +241,7 @@ namespace user
 
                m_pworkset->m_bSizingCapture = false;
 
-               Session.ReleaseCapture();
-
-               Session.set_cursor(::visual::cursor_default);
+               Session.set_cursor(GetSizingWindow(),::visual::cursor_default);
 
                return true;
 

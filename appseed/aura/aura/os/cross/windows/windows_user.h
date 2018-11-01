@@ -1020,8 +1020,11 @@ typedef struct _hmenu
 
 struct visual_cursor;
 
+#ifdef LINUX
+typedef unsigned long HCURSOR;
+#else
 typedef void * HCURSOR;
-
+#endif
 
 typedef void * HDROP;
 
