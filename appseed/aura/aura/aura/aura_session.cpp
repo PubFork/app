@@ -1368,7 +1368,7 @@ namespace aura
    }
 
 
-   void session::set_cursor(::user::interaction * pui, ::visual::cursor * pcursor)
+   bool session::set_cursor(::user::interaction * pui, ::visual::cursor * pcursor)
    {
 
       m_ecursor = ::visual::cursor_visual;
@@ -1378,58 +1378,67 @@ namespace aura
       if (pcursor != NULL)
       {
 
-         pcursor->set_current(pui, this);
+         if (!pcursor->set_current(pui, this))
+         {
+
+            return false;
+
+         }
 
       }
       else
       {
 
-         ::visual::cursor::reset(pui, this);
+         if (!::visual::cursor::reset(pui, this))
+         {
+
+            return false;
+
+         }
 
       }
+
+      return true;
 
    }
 
 
-   void session::set_cursor(::user::interaction * pui, ::visual::e_cursor ecursor)
+   bool session::set_cursor(::user::interaction * pui, ::visual::e_cursor ecursor)
    {
 
       m_ecursor = ecursor;
-
-//      if(ecursor == ::visual::cursor_size_bottom_right
-//         || (ecursor == ::visual::cursor_default
-//             && m_ecursorDefault == ::visual::cursor_size_bottom_right))
-//      {
-//
-//         output_debug_string("\nbottom_right_cursor   ");
-//
-//      }
-//      else
-//      {
-//
-//         output_debug_string("\nNOT_bottom_right_cursor   ");
-//
-//      }
 
       ::visual::cursor * pcursor = get_cursor();
 
       if (pcursor != NULL)
       {
 
-         pcursor->set_current(pui, this);
+         if (!pcursor->set_current(pui, this))
+         {
+
+            return false;
+
+         }
 
       }
       else
       {
 
-         ::visual::cursor::reset(pui, this);
+         if (!::visual::cursor::reset(pui, this))
+         {
+
+            return false;
+
+         }
 
       }
+
+      return true;
 
    }
 
 
-   void session::set_default_cursor(::user::interaction * pui, ::visual::e_cursor ecursor)
+   bool session::set_default_cursor(::user::interaction * pui, ::visual::e_cursor ecursor)
    {
 
       if (ecursor == ::visual::cursor_default)
@@ -1444,6 +1453,8 @@ namespace aura
          m_ecursorDefault = ecursor;
 
       }
+
+      return true;
 
    }
 

@@ -45,12 +45,13 @@ namespace user
 
       HENHMETAFILE SetEnhMetaFile(HENHMETAFILE hMetaFile);
       HENHMETAFILE GetEnhMetaFile();
-      void set_icon(::visual::icon * picon);
-      ::visual::icon * get_icon();
-      void set_bitmap(::draw2d::bitmap * pbitmap);
-      ::draw2d::bitmap * get_bitmap();
-      void set_cursor(::visual::cursor * pcursor);
-      ::visual::cursor * get_cursor();
+      void static_set_icon(::visual::icon * picon);
+      ::visual::icon * static_get_icon();
+      void static_set_bitmap(::draw2d::bitmap * pbitmap);
+      ::draw2d::bitmap * static_get_bitmap();
+      void static_set_cursor(::visual::cursor * pcursor);
+      ::visual::cursor * static_get_cursor();
+
 
       e_type get_type();
 

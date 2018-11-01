@@ -7699,6 +7699,14 @@ run:
    }
 
 
+   ::file::path application::appconfig_folder()
+   {
+
+      return ::dir::system() / "config" / m_strAppName;
+
+   }
+
+
 } // namespace aura
 
 

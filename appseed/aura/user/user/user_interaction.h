@@ -153,6 +153,7 @@ namespace user
       virtual ~interaction();
 
 
+
       tooltip *         get_tooltip();
 
       virtual double get_rotate();
@@ -210,8 +211,8 @@ namespace user
 
       virtual bool is_place_holder() override;
 
-      ::visual::e_cursor get_cursor();
-      void set_cursor(::visual::e_cursor ecursor);
+      virtual ::visual::e_cursor get_cursor();
+      virtual bool set_cursor(::visual::e_cursor ecursor);
 
 
       void set_timer(spa(::aura::timer_item) timera);

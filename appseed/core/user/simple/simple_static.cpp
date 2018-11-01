@@ -3,7 +3,7 @@
 
 simple_static::simple_static(::aura::application * papp) :
    object(papp),
-   
+
    ::user::static_control(papp),
    m_brushBkg(allocer())
 {
@@ -37,19 +37,19 @@ LRESULT simple_static::OnSetIcon(WPARAM wparam, LPARAM lparam)
 
 void simple_static::_001OnDraw(::draw2d::graphics * pgraphics)
 {
-   
+
    if (get_type() == type_icon)
    {
-      
-      ::visual::icon * picon = get_icon();
-      
+
+      ::visual::icon * picon = static_get_icon();
+
       if (picon != NULL)
       {
-         
+
          pgraphics->DrawIcon(null_point(), picon);
-         
+
       }
-      
+
    }
    else if (get_type() == type_text)
    {

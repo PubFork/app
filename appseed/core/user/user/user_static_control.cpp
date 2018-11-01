@@ -177,7 +177,7 @@ namespace user
    }
 
 
-   void static_control::set_icon(::visual::icon * picon)
+   void static_control::static_set_icon(::visual::icon * picon)
    {
 
       if(picon == NULL)
@@ -190,7 +190,7 @@ namespace user
    }
 
 
-   ::visual::icon * static_control::get_icon()
+   ::visual::icon * static_control::static_get_icon()
    {
 
       return m_etype == type_icon ? m_picon : NULL;
@@ -222,7 +222,7 @@ namespace user
    }
 
 
-   void static_control::set_bitmap(::draw2d::bitmap * pbitmap)
+   void static_control::static_set_bitmap(::draw2d::bitmap * pbitmap)
    {
 
 
@@ -237,7 +237,7 @@ namespace user
    }
 
 
-   ::draw2d::bitmap * static_control::get_bitmap()
+   ::draw2d::bitmap * static_control::static_get_bitmap()
    {
 
       return m_etype == type_bitmap ? m_pbitmap : NULL;
@@ -245,7 +245,7 @@ namespace user
    }
 
 
-   void static_control::set_cursor(::visual::cursor * pcursor)
+   void static_control::static_set_cursor(::visual::cursor * pcursor)
    {
 
       if(pcursor == NULL)
@@ -258,7 +258,7 @@ namespace user
    }
 
 
-   ::visual::cursor *  static_control::get_cursor()
+   ::visual::cursor *  static_control::static_get_cursor()
    {
 
       return m_etype == type_cursor ? m_pcursor : NULL;

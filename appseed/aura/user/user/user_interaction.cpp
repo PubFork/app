@@ -5806,10 +5806,12 @@ restart:
    }
 
 
-   void interaction::set_cursor(::visual::e_cursor ecursor)
+   bool interaction::set_cursor(::visual::e_cursor ecursor)
    {
 
       m_ecursor = ecursor;
+
+      return Session.set_cursor(this, m_ecursor);
 
    }
 

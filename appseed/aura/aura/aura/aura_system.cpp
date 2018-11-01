@@ -2127,6 +2127,12 @@ RetryBuildNumber:
          path = App(papp).dir().dropbox() / path;
 
       }
+      else if (::str::begins_eat_ci(path, "appconfig://"))
+      {
+
+         path = App(papp).appconfig_folder() / path;
+
+      }
       else if (::str::begins_eat_ci(path, "download://"))
       {
 
