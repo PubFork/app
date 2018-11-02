@@ -2380,12 +2380,12 @@ repeat:
 
          {
 
-            registry::Key regkey(HKEY_CLASSES_ROOT, "." + strExtension + "OpenWithProgids", true);
+            registry::Key regkey(HKEY_CLASSES_ROOT, "." + strExtension + "\\OpenWithProgids", true);
 
             if (!regkey.SetValue(strTargetProgId, ""))
             {
 
-               TRACE("Failure to set ." + strExtension + "/OpenWithProgids");
+               TRACE("Failure to set ." + strExtension + "\\OpenWithProgids");
 
             }
 
