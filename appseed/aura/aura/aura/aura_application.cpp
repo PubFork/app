@@ -3737,31 +3737,35 @@ retry_license:
 
       ::aura::del(m_pimaging);
 
-      if (!is_session() && !is_system())
-      {
 
-         try
-         {
-
-            if (Session.appptra().get_count() <= 1)
-            {
-
-               if (System.thread::get_os_data() != NULL)
-               {
-
-                  ::multithreading::post_quit(&System);
-
-               }
-
-            }
-
-         }
-         catch (...)
-         {
-
-         }
-
-      }
+      /// commented out the code below
+      /// reasoning: better leave to the session the responsability
+      /// to do those checks/actions.
+//      if (!is_session() && !is_system())
+//      {
+//
+//         try
+//         {
+//
+//            if (Session.appptra().get_count() <= 1)
+//            {
+//
+//               if (System.thread::get_os_data() != NULL)
+//               {
+//
+//                  ::multithreading::post_quit(&System);
+//
+//               }
+//
+//            }
+//
+//         }
+//         catch (...)
+//         {
+//
+//         }
+//
+//      }
 
    }
 
