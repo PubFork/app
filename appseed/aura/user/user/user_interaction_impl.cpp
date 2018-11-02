@@ -2236,11 +2236,7 @@ namespace user
 
          output_debug_string("interaction_impl::_001OnShowWindows bShow = true");
 
-#ifndef WINDOWSEX
-
          m_pui->defer_start_prodevian();
-
-#endif // WINDOWS
 
       }
       else

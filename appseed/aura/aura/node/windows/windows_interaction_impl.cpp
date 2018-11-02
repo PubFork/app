@@ -3786,6 +3786,8 @@ namespace windows
 
          }
 
+         deferred_on_change_visibility();
+
          m_pui->set_need_redraw();
 
       });
@@ -5841,7 +5843,11 @@ lCallNextHook:
       else
       {
 
-         return ::SetWindowPos(get_handle(), (HWND)z, x, y, cx, cy, nFlags) != 0;
+         bool bOk = ::SetWindowPos(get_handle(), (HWND)z, x, y, cx, cy, nFlags) != FALSE;
+
+         deferred_on_change_visibility();
+
+         return bOk;
 
       }
 
