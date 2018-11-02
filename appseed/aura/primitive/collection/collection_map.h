@@ -556,6 +556,9 @@ public:
 
    }
 
+   map & operator = (const map & m);
+
+
 };
 
 template <class KEY, class ARG_KEY, class VALUE, class ARG_VALUE = const VALUE &, class PAIR = pair < KEY, VALUE > >
@@ -1012,6 +1015,25 @@ template < class KEY, class ARG_KEY, class VALUE, class ARG_VALUE, class PAIR >
 inline ::count map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::size() const
 {
    return m_nCount;
+}
+
+template < class KEY, class ARG_KEY, class VALUE, class ARG_VALUE, class PAIR >
+map< KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR > & map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::operator = (const map & m)
+{
+    if(this != &m)
+         {
+
+            remove_all();
+
+            for(auto & pair : m)
+            {
+
+               set_at(pair.m_element1,pair.m_element2);
+
+            }
+
+         }
+return *this;
 }
 
 template < class KEY, class ARG_KEY, class VALUE, class ARG_VALUE, class PAIR >

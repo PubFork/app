@@ -545,7 +545,7 @@ namespace aura
       catch(exit_exception * pexception)
       {
 
-         throw pexception;
+         _rethrow(pexception);
 
       }
       catch(::exception::exception * pexception)
@@ -2352,7 +2352,7 @@ namespace aura
       catch (exit_exception * pexception)
       {
 
-         throw pexception;
+         _rethrow(pexception);
 
       }
       catch (::exception::exception  * pexception)

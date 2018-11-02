@@ -111,9 +111,9 @@ error & error::operator =(const error & error)
 
    }
 
-   m_iaErrorCode2     = error.m_iaErrorCode2;
+   m_iaErrorCode2       = error.m_iaErrorCode2;
 
-   m_mapError2        = error.m_mapError2;
+   m_mapError2          = error.m_mapError2;
 
    return *this;
 
@@ -128,7 +128,7 @@ error & error::operator =(const error & error)
 
       auto & spe = m_mapError2[i];
 
-      if(m_mapError2[i].is_set())
+      if(spe.is_set())
       {
 
          return spe.m_p;
@@ -1625,6 +1625,15 @@ thread_startup::~thread_startup()
 bool thread::begin_thread(bool bSynch, int32_t epriority,uint_ptr nStackSize,uint32_t dwCreateFlagsParam,LPSECURITY_ATTRIBUTES lpSecurityAttrs, IDTHREAD * puiId, error * perror)
 {
 
+//   error errorLocal;
+//
+//   if(::is_null(perror))
+//   {
+//
+//      perror = &errorLocal;
+//
+//   }
+
    m_bRunThisThread = true;
 
    DWORD dwCreateFlags = dwCreateFlagsParam;
@@ -1683,12 +1692,12 @@ bool thread::begin_thread(bool bSynch, int32_t epriority,uint_ptr nStackSize,uin
 
       release();
 
-      auto pexitexception = perror->get_exception();
+      auto pexitexception = pstartup->m_error.get_exception();
 
       if(pexitexception != NULL)
       {
 
-         throw pexitexception;
+         _rethrow(pexitexception);
 
       }
 
@@ -2021,6 +2030,13 @@ uint32_t __thread_entry(void * pparam)
 
          pthread->m_error.set(pexception);
 
+         if(bSynch)
+         {
+
+            pstartup->m_error = pthread->m_error;
+
+         }
+
          // let translator run undefinetely
          //translator::detach();
          try
@@ -2034,6 +2050,13 @@ uint32_t __thread_entry(void * pparam)
 
             pthread->m_error.set_if_not_set(-1);
             //nResult = (DWORD)-1;
+
+            if(bSynch)
+            {
+
+               pstartup->m_error = pthread->m_error;
+
+            }
 
          }
 
@@ -2053,8 +2076,6 @@ uint32_t __thread_entry(void * pparam)
 
          if (bSynch)
          {
-
-            pstartup->m_error = pthread->m_error;
 
             pstartup->m_bError = true;
 
