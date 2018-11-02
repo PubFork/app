@@ -3235,15 +3235,14 @@ bool simple_frame_window::set_appearance(::user::e_appearance eappearance)
 bool simple_frame_window::create_bars()
 {
 
-   if(!on_create_bars())
-      return false;
-
-   if (!m_bInitialFramePosition)
+   if (!on_create_bars())
    {
 
-      set_need_layout();
+      return false;
 
    }
+
+   set_need_layout();
 
    return true;
 

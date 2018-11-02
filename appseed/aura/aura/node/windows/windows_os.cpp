@@ -1931,6 +1931,7 @@ repeat:
 
    }
 
+
    bool os::set_default_browser(::aura::application * papp)
    {
 
@@ -2183,6 +2184,295 @@ repeat:
          }
 
       }
+      //file_association_set_shell_open_command(".htm", strTargetProgId, strModule, "\"%1\"");
+      //file_association_set_shell_open_command(".html", strTargetProgId, strModule, "\"%1\"");
+      //file_association_set_shell_open_command("http", strTargetProgId, strModule, "\"%1\"");
+      //file_association_set_shell_open_command("https", strTargetProgId, strModule, "\"%1\"");
+      SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_DWORD | SHCNF_FLUSH, nullptr, nullptr);
+      Sleep(1000);
+
+
+
+      return true;
+
+   }
+
+
+   bool os::add_default_program(::aura::application * papp, stringa & straExtension, stringa & straMimeType)
+   {
+
+      string strTargetProgId;
+
+      string strModule = solve_relative_compressions(::file::app_module());
+
+      string strApplicationRegistryPath = papp->oprop("ApplicationRegistryPath");
+
+      ::file::path pathApplication;
+
+      pathApplication = "Software";
+
+      pathApplication /= strApplicationRegistryPath;
+
+      pathApplication /= strTargetProgId;
+
+      strTargetProgId = papp->m_strAppName;
+
+      strTargetProgId.replace("-", "_");
+      strTargetProgId.replace("\\", "_");
+      strTargetProgId.replace("/", "_");
+
+      {
+
+         ::windows::registry::Key regkey(HKEY_LOCAL_MACHINE, pathApplication, true);
+
+         string strValue;
+
+         regkey.SetValue("", papp->oprop("ApplicationName").get_string());
+
+      }
+
+      {
+
+         ::windows::registry::Key regkey(HKEY_LOCAL_MACHINE, pathApplication / "DefaultIcon", true);
+
+         string strValue;
+
+         regkey.SetValue("", strModule + ",0");
+
+      }
+
+
+      {
+
+         ::windows::registry::Key regkey(HKEY_LOCAL_MACHINE, pathApplication / "InstallInfo", true);
+
+         string strValue;
+
+         regkey.SetValue("HideIconsCommand", "\"" + strModule + "\" : hide_icons");
+         regkey.SetValue("IconsVisible", 1);
+         regkey.SetValue("ReinstallCommand", "\"" + strModule + "\" : install");
+         regkey.SetValue("ShowIconsCommand", "\"" + strModule + "\" : show_icons");
+
+      }
+
+      {
+
+         ::windows::registry::Key regkey(HKEY_LOCAL_MACHINE, pathApplication / "shell/open/command", true);
+
+         string strValue;
+
+         regkey.SetValue("", "\"" + strModule + "\" \"%1\"");
+
+      }
+
+
+      ::file::path pathApplicationCapabilities;
+
+      pathApplicationCapabilities = pathApplication / "Capabilities";
+
+      {
+
+         ::windows::registry::Key regkey(HKEY_LOCAL_MACHINE, "SOFTWARE\\RegisteredApplications", true);
+
+         string strValue;
+
+         regkey.SetValue(strTargetProgId, pathApplicationCapabilities);
+
+      }
+
+      {
+
+         ::windows::registry::Key regkey(HKEY_LOCAL_MACHINE, pathApplicationCapabilities, true);
+
+         string strValue;
+
+         regkey.SetValue("ApplicationDescription", papp->oprop("ApplicationDescription").get_string());
+         regkey.SetValue("ApplicationIcon", papp->oprop("ApplicationIcon").get_string());
+         regkey.SetValue("ApplicationName", papp->oprop("ApplicationName").get_string());
+
+      }
+
+      {
+
+         ::windows::registry::Key regkey(HKEY_LOCAL_MACHINE, pathApplicationCapabilities / "FileAssociations", true);
+
+         string strValue;
+
+         regkey.SetValue(".mp4", strTargetProgId);
+
+      }
+
+      //{
+
+      //   ::windows::registry::Key regkey(HKEY_LOCAL_MACHINE, "Software\\Clients\\StartMenuInternet\\" + strTargetProgId + "\\Capabilities\\Startmenu", true);
+
+      //   string strValue;
+
+      //   regkey.SetValue("StartMenuInternet", strTargetProgId);
+
+      //}
+
+      {
+
+         ::windows::registry::Key regkey(HKEY_LOCAL_MACHINE, pathApplicationCapabilities / "FileAssociations", true);
+
+         for (index i = 0; i < straMimeType.get_count(); i++)
+         {
+
+            string strExtension = straExtension[i];
+
+            regkey.SetValue("." + strExtension, strTargetProgId + "." + strExtension);
+
+         }
+
+      }
+
+      {
+
+         ::windows::registry::Key regkey(HKEY_LOCAL_MACHINE, pathApplicationCapabilities / "MimeAssociations", true);
+
+         for (index i = 0; i < straMimeType.get_count(); i++)
+         {
+
+            string strMimeType = straMimeType[i];
+
+            string strExtension = straExtension[i];
+
+            regkey.SetValue(strMimeType, strTargetProgId + "." + strExtension);
+
+         }
+
+      }
+
+      //{
+
+      //   registry::Key regkey(HKEY_CLASSES_ROOT, strTargetProgId, true);
+
+      //   regkey.SetValue("", strTargetProgId + " HTML Document");
+      //   regkey.SetValue("AppUserModelId", papp->oprop("AppUserModelId").get_string());
+
+      //}
+      {
+
+         registry::Key regkey(HKEY_CLASSES_ROOT, strTargetProgId + "\\Application", true);
+
+         regkey.SetValue("ApplicationCompany", papp->oprop("ApplicationCompany").get_string());
+         regkey.SetValue("ApplicationDescription", papp->oprop("ApplicationDescription").get_string());
+         regkey.SetValue("ApplicationIcon", papp->oprop("ApplicationIcon").get_string());
+         regkey.SetValue("ApplicationName", papp->oprop("ApplicationName").get_string());
+         regkey.SetValue("AppUserModelId", papp->oprop("AppUserModelId").get_string());
+
+      }
+      {
+
+         registry::Key regkey(HKEY_CLASSES_ROOT, strTargetProgId + "\\DefaultIcon", true);
+
+         regkey.SetValue("", papp->oprop("DefaultIcon").get_string());
+
+      }
+
+      for (index i = 0; i < straExtension.get_count(); i++)
+      {
+
+         string strExtension = straExtension[i];
+
+         file_association_set_shell_open_command(strExtension, strTargetProgId + "." + strExtension, strModule, "\"%1\"");
+
+         {
+
+            registry::Key regkey(HKEY_CLASSES_ROOT, "." + strExtension + "OpenWithProgids", true);
+
+            if (!regkey.SetValue(strTargetProgId, ""))
+            {
+
+               TRACE("Failure to set ." + strExtension + "/OpenWithProgids");
+
+            }
+
+         }
+
+      }
+
+      //{
+
+      //   ::windows::registry::Key regkey(HKEY_CURRENT_USER, "SOFTWARE\\Microsoft\\Windows\\shell\\Associations\\UrlAssociations\\http\\UserChoice", true);
+
+      //   string strProgId;
+
+      //   regkey.QueryValue("ProgId", strProgId);
+
+      //   if (strProgId != strTargetProgId)
+      //   {
+
+      //      regkey.DeleteValue("Hash");
+      //      regkey.SetValue("ProgId", strTargetProgId);
+
+      //   }
+
+      //}
+
+      //{
+
+      //   ::windows::registry::Key regkey(HKEY_CURRENT_USER, "SOFTWARE\\Microsoft\\Windows\\shell\\Associations\\UrlAssociations\\https\\UserChoice", true);
+
+      //   string strProgId;
+
+      //   regkey.QueryValue("ProgId", strProgId);
+
+      //   if (strProgId != strTargetProgId)
+      //   {
+
+      //      regkey.DeleteValue("Hash");
+      //      regkey.SetValue("ProgId", strTargetProgId);
+
+      //   }
+
+      //}
+
+      //{
+
+      //   registry::Key regkey(HKEY_CURRENT_USER, "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\FileExts\\.html\\UserChoice", true);
+      //   string strProgId;
+
+      //   regkey.QueryValue("ProgId", strProgId);
+
+      //   if (strProgId != strTargetProgId)
+      //   {
+
+      //      regkey.DeleteValue("Hash");
+      //      regkey.SetValue("ProgId", strTargetProgId);
+
+      //   }
+
+      //}
+      //{
+
+      //   registry::Key regkey(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\FileExts\\.htm\\UserChoice", true);
+      //   string strProgId;
+
+      //   regkey.QueryValue("ProgId", strProgId);
+
+      //   if (strProgId != strTargetProgId)
+      //   {
+
+      //      regkey.DeleteValue("Hash");
+      //      regkey.SetValue("ProgId", strTargetProgId);
+
+      //   }
+
+      //}
+      //{
+
+      //   registry::Key regkey(HKEY_CLASSES_ROOT, ".htm\\OpenWithProgids", true);
+
+      //   if(!regkey.SetValue(strTargetProgId, ""))
+      //   {
+
+      //      TRACE("Failure to set .htm/OpenWithProgids");
+
+      //   }
+
+      //}
       //file_association_set_shell_open_command(".htm", strTargetProgId, strModule, "\"%1\"");
       //file_association_set_shell_open_command(".html", strTargetProgId, strModule, "\"%1\"");
       //file_association_set_shell_open_command("http", strTargetProgId, strModule, "\"%1\"");

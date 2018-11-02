@@ -1440,7 +1440,7 @@ restart:
 
       threadrefa_post_quit();
 
-      threadrefa_wait(one_second());
+      threadrefa_wait(seconds(30));
 
       try
       {

@@ -4938,6 +4938,8 @@ retry_license:
 
       }
 
+      add_fork(strCommandLine);
+
       return false;
 
    }

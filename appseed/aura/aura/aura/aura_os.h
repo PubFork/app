@@ -91,6 +91,8 @@ namespace aura
 
       virtual bool set_default_browser(::aura::application * papp);
 
+      virtual bool add_default_program(::aura::application * papp, stringa & straExtension, stringa & straMimeType);
+
       virtual bool register_user_auto_start(string strId, string strCommand, bool bRegister);
 
       virtual bool is_user_auto_start(string strId);
@@ -118,6 +120,8 @@ namespace aura
 
       /// set["folder"] : in/out folder path
       virtual bool browse_file_or_folder(oswindow oswindowOwner, property_set & set);
+
+
 
    };
 

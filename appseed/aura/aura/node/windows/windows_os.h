@@ -97,6 +97,8 @@ namespace windows
 
       virtual bool set_default_browser(::aura::application * papp) override;
 
+      virtual bool add_default_program(::aura::application * papp, stringa & straExtension, stringa & straMimeType) override;
+
    };
 
 

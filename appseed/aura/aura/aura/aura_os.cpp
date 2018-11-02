@@ -547,6 +547,17 @@ namespace aura
    }
 
 
+   bool os::add_default_program(::aura::application * papp, stringa & straExtension, stringa & straMimeType)
+   {
+
+      UNREFERENCED_PARAMETER(papp);
+      UNREFERENCED_PARAMETER(straExtension);
+      UNREFERENCED_PARAMETER(straMimeType);
+
+      return false;
+
+   }
+
 
    bool os::register_user_auto_start(string strId, string strCommand, bool bRegister)
    {

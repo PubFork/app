@@ -663,9 +663,18 @@ namespace user
    {
       ASSERT(lpLayout != NULL);
 
+      uint32_t dwStyleVisible = (GetStyle() & WS_VISIBLE);
+
+      if (is_this_visible())
+      {
+
+         dwStyleVisible |= WS_VISIBLE;
+
+      }
+
       // resize and reposition this control bar based on styles
       uint32_t dwStyle = (m_dwStyle & (CBRS_ALIGN_ANY|CBRS_BORDER_ANY)) |
-                         (GetStyle() & WS_VISIBLE);
+                         dwStyleVisible;
 
       // handle delay hide/show
       if (m_nStateFlags & (delayHide|delayShow))
