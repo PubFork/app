@@ -82,8 +82,8 @@ namespace dynamic_source
       spa(plugin_map_item)                      m_pluginmapitema;
 
       mutex                                     m_mutexIncludeMatches;
-      string_map < bool >         m_mapIncludeMatchesFileExists;
-      string_map < bool >         m_mapIncludeMatchesIsDir;
+      string_map < bool >                       m_mapIncludeMatchesFileExists;
+      string_map < bool >                       m_mapIncludeMatchesIsDir;
       mutex                                     m_mutexIncludeHasScript;
       string_map < bool >                       m_mapIncludeHasScript;
       mutex                                     m_mutexShouldBuild;
@@ -181,8 +181,8 @@ namespace dynamic_source
       string get_library_build_log();
 
 
-
-      void clear_include_matches();
+      virtual void clear_include_matches(::file::path path);
+      virtual void clear_include_matches();
       static UINT c_cdecl clear_include_matches_FolderWatchThread(LPVOID lpParam); // thread procedure
 
       virtual ::file::path real_path(const ::file::path & str);

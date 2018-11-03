@@ -19,7 +19,6 @@ namespace dynamic_source
 {
 
 
-
    script::script(::aura::application * papp) :
       ::object(papp),
       m_memfileError(papp)
@@ -29,9 +28,12 @@ namespace dynamic_source
 
    }
 
+
    script::~script()
    {
+
    }
+
 
    void script::run(script_instance * pinstance)
    {
@@ -39,14 +41,13 @@ namespace dynamic_source
    }
 
 
-
-   typedef struct tagLOADPARMS32
+   bool script::ShouldBuild()
    {
-      char * lpEnvAddress;  // address of environment strings
-      char * lpCmdLine;     // address of command line
-      char * lpCmdShow;     // how to show new program
-      uint32_t dwReserved;    // must be zero
-   } LOADPARMS32;
+
+      return true;
+
+   }
+
 
    ds_script::ds_script(::aura::application * papp) :
       ::object(papp),
@@ -63,6 +64,17 @@ namespace dynamic_source
       m_evCreationEnabled.SetEvent();
 
 
+
+   }
+
+
+
+
+
+   ds_script::~ds_script()
+   {
+
+      Unload();
 
    }
 
@@ -254,84 +266,97 @@ namespace dynamic_source
 
       synch_lock sl(m_pmutex);
 
-
-#ifdef WINDOWS
-
-      m_strScriptPath.replace("/", "\\");
-#else
-      /*int iRetry = 5;
-      while(!Application.file().exists(m_strScriptPath) && iRetry > 0)
-      {
-
-          Sleep(500);
-          iRetry--;
-      }*/
-#endif
-      //::output_debug_string(m_strScriptPath);
       if(!Application.file().exists(m_strScriptPath))
       {
+
          if(HasTempError())
          {
+
             m_memfileError << m_strScriptPath << ": does not exist because of \"temp\" error.";
+
          }
          else
          {
+
             m_memfileError << m_strScriptPath << ": does not exist.";
+
          }
+
          m_lpfnCreateInstance = NULL;
+
          return;
+
       }
-      if(m_plibrary.is_null() || m_plibrary->is_closed())
+
+      if (m_plibrary.is_null() || m_plibrary->is_closed())
       {
 
          m_plibrary.alloc(allocer());
 
-         //if(m_strScriptPath.find("transactions") >= 0)
-         //{
-         // debug_break();
-         //}
-         //::SetDllDirectory("C:\\netnode\\stage\\x64");
          string strStagePath = m_pmanager->get_full_stage_path(m_strScriptPath);
-
-
 
          ::file_copy_dup(strStagePath, m_strScriptPath, true);
 
-         m_plibrary->open(strStagePath);
+         m_plibrary->open(strStagePath, true);
 
          if(m_plibrary->is_closed())
          {
+
 #ifdef LINUX
+
             const char * psz = dlerror();
+
 #endif
+
             uint32_t dwMessageId = get_last_error();
+
             if(dwMessageId == 0x139)
             {
+
                debug_break();
+
             }
+
             TRACE("Error Message Id: %d\n", dwMessageId);
+
             string strError = get_system_error_message(::get_last_error());
+
             string str;
+
             str.Format("%d - ", ::get_last_error());
+
             m_memfileError << strStagePath << " : LoadLibrary, get_last_error : " << str << strError;
+
          }
+
       }
-      m_lpfnCreateInstance = m_plibrary->get < NET_NODE_CREATE_INSTANCE_PROC > ("create_dynamic_source_script_instance");
-      if(m_lpfnCreateInstance == NULL)
+
+      if (m_plibrary.is_set() && !m_plibrary->is_closed())
       {
-         TRACE("create_dynamic_source_script_instance error");
+
+         m_lpfnCreateInstance = m_plibrary->get < NET_NODE_CREATE_INSTANCE_PROC >("create_dynamic_source_script_instance");
+
+         if (m_lpfnCreateInstance == NULL)
+         {
+
+            TRACE("create_dynamic_source_script_instance error");
+
+         }
+
       }
-      //
-      //else
-      //{
-      // m_evCreationEnabled.SetEvent();
-      //}
+
    }
+
+
    void ds_script::Unload()
    {
 
-      if(m_bUnloading)
+      if (m_bUnloading)
+      {
+
          return;
+
+      }
 
       keep < bool > unloading(&m_bUnloading,true,false,true);
 
@@ -347,36 +372,6 @@ namespace dynamic_source
          m_plibrary->close();
 
          string strStagePath = m_pmanager->get_stage_path(m_strScriptPath);
-         /*
-         #ifdef WINDOWSEX
-
-         HMODULE hmodule = ::GetModuleHandleW(::str::international::utf8_to_unicode("\\\\?\\" + strStagePath));
-         bool b = ::GetModuleHandleExW(GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT, ::str::international::utf8_to_unicode("\\\\?\\" + strStagePath), &hmodule) != FALSE;
-         if(hmodule != NULL && !::FreeLibrary(hmodule))
-         {
-            uint32_t dwError = ::get_last_error();
-            TRACE("ds_script::GetModuleHandle return bool(%d) Unload Error close Handle %s %d\r\n", b, strStagePath, dwError);
-         }
-         string strPdb;
-         strPdb = strStagePath;
-         ::str::ends_eat_ci(strPdb, ".dll");
-         strPdb += ".pdb";
-         b = ::GetModuleHandleExW(GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT, ::str::international::utf8_to_unicode("\\\\?\\" + strPdb), &hmodule) != FALSE;
-         if(hmodule != NULL && !::FreeLibrary(hmodule))
-         {
-            uint32_t dwError = ::get_last_error();
-            TRACE("ds_script::Unload Error close Handle %s %d\r\n", strPdb, dwError);
-         }
-
-         #elif defined(METROWIN)
-
-         #else
-         void * p = dlopen(m_strScriptPath, RTLD_NOLOAD);
-         if(p != NULL && !dlclose(p))
-         {
-            TRACE("ds_script::%s Unload Error\r\n", m_strScriptPath.c_str());
-         }
-         #endif*/
 
          m_lpfnCreateInstance = (NET_NODE_CREATE_INSTANCE_PROC) NULL;
 
@@ -385,134 +380,14 @@ namespace dynamic_source
    }
 
 
-
-   ds_script::~ds_script()
-   {
-   }
-
-
    script_instance * ds_script::create_instance()
    {
 
-      if (m_strSourcePath.find_ci("\\applications\\basic\\") > 0)
-      {
+      synch_lock slCompiler(&Application.m_semCompiler);
 
-         TRACE("/applications/basic/");
+      synch_lock sl(m_pmutex);
 
-      }
-
-//   check_should_build:
-
-      if(ShouldBuild())
-      {
-         synch_lock slCompiler(&Application.m_semCompiler);
-         Sleep(100);
-
-         try
-         {
-
-            ::multithreading::set_priority(::multithreading::priority_highest);
-
-         }
-         catch(...)
-         {
-
-         }
-
-         string str;
-
-         int32_t iRetry = 0;
-
-         bool bHasTempError = false;
-
-         do
-         {
-
-            if (iRetry > 0)
-            {
-
-               Sleep((DWORD) System.math().RandRange(1977, 1977+ 2000));
-
-            }
-
-            m_pmanager->m_pcompiler->compile(this);
-
-            str = m_strError;
-
-
-
-            if(iRetry == 0)
-            {
-               TRACE("Build: %s\n%s\n", m_strName.c_str(), str.c_str());
-            }
-            else
-            {
-               TRACE("Retry(%d): %s\nError: %s\n", iRetry, m_strName.c_str(), str.c_str());
-            }
-
-            iRetry++;
-
-         }
-         while((bHasTempError = HasTempError()) && iRetry < 8 && ::get_thread_run());
-
-
-         if (!::get_thread_run())
-            return NULL;
-         m_dwLastBuildTime = ::get_tick_count();
-
-         // Wait for finalization of build
-         // or delay in case of error to avoid run conditions due extreme overload.
-         //Sleep(pscript->m_pmanager->m_dwBuildTimeWindow +
-         // System.math().RandRange(0, pscript->m_pmanager->m_dwBuildTimeRandomWindow));
-//         m_bShouldBuild =false;
-
-         m_ft = get_file_time(m_strSourcePath);
-
-
-         Load();
-
-         Sleep(100);
-
-         if (!::get_thread_run())
-            return NULL;
-         // retried at least 8 times, give up any rebuild attemp until file is changed
-         m_bShouldBuild = false;
-
-         {
-
-            synch_lock sl(&m_pmanager->m_mutexShouldBuild);
-
-            m_pmanager->m_mapShouldBuild[m_strSourcePath] = false;
-
-         }
-
-         // don't bother with sleeps if not compiling even if there are errors
-
-         /*         try
-                  {
-
-                     ::multithreading::set_priority(::multithreading::priority_normal);
-
-                  }
-                  catch(...)
-                  {
-
-                  }*/
-
-      }
-      //else
-      //{
-
-      //   if(!m_pmanager->should_build(m_strScriptPath))
-      //   {
-
-      //      m_strScriptPath = m_pmanager->get_script_path(m_strName);
-
-      //      Load();
-
-      //   }
-
-      //}
+      defer_build();
 
       script_instance * pinstance = NULL;
 
@@ -522,23 +397,15 @@ namespace dynamic_source
          return NULL;
 
       }
-      else
+
+      try
       {
 
-         try
-         {
+         pinstance = m_lpfnCreateInstance(this);
 
-            pinstance = m_lpfnCreateInstance(this);
-
-         }
-         catch (...)
-         {
-
-            //m_bShouldBuild = true;
-
-            //goto check_should_build;
-
-         }
+      }
+      catch (...)
+      {
 
       }
 
@@ -547,18 +414,120 @@ namespace dynamic_source
       pinstance->m_dwCreate = get_tick_count();
 
       return pinstance;
+
+   }
+
+
+   void ds_script::defer_build()
+   {
+
+      synch_lock sl(m_pmutex);
+
+      if (m_plibrary.is_set() && !m_plibrary->is_closed())
+      {
+
+         return;
+
+      }
+
+      if (m_strSourcePath.find_ci("\\applications\\basic\\") > 0)
+      {
+
+         TRACE("/applications/basic/");
+
+      }
+
+      try
+      {
+
+         ::multithreading::set_priority(::multithreading::priority_highest);
+
+      }
+      catch (...)
+      {
+
+      }
+
+      string str;
+
+      int32_t iRetry = 0;
+
+      bool bHasTempError = false;
+
+      do
+      {
+
+         if (iRetry > 0)
+         {
+
+            Sleep((DWORD)System.math().RandRange(2000, 4000));
+
+         }
+
+         m_pmanager->m_pcompiler->compile(this);
+
+         str = m_strError;
+
+         if (iRetry == 0)
+         {
+
+            TRACE("Build: %s\n%s\n", m_strName.c_str(), str.c_str());
+
+         }
+         else
+         {
+
+            TRACE("Retry(%d): %s\nError: %s\n", iRetry, m_strName.c_str(), str.c_str());
+
+         }
+
+         iRetry++;
+
+      }
+      while ((bHasTempError = HasTempError()) && iRetry < 8 && ::get_thread_run());
+
+      if (!::get_thread_run())
+      {
+
+         return;
+
+      }
+
+      m_dwLastBuildTime = ::get_tick_count();
+
+      m_ft = get_file_time(m_strSourcePath);
+
+      Load();
+
+      if (!::get_thread_run())
+      {
+
+         return;
+
+      }
+
+      m_bShouldBuild = false;
+
+      {
+
+         synch_lock sl(&m_pmanager->m_mutexShouldBuild);
+
+         m_pmanager->m_mapShouldBuild[m_strSourcePath] = false;
+
+      }
+
    }
 
 
    sp(::aura::application) ds_script::get_app() const
    {
+
       return m_pmanager->get_app();
+
    }
 
 
 } // namespace dynamic_source
-
-
 
 
 

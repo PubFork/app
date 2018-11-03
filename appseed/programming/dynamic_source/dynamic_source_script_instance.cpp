@@ -6,51 +6,28 @@ namespace dynamic_source
 {
 
 
-script_instance::script_instance(script * pscript) :
-   ::object(pscript->get_app())
-{
-
-   synch_lock sl(pscript->m_pmutex);
-
-   m_pscript = pscript;
-   m_pscriptScriptInstance = pscript;
-   m_pscriptScriptInstance->m_scriptinstanceptra.add(this);
-}
-
-script_instance::~script_instance()
-{
-}
-
-void script_instance::destroy()
-{
-
-   single_lock sl(m_pscriptScriptInstance->m_pmutex);
-   
-   try
+   script_instance::script_instance(script * pscript) :
+      ::object(pscript->get_app())
    {
 
-      sl.lock(minutes(1.0));
+      m_pscript = pscript;
+
+      m_pscriptScriptInstance = pscript;
 
    }
-   catch(...)
+
+
+   script_instance::~script_instance()
    {
 
    }
 
-   try
+   bool script_instance::ShouldBuild()
    {
 
-      m_pscriptScriptInstance->m_scriptinstanceptra.remove(this);
+      return false;
 
    }
-   catch(...)
-   {
-
-   }
-
-}
-
-
 
 } // namespace dynamic_source
 

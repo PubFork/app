@@ -22,8 +22,6 @@ namespace dynamic_source
       ::file::plain_text_stream_memory_file     m_memfileError;
       string                                    m_strError;
 
-      spa(script_instance)                      m_scriptinstanceptra;
-
 
       script(::aura::application * papp);
       virtual ~script();
@@ -32,6 +30,9 @@ namespace dynamic_source
       virtual script_instance * create_instance() = 0;
 
       virtual void run(script_instance * pinstance);
+
+      virtual bool ShouldBuild();
+
 
    };
 
@@ -42,7 +43,7 @@ namespace dynamic_source
    public:
 
 
-      sp(::aura::library )                 m_plibrary;
+      sp(::aura::library)              m_plibrary;
 
 
       file_time                        m_ft;
@@ -62,18 +63,14 @@ namespace dynamic_source
       bool                             m_bHasTempError;
       bool                             m_bHasTempOsError;
       bool                             m_bUnloading;
-
+      NET_NODE_CREATE_INSTANCE_PROC    m_lpfnCreateInstance;
 
 
       ds_script(::aura::application * papp);
       ~ds_script();
 
 
-
-      NET_NODE_CREATE_INSTANCE_PROC m_lpfnCreateInstance;
-
-
-
+      virtual void defer_build();
       virtual void on_start_build();
 
       bool DoesMatchVersion();

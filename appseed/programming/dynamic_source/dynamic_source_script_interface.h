@@ -25,8 +25,8 @@ namespace dynamic_source
       script_manager *                    m_pmanager;
 
 
-      sp(::memory_file)           m_spmemoryfileFallback;
-      serialize               m_ostreamFallback;
+      sp(::memory_file)                   m_spmemoryfileFallback;
+      serialize                           m_ostreamFallback;
 
       script *                            m_pscript;
 

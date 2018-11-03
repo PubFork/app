@@ -481,7 +481,55 @@ namespace dynamic_source
    }
 
 
+   void script_manager::clear_include_matches(::file::path path)
+   {
 
+      try
+      {
+         single_lock sl(&m_mutexIncludeMatches, TRUE);
+
+         try
+         {
+
+            m_mapIncludeMatchesFileExists.remove_key(path);
+
+         }
+         catch (...)
+         {
+
+         }
+
+         try
+         {
+
+            m_mapIncludeMatchesIsDir.remove_key(path);
+
+         }
+         catch (...)
+         {
+
+         }
+
+      }
+      catch (...)
+      {
+
+      }
+
+      try
+      {
+
+         single_lock sl(&m_mutexIncludeExpandMd5, TRUE);
+
+         m_mapIncludeExpandMd5.remove_key(path);
+
+      }
+      catch (...)
+      {
+
+      }
+
+   }
 
 
    void script_manager::clear_include_matches()
@@ -519,22 +567,13 @@ namespace dynamic_source
 
       }
 
-
-      //try
-      //{
-      //   single_lock sl(&m_mutexIncludeHasScript, TRUE);
-      //   m_mapIncludeHasScript.remove_all();
-      //}
-      //catch(...)
-      //{
-
-      //}
-
-
       try
       {
+
          single_lock sl(&m_mutexIncludeExpandMd5, TRUE);
+
          m_mapIncludeExpandMd5.remove_all();
+
       }
       catch(...)
       {
@@ -631,16 +670,27 @@ namespace dynamic_source
    {
 
       UNREFERENCED_PARAMETER(id);
-      UNREFERENCED_PARAMETER(dir);
-      UNREFERENCED_PARAMETER(filename);
       UNREFERENCED_PARAMETER(eaction);
+
+      ::file::path path;
+
+      path = dir;
+
+      path /= filename;
+
+      if (path.contains_ci("\\.git\\") || path.contains_ci("/.git/"))
+      {
+
+         return;
+
+      }
 
       // Thank you (casey)!! For tip for ever writing down every todo
       // todo (camilo) equal file comparison, for clearing include matching only changed files
       try
       {
 
-         m_pmanager->clear_include_matches();
+         m_pmanager->clear_include_matches(path);
 
       }
       catch(...)
@@ -651,28 +701,9 @@ namespace dynamic_source
       try
       {
 
-         //bool b;
-         //if (m_pmanager->m_mapIncludeHasScript.Lookup(::file::path(dir) / filename, b))
-         //{
-         //   m_pmanager->m_mapIncludeHasScript.remove_key(::file::path(dir) / filename);
-         //}
-
          synch_lock sl(&m_pmanager->m_mutexShouldBuild);
 
-         ::file::path path;
-
-         path = dir;
-
-         path /= filename;
-
          m_pmanager->m_mapShouldBuild[path] = true;
-
-         ::fork(get_app(), [=]()
-         {
-
-            m_pmanager->get(path);
-
-         });
 
       }
       catch (...)
@@ -680,16 +711,7 @@ namespace dynamic_source
 
       }
 
-      //try
-      //{
-      //   m_pmanager->m_pcompiler->run_persistent();
-      //}
-      //catch(...)
-      //{
-      //}
-
    }
-
 
 
    ::file::path script_manager::real_path(const ::file::path & strBase,const ::file::path & str)

@@ -123,6 +123,8 @@ namespace aura
    }
 
 
+
+
    bool library::open_ca2_library(string strTitle)
    {
 

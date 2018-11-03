@@ -20,10 +20,10 @@ namespace aura
       bool              m_bAutoUnload;
 
 
-
       library(::aura::application * papp);
       library(::aura::application * papp,int iDesmabi, const char * pszRoot);
       virtual ~library();
+
 
       virtual bool open(const char * pszPath,bool bAutoClose = true,bool bCa2Path = false);
 

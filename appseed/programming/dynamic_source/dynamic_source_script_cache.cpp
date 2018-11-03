@@ -24,15 +24,21 @@ namespace dynamic_source
       string strName(lpcszName);
 
 #ifdef WINDOWS
+
       strName.replace("/", "\\");
+
 #endif
 
       single_lock sl(&m_cs, TRUE);
 
       strsp(script)::pair * ppair = m_map.PLookup(strName);
 
-      if(ppair != NULL)
-         return (script *) ppair->m_element2;
+      if (ppair != NULL && ppair->m_element2.is_set() && !ppair->m_element2->ShouldBuild())
+      {
+
+         return (script *)ppair->m_element2;
+
+      }
 
       sp(script) pscript = new ds_script(get_app());
 
@@ -45,6 +51,7 @@ namespace dynamic_source
       return pscript;
 
    }
+
 
    script * script_cache::register_script(const char * lpcszName, script * pscript)
    {
@@ -109,9 +116,13 @@ namespace dynamic_source
 
    void script_cache::cache(script * pscript)
    {
+
       single_lock sl(&m_cs, TRUE);
+
       m_map.set_at(pscript->m_strName, pscript);
+
    }
+
 
    void script_cache::set_all_out_of_date()
    {
