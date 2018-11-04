@@ -238,7 +238,10 @@ inline void simple_string::ReleaseBufferSetLength(strsize nNewLength )
 }
 inline void simple_string::Truncate(strsize nNewLength )
 {
-   ASSERT( nNewLength <= get_length() );
+   if(nNewLength <= get_length())
+   {
+      return;
+   }
    GetBuffer( nNewLength );
    ReleaseBufferSetLength( nNewLength );
 }
