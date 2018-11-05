@@ -371,8 +371,6 @@ namespace user
 
       gboolean bOk = g_settings_set_string(settings, pszKey, pszValue);
 
-      g_settings_sync ();
-
       if (settings != NULL)
       {
 
@@ -383,6 +381,17 @@ namespace user
       return bOk;
 
    }
+
+
+   bool gsettings_sync()
+   {
+
+      g_settings_sync ();
+
+      return true;
+
+   }
+
 
 
    char * gsettings_get_malloc(const char * pszSchema, const char * pszKey)

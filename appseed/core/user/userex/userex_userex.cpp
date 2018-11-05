@@ -1383,12 +1383,18 @@ retry_license:
 
          bool bOk2 = true;
 
-         if(::file::system_short_name().contains_ci("manjaro"))
+         //if(::file::system_short_name().contains_ci("manjaro"))
          {
 
             bOk2 = ::user::gsettings_set("org.gnome.desktop.wm.preferences", "theme",  strTheme);
 
          }
+
+         Sleep(300);
+
+         ::user::gsettings_sync();
+
+         Sleep(300);
 
          return bOk1 && bOk2;
 
