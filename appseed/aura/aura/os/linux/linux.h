@@ -32,6 +32,9 @@ LRESULT axis_DispatchMessage(const MESSAGE * lpmessage);
 #include "linux_windowing.h"
 
 
+#include "linux_g.h"
+
+
 
 
 

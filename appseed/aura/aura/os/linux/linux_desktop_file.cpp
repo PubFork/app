@@ -251,7 +251,17 @@ namespace linux
 
       ::file::path pathLaunch;
 
-      pathLaunch = ::dir::home() / ".config/ca2/launch" / (Application.m_strAppId + ".sh");
+      string strName;
+
+      strName = Application.m_strAppId;
+
+      strName.replace("-", "_");
+      
+      strName.replace("/", "_");
+
+      strName.replace(".", "_");
+
+      pathLaunch = ::dir::home() / ".config/ca2/bin" / (strName + ".sh");
 
       ::file::path pathIcon = Application.dir().matter("main/icon-256.png");
 

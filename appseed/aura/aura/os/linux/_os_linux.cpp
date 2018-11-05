@@ -62,3 +62,6 @@
 #include "linux_window_xlib.cpp"
 #include "linux_xdisplay.cpp"
 #include "linux_xinerama.cpp"
+
+
+#include "linux_g.cpp"

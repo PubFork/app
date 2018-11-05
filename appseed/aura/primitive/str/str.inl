@@ -1,9 +1,9 @@
-
-
+#pragma once
 
 
 namespace str
 {
+
 
    template < typename T >
    inline string  from(const T & t)
@@ -17,6 +17,7 @@ namespace str
 
    }
 
+
    template < typename T >
    inline string  from_int(const T & t)
    {
@@ -28,6 +29,7 @@ namespace str
       return str;
 
    }
+
 
    template < typename T >
    inline string  from_uint(const T & t)
@@ -41,23 +43,30 @@ namespace str
 
    }
 
+
 } // namespace str
+
 
 inline void simple_string::construct(string_manager * pstringmanager)
 {
+   
    if (pstringmanager == NULL)
    {
 
       pstringmanager = string_trait::GetDefaultManager();
 
    }
+
    string_data * pData = pstringmanager->GetNilString();
+
    attach(pData);
 
 }
 
-inline simple_string::simple_string(const simple_string & strSrc, string_manager * pstringmanager  )
+
+inline simple_string::simple_string(const simple_string & strSrc, string_manager * pstringmanager)
 {
+
    //if(is_null(&strSrc))
    //{
    //   ENSURE( pstringmanager != NULL );
@@ -68,71 +77,123 @@ inline simple_string::simple_string(const simple_string & strSrc, string_manager
    //   return;
    //}
    string_data* pSrcData = strSrc.get_data();
+
    string_data* pNewData = CloneData( pSrcData );
+
    attach( pNewData );
+
 }
+
 
 inline simple_string::simple_string(const string_data  * pdata, string_manager * pstringmanager  )
 {
+
    if(pdata == NULL)
    {
+      
       ENSURE( pstringmanager != NULL );
 
       string_data* pData = pstringmanager->allocate( 0);
+
       if( pData == NULL )
       {
+
          throw_memory_exception();
+
       }
+
       attach( pData );
+
       set_length( 0 );
+
       return;
+
    }
+   
    string_data* pSrcData = const_cast < string_data * > (pdata);
+   
    string_data* pNewData = CloneData( pSrcData );
+
    attach( pNewData );
+
 }
 
 
 inline simple_string::simple_string(const char * pszSrc,string_manager * pstringmanager )
 {
+
    ENSURE( pstringmanager != NULL );
 
    strsize nLength = StringLength( pszSrc );
+
    string_data* pData = pstringmanager->allocate( nLength);
-   if( pData == NULL )
+
+   if(pData == NULL)
    {
+
       throw_memory_exception();
+
    }
+
    attach( pData );
+
    set_length( nLength );
+
 #if _SECURE_TEMPLATE
+
    CopyChars( m_pszData, nLength, pszSrc, nLength );
+
 #else
+
    CopyChars( m_pszData, pszSrc, nLength );
+
 #endif
+
 }
+
+
 inline simple_string::simple_string(const char* pchSrc,strsize nLength,string_manager * pstringmanager)
 {
+
    ENSURE( pstringmanager != NULL );
 
    if(pchSrc == NULL && nLength != 0)
+   {
+
       _throw(invalid_argument_exception(get_app()));
 
+   }
+
    if(nLength < 0)
+   {
+
       nLength = (strsize) strlen(pchSrc);
 
+   }
+
    string_data * pData = pstringmanager->allocate( nLength);
+
    if( pData == NULL )
    {
+
       throw_memory_exception();
+
    }
+
    attach( pData );
+
    set_length( nLength );
+
 #if _SECURE_TEMPLATE
+
    CopyChars( m_pszData, nLength, pchSrc, nLength );
+
 #else
+
    CopyChars( m_pszData, pchSrc, nLength );
+
 #endif
+
 }
 
 // besides returning a reference (and const does not really impedes changing), do not change a simple_string (or string) directly,
@@ -140,34 +201,35 @@ inline simple_string::simple_string(const char* pchSrc,strsize nLength,string_ma
 inline const char & simple_string::operator [](strsize iChar ) const
 {
 
-   //ASSERT( (iChar >= 0) && (iChar <= get_length()) );  // Indexing the '\0' is OK
-
-   //if( (iChar < 0) || (iChar > get_length()) )
-   // _throw(invalid_argument_exception(get_app()));
-
    return m_pszData[iChar];
 
 }
+
+
 inline char simple_string::get_at(strsize iChar ) const
 {
-   //ASSERT( (iChar >= 0) && (iChar <= get_length()) );  // Indexing the '\0' is OK
-   //if( (iChar < 0) || (iChar > get_length()) )
-   // _throw(invalid_argument_exception(get_app()));
 
    return m_pszData[iChar];
+
 }
 
 
-inline   void simple_string::set_at(strsize iChar,char ch )
+inline void simple_string::set_at(strsize iChar,char ch )
 {
-   ASSERT( (iChar >= 0) && (iChar < get_length()) );
+   
+   if((iChar < 0) || (iChar >= get_length()))
+   {
 
-   if( (iChar < 0) || (iChar >= get_length()) )
       _throw(invalid_argument_exception(get_app()));
 
+   }
+
    strsize nLength = get_length();
+   
    char * pszBuffer = GetBuffer();
+
    pszBuffer[iChar] = ch;
+
    ReleaseBufferSetLength( nLength );
 
 }
@@ -175,86 +237,133 @@ inline   void simple_string::set_at(strsize iChar,char ch )
 
 inline void simple_string::SetString(const char * pszSrc,strsize nLength )
 {
+
    if( nLength == 0 )
    {
+
       Empty();
+
    }
    else
    {
+
       // It is possible that pszSrc points to a location inside of our
       // buffer.  GetBuffer() might change m_pszData if (1) the buffer
       // is shared or (2) the buffer is too small to hold the new
       // string.  We detect this aliasing, and modify pszSrc to point
       // into the newly allocated buffer instead.
-
       if(pszSrc == NULL)
+      {
+
          _throw(invalid_argument_exception(get_app()));
 
+      }
+
       uint_ptr nOldLength = (uint_ptr) get_length();
+
       uint_ptr nOffset = (uint_ptr) (pszSrc - GetString());
+      
       // If 0 <= nOffset <= nOldLength, then pszSrc points into our
       // buffer
-
       char * pszBuffer = GetBuffer( nLength );
+
       if( nOffset <= nOldLength )
       {
+
 #if _SECURE_TEMPLATE
+
          CopyCharsOverlapped( pszBuffer, nLength,
                               pszBuffer+nOffset, nLength );
+
 #else
+
          CopyCharsOverlapped( pszBuffer, pszBuffer+nOffset, nLength );
+
 #endif
+
       }
       else
       {
+
 #if _SECURE_TEMPLATE
+
          CopyChars( pszBuffer, nLength, pszSrc, nLength );
+
 #else
          CopyChars( pszBuffer, pszSrc, nLength );
+
 #endif
+
       }
+
       ReleaseBufferSetLength( nLength );
+
    }
+
 }
 
 
 inline void string_file::set_length(strsize nLength )
 {
-   ASSERT( nLength >= 0 );
-   ASSERT( nLength <= m_nBufferLength );
+   
+   ASSERT(nLength >= 0);
 
-   if( nLength < 0 )
+   ASSERT(nLength <= m_nBufferLength);
+
+   if(nLength < 0)
+   {
+
       _throw(invalid_argument_exception(get_app()));
 
-   m_nLength = nLength;
-}
+   }
 
+   m_nLength = nLength;
+
+}
 
 
 inline void simple_string::ReleaseBufferSetLength(strsize nNewLength )
 {
-   ASSERT( nNewLength >= 0 );
-   set_length( nNewLength );
+   
+   ASSERT(nNewLength >= 0);
+
+   set_length(nNewLength);
+
 }
-inline void simple_string::Truncate(strsize nNewLength )
+
+
+inline void simple_string::Truncate(strsize nNewLength)
 {
-   if(nNewLength <= get_length())
+   
+   if(nNewLength >= get_length())
    {
+
       return;
+
    }
+
    GetBuffer( nNewLength );
+
    ReleaseBufferSetLength( nNewLength );
+
 }
+
 
 inline void simple_string::SetManager(string_manager * pstringmanager )
 {
-   ASSERT( is_empty() );
+
+   ASSERT(is_empty());
 
    string_data * pData = get_data();
+
    pData->Release();
+
    pData = pstringmanager->GetNilString();
+
    attach( pData );
+
 }
+
 
 inline void simple_string::Reallocate(strsize nLength )
 {
@@ -262,6 +371,7 @@ inline void simple_string::Reallocate(strsize nLength )
    attach(get_data()->Reallocate(nLength));
 
 }
+
 
 inline string_data * string_data::Reallocate(strsize nLength) // current data will be invalid after function call
 {
@@ -271,6 +381,7 @@ inline string_data * string_data::Reallocate(strsize nLength) // current data wi
    return pstringmanager->Reallocate(this,nLength);
 
 }
+
 
 #ifdef WINDOWS
 #if OSBIT == 64
@@ -1188,9 +1299,6 @@ namespace str
 } // namespace str
 
 
-
-
-
 inline bool string::equals(const char * psz) const
 {
 
@@ -1230,17 +1338,10 @@ inline strsize string::find(char ch, strsize iStart) const RELEASENOTHROW
 
 inline bool wstring::operator == (const wstring & wstr) const
 {
+
    return Compare(wstr) == 0;
+
 }
-
-
-
-
-//inline simple_string::simple_string(const wchar_t * pwsz, string_manager * pmanager)
-//{
-//   operator = (pwsz);
-//
-//}
 
 
 namespace stra
@@ -1266,3 +1367,6 @@ namespace stra
       }
 
 } // namespace stra
+
+
+

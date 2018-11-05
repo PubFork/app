@@ -120,6 +120,14 @@ namespace userex
       virtual bool impl_set_wallpaper(index iScreen, string strWallpaper);
 
 
+      virtual string get_os_desktop_theme();
+      virtual bool set_os_desktop_theme(string strTheme);
+
+
+      virtual string impl_get_os_desktop_theme();
+      virtual bool impl_set_os_desktop_theme(string strTheme);
+
+
       virtual void enable_wallpaper_change_notification();
 
 

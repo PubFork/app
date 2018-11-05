@@ -50,6 +50,7 @@
 					<Add option="-lcrypto" />
 					<Add option="-lace" />
 					<Add option="-lfreeimage" />
+					<Add option="`pkg-config --libs gtk+-3.0 gdk-3.0 appindicator3-0.1`" />
 					<Add option="-Wl,-z,defs" />
 					<Add directory="../../../time/x64/basis" />
 				</Linker>
@@ -718,6 +719,8 @@
 			<Option link="0" />
 		</Unit>
 		<Unit filename="aura/os/linux/linux_file_watcher.h" />
+		<Unit filename="aura/os/linux/linux_g_direct.cpp" />
+		<Unit filename="aura/os/linux/linux_g_g.h" />
 		<Unit filename="aura/os/linux/linux_graphics.h" />
 		<Unit filename="aura/os/linux/linux_launcher.cpp">
 			<Option compile="0" />

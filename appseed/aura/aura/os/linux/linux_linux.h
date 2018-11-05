@@ -58,7 +58,10 @@ bool linux_prepare_app_desktop_file(::aura::application * papp, string strAppId)
 
 #include "linux_x11.h"
 
+#include "linux_g_g.h"
+
 #include "linux.inl"
+
 
 
 

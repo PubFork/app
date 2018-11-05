@@ -1059,7 +1059,7 @@ template < typename Type, typename RawType >
 index string_array < Type, RawType >::_007OpenSection(const RawType & strSection)
 {
 
-   index iSectionIndex = this->find_first_begins_ci(strSection);
+   index iSectionIndex = this->_007FindSection(strSection);
 
    if(iSectionIndex < 0)
    {
@@ -1099,7 +1099,7 @@ template < typename Type, typename RawType >
 index string_array < Type, RawType >::_007GetLine(RawType & strValue, const RawType & strSection, const RawType & strKey) const
 {
 
-   index iSectionIndex = this->_007FindLine(strSection);
+   index iSectionIndex = this->_007FindSection(strSection);
 
    if(iSectionIndex < 0)
    {

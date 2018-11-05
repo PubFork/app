@@ -1217,6 +1217,22 @@ retry_license:
    }
 
 
+   string userex::get_os_desktop_theme()
+   {
+
+      return get_os_desktop_theme();
+
+   }
+
+
+   bool userex::set_os_desktop_theme(string strTheme)
+   {
+
+      return impl_set_os_desktop_theme(strTheme);
+
+   }
+
+
    string userex::get_wallpaper(index iScreen)
    {
 
@@ -1347,6 +1363,128 @@ retry_license:
 #elif defined(LINUX)
 
 
+   bool userex::impl_set_os_desktop_theme(string strTheme)
+   {
+
+      // https://ubuntuforums.org/showthread.php?t=2140488
+      // gsettings set org.gnome.desktop.interface gtk-theme your_theme
+
+      // indirect wall-changer sourceforge.net contribution
+
+      switch(::user::get_edesktop())
+      {
+
+      case ::user::desktop_gnome:
+      case ::user::desktop_ubuntu_gnome:
+      case ::user::desktop_unity_gnome:
+      {
+
+         bool bOk1 = ::user::gsettings_set("org.gnome.desktop.interface", "gtk-theme", strTheme);
+
+         bool bOk2 = true;
+
+         if(::file::system_short_name().contains_ci("manjaro"))
+         {
+
+            bOk2 = ::user::gsettings_set("org.gnome.desktop.wm.preferences", "theme",  strTheme);
+
+         }
+
+         return bOk1 && bOk2;
+
+      }
+
+      case ::user::desktop_mate:
+
+         //return ::user::gsettings_set("org.mate.background", "picture-filename", strLocalImagePath);
+
+      case ::user::desktop_lxde:
+
+         //call_async("pcmanfm", "-w " + strLocalImagePath, NULL, SW_HIDE, false);
+
+         break;
+
+      case ::user::desktop_xfce:
+      {
+         //        Q_FOREACH(QString entry, Global::getOutputOfCommand("xfconf-query", QStringList() << "-c" << "xfce4-desktop" << "-p" << "/backdrop" << "-l").split("\n")){
+         //          if(entry.contains("image-path") || entry.contains("last-image")){
+         //            QProcess::startDetached("xfconf-query", QStringList() << "-c" << "xfce4-desktop" << "-p" << entry << "-s" << image);
+         //      }
+         //}
+
+      }
+
+      //break;
+
+      default:
+
+         output_debug_string("Failed to change wallpaper. If your Desktop Environment is not listed at \"Preferences->Integration-> Current Desktop Environment\", then it is not supported.");
+         return false;
+
+      }
+
+      return true;
+
+   }
+
+
+   string userex::impl_get_os_desktop_theme()
+   {
+
+      // https://ubuntuforums.org/showthread.php?t=2140488
+      // gsettings set org.gnome.desktop.interface gtk-theme your_theme
+
+      // indirect wall-changer sourceforge.net contribution
+
+      string strTheme;
+
+      bool bOk = false;
+
+      switch(::user::get_edesktop())
+      {
+
+      case ::user::desktop_gnome:
+      case ::user::desktop_ubuntu_gnome:
+      case ::user::desktop_unity_gnome:
+
+         bOk = ::user::gsettings_get(strTheme, "org.gnome.desktop.interface", "gtk-theme");
+
+      case ::user::desktop_mate:
+
+         bOk = ::user::gsettings_get(strTheme, "org.mate.background", "picture-filename");
+
+         break;
+
+      case ::user::desktop_lxde:
+
+         //call_async("pcmanfm", "-w " + strLocalImagePath, NULL, SW_HIDE, false);
+
+         break;
+
+      case ::user::desktop_xfce:
+      {
+         //        Q_FOREACH(QString entry, Global::getOutputOfCommand("xfconf-query", QStringList() << "-c" << "xfce4-desktop" << "-p" << "/backdrop" << "-l").split("\n")){
+         //          if(entry.contains("image-path") || entry.contains("last-image")){
+         //            QProcess::startDetached("xfconf-query", QStringList() << "-c" << "xfce4-desktop" << "-p" << entry << "-s" << image);
+         //      }
+         //}
+
+      }
+
+      //break;
+
+      default:
+
+         output_debug_string("Failed to get wallpaper setting. If your Desktop Environment is not listed at \"Preferences->Integration-> Current Desktop Environment\", then it is not supported.");
+         //return "";
+
+      }
+
+      return strTheme;
+
+   }
+
+
    bool userex::impl_set_wallpaper(index iScreen, string strLocalImagePath)
    {
 
@@ -1398,11 +1536,11 @@ retry_license:
    string userex::impl_get_wallpaper(index iScreen)
    {
 
-      hstring hstr(MAX_PATH * 8);
-
-      hstr.zero();
-
       // wall-changer sourceforge.net contribution
+
+      bool bOk = false;
+
+      string strWallpaper;
 
       switch(::user::get_edesktop())
       {
@@ -1411,13 +1549,13 @@ retry_license:
       case ::user::desktop_ubuntu_gnome:
       case ::user::desktop_unity_gnome:
 
-         ::user::gsettings_get(hstr, hstr.count(), "org.gnome.desktop.background", "picture-uri");
+         bOk = ::user::gsettings_get(strWallpaper, "org.gnome.desktop.background", "picture-uri");
 
          break;
 
       case ::user::desktop_mate:
 
-         ::user::gsettings_get(hstr, hstr.count(), "org.mate.background", "picture-filename");
+         bOk = ::user::gsettings_get(strWallpaper, "org.mate.background", "picture-filename");
 
          break;
 
@@ -1446,11 +1584,9 @@ retry_license:
 
       }
 
-      string str(hstr);
+      ::str::begins_eat_ci(strWallpaper, "file://");
 
-      ::str::begins_eat_ci(str, "file://");
-
-      return str;
+      return strWallpaper;
 
    }
 

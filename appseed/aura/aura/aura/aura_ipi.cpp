@@ -359,7 +359,7 @@ started:
 
 #ifdef LINUX
 
-      strKey = ::file::path(getenv("HOME")) / ".config/ca2/ipi" / strApp / ::str::from(iPid);
+      strKey = ::dir::system() / "ipi" / strApp / ::str::from(iPid);
 
 #else
 
@@ -378,7 +378,7 @@ started:
 #else
 
 
-      strKey = ::file::path(getenv("HOME")) / "Library/ca2/ipi" / strApp / ::str::from(iPid);
+      strKey = :dir::system() / "ipi" / strApp / ::str::from(iPid);
 
 #endif
 
@@ -571,13 +571,14 @@ started:
 
       ::file::path pathModule;
 
-      pathModule = ::dir::system() / "config/ipi";
+      pathModule = ::dir::system() / "ipi";
 
       pathModule /= strApp + ".module_list";
 
       string strModuleList = file_as_string_dup(pathModule);
 
       stra.add_lines(strModuleList);
+
 repeat:
 
       if (stra.get_count() > 32)
@@ -660,7 +661,7 @@ repeat:
 
       m_straModule.remove_all();
 
-      pathModule = ::dir::system() / "config/ipi";
+      pathModule = ::dir::system() / "ipi";
 
       pathModule /= m_strApp + ".module_list";
 

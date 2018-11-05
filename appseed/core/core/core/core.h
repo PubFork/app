@@ -356,12 +356,6 @@ namespace core
 
 }
 
-#ifdef LINUX
-
-#include "core/core/os/linux/basecore.h"
-
-#endif
-
 #include "core_process_data.h"
 
 #include "core_types.h"

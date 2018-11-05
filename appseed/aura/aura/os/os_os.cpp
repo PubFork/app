@@ -25,7 +25,7 @@ CLASS_DECL_AURA void set_command_line_dup(const char * psz)
 
    get_command_line_string() = psz;
 
-   ::file::path pathFolder = ::dir::ca2config() / "program";
+   ::file::path pathFolder = ::dir::program_data();
 
    string strAppId = get_command_line_param(psz, "app");
 

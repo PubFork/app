@@ -176,11 +176,17 @@ mutex::mutex(::aura::application * papp, bool bInitiallyOwn, const char * pstrNa
 
          path = ::dir::system() / "home/user/ca2/lock/mutex" / string(pstrName);
 
-#else
+#elif defined __APPLE__
 
          path = getenv("HOME");
 
          path /= "Library/ca2/lock/mutex/named";
+
+#else
+
+         path = getenv("HOME");
+
+         path /= ".config/Library/ca2/lock/mutex/named";
 
 #endif
 
@@ -1445,9 +1451,19 @@ mutex * mutex::open_mutex(::aura::application * papp,  const char * pstrName)
    else
    {
 
+#ifdef __APPLE__
+
       path = getenv("HOME");
 
       path /= "Library/ca2/lock/mutex/named";
+
+#else
+
+      path = getenv("HOME");
+
+      path /= ".config/ca2/lock/mutex/named";
+
+#endif
 
    }
 

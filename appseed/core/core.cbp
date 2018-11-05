@@ -145,11 +145,6 @@
 		<Unit filename="core/core/plane.h" />
 		<Unit filename="core/node/linux/linux_simple_frame_window.cpp" />
 		<Unit filename="core/os/ios/ios_main.h" />
-		<Unit filename="core/os/linux/basecore.cpp" />
-		<Unit filename="core/os/linux/basecore.h" />
-		<Unit filename="core/os/linux/basecore_internal_glue.h" />
-		<Unit filename="core/os/linux/basecore_shared.h" />
-		<Unit filename="core/os/os.h" />
 		<Unit filename="core/plugin/plugin.h" />
 		<Unit filename="core/plugin/plugin_gen.h" />
 		<Unit filename="core/plugin/plugin_history.cpp" />
