@@ -23,7 +23,7 @@ namespace user
 
    bool gsettings_set(const char * pszSchema, const char * pszKey, const char * pszValue);
 
-   int gsettings_get(char * pszValue, int iSize, const char * pszSchema, const char * pszKey);
+   char * gsettings_get_malloc(const char * pszSchema, const char * pszKey);
 
    bool g_enable_wallpaper_change_notification(const char * pszSchema, const char * pszKey);
 

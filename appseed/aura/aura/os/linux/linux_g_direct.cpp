@@ -1,6 +1,5 @@
-#include "basecore.h"
-#include "basecore_shared.h"
-#include "basecore_internal_glue.h"
+#include "linux_g.h"
+#include "linux_g_internal_glue.h"
 #include "aura/aura/message/message_global.h"
 
 // apt-get install libgtk2.0-dev
@@ -386,27 +385,20 @@ namespace user
    }
 
 
-   int gsettings_get(char * pszValue, int iSize, const char * pszSchema, const char * pszKey)
+   char * gsettings_get_malloc(const char * pszSchema, const char * pszKey)
    {
 
       if(pszSchema == NULL)
       {
 
-         return false;
+         return NULL;
 
       }
 
       if(pszKey == NULL)
       {
 
-         return false;
-
-      }
-
-      if(pszValue == NULL)
-      {
-
-         return false;
+         return NULL;
 
       }
 
@@ -415,7 +407,7 @@ namespace user
       if(settings == NULL)
       {
 
-         return -1;
+         return NULL;
 
       }
 
@@ -428,44 +420,17 @@ namespace user
 
          g_object_unref (settings);
 
-         return -1;
+         return NULL;
 
       }
 
-      int iLen = strlen(pgchar);
-
-      if(pszValue == NULL)
-      {
-
-         g_object_unref (settings);
-
-         return iLen;
-
-      }
-
-      if(iLen > iSize)
-      {
-
-         strncpy(pszValue, pgchar, MIN(iSize, iLen));
-
-      }
-      else
-      {
-
-         strcpy(pszValue, pgchar);
-
-      }
+      char * psz = strdup(pgchar);
 
       g_free (pgchar);
 
-      if (settings != NULL)
-      {
+      g_object_unref (settings);
 
-         g_object_unref (settings);
-
-      }
-
-      return iLen;
+      return psz;
 
    }
 

@@ -28,7 +28,8 @@ public:
 };
 
 
-#include "basecore_shared.h"
+#include "linux_g_shared.h"
+
 
 
 
