@@ -16,12 +16,12 @@ namespace userex
 {
 
 
-   userex::userex(::aura::application * papp):
+   userex::userex(::aura::application * papp) :
       object(papp),
       ::aura::department(papp)
    {
 
-      m_pshell  = NULL;
+      m_pshell = NULL;
       m_ptemplateForm = NULL;
       m_ptemplateChildForm = NULL;
       m_ptemplatePlaceHolder = NULL;
@@ -90,7 +90,7 @@ namespace userex
       System.factory().creatable_small < ::user::tab_view >();
 
 
-      if(!create_user_shell())
+      if (!create_user_shell())
       {
 
          return false;
@@ -121,21 +121,21 @@ namespace userex
 
       }
 
-      if(!m_typeDefaultMeshData)
+      if (!m_typeDefaultMeshData)
       {
 
          m_typeDefaultMeshData = System.type_info < ::simple_mesh_data >();
 
       }
 
-      if(!m_typeDefaultListData)
+      if (!m_typeDefaultListData)
       {
 
          m_typeDefaultListData = System.type_info < ::simple_list_data >();
 
       }
 
-      if(!m_typeDefaultListHeader)
+      if (!m_typeDefaultListHeader)
       {
 
          m_typeDefaultListHeader = System.type_info < ::simple_list_header_control >();
@@ -224,25 +224,25 @@ namespace userex
       TRACE("::userex::application::initialize");
 
       xml::document docUser(get_app());
-      string strUser = Application.file().as_string(System.dir().appdata()/"langstyle_settings.xml");
+      string strUser = Application.file().as_string(System.dir().appdata() / "langstyle_settings.xml");
       string strLangUser;
       string strStyleUser;
-      if(docUser.load(strUser))
+      if (docUser.load(strUser))
       {
-         if(docUser.get_child("lang") != NULL)
+         if (docUser.get_child("lang") != NULL)
          {
             strLangUser = docUser.get_child("lang")->get_value();
          }
-         if(docUser.get_child("style") != NULL)
+         if (docUser.get_child("style") != NULL)
          {
             strStyleUser = docUser.get_child("style")->get_value();
          }
       }
 
-      if(strLangUser.has_char())
-         Session.set_locale(strLangUser,::action::source::database());
-      if(strStyleUser.has_char())
-         Session.set_schema(strStyleUser,::action::source::database());
+      if (strLangUser.has_char())
+         Session.set_locale(strLangUser, ::action::source::database());
+      if (strStyleUser.has_char())
+         Session.set_schema(strStyleUser, ::action::source::database());
 
       string strLicense = Application.get_license_id();
 
@@ -253,12 +253,12 @@ namespace userex
 
       bool bHasUninstall = varTopicQuey.has_property("uninstall");
 
-      if(!(bHasInstall || bHasUninstall)
+      if (!(bHasInstall || bHasUninstall)
             && Application.m_bLicense
             && strLicense.has_char())
       {
 
-         if(&ApplicationUser == NULL)
+         if (&ApplicationUser == NULL)
          {
             return false;
          }
@@ -275,12 +275,12 @@ retry_license:
 
          iRetry--;
 
-         if(!Session.is_licensed(strLicense))
+         if (!Session.is_licensed(strLicense))
          {
 
             Session.licensing().m_mapInfo.remove_key(strLicense);
 
-            if(iRetry > 0)
+            if (iRetry > 0)
                goto retry_license;
 
             return false;
@@ -337,7 +337,7 @@ retry_license:
          ::aura::department::term();
 
       }
-      catch(...)
+      catch (...)
       {
 
       }
@@ -348,7 +348,7 @@ retry_license:
          m_pmenucentral2.release();
 
       }
-      catch(...)
+      catch (...)
       {
 
       }
@@ -371,116 +371,116 @@ retry_license:
 
    }
 
-   string userex::message_box(const char * pszMatter,property_set & propertyset)
+   string userex::message_box(const char * pszMatter, property_set & propertyset)
    {
 
       class ::userex::message_box box(get_app());
 
-      box.show(pszMatter,&propertyset);
+      box.show(pszMatter, &propertyset);
 
       return box.m_strResponse;
 
    }
 
 
-   int32_t userex::simple_message_box(::user::primitive * pwndOwner,const char * pszMessage,UINT fuStyle)
+   int32_t userex::simple_message_box(::user::primitive * pwndOwner, const char * pszMessage, UINT fuStyle)
    {
 
       int iRet = ::simple_message_box(pwndOwner->get_safe_handle(), pszMessage, "ca2", fuStyle);
 
       return iRet;
 
-//      class ::userex::message_box box(get_app());
-//
-//      property_set propertyset;
-//
-//      propertyset["message"] = pszMessage;
-//
-//      propertyset["application_name"] = pwndOwner == NULL ? Application.m_strAppName : App(pwndOwner->get_app()).m_strAppName;
-//
-//      string strMatter;
-//
-//      if(fuStyle & MB_YESNOCANCEL)
-//      {
-//
-//         strMatter = "system\\user\\simple_message_box\\yesnocancel.xhtml";
-//
-//      }
-//      else
-//      {
-//
-//         strMatter = "system\\user\\simple_message_box\\ok.xhtml";
-//
-//      }
-//
-//      try
-//      {
-//
-//         if(!box.show(strMatter,&propertyset))
-//         {
-//
-//            string strMessage = pszMessage;
-//
-//            strMessage.replace("<br>","\r\n");
-//
-//            return ::simple_message_box(pwndOwner->get_safe_handle(),strMessage,Application.m_strAppName,fuStyle);
-//
-//         }
-//
-//      }
-//      catch(...)
-//      {
-//
-//         string strMessage = pszMessage;
-//
-//         strMessage.replace("<br>","\r\n");
-//
-//         return ::simple_message_box(pwndOwner == NULL ? NULL : pwndOwner->get_handle(),strMessage,Application.m_strAppName,fuStyle);
-//
-//      }
-//
-//      if(box.m_strResponse == "ok")
-//      {
-//
-//         return IDOK;
-//
-//      }
-//      else if(box.m_strResponse == "yes")
-//      {
-//
-//         return IDYES;
-//
-//      }
-//      else if(box.m_strResponse == "no")
-//      {
-//
-//         return IDNO;
-//
-//      }
-//      else if(box.m_strResponse == "cancel")
-//      {
-//
-//         return IDCANCEL;
-//
-//      }
-//
-//      if(fuStyle & MB_YESNOCANCEL)
-//      {
-//
-//         return IDCANCEL;
-//
-//      }
-//      else
-//      {
-//
-//         return 0;
-//
-//      }
+      //      class ::userex::message_box box(get_app());
+      //
+      //      property_set propertyset;
+      //
+      //      propertyset["message"] = pszMessage;
+      //
+      //      propertyset["application_name"] = pwndOwner == NULL ? Application.m_strAppName : App(pwndOwner->get_app()).m_strAppName;
+      //
+      //      string strMatter;
+      //
+      //      if(fuStyle & MB_YESNOCANCEL)
+      //      {
+      //
+      //         strMatter = "system\\user\\simple_message_box\\yesnocancel.xhtml";
+      //
+      //      }
+      //      else
+      //      {
+      //
+      //         strMatter = "system\\user\\simple_message_box\\ok.xhtml";
+      //
+      //      }
+      //
+      //      try
+      //      {
+      //
+      //         if(!box.show(strMatter,&propertyset))
+      //         {
+      //
+      //            string strMessage = pszMessage;
+      //
+      //            strMessage.replace("<br>","\r\n");
+      //
+      //            return ::simple_message_box(pwndOwner->get_safe_handle(),strMessage,Application.m_strAppName,fuStyle);
+      //
+      //         }
+      //
+      //      }
+      //      catch(...)
+      //      {
+      //
+      //         string strMessage = pszMessage;
+      //
+      //         strMessage.replace("<br>","\r\n");
+      //
+      //         return ::simple_message_box(pwndOwner == NULL ? NULL : pwndOwner->get_handle(),strMessage,Application.m_strAppName,fuStyle);
+      //
+      //      }
+      //
+      //      if(box.m_strResponse == "ok")
+      //      {
+      //
+      //         return IDOK;
+      //
+      //      }
+      //      else if(box.m_strResponse == "yes")
+      //      {
+      //
+      //         return IDYES;
+      //
+      //      }
+      //      else if(box.m_strResponse == "no")
+      //      {
+      //
+      //         return IDNO;
+      //
+      //      }
+      //      else if(box.m_strResponse == "cancel")
+      //      {
+      //
+      //         return IDCANCEL;
+      //
+      //      }
+      //
+      //      if(fuStyle & MB_YESNOCANCEL)
+      //      {
+      //
+      //         return IDCANCEL;
+      //
+      //      }
+      //      else
+      //      {
+      //
+      //         return 0;
+      //
+      //      }
 
    }
 
 
-   int32_t userex::simple_message_box_timeout(::user::primitive * puiOwner,const char * pszMessage,::duration durationTimeout,UINT fuStyle, ::aura::application * papp)
+   int32_t userex::simple_message_box_timeout(::user::primitive * puiOwner, const char * pszMessage, ::duration durationTimeout, UINT fuStyle, ::aura::application * papp)
    {
 
       UNREFERENCED_PARAMETER(puiOwner);
@@ -491,11 +491,11 @@ retry_license:
 
       propertyset["message"] = pszMessage;
 
-      pbox->m_dwDelay = (DWORD) durationTimeout.get_total_milliseconds();
+      pbox->m_dwDelay = (DWORD)durationTimeout.get_total_milliseconds();
 
       string strMatter;
 
-      if(fuStyle & MB_YESNOCANCEL)
+      if (fuStyle & MB_YESNOCANCEL)
       {
 
          strMatter = "system\\user\\simple_message_box_timeout\\yesnocancel.xhtml";
@@ -515,32 +515,32 @@ retry_license:
 
       }
 
-      if(pbox->m_strResponse == "ok")
+      if (pbox->m_strResponse == "ok")
       {
 
          return IDOK;
 
       }
-      else if(pbox->m_strResponse == "yes")
+      else if (pbox->m_strResponse == "yes")
       {
 
          return IDYES;
 
       }
-      else if(pbox->m_strResponse == "no")
+      else if (pbox->m_strResponse == "no")
       {
 
          return IDNO;
 
       }
-      else if(pbox->m_strResponse == "cancel")
+      else if (pbox->m_strResponse == "cancel")
       {
 
          return IDCANCEL;
 
       }
 
-      if(fuStyle & MB_YESNOCANCEL)
+      if (fuStyle & MB_YESNOCANCEL)
       {
 
          return IDCANCEL;
@@ -558,7 +558,7 @@ retry_license:
    }
 
 
-   int32_t userex::track_popup_menu(const char * pszMatter,point pt,sp(::user::interaction) puie)
+   int32_t userex::track_popup_menu(const char * pszMatter, point pt, sp(::user::interaction) puie)
    {
 
       UNREFERENCED_PARAMETER(pszMatter);
@@ -570,12 +570,12 @@ retry_license:
    }
 
 
-   bool userex::get_fs_size(string & strSize,const char * pszPath,bool & bPending)
+   bool userex::get_fs_size(string & strSize, const char * pszPath, bool & bPending)
    {
 
       int64_t i64Size;
 
-      if(!get_fs_size(i64Size,pszPath,bPending))
+      if (!get_fs_size(i64Size, pszPath, bPending))
       {
 
          strSize.Empty();
@@ -584,31 +584,31 @@ retry_license:
 
       }
 
-      if(i64Size > 1024 * 1024 * 1024)
+      if (i64Size > 1024 * 1024 * 1024)
       {
 
          double d = (double)i64Size / (1024.0 * 1024.0 * 1024.0);
 
-         strSize.Format("%0.2f GB",d);
+         strSize.Format("%0.2f GB", d);
 
       }
-      else if(i64Size > 1024 * 1024)
+      else if (i64Size > 1024 * 1024)
       {
 
          double d = (double)i64Size / (1024.0 * 1024.0);
 
-         strSize.Format("%0.1f MB",d);
+         strSize.Format("%0.1f MB", d);
 
       }
-      else if(i64Size > 1024)
+      else if (i64Size > 1024)
       {
 
          double d = (double)i64Size / (1024.0);
 
-         strSize.Format("%0.0f KB",d);
+         strSize.Format("%0.0f KB", d);
 
       }
-      else if(i64Size > 0)
+      else if (i64Size > 0)
       {
 
          strSize.Format("1 KB");
@@ -621,7 +621,7 @@ retry_license:
 
       }
 
-      if(bPending)
+      if (bPending)
       {
 
          strSize = "~" + strSize;
@@ -633,7 +633,7 @@ retry_license:
    }
 
 
-   bool userex::get_fs_size(int64_t & i64Size,const char * pszPath,bool & bPending)
+   bool userex::get_fs_size(int64_t & i64Size, const char * pszPath, bool & bPending)
    {
 
       db_server * pcentral = dynamic_cast <db_server *> (&System.m_psimpledb->db());
@@ -645,7 +645,7 @@ retry_license:
 
       }
 
-      return pcentral->m_pfilesystemsizeset->get_cache_fs_size(i64Size,pszPath,bPending);
+      return pcentral->m_pfilesystemsizeset->get_cache_fs_size(i64Size, pszPath, bPending);
 
    }
 
@@ -653,9 +653,9 @@ retry_license:
    void userex::data_on_after_change(::message::message * pobj)
    {
 
-      SCAST_PTR(::database::change_event,pchange,pobj);
+      SCAST_PTR(::database::change_event, pchange, pobj);
 
-      if(pchange->m_datakey == "ca2.savings")
+      if (pchange->m_datakey == "ca2.savings")
       {
 
          pchange->data_get(Session.savings().m_eresourceflagsShouldSave);
@@ -738,7 +738,7 @@ retry_license:
 
       ASSERT(Application.document_manager() != NULL);
 
-      if(Application.document_manager() == NULL)
+      if (Application.document_manager() == NULL)
       {
 
          return;
@@ -815,7 +815,7 @@ retry_license:
    }
 
 
-   sp(::user::document) userex::create_form(::aura::application * pauraapp, ::user::form_callback * pcallback,sp(::user::interaction) pwndParent,var var)
+   sp(::user::document) userex::create_form(::aura::application * pauraapp, ::user::form_callback * pcallback, sp(::user::interaction) pwndParent, var var)
    {
 
       if (m_ptemplateForm == NULL)
@@ -853,9 +853,9 @@ retry_license:
 
       sp(::create) createcontext(papp->allocer());
 
-      createcontext->m_bMakeVisible                   = false;
+      createcontext->m_bMakeVisible = false;
 
-      createcontext->m_puiParent                      = pwndParent;
+      createcontext->m_puiParent = pwndParent;
 
       if (var.get_file_path().has_char())
       {
@@ -866,10 +866,10 @@ retry_license:
 
       }
 
-      if(var.get_type() == var::type_propset && var.has_property("hold") && !(bool)var["hold"])
+      if (var.get_type() == var::type_propset && var.has_property("hold") && !(bool)var["hold"])
       {
 
-         createcontext->m_bHold                       = false;
+         createcontext->m_bHold = false;
 
       }
 
@@ -886,7 +886,7 @@ retry_license:
 
       sp(::user::form_window) pform = pdoc->get_typed_view < ::user::form_window >();
 
-      if(pform.is_set())
+      if (pform.is_set())
       {
 
          pform->m_pcallback = pcallback;
@@ -898,7 +898,7 @@ retry_license:
    }
 
 
-   sp(::user::document) userex::create_child_form(::aura::application * pauraapp, sp(::user::form) pview,::user::form_callback * pcallback,sp(::user::interaction) pwndParent,var var)
+   sp(::user::document) userex::create_child_form(::aura::application * pauraapp, sp(::user::form) pview, ::user::form_callback * pcallback, sp(::user::interaction) pwndParent, var var)
    {
 
       if (m_ptemplateChildForm == NULL)
@@ -937,11 +937,11 @@ retry_license:
 
       sp(::create) createcontext(papp->allocer());
 
-      createcontext->m_bMakeVisible                   = false;
+      createcontext->m_bMakeVisible = false;
 
-      createcontext->m_puiParent                      = pwndParent;
+      createcontext->m_puiParent = pwndParent;
 
-      createcontext->m_puiAlloc                       = pview;
+      createcontext->m_puiAlloc = pview;
 
       if (var.get_file_path().has_char())
       {
@@ -952,10 +952,10 @@ retry_license:
 
       }
 
-      if(var.get_type() == var::type_propset && var.has_property("hold") && !(bool)var["hold"])
+      if (var.get_type() == var::type_propset && var.has_property("hold") && !(bool)var["hold"])
       {
 
-         createcontext->m_bHold                       = false;
+         createcontext->m_bHold = false;
 
       }
 
@@ -972,7 +972,7 @@ retry_license:
 
       sp(::user::form_window) pform = pdoc->get_typed_view < ::user::form_window >();
 
-      if(pform.is_set())
+      if (pform.is_set())
       {
 
          pform->m_pcallback = pcallback;
@@ -984,7 +984,7 @@ retry_license:
    }
 
 
-   sp(::user::document) userex::create_child_form(::aura::application * pauraapp, ::user::form_callback * pcallback,sp(::user::interaction) pwndParent,var var)
+   sp(::user::document) userex::create_child_form(::aura::application * pauraapp, ::user::form_callback * pcallback, sp(::user::interaction) pwndParent, var var)
    {
 
       if (m_ptemplateChildForm == NULL)
@@ -1022,9 +1022,9 @@ retry_license:
 
       sp(::create) createcontext(papp->allocer());
 
-      createcontext->m_bMakeVisible                   = true;
+      createcontext->m_bMakeVisible = true;
 
-      createcontext->m_puiParent                      = pwndParent;
+      createcontext->m_puiParent = pwndParent;
 
       if (var.get_file_path().has_char())
       {
@@ -1048,7 +1048,7 @@ retry_license:
 
       sp(::user::form_window) pform = pdoc->get_typed_view < ::user::form_window >();
 
-      if(pform.is_set())
+      if (pform.is_set())
       {
 
          pform->m_pcallback = pcallback;
@@ -1144,9 +1144,9 @@ retry_license:
 
       sp(::create) createcontext(pui->allocer());
 
-      createcontext->m_bMakeVisible    = false;
+      createcontext->m_bMakeVisible = false;
 
-      createcontext->m_bHold           = false;
+      createcontext->m_bHold = false;
 
       m_ptemplatePlaceHolder->request_create(createcontext);
 
@@ -1256,7 +1256,7 @@ retry_license:
 
       stringa stra;
 
-      for(index iScreen = 0; iScreen < iMonitorCount; iScreen++)
+      for (index iScreen = 0; iScreen < iMonitorCount; iScreen++)
       {
 
          stra.add(get_wallpaper(iScreen));
@@ -1265,10 +1265,10 @@ retry_license:
 
       bool bAllEqual = true;
 
-      for(index iScreen = 1; iScreen < iMonitorCount; iScreen++)
+      for (index iScreen = 1; iScreen < iMonitorCount; iScreen++)
       {
 
-         if(stra[iScreen] != stra[iScreen - 1])
+         if (stra[iScreen] != stra[iScreen - 1])
          {
 
             bAllEqual = false;
@@ -1277,7 +1277,7 @@ retry_license:
 
       }
 
-      if(bAllEqual && stra.get_count() >= 2)
+      if (bAllEqual && stra.get_count() >= 2)
       {
 
          stra.set_size(1);
@@ -1292,7 +1292,7 @@ retry_license:
    void userex::set_wallpaper(const stringa & straWallpaper)
    {
 
-      if(straWallpaper.is_empty())
+      if (straWallpaper.is_empty())
       {
 
          return;
@@ -1303,7 +1303,7 @@ retry_license:
 
 #ifdef LINUX
 
-      if(iMonitorCount > 0)
+      if (iMonitorCount > 0)
       {
 
          set_wallpaper(0, straWallpaper[0]);
@@ -1312,7 +1312,7 @@ retry_license:
 
 #else
 
-      for(index iScreen = 0; iScreen < iMonitorCount; iScreen++)
+      for (index iScreen = 0; iScreen < iMonitorCount; iScreen++)
       {
 
          string strWallpaper = iScreen % straWallpaper;
@@ -1348,7 +1348,7 @@ retry_license:
 
       hwstring wsz(MAX_PATH * 8);
 
-      if(!SystemParametersInfoW(SPI_GETDESKWALLPAPER, wsz.count(), wsz, 0))
+      if (!SystemParametersInfoW(SPI_GETDESKWALLPAPER, wsz.count(), wsz, 0))
       {
 
          return "";
@@ -1356,6 +1356,24 @@ retry_license:
       }
 
       return wsz;
+
+   }
+
+
+   string userex::impl_get_os_desktop_theme()
+   {
+
+      return "";
+
+   }
+
+
+   bool userex::impl_set_os_desktop_theme(string strTheme)
+   {
+
+      UNREFERENCED_PARAMETER(strTheme);
+
+      return true;
 
    }
 
@@ -1371,7 +1389,7 @@ retry_license:
 
       // indirect wall-changer sourceforge.net contribution
 
-      switch(::user::get_edesktop())
+      switch (::user::get_edesktop())
       {
 
       case ::user::desktop_gnome:
@@ -1386,7 +1404,7 @@ retry_license:
          //if(::file::system_short_name().contains_ci("manjaro"))
          {
 
-            bOk2 = ::user::gsettings_set("org.gnome.desktop.wm.preferences", "theme",  strTheme);
+            bOk2 = ::user::gsettings_set("org.gnome.desktop.wm.preferences", "theme", strTheme);
 
          }
 
@@ -1402,7 +1420,7 @@ retry_license:
 
       case ::user::desktop_mate:
 
-         //return ::user::gsettings_set("org.mate.background", "picture-filename", strLocalImagePath);
+      //return ::user::gsettings_set("org.mate.background", "picture-filename", strLocalImagePath);
 
       case ::user::desktop_lxde:
 
@@ -1446,7 +1464,7 @@ retry_license:
 
       bool bOk = false;
 
-      switch(::user::get_edesktop())
+      switch (::user::get_edesktop())
       {
 
       case ::user::desktop_gnome:
@@ -1496,7 +1514,7 @@ retry_license:
 
       // wall-changer sourceforge.net contribution
 
-      switch(::user::get_edesktop())
+      switch (::user::get_edesktop())
       {
 
       case ::user::desktop_gnome:
@@ -1548,7 +1566,7 @@ retry_license:
 
       string strWallpaper;
 
-      switch(::user::get_edesktop())
+      switch (::user::get_edesktop())
       {
 
       case ::user::desktop_gnome:
@@ -1600,7 +1618,7 @@ retry_license:
    void userex::enable_wallpaper_change_notification()
    {
 
-      switch(::user::get_edesktop())
+      switch (::user::get_edesktop())
       {
 
       case ::user::desktop_gnome:
@@ -1711,14 +1729,14 @@ retry_license:
    bool userex::impl_set_wallpaper(index iScreen, string strLocalImagePath)
    {
 
-      return macos_set_user_wallpaper((int) iScreen, strLocalImagePath);
+      return macos_set_user_wallpaper((int)iScreen, strLocalImagePath);
 
    }
 
    string userex::impl_get_wallpaper(index iScreen)
    {
 
-      return macos_get_user_wallpaper((int) iScreen);
+      return macos_get_user_wallpaper((int)iScreen);
 
    }
 
@@ -2196,3 +2214,6 @@ namespace user
 
 
 } // namespace user
+
+
+
