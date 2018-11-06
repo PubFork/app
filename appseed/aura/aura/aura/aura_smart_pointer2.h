@@ -147,13 +147,13 @@ inline const T * smart_pointer < T > ::get_() const
 template < class T >
 inline bool smart_pointer < T > ::is_null() const
 {
-   return m_p == NULL;
+   return ::is_null(m_p);
 }
 
 template < class T >
 inline bool smart_pointer < T > ::is_set() const
 {
-   return m_p != NULL;
+   return ::is_set(m_p);
 }
 
 template < class T >
@@ -162,12 +162,16 @@ inline smart_pointer < T > & smart_pointer < T > ::reset (T * p)
    if(m_p != p)
    {
       T * pOld = m_p;
-      if(p != NULL)
+      if(::is_set(p))
       {
          ::add_ref(p);
+         m_p = p;
       }
-      m_p = p;
-      if(pOld != NULL)
+      else
+      {
+         m_p = NULL;
+      }
+      if(::is_set(pOld))
       {
          ::release(pOld);
       }

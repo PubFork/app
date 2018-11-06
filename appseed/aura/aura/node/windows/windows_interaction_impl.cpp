@@ -652,6 +652,7 @@ namespace windows
       }
 
       IGUI_MSG_LINK(WM_DESTROY, pinterface, this, &interaction_impl::_001OnDestroy);
+      IGUI_MSG_LINK(WM_ENABLE, pinterface, this, &interaction_impl::_001OnEnable);
 
    }
 
@@ -714,6 +715,32 @@ namespace windows
          pobj->m_bRet = true;
 
          return;
+
+      }
+
+   }
+
+
+   void interaction_impl::_001OnEnable(::message::message * pobj)
+   {
+
+      SCAST_PTR(::message::enable, penable, pobj);
+
+      if (penable != NULL)
+      {
+
+         if (penable->get_enable())
+         {
+
+            output_debug_string("::window::interaction_impl _001OnEnable = TRUE");
+
+         }
+         else
+         {
+
+            output_debug_string("::window::interaction_impl _001OnEnable = FALSE");
+
+         }
 
       }
 
@@ -1445,7 +1472,12 @@ namespace windows
 
          SCAST_PTR(::message::key, pkey, pbase);
 
+         if (uiMessage == WM_KEYDOWN)
+         {
 
+            output_debug_string("\nKEY_DOWN: "+::str::from((char)pkey->m_nChar)+"\n");
+
+         }
 
          if (uiMessage == WM_KEYDOWN || uiMessage == WM_SYSKEYDOWN)
          {
@@ -3758,24 +3790,24 @@ namespace windows
          else if (nCmdShow == SW_HIDE)
          {
 
-            if (GetExStyle() & WS_EX_LAYERED)
-            {
+            //if (GetExStyle() & WS_EX_LAYERED)
+            //{
 
-               m_iShowWindow = SW_HIDE;
+            //   m_iShowWindow = SW_HIDE;
 
-               m_iShowFlags = SWP_HIDEWINDOW;
+            //   m_iShowFlags = SWP_HIDEWINDOW;
 
-               m_bShowWindow = true;
+            //   m_bShowWindow = true;
 
-               m_bShowFlags = true;
+            //   m_bShowFlags = true;
 
-            }
-            else
-            {
+            //}
+            //else
+            //{
 
-               ::ShowWindow(get_handle(), nCmdShow);
+            ::ShowWindow(get_handle(), nCmdShow);
 
-            }
+            //}
 
 
          }
@@ -4509,7 +4541,11 @@ namespace windows
    bool interaction_impl::has_focus()
    {
 
-      return ::GetFocus() == get_handle();
+      HWND hwndFocus = ::get_focus();
+
+      HWND hwndThis = get_handle();
+
+      return hwndFocus ==  hwndThis;
 
    }
 
@@ -4539,9 +4575,16 @@ namespace windows
 
       }
 
-      oswindow window = ::SetFocus(get_handle());
+      m_pui->post_pred([this]()
+      {
 
-      return window != NULL;
+         HWND hwnd = ::SetFocus(get_handle());
+
+         ::output_debug_string("::windows::interaction_impl::SetFocus ::SetFocus(" + ::hex::lower_from((int_ptr) hwnd) + ")");
+
+      });
+
+      return true;
 
    }
 
@@ -5027,10 +5070,10 @@ namespace windows
 
    void interaction_impl::_001OnSetFocus(::message::message * pobj)
    {
-      //   Default();
+
+      m_bFocus = true;
 
       Default();
-
 
    }
 
@@ -5038,25 +5081,40 @@ namespace windows
    void interaction_impl::_001OnKillFocus(::message::message * pobj)
    {
 
+      m_bFocus = false;
 
    }
 
 
    LRESULT interaction_impl::OnMenuChar(UINT, UINT, ::user::menu*)
    {
+
       return Default();
+
    }
+
+
    void interaction_impl::OnMenuSelect(UINT, UINT, HMENU)
    {
+
       Default();
+
    }
+
+
    void interaction_impl::OnMove(int32_t, int32_t)
    {
+
       Default();
+
    }
+
+
    HCURSOR interaction_impl::OnQueryDragIcon()
    {
+
       return (HCURSOR)Default();
+
    }
 
    bool interaction_impl::OnQueryEndSession()

@@ -263,6 +263,8 @@ namespace user
 
       synch_lock sl(m_pfontlist->m_pmutex);
 
+      m_pgraphics = pgraphics;
+
       if (m_pfontlist->m_strText != m_pfontlist->m_strTextLayout)
       {
 

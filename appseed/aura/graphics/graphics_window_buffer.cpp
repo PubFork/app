@@ -76,6 +76,8 @@ bool window_buffer::is_buffer_ok()
    if (m_cx != m_pimpl->m_rectParentClientRequest.get_size().cx || m_cy != m_pimpl->m_rectParentClientRequest.get_size().cy)
    {
 
+      //on_create_window(m_pimpl);
+
       create_buffer(m_pimpl->m_rectParentClientRequest.get_size().cx, m_pimpl->m_rectParentClientRequest.get_size().cy, m_spdibBuffer->m_iScan);
 
    }

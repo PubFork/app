@@ -31,6 +31,8 @@ namespace user
       ::user::interaction *               m_puiDeactivateTogether;
       ::user::wndfrm::frame::WorkSet *    m_puiDeactivateTogetherSet;
 
+      tick                                m_tickLastHide;
+
 
       combo_list();
       combo_list(::aura::application * papp);

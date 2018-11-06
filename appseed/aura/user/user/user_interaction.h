@@ -44,6 +44,8 @@ namespace user
 
             m_pui->select(pgraphics);
 
+            pgraphics->m_pui = pui;
+
          }
 
          ~draw_select()

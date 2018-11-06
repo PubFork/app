@@ -7059,6 +7059,7 @@ finalize:
 
    }
 
+
    bool application::get_frame(sp(::user::interaction) & pui)
    {
 

@@ -374,7 +374,7 @@ public:
 
             }
 
-            delete m_prunnableEnd;
+            ::aura::del(m_prunnableEnd);
 
          }
 

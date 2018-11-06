@@ -116,6 +116,7 @@ namespace windows
       DECL_GEN_SIGNAL(_001OnWindowPosChanging);
       DECL_GEN_SIGNAL(_001OnWindowPosChanged);
       DECL_GEN_SIGNAL(_001OnGetMinMaxInfo);
+      DECL_GEN_SIGNAL(_001OnEnable);
 
 
       virtual void win_update_graphics();

@@ -38,6 +38,9 @@ namespace windows
 
       virtual void update_window(::draw2d::dib * pdib) override;
 
+
+      virtual void update_window_2(::draw2d::dib * pdib, bool bLayered, bool bSetWindowPos);
+
    };
 
 

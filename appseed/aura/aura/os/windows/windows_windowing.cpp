@@ -203,10 +203,51 @@ CLASS_DECL_AURA WINBOOL is_window(oswindow oswindow)
 }
 
 
+CLASS_DECL_AURA bool get_gui_thread_info(PGUITHREADINFO pinfo)
+{
+
+   HWND hwndForeground = ::GetForegroundWindow();
+
+   if (hwndForeground == NULL)
+   {
+
+      return false;
+
+   }
+
+   DWORD dwThread = GetWindowThreadProcessId(hwndForeground, NULL);
+
+   ZEROP(pinfo);
+
+   pinfo->cbSize = sizeof(GUITHREADINFO);
+
+   if (!::GetGUIThreadInfo(dwThread, pinfo))
+   {
+
+      DWORD dwLastError = ::GetLastError();
+
+      return false;
+
+   }
+
+   return true;
+
+}
+
+
 CLASS_DECL_AURA oswindow get_focus()
 {
 
-   return ::GetFocus();
+   GUITHREADINFO info;
+
+   if (!get_gui_thread_info(&info))
+   {
+
+      return NULL;
+
+   }
+
+   return info.hwndFocus;
 
 }
 

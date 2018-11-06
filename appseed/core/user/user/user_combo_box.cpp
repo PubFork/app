@@ -694,6 +694,22 @@ namespace user
       if(bShow)
       {
 
+         if (m_plist.is_set())
+         {
+
+            if (tick::now() - m_plist->m_tickLastHide < 300)
+            {
+
+               m_plist->m_tickLastHide.m_ui -= 300;
+
+               output_debug_string("asking to show too soon!! not going to show!!");
+
+               return;
+
+            }
+
+         }
+
          defer_create_combo_list();
 
          Session.on_show_user_input_popup(m_plist);

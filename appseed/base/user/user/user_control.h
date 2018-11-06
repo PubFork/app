@@ -24,7 +24,7 @@ namespace user
       };
 
       ::aura::draw_context *     m_pdrawcontext;
-      index                      m_iHover;
+      //index                      m_iHover;
       e_element                  m_eelementHover;
       control_descriptor *       m_pdescriptor;
       sp(::user::interaction)    m_pwndCustomWindowProc;

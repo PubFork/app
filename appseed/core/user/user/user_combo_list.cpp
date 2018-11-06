@@ -464,6 +464,8 @@ namespace user
 
          ShowWindow(SW_HIDE);
 
+         m_tickLastHide = tick::now();
+
       }
 
       pkillfocus->m_bRet = true;

@@ -10,7 +10,6 @@ namespace simple_ui
    {
    public:
 
-
       bool                 m_bAutoStockIconPenWidth;
       double               m_dStockIconPenWidth;
       e_stock_icon         m_estockicon;

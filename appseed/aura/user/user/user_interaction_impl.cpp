@@ -27,7 +27,7 @@ namespace user
 
    void interaction_impl::user_common_construct()
    {
-
+      m_bOkToUpdateScreen = true;
       m_bUpdatingBuffer = false;
       m_bFocus = false;
       m_bCursorRedraw = false;
@@ -1232,6 +1232,7 @@ namespace user
       else
       {
 
+         //stop_prodevian();
          ::multithreading::post_quit(m_pthreadProDevian);
 
       }
@@ -2578,6 +2579,17 @@ namespace user
 
 
          }
+
+#ifdef REDRAW_HINTING
+
+         pgraphics->SelectClipRgn(NULL);
+
+         pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
+
+         pgraphics->fill_solid_rect(r, ARGB(128, System.math().RandRange(128, 255), System.math().RandRange(128, 255), System.math().RandRange(128, 255)));
+
+#endif
+
 
 //            pgraphics->fill_solid_rect_dim(100, 100, 450, 120, ARGB(255, 255, 0, 0));
 //

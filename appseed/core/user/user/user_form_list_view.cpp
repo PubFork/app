@@ -209,7 +209,14 @@ namespace user
          if (IsTopParentActive())
          {
 
-            SetFocus();
+            sp(::user::interaction) puiFocus = Session.get_keyboard_focus();
+
+            if (puiFocus.is_null() || !is_ascendant_of(puiFocus, true))
+            {
+
+               SetFocus();
+
+            }
 
          }
 

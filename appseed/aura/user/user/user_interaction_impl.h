@@ -76,6 +76,7 @@ namespace user
       bool                          m_bIpcCopy;
       bool                          m_bLockWindowUpdate;
       point                         m_ptCursor;
+      bool                          m_bOkToUpdateScreen;
 
       object_ptra                   m_ptraRedraw;
 

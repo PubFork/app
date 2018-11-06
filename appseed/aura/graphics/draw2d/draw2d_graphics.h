@@ -12,6 +12,9 @@ namespace draw2d
    {
    public:
 
+
+      ::user::interaction *         m_pui;
+
       bool                          m_bPat;
 
       ::aura::str_context *         m_puistrcontext;

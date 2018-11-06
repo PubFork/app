@@ -3354,7 +3354,7 @@ namespace user
 
       pmouse->previous(); // give chance to child control
 
-      set_need_redraw();
+      //set_need_redraw();
 
       track_mouse_leave();
 
@@ -6357,8 +6357,13 @@ namespace user
       else
       {
 
-         m_iDisplayItemHover = -1;
-         m_iSubItemHover = -1;
+         if (m_iDisplayItemHover != -1 || m_iSubItemHover != -1)
+         {
+
+            m_iDisplayItemHover = -1;
+            m_iSubItemHover = -1;
+            set_need_redraw();
+         }
 
       }
 

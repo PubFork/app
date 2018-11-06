@@ -1319,7 +1319,7 @@ namespace user
    bool menu::has_pending_graphical_update()
    {
 
-      return m_bRedraw;
+      return ::user::interaction::has_pending_graphical_update();
 
    }
 
@@ -1375,7 +1375,12 @@ namespace user
 
       }
 
-      set_need_redraw();
+      if (command.m_bEnableChanged || command.m_bRadioChanged)
+      {
+
+         set_need_redraw();
+
+      }
 
    }
 

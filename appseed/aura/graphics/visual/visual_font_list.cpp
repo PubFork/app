@@ -219,7 +219,10 @@ namespace visual
          else if (i == m_iHover)
          {
 
-            pgraphics->fill_solid_rect(r, _001GetColor(::user::color_background_hover));
+            COLORREF cr = _001GetColor(::user::color_background_hover);
+            int iA = argb_get_a_value(cr);
+            pgraphics->fill_solid_rect(r, cr);
+            //pgraphics->fill_solid_rect(r, ARGB(255,0, 0, 0));
 
          }
 

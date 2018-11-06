@@ -51,9 +51,9 @@ void _001AddPacks(string_to_string & base64map, string & str)
       {
 
          ::str::base64 & b64 = System.base64();
-         
+
          index iBase64 = iEncoding + 1;
-         
+
          for (; iBase64 < str.get_length(); iBase64++)
          {
 
@@ -131,7 +131,7 @@ namespace user
 
    }
 
-   
+
    void plain_edit::plain_edit_common_construct()
    {
 
@@ -697,9 +697,9 @@ namespace user
 
                pgraphics->SelectObject(penCaret);
 
-               pgraphics->move_to(left + x2 + x1, y);
+               pgraphics->move_to(left + x2, y);
 
-               pgraphics->line_to(left + x2 + x1, y + iLineHeight);
+               pgraphics->line_to(left + x2, y + iLineHeight);
 
             }
 
@@ -722,9 +722,9 @@ namespace user
       pcreate->previous();
 
 #if !defined(APPLE_IOS) && !defined(VSNORD)
-      
+
       Session.keyboard(); // trigger keyboard creationg
-      
+
 #endif
 
       if (m_ptree == NULL)
@@ -920,18 +920,18 @@ namespace user
       }
       else if (ptimer->m_nIDEvent == 500 || ptimer->m_nIDEvent == 501)
       {
-         
+
          if (ptimer->m_nIDEvent == 500)
          {
-            
+
             KillTimer(500);
-            
+
             SetTimer(501, 300, NULL);
-            
+
          }
-         
+
          key_to_char(m_pmessagekeyLast);
-         
+
       }
 
    }
@@ -1148,34 +1148,34 @@ namespace user
 
    void plain_edit::_001OnKeyUp(::message::message * pobj)
    {
-      
+
       SCAST_PTR(::message::key, pkey, pobj);
-      
+
       if (pkey->m_ekey == ::user::key_return)
       {
-         
+
          if (Session.is_key_pressed(::user::key_control)
-             && Session.is_key_pressed(::user::key_alt))
+               && Session.is_key_pressed(::user::key_alt))
          {
-            
+
             pkey->m_bRet = false;
-            
+
             return;
-            
+
          }
-         
+
       }
       else if (pkey->m_ekey == ::user::key_alt)
       {
-         
+
          pkey->m_bRet = false;
-         
+
          return;
-         
+
       }
-      
+
    }
-   
+
 
    void plain_edit::pre_translate_message(::message::message * pobj)
    {
@@ -1397,13 +1397,11 @@ namespace user
 
       synch_lock sl(m_pmutex);
 
-      m_ptree->m_iSelEnd = iSelEnd;
-
-      m_iColumn = SelToColumnX(m_ptree->m_iSelEnd, m_iColumnX);
+      index iColumn = SelToColumnX(iSelEnd, m_iColumnX);
 
       int x = 0;
 
-      index iLine = SelToLineX(m_ptree->m_iSelEnd, x);
+      index iLine = SelToLineX(iSelEnd, x);
 
       index xEnd = 0;
 
@@ -1413,19 +1411,40 @@ namespace user
 
       GetClientRect(rectClient);
 
+      int xViewport = get_viewport_offset().x;
+
       if (x > 0 && x < get_viewport_offset().x)
       {
 
-         set_viewport_offset_x(MAX(0, x - rectClient.width() / 2));
+         xViewport = MAX(0, x - rectClient.width() / 2);
 
       }
       else if (x > rectClient.width())
       {
 
-         set_viewport_offset_x(MAX(0, x - rectClient.width() / 2));
+         xViewport = MAX(0, x - rectClient.width() / 2);
 
       }
 
+      if (iSelEnd == m_ptree->m_iSelEnd
+            && iColumn == m_iColumn
+            && xViewport == get_viewport_offset().x)
+      {
+
+         return;
+
+      }
+
+      m_ptree->m_iSelEnd = iSelEnd;
+
+      m_iColumn = iColumn;
+
+      if (xViewport != get_viewport_offset().x)
+      {
+
+         set_viewport_offset_x(xViewport);
+
+      }
 
       _001EnsureVisibleChar(iSelEnd);
 
@@ -1433,10 +1452,10 @@ namespace user
 
       set_need_redraw();
 
-
 #endif
 
    }
+
 
    void plain_edit::_001SetSel(strsize iBeg, strsize iEnd)
    {
@@ -2989,7 +3008,7 @@ end:
 
       m_bActionHover = true;
 
-      set_need_redraw();
+      //set_need_redraw();
 
    }
 
@@ -4401,7 +4420,7 @@ finished_update:
       if (iTimer == 0)
       {
 
-         if (IsWindowVisible() && ::get_tick_count() - m_dwLastDraw > m_dwCaretTime)
+         if (has_focus() && IsWindowVisible() && ::get_tick_count() - m_dwLastDraw > m_dwCaretTime)
          {
 
             m_dwLastDraw = get_tick_count();
@@ -5557,17 +5576,17 @@ finished_update:
       m_brushTextEmpty.alloc(pedit->allocer());
 
       COLORREF cr = pedit->_001GetColor(color_edit_text, ARGB(255, 0, 0, 0));
-      
+
       m_penCaret->create_solid(1.0, cr);
-      
+
       m_brushTextCr->create_solid(cr);
 
       cr = pedit->_001GetColor(color_edit_text_selected, ARGB(255, 255, 255, 255));
-      
+
       m_brushTextSel->create_solid(cr);
 
       cr = pedit->_001GetColor(color_edit_text_empty, ARGB(255, 180, 180, 180));
-      
+
       m_brushTextEmpty->create_solid(cr);
 
    }

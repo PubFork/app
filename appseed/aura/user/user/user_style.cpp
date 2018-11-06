@@ -741,7 +741,9 @@ namespace user
                pgraphics->draw_rect(rectClient, pen);
 
             }
+            HWND hwndFocus = ::GetFocus();
 
+            HWND hwndThis = pui->get_handle();
 
             if (pui->has_focus())
             {
@@ -1279,7 +1281,18 @@ namespace user
    void style::nextstyle(style_context * pcontext)
    {
 
-      pcontext->m_pstyle.release();
+      if (::is_set(m_pgraphics) && ::is_set(m_pgraphics->m_pui))
+      {
+
+         m_pgraphics->m_pui->nextstyle(pcontext);
+
+      }
+      else
+      {
+
+         pcontext->m_pstyle.release();
+
+      }
 
    }
 

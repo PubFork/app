@@ -21,7 +21,10 @@ namespace simple_ui
 
    {
 
+      m_iHover = -1;
+
    }
+
 
    interaction::~interaction()
    {

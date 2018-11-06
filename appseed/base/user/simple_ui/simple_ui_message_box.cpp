@@ -428,7 +428,7 @@ namespace simple_ui
    bool message_box::has_pending_graphical_update()
    {
 
-      return true;
+      return ::simple_ui::top::has_pending_graphical_update();
 
    }
 

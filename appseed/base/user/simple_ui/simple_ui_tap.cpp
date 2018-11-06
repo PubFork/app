@@ -124,7 +124,14 @@ namespace simple_ui
 
       track_mouse_hover();
 
-      set_need_redraw();
+      if (m_iHover == -1)
+      {
+
+         m_iHover = 0;
+
+         set_need_redraw();
+
+      }
 
 
    }
@@ -136,7 +143,7 @@ namespace simple_ui
 
       pobj->m_bRet = true;
       m_bMouseMove = false;
-
+      m_iHover = -1;
       set_need_redraw();
 
 

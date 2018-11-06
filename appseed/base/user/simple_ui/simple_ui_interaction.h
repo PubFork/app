@@ -19,6 +19,9 @@ namespace simple_ui
    public:
 
 
+      index                m_iHover;
+
+
       interaction();
       virtual ~interaction();
 

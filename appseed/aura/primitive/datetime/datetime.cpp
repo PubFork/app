@@ -600,15 +600,14 @@ CLASS_DECL_AURA double first_milli()
 
 }
 
-
-CLASS_DECL_AURA DWORD get_tick_count()
+CLASS_DECL_AURA u64 get_tick()
 {
 
 #ifdef RASPBIAN
 
    struct timeval tv;
 
-   if(gettimeofday(&tv, NULL) != 0)
+   if (gettimeofday(&tv, NULL) != 0)
    {
 
       return 0;
@@ -619,9 +618,18 @@ CLASS_DECL_AURA DWORD get_tick_count()
 
 #else
 
-   return (DWORD) (((uint64_t) get_nanos() / (uint64_t) (1000 * 1000)) % ((uint64_t)0x100000000ULL));
+   return nano_to_tick(get_nanos());
 
 #endif
+
+}
+
+
+
+CLASS_DECL_AURA DWORD get_tick_count()
+{
+
+   return tick_to_Tick(get_tick());
 
 }
 
@@ -649,12 +657,6 @@ CLASS_DECL_AURA DWORD get_fast_tick_count()
 
 }
 
-CLASS_DECL_AURA DWORD get_first_tick()
-{
-
-   return (DWORD) (((uint64_t)get_first_nano() / (uint64_t)(1000 * 1000)) % ((uint64_t)0x100000000ULL));
-
-}
 
 
 CLASS_DECL_AURA uint64_t get_first_nano()
@@ -664,6 +666,21 @@ CLASS_DECL_AURA uint64_t get_first_nano()
 
 }
 
+
+CLASS_DECL_AURA u64 first_tick()
+{
+
+   return nano_to_tick(get_first_nano());
+
+}
+
+
+CLASS_DECL_AURA DWORD get_first_tick()
+{
+
+   return tick_to_Tick(first_tick());
+
+}
 
 
 

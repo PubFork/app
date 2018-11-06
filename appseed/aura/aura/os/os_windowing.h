@@ -28,4 +28,6 @@ CLASS_DECL_AURA oswindow get_window(oswindow oswindow, int iWindow);
 CLASS_DECL_AURA oswindow get_desktop_window();
 CLASS_DECL_AURA WINBOOL show_window(oswindow oswindow, int iShowCmd);
 
-
+#ifdef WINDOWSEX
+CLASS_DECL_AURA bool get_gui_thread_info(PGUITHREADINFO pinfo);
+#endif

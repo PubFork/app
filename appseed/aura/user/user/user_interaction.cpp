@@ -1801,6 +1801,8 @@ restart:
 
       ::draw2d::savedc k(pgraphics);
 
+      pgraphics->m_pui = this;
+
       try
       {
 

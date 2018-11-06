@@ -6,16 +6,17 @@ class CLASS_DECL_AURA tick
 public:
 
 
-   u32 m_ui;
+   u64 m_ui;
 
 
    tick() {}
-   tick(u32 ui) { m_ui = ui; }
+   tick(u64 ui) { m_ui = ui; }
    tick(const tick & count) { m_ui = count.m_ui; }
 
-   tick & operator = (u32 ui) { m_ui = ui; return *this; }
+   tick & operator = (u64 ui) { m_ui = ui; return *this; }
+   tick & operator = (const tick & tick) { m_ui = tick.m_ui; return *this; }
 
-   operator u32 & () { return m_ui; }
+   operator u64 & () { return m_ui; }
 
    inline static tick now() { return tick(::get_tick_count()); }
 

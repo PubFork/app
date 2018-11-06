@@ -31,6 +31,7 @@ namespace draw2d
       object(papp)
    {
 
+      m_pui = NULL;
       m_bPat = false;
       m_bStoreThumbnails      = true;
       m_puistrcontext         = NULL;
