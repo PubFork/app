@@ -685,6 +685,20 @@ namespace dynamic_source
 
       }
 
+      if (path.contains_ci("\\.git") || path.contains_ci("/.git"))
+      {
+
+         return;
+
+      }
+
+      if (path.ends_ci(".tmp"))
+      {
+
+         return;
+
+      }
+
       // Thank you (casey)!! For tip for ever writing down every todo
       // todo (camilo) equal file comparison, for clearing include matching only changed files
       try
@@ -1252,7 +1266,7 @@ namespace dynamic_source
    }
 
 
-   ::file::path script_manager::get_script_path(const ::file::path & strName)
+   ::file::path script_manager::get_script_path(const ::file::path & strName, const string & strModifier)
    {
 
       ::file::path strTransformName = strName;
@@ -1265,11 +1279,11 @@ namespace dynamic_source
 
 #ifdef WINDOWS
 
-      return System.dir().install()/m_pcompiler->m_strDynamicSourceStage /m_pcompiler->m_strStagePlatform /m_pcompiler->m_strDynamicSourceConfiguration/"dynamic_source" /strTransformName.folder()/strScript + ".dll";
+      return System.dir().install()/m_pcompiler->m_strDynamicSourceStage /m_pcompiler->m_strStagePlatform /m_pcompiler->m_strDynamicSourceConfiguration/"dynamic_source" /strTransformName.folder()/strScript + strModifier + ".dll";
 
 #else
 
-      return System.dir().install() / m_pcompiler->m_strDynamicSourceStage / m_pcompiler->m_strStagePlatform / m_pcompiler->m_strDynamicSourceConfiguration / "dynamic_source" / strTransformName.folder() / strScript + ".so";
+      return System.dir().install() / m_pcompiler->m_strDynamicSourceStage / m_pcompiler->m_strStagePlatform / m_pcompiler->m_strDynamicSourceConfiguration / "dynamic_source" / strTransformName.folder() / strScript + strModifier + ".so";
 
 #endif
 

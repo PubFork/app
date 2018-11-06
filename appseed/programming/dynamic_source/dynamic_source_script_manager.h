@@ -221,7 +221,7 @@ namespace dynamic_source
 
       virtual bool should_build(const ::file::path & strScript);
 
-      virtual ::file::path get_script_path(const ::file::path & strName);
+      virtual ::file::path get_script_path(const ::file::path & strName, const string & strModifier);
 
    };
 

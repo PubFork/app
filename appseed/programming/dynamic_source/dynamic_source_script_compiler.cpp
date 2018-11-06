@@ -333,13 +333,19 @@ namespace dynamic_source
          return;
       }
 
+      string strRndTitle;
+
+      string strMillis;
+
+      strMillis = ::str::from(::get_tick_count() % 1000);
+
+      ::zero_pad(strMillis, 3);
+
+      strRndTitle = "_" + System.datetime().international().get_gmt_date_time("%Y-%m-%d_%H-%M-%S") + "_" + strMillis;
 
       string strTime = m_strTime;
 
-
       pscript->m_strCppPath.Format(m_strTime / "dynamic_source\\%s.cpp",strTransformName);
-
-
 
       strClog.Format(m_strTime / "dynamic_source/%s-compile-log.txt",strTransformName);
       strLlog.Format(m_strTime / "dynamic_source/%s-link-log.txt",strTransformName);
@@ -373,7 +379,7 @@ namespace dynamic_source
 
 #endif
 
-      pscript->m_strScriptPath = m_pmanager->get_script_path(strName);
+      pscript->m_strScriptPath = m_pmanager->get_script_path(strName, strRndTitle);
 
       try
       {
@@ -742,10 +748,14 @@ namespace dynamic_source
 #endif
          str.replace("%TARGET_PATH%",strTargetPath);
          string strHmhLctvWildPdbPath;
-         string strRndTitle;
-         System.math().gen_rand_alnum(strRndTitle.GetBufferSetLength(64),64);
-         strRndTitle.ReleaseBuffer();
-         strHmhLctvWildPdbPath = ::file::path(::dir::system() / "netnodelite\\symbols") / strRndTitle;
+
+         string strSymbolName;
+
+         strSymbolName = ::file::path(strTransformName).title();
+
+         strSymbolName += strRndTitle;
+
+         strHmhLctvWildPdbPath = ::file::path(::dir::system() / "netnodelite\\symbols") / strSymbolName;
 
          str.replace("%HMH_LCTVWILD_PDB_PATH%",strHmhLctvWildPdbPath);
 

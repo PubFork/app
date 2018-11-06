@@ -40,7 +40,7 @@ namespace dynamic_source
 
       }
 
-      sp(script) pscript = new ds_script(get_app());
+      sp(script) pscript = canew(ds_script(get_app()));
 
       pscript->m_pmanager = m_pmanager;
 
