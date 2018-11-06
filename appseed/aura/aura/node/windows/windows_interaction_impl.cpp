@@ -3793,19 +3793,19 @@ namespace windows
             //if (GetExStyle() & WS_EX_LAYERED)
             //{
 
-            //   m_iShowWindow = SW_HIDE;
+            m_iShowWindow = SW_HIDE;
 
-            //   m_iShowFlags = SWP_HIDEWINDOW;
+            m_iShowFlags = SWP_HIDEWINDOW;
 
-            //   m_bShowWindow = true;
+            m_bShowWindow = true;
 
-            //   m_bShowFlags = true;
+            m_bShowFlags = true;
 
             //}
             //else
             //{
 
-            ::ShowWindow(get_handle(), nCmdShow);
+            //::ShowWindow(get_handle(), nCmdShow);
 
             //}
 
@@ -3814,11 +3814,9 @@ namespace windows
          else
          {
 
-            ::ShowWindow(get_handle(), nCmdShow);
+            //::ShowWindow(get_handle(), nCmdShow);
 
          }
-
-         deferred_on_change_visibility();
 
          m_pui->set_need_redraw();
 

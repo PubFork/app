@@ -7166,7 +7166,7 @@ restart:
          }
 
 
-         synch_lock slUserMutex(m_pmutex);
+         /*synch_lock slUserMutex(m_pmutex);
 
          {
 
@@ -7180,7 +7180,9 @@ restart:
 
             ::ShowWindow(get_handle(), SW_RESTORE);
 
-         }
+         }*/
+
+         ShowWindow(SW_RESTORE);
 
          SetWindowPos(iZOrder, rectNew, uiSwpFlags);
 

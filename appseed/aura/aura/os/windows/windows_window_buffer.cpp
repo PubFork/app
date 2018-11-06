@@ -330,6 +330,9 @@ namespace windows
 
                            m_pimpl->m_pui->ModifyStyle(0, WS_VISIBLE);
 
+                           m_pimpl->m_pui->send_message(WM_SHOWWINDOW, 1);
+
+
                         }
 
                      }
@@ -343,7 +346,11 @@ namespace windows
 
                            m_pimpl->m_pui->ModifyStyle(WS_VISIBLE, 0);
 
+                           m_pimpl->m_pui->send_message(WM_SHOWWINDOW, 0);
+
                         }
+
+
 
                      }
 
@@ -402,15 +409,78 @@ namespace windows
 
                   }
 
+                  oswindow oswindowFocus = NULL;
+
+                  oswindow oswindowImpl = NULL;
+
+                  ::user::interaction_impl * pimplFocus = NULL;
+
+                  if (m_pimpl != NULL
+                        && m_pimpl->m_pui != NULL
+                        && m_pimpl->m_pui->IsWindowVisible())
+                  {
+
+                     if (Sess(m_pimpl->get_app()).m_pimplPendingSetFocus == m_pimpl)
+                     {
+
+                        Sess(m_pimpl->get_app()).m_pimplPendingSetFocus = NULL;
+
+                        oswindowFocus = ::get_focus();
+
+                        oswindowImpl = m_pimpl->m_oswindow;
+
+                        pimplFocus = oswindow_get(oswindowFocus);
+
+                        if (oswindowFocus == oswindowImpl)
+                        {
+
+                           output_debug_string("optimized out a SetFocus");
+
+                        }
+                        else
+                        {
+
+                           ::SetFocus(m_pimpl->m_oswindow);
+
+                        }
+
+
+                        m_pimpl->m_pui->on_set_window_pos();
+
+                     }
+
+                  }
+                  else
+                  {
+
+                  }
+
+
+
                }
                catch (...)
                {
 
                }
 
-               m_pimpl->m_bOkToUpdateScreen = true;
+               if (m_pimpl->m_pui->is_this_visible())
+               {
 
-               m_pimpl->m_pui->set_need_redraw();
+                  m_pimpl->m_bOkToUpdateScreen = true;
+
+                  m_pimpl->m_pui->set_need_redraw();
+
+
+               }
+               else
+               {
+
+                  m_pimpl->deferred_on_change_visibility();
+
+               }
+
+
+
 
 
             });
@@ -427,51 +497,6 @@ namespace windows
       }
 
       update_window_2(pdib, bLayered, false);
-
-      oswindow oswindowFocus = NULL;
-
-      oswindow oswindowImpl = NULL;
-
-      ::user::interaction_impl * pimplFocus = NULL;
-
-      if (m_pimpl != NULL
-            && m_pimpl->m_pui != NULL
-            && m_pimpl->m_pui->IsWindowVisible())
-      {
-
-         if (Sess(m_pimpl->get_app()).m_pimplPendingSetFocus == m_pimpl)
-         {
-
-            Sess(m_pimpl->get_app()).m_pimplPendingSetFocus = NULL;
-
-            oswindowFocus = ::get_focus();
-
-            oswindowImpl = m_pimpl->m_oswindow;
-
-            pimplFocus = oswindow_get(oswindowFocus);
-
-            if (oswindowFocus == oswindowImpl)
-            {
-
-               output_debug_string("optimized out a SetFocus");
-
-            }
-            else
-            {
-
-               m_pimpl->m_pui->post_pred([this]()
-               {
-
-                  ::SetFocus(m_pimpl->m_oswindow);
-
-               });
-
-            }
-
-         }
-
-      }
-
 
    }
 
@@ -769,17 +794,6 @@ namespace windows
 
          }
 
-         if (bSetWindowPos)
-         {
-
-            if (m_pimpl->m_pui != NULL)
-            {
-
-               m_pimpl->m_pui->on_set_window_pos();
-
-            }
-
-         }
 
 
          if (m_pimpl->m_bIpcCopy)
@@ -797,6 +811,7 @@ namespace windows
       }
 
       destroy_window_graphics_();
+
 
    }
 
