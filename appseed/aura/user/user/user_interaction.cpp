@@ -634,6 +634,8 @@ restart:
             if (m_pthreadUserInteraction.is_set())
             {
 
+               threadrefa_add(m_pthreadUserInteraction);
+
                m_pthreadUserInteraction->uiptra().add(this);
 
             }
@@ -3490,6 +3492,8 @@ restart:
       if (m_pthreadUserInteraction.is_set())
       {
 
+         threadrefa_add(m_pthreadUserInteraction);
+
          m_pthreadUserInteraction->uiptra().add(this);
 
       }
@@ -3611,6 +3615,8 @@ restart:
 
       if (m_pthreadUserInteraction.is_set())
       {
+
+         threadrefa_add(m_pthreadUserInteraction);
 
          m_pthreadUserInteraction->uiptra().add(this);
 
@@ -7182,7 +7188,7 @@ restart:
 
          }*/
 
-         ShowWindow(SW_RESTORE);
+         //ShowWindow(SW_RESTORE);
 
          SetWindowPos(iZOrder, rectNew, uiSwpFlags);
 

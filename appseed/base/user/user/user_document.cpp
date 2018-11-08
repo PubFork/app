@@ -11,6 +11,9 @@ namespace user
       ::data::data_container_base(papp),
       ::user::controller(papp)
    {
+
+      threadrefa_add(papp);
+
       m_pviewTopic=(::user::impact *) (int_ptr)0;
       m_pimpactsystem = NULL;
 

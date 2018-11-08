@@ -710,6 +710,7 @@
     <ClCompile Include="user\fontopus\fontopus_view.cpp" />
     <ClCompile Include="user\hi5\hi5_oauth.cpp" />
     <ClCompile Include="user\hi5\hi5_twit.cpp" />
+    <ClCompile Include="user\hi5\hi5_youtube_api.cpp" />
     <ClCompile Include="user\html\graphics\elemental\html_elemental_cell.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='cover|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
@@ -1667,6 +1668,7 @@
     <ClInclude Include="user\hi5\hi5.h" />
     <ClInclude Include="user\hi5\hi5_oauth.h" />
     <ClInclude Include="user\hi5\hi5_twit.h" />
+    <ClInclude Include="user\hi5\hi5_youtube_api.h" />
     <ClInclude Include="user\html\graphics\elemental\html_elemental.h" />
     <ClInclude Include="user\html\graphics\elemental\html_elemental_cell.h" />
     <ClInclude Include="user\html\graphics\elemental\html_elemental_elemental.h" />
