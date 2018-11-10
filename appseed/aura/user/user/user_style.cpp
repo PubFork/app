@@ -741,9 +741,14 @@ namespace user
                pgraphics->draw_rect(rectClient, pen);
 
             }
+
+            #ifdef WINDOWS
+
             HWND hwndFocus = ::GetFocus();
 
             HWND hwndThis = pui->get_handle();
+
+            #endif
 
             if (pui->has_focus())
             {

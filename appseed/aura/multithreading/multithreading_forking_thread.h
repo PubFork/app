@@ -81,7 +81,7 @@ template < typename PRED >
 
    }
 
-   return fork(papp, pholdref, pred)
+   return fork(papp, pholdref, pred);
 
 }
 
@@ -115,7 +115,7 @@ template < typename PRED >
 
    }
 
-   return fork(papp, pred, pobjectDependent);
+   return fork(papp, pred);
 
 }
 
