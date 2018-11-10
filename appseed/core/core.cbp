@@ -329,6 +329,7 @@
 		<Unit filename="user/hi5/hi5_oauth.h" />
 		<Unit filename="user/hi5/hi5_twit.cpp" />
 		<Unit filename="user/hi5/hi5_twit.h" />
+		<Unit filename="user/hi5/hi5_youtube_api.cpp" />
 		<Unit filename="user/html/___framework.h" />
 		<Unit filename="user/html/graphics/elemental/html_elemental.h" />
 		<Unit filename="user/html/graphics/elemental/html_elemental_cell.cpp" />

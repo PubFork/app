@@ -1202,11 +1202,20 @@ void object::children_add(::object * pobjectChild)
 
    }
 
+   try
+   {
+
    if (pobjectChild->children_is(this))
    {
 
       return;
 
+   }
+   }
+   catch(...)
+   {
+
+   return;
    }
 
    {

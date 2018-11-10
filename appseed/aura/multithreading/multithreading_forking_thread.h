@@ -1,7 +1,7 @@
 #pragma once
 
 template < typename PRED >
-::thread * pred_run(::aura::application * papp, bool bSync, PRED pred);
+::thread * pred_run(::aura::application * papp, bool bSync, PRED pred, ::object * pobjectDependency = NULL);
 
 
 CLASS_DECL_AURA int get_current_process_affinity_order();
@@ -87,12 +87,19 @@ template < typename PRED >
 
 
 template < typename PRED >
-::thread * fork(::aura::application * papp, PRED pred)
+::thread * fork(::aura::application * papp, PRED pred, ::object * pobjectDependency = NULL)
 {
 
    auto pforkingthread = canew(forking_thread < PRED >(papp, pred));
 
    ::thread * pthread = dynamic_cast < ::thread * > (pforkingthread);
+
+   if(::is_set(pobjectDependency))
+   {
+
+      pobjectDependency->children_add(pthread);
+
+   }
 
    pthread->begin();
 
@@ -103,7 +110,7 @@ template < typename PRED >
 
 /// optimized: forks if not forked
 template < typename PRED >
-::thread * opt_fork(::aura::application * papp,  PRED pred)
+::thread * opt_fork(::aura::application * papp,  PRED pred, ::object * pobjectDependency = NULL)
 {
 
    if (::get_thread() != NULL && ::get_thread()->m_bFork)
@@ -115,7 +122,7 @@ template < typename PRED >
 
    }
 
-   return fork(papp, pred);
+   return fork(papp, pred, pobjectDependency);
 
 }
 
@@ -128,9 +135,7 @@ inline ::thread * object::fork(PRED pred)
 
    synch_lock sl(m_pmutex);
 
-   thread * pthread = ::fork(get_app(),pred);
-
-   children_add(pthread);
+   thread * pthread = ::fork(get_app(),pred, this);
 
    return pthread;
 
@@ -147,8 +152,6 @@ inline ::thread * object::opt_fork(PRED pred)
 
    thread * pthread = ::opt_fork(get_app(), pred, this);
 
-   children_add(pthread);
-
    return pthread;
 
 }
@@ -162,9 +165,7 @@ inline ::thread * object::pred_run(bool bSync, PRED pred)
 
    synch_lock sl(m_pmutex);
 
-   thread * pthread = ::pred_run(get_app(), bSync, pred);
-
-   children_add(pthread);
+   thread * pthread = ::pred_run(get_app(), bSync, pred, this);
 
    return pthread;
 
@@ -845,7 +846,7 @@ spa(::thread) fork_proc(::aura::application * papp, PRED pred, index iCount = -1
 
 
 template < typename PRED >
-::thread * pred_run(::aura::application * papp, bool bSync, PRED pred)
+::thread * pred_run(::aura::application * papp, bool bSync, PRED pred, object * pobjectDependency)
 {
 
    if (bSync)
@@ -859,7 +860,7 @@ template < typename PRED >
    else
    {
 
-      return fork(papp, pred);
+      return fork(papp, pred, pobjectDependency);
 
    }
 
