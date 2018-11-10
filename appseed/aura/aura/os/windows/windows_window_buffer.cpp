@@ -262,7 +262,7 @@ namespace windows
             //if (m_rectLast != rectWindow || m_pimpl->m_bZ)
          {
 
-            m_pimpl->m_bOkToUpdateScreen = false;
+            //m_pimpl->m_bOkToUpdateScreen = false;
 
             m_pimpl->m_pui->post_pred([=]()
             {
