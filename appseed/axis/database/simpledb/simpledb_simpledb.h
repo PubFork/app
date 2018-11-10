@@ -24,9 +24,9 @@ namespace simpledb
    {
    public:
 
-      
+
       bool                 m_bInitialized;
-      db_server *          m_pserver;
+      sp(db_server)        m_pserver;
 
 
       simpledb(::aura::application * papp);

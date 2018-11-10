@@ -1494,7 +1494,6 @@ void app_core::run()
 
    }
 
-
    if (!m_psystem->process_command(m_psystem->m_pcommand))
    {
 
@@ -1522,30 +1521,16 @@ void app_core::run()
 
    }
 
-
    try
    {
 
-      m_psystem->on_pos_run_thread();
+      m_psystem->thread_exit();
 
    }
    catch (...)
    {
 
       on_result(-2700);
-
-   }
-
-   try
-   {
-
-      m_psystem->term_thread();
-
-   }
-   catch (...)
-   {
-
-      on_result(-2005);
 
    }
 
@@ -1559,6 +1544,19 @@ void app_core::run()
    {
 
       on_result(-2006);
+
+   }
+
+   try
+   {
+
+      ::multithreading::__on_thread_finally(m_psystem);
+
+   }
+   catch (...)
+   {
+
+      on_result(-2005);
 
    }
 

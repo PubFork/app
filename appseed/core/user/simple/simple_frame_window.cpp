@@ -328,11 +328,11 @@ sp(::user::interaction) simple_frame_window::WindowDataGetWnd()
 void simple_frame_window::_001OnDestroy(::message::message * pobj)
 {
 
+   pobj->previous();
+
    {
 
       synch_lock sl(m_pmutex);
-
-      pobj->previous();
 
       try
       {
@@ -340,9 +340,13 @@ void simple_frame_window::_001OnDestroy(::message::message * pobj)
          if (m_pnotifyicon.is_set())
          {
 
-            m_pnotifyicon->Destroy();
+            auto pnotifyicon = m_pnotifyicon;
 
             m_pnotifyicon.release();
+
+            sl.unlock();
+
+            pnotifyicon->Destroy();
 
          }
 
@@ -353,8 +357,6 @@ void simple_frame_window::_001OnDestroy(::message::message * pobj)
       }
 
    }
-
-   ::multithreading::post_quit_and_wait(m_pthreadSaveWindowRect, seconds(5));
 
 }
 
@@ -1125,8 +1127,7 @@ void simple_frame_window::_001OnAppExit(::message::message * pobj)
 
    }
 
-   System.request_exit();
-
+   Application.handler()->handle(::command_france_exit);
 
 }
 

@@ -179,6 +179,8 @@ namespace aura
       virtual void application_menu_update();
 
 
+      virtual void post_quit() override;
+
 
       virtual object * alloc(sp(type) info);
       virtual object * alloc(const id & idType);

@@ -484,7 +484,7 @@ bool db_str_set::load(const ::database::key & key, string & strValue)
                          -1,
                          &pcore->m_pstmtSelect, NULL)) != SQLITE_OK)
          {
-            
+
             pcore->m_pstmtSelect = NULL;
 
             return false;
@@ -720,6 +720,8 @@ bool db_str_set::save(const ::database::key & key, const string & strValue)
          pcore->m_pqueue = canew(db_str_sync_queue(get_app()));
 
          pcore->m_pqueue->m_pset = this;
+
+         pcore->children_add(pcore->m_pqueue);
 
          pcore->m_pqueue->begin();
 

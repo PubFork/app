@@ -301,9 +301,11 @@ thread::thread(::aura::application * papp, __THREADPROC pfnThreadProc, LPVOID pP
 
 CLASS_DECL_AURA ::thread * get_thread_raw();
 
+
 void thread::CommonConstruct()
 {
 
+   m_bFork = false;
    m_pmutexThreadUiPtra = NULL;
    m_puiptraThread = NULL;
    m_bThreadToolsForIncreasedFps = false;
@@ -373,24 +375,6 @@ void thread::CommonConstruct()
 thread::~thread()
 {
 
-   try
-   {
-
-      synch_lock sl(m_pmutex);
-
-      for (auto pobject : m_objectptraDependent)
-      {
-
-         pobject->threadrefa_remove(this);
-
-      }
-
-   }
-   catch (...)
-   {
-
-   }
-
    memcnts_dec(this);
 
    ::aura::del(m_puiptraThread);
@@ -398,13 +382,6 @@ thread::~thread()
    ::aura::del(m_pmutexThreadUiPtra);
 
 }
-
-
-
-
-
-
-
 
 
 HTHREAD thread::get_os_handle() const
@@ -422,40 +399,20 @@ bool thread::is_thread() const
 
 }
 
+
 void thread::on_pos_run_thread()
 {
 
    try
    {
 
-      threadrefa_post_quit();
+      children_post_quit_and_wait(one_minute());
 
    }
    catch (...)
    {
 
    }
-
-   {
-
-
-      for(auto pobject : m_objectptraDependent)
-      {
-
-         pobject->threadrefa_remove(this);
-
-      }
-
-   }
-
-
-   threadrefa_post_quit();
-
-   threadrefa_wait(one_minute());
-
-   //close_dependent_threads(minutes(1));
-
-   //return true;
 
 }
 
@@ -1131,6 +1088,8 @@ bool thread::should_enable_thread()
 void thread::post_quit()
 {
 
+   ::command_target::post_quit();
+
    try
    {
 
@@ -1164,7 +1123,21 @@ void thread::post_quit()
 
       }
 
-      m_bRunThisThread = false;
+      if (m_bRunThisThread)
+      {
+
+         sp(manual_reset_event) pev = m_pevSleep;
+
+         m_bRunThisThread = false;
+
+         if (pev.is_set())
+         {
+
+            pev->SetEvent();
+
+         }
+
+      }
 
       ::PostThreadMessage(m_uiThread, WM_QUIT, 0, 0);
 
@@ -1173,6 +1146,14 @@ void thread::post_quit()
    {
 
    }
+
+}
+
+
+void thread::wait_quit(duration durationTimeout)
+{
+
+   ::command_target::wait_quit(durationTimeout);
 
 }
 
@@ -1382,13 +1363,6 @@ bool thread::init_thread()
 
 bool thread::on_pre_run_thread()
 {
-
-   //if(!register_at_required_threads())
-   //{
-
-   //   return false;
-
-   //}
 
    return true;
 
@@ -1624,15 +1598,6 @@ thread_startup::~thread_startup()
 
 bool thread::begin_thread(bool bSynch, int32_t epriority,uint_ptr nStackSize,uint32_t dwCreateFlagsParam,LPSECURITY_ATTRIBUTES lpSecurityAttrs, IDTHREAD * puiId, error * perror)
 {
-
-//   error errorLocal;
-//
-//   if(::is_null(perror))
-//   {
-//
-//      perror = &errorLocal;
-//
-//   }
 
    m_bRunThisThread = true;
 
@@ -2167,6 +2132,7 @@ uint32_t __thread_entry(void * pparam)
       {
 
       }
+
       try
       {
 
@@ -2452,42 +2418,64 @@ bool thread::send_message(UINT message, WPARAM wParam, lparam lParam, ::duration
 
 void thread::set_os_data(void * pvoidOsData)
 {
+
 #ifdef WINDOWSEX
 
    if(m_bDupHandle)
    {
+
       if(m_hthread != NULL)
       {
+
          ::CloseHandle(m_hthread);
+
       }
+
    }
+
    m_hthread = NULL;
+
    if(pvoidOsData != NULL)
    {
+
       if(::DuplicateHandle(::GetCurrentProcess(),(HANDLE)pvoidOsData,GetCurrentProcess(),&m_hthread,THREAD_ALL_ACCESS,TRUE,0))
       {
+
          m_bDupHandle = true;
+
       }
       else
       {
+
          TRACE("thread::set_os_data failed to duplicate handle");
+
       }
+
    }
+
 #else
+
    m_hthread = (HTHREAD)pvoidOsData;
+
 #endif
+
 }
+
 
 void thread::set_os_int(IDTHREAD iData)
 {
+
 #ifdef WINDOWSEX
+
    m_uiThread = (DWORD)iData;
+
 #else
+
    m_uiThread = (IDTHREAD) iData;
+
 #endif
+
 }
-
-
 
 
 int32_t thread::do_thread_startup(::thread_startup * pstartup)
@@ -2495,24 +2483,15 @@ int32_t thread::do_thread_startup(::thread_startup * pstartup)
 
    ASSERT(pstartup != NULL);
    ASSERT(pstartup->m_pthread != NULL);
-//   ASSERT(pstartup->m_pthreadimpl != NULL);
    ASSERT(!pstartup->m_bError);
-//   ASSERT(pstartup->m_pthreadimpl == pstartup->m_pthreadimpl);
-   // ASSERT(pstartup->m_pthread == pstartup->m_pthreadimpl->m_pthread);
-
-   //::thread * pthreadimpl = pstartup->m_pthreadimpl;
 
    IGUI_MSG_LINK(WM_APP + 1000, this, this, &::thread::_001OnThreadMessage);
 
    install_message_routing(this);
 
-   //install_message_routing(pthreadimpl);
-
    return 0;
 
 }
-
-
 
 
 bool thread::thread_entry()
@@ -2730,19 +2709,6 @@ int32_t thread::thread_term()
 }
 
 
-void thread::threadrefa_add(::thread * pthread)
-{
-
-   if (pthread == this)
-   {
-
-      return;
-
-   }
-
-   command_target::threadrefa_add(pthread);
-
-}
 
 
 int32_t thread::thread_exit()
@@ -3636,7 +3602,7 @@ user_interaction_ptr_array & thread::uiptra()
       for (auto & pthread : ptools->m_threada)
       {
 
-         threadrefa_add(pthread);
+         children_add(pthread);
 
       }
 
@@ -3709,8 +3675,49 @@ thread_ptra::~thread_ptra()
 }
 
 
+//void thread::thread_sleep(u32 uiMillis)
+//{
+//
+//}
+//
+
 CLASS_DECL_AURA bool thread_sleep(DWORD dwMillis)
 {
+
+   ::thread * pthread = ::get_thread();
+
+   try
+   {
+
+      if (::is_set(pthread))
+      {
+
+         sp(manual_reset_event) pevSleep(canew(manual_reset_event(get_app())));
+
+         {
+
+            synch_lock sl(pthread->m_pmutex);
+
+            pthread->m_pevSleep = pevSleep;
+
+         }
+
+         if (!::get_thread_run())
+         {
+
+            return false;
+
+         }
+
+         return pevSleep->wait(millis((u32)dwMillis)).succeeded();
+
+      }
+
+   }
+   catch (...)
+   {
+
+   }
 
    int iTenths = dwMillis / 100;
 

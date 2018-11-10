@@ -41,32 +41,27 @@ namespace user
       return m_docptra.element_at(index);
    }
 
+
    void multiple_document_template::add_document(::user::document * pdocument)
    {
-      if(m_docptra.add_unique(pdocument))
+
+      if (m_docptra.add_unique(pdocument) > 0)
       {
+
          impact_system::add_document(pdocument);
+
       }
+
    }
 
 
    void multiple_document_template::remove_document(::user::document * pdocument)
    {
 
-      ::count cRef = (::count) pdocument->m_countReference;
-      
-      if (m_docptra.remove(pdocument) > 0)
-      {
+      impact_system::remove_document(pdocument);
 
-         if (cRef > 1)
-         {
+      m_docptra.remove(pdocument);
 
-            impact_system::remove_document(pdocument);
-
-         }
-
-      }
-      
    }
 
 
@@ -81,7 +76,7 @@ namespace user
 
       if (pdocument == NULL)
       {
-      
+
          TRACE(::aura::trace::category_AppMsg, 0, "impact_system::create_new_document returned NULL.\n");
 
          // TODO Translate
@@ -110,20 +105,20 @@ namespace user
             strId = demangle(typeid(*pcreate->m_puiAlloc).name());
 
          }
-         
+
          if (strId.find_ci("userex::message_box") < 0)
          {
-            
+
             System.simple_message_box(NULL, "Failed to create ::user::document");
-            
+
          }
-         
+
          remove_document(pdocument);
-         
+
          return;
-         
+
       }
-      
+
       ASSERT_VALID(pFrame);
 
       if(pcreate->m_spCommandLine->m_varFile.is_empty())
@@ -181,7 +176,7 @@ namespace user
    {
       string strDocName;
       if (GetDocString(strDocName, impact_system::docName) &&
-         !strDocName.is_empty())
+            !strDocName.is_empty())
       {
 
          string strNum;

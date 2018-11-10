@@ -1,16 +1,40 @@
 ﻿#include "framework.h"
 //#include <math.h>
 
+//#define SECOND_NANOS 1000
 
 void duration::normalize()
 {
 
-   m_iSeconds     += m_iNanoseconds / (1000 * 1000 * 1000);
+   m_iSeconds += m_iNanoseconds / SECOND_NANOS;
 
-   m_iNanoseconds %= 1000 * 1000 * 1000;
+   m_iNanoseconds %= SECOND_NANOS;
+
+   int iSecondSign = ::lemon::sgn(m_iSeconds);
+
+   int iNanosecondsSign = ::lemon::sgn(m_iNanoseconds);
+
+   if (iSecondSign == -iNanosecondsSign && iSecondSign != 0)
+   {
+
+      m_iSeconds -= iSecondSign;
+
+      m_iNanoseconds += iSecondSign * SECOND_NANOS;
+
+   }
 
 }
 
+
+
+
+
+duration duration::operator - (const duration & duration) const
+{
+
+   return ::duration(m_iSeconds - duration.m_iSeconds, m_iNanoseconds - duration.m_iNanoseconds);
+
+}
 
 nanos::nanos(double d)
 {

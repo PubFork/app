@@ -1761,23 +1761,25 @@ retry:
 
          ZERO(si);
 
+         PeekMessage(NULL, NULL, 0, 0, 0);
+
          wstring wstrTarget(path);
 
          wstring wstrFolder(strFolder);
 
          wstring wstrParams(strParams);
 
-         const wchar_t * pwszParams = wstrParams.is_empty() ? NULL : wstrParams.c_str();
+         const wchar_t * pwszParams = wstrParams.c_str();
 
-         const wchar_t * pwszFolder = wstrFolder.is_empty() ? NULL : wstrFolder.c_str();
+         const wchar_t * pwszFolder = wstrFolder.c_str();
 
          si.cbSize = sizeof(si);
 
-         si.fMask = NULL;
+         si.fMask = SEE_MASK_ASYNCOK;
 
          si.hwnd = NULL;
 
-         si.lpVerb = NULL;
+         si.lpVerb = L"open";
 
          if (wstrTarget.is_empty())
          {
@@ -1804,6 +1806,18 @@ retry:
 
          ShellExecuteExW(&si);
 
+         //DWORD dwLastError = ::GetLastError();
+
+         //int iResult = (int) si.hInstApp;
+
+         //string str;
+
+         //str.Format("ShellExecuteExW %d GetLastError = %d", iResult, dwLastError);
+
+         //output_debug_string(str);
+
+
+         //thread_pump_sleep(60 * 1000);
 
 
          //int iRet = (int) (int_ptr) ::ShellExecuteW(NULL, L"open", wstring(path), pwszParams, pwszFolder, SW_RESTORE);

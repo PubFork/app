@@ -119,6 +119,17 @@ namespace hotplugin
       return false;
    }
 
+
+   void plugin::post_quit()
+   {
+
+      ::simple_ui::interaction::post_quit();
+
+      ::base::session::post_quit();
+
+   }
+
+
    string plugin::get_host_location_url()
    {
       if(m_phost != NULL)

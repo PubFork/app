@@ -74,19 +74,24 @@ namespace user
 namespace core
 {
 
+
    void application::close(e_end eend)
    {
 
-      threadrefa_post_quit();
-
-      threadrefa_wait(seconds(15));
-
-      //close_dependent_threads(seconds(15));
-
-      if (m_pdocmanager != NULL)
+      try
       {
 
-         document_manager()->close_all_documents(eend != end_close);
+         if (m_pdocmanager.is_set())
+         {
+
+            m_pdocmanager->close_all_documents(eend != end_close);
+
+         }
+
+      }
+      catch (...)
+      {
+
 
       }
 
@@ -108,31 +113,73 @@ namespace core
 
       }
 
-      if (!is_system())
+      if (!is_system() && !is_session())
       {
 
-         if (m_psession != NULL)
+         try
          {
 
-            if (Sess(m_psession).m_pdocmanager != NULL)
+            if (m_psession != NULL)
             {
 
-               Sess(m_psession).document_manager()->close_all_documents(true);
+               auto psession = &Session;
 
-               Sess(m_psession).m_pdocmanager.release();
+               if (::is_set(psession))
+               {
+
+                  if (psession->m_pdocmanager.is_set())
+                  {
+
+                     psession->m_pdocmanager->close_all_documents(true);
+
+                     psession->m_pdocmanager.release();
+
+                  }
+
+               }
+
+            }
+
+
+         }
+         catch (...)
+         {
+
+
+         }
+
+
+         try
+         {
+
+
+            if (m_psystem != NULL)
+            {
+
+               auto psystem = &System;
+
+               if (::is_set(psystem))
+               {
+
+                  if (psystem->m_pdocmanager.is_set())
+                  {
+
+                     psystem->m_pdocmanager->close_all_documents(true);
+
+                     psystem->m_pdocmanager.release();
+
+                  }
+
+               }
 
             }
 
          }
+         catch (...)
+         {
 
-      }
 
-      if (Sys(m_psystem).m_pdocmanager != NULL)
-      {
-
-         Sys(m_psystem).document_manager()->close_all_documents(true);
-
-         Sys(m_psystem).m_pdocmanager.release();
+         }
 
       }
 

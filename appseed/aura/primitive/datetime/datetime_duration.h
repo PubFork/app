@@ -37,9 +37,9 @@ public:
    duration(int64_t iSeconds = 0, int64_t iNanoSeconds = 0);
    duration(int32_t iSeconds, int32_t iNanoSeconds = 0) :duration((i64)iSeconds, (i64)iNanoSeconds) {}
    duration(uint32_t uiSeconds, uint32_t uiNanoSeconds = 0) :duration((i64)uiSeconds, (i64)uiNanoSeconds) {}
-   #if !defined(__GNUC__)
+#if !defined(__GNUC__)
    duration(DWORD dwSeconds, DWORD dwNanoSeconds = 0) :duration((i64)dwSeconds, (i64)dwNanoSeconds) {}
-   #endif
+#endif
    duration(e_duration eduration);
 
    inline void raw_set(int64_t iSeconds, int64_t iNanoseconds = 0);
@@ -82,9 +82,13 @@ public:
 
    inline operator bool() const;
 
+   inline duration & operator = (const ::datetime::time_span & span);
+   inline duration & operator += (const ::datetime::time_span & duration);
+   inline duration & operator -= (const ::datetime::time_span & duration);
 
    inline __time64_t GetTimeSpan() const;
 
+   duration operator - (const duration & duration) const;
 
    void sleep();
 
@@ -99,6 +103,8 @@ inline duration::duration(int64_t iSeconds, int64_t iNanoSeconds)
    m_iSeconds = iSeconds;
 
    m_iNanoseconds = iNanoSeconds;
+
+   normalize();
 
 }
 
@@ -639,7 +645,6 @@ inline duration::operator bool() const
    return m_iSeconds != 0 || m_iNanoseconds != 0;
 
 }
-
 
 
 CLASS_DECL_AURA void Sleep(const duration & duration);

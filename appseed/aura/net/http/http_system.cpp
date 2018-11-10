@@ -1950,9 +1950,14 @@ retry_session:
          if (iTry <= 3 &&  ::comparison::lt(dwDelta, iTimeoutTotalMs))
          {
 
-            Sleep(500 * iTry);
+            thread_sleep(500 * iTry);
 
-            goto retry;
+            if (::get_thread_run())
+            {
+
+               goto retry;
+
+            }
 
          }
 

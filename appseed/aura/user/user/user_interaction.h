@@ -477,6 +477,8 @@ namespace user
 
       virtual bool DestroyWindow() override;
 
+      virtual void post_quit() override;
+
 
 #ifdef WINDOWS
       virtual bool RedrawWindow(LPCRECT lpRectUpdate = NULL,

@@ -568,18 +568,6 @@ namespace core
    void application::term_application()
    {
 
-
-      try
-      {
-
-         close(end_app);
-
-      }
-      catch (...)
-      {
-
-      }
-
       try
       {
 
@@ -595,6 +583,18 @@ namespace core
       {
 
       }
+
+      try
+      {
+
+         close(end_app);
+
+      }
+      catch (...)
+      {
+
+      }
+
 
       try
       {
@@ -3318,12 +3318,9 @@ namespace core
    void application::_001OnFranceExit()
    {
 
-      //document_manager()->close_all_documents(true);
-
-      // hide the application's windows before closing all the documents
       HideApplication();
 
-      post_quit();
+      close(end_app);
 
    }
 

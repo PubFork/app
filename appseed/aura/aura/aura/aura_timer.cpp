@@ -105,7 +105,7 @@ void timer::stop()
       if (m_pcallback != NULL)
       {
 
-         m_pcallback->threadrefa_remove(this);
+         m_pcallback->children_remove(this);
 
          m_pcallback = NULL;
 
@@ -146,14 +146,7 @@ void timer::call_on_timer()
    try
    {
 
-      //if (!m_bThreadInit)
-      //{
-
-      //   m_bThreadInit = true;
-
-      //   register_at_required_threads();
-
-      //}
+      get_app()->children_add(this);
 
    }
    catch (...)
@@ -218,47 +211,28 @@ void timer::call_on_timer()
    if(!bRepeat)
    {
 
-      //try
-      //{
-
-      //   // intentionally may repeat the operation
-      //   post_quit();
-
-      //}
-      //catch(...)
-      //{
-
-      //}
-
-      /*try
+      try
       {
 
-         unregister_from_required_threads();
+         children_post_quit_and_wait(one_minute());
 
       }
-      catch(...)
+      catch (...)
       {
 
-      }*/
+
+      }
 
       try
       {
 
-         synch_lock sl(m_pmutex);
-
-         for (auto pobject : m_objectptraDependent)
-         {
-
-            pobject->threadrefa_remove(this);
-
-         }
+         get_app()->children_remove(this);
 
       }
       catch (...)
       {
 
       }
-
 
       try
       {

@@ -477,34 +477,7 @@ CLASS_DECL_AURA int_bool WINAPI PostThreadMessageW(IDTHREAD iThreadId,UINT Msg,W
 
 
 
-//void thread_layer::wait_thread(DWORD dwMillis)
-//{
-//
-//   try
-//   {
-//
-//      m_hthread->m_pevent->wait(millis(dwMillis));
-//
-//   }
-//   catch(...)
-//   {
-//
-//   }
-//
-//}
-//
-//
-//
-//
-//
-//thread_layer::~thread_layer()
-//{
-//
-//   delete m_hthread;
-//
-//}
-//
-//
+
 
 
 CLASS_DECL_AURA HTHREAD GetCurrentThread()

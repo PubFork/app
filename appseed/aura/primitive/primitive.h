@@ -23,6 +23,39 @@
 
 
 
+class CLASS_DECL_AURA parents
+{
+public:
+
+   pointer_array < object * >    m_ptra;
+
+   parents();
+   ~parents();
+
+
+};
+
+
+class CLASS_DECL_AURA children
+{
+public:
+
+
+   spa(object)                   m_ptra;
+   duration                      m_durationWait;
+
+
+   children();
+   ~children();
+
+
+   //virtual ::count get_count_except_current_thread(::object * pobjectParent);
+   virtual void post_quit(::object * pobjectParent);
+   virtual ::count wait_quit(::object * pobjectParent, const duration & duration);
+   virtual ::count _wait_quit(::object * pobjectParent);
+
+
+};
 
 
 

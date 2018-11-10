@@ -75,6 +75,7 @@ namespace hotplugin
       // It is the location url of the page that hosts the plugin when the plugin was created.
       virtual string     get_host_location_url();
 
+      virtual void post_quit() override;
 
       virtual void         redraw();
       virtual void         post_message(UINT uiMessage, WPARAM wparam, LPARAM lparam);

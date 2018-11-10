@@ -42,7 +42,7 @@ namespace aura
 
       timer * ptimer = canew(timer(get_app(), nIDEvent, pfnTimer, pvoidData, m_pmutex));
 
-      threadrefa_add(ptimer);
+      children_add(ptimer);
 
       ptimer->m_pcallback = this;
 
@@ -100,7 +100,7 @@ namespace aura
 
       m_map.remove_key(nIDEvent);
 
-      threadrefa_remove(ptimer);
+      ptimer->children_post_quit_and_wait(one_minute());
 
       ptimer->m_pmutex = NULL;
 

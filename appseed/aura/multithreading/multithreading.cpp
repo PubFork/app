@@ -28,14 +28,11 @@ namespace multithreading
 
       __node_term_multithreading();
 
-      delete s_pthreadptra;
-      s_pthreadptra = NULL;
+      ::aura::del(s_pthreadptra);
 
-      delete s_piaThread;
-      s_piaThread = NULL;
+      ::aura::del(s_piaThread);
 
-      delete s_pmutex;
-      s_pmutex = NULL;
+      ::aura::del(s_pmutex);
 
    }
 
@@ -71,12 +68,12 @@ namespace multithreading
    }
 
 
-   CLASS_DECL_AURA uint32_t __on_thread_finally(thread * thread)
+   CLASS_DECL_AURA uint32_t __on_thread_finally(thread * pthreadParam)
    {
 
       int nExitCode = -1;
 
-      if (thread == NULL)
+      if (::is_null(pthreadParam))
       {
 
          return -1;
@@ -85,62 +82,25 @@ namespace multithreading
 
       {
 
-         sp(::thread) pthread = thread;
-
-         //try
-         //{
-
-         //   pthread->unregister_from_required_threads();
-
-         //}
-         //catch(...)
-         //{
-
-
-         //}
-
-         //try
-         //{
-
-         //   synch_lock sl(pthread->m_pmutex);
-
-         //   for (auto pobject : pthread->m_objectptraDependent)
-         //   {
-
-         //      pobject->threadrefa_remove(pthread);
-
-         //   }
-
-         //}
-         //catch (...)
-         //{
-
-         //}
+         sp(::thread) pthread = pthreadParam;
 
          try
          {
 
-            pthread->threadrefa_post_quit();
+            {
 
-         }
-         catch (...)
-         {
+               synch_lock sl(pthread->m_pmutex);
 
-         }
+               if (pthread->m_pevSleep.is_set())
+               {
 
-         try
-         {
+                  pthread->m_pevSleep->SetEvent();
 
-            pthread->threadrefa_wait(one_minute());
+                  pthread->m_pevSleep.release();
 
-         }
-         catch (...)
-         {
+               }
 
-         }
-
-         try
-         {
+            }
 
             __node_term_thread(pthread);
 
@@ -148,7 +108,16 @@ namespace multithreading
 
             ::aura::application * papp = pthread->get_app();
 
-            nExitCode = pthread->m_error.get_exit_code();
+            try
+            {
+
+               nExitCode = pthread->m_error.get_exit_code();
+
+            }
+            catch (...)
+            {
+
+            }
 
             try
             {
@@ -164,13 +133,15 @@ namespace multithreading
             try
             {
 
-               pthread->thread_term();
+               pthread->release_parents();
 
             }
-            catch(...)
+            catch (...)
             {
 
             }
+
+            pthread->set_os_data(NULL);
 
             __end_thread(papp);
 
@@ -185,7 +156,7 @@ namespace multithreading
       try
       {
 
-         ::release(thread);
+         ::release(pthreadParam);
 
       }
       catch(...)
@@ -644,6 +615,9 @@ void thread_ptra::wait(const duration & duration, synch_lock & sl)
    }
 
 }
+
+
+
 
 
 

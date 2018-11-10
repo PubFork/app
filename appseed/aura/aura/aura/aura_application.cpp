@@ -249,6 +249,14 @@ namespace aura
    }
 
 
+   void application::post_quit()
+   {
+
+      ::thread::post_quit();
+
+   }
+
+
    void application::set_has_installer(bool bSet)
    {
 
@@ -2341,6 +2349,34 @@ namespace aura
       try
       {
 
+         if (is_system())
+         {
+
+            ::aura::system::g_p->m_pappcore->children_add(this);
+
+         }
+         else if (is_session())
+         {
+
+            System.children_add(this);
+
+         }
+         else
+         {
+
+            Session.children_add(this);
+
+         }
+
+      }
+      catch (...)
+      {
+
+      }
+
+      try
+      {
+
          if (!pre_run())
          {
 
@@ -2377,28 +2413,6 @@ namespace aura
 
    void application::term_thread()
    {
-
-      //try
-      //{
-
-      //   signal_close_dependent_threads();
-
-      //}
-      //catch (...)
-      //{
-
-      //}
-
-      //try
-      //{
-
-      //   wait_close_dependent_threads(seconds(60));
-
-      //}
-      //catch (...)
-      //{
-
-      //}
 
       thisstart;
 

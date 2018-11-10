@@ -95,7 +95,8 @@ object::object()
    m_ulFlags = (uint32_t)flag_auto_clean;
    m_pfactoryitembase = NULL;
    m_papp = NULL;
-   m_pthreadrefa = NULL;
+   m_pchildren = NULL;
+   m_pparents = NULL;
 
 }
 
@@ -133,8 +134,8 @@ object::object(const object& objectSrc)
    m_pfactoryitembase = NULL;
    m_countReference = 1;
    m_papp = objectSrc.m_papp;
-   m_pthreadrefa = NULL;
-
+   m_pchildren = NULL;
+   m_pparents = NULL;
 
 }
 
@@ -148,7 +149,8 @@ object::object(::aura::application * papp)
    m_pfactoryitembase = NULL;
    m_countReference = 1;
    m_papp = papp;
-   m_pthreadrefa = NULL;
+   m_pchildren = NULL;
+   m_pparents = NULL;
 
 }
 
@@ -156,11 +158,40 @@ object::object(::aura::application * papp)
 object::~object()
 {
 
-   threadrefa_post_quit();
+   try
+   {
 
-   threadrefa_wait(one_minute());
+      // Last Chance : Objects shouldn't rely on this call.
+      // This object (as parent) is virtually completely destroyed.
+      // Any children registered as dependant of this object is
+      // having trouble to access this object at this point.
+      // Solution: right before deleting the object,
+      // call children_post_quit_and_wait with appropriate timeout
+      // duration, to ask children to destroy themselves and wait
+      // for then to finish.
 
-   ::aura::del(m_pthreadrefa);
+      children_post_quit();
+
+   }
+   catch (...)
+   {
+
+   }
+
+   try
+   {
+
+      release_parents();
+
+   }
+   catch (...)
+   {
+
+   }
+
+   ::aura::del(m_pchildren);
+
+   ::aura::del(m_pparents);
 
    ::aura::del(m_psetObject);
 
@@ -822,12 +853,15 @@ void object::system(const char * pszProjectName)
 
 }
 
+
 void object::safe_pre_term()
 {
 
-   threadrefa_post_quit();
+   post_quit();
 
-   threadrefa_wait(one_minute());
+   wait_quit(one_minute());
+
+   release_parents();
 
 }
 
@@ -990,7 +1024,7 @@ void object::on_handle(::create * pcreate)
 }
 
 
-void object::threadrefa_post_quit()
+void object::children_post_quit()
 {
 
    synch_lock sl(m_pmutex);
@@ -998,110 +1032,592 @@ void object::threadrefa_post_quit()
    try
    {
 
-      if (m_pthreadrefa != NULL)
-      {
-
-         m_pthreadrefa->post_quit();
-
-      }
-
-   }
-   catch (...)
-   {
-
-   }
-
-}
-
-
-void object::threadrefa_wait(::duration duration)
-{
-
-   synch_lock sl(m_pmutex);
-
-   try
-   {
-
-      if (m_pthreadrefa != NULL)
-      {
-
-         m_pthreadrefa->wait(duration, sl);
-
-      }
-
-   }
-   catch (...)
-   {
-
-   }
-
-}
-
-
-
-void object::threadrefa_add(::thread * pthread)
-{
-
-   if (pthread == NULL)
-   {
-
-      return;
-
-   }
-
-   synch_lock slObject(m_pmutex);
-
-   if (m_pthreadrefa == NULL)
-   {
-
-      m_pthreadrefa = new thread_ptra;
-
-   }
-
-   synch_lock sl(m_pthreadrefa->m_pmutex);
-
-   synch_lock slThread(pthread->m_pmutex);
-
-   m_pthreadrefa->add(pthread);
-
-   pthread->m_objectptraDependent.add(this);
-
-}
-
-
-void object::threadrefa_remove(::thread * pthread)
-{
-
-   if (pthread == NULL)
-   {
-
-      return;
-
-   }
-
-   {
-
-      synch_lock slObject(m_pmutex);
-
-      if (m_pthreadrefa == NULL)
+      if (::is_null(m_pchildren))
       {
 
          return;
 
       }
 
-      //synch_lock sl(m_pthreadrefa->m_pmutex);
+      sl.unlock();
 
-
-      m_pthreadrefa->remove(pthread);
+      m_pchildren->post_quit(this);
 
    }
+   catch (...)
    {
-      synch_lock slThread(pthread->m_pmutex);
-
-      pthread->m_objectptraDependent.remove(this);
 
    }
+
+}
+
+
+void object::post_quit()
+{
+
+   try
+   {
+
+      children_post_quit();
+
+   }
+   catch (...)
+   {
+
+   }
+
+}
+
+
+void object::wait_quit(duration durationTimeout)
+{
+
+   try
+   {
+
+      children_post_quit_and_wait(durationTimeout);
+
+   }
+   catch (...)
+   {
+
+   }
+
+}
+
+
+void object::children_wait_quit(::duration duration)
+{
+
+   try
+   {
+
+      synch_lock sl(m_pmutex);
+
+      if (::is_null(m_pchildren) || m_pchildren->m_ptra.isEmpty())
+      {
+
+         return;
+
+      }
+
+      sl.unlock();
+
+      m_pchildren->wait_quit(this, duration);
+
+   }
+   catch (...)
+   {
+
+   }
+
+}
+
+
+void object::children_post_quit_and_wait(duration durationTimeout)
+{
+
+   try
+   {
+
+      children_post_quit();
+
+      children_wait_quit(durationTimeout);
+
+   }
+   catch (...)
+   {
+
+   }
+
+}
+
+
+void object::release_parents()
+{
+
+   try
+   {
+
+      synch_lock sl(m_pmutex);
+
+      if (::is_set(m_pparents))
+      {
+
+         for (auto & pparent : m_pparents->m_ptra)
+         {
+
+            sl.unlock();
+
+            try
+            {
+
+               pparent->children_remove(this, false);
+
+            }
+            catch (...)
+            {
+
+
+            }
+
+            sl.lock();
+
+         }
+
+         ::aura::del(m_pparents);
+
+      }
+
+   }
+   catch (...)
+   {
+
+   }
+
+}
+
+
+void object::children_add(::object * pobjectChild)
+{
+
+   if (::is_null(pobjectChild))
+   {
+
+      return;
+
+   }
+
+   if (pobjectChild == this)
+   {
+
+      return;
+
+   }
+
+   if (children_is(pobjectChild))
+   {
+
+      return;
+
+   }
+
+   if (pobjectChild->children_is(this))
+   {
+
+      return;
+
+   }
+
+   {
+
+      synch_lock sl(m_pmutex);
+
+      if (::is_null(m_pchildren))
+      {
+
+         m_pchildren = new children;
+
+      }
+
+      m_pchildren->m_ptra.add(pobjectChild);
+
+   }
+
+   {
+
+      synch_lock sl(pobjectChild->m_pmutex);
+
+      if (::is_null(pobjectChild->m_pparents))
+      {
+
+         pobjectChild->m_pparents = new parents;
+
+      }
+
+      pobjectChild->m_pparents->m_ptra.add(this);
+
+   }
+
+}
+
+
+/// tells if pobject is dependant of this object or of any dependant objects
+bool object::children_is(::object * pobjectDescendantCandidate) const
+{
+
+   if (::is_null(pobjectDescendantCandidate))
+   {
+
+      return false;
+
+   }
+
+   synch_lock sl(m_pmutex);
+
+   if (::is_null(m_pchildren))
+   {
+
+      return false;
+
+   }
+
+   for (auto & pobjectChild : m_pchildren->m_ptra)
+   {
+
+      if (pobjectChild == pobjectDescendantCandidate)
+      {
+
+         return true;
+
+      }
+
+   }
+
+   for (auto & pobjectChild : m_pchildren->m_ptra)
+   {
+
+      sl.unlock();
+
+      if (pobjectChild->children_is(pobjectDescendantCandidate))
+      {
+
+         return true;
+
+      }
+
+      sl.lock();
+
+   }
+
+   return false;
+
+}
+
+
+void object::children_remove(::object * pobjectChild, bool bRemoveFromParent)
+{
+
+   try
+   {
+
+      synch_lock sl(m_pmutex);
+
+      if (::is_set(m_pchildren))
+      {
+
+         m_pchildren->m_ptra.remove(pobjectChild);
+
+      }
+
+   }
+   catch (...)
+   {
+
+
+   }
+
+   if (bRemoveFromParent)
+   {
+
+      try
+      {
+
+         synch_lock sl(pobjectChild->m_pmutex);
+
+         if (::is_set(pobjectChild->m_pparents))
+         {
+
+            pobjectChild->m_pparents->m_ptra.remove(this);
+
+         }
+
+      }
+      catch (...)
+      {
+
+      }
+
+   }
+
+}
+
+
+parents::parents()
+{
+
+}
+
+
+parents::~parents()
+{
+
+}
+
+
+children::children()
+{
+
+}
+
+
+children::~children()
+{
+
+}
+
+
+void children::post_quit(::object * pobjectParent)
+{
+
+   synch_lock sl(pobjectParent->m_pmutex);
+
+   try
+   {
+
+restart:
+
+      for (index i = 0; i < m_ptra.get_count(); i++)
+      {
+
+         ::object * pobject = m_ptra[i];
+
+         sl.unlock();
+
+         try
+         {
+
+            /// this is quite dangerous
+            //synch_lock slThread(pthread->m_pmutex);
+
+            pobject->post_quit();
+
+         }
+         catch (...)
+         {
+
+            sl.lock();
+
+            m_ptra.remove(pobject);
+
+            goto restart;
+
+         }
+
+         sl.lock();
+
+      }
+
+   }
+   catch (...)
+   {
+
+   }
+
+}
+
+
+#undef CHILD_SLEEP_MILLIS
+
+
+//#define CHILD_SLEEP_MILLIS 50
+
+
+::count children::_wait_quit(::object * pobjectParent)
+{
+
+   if (::is_null(pobjectParent))
+   {
+
+      return 0;
+
+   }
+
+   spa(object) ptraChildren;
+
+   string strLog;
+
+   try
+   {
+
+      synch_lock sl(pobjectParent->m_pmutex);
+
+      ptraChildren = m_ptra;
+
+      string strName = typeid(*pobjectParent).name();
+
+      strLog += "\n ";
+      strLog += "\n---------------------";
+      strLog += "\n ";
+      strLog += "\n   _wait_quit";
+      strLog += "\n      " + strName;
+      strLog += "\n      ";
+
+
+   }
+   catch (...)
+   {
+
+      return 0;
+
+   }
+
+   ::object * pobjectThread = ::get_thread();
+
+   ptraChildren.remove(pobjectThread);
+
+   ptraChildren.pred_remove([pobjectThread, pobjectParent](auto pobjectChild)
+   {
+
+      try
+      {
+
+         return pobjectChild->children_is(pobjectThread);
+
+      }
+      catch (...)
+      {
+
+      }
+
+      try
+      {
+
+         synch_lock sl(pobjectParent->m_pmutex);
+
+         pobjectParent->m_pchildren->m_ptra.remove(pobjectChild);
+
+      }
+      catch (...)
+      {
+
+         return true;
+
+      }
+
+      return true;
+
+   });
+
+   ::count cRemainingObjects = 0;
+
+   try
+   {
+
+      synch_lock sl(pobjectParent->m_pmutex);
+
+      for(index i = 0; i < ptraChildren.get_count(); i++)
+      {
+
+         sp(::object) pobjectChild = ptraChildren[i];
+
+         if (pobjectChild.is_null())
+         {
+
+            continue;
+
+         }
+
+         sl.unlock();
+
+         try
+         {
+
+            synch_lock ls(pobjectChild->m_pmutex);
+
+            sp(thread) pthreadChild = pobjectChild;
+
+            if (pthreadChild.is_set())
+            {
+
+               strLog += ::str::from(pthreadChild->get_os_int()) + " <-- thread id, ";
+
+            }
+
+            string strName = typeid(*pobjectChild.m_p).name();
+
+            strLog += strName + "\n      ";
+
+            if (::is_set(pobjectChild->m_pchildren)
+                  && pobjectChild->m_pchildren->m_ptra.has_elements())
+            {
+
+               pobjectChild->m_pchildren->_wait_quit(pobjectChild);
+
+            }
+
+            cRemainingObjects++;
+
+         }
+         catch (...)
+         {
+
+         }
+
+         sl.lock();
+
+      }
+
+   }
+   catch (...)
+   {
+
+   }
+
+   strLog += "\n---------------------\n";
+   strLog += "\n ";
+   strLog += "\n ";
+
+   ::aura::application * papp = ::aura::system::g_p;
+
+   APPTRACE("%s", strLog);
+
+   return cRemainingObjects;
+
+}
+
+
+/// returns remaining object, i.e., objects not yet destroyed
+::count children::wait_quit(::object * pobjectParent, const duration & duration)
+{
+
+   ::count cRemainingObjects = 0;
+
+   ::datetime::time timeStart = ::datetime::time::get_current_time();
+
+   ::datetime::time timeEnd = timeStart + MAX(seconds(2), duration - m_durationWait);
+
+   try
+   {
+
+      do
+      {
+
+         cRemainingObjects = _wait_quit(pobjectParent);
+
+         if (cRemainingObjects <= 0)
+         {
+
+            break;
+
+         }
+
+         Sleep(50);
+
+      }
+      while (::datetime::time::get_current_time() < timeEnd);
+
+   }
+   catch (...)
+   {
+
+   }
+
+   synch_lock sl(pobjectParent->m_pmutex);
+
+   m_durationWait += ::datetime::time::get_current_time() - timeStart;
+
+   return cRemainingObjects;
 
 }
 

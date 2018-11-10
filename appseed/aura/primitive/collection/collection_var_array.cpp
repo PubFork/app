@@ -348,8 +348,15 @@ void var_array::parse_json(const char * & pszJson, const char * pszEnd)
       pszJson++;
       return;
    }
+   ::thread * pthread = ::get_thread();
    while(true)
    {
+      if (!pthread->thread_get_run())
+      {
+
+         _throw(::exit_exception(::get_app(), exit_thread));
+
+      }
       ::var & var = add_new();
       var.parse_json(pszJson, pszEnd);
       ::str::consume_spaces(pszJson, 0, pszEnd);

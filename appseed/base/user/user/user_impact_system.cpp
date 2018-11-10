@@ -53,10 +53,12 @@ namespace user
 
    }
 
+
    bool impact_system::GetDocString(string & rString, enum DocStringIndex i) const
    {
-      //xxx return ::core::extract_sub_string(rString, m_strDocStrings, (int32_t)i);
+
       return false;
+
    }
 
 
@@ -121,7 +123,9 @@ namespace user
 
       // otherwise we will guess it may work
       return yesAttemptForeign;
+
    }
+
 
    ::user::document * impact_system::create_new_document(::create * pcreate)
    {

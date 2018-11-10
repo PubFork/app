@@ -57,7 +57,7 @@ namespace user
 
          impact_system::remove_document(pdocument);
 
-         m_pdocument = NULL;
+         m_pdocument.release();
 
       }
 
@@ -140,9 +140,12 @@ namespace user
 
       }
 
+      ASSERT_VALID(pFrame);
+
       if (pcreate->m_spCommandLine->m_varFile.is_empty()
-         || pcreate->m_spCommandLine->m_varFile.is_numeric())
+            || pcreate->m_spCommandLine->m_varFile.is_numeric())
       {
+
          // create a new ::user::document
          set_default_title(pdocument);
 
@@ -192,7 +195,7 @@ namespace user
                if (!pdocument->on_new_document())
                {
                   TRACE(::aura::trace::category_AppMsg, 0, "Error: on_new_document failed after trying "
-                     "to open a ::user::document - trying to continue.\n");
+                        "to open a ::user::document - trying to continue.\n");
                   // assume we can continue
                }
             }
@@ -204,17 +207,17 @@ namespace user
 
 //      thread* pThread = ::get_thread();
 
-if(!pcreate->m_bHold)
+      if(!pcreate->m_bHold)
       {
          pFrame->oprop("should_not_be_automatically_holded_on_initial_update_frame") = true;
       }
 
-if(bCreated)
-{
+      if(bCreated)
+      {
 
-   InitialUpdateFrame(pFrame,pdocument,bMakeVisible);
+         InitialUpdateFrame(pFrame,pdocument,bMakeVisible);
 
-}
+      }
 
       ::user::view_update_hint uh(get_app());
       uh.m_ehint = ::user::view_update_hint::hint_open_document;
@@ -228,7 +231,7 @@ if(bCreated)
    {
       string strDocName;
       if (!GetDocString(strDocName, impact_system::docName) ||
-         strDocName.is_empty())
+            strDocName.is_empty())
       {
          strDocName = System.load_string("untitled");
       }

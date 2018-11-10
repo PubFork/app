@@ -2761,7 +2761,6 @@ RetryBuildNumber:
             fork([papp]()
             {
 
-               //papp->handler()->handle(::command_france_exit);
                papp->_001FranceExit();
 
             });
@@ -2795,7 +2794,7 @@ RetryBuildNumber:
 
             }
 
-            Sleep(500);
+            thread_sleep(500);
 
             i--;
 

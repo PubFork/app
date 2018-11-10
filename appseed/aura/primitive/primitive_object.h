@@ -97,6 +97,9 @@ public:
 };
 
 
+class parents;
+class children;
+
 
 class CLASS_DECL_AURA object :
    virtual public simple_object
@@ -124,7 +127,8 @@ public:
    ::aura::application *         m_papp;
    sync_object *                 m_pmutex;
    property_set *                m_psetObject;
-   thread_ptra *                 m_pthreadrefa;
+   parents *                     m_pparents;
+   children *                    m_pchildren;
    ::id                          m_id;
 
 
@@ -147,6 +151,9 @@ public:
 
    template < typename PRED >
    inline ::thread * fork(PRED pred);
+
+   template < typename PRED >
+   inline ::thread * opt_fork(PRED pred);
 
    template < typename PRED >
    inline ::thread * delay_fork(bool * pbExecuting, int64_t * piRequestCount, ::duration duration, PRED pred);
@@ -263,10 +270,22 @@ public:
 
    virtual void on_system_event(e_system_event eevent, lparam lparam);
 
-   virtual void threadrefa_add(::thread * pthread);
-   virtual void threadrefa_post_quit();
-   virtual void threadrefa_wait(duration duration);
-   virtual void threadrefa_remove(::thread * pthread);
+   virtual void children_add(::object * pobjectChild);
+   virtual void children_post_quit();
+   virtual void children_wait_quit(duration duration);
+   virtual void children_remove(::object * pobjectChild, bool bRemoveFromParent = true);
+
+   virtual bool children_is(::object * pobjectDescendantCandidate) const;
+
+   //virtual void dependency_add(::object * pobject);
+   //virtual void dependency_remove(::object * pobject);
+
+   virtual void children_post_quit_and_wait(duration durationTimeout);
+
+   virtual void release_parents();
+
+   virtual void post_quit();
+   virtual void wait_quit(duration duration);
 
    virtual void on_request(::create * pcreate);
 

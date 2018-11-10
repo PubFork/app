@@ -1,6 +1,8 @@
 #pragma once
 
+
 #include "aura/primitive/comparison/comparison_equals.h"
+
 
 inline property & object::oprop(const char * psz)
 {
@@ -143,3 +145,34 @@ inline stream & operator >> (stream & stream, color::hls & hls)
    return stream;
 
 }
+
+
+inline duration & duration::operator = (const ::datetime::time_span & span)
+{
+
+   raw_set(span.GetTotalSeconds());
+
+   return *this;
+
+}
+
+inline duration & duration::operator += (const ::datetime::time_span & span)
+{
+
+   set(m_iSeconds + span.GetTotalSeconds(), m_iNanoseconds);
+
+   return *this;
+
+}
+
+
+inline duration & duration::operator -= (const ::datetime::time_span & span)
+{
+
+   set(m_iSeconds - span.GetTotalSeconds(), m_iNanoseconds);
+
+   return *this;
+
+}
+
+

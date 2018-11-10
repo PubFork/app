@@ -87,6 +87,7 @@ public:
 
    };
 
+   bool                                   m_bFork;
    bool                                   m_bAvoidProcFork;
    bool                                   m_bThreadToolsForIncreasedFps;
    //::duration                             m_durationRunLock;
@@ -101,7 +102,8 @@ public:
    single_lock *                          m_pslUser;
    static bool                            s_bAllocReady;
 
-   object_ptra                            m_objectptraDependent;
+   //object_ptra                            m_objectptraDependent;
+   //object_ptra                            m_objectptraRequired;
    //bool                                   m_bFastPath;
 
    //mutex *                              m_pmutex;
@@ -161,6 +163,7 @@ public:
    DWORD_PTR                                 m_dwThreadAffinityMask;
    spa(::thread_toolset)                     m_toolset;
    bool                                      m_bTemporary;
+   sp(manual_reset_event)                    m_pevSleep;
 
 
 
@@ -177,6 +180,11 @@ public:
    user_interaction_ptr_array & uiptra();
 
 
+
+
+   //virtual void thread_sleep(u32 uiMillis);
+
+
    thread_tools * tools(::multithreading::e_priority epriority);
    thread_toolset * toolset(e_tool etool);
 
@@ -186,7 +194,7 @@ public:
    ::duration set_file_sharing_violation_timeout(::duration duration);
 
 
-   virtual void threadrefa_add(::thread * pthread) override;
+   //virtual void dependant_add(::object * pobject) override;
 
    ///  \brief    starts thread on first call
    virtual void start();
@@ -385,7 +393,8 @@ public:
 
    virtual bool thread_get_run();
    virtual bool should_enable_thread();
-   virtual void post_quit();
+   virtual void post_quit() override;
+   virtual void wait_quit(::duration durationTimeout) override;
 
    virtual bool kick_thread();
 

@@ -72,8 +72,6 @@ namespace user
 
       m_bNeedLayout = false;
 
-      //m_bCreated = false;
-
       m_bLockWindowUpdate = false;
 
       m_bRedrawing = false;
@@ -123,8 +121,7 @@ namespace user
    interaction::~interaction()
    {
 
-      TRACE("::user::interaction::~interaction interaction=0x%016x %s", this, typeid(*this).name());
-
+      //TRACE("::user::interaction::~interaction interaction=0x%016x %s", this, typeid(*this).name());
 
    }
 
@@ -419,7 +416,6 @@ namespace user
    }
 
 
-
    ::user::interaction * interaction::GetTopWindow() const
    {
 
@@ -633,8 +629,6 @@ restart:
 
             if (m_pthreadUserInteraction.is_set())
             {
-
-               threadrefa_add(m_pthreadUserInteraction);
 
                m_pthreadUserInteraction->uiptra().add(this);
 
@@ -1435,14 +1429,12 @@ restart:
 
       }
 
-      single_lock sl(get_wnd() == NULL || get_wnd()->m_pimpl.is_null()
-                     || get_wnd()->m_pimpl.cast < ::user::interaction_impl >() == NULL ? NULL : get_wnd()->m_pimpl.cast < ::user::interaction_impl >()->draw_mutex(), true);
-
       m_bUserElementalOk = false;
 
-      threadrefa_post_quit();
+      children_post_quit();
 
-      threadrefa_wait(seconds(30));
+      single_lock slDraw(get_wnd() == NULL || get_wnd()->m_pimpl.is_null()
+                         || get_wnd()->m_pimpl.cast < ::user::interaction_impl >() == NULL ? NULL : get_wnd()->m_pimpl.cast < ::user::interaction_impl >()->draw_mutex(), true);
 
       try
       {
@@ -1459,7 +1451,6 @@ restart:
       {
 
       }
-
 
       try
       {
@@ -1482,7 +1473,6 @@ restart:
 
       }
 
-
       for (int32_t i = 0; i < uiptra.get_count(); i++)
       {
 
@@ -1501,7 +1491,9 @@ restart:
 
       }
 
+      children_post_quit_and_wait(one_minute());
 
+      release_parents();
 
       if (m_papp == NULL)
       {
@@ -3492,8 +3484,6 @@ restart:
       if (m_pthreadUserInteraction.is_set())
       {
 
-         threadrefa_add(m_pthreadUserInteraction);
-
          m_pthreadUserInteraction->uiptra().add(this);
 
       }
@@ -3615,8 +3605,6 @@ restart:
 
       if (m_pthreadUserInteraction.is_set())
       {
-
-         threadrefa_add(m_pthreadUserInteraction);
 
          m_pthreadUserInteraction->uiptra().add(this);
 
@@ -4407,12 +4395,30 @@ restart:
    }
 
 
+   void interaction::post_quit()
+   {
+
+      try
+      {
+
+         DestroyWindow();
+
+      }
+      catch (...)
+      {
+
+      }
+
+   }
+
 
    // for custom cleanup after WM_NCDESTROY
    void interaction::PostNcDestroy()
    {
 
       sp(::user::interaction) pui = this;
+
+      sp(::user::interaction_impl_base) pimpl = m_pimpl;
 
       {
 
@@ -4516,23 +4522,9 @@ restart:
 
       }
 
-
-      {
-
-         synch_lock sl(m_pmutex);
-
-         {
-
-            m_pimpl.release();
-
-         }
-
-      }
+      pimpl.release();
 
    }
-
-
-
 
 
    void interaction::CalcWindowRect(LPRECT lprect, UINT nAdjustType)

@@ -113,14 +113,29 @@ namespace hi5
 
       {
 
-         ::property_set set;
-
-         set["raw_http"] = true;
-
          int iRetry = 100;
 
-         while (::get_thread_run() && iRetry > 0 && (strCode = Application.http().get("https://ca2.cc/youtube_api/account/get_string?key=" + System.url().url_encode("youtube_resident." + strState), set)).is_empty())
+         string strUrl = "https://ca2.cc/api/account/get_string?key=" + System.url().url_encode("youtube_resident." + strState);
+
+         while (::get_thread_run() && iRetry > 0)
          {
+
+            {
+
+               ::property_set set;
+
+               set["raw_http"] = true;
+
+               strCode = Application.http().get(strUrl, set);
+
+               if (strCode.has_char())
+               {
+
+                  break;
+
+               }
+
+            }
 
             Sleep(1000);
 

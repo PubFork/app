@@ -55,7 +55,7 @@ namespace simpledb
 //#endif
       }
 
-      m_pserver = new db_server(m_papp);
+      m_pserver = canew(db_server(m_papp));
 
 
       m_pserver->add_client(this);
@@ -115,26 +115,23 @@ namespace simpledb
 
       }
 
-      if (m_pserver == NULL)
+      if (m_pserver.is_set())
       {
 
-         return true;
+         try
+         {
+
+            m_pserver->finalize();
+
+         }
+         catch (...)
+         {
+
+         }
+
+         m_pserver.release();
 
       }
-
-      try
-      {
-
-         m_pserver->finalize();
-
-      }
-      catch(...)
-      {
-
-      }
-
-
-      ::aura::del(m_pserver);
 
       m_pserver = NULL;
 

@@ -12,9 +12,8 @@ namespace user
       ::user::controller(papp)
    {
 
-      threadrefa_add(papp);
-
       m_pviewTopic=(::user::impact *) (int_ptr)0;
+
       m_pimpactsystem = NULL;
 
       m_bModified = FALSE;
@@ -34,16 +33,26 @@ namespace user
       // do not call delete_contents here !
 #ifdef DEBUG
       if (is_modified())
+      {
+
          TRACE(::aura::trace::category_AppMsg, 0, "Warning: destroying an unsaved document.\n");
+
+      }
 #endif
 
       // there should be no views left!
       disconnect_views();
+
       ASSERT(m_viewspa.is_empty());
 
       if (m_pimpactsystem != NULL)
+      {
+
          m_pimpactsystem->remove_document(this);
-//      ASSERT(m_pimpactsystem == NULL);     // must be detached
+
+      }
+
+      ASSERT(m_pimpactsystem == NULL);     // must be detached
 
    }
 
@@ -658,8 +667,6 @@ namespace user
       sp(::object) pthis = this;
 
       {
-
-
 
          synch_lock sl(m_pmutex);
 

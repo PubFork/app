@@ -335,11 +335,16 @@ namespace user
 } // namespace user
 
 
+#define SECOND_NANOS 1000000000
+
+
 namespace datetime
 {
 
 
    class department;
+   class time;
+   class time_span;
 
 
 } // namespace datetime
