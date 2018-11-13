@@ -81,20 +81,11 @@ namespace aura
 {
 
 
-   application_message::application_message(e_application_message esignal)
-   {
-
-      m_id = ::message::type_application;
-      m_esignal = esignal;
-      m_bOk = true;
-
-   }
-
-
    application::application() :
       m_allocer(this),
       m_mutexMatterLocator(this),
-      m_mutexStr(this)
+      m_mutexStr(this),
+      m_appptra(this)
    {
 
       if(m_papp == NULL)
@@ -178,6 +169,8 @@ namespace aura
       m_phandler = canew(::handler(this));
 
       m_bLicense = false;
+      
+      m_bIpi = true;
 
       m_bAuraProcessInitialize = false;
       m_bAuraProcessInitializeResult = false;
@@ -203,7 +196,25 @@ namespace aura
 
    }
 
+   
+   application::~application()
+   {
 
+      ::aura::del(m_puiptraFrame);
+      
+   }
+   
+
+   application_message::application_message(e_application_message esignal)
+   {
+      
+      m_id = ::message::type_application;
+      m_esignal = esignal;
+      m_bOk = true;
+      
+   }
+   
+   
    application_menu & application::applicationmenu()
    {
 
@@ -219,26 +230,6 @@ namespace aura
    }
 
 
-   application_menu_item::application_menu_item()
-   {
-
-   }
-
-
-   application_menu_item::application_menu_item(string strName, string strId) :
-      m_strName(strName),
-      m_strId(strId)
-   {
-
-   }
-
-
-   void application_menu::add_item(index iIndex, string strName, string strId)
-   {
-
-      this->set_at_grow(iIndex, application_menu_item(strName, strId));
-
-   }
 
 
    void application::application_menu_update()
@@ -266,18 +257,6 @@ namespace aura
 
    }
 
-
-   application::~application()
-   {
-      ::aura::del(m_puiptraFrame);
-//      if (m_peventReady != NULL)
-//      {
-//
-//         delete m_peventReady;
-//
-//      }
-
-   }
 
    void application::assert_valid() const
    {
@@ -2654,6 +2633,46 @@ run:
 
    }
 
+   
+   void application::release_parents()
+   {
+
+      try
+      {
+         
+         if(::is_set(m_psystem))
+         {
+         
+            m_psystem->appptra_remove(this);
+            
+         }
+         
+      }
+      catch(...)
+      {
+         
+      }
+
+      try
+      {
+         
+         if(::is_set(m_psession))
+         {
+         
+            m_psession->appptra_remove(this);
+            
+         }
+         
+      }
+      catch(...)
+      {
+         
+      }
+
+      ::thread::release_parents();
+
+   }
+   
 
    void application::pos_run()
    {
@@ -3368,7 +3387,13 @@ retry_license:
 
       sp(application) papp;
 
-      papp = Session.m_appptra.find_running_defer_try_quit_damaged(pszAppId);
+      {
+         
+         synch_lock sl(m_psession->m_pmutex);
+         
+         papp = Session.m_appptra.find_running_defer_try_quit_damaged(pszAppId);
+         
+      }
 
       if (papp.is_null())
       {
@@ -3536,7 +3561,26 @@ retry_license:
    bool application::process_init()
    {
 
-      m_psystem->m_appptra.add(this);
+      if(::is_set(m_psystem))
+      {
+         
+         m_psystem->appptra_add(this);
+         
+      }
+         
+      if(::is_set(m_psession))
+      {
+      
+         m_psession->appptra_add(this);
+         
+      }
+
+      if(::is_set(m_papp))
+      {
+         
+         m_papp->appptra_add(this);
+         
+      }
 
       if (is_system() || is_session())
       {
@@ -3815,16 +3859,21 @@ retry_license:
 
       if (!is_system() && !is_session())
       {
-
-         try
+         
+         if(m_bIpi)
          {
 
-            m_pipi = create_ipi();
+            try
+            {
 
-         }
-         catch (...)
-         {
+               m_pipi = create_ipi();
 
+            }
+            catch (...)
+            {
+
+            }
+            
          }
 
          thisok << 0.1;
@@ -4326,41 +4375,150 @@ retry_license:
 
    }
 
-
-
-   void application::term_application()
+   
+   application_ptra & application::appptra()
    {
+      
+      return m_appptra;
+      
+   }
+   
 
+   application_ptra application::get_appptra()
+   {
+      
+      synch_lock sl(m_pmutex);
+      
+      return m_appptra;
+      
+   }
+
+   
+   void application::appptra_add(::aura::application * papp)
+   {
+      
+      if(::is_null(papp))
+      {
+         
+         return;
+         
+      }
+      
+      synch_lock sl(m_pmutex);
+      
+      if(papp == this)
+      {
+         
+         return;
+         
+      }
+      
+      m_appptra.add_unique(papp);
+
+   }
+   
+   
+   void application::appptra_remove(::aura::application * papp)
+   {
+      
+      synch_lock sl(m_pmutex);
+      
       try
       {
-
-         for (auto & papp : System.m_appptra)
+         
+         for (auto & papp : m_appptra)
          {
-
+            
             try
             {
-
+               
                if (papp->m_papp == this && papp != this)
                {
-
+                  
                   papp->m_papp = NULL;
-
+                  
+               }
+               
+               if(is_session())
+               {
+                  
+                  ::aura::session * psessionThis = dynamic_cast < ::aura::session * >(this);
+                  
+                  if (papp->m_psession == psessionThis && papp != this)
+                  {
+                     
+                     papp->m_psession = NULL;
+                     
+                  }
+                  
+               }
+               
+               if(is_system())
+               {
+                  
+                  ::aura::system * psystemThis = dynamic_cast < ::aura::system * >(this);
+                  
+                  if (papp->m_psystem == psystemThis && papp != this)
+                  {
+                     
+                     papp->m_psystem = NULL;
+                     
+                  }
+                  
                }
 
             }
             catch (...)
             {
-
+               
             }
-
+            
          }
-
-         System.m_appptra.remove(this);
-
+         
       }
       catch (...)
       {
+         
+      }
 
+      m_appptra.remove(papp);
+      
+   }
+   
+   
+   void application::term_application()
+   {
+      
+      if(::is_set(m_papp))
+      {
+      
+         m_papp->appptra_remove(this);
+         
+      }
+      
+      if(::is_set(m_psession))
+      {
+
+         m_psession->appptra_remove(this);
+         
+      }
+      
+      if(::is_set(m_psystem))
+      {
+
+         m_psystem->appptra_remove(this);
+         
+      }
+      
+      try
+      {
+       
+         m_pipi.release();
+         
+      }
+      catch (...)
+      {
+       
       }
 
       try
@@ -4410,10 +4568,6 @@ retry_license:
 
 
       }
-//
-//
-//
-//      return m_iErrorCode;
 
    }
 
@@ -5153,81 +5307,6 @@ retry_license:
 
 
 
-
-
-
-   application * application_ptra::find_by_app_name(const string & strAppName)
-   {
-
-      application * papp = NULL;
-
-      for (int32_t i = 0; i < get_count(); i++)
-      {
-         try
-         {
-
-            papp = element_at(i).m_p;
-
-            if (papp == NULL)
-               continue;
-
-            if (papp->m_strAppName == strAppName)
-            {
-
-               return papp;
-
-            }
-
-         }
-         catch (...)
-         {
-
-         }
-
-      }
-
-      return NULL;
-
-
-   }
-
-
-   application * application_ptra::find_running_defer_try_quit_damaged(const string & strAppName)
-   {
-
-      sp(application) papp = find_by_app_name(strAppName);
-
-      if (papp.is_null())
-         return NULL;
-
-      if (papp->safe_is_running())
-         return papp;
-
-      try
-      {
-
-         papp->post_quit();
-
-      }
-      catch (...)
-      {
-
-      }
-
-      try
-      {
-
-         papp.release();
-
-      }
-      catch (...)
-      {
-
-      }
-
-      return NULL;
-
-   }
 
 
 

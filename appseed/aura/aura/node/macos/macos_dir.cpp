@@ -176,7 +176,7 @@ namespace macos
 
     
 
-   bool dir::is(const ::file::path & lpcszPath, ::aura::application * papp)
+   bool dir::is(const ::file::path & lpcszPath, ::aura::application * papp, bool bOptional, bool bNoCache)
    {
 
       bool bIsDir;
@@ -198,7 +198,7 @@ namespace macos
 //      }
 
 
-      if(::file::dir::system::is(lpcszPath, papp))
+      if(::file::dir::system::is(lpcszPath, papp, bOptional, bNoCache))
          return true;
 
 

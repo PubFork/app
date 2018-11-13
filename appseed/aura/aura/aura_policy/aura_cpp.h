@@ -1501,9 +1501,9 @@ typedef ::map < sp(object), sp(object), ptra, ptra > map_many;
 
 #include "aura/user/user/user.h"
 
-//#include "aura/aura/aura/aura_application_interface.h"
-#include "aura/aura/aura/aura_application.h"
+#include "aura/aura/aura/aura_application_menu.h"
 #include "aura/aura/aura/aura_application_ptra.h"
+#include "aura/aura/aura/aura_application.h"
 
 
 #include "aura/aura/aura/aura_gudo_application.inl"

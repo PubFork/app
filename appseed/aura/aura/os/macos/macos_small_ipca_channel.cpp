@@ -173,6 +173,8 @@ namespace aura
          object(papp),
          base(papp)
       {
+         
+         m_id = "::aura::ipc::rx";
 
          m_preceiver    = NULL;
 
@@ -256,8 +258,9 @@ namespace aura
 
          m_bRun = true;
 
-         m_pthread = ::fork(get_app(), [&]()
+         m_pthread = fork([&]()
                             {
+                               
                                receive();
                             });
 
@@ -362,6 +365,10 @@ namespace aura
          CFRunLoopSourceRef runLoopSource =
          CFMessagePortCreateRunLoopSource(nil, m_port, 0);
          
+         CFRunLoopRef runloop = CFRunLoopGetCurrent();
+         
+         ::get_thread()->m_runloop = runloop;
+         
          CFRunLoopAddSource(CFRunLoopGetCurrent(),
                             runLoopSource,
                             kCFRunLoopCommonModes);
@@ -375,7 +382,7 @@ namespace aura
          do
          {
             // Start the run loop but return after each source is handled.
-            SInt32    result = CFRunLoopRunInMode(kCFRunLoopDefaultMode, 2, TRUE);
+            SInt32    result = CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0.5, TRUE);
             
             // If a source explicitly stopped the run loop, or if there are no
             // sources or timers, go ahead and exit.
@@ -385,7 +392,7 @@ namespace aura
             // Check for any other exit conditions here and set the
             // done variable as needed.
          }
-         while (!done && ::get_thread_run());
+         while(!done && ::get_thread_run());
          
 //         while(m_bRun)
 //         {

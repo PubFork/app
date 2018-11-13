@@ -719,7 +719,7 @@ namespace macos
 
       void _001OnTimer(::timer * ptimer) override;
 
-      virtual void prodevian_task() override;
+      virtual void _thread_prodevian() override;
 
       virtual bool SetWindowPos(int_ptr z,int32_t x,int32_t y,int32_t cx,int32_t cy,UINT nFlags) override;
 

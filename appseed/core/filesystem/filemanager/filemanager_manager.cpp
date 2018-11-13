@@ -1022,11 +1022,11 @@ namespace filemanager
       uh.set_type(update_hint::TypeCreateBars);
       update_all_views(NULL, 0, &uh);
 
-      if (bMakeVisible)
-      {
-         uh.set_type(update_hint::TypePop);
-         update_all_views(NULL, 0, &uh);
-      }
+//      if (bMakeVisible)
+//      {
+//         uh.set_type(update_hint::TypePop);
+//         update_all_views(NULL, 0, &uh);
+//      }
 
    }
 
@@ -1249,10 +1249,19 @@ namespace filemanager
 
    bool manager::on_create_bars(simple_frame_window * pframe)
    {
-
+      
       string strToolbar;
 
       strToolbar = get_filemanager_template()->m_setToolbar[m_emode];
+
+      if(pframe->GetParent() != NULL)
+      {
+         
+         ::file::path path = strToolbar;
+         
+         strToolbar = path.folder() / ("child_" + string(path.name()));
+
+      }
 
       if (!pframe->LoadToolBar("filemanager", strToolbar))
       {

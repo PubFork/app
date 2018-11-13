@@ -103,6 +103,13 @@ namespace base
       ::aura::system(this, pappcore),
       ::axis::system(this, pappcore)
    {
+      
+      
+      m_strAppId                    = "base_system";
+      m_strAppName                  = "base_system";
+      m_strBaseSupportId            = "base_system";
+      m_strInstallToken             = "base_system";
+
 
       factory().creatable_small < ::visual::icon >();
 
@@ -706,6 +713,10 @@ error:
 
    void system::on_setting_changed(::aura::e_setting esetting)
    {
+      
+      fork([this, esetting]
+           ()
+           {
 
       sp(::user::interaction) pui;
 
@@ -724,6 +735,8 @@ error:
          pui->on_setting_changed(esetting);
 
       }
+              
+           });
 
    }
 

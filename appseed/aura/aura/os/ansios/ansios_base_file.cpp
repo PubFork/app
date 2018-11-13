@@ -205,6 +205,8 @@ string file_as_string_dup(const char * path)
    lpsz[iRead] = '\0';
 
    str.ReleaseBuffer(iRead);
+   
+   ::str::begins_eat_ci(str, "\xef\xbb\xbf");
 
    fclose(f);
 

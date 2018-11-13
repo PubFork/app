@@ -4,27 +4,7 @@
 namespace aura
 {
 
-   class CLASS_DECL_AURA  application_menu_item
-   {
-   public:
-
-      string m_strName;
-      string m_strId;
-
-      application_menu_item();
-      application_menu_item(string strName, string strId);
-
-   };
-
-
-   class CLASS_DECL_AURA application_menu :
-      public array < application_menu_item >
-   {
-   public:
-
-      void add_item(index iIndex, string strName, string strId);
-
-   };
+   
 
 
    class CLASS_DECL_AURA application :
@@ -37,7 +17,29 @@ namespace aura
    public:
 
 
+      string                                          m_strAppName;
+      string                                          m_strAppTitle;
+      string                                          m_strAppId;
+      string                                          m_strBaseSupportId;
+      string                                          m_strRoot;
+      string                                          m_strDomain;
+      string                                          m_strLocale;
+      string                                          m_strSchema;
+      string                                          m_strLibraryName;
+      string                                          m_strRelativeFolder;
+      string                                          m_strBuild;
+      string                                          m_strInstallToken;
+      string                                          m_strInstallTraceLabel;
+      string                                          m_strInstallBuild;
+      string                                          m_strHttpUserAgentToken;
+      string                                          m_strHttpUserAgentVersion;
+      stringa                                         m_straAppCategory;
+      stringa                                         m_straMatterLocatorPriority;
+      stringa                                         m_straMatterLocator;
+      bool                                            m_bLicense;
 
+
+      HINSTANCE                                       m_hinstance;
 
       sp(application_menu)                            m_papplicationmenu;
 
@@ -53,15 +55,10 @@ namespace aura
       bool                                            m_bAppHasInstallerProtected;
       bool                                            m_bAppHasInstallerChangedProtected;
       ::install::installer *                          m_pinstaller;
-      string                                          m_strInstallTraceLabel;
-      string                                          m_strInstallBuild;
-
+      
       object_ptra                                     m_objectptraSystemEvents;
 
 
-
-      stringa                                         m_straMatterLocatorPriority;
-      stringa                                         m_straMatterLocator;
 
 
 
@@ -70,7 +67,7 @@ namespace aura
       bool                                            m_bAgreeExitOk;
       bool                                            m_bFranceExit;
 
-      //sp(application)                                 m_pappimpl;
+      bool                                            m_bIpi;
       sp(ipi)                                         m_pipi;
       sp(service_base)                                m_pservice;
 
@@ -86,14 +83,9 @@ namespace aura
       bool                                            m_bAuraInitialize;
       bool                                            m_bAuraInitializeResult;
 
-      string                                          m_strHttpUserAgentToken;
-      string                                          m_strHttpUserAgentVersion;
       mutex                                           m_mutexFrame;
       ::user::interaction_spa *                       m_puiptraFrame;
 
-      string                                          m_strAppName;
-      string                                          m_strAppTitle;
-      stringa                                         m_straAppCategory;
       ::aura::allocatorsp                             m_allocer;
 
       sp(::command::command)                          m_pcommand;
@@ -110,31 +102,16 @@ namespace aura
 
       bool                                            m_bService;
 
-      string                                          m_strLibraryName;
-      string                                          m_strAppId;
-      string                                          m_strRelativeFolder;
-      string                                          m_strBuild;
-
-      HINSTANCE                                       m_hinstance;
 
 
       bool                                            m_bUpdateMatterOnInstall;
 
 
-      bool                                            m_bLicense;
-      string                                          m_strBaseSupportId;
-
-
-      string                                          m_strRoot;
-      string                                          m_strDomain;
-      string                                          m_strLocale;
-      string                                          m_strSchema;
 
       // Initial state of the application's interaction_impl; normally,
       // this is an argument to ShowWindow().
       manual_reset_event *                            m_pevAppBeg;
       manual_reset_event *                            m_pevAppEnd;
-      string                                          m_strInstallToken;
       mutex                                           m_mutexMatterLocator;
 
 
@@ -148,6 +125,7 @@ namespace aura
       ::file::dir::application_sp                     m_spdir;
       ::file::application_sp                          m_spfile;
       application_bias                                m_biasCalling;
+      application_ptra                                m_appptra;
 
 
       application();
@@ -180,8 +158,11 @@ namespace aura
 
 
       virtual void post_quit() override;
+      
+      
+      virtual void release_parents() override;
 
-
+      
       virtual object * alloc(sp(type) info);
       virtual object * alloc(const id & idType);
 
@@ -215,6 +196,14 @@ namespace aura
          }
          return pt;
       }
+
+      
+      virtual void appptra_add(::aura::application * papp);
+      virtual void appptra_remove(::aura::application * papp);
+
+      application_ptra & appptra();
+      
+      application_ptra                                get_appptra();
 
 
       virtual void on_system_event(e_system_event eevent, lparam lparam) override;

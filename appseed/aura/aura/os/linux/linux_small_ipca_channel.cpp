@@ -68,17 +68,20 @@ namespace aura
 
          m_strBaseChannel = pszChannel;
 
-         //Application.simple_message_box(NULL, Application.m_strAppName + string(" : tx::open : ")+pszChannel, MB_OK);
-
          return true;
 
       }
+      
 
       bool tx::close()
       {
 
          if(m_iQueue < 0)
+         {
+            
             return true;
+            
+         }
 
          m_iQueue = -1;
 
@@ -233,8 +236,6 @@ namespace aura
          {
             return false;
          }
-
-         //Application.simple_message_box(NULL, Application.m_strAppName + string(" : rx::create : ")+pszChannel, MB_OK);
 
          start_receiving();
 

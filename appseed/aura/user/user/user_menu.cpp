@@ -1366,15 +1366,25 @@ namespace user
 
          m_puiMenuNotify->on_command_probe(&command);
 
-         if (pitem->m_pmenu != NULL)
-         {
-
-            pitem->m_pmenu->update_command(pitem);
-
-         }
-
       }
 
+      for (command.m_iIndex = 0; command.m_iIndex < command.m_iCount; command.m_iIndex++)
+      {
+         
+         menu_item * pitem = pitemParent->m_spitema->element_at(command.m_iIndex);
+         
+         command.m_id = pitem->m_id;
+         
+         command.m_puiOther = pitem->m_pui;
+         
+         if (pitem->m_pmenu != NULL)
+         {
+            
+            pitem->m_pmenu->update_command(pitem);
+            
+         }
+         
+      }
       if (command.m_bEnableChanged || command.m_bRadioChanged)
       {
 

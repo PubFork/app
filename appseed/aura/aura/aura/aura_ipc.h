@@ -127,7 +127,7 @@ namespace aura
          bool                 m_bRunning;
          bool                 m_bRun;
          thread *             m_pthread;
-
+         
 #endif
 
 

@@ -1,21 +1,21 @@
-﻿#include "framework.h"
+#include "framework.h"
 #include "framework.h" // from "axis/net/net_sockets.h"
 #include "fiasco_finder.h"
-
-//#ifndef WINDOWS
-//#include "ft2build.h"
-//#include FT_FREETYPE_H
-//#endif
 
 
 namespace axis
 {
 
 
-
    system::system(::aura::application * papp, app_core * pappcore):
       aura::system(this, pappcore)
    {
+      
+      m_strAppId                    = "axis_system";
+      m_strAppName                  = "axis_system";
+      m_strBaseSupportId            = "axis_system";
+      m_strInstallToken             = "axis_system";
+
 
       m_datakey.m_bLocalData = true;
 
@@ -168,7 +168,7 @@ namespace axis
    void system::term()
    {
 
-      __wait_threading_count_except(this,::millis((5000) * 77));
+      //__wait_threading_count_except(this,::millis((5000) * 77));
 
       try
       {
@@ -247,9 +247,12 @@ namespace axis
    void system::term_application()
    {
 
-      __wait_threading_count(::millis((5000) * 8));
+//      __wait_threading_count(::millis((5000) * 8));
 
       axis::application::term_application();
+      
+      ::aura::del(m_phtml);
+      
       try
       {
 

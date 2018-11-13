@@ -127,9 +127,9 @@ namespace userstack
       if(::str::begins_eat(strId, "app:"))
       {
 
-         ::aura::application * pappTab = NULL;
+         sp(::aura::application) pappTab;
 
-         if(Session.m_mapApplication.Lookup("application:" + strId, pappTab))
+         if(Session.appptra().lookup("application:" + strId, pappTab))
          {
             Session.m_pappCurrent = pappTab;
             //Session.m_pappCurrent = pappTab;
@@ -202,9 +202,9 @@ namespace userstack
       if(::str::begins_eat(strId, "app:"))
       {
 
-         ::aura::application * pappTab = NULL;
+         sp(::aura::application) pappTab;
 
-         if(!Session.m_mapApplication.Lookup("application:" + strId, pappTab))
+         if(!Session.appptra().lookup("application:" + strId, pappTab))
          {
 
             application_bias * pbiasCreate = new application_bias;
@@ -243,7 +243,7 @@ namespace userstack
 
          sp(::aura::application) pappCurrent = Session.m_pappCurrent;
 
-         Application.m_mapApplication[strId] = pappCurrent;
+         Application.appptra_add(pappCurrent);
 
          string strTypeId = typeid(*pappCurrent.m_p).name();
 

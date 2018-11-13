@@ -121,6 +121,7 @@ public:
    };
 
 
+   ::id                          m_id;
    uint64_t                      m_ulFlags;
    factory_item_base *           m_pfactoryitembase;
    void *                        m_pthis;
@@ -129,7 +130,6 @@ public:
    property_set *                m_psetObject;
    parents *                     m_pparents;
    children *                    m_pchildren;
-   ::id                          m_id;
 
 
    object();
@@ -273,7 +273,7 @@ public:
    virtual void children_add(::object * pobjectChild);
    virtual void children_post_quit();
    virtual void children_wait_quit(duration duration);
-   virtual void children_remove(::object * pobjectChild, bool bRemoveFromParent = true);
+   virtual void children_remove(::object * pobjectChild);
 
    virtual bool children_is(::object * pobjectDescendantCandidate) const;
 
@@ -283,6 +283,7 @@ public:
    virtual void children_post_quit_and_wait(duration durationTimeout);
 
    virtual void release_parents();
+   virtual void release_children();
 
    virtual void post_quit();
    virtual void wait_quit(duration duration);

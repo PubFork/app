@@ -193,8 +193,8 @@ namespace core
       virtual bool      get_monitor_rect(index iMonitor,LPRECT lprect) override;
 
 
-      virtual void register_bergedge_application(::aura::application * papp);
-      virtual void unregister_bergedge_application(::aura::application * papp);
+//      virtual void register_bergedge_application(::aura::application * papp);
+//      virtual void unregister_bergedge_application(::aura::application * papp);
 
       virtual ::aura::application * application_get(const char * pszAppId, bool bCreate = true, bool bSynch = true, application_bias * pbiasCreate = NULL);
 

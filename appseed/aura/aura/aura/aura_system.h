@@ -51,7 +51,6 @@ namespace aura
 
       ::file::path                                 m_pathConfig;
       ::file::path                                 m_pathCa2Config;
-      pointer_array < ::aura::application * >      m_appptra;
 
 
       sp(class ::datetime::department)             m_pdatetime;
@@ -196,7 +195,6 @@ namespace aura
       virtual ~system();
 
 
-      application_ptra                                get_appptra();
 
 
       //spa(::aura::session)                         &  basesessionptra();
@@ -307,7 +305,7 @@ namespace aura
       virtual void discard_to_factory(::object * pca);
 
 
-
+      ::aura::library * get_library(const char * pszLibrary, bool bOpenCa2 = false);
 
 
       virtual UINT os_post_to_all_threads(UINT uiMessage,WPARAM wparam = 0,lparam lparam = 0);
@@ -340,6 +338,7 @@ namespace aura
       virtual bool is_system() override;
 
 
+      
 
       static inline ::id id(const ::std_type_info & info);
       static inline ::id id(const char * psz);

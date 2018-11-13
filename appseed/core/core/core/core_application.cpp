@@ -228,8 +228,6 @@ namespace core
    }
 
 
-
-
    bool application::init1()
    {
 
@@ -244,7 +242,6 @@ namespace core
 
       }
 
-
       if (!initialize1_wndfrm())
       {
 
@@ -254,16 +251,7 @@ namespace core
 
       }
 
-
       m_dwAlive = ::get_tick_count();
-
-      if (!is_system() && !is_session())
-      {
-
-         Session.register_bergedge_application(this);
-
-      }
-
 
       if (!initialize1_userfs())
       {
@@ -274,8 +262,6 @@ namespace core
 
       }
 
-
-      //if (!is_system() && !is_session() && !is_installing() && !is_unstalling())
       if (!is_system() && !is_session())
       {
 
@@ -567,22 +553,6 @@ namespace core
 
    void application::term_application()
    {
-
-      try
-      {
-
-         if (!is_system())
-         {
-
-            Session.unregister_bergedge_application(this);
-
-         }
-
-      }
-      catch (...)
-      {
-
-      }
 
       try
       {
@@ -2371,9 +2341,6 @@ namespace core
 
       ::base::application::dump(dumpcontext);
 
-      //dumpcontext << "\nm_lpCmdLine = " << m_strCmdLine;
-      //dumpcontext << "\nm_nCmdShow = " << m_nCmdShow;
-      //dumpcontext << "\nm_pszAppName = " << m_strAppName;
       dumpcontext << "\nm_bHelpMode = " << m_bHelpMode;
       dumpcontext << "\nm_pszHelpFilePath = " << m_strHelpFilePath;
       dumpcontext << "\nm_pszProfileName = " << m_strProfileName;

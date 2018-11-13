@@ -25,19 +25,19 @@ namespace core
       ::thread(papp)
    {
 
+      m_strAppId                    = "core_session";
+      m_strAppName                  = "core_session";
+      m_strBaseSupportId            = "core_session";
+      m_strInstallToken             = "core_session";
+
       m_puiLastUserInputPopup = NULL;
 
       m_pdocs = create_session_docs();
 
       m_bLicense				               = false;
 
-      m_strAppName                        = "bergedge";
-
       m_puserex                           = NULL;
 
-      m_strAppName         = "session";
-      m_strBaseSupportId   = "ca2_bergedge";
-      m_strInstallToken    = "session";
       m_bLicense           = false;
       m_eexclusiveinstance = ExclusiveInstanceNone;
 
@@ -694,16 +694,14 @@ namespace core
    ::aura::application * session::application_get(const char * pszAppId, bool bCreate, bool bSynch, application_bias * pbiasCreate)
    {
 
-      ::aura::application * papp = NULL;
+      sp(::aura::application) papp;
 
-      if(m_psession->m_mapApplication.Lookup(string(pszAppId),papp))
+      if(m_psession->appptra().lookup(pszAppId,papp))
       {
 
          return papp;
 
       }
-      else
-      {
 
          if(!bCreate)
             return NULL;
@@ -749,20 +747,16 @@ namespace core
 
          }
 
-         if(&App(papp) == NULL)
+         if(&App(papp.m_p) == NULL)
          {
-
-            ::aura::del(papp);
 
             return NULL;
 
          }
 
-         m_psession->m_mapApplication.set_at(string(pszAppId), papp);
+         m_psession->appptra_add(papp);
 
          return papp;
-
-      }
 
    }
 
@@ -829,9 +823,9 @@ namespace core
    void session::set_app_title(const char * pszAppId, const char * pszTitle)
    {
 
-      ::aura::application * papp = NULL;
+      sp(::aura::application) papp;
 
-      if(m_psession->m_mapApplication.Lookup(string(pszAppId), papp) && papp != NULL)
+      if(m_psession->appptra().lookup(pszAppId, papp) && papp.is_set())
       {
 
          //sp(::bergedge::pane_view) ppaneview = get_document()->get_typed_view < ::bergedge::pane_view >();
@@ -949,55 +943,6 @@ namespace core
       ::core::application::main();
 
    }
-
-
-   void session::register_bergedge_application(::aura::application * papp)
-   {
-
-      retry_single_lock rsl(m_pmutex,millis(84),millis(84));
-
-      if(papp == NULL || is_null_ref(App(papp)))
-         return;
-
-      Session.m_appptra.add_unique(papp);
-
-      //if (System.is_installing() || System.is_unstalling())
-      {
-
-         // System.m_bDoNotExitIfNoApplications = false;
-
-      }
-      //else
-      if(!papp->is_session() && !papp->is_system() && !papp->is_serviceable())
-      {
-
-         System.m_bDoNotExitIfNoApplications = false;
-
-      }
-
-   }
-
-
-   void session::unregister_bergedge_application(::aura::application * papp)
-   {
-
-      {
-
-         synch_lock rsl(m_pmutex);
-
-         m_appptra.remove(papp);
-
-      }
-
-      ::get_thread()->kick_thread();
-
-      kick_thread();
-
-      System.kick_thread();
-
-   }
-
-
 
 
    ::core::session * session::query_bergedge()

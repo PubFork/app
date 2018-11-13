@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 CLASS_DECL_AURA IDTHREAD get_current_thread_id();
@@ -40,7 +40,7 @@ CLASS_DECL_AURA int_bool __thread_set_data(IDTHREAD thread,uint32_t dwIndex,void
 
 //mq * __get_mq();
 //mq * __get_mq(IDTHREAD hthread);
-void __clear_mq();
+void __clear_mq(bool bClose);
 
 
 

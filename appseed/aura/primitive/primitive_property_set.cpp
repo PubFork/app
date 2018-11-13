@@ -621,18 +621,29 @@ void property_set::skip_json(const char * & pszJson)
 
 void property_set::skip_json(const char * & pszJson, const char * pszEnd)
 {
+   
    ::str::consume_spaces(pszJson, 0, pszEnd);
+   
    if (*pszJson == '\0')
    {
+      
       return;
+      
    }
+   
    ::str::consume(pszJson, "{", 1, pszEnd);
+   
    ::str::consume_spaces(pszJson, 0, pszEnd);
+   
    if (*pszJson == '}')
    {
+      
       pszJson++;
+      
       return;
+      
    }
+   
    while (true)
    {
 
@@ -643,23 +654,36 @@ void property_set::skip_json(const char * & pszJson, const char * pszEnd)
       property::skip_json_value(pszJson, pszEnd);
 
       ::str::consume_spaces(pszJson, 0, pszEnd);
+      
       if (*pszJson == ',')
       {
+         
          pszJson++;
+         
          continue;
+         
       }
       else if (*pszJson == '}')
       {
+         
          pszJson++;
+         
          return;
+         
       }
       else
       {
+         
          string str = "not expected character : ";
+         
          str += pszJson;
+      
          _throw(simple_exception(::get_app(), str));
+    
       }
+      
    }
+   
 }
 
 

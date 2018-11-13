@@ -628,6 +628,8 @@
 		9A0974881F223E5000CFA833 /* apple_ns_exception.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A0974841F223E5000CFA833 /* apple_ns_exception.h */; };
 		9A0AA3C21FDD849600C3A7A6 /* ios_windowing.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A0AA3C01FDD849600C3A7A6 /* ios_windowing.cpp */; };
 		9A0AA3C31FDD849600C3A7A6 /* ios_windowing.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A0AA3C11FDD849600C3A7A6 /* ios_windowing.h */; };
+		9A0CD8F4219A0C5600626173 /* aura_application_ptra.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A0CD8F3219A0C5600626173 /* aura_application_ptra.cpp */; };
+		9A0CD8F5219A0C5600626173 /* aura_application_ptra.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A0CD8F3219A0C5600626173 /* aura_application_ptra.cpp */; };
 		9A1641E419C4A4CE00966C5E /* aura_c.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163DD119C4A4CD00966C5E /* aura_c.h */; };
 		9A1641E519C4A4CE00966C5E /* aura_cpp.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163DD219C4A4CD00966C5E /* aura_cpp.h */; };
 		9A1641E619C4A4CE00966C5E /* aura_policy.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163DD319C4A4CD00966C5E /* aura_policy.h */; };
@@ -1637,6 +1639,10 @@
 		9A706D7B1FFE62FA00A78618 /* RoundWindowFrameView.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A706D731FFE62F800A78618 /* RoundWindowFrameView.h */; };
 		9A706D7D1FFE62FA00A78618 /* RoundWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A706D751FFE62F900A78618 /* RoundWindow.h */; };
 		9A706D801FFE62FA00A78618 /* round_window.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A706D781FFE62FA00A78618 /* round_window.h */; };
+		9A778202219AD1CE0062DAD9 /* aura_application_menu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A778200219AD1CE0062DAD9 /* aura_application_menu.cpp */; };
+		9A778203219AD1CE0062DAD9 /* aura_application_menu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A778200219AD1CE0062DAD9 /* aura_application_menu.cpp */; };
+		9A778204219AD1CE0062DAD9 /* aura_application_menu.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A778201219AD1CE0062DAD9 /* aura_application_menu.h */; };
+		9A778205219AD1CE0062DAD9 /* aura_application_menu.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A778201219AD1CE0062DAD9 /* aura_application_menu.h */; };
 		9A7867C92173BCE9008A1B6D /* aura_runnable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A7B322E2168518A004AD1E9 /* aura_runnable.cpp */; };
 		9A7867CA2173BD0E008A1B6D /* compress_zip_is_dir.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A7B33B021686499004AD1E9 /* compress_zip_is_dir.cpp */; };
 		9A7B32332168518B004AD1E9 /* aura_runnable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A7B322E2168518A004AD1E9 /* aura_runnable.cpp */; };
@@ -1986,6 +1992,8 @@
 		9AB3AB50213D5F1B0076237D /* draw2d_draw2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AE47FAC20D09B0400648DFD /* draw2d_draw2d.cpp */; };
 		9AB423B5203D20E600EA1483 /* apple_process.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AB423AF203D20E500EA1483 /* apple_process.cpp */; };
 		9AB423B6203D20ED00EA1483 /* apple_process.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AB423AF203D20E500EA1483 /* apple_process.cpp */; };
+		9AB7758021979DBB00759787 /* visual_text_box.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AB7757A21979DBA00759787 /* visual_text_box.cpp */; };
+		9AB7758121979DBB00759787 /* visual_text_box.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AB7757F21979DBA00759787 /* visual_text_box.h */; };
 		9AB8C85B1EA98EA0007670A6 /* netserver_socket_handler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AB8C8581EA98EA0007670A6 /* netserver_socket_handler.cpp */; };
 		9AB8C85C1EA98EA0007670A6 /* netserver_socket_thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AB8C8591EA98EA0007670A6 /* netserver_socket_thread.cpp */; };
 		9AB8C85D1EA98EA0007670A6 /* netserver_socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AB8C85A1EA98EA0007670A6 /* netserver_socket.cpp */; };
@@ -2831,6 +2839,7 @@
 		9A0AA3C01FDD849600C3A7A6 /* ios_windowing.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ios_windowing.cpp; sourceTree = "<group>"; };
 		9A0AA3C11FDD849600C3A7A6 /* ios_windowing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ios_windowing.h; sourceTree = "<group>"; };
 		9A0AA3C91FDD8AA500C3A7A6 /* os_windowing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = os_windowing.h; sourceTree = "<group>"; };
+		9A0CD8F3219A0C5600626173 /* aura_application_ptra.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = aura_application_ptra.cpp; sourceTree = "<group>"; };
 		9A12322A1F9E933400BBECF8 /* axisidn.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = axisidn.xcodeproj; path = ../../../third/appseed/idn/axisidn.xcodeproj; sourceTree = "<group>"; };
 		9A163DD119C4A4CD00966C5E /* aura_c.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aura_c.h; sourceTree = "<group>"; };
 		9A163DD219C4A4CD00966C5E /* aura_cpp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aura_cpp.h; sourceTree = "<group>"; };
@@ -3803,6 +3812,8 @@
 		9A706D761FFE62F900A78618 /* round_window.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = round_window.mm; path = ios/round_window.mm; sourceTree = "<group>"; };
 		9A706D771FFE62FA00A78618 /* RoundViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = RoundViewController.mm; path = ios/RoundViewController.mm; sourceTree = "<group>"; };
 		9A706D781FFE62FA00A78618 /* round_window.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = round_window.h; path = ios/round_window.h; sourceTree = "<group>"; };
+		9A778200219AD1CE0062DAD9 /* aura_application_menu.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = aura_application_menu.cpp; sourceTree = "<group>"; };
+		9A778201219AD1CE0062DAD9 /* aura_application_menu.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = aura_application_menu.h; sourceTree = "<group>"; };
 		9A7867CB2173C1B9008A1B6D /* metrowin_interaction_impl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = metrowin_interaction_impl.cpp; sourceTree = "<group>"; };
 		9A7B322E2168518A004AD1E9 /* aura_runnable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = aura_runnable.cpp; sourceTree = "<group>"; };
 		9A7B33AB21686498004AD1E9 /* compress_zip_is_dir.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = compress_zip_is_dir.h; sourceTree = "<group>"; };
@@ -3979,6 +3990,8 @@
 		9AB169D221223B7500E84DDF /* file_cpp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = file_cpp.cpp; sourceTree = "<group>"; };
 		9AB169D321223B7500E84DDF /* file_cpp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = file_cpp.h; sourceTree = "<group>"; };
 		9AB423AF203D20E500EA1483 /* apple_process.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = apple_process.cpp; sourceTree = "<group>"; };
+		9AB7757A21979DBA00759787 /* visual_text_box.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = visual_text_box.cpp; sourceTree = "<group>"; };
+		9AB7757F21979DBA00759787 /* visual_text_box.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = visual_text_box.h; sourceTree = "<group>"; };
 		9AB8711B1F3E47F10007F324 /* primitive_handler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = primitive_handler.cpp; sourceTree = "<group>"; };
 		9AB8711D1F3E4D9B0007F324 /* primitive_object.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = primitive_object.cpp; sourceTree = "<group>"; };
 		9AB8C8581EA98EA0007670A6 /* netserver_socket_handler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = netserver_socket_handler.cpp; sourceTree = "<group>"; };
@@ -5973,6 +5986,8 @@
 		9A2A53211F1FEDFD001AB0F8 /* visual */ = {
 			isa = PBXGroup;
 			children = (
+				9AB7757A21979DBA00759787 /* visual_text_box.cpp */,
+				9AB7757F21979DBA00759787 /* visual_text_box.h */,
 				9AD1860A1F9C2982001CEA8E /* visual.inl */,
 				9A2A53231F1FEDFD001AB0F8 /* visual.h */,
 				9A4BE0D51FFED87B00DED594 /* visual_ios_image_mm.mm */,
@@ -6683,7 +6698,6 @@
 				9A6FAD861F5C768E00AF31B2 /* primitive_factory.cpp */,
 				9AB8711B1F3E47F10007F324 /* primitive_handler.cpp */,
 				9A6FAD871F5C768E00AF31B2 /* primitive_id_space.cpp */,
-				9A6FAD881F5C768E00AF31B2 /* primitive_id.cpp */,
 				9A6FAD891F5C768E00AF31B2 /* primitive_interlocked_long_pulse.cpp */,
 				9A6FAD8A1F5C768E00AF31B2 /* primitive_interlocked_long.cpp */,
 				9A6FAD8B1F5C768E00AF31B2 /* primitive_job.cpp */,
@@ -6720,6 +6734,7 @@
 				9AE722C917E83B69003E47F9 /* primitive_handler.h */,
 				9AE722D317E83B69003E47F9 /* primitive_edit.h */,
 				9AE722D517E83B69003E47F9 /* primitive_factory.h */,
+				9A6FAD881F5C768E00AF31B2 /* primitive_id.cpp */,
 				9AE722D717E83B69003E47F9 /* primitive_id.h */,
 				9AE722D917E83B69003E47F9 /* primitive_id_space.h */,
 				9AE722DB17E83B69003E47F9 /* primitive_interlocked_long.h */,
@@ -6810,7 +6825,10 @@
 				9AF4C24C1F836F8200197385 /* aura_application.h */,
 				9AF4C24D1F836F8200197385 /* aura_application_common.h */,
 				9AF4C24E1F836F8200197385 /* aura_application_heap.h */,
+				9A778200219AD1CE0062DAD9 /* aura_application_menu.cpp */,
+				9A778201219AD1CE0062DAD9 /* aura_application_menu.h */,
 				9AF4C24F1F836F8200197385 /* aura_application_message.h */,
+				9A0CD8F3219A0C5600626173 /* aura_application_ptra.cpp */,
 				9AF4C2501F836F8200197385 /* aura_application_ptra.h */,
 				9AF4C2511F836F8200197385 /* aura_application_signal_details.h */,
 				9AF4C2521F836F8200197385 /* aura_argcargv.cpp */,
@@ -7285,6 +7303,7 @@
 				077A07471B4D7403001C85FF /* data_data_container.h in Headers */,
 				077A07481B4D7403001C85FF /* file_dir.h in Headers */,
 				077A07491B4D7403001C85FF /* primitive_check.h in Headers */,
+				9A778205219AD1CE0062DAD9 /* aura_application_menu.h in Headers */,
 				077A074A1B4D7403001C85FF /* collection_comparable_eq_array.h in Headers */,
 				9A6FAD011F5C75A300AF31B2 /* RoundWindowApp.h in Headers */,
 				077A074C1B4D7403001C85FF /* math_count.h in Headers */,
@@ -7836,6 +7855,7 @@
 				9A6FAE901F5C777800AF31B2 /* compare.h in Headers */,
 				9A41734820004E7A0056265A /* symhacks.h in Headers */,
 				9A0256881EA593AC003C82CF /* netserver_socket_thread.h in Headers */,
+				9A778204219AD1CE0062DAD9 /* aura_application_menu.h in Headers */,
 				9A16427519C4A4CE00966C5E /* ansios_pipe.h in Headers */,
 				9A41734120004E7A0056265A /* sha.h in Headers */,
 				9AF4C3AD1F836F8400197385 /* aura_simple_app.h in Headers */,
@@ -8103,6 +8123,7 @@
 				07F5B1B8184A3B430092C3E1 /* file_composite.h in Headers */,
 				9A6FAC021F5C70D200AF31B2 /* message_id.h in Headers */,
 				9A1EDB6119C841D600F5CCE8 /* service_plain_service.h in Headers */,
+				9AB7758121979DBB00759787 /* visual_text_box.h in Headers */,
 				9A2A53441F1FEDFD001AB0F8 /* draw2d_palette.h in Headers */,
 				07B094BD18495C2A007A0560 /* collection_deque.h in Headers */,
 				9AE7257217E83B69003E47F9 /* primitive_object.h in Headers */,
@@ -8893,6 +8914,7 @@
 				9AF4C3DE1F836FD100197385 /* aura_app_core.cpp in Sources */,
 				07EDC2791B4E427700AF8928 /* ios_MessageBoxA_W.mm in Sources */,
 				9AF4C40D1F83702B00197385 /* aura_machine_event_data.cpp in Sources */,
+				9A778203219AD1CE0062DAD9 /* aura_application_menu.cpp in Sources */,
 				077A05C11B4D7403001C85FF /* str_ch.cpp in Sources */,
 				9A6FB0CD1F5C7D5400AF31B2 /* ios_time.cpp in Sources */,
 				9A9578F61F62249500623508 /* str_c.cpp in Sources */,
@@ -8958,6 +8980,7 @@
 				9A6FB0C71F5C7D5400AF31B2 /* ios_multithreading.cpp in Sources */,
 				9A9579081F62249500623508 /* str_to_integer.cpp in Sources */,
 				077A05C51B4D7403001C85FF /* str_ch_class.cpp in Sources */,
+				9A0CD8F5219A0C5600626173 /* aura_application_ptra.cpp in Sources */,
 				9A95792C1F6224C700623508 /* datetime.cpp in Sources */,
 				9A9579241F6224C700623508 /* datetime_duration.cpp in Sources */,
 				9A95794A1F62251C00623508 /* net_address.cpp in Sources */,
@@ -9238,6 +9261,7 @@
 				9A6FAC4A1F5C713E00AF31B2 /* macos_application.cpp in Sources */,
 				9A6FAE811F5C775100AF31B2 /* data_data_listener.cpp in Sources */,
 				9AF4C3AE1F836F8400197385 /* aura_simple_log.cpp in Sources */,
+				9AB7758021979DBB00759787 /* visual_text_box.cpp in Sources */,
 				9A6FAC541F5C713E00AF31B2 /* macos_util.cpp in Sources */,
 				9AF4C3521F836F8300197385 /* aura_file_watcher_impl.cpp in Sources */,
 				9A6FABD41F5C70BE00AF31B2 /* exception_invalid_index.cpp in Sources */,
@@ -9245,6 +9269,7 @@
 				9AF4C3C11F836F8400197385 /* aura_template.cpp in Sources */,
 				9A6FACED1F5C71EC00AF31B2 /* process_pipe.cpp in Sources */,
 				9A6FADEC1F5C76BD00AF31B2 /* math_value.cpp in Sources */,
+				9A0CD8F4219A0C5600626173 /* aura_application_ptra.cpp in Sources */,
 				9A1EDB6019C841D600F5CCE8 /* service_plain_service.cpp in Sources */,
 				9A6FB0B11F5C7A9B00AF31B2 /* xml_parse_info.cpp in Sources */,
 				9AF4C33B1F836F8300197385 /* aura_cpu_architecture.cpp in Sources */,
@@ -9462,6 +9487,7 @@
 				9AD1860F1F9C2983001CEA8E /* visual_imaging.cpp in Sources */,
 				9A6FAE461F5C772700AF31B2 /* geometry_geometry.cpp in Sources */,
 				9A6FACC91F5C71AF00AF31B2 /* macos_launcher.cpp in Sources */,
+				9A778202219AD1CE0062DAD9 /* aura_application_menu.cpp in Sources */,
 				07B0953618495C2B007A0560 /* str_ch_class.cpp in Sources */,
 				9A6FAB401F5C707800AF31B2 /* fontopus_user.cpp in Sources */,
 				9AD1863E1F9C308C001CEA8E /* graphics_window_buffer.cpp in Sources */,

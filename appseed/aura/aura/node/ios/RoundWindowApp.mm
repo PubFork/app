@@ -79,7 +79,7 @@ plane_system * create_plane_system();
 @end
 
 
-void ns_application_main(int argc, char * argv[])
+void ns_application_main(int argc, char * argv[], const char * pszCommandLine)
 {
    
    @autoreleasepool

@@ -2819,20 +2819,6 @@ skip:
 
       memory_size_t iNewBufferSize = psz - pszValueStart;
 
-
-      //if (iNewBufferSize > iBufferSize)
-      //{
-
-      //   *ppsz = (char *)memory_alloc(iNewBufferSize + 1);
-
-      //}
-
-      //strncpy(*ppsz, pszValueStart, iNewBufferSize);
-
-      //(*ppsz)[iNewBufferSize] = '\0';
-
-      //iBufferSize = iNewBufferSize;
-
       psz++;
 
       pszXml = psz;

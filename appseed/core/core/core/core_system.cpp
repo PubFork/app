@@ -38,6 +38,12 @@ namespace core
       m_mutex(this)
    {
 
+      
+      m_strAppId                    = "core_system";
+      m_strAppName                  = "core_system";
+      m_strBaseSupportId            = "core_system";
+      m_strInstallToken             = "core_system";
+
       m_phistory = NULL;
       m_ppatch = new core::patch();
       g_pszCooperativeLevel = "core";

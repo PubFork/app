@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 #include "base/user/simple_ui/simple_ui_style.h"
@@ -62,13 +62,13 @@ namespace hotplugin
       virtual ~plugin();
 
 
-      virtual void install_message_routing(::message::sender * psender);
+      virtual void install_message_routing(::message::sender * psender) override;
 
       // host should implement
       virtual bool         open_link(const string & strLink,const string & pszTarget);
       virtual bool         reload_plugin();
 
-      virtual void delete_this();
+      virtual void delete_this() override;
 
       // Host location is not the updated url - if there is a way to update the url and
       // maintain the same plugin instance, what would lead to an out-of-date location url.
@@ -82,16 +82,16 @@ namespace hotplugin
       virtual oswindow         get_host_window();
 
       using ::simple_ui::interaction::ClientToScreen;
-      virtual bool ClientToScreen(POINT * ppt);
+      virtual bool ClientToScreen(POINT * ppt) override;
 
       using ::simple_ui::interaction::ScreenToClient;
-      virtual bool ScreenToClient(POINT * ppt);
+      virtual bool ScreenToClient(POINT * ppt) override;
 
       using ::simple_ui::interaction::GetWindowRect;
-      virtual bool GetWindowRect(RECT64 * prect);
+      virtual bool GetWindowRect(RECT64 * prect) override;
 
       using ::simple_ui::interaction::GetClientRect;
-      virtual bool GetClientRect(RECT64 * lprect);
+      virtual bool GetClientRect(RECT64 * lprect) override;
 
 
 
@@ -131,7 +131,7 @@ namespace hotplugin
       using ::user::interaction::message_handler;
       virtual int32_t x11_message_handler(void * pevent);
 #endif
-      virtual void message_handler(::message::base * pbase);
+      virtual void message_handler(::message::base * pbase) override;
       virtual void plugin_message_handler(UINT message, WPARAM wparam, LPARAM lparam, bool bEnsureTx);
       virtual void plugin_message_handler(MESSAGE * pmsg,bool bEnsureTx);
 
@@ -160,7 +160,7 @@ namespace hotplugin
 
       virtual void set_status(const char * pszStatus);
 
-      virtual void restart_aura_ipc();
+      virtual void restart_aura_ipc() override;
 
       virtual void ensure_bitmap_data(int32_t cx, int32_t cy, bool bCreateFile);
 

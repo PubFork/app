@@ -101,7 +101,18 @@ namespace multithreading
                }
 
             }
-
+            
+            try
+            {
+               
+               pthread->release_parents();
+               
+            }
+            catch (...)
+            {
+               
+            }
+            
             __node_term_thread(pthread);
 
             ::multithreading::__node_on_term_thread(pthread);
@@ -126,17 +137,6 @@ namespace multithreading
 
             }
             catch(...)
-            {
-
-            }
-
-            try
-            {
-
-               pthread->release_parents();
-
-            }
-            catch (...)
             {
 
             }

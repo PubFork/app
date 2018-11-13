@@ -358,7 +358,13 @@ bool app_core::ini()
    }
 
 #endif
+   
+   string strNoDock;
+   
+   
+   
 
+                             
    get_command_line_param(strAppId, strCommandLine, "app");
 
    if (strAppId.is_empty())
@@ -1436,7 +1442,7 @@ void app_core::run()
 
       m_psystem->startup_command(m_pmaindata->m_pmaininitdata);
 
-      ns_application_main(m_pmaindata->m_argc, m_pmaindata->m_argv);
+      ns_application_main(m_pmaindata->m_argc, m_pmaindata->m_argv, m_strCommandLine);
 
    }
 

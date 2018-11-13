@@ -1220,7 +1220,7 @@ retry_license:
    string userex::get_os_desktop_theme()
    {
 
-      return get_os_desktop_theme();
+      return impl_get_os_desktop_theme();
 
    }
 
@@ -1726,6 +1726,12 @@ retry_license:
 
 #else
 
+
+     void userex::enable_wallpaper_change_notification()
+   {
+
+   }
+
    bool userex::impl_set_wallpaper(index iScreen, string strLocalImagePath)
    {
 
@@ -1739,6 +1745,28 @@ retry_license:
       return macos_get_user_wallpaper((int)iScreen);
 
    }
+
+ 
+
+
+
+   string userex::impl_get_os_desktop_theme()
+   {
+
+      return "";
+
+   }
+
+
+   bool userex::impl_set_os_desktop_theme(string strTheme)
+   {
+
+      UNREFERENCED_PARAMETER(strTheme);
+
+      return true;
+
+   }
+
 
 #endif
 

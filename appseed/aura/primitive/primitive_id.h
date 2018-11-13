@@ -8,8 +8,8 @@
 struct id_all
 {
 
-   int64_t            m_iType;
    int64_t            m_iBody;
+   int64_t            m_iType;
 
 };
 
@@ -31,27 +31,31 @@ public:
 
    union
    {
+      
+      int64_t              m_iId;
+      const char *         m_pszId;
 
       struct
       {
 
-         e_type                  m_etype;
-
          union
          {
-
+            
             int64_t              m_i;
             const char *         m_psz;
-
+            
          };
+
+         e_type                  m_etype;
+
 
       };
 
       struct
       {
 
-         int64_t            m_iType;
          int64_t            m_iBody;
+         int64_t            m_iType;
 
       };
 

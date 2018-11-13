@@ -77,18 +77,18 @@ namespace filemanager
             if (puh->is_type_of(update_hint::TypeInitialize))
             {
 
-               string str;
-
-               str.Format("(%d,%d)",filemanager_manager().get_filemanager_data()->m_iTemplate,filemanager_manager().get_filemanager_data()->m_iDocument);
-
-               sp(::database::client) pclient = GetParentFrame();
-
-               if (pclient.is_set())
-               {
-
-                  pclient->set_data_key_modifier(str);
-
-               }
+//               string str;
+//
+//               str.Format("(%d,%d)",filemanager_manager().get_filemanager_data()->m_iTemplate,filemanager_manager().get_filemanager_data()->m_iDocument);
+//
+//               sp(::database::client) pclient = GetParentFrame();
+//
+//               if (pclient.is_set())
+//               {
+//
+//                  pclient->set_data_key_modifier(str);
+//
+//               }
 
             }
             else if (puh->is_type_of(update_hint::TypePop))

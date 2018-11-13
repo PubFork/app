@@ -429,15 +429,19 @@ namespace user
             }
 
             return false;
+            
          }
 
+         
          bool frame::_000OnNcHitTest(point pt,LRESULT & nHitTest)
          {
+         
             UNREFERENCED_PARAMETER(pt);
             UNREFERENCED_PARAMETER(nHitTest);
+            
             return false;
+            
          }
-
 
 
          bool frame::_000OnTimer(UINT nIDEvent)
@@ -448,34 +452,13 @@ namespace user
             return false;
 
          }
-         /*
-         bool frame::_000OnSize(UINT nType, int32_t cx, int32_t cy)
-         {
 
-            UNREFERENCED_PARAMETER(nType);
-            UNREFERENCED_PARAMETER(cx);
-            UNREFERENCED_PARAMETER(cy);
-
-            return false;
-
-         }
-
-         */
-
+         
          bool frame::_000OnSize(uint32_t nType,int32_t cx,int32_t cy)
          {
 
             UNREFERENCED_PARAMETER(cx);
             UNREFERENCED_PARAMETER(cy);
-
-            sp(::user::interaction) pwnd = get_window();
-
-            if(pwnd == NULL || pwnd->m_pimpl->m_bIgnoreSizeEvent)
-               return false;
-
-            synch_lock sl(pwnd->m_pmutex);
-
-            //on_layout();
 
             return false;
 

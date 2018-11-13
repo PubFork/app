@@ -337,6 +337,7 @@ void var_array::parse_json(const char * & pszJson)
    parse_json(pszJson, pszJson + strlen(pszJson) - 1);
 }
 
+int g_iRandomNumberGenerator = 0;
 
 void var_array::parse_json(const char * & pszJson, const char * pszEnd)
 {
@@ -348,10 +349,20 @@ void var_array::parse_json(const char * & pszJson, const char * pszEnd)
       pszJson++;
       return;
    }
-   ::thread * pthread = ::get_thread();
+   
+   
+   ::thread * pthread = NULL;
    while(true)
    {
-      if (!pthread->thread_get_run())
+      g_iRandomNumberGenerator++;
+      if(pthread == NULL)
+      {
+         if((g_iRandomNumberGenerator % 25) == 0)
+         {
+            pthread = ::get_thread();
+         }
+      }
+      else if(!pthread->thread_get_run())
       {
 
          _throw(::exit_exception(::get_app(), exit_thread));

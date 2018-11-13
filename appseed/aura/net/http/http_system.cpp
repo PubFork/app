@@ -1830,7 +1830,18 @@ retry_session:
 
          iContentLength = set["http_content_length"].i64();
 
-         iBodySizeDownloaded = set["http_body_size_downloaded"].i64();
+         
+         
+         i64 iBodySizeDownloadedNow = set["http_body_size_downloaded"].i64();
+         
+         if(iBodySizeDownloadedNow > iBodySizeDownloaded)
+         {
+            
+            iBodySizeDownloaded = iBodySizeDownloadedNow;
+            
+            dwTimeoutStart = ::get_tick_count();
+            
+         }
 
          if(set.has_property("cancel") && set["cancel"].get_bool())
          {

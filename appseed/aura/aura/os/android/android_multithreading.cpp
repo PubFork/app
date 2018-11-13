@@ -482,7 +482,7 @@ thread_int_ptr < HRESULT > t_hresultCoInitialize;
 bool __os_init_thread()
 {
 
-   __clear_mq();
+   __clear_mq(false);
 
    return true;
 
@@ -493,7 +493,7 @@ bool __os_init_thread()
 bool __os_term_thread()
 {
 
-   __clear_mq();
+   __clear_mq(true);
 
    thread_shutdown();
 

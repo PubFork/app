@@ -150,29 +150,44 @@ namespace file
 
       ::file::file_sp application::time_square_file(const string & pszPrefix, const string & pszSuffix)
       {
+         
          return m_papp->m_psystem->m_spfile->time_square_file(m_papp, pszPrefix, pszSuffix);
+         
       }
 
+      
       ::file::file_sp application::get(const ::file::path & name)
       {
+         
          return m_papp->m_psystem->m_spfile->get(name, m_papp);
+         
       }
 
+      
       string application::as_string(var varFile)
       {
+         
          return m_papp->m_psystem->m_spfile->as_string(varFile, m_papp);
+         
       }
+      
 
       string application::as_string(var varFile, var & varQuery)
       {
+         
          return m_papp->m_psystem->m_spfile->as_string(varFile, varQuery, m_papp);
+         
       }
 
+      
       void application::as_memory(var varFile, memory & mem)
       {
+         
          return m_papp->m_psystem->m_spfile->as_memory(varFile, mem, m_papp);
+         
       }
 
+      
       void application::lines(stringa & stra, var varFile)
       {
          return m_papp->m_psystem->m_spfile->lines(stra, varFile, m_papp);

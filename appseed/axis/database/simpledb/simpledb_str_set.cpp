@@ -279,8 +279,25 @@ void db_str_sync_queue::run()
    {
 
    }
+   
+   if(::is_set(m_pset))
+   {
+      
+      if(m_pset->m_pcore.is_set())
+      {
+         
+         db_str_set_core * psetcore = (db_str_set_core *) m_pset->m_pcore->m_ptopthis;
+         
+         if(::is_set(psetcore))
+         {
 
-   ((db_str_set_core *)(m_pset->m_pcore->m_ptopthis))->m_pqueue = NULL;
+            psetcore->m_pqueue = NULL;
+            
+         }
+         
+      }
+      
+   }
 
 }
 

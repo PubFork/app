@@ -9,6 +9,7 @@
 #include "framework.h"
 #include "macos_window_impl.h"
 #include "aura/aura/os/os.h"
+#include <CoreGraphics/CoreGraphics.h>
 
 oswindow_dataptra * g_poswindowdataptra = NULL;
 
@@ -954,4 +955,95 @@ void os_term_windowing()
 
 
 
+// front first
+rect_array cg_get_window_rect_list_above(CGWindowID windowid)
+{
+   rect_array recta;
+   CFArrayRef windowa = CGWindowListCopyWindowInfo(kCGWindowListOptionOnScreenAboveWindow, windowid);
+   
+   rect rMainScreen;
+   GetMainScreenRect(rMainScreen);
+   
+   long c = CFArrayGetCount(windowa);
+   
+   for(int i = 0; i < c; i++)
+   {
+      
+      CFDictionaryRef dict = (CFDictionaryRef)CFArrayGetValueAtIndex(windowa, i);
+      
+      CGRect rect={};
+      
+      CFDictionaryRef dictRect = (CFDictionaryRef) CFDictionaryGetValue(dict, kCGWindowBounds);
+      
+      CGRectMakeWithDictionaryRepresentation(dictRect, &rect);
+      
+      if(rect.size.width > 0 && rect.size.height > 0)
+      {
+      
+      ::rect r;
+      
+      r.left = rect.origin.x;
+         r.top = rMainScreen.height() - (rect.origin.y + rect.size.height);
+      r.bottom = r.top + rect.size.height;
+      r.right = rect.origin.x + rect.size.width;
+      
+      recta.add(r);
+         
+      }
+      
+   }
+   
+   CFRelease(windowa);
 
+   return recta;
+   
+}
+
+
+CGWindowID get_os_window_window_number(oswindow oswindow);
+
+int_bool is_window_occluded(oswindow oswindow)
+{
+   
+   
+   CGWindowID windowid = get_os_window_window_number(oswindow);
+   
+   if(windowid == 0)
+   {
+      
+      return false;
+      
+   }
+   
+   rect_array recta = cg_get_window_rect_list_above(windowid);
+
+   
+   if(recta.is_empty())
+   {
+      
+      return false;
+      
+   }
+   
+   ::rect r;
+   
+   r = oswindow->m_pimpl->m_rectParentClient;
+   
+   ::rect rTest;
+   
+   for(int i = 0; i < recta.get_size(); i++)
+   {
+      
+         if(rTest.intersect(recta[i], r))
+         {
+            
+            return true;
+            
+         }
+         
+   }
+   
+   
+   return false;
+   
+}

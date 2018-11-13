@@ -62,26 +62,26 @@ namespace userstack
    {
 
 
-      string strId;
-
-      sp(::aura::application) pcaapp;
-
-      POSITION pos = m_mapApplication.get_start_position();
-
-      while (pos != NULL)
-      {
-
-         strId.Empty();
-
-         pcaapp = NULL;
-
-         m_mapApplication.get_next_assoc(pos, strId, pcaapp);
-
-         sp(::aura::application) papp = (pcaapp);
-
-         papp->post_quit();
-
-      }
+//      string strId;
+//
+//      sp(::aura::application) pcaapp;
+//
+//      POSITION pos = m_mapApplication.get_start_position();
+//
+//      while (pos != NULL)
+//      {
+//
+//         strId.Empty();
+//
+//         pcaapp = NULL;
+//
+//         m_mapApplication.get_next_assoc(pos, strId, pcaapp);
+//
+//         sp(::aura::application) papp = (pcaapp);
+//
+//         papp->post_quit();
+//
+//      }
 
       try
       {
@@ -279,9 +279,7 @@ namespace userstack
 
       sp(::aura::application) papp;
 
-      string strAppId(pszAppId);
-
-      if (m_mapApplication.Lookup(strAppId, papp))
+      if (appptra().lookup(pszAppId, papp))
       {
 
          return papp;
@@ -300,7 +298,7 @@ namespace userstack
       try
       {
 
-         papp = create_application(strAppId, bSynch, pbiasCreate);
+         papp = create_application(pszAppId, bSynch, pbiasCreate);
 
       }
       catch(...)
@@ -324,9 +322,9 @@ namespace userstack
 
       }
 
-      m_mapApplication.set_at(strAppId, papp);
+      appptra_add( papp);
 
-      Session.m_mapApplication.set_at(strAppId, papp);
+      Session.appptra_add(papp);
 
       return papp;
 
@@ -366,9 +364,9 @@ namespace userstack
    void application::set_app_title(const char * pszType, const char * pszAppId, const char * pszTitle)
    {
 
-      sp(::aura::application) papp = NULL;
+      sp(::aura::application) papp;
 
-      if(m_mapApplication.Lookup(string(pszType) + ":" + string(pszAppId), papp) && papp != NULL)
+      if(appptra().lookup(string(pszType) + ":" + string(pszAppId), papp) && papp.is_set())
       {
 
          sp(pane_view) ppaneview = m_ppaneview;

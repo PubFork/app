@@ -856,6 +856,19 @@ void object::system(const char * pszProjectName)
 
 void object::safe_pre_term()
 {
+   
+   if(string(m_id).contains("::rx"))
+   {
+      
+      output_debug_string("::rx safe_pre_term");
+      
+   }
+   if(string(m_id).contains("::ipi"))
+   {
+      
+      output_debug_string("::ipi safe_pre_term");
+      
+   }
 
    post_quit();
 
@@ -868,6 +881,13 @@ void object::safe_pre_term()
 
 void object::delete_this()
 {
+
+   if(string(m_id).contains("::rx"))
+   {
+      
+      output_debug_string("::rx delete_this()");
+      
+   }
 
    safe_pre_term();
 
@@ -1058,7 +1078,7 @@ void object::post_quit()
    try
    {
 
-      children_post_quit();
+      release_children();
 
    }
    catch (...)
@@ -1143,16 +1163,20 @@ void object::release_parents()
 
       if (::is_set(m_pparents))
       {
-
-         for (auto & pparent : m_pparents->m_ptra)
+         
+         auto ptra = m_pparents->m_ptra;
+         
+         ::aura::del(m_pparents);
+         
+         sl.unlock();
+         
+         for (auto & pparent : ptra)
          {
-
-            sl.unlock();
 
             try
             {
 
-               pparent->children_remove(this, false);
+               pparent->children_remove(this);
 
             }
             catch (...)
@@ -1161,14 +1185,10 @@ void object::release_parents()
 
             }
 
-            sl.lock();
-
          }
 
-         ::aura::del(m_pparents);
-
       }
-
+      
    }
    catch (...)
    {
@@ -1177,7 +1197,62 @@ void object::release_parents()
 
 }
 
+                  
+void object::release_children()
+{
+   
+   children_post_quit();
 
+//   try
+//   {
+//
+//      synch_lock sl(m_pmutex);
+//
+//      if (::is_set(m_pchildren))
+//      {
+//
+//         for (auto & pchild : m_pchildren->m_ptra)
+//         {
+//
+//            sl.unlock();
+//
+//            try
+//            {
+//
+//               {
+//
+//                  synch_lock sl(pchild->m_pmutex);
+//
+//                  if(::is_set(pchild->m_pparents))
+//                  {
+//
+//                     pchild->m_pparents->m_ptra.remove(this);
+//
+//                  }
+//
+//               }
+//
+//            }
+//            catch (...)
+//            {
+//
+//            }
+//
+//            sl.lock();
+//
+//         }
+//
+//      }
+//
+//   }
+//   catch (...)
+//   {
+//
+//   }
+
+}
+
+                  
 void object::children_add(::object * pobjectChild)
 {
 
@@ -1304,7 +1379,7 @@ bool object::children_is(::object * pobjectDescendantCandidate) const
 }
 
 
-void object::children_remove(::object * pobjectChild, bool bRemoveFromParent)
+void object::children_remove(::object * pobjectChild)
 {
 
    try
@@ -1326,28 +1401,28 @@ void object::children_remove(::object * pobjectChild, bool bRemoveFromParent)
 
    }
 
-   if (bRemoveFromParent)
-   {
-
-      try
-      {
-
-         synch_lock sl(pobjectChild->m_pmutex);
-
-         if (::is_set(pobjectChild->m_pparents))
-         {
-
-            pobjectChild->m_pparents->m_ptra.remove(this);
-
-         }
-
-      }
-      catch (...)
-      {
-
-      }
-
-   }
+//   if (bRemoveFromParent)
+//   {
+//
+//      try
+//      {
+//
+//         synch_lock sl(pobjectChild->m_pmutex);
+//
+//         if (::is_set(pobjectChild->m_pparents))
+//         {
+//
+//            pobjectChild->m_pparents->m_ptra.remove(this);
+//
+//         }
+//
+//      }
+//      catch (...)
+//      {
+//
+//      }
+//
+//   }
 
 }
 
@@ -1539,7 +1614,7 @@ restart:
             if (pthreadChild.is_set())
             {
 
-               strLog += ::str::from(pthreadChild->get_os_int()) + " <-- thread id, ";
+               strLog += ::str::from((int_ptr)pthreadChild->get_os_int()) + " <-- thread id, ";
 
             }
 
@@ -1547,14 +1622,14 @@ restart:
 
             strLog += strName + "\n      ";
 
-            if (::is_set(pobjectChild->m_pchildren)
-                  && pobjectChild->m_pchildren->m_ptra.has_elements())
-            {
-
-               pobjectChild->m_pchildren->_wait_quit(pobjectChild);
-
-            }
-
+//            if (::is_set(pobjectChild->m_pchildren)
+//                  && pobjectChild->m_pchildren->m_ptra.has_elements())
+//            {
+//
+//               pobjectChild->m_pchildren->_wait_quit(pobjectChild);
+//
+//            }
+//
             cRemainingObjects++;
 
          }

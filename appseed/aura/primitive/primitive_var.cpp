@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 var::var(const char * psz)
@@ -4160,39 +4160,60 @@ namespace str
 
 void var::skip_json(const char * & pszJson, const char * pszEnd)
 {
+   
    ::str::consume_spaces(pszJson, 0, pszEnd);
+   
    if (*pszJson == '{')
    {
+      
       property_set::skip_json(pszJson, pszEnd);
+      
    }
    else if (*pszJson == '\"')
    {
+      
       ::str::skip_quoted_value_ex(pszJson, pszEnd);
+      
+   }
+   else if (*pszJson == '\'')
+   {
+      
+      ::str::skip_quoted_value_ex(pszJson, pszEnd);
+      
    }
    else if (isdigit_dup(*pszJson) || *pszJson == '-' || *pszJson == '.')
    {
+      
       ::var::skip_number(pszJson, pszEnd);
+      
    }
    else if (*pszJson == '[')
    {
+      
       ::var_array::skip_json(pszJson, pszEnd);
+      
    }
    else if (*pszJson == ']')
    {
+      
       ::output_debug_string("");
-
-      //pszJson++;
 
    }
    else if (*pszJson == '\0')
    {
+      
       ::output_debug_string("");
+      
    }
    else
    {
+      
       ::var::skip_identifier(pszJson, pszEnd);
+      
    }
+   
 }
+
 
 void var::skip_json(const char * & pszJson)
 {

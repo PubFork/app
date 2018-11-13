@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 #include "fiasco_finder.h"
 #include "aura/compress/zip/zip.h"
 
@@ -57,19 +57,7 @@ namespace axis
    void application::dump(dump_context & dumpcontext) const
    {
 
-      thread::dump(dumpcontext);
-
-#ifdef WINDOWS
-
-      dumpcontext << "m_hinstance = " << (void *)m_hinstance;
-
-#endif
-
-      //dumpcontext << "\nm_strCmdLine = " << m_strCmdLine;
-      //dumpcontext << "\nm_nCmdShow = " << m_nCmdShow;
-      dumpcontext << "\nm_bHelpMode = " << m_strAppName;
-
-      dumpcontext << "\n";
+      aura::application::dump(dumpcontext);
 
    }
 
@@ -497,8 +485,13 @@ namespace axis
    {
 
       Sleep(500);
+      
+      if(m_puiMain != NULL)
+      {
 
-      m_puiMain->post_message(WM_CLOSE);
+         m_puiMain->post_message(WM_CLOSE);
+         
+      }
 
 
    }
@@ -1758,16 +1751,6 @@ InitFailure:
       }
 
 
-      if (m_psystem->m_phtml != NULL)
-      {
-
-         ::aura::del(m_psystem->m_phtml);
-
-         m_psystem->m_phtml = NULL;
-
-      }
-
-
       try
       {
 
@@ -1993,172 +1976,6 @@ InitFailure:
       return true;
 
    }
-
-
-
-
-
-
-
-   //void application::on_set_scalar(e_scalar escalar,int64_t iValue, int iFlags)
-   //{
-
-   //   //if (escalar == scalar_app_install_progress)
-   //   //{
-
-   //   //   m_iProgressInstallStep = iValue;
-
-   //   //}
-   //   //else if (escalar == scalar_app_install_progress_min)
-   //   //{
-
-   //   //   m_iProgressInstallStart = iValue;
-
-   //   //}
-   //   //else if (escalar == scalar_app_install_progress_max)
-   //   //{
-
-   //   //   m_iProgressInstallEnd = iValue;
-
-   //   //}
-   //   //else
-   //   {
-
-   //      return ::int_scalar_source::on_set_scalar(escalar,iValue, int iFlags);
-
-   //   }
-
-   //}
-
-
-   //void application::get_scalar_minimum(e_scalar escalar,int64_t & i)
-   //{
-
-   //   //if (escalar == scalar_app_install_progress)
-   //   //{
-
-   //   //   i = m_iProgressInstallStart;
-
-   //   //}
-   //   //else if (escalar == scalar_app_install_progress_min)
-   //   //{
-
-   //   //   i = 0;
-
-   //   //}
-   //   //else if (escalar == scalar_app_install_progress_max)
-   //   //{
-
-   //   //   i = 0;
-
-   //   //}
-   //   //else
-   //   {
-
-   //      ::int_scalar_source::get_scalar_minimum(escalar,i);
-
-   //   }
-
-   //}
-
-   //void application::get_scalar(e_scalar escalar,int64_t & i)
-   //{
-
-   //   //if (escalar == scalar_app_install_progress)
-   //   //{
-
-   //   //   i = m_iProgressInstallStep;
-
-   //   //}
-   //   //else if (escalar == scalar_app_install_progress_min)
-   //   //{
-
-   //   //   i = m_iProgressInstallStart;
-
-   //   //}
-   //   //else if (escalar == scalar_app_install_progress_max)
-   //   //{
-
-   //   //   i = m_iProgressInstallEnd;
-
-   //   //}
-   //   //else
-   //   {
-
-   //      ::int_scalar_source::get_scalar(escalar,i);
-
-   //   }
-
-   //}
-
-   //void application::get_scalar_maximum(e_scalar escalar,int64_t & i)
-   //{
-
-   //   //if (escalar == scalar_download_size)
-   //   //{
-
-   //   //   i = m_iProgressInstallEnd;
-
-   //   //}
-   //   //else if (escalar == scalar_app_install_progress_min)
-   //   //{
-
-   //   //   i = 0x7fffffff;
-
-   //   //}
-   //   //else if (escalar == scalar_app_install_progress_max)
-   //   //{
-
-   //   //   i = 0x7fffffff;
-
-   //   //}
-   //   //else
-   //   {
-
-   //      ::int_scalar_source::get_scalar_minimum(escalar,i);
-
-   //   }
-
-   //}
-
-
-
-
-   //service_base * application::get_service()
-   //{
-
-   //   return m_pservice;
-
-   //}
-
-
-
-
-
-   //string application::get_license_id()
-   //{
-
-   //   if(m_strLicense.is_empty())
-   //   {
-   //
-   //      m_strLicense = m_strAppId;
-
-   //      if(m_strLicense.is_empty())
-   //      {
-
-   //         m_strLicense = m_strAppName;
-
-   //      }
-
-   //   }
-
-
-
-   //   return m_strLicense;
-
-   //}
-
-
 
 
 
@@ -2695,645 +2512,42 @@ namespace axis
    }
 
 
-
-   //bool application::final_handle_exception(::exception::exception & e)
-   //{
-   //   UNREFERENCED_PARAMETER(e);
-   //   //linux      exit(-1);
-
-   //   if(!is_system())
-   //   {
-
-   //      // get_app() may be it self, it is ok...
-   //      if(System.final_handle_exception((::exception::exception &) e))
-   //         return true;
-
-
-   //   }
-
-   //   return false;
-   //}
-
-
-
-
-
-   //int32_t application::main()
-   //{
-
-   //   TRACE(string(typeid(*this).name()) + " main");;
-
-   //   dappy(string(typeid(*this).name()) + " : application::main 1");
-
-   //   try
-   //   {
-
-   //      TRACE(string(typeid(*this).name()) + " on_run");;
-   //      dappy(string(typeid(*this).name()) + " : going to on_run : " + ::str::from(m_iErrorCode));
-   //      m_iErrorCode = 0;
-   //      m_bReady = true;
-   //      m_bRun = true;
-   //      m_iErrorCode = on_run();
-   //      if(m_iErrorCode != 0)
-   //      {
-   //         dappy(string(typeid(*this).name()) + " : on_run failure : " + ::str::from(m_iErrorCode));
-   //         ::output_debug_string(L"application::main on_run termination failure");
-   //      }
-
-   //   }
-   //   catch(::exit_exception &)
-   //   {
-
-   //      dappy(string(typeid(*this).name()) + " : on_run exit_exception");
-
-   //      ::aura::post_quit_thread(&System);
-
-   //      goto exit_application;
-
-   //   }
-   //   catch(...)
-   //   {
-
-   //      dappy(string(typeid(*this).name()) + " : on_run general exception");
-
-   //      goto exit_application;
-
-   //   }
-
-   //   try
-   //   {
-
-   //      if(is_system())
-   //      {
-
-   //         dappy(string(typeid(*this).name()) + " : quiting main");
-
-   //         //::aura::post_quit_thread(&System);
-
-   //         //Sleep(5000);
-
-   //      }
-
-   //   }
-   //   catch(...)
-   //   {
-
-   //   }
-
-   //exit_application:
-
-   //   try
-   //   {
-
-   //      m_iErrorCode = exit();
-
-   //   }
-   //   catch(::exit_exception &)
-   //   {
-
-   //      ::aura::post_quit_thread(&System);
-
-   //      m_iErrorCode = -1;
-
-   //   }
-   //   catch(...)
-   //   {
-
-   //      m_iErrorCode = -1;
-
-   //   }
-
-   //   return m_iErrorCode;
-
-   //}
-
-
-
-
-   //bool application::pre_run()
-   //{
-
-   //   TRACE(string(typeid(*this).name()) + " main_start");;
-   //   try
-   //   {
-
-   //      m_dwAlive = ::get_tick_count();
-   //      TRACE(string(typeid(*this).name()) + "application_pre_run");;
-   //      int32_t m_iErrorCode = application_pre_run();
-   //      if(m_iErrorCode != 0)
-   //      {
-   //         dappy(string(typeid(*this).name()) + " : applicationpre_run failure : " + ::str::from(m_iErrorCode));
-   //         m_bReady = true;
-   //         TRACE("application::main application_pre_run failure");
-   //         return false;
-   //      }
-
-   //      xxdebug_box("pre_runnned","pre_runnned",MB_ICONINFORMATION);
-   //      dappy(string(typeid(*this).name()) + " : pre_runned : " + ::str::from(m_iErrorCode));
-   //      TRACE(string(typeid(*this).name()) + " initial_check_directrix");;
-   //      if(!initial_check_directrix())
-   //      {
-   //         dappy(string(typeid(*this).name()) + " : initial_check_directrix failure");
-   //         m_iErrorCode = -1;
-   //         exit();
-   //         m_bReady = true;
-   //         ::output_debug_string(L"exiting on check handler");
-   //         return false;
-   //      }
-
-
-   //      TRACE(string(typeid(*this).name()) + " os_native_bergedge_start");;
-   //      m_dwAlive = ::get_tick_count();
-   //      if(!os_native_bergedge_start())
-   //      {
-   //         dappy(string(typeid(*this).name()) + " : os_native_bergedge_start failure");
-   //         exit();
-   //         m_iErrorCode = -1;
-   //         m_bReady = true;
-   //         ::output_debug_string(L"application::main os_native_bergedge_start failure");
-   //         return false;
-   //      }
-
-   //      return true;
-   //   }
-   //   catch(::exit_exception &)
-   //   {
-
-   //      dappy(string(typeid(*this).name()) + " : main_start exit_exception");
-
-   //      ::aura::post_quit_thread(&System);
-
-   //   }
-
-   //   return false;
-
-   //}
-
-
-
-
-   //int32_t application::on_run()
-   //{
-   //   int32_t m_iErrorCode = 0;
-
-   //   try
-   //   {
-   //      ::aura::application_message signal(this,m_psignal,::aura::application_message_start);
-   //      m_psignal->emit(&signal);
-   //   }
-   //   catch(...)
-   //   {
-   //   }
-
-   //   dappy(string(typeid(*this).name()) + " : starting on_run : " + ::str::from(m_iErrorCode));
-
-   //   thread * pthread = ::get_thread();
-
-   //   install_message_routing(pthread->m_pthreadimpl);
-
-   //   dappy(string(typeid(*this).name()) + " : starting on_run 2 : " + ::str::from(m_iErrorCode));
-
-   //   try
-   //   {
-   //      try
-   //      {
-   //         m_bReady = true;
-   //         if(m_peventReady != NULL)
-   //            m_peventReady->SetEvent();
-   //      }
-   //      catch(...)
-   //      {
-   //      }
-   //   run:
-   //      try
-   //      {
-   //         m_iErrorCode = run();
-
-   //      }
-   //      catch(::exit_exception & e)
-   //      {
-
-   //         _throw(e);
-
-   //      }
-   //      catch(const ::exception::exception & e)
-   //      {
-   //         if(on_run_exception((::exception::exception &) e))
-   //            goto run;
-   //         if(final_handle_exception((::exception::exception &) e))
-   //            goto run;
-   //         try
-   //         {
-   //            m_iErrorCode = exit();
-   //         }
-   //         catch(::exit_exception & e)
-   //         {
-
-   //            _throw(e);
-
-   //         }
-   //         catch(...)
-   //         {
-   //            m_iErrorCode = -1;
-   //         }
-   //         goto InitFailure;
-   //      }
-   //   }
-   //   catch(::exit_exception & e)
-   //   {
-
-   //      _throw(e);
-
-   //   }
-   //   catch(...)
-   //   {
-   //      // linux-like exit style on crash, differently from general windows error message approach
-   //      // to prevent or correct from crash, should:
-   //      // - look at dumps - to do;
-   //      // - look at trace and log - always doing;
-   //      // - look at debugger with the visual or other tool atashed - to doing;
-   //      // - fill other possibilities;
-   //      // - restart and send information in the holy back, and stateful or self-heal as feedback from below;
-   //      // - ...
-   //      // - ..
-   //      // - .
-   //      // - .
-   //      // - .
-   //      // - .
-   //      // -  .
-   //      // - ...
-   //      // - ...
-   //      // - ...
-   //      // to pro-activia and overall benefits workaround:
-   //      // - stateful applications:
-   //      //      - browser urls, tabs, entire history, in the ca2computing cloud;
-   //      //      - uint16_t - html document to simplify here - with all history of undo and redos per document optimized by cvs, svn, syllomatter;
-   //      //           - not directly related but use date and title to name document;
-   //      //      - save forms after every key press in .undo.redo.form file parallel to appmatter / form/undo.redo.file parity;
-   //      //      - last ::ikaraoke::karaoke song and scoring, a little less motivated at time of writing;
-   //      //
-   //      // - ex-new-revolut-dynamic-news-self-healing
-   //      //      - pre-history, antecendentes
-   //      //            - sometimes we can't recover from the last state
-   //      //            - to start from the beggining can be too heavy, waity, worky, bory(ing)
-   //      //      - try to creativetily under-auto-domain with constrained-learning, or heuristcally recover from restart, shutdown, login, logoff;
-   //      //           - reification :
-   //      //           - if the document is corrupted, try to open the most of it
-   //      //           - if can only detect that the document cannot be opened or damaged, should creatively workarounds as it comes, as could it be
-   //      //              done, for example search in the web for a proper solution?
-   //      //           - ::ikaraoke::karaoke file does not open? can open next? do it... may animate with a temporary icon...
-   //      //               speed into cartesian dimensions of
-   //      //               black letters, or colorful and pink are accepted and sometimes desired, for example, hello kity prodevian, pirarucu games,
-   //      //               I think no one likes to be boring, but a entire background in black... I don't know... only for your personal office, may be...
-   //      //           - could an online colaborator investigate crashes promptly in a funny way, and make news and jokes? Like terra and UOL for the real world?
-   //      //               - new crash, two documents lost, weathers fault, too hot, can't think, my mother was angry with me, lead to buggy code;
-   //      //               - new version with bug fixes;
-   //      //      - new versions
-   //      //      - automatic updates
-   //      //      - upgrades
-   //      //      - rearrangemntes
-   //      //      - downgrade in the form of retro
-   //      // - ...
-   //      // - ..
-   //      // - .
-   //      // - .
-   //      // - .
-   //      // - .
-   //      // -  .
-   //      // - ...
-   //      // - ...
-   //      // - ...
-
-   //   }
-   //InitFailure:
-   //   try
-   //   {
-   //      if(m_peventReady != NULL)
-   //         m_peventReady->SetEvent();
-   //   }
-   //   catch(...)
-   //   {
-   //   }
-   //   try
-   //   {
-   //      thread * pthread = this;
-   //      if(pthread != NULL && pthread->m_pbReady != NULL)
-   //      {
-   //         *pthread->m_pbReady = true;
-   //      }
-   //   }
-   //   catch(...)
-   //   {
-   //   }
-   //   /*try
-   //   {
-   //   thread * pthread = dynamic_cast < thread * > (this);
-   //   ::SetEvent((HANDLE) pthread->m_peventReady);
-   //   }
-   //   catch(...)
-   //   {
-   //   }*/
-
-   //   // let translator run undefinetely
-   //   /*if(is_system())
-   //   {
-   //   translator::detach();
-   //   }*/
-
-   //   return m_iErrorCode;
-   //}
-
-
-
-
-   //int32_t application::application_pre_run()
-   //{
-
-   //   return ::axis::application::application_pre_run();
-
-   //}
-
-
-
-   //bool application::InitApplication()
-   //{
-
-   //   return true;
-
-   //}
-
-
-
-   //bool application::initial_check_directrix()
-   //{
-
-   //   return axis::application::initial_check_directrix();
-
-   //}
-
-
-   //bool application::on_install()
-   //{
-
-   //   if(!axis::application::on_install())
-   //      return false;
-
-
-
-   //   return true;
-
-   //}
-
-
-   //bool application::on_uninstall()
-   //{
-
-   //   bool bOk = axis::application::on_uninstall();
-
-
-   //   if(is_serviceable())
-   //   {
-
-   //      if(!remove_service())
-   //         bOk = false;
-
-   //   }
-
-   //   return bOk;
-
-   //}
-
-
-   //bool application::system_add_app_install(const char * pszId)
-   //{
-
-
-
-   //   return axis::application::system_add_app_install(pszId);
-
-   //}
-
-
-
-   //bool application::os_native_bergedge_start()
-   //{
-
-   //   return axis::application::os_native_bergedge_start();
-
-   //}
-
-
-
-
-
-
-
-
-
-
-
-   //   void application::construct(const char *pszId)
-   //   {
-   //      //if(m_strAppName.has_char())
-   //      //   return;
-   //      //m_strAppName.Empty();
-   //      //m_strId.Empty();
-   //      if (pszId == NULL)
-   //      {
-   //#ifdef WINDOWSEX
-   //         wstring wstr = ::GetCommandLineW();
-   //         string str = ::str::international::unicode_to_utf8(wstr);
-   //         strsize iFind = str.find(" : ");
-   //         if (iFind >= 0)
-   //         {
-   //            iFind = str.find("app=", iFind);
-   //            if (iFind >= 0)
-   //            {
-   //               strsize iEnd = str.find(" ", iFind);
-   //               if (iEnd < 0)
-   //               {
-   //                  m_strId = str.Mid(iFind + 4);
-   //               }
-   //               else
-   //               {
-   //                  m_strId = str.Mid(iFind + 4, iEnd - iFind - 4);
-   //               }
-   //               ::str::begins_eat(m_strId, "\"");
-   //               ::str::ends_eat(m_strId, "\"");
-   //            }
-   //         }
-   //#endif
-   //      }
-   //      else
-   //      {
-   //         m_strId = pszId;
-   //      }
-   //      if (m_strId.is_empty())
-   //         m_strId = "mplite";
-   //      construct();
-   //      if (m_strAppName.is_empty())
-   //      {
-   //         if (m_strAppId.has_char())
-   //            m_strAppName = m_strAppId;
-   //         else if (m_strInstallToken.has_char())
-   //            m_strAppName = m_strInstallToken;
-   //      }
-   //   }
-
-
-   //void application::construct()
-   //{
-   //   string strId = m_strId;
-   //   char chFirst = '\0';
-   //   if (strId.get_length() > 0)
-   //   {
-   //      chFirst = strId[0];
-   //   }
-
-   //   ::core::application::construct();
-
-   //}
-
-
-
-
-   //void application::_001OnFileNew()
-   //{
-   //   string strId = m_strId;
-   //   char chFirst = '\0';
-   //   if (strId.get_length() > 0)
-   //   {
-   //      chFirst = strId[0];
-   //   }
-   //   ::core::application::_001OnFileNew(NULL);
-   //}
-
-
-   //bool application::bergedge_start()
-   //{
-   //   string strId = m_strId;
-   //   char chFirst = '\0';
-   //   if (strId.get_length() > 0)
-   //   {
-   //      chFirst = strId[0];
-   //   }
-   //   return ::core::application::bergedge_start();
-   //}
-
-
-
-   //bool application::on_install()
-   //{
-   //   string strId = m_strId;
-   //   char chFirst = '\0';
-   //   if (strId.get_length() > 0)
-   //   {
-   //      chFirst = strId[0];
-   //   }
-   //   return ::core::application::on_install();
-   //}
-
-   //bool application::on_uninstall()
-   //{
-   //   string strId = m_strId;
-   //   char chFirst = '\0';
-   //   if (strId.get_length() > 0)
-   //   {
-   //      chFirst = strId[0];
-   //   }
-   //   return ::core::application::on_uninstall();
-   //}
-
-
-   //void application::on_request(::create * pcreate)
-   //{
-
-   //   ::object::on_request(pcreate);
-
-   //   handler()->consolidate(pcreate);
-
-   //}
-
-
-   //bool application::is_serviceable()
-   //{
-
-
-   //   string strId = m_strId;
-   //   char chFirst = '\0';
-   //   if (strId.get_length() > 0)
-   //   {
-   //      chFirst = strId[0];
-   //   }
-   //   return ::core::application::is_serviceable();
-   //}
-
-   //service_base * application::allocate_new_service()
-   //{
-
-   //   return NULL;
-
-   //}
-
-
-   //sp(::user::document) application::_001OpenDocumentFile(var varFile)
-   //{
-   //   string strId = m_strId;
-   //   char chFirst = '\0';
-   //   if (strId.get_length() > 0)
-   //   {
-   //      chFirst = strId[0];
-   //   }
-   //   return ::core::application::_001OpenDocumentFile(varFile);
-
-   //}
-
-
-   //int32_t application::run()
-   //{
-
-   //   return ::axis::application::run();
-
-
-   //}
-
-
-
-
-
-
-
-
-
-
-
    void application::on_service_request(::create * pcreate)
    {
 
       if(!is_serviceable())
+      {
+         
          return;
+         
+      }
 
       if(pcreate->m_spCommandLine->m_varQuery.has_property("create_service"))
       {
+         
          create_service();
+         
       }
       else if(pcreate->m_spCommandLine->m_varQuery.has_property("start_service"))
       {
+         
          start_service();
+         
       }
       else if(pcreate->m_spCommandLine->m_varQuery.has_property("stop_service"))
       {
+         
          stop_service();
+         
       }
       else if(pcreate->m_spCommandLine->m_varQuery.has_property("remove_service"))
       {
+         
          remove_service();
+         
       }
 
-
    }
-
-
 
 
    string application::get_mutex_name_gen()
@@ -3472,71 +2686,19 @@ namespace axis
    int32_t application::simple_message_box(::user::primitive * puiOwner,const char * pszMessage,UINT fuStyle)
    {
 
-#if defined(WINDOWSEX)
-
       return ::simple_message_box(puiOwner->get_safe_handle(),pszMessage,m_strAppName,fuStyle);
-      //return MessageBoxW(puiOwner->get_safe_handle(),wstring(pszMessage),wstring(m_strAppName),fuStyle);
-      //return MessageBoxW((puiOwner == NULL ? NULL : (puiOwner->get_wnd() == NULL ? NULL : puiOwner->get_handle())),
-      //   wstring(pszMessage), wstring(m_strAppName), fuStyle);
-
-#elif  defined(LINUX) || defined(APPLEOS) || defined(ANDROID)
-
-      return ::simple_message_box(puiOwner->get_safe_handle(),pszMessage,m_strAppName,fuStyle);
-      //   return simple_message_box((puiOwner == NULL ? NULL : (puiOwner->get_wnd() == NULL ? NULL : puiOwner->get_handle())), pszMessage, m_strAppName, fuStyle);
-
-#else
-
-      return ::simple_message_box(puiOwner->get_safe_handle(),pszMessage,m_strAppName,fuStyle);
-
-#endif
 
    }
 
-   /*
-   int32_t application::simple_message_box(sp(::user::interaction) puiOwner, const char * pszMessage, UINT fuStyle)
-   {
-
-   #if defined(WINDOWSEX)
-
-   return MessageBoxW((puiOwner == NULL ? NULL : (puiOwner->get_wnd() == NULL ? NULL : puiOwner->get_handle())),
-   wstring(pszMessage), wstring(m_strAppName), fuStyle);
-
-   #elif  defined(LINUX) || defined(APPLEOS) || defined(ANDROID)
-
-   return simple_message_box((puiOwner == NULL ? NULL : (puiOwner->get_wnd() == NULL ? NULL : puiOwner->get_handle())), pszMessage, m_strAppName, fuStyle);
-
-   #else
-
-   return simple_message_box(m_psystem->m_posdata->m_pui->get_handle(), pszMessage, m_strAppName, fuStyle);
-
-   #endif
-
-   }
-   */
 
    int32_t application::simple_message_box(const char * pszMessage,UINT fuStyle)
    {
 
-#if defined(WINDOWSEX)
-
       return ::simple_message_box(NULL,pszMessage,m_strAppName,fuStyle);
-      //return MessageBoxW(NULL,wstring(pszMessage),wstring(m_strAppName),fuStyle);
-      //return MessageBoxW((puiOwner == NULL ? NULL : (puiOwner->get_wnd() == NULL ? NULL : puiOwner->get_handle())),
-      //   wstring(pszMessage), wstring(m_strAppName), fuStyle);
-
-#elif  defined(LINUX) || defined(APPLEOS) || defined(ANDROID)
-
-      return ::simple_message_box(NULL,pszMessage,m_strAppName,fuStyle);
-      //   return simple_message_box((puiOwner == NULL ? NULL : (puiOwner->get_wnd() == NULL ? NULL : puiOwner->get_handle())), pszMessage, m_strAppName, fuStyle);
-
-#else
-
-      return ::simple_message_box(NULL,pszMessage,m_strAppName,fuStyle);
-
-#endif
 
    }
 
+   
    string application::message_box(const string & pszMatter,property_set & propertyset)
    {
 
@@ -3550,9 +2712,12 @@ namespace axis
    bool application::set_keyboard_layout(const char * pszPath,::action::context actioncontext)
    {
 
-
       if(get_app()->m_psession == NULL)
+      {
+         
          return false;
+         
+      }
 
       if(pszPath == NULL)
       {

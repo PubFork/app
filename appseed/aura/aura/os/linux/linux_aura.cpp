@@ -24,11 +24,11 @@ CLASS_DECL_AURA bool __node_aura_pos_init()
 
 }
 
-void __clear_mq();
+void __clear_mq(bool bClose);
 
 CLASS_DECL_AURA bool __node_aura_pre_term()
 {
-   __clear_mq();
+   __clear_mq(true);
    __node_term_cross_windows_threading();
 //   if(t_hthread != NULL)
 //   {

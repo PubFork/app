@@ -19,7 +19,7 @@ namespace userstack
       bool                                                           m_bShowPlatform;
 
       sp(::aura::application)                                            m_pappCurrent;
-      string_map < sp(::aura::application) >               m_mapApplication;
+//      string_map < sp(::aura::application) >               m_mapApplication;
 
 
       sp(::user::single_document_template)                         m_ptemplate_main;

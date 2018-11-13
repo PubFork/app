@@ -22,6 +22,10 @@ namespace aura
 
       ipi(::aura::application * papp, const string & strApp);
       virtual ~ipi();
+      
+      
+      virtual void safe_pre_term();
+      
 
       void defer_add_module(const string & strModule, int iPid);
 

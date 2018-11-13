@@ -70,8 +70,19 @@ void simple_frame_window::defer_save_window_placement()
 
       m_pthreadSaveWindowRect = fork([&]()
       {
+         
+         try
+         {
 
-         _thread_save_window_placement();
+            _thread_save_window_placement();
+            
+         }
+         catch(...)
+         {
+            
+         }
+         
+         m_pthreadSaveWindowRect.release();
 
       });
 
@@ -83,55 +94,40 @@ void simple_frame_window::defer_save_window_placement()
 void simple_frame_window::_thread_save_window_placement()
 {
 
-   try
+   while (::get_thread_run())
    {
 
-      while (::get_thread_run())
+      if(!thread_sleep(300) || !m_bEnableSaveWindowRect)
+      {
+         
+         break;
+         
+      }
+
+      if (::get_tick_count() - m_dwLastSizeMove < 300)
+      {
+         
+         continue;
+         
+      }
+
+      try
       {
 
-         Sleep(300);
-
-         if (m_bEnableSaveWindowRect)
+         m_bSizeMove = false;
+         
+         if (WindowDataSaveWindowRect())
          {
 
-            if (::get_tick_count() - m_dwLastSizeMove > 300)
-            {
-
-               m_bSizeMove = false;
-
-               try
-               {
-
-                  if (WindowDataSaveWindowRect())
-                  {
-
-                     break;
-
-                  }
-
-               }
-               catch (...)
-               {
-
-               }
-
-            }
+            break;
 
          }
 
       }
+      catch (...)
+      {
 
-   }
-   catch (...)
-   {
-
-   }
-
-   {
-
-      synch_lock sl(m_pmutex);
-
-      m_pthreadSaveWindowRect.release();
+      }
 
    }
 
@@ -2886,8 +2882,11 @@ void simple_frame_window::draw_frame_and_control_box_over(::draw2d::graphics * p
 {
 
    if (!is_this_visible())
+   {
+      
       return;
-
+      
+   }
 
    ::user::interaction_spa uia;
 
@@ -2930,10 +2929,7 @@ void simple_frame_window::draw_frame_and_control_box_over(::draw2d::graphics * p
 
    }
 
-
-
    _001DrawThis(pgraphics);
-
 
    if (!frame_is_transparent() || is_active())
    {

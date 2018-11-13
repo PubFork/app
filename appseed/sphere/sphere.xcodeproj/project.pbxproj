@@ -699,9 +699,9 @@
 		9ACABEAD17BD0515004C3F85 /* asphere */ = {
 			isa = PBXGroup;
 			children = (
-				9A9D7F0A1F5D820D009EC103 /* asphere_application.cpp */,
 				9A9D7F0B1F5D820D009EC103 /* asphere_asphere.cpp */,
 				9ACABEAE17BD0515004C3F85 /* asphere.h */,
+				9A9D7F0A1F5D820D009EC103 /* asphere_application.cpp */,
 				9ACABEB017BD0515004C3F85 /* asphere_application.h */,
 			);
 			path = asphere;

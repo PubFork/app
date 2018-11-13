@@ -165,6 +165,12 @@ public:
    bool                                      m_bTemporary;
    sp(manual_reset_event)                    m_pevSleep;
 
+#ifdef MACOS
+   
+   array < CFRunLoopSourceRef >              m_runloopsourcea;
+   CFRunLoopRef                              m_runloop;
+   
+#endif
 
 
    thread();
@@ -446,7 +452,7 @@ public:
    virtual int get_exit_code();
 
 
-   virtual void on_system_event(e_system_event eevent, lparam lparam);
+   virtual void on_system_event(e_system_event eevent, lparam lparam) override;
 
 
 };

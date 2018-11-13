@@ -281,8 +281,8 @@ public ::smart_pointer < T >
 
       }
 
-      ::smart_pointer<T>::~smart_pointer();
-
+      this->release();
+      
    }
 
 

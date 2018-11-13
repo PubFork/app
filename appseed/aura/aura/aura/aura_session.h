@@ -58,14 +58,8 @@ namespace aura
       sp(::fontopus::fontopus)                                 m_pfontopus;
       sp(class ::fontopus::licensing)                          m_splicensing;
 
-      string_map < ::aura::application * >                     m_mapApplication;
-
-      application_ptra                                         m_appptra;
       sp(::aura::savings)                                      m_psavings;
       ::sockets::sockets *                                     m_psockets;
-
-
-
 
       ::aura::application *                              m_pappCurrent;
 
@@ -93,9 +87,6 @@ namespace aura
 
       session(::aura::application * papp);
       virtual ~session_parent;
-
-
-      application_ptra & appptra();
 
 
       virtual ::sockets::sockets & sockets() { return *m_psockets;  }; // only usable from base.dll and dependants
@@ -157,7 +148,8 @@ namespace aura
 
       virtual COLORREF get_default_color(uint64_t ui);
 
-
+      virtual void appptra_add(::aura::application * papp) override;
+      virtual void appptra_remove(::aura::application * papp) override;
       //virtual index initial_frame_position(LPRECT lprect,const RECT & rect, bool bMove);
 
       virtual size get_window_minimum_size();

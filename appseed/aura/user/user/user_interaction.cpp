@@ -1431,7 +1431,7 @@ restart:
 
       m_bUserElementalOk = false;
 
-      children_post_quit();
+      post_quit();
 
       single_lock slDraw(get_wnd() == NULL || get_wnd()->m_pimpl.is_null()
                          || get_wnd()->m_pimpl.cast < ::user::interaction_impl >() == NULL ? NULL : get_wnd()->m_pimpl.cast < ::user::interaction_impl >()->draw_mutex(), true);
@@ -2254,7 +2254,7 @@ restart:
    void interaction::defer_start_prodevian()
    {
 
-#if defined(WINDOWSEX) || defined(MACOS) //|| defined(LINUX)
+#if defined(WINDOWSEX) //|| defined(MACOS) //|| defined(LINUX)
 
       if (this == System.m_psystemwindow)
       {
@@ -4398,16 +4398,18 @@ restart:
    void interaction::post_quit()
    {
 
-      try
-      {
-
-         DestroyWindow();
-
-      }
-      catch (...)
-      {
-
-      }
+//      try
+//      {
+//
+//         DestroyWindow();
+//
+//      }
+//      catch (...)
+//      {
+//
+//      }
+      
+      ::user::interaction_base::post_quit();
 
    }
 

@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 #include "aura/net/net_sockets.h"
 #include "aura/net/ftp/ftp_data_types.h"
 
@@ -13,6 +13,11 @@ namespace axis
       ::aura::session(papp)
    {
 
+      m_strAppId                    = "axis_session";
+      m_strAppName                  = "axis_session";
+      m_strBaseSupportId            = "axis_session";
+      m_strInstallToken             = "axis_session";
+
       m_datakey.m_bLocalData        = true;
 
       m_bIfs                        = true;
@@ -20,6 +25,8 @@ namespace axis
       m_pkeyboard                   = NULL;
 
       m_puserpresence               = NULL;
+      
+      
 
    }
 
@@ -506,17 +513,6 @@ namespace axis
 
    void session::term_application()
    {
-
-      try
-      {
-
-         m_mapApplication.remove_all();
-
-      }
-      catch (...)
-      {
-
-      }
 
       try
       {

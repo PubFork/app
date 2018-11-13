@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 
@@ -401,6 +401,14 @@ public:
    property & operator =(bool b)
    {
       m_element2 = b;
+      return *this;
+   }
+   
+   // 2018-11-11 macos macos macos macOS macOS macOS MACOS MACOS MACOS
+
+   property & operator =(size_t * p)
+   {
+      m_element2 = (int64_t *) p;
       return *this;
    }
 

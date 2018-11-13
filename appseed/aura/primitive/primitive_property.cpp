@@ -192,6 +192,7 @@ void property::parse_json_value(var & var, const char * & pszJson,const char * p
    var.parse_json(pszJson,pszEnd);
 }
 
+
 void property::skip_json_id(const char * & pszJson, const char * pszEnd)
 {
 
@@ -201,11 +202,16 @@ void property::skip_json_id(const char * & pszJson, const char * pszEnd)
 
 }
 
+
 void property::skip_json_value( const char * & pszJson, const char * pszEnd)
 {
+   
    ::str::consume_spaces(pszJson, 0, pszEnd);
+   
    ::str::consume(pszJson, ":", 1, pszEnd);
+   
    ::var::skip_json(pszJson, pszEnd);
+   
 }
 
 

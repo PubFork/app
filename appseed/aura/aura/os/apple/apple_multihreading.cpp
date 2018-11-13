@@ -56,12 +56,12 @@ namespace multithreading
 {
    
    
-   int32_t priority()
-   {
-      
-      return ::GetThreadPriority(::GetCurrentThread());
-      
-   }
+//   int32_t priority()
+//   {
+//      
+//      return ::GetThreadPriority(::GetCurrentThread());
+//      
+//   }
    
    
 } // namespace multithreading

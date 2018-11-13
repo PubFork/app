@@ -99,7 +99,7 @@ bool __os_init_thread()
 bool __os_term_thread()
 {
 
-   __clear_mq();
+   __clear_mq(true);
    thread_shutdown();
 
    return true;

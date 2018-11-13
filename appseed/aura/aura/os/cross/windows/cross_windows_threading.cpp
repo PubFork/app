@@ -568,7 +568,7 @@ void * __thread_get_data(IDTHREAD idthread,uint32_t dwIndex)
 }
 
 
-
+#define CLOSED_MQ ((mq *)((int_ptr) 1))
 
 
 mq * __get_mq(IDTHREAD idthread, bool bCreate)
@@ -578,9 +578,17 @@ mq * __get_mq(IDTHREAD idthread, bool bCreate)
 
    mq * pmq = (mq *)__thread_get_data(idthread, TLS_MESSAGE_QUEUE);
 
+   if(pmq == CLOSED_MQ)
+   {
+      
+      return NULL;
+      
+   }
+
    if(pmq != NULL)
       return pmq;
-
+   
+   
    if(!bCreate)
       return NULL;
 
@@ -599,7 +607,7 @@ mq * __get_mq(IDTHREAD idthread, bool bCreate)
 
 
 
-void __clear_mq()
+void __clear_mq(bool bClose)
 {
 
    synch_lock sl(g_pmutexMq);
@@ -613,7 +621,7 @@ void __clear_mq()
 
    ::aura::del(pmq);
 
-   __thread_set_data(idthread, TLS_MESSAGE_QUEUE, NULL);
+   __thread_set_data(idthread, TLS_MESSAGE_QUEUE, (void *) (int_ptr) (bClose ? 1 : 0));
 
 }
 
@@ -642,6 +650,9 @@ void __node_init_cross_windows_threading()
 void __node_term_cross_windows_threading()
 {
 
+   __clear_mq(true);
+
+   
    if(freeTlsIndices != NULL)
    {
 

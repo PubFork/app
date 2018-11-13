@@ -19,6 +19,24 @@ public:
    operator u64 & () { return m_ui; }
 
    inline static tick now() { return tick(::get_tick_count()); }
+   
+   inline bool timeout(const duration & durationTimeout)
+   {
+      
+      tick tickNow = now();
+      
+      if(tickNow.m_ui - m_ui < durationTimeout.total_milliseconds())
+      {
+       
+         return false;
+         
+      }
+      
+      m_ui = tickNow.m_ui;
+
+      return true;
+      
+   }
 
 };
 

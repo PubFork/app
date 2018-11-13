@@ -1,16 +1,19 @@
 #pragma once
 
+
+
 namespace asphere
 {
 
 
    class CLASS_DECL_SPHERE application :
-   virtual public ::core::application,
-   virtual public ::file_watcher::listener
+      virtual public ::core::application,
+      virtual public ::file_watcher::listener
    {
    public:
-      void initialize_contextualized_theme();
-::file_watcher::id                           m_watchid;
+      
+      
+      ::file_watcher::id                           m_watchid;
       bool                                         m_bContextTheme;
       colorertake5::ParserFactory *                m_pparserfactory;
 
@@ -31,6 +34,10 @@ namespace asphere
       COLORREF                                     m_crBack;
       COLORREF                                     m_crText;
       COLORREF                                     m_crIconGlow;
+      
+      string                                       m_strWeatherState;
+      string                                       m_strDayNight;
+      string                                       m_strDayNightTheme;
 
 
       application();
@@ -40,6 +47,14 @@ namespace asphere
       virtual bool init_instance() override;
       virtual bool init1() override;
       virtual bool init() override;
+
+      
+      void initialize_contextualized_theme();
+      
+      
+      virtual string get_weather_state();
+      virtual string get_day_night();
+      virtual string get_day_night_theme();
 
 
       virtual void get_theme_text_color(COLORREF & crText, COLORREF & crBack);
@@ -65,6 +80,8 @@ namespace asphere
       ::colorertake5::ParserFactory                &  parser_factory();
 
       virtual void handle_file_action(::file_watcher::id watchid, const char * dir, const char * filename, ::file_watcher::e_action action) override;
+      
+      virtual void on_change_weather_state();
 
    };
 

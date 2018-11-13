@@ -2742,9 +2742,11 @@ restart:
          else if (::str::begins_eat_ci(strPath, "matter://"))
          {
 
-            ::aura::application * pappLookup = NULL;
+            sp(::aura::application) pappLookup;
+            
+            string strApp = System.url().get_server("matter://" + strPath);
 
-            if (System.url().get_server("matter://" + strPath) == papp->m_strAppName)
+            if (strApp == papp->m_strAppName)
             {
 
                strPath = System.url().get_object("matter://" + strPath).Mid(1);
@@ -2754,7 +2756,7 @@ restart:
                cres = spfile->open(App(papp).dir().matter(strPath), nOpenFlags);
 
             }
-            else if (&Session != NULL && Session.m_mapApplication.Lookup(System.url().get_server("matter://" + strPath), pappLookup) && App(pappLookup).m_strAppName.has_char())
+            else if (&Session != NULL && Session.appptra().lookup(strApp, pappLookup))
             {
 
                spfile = App(pappLookup).file().get_file("matter://" + strPath, nOpenFlags, &cres);

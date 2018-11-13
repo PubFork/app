@@ -22,6 +22,9 @@ WINBOOL GetMessage(LPMESSAGE lpMsg, oswindow hWnd, UINT wMsgFilterMin, UINT wMsg
 namespace macos
 {
 
+   ::aura::application * g_pappPreTranslateMouseMessage = NULL;
+   
+   
    class round_window_draw_life_time
    {
    public:
@@ -339,7 +342,7 @@ namespace macos
 
          m_oswindow = oswindow_get(new_round_window(this, rect));
 
-         m_pui->m_pthread = ::get_thread();
+         m_pui->m_pthreadUserInteraction = ::get_thread();
 
          ::copy(&m_rectParentClient, &rectParam);
 
@@ -375,9 +378,9 @@ namespace macos
 
          bOk = false;
 
-         threadrefa_post_quit();
+         children_post_quit();
 
-         threadrefa_wait(one_minute());
+         children_wait_quit(one_minute());
 
          PostNcDestroy();        // cleanup if CreateWindowEx fails too soon
 
@@ -1900,15 +1903,8 @@ namespace macos
    }
 
 
-
-   void interaction_impl::prodevian_task()
+   void interaction_impl::_thread_prodevian()
    {
-
-      if (m_pthreadProDevian.is_null())
-      {
-
-         m_pthreadProDevian = fork([&]()
-         {
 
             DWORD dwStart;
 
@@ -2025,11 +2021,6 @@ namespace macos
 
             output_debug_string("m_pthreadDraw has finished!");
 
-         });
-
-      }
-
-
    }
 
 
@@ -2049,6 +2040,13 @@ namespace macos
       else
       {
 
+      }
+      
+      if(::is_null(g_pappPreTranslateMouseMessage))
+      {
+      
+         g_pappPreTranslateMouseMessage = System.oprop("pre_translate_mouse_message").cast < ::aura::application >();
+         
       }
 
    }
@@ -2618,9 +2616,12 @@ namespace macos
       }
    }
 
+   
    bool interaction_impl::IsWindow() const
    {
+      
       return ::is_window(m_oswindow) != FALSE;
+      
    }
 
 
@@ -2780,6 +2781,8 @@ namespace macos
       //m_pui->send_message(WM_SHOWWINDOW, ::IsWindowVisible(get_handle()));
          
       }
+      
+      deferred_on_change_visibility();
 
       return m_pui->IsWindowVisible();
 
@@ -2900,14 +2903,14 @@ namespace macos
    bool interaction_impl::post_message(UINT message, WPARAM wparam, lparam lparam)
    {
 
-      if (m_pui->m_pthread == NULL)
+      if (m_pui->m_pthreadUserInteraction == NULL)
       {
 
          return false;
 
       }
 
-      return m_pui->m_pthread->post_message((::user::primitive *) m_pui, message, wparam, lparam);
+      return m_pui->m_pthreadUserInteraction->post_message((::user::primitive *) m_pui, message, wparam, lparam);
 
    }
 
@@ -4479,7 +4482,7 @@ namespace macos
    void interaction_impl::_001BaseWndInterfaceMap()
    {
 
-      System.window_map().set((int_ptr)get_handle(), this);
+      System.window_map().set(get_handle(), this);
 
    }
 
@@ -4556,6 +4559,9 @@ namespace macos
       g->set_alpha_mode(::draw2d::alpha_mode_set);
 
       g->BitBlt(0, 0, spdibBuffer->m_size.cx, spdibBuffer->m_size.cy, spdibBuffer->get_graphics(), 0, 0, SRCCOPY);
+      
+      
+      //g->fill_solid_rect_dim(0, 0, spdibBuffer->m_size.cx, spdibBuffer->m_size.cy, ARGB(255, 100, 100, 100));
 
    }
 
@@ -4747,6 +4753,17 @@ namespace macos
             return;
 
          }
+         
+         try {
+            if(::is_set(g_pappPreTranslateMouseMessage))
+            {
+               
+               g_pappPreTranslateMouseMessage->pre_translate_message(spbase);
+               
+            }
+         } catch (...) {
+         }
+
 
          m_pui->send(spbase);
 
@@ -4786,6 +4803,16 @@ namespace macos
 
          return;
 
+      }
+      
+      try {
+         if(::is_set(g_pappPreTranslateMouseMessage))
+         {
+            
+            g_pappPreTranslateMouseMessage->pre_translate_message(spbase);
+            
+         }
+      } catch (...) {
       }
 
       m_pui->send(spbase);
@@ -5480,6 +5507,8 @@ namespace macos
       m_bShowFlags = bShowFlags;
       
       set_need_redraw();
+      
+      deferred_on_change_visibility();
       
       return true;
       

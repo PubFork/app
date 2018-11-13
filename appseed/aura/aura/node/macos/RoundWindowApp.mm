@@ -365,7 +365,7 @@ NSAppleEventManager *appleEventManager = [NSAppleEventManager sharedAppleEventMa
 @end
 
 
-void ns_application_main(int argc, char *argv[])
+void ns_application_main(int argc, char *argv[], const char * pszCommandLine)
 {
    
    NSApplication * application = [NSApplication sharedApplication];
@@ -381,7 +381,20 @@ void ns_application_main(int argc, char *argv[])
    
    [NSApplication sharedApplication];
    
-   [NSApp setActivationPolicy:NSApplicationActivationPolicyRegular];
+   bool bNoDock = strstr(pszCommandLine, " no_dock") != NULL;
+   
+   if(bNoDock)
+   {
+      
+      nsapp_activation_policy_accessory();
+      
+   }
+   else
+   {
+      
+      nsapp_activation_policy_regular();
+      
+   }
    
    id menuMain = [NSMenu alloc];
    

@@ -39,7 +39,10 @@ namespace aura
 
       }
 
-      m_strAppId = "session";
+      m_strAppId           = "aura_session";
+      m_strAppName         = "aura_session";
+      m_strBaseSupportId   = "aura_session";
+      m_strInstallToken    = "aura_session";
 
       m_ecursorDefault = ::visual::cursor_arrow;
 
@@ -129,7 +132,7 @@ namespace aura
             || pcreate->m_spCommandLine->m_varQuery.has_property("uninstall"))
       {
 
-         Session.appptra().remove(papp);
+         appptra().remove(papp);
 
          return NULL;
 
@@ -162,7 +165,7 @@ namespace aura
 
       pcreate->m_spCommandLine->m_eventReady.ResetEvent();
 
-      //Session.m_appptra.add(papp);
+      appptra().add_unique(papp);
 
       m_pappCurrent = papp;
 
@@ -373,26 +376,33 @@ namespace aura
 
       try
       {
-
-         for (auto & papp : System.m_appptra)
+         
+         if(::is_set(m_psystem))
          {
+            
+            synch_lock sl(m_psystem->m_pmutex);
 
-            try
+            for (auto & papp : m_psystem->m_appptra)
             {
 
-               if (papp->m_psession == this)
+               try
                {
 
-                  papp->m_psession = NULL;
+                  if (papp->m_psession == this)
+                  {
+
+                     papp->m_psession = NULL;
+
+                  }
+
+               }
+               catch (...)
+               {
 
                }
 
             }
-            catch (...)
-            {
-
-            }
-
+            
          }
 
       }
@@ -401,18 +411,40 @@ namespace aura
 
       }
 
-
       ::aura::application::term_application();
 
    }
 
-
-   application_ptra & session::appptra()
+   
+   void session::appptra_add(::aura::application * papp)
    {
-
-      return m_appptra;
-
+      
+      if(::is_null(papp))
+      {
+         
+         return;
+         
+      }
+      
+      ::aura::application::appptra_add(papp);
+      
+      if(!papp->is_session() && !papp->is_system() && !papp->is_serviceable())
+      {
+         
+         m_psystem->m_bDoNotExitIfNoApplications = false;
+         
+      }
+      
    }
+
+   
+   void session::appptra_remove(::aura::application * papp)
+   {
+      
+      ::aura::application::appptra_remove(papp);
+      
+   }
+   
 
    //// only usable from base.dll and dependants
    //::sockets::sockets & session::sockets()
@@ -767,9 +799,9 @@ namespace aura
    ::aura::application * session::application_get(const char * pszAppId, bool bCreate, bool bSynch, application_bias * pbiasCreate)
    {
 
-      ::aura::application * papp = NULL;
+      sp(::aura::application) papp;
 
-      if (m_psession->m_mapApplication.Lookup(string(pszAppId), papp))
+      if (m_psession->appptra().lookup(pszAppId, papp))
       {
 
          return papp;
@@ -833,16 +865,14 @@ namespace aura
 
          }
 
-         if (&App(papp) == NULL)
+         if (&App(papp.m_p) == NULL)
          {
-
-            ::aura::del(papp);
 
             return NULL;
 
          }
 
-         m_psession->m_mapApplication.set_at(string(pszAppId), papp);
+         m_psession->appptra_add(papp);
 
          return papp;
 
@@ -1130,15 +1160,8 @@ namespace aura
                && (pcreate->m_spCommandLine->m_strApp.is_empty()
                    || App(m_pappCurrent).m_strAppName == pcreate->m_spCommandLine->m_strApp))
          {
-            //if(get_document() != NULL && get_document()->get_typed_view < ::bergedge::pane_view >() != NULL)
-            //{
-            //   get_document()->get_typed_view < ::bergedge::pane_view >()->set_cur_tab_by_id("app:" + App(m_pappCurrent).m_strAppName);
-            //}
+
             App(m_pappCurrent).request_create(pcreate);
-            //if(pcreate->m_spCommandLine->m_varQuery["document"].cast < ::user::document > () == NULL)
-            {
-               //             goto alt1;
-            }
 
          }
          else
@@ -1188,67 +1211,7 @@ namespace aura
 
       }
 
-//      if (pcreate->m_spCommandLine->m_varFile.get_type() == var::type_string)
-//      {
-//         if (::str::ends_ci(pcreate->m_spCommandLine->m_varFile, ".core"))
-//         {
-//            string strCommand = Application.file().as_string(pcreate->m_spCommandLine->m_varFile);
-//            if (::str::begins_eat(strCommand, "ca2prompt\r")
-//                  || ::str::begins_eat(strCommand, "ca2prompt\n"))
-//            {
-//               strCommand.trim();
-//               handler()->add_fork_uri(strCommand);
-//               System.m_bDoNotExitIfNoApplications = true;
-//            }
-//            return;
-//         }
-//         else
-//         {
-//            on_request(pcreate);
-//         }
-//      }
-//      else if (m_pappCurrent != NULL && m_pappCurrent != this
-//               && (pcreate->m_spCommandLine->m_strApp.is_empty()
-//                   || App(m_pappCurrent).m_strAppName == pcreate->m_spCommandLine->m_strApp))
-//      {
-//
-//
-//         /*         if(get_document() != NULL && get_document()->get_typed_view < ::platform::pane_view >() != NULL)
-//         {
-//         get_document()->get_typed_view < ::platform::pane_view >()->set_cur_tab_by_id("app:" + App(m_pappCurrent).m_strAppName);
-//         }*/
-//         App(m_pappCurrent).request_create(pcreate);
-//      }
-//      else
-//      {
-//         on_request(pcreate);
-//      }
-
    }
-
-
-   //::visual::cursor * session::get_cursor()
-   //{
-
-   //   return NULL;
-
-   //}
-
-
-   //::visual::cursor * session::get_default_cursor()
-   //{
-
-   //   return NULL;
-
-   //}
-
-
-   //oswindow session::get_capture()
-   //{
-
-   //   return NULL;
-
-   //}
 
 
    string session::fontopus_get_user_sessid(const string & str)

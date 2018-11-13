@@ -465,7 +465,24 @@ namespace macos
 
       // attempt file creation
       //HANDLE hFile = shell::CreateFile(::str::international::utf8_to_unicode(m_strFileName), dwAccess, dwShareMode, &sa, dwCreateFlag, FILE_ATTRIBUTE_NORMAL, NULL);
-      int32_t hFile = ::open(m_strFileName, dwFlags, dwPermission); //::open(m_strFileName, dwAccess, dwShareMode, &sa, dwCreateFlag, FILE_ATTRIBUTE_NORMAL, NULL);
+      
+      
+      int32_t hFile;
+      
+//      if(dwFlags == 0)
+//      {
+//
+//         hFile = ::open(m_strFileName, dwFlags);
+//
+//      }
+//      else
+//      {
+//
+         hFile = ::open(m_strFileName, dwFlags, dwPermission);
+         
+      //}
+      
+      //::open(m_strFileName, dwAccess, dwShareMode, &sa, dwCreateFlag, FILE_ATTRIBUTE_NORMAL, NULL);
       if(hFile == hFileNull)
       {
 

@@ -23,7 +23,6 @@ namespace multimedia
          m_estate             = state_initial;
          m_pthreadCallback    = NULL;
          m_mmr                = ::multimedia::result_success;
-         m_peffect            = NULL;
          m_bDone              = false;
 
       }
@@ -433,12 +432,12 @@ namespace multimedia
 
          OSStatus status;
 
-         if(m_peffect != NULL)
-         {
-
-            m_peffect->Process16bits((int16_t *) buf->mAudioData, wave_out_get_buffer_size() / 2);
-
-         }
+//         if(m_peffect != NULL)
+//         {
+//
+//            m_peffect->Process16bits((int16_t *) buf->mAudioData, wave_out_get_buffer_size() / 2);
+//
+//         }
 
          single_lock sLock(m_pmutex, TRUE);
 
@@ -659,21 +658,9 @@ namespace multimedia
       void wave_out::wave_out_on_playback_end()
       {
 
-         wave_out_stop();
-
-         if(m_pprebuffer->m_pstreameffectOut != NULL)
-         {
-            ::multimedia::iaudio::wave_stream_effect * peffect = m_pprebuffer->m_pstreameffectOut;
-            m_pprebuffer->m_pstreameffectOut = NULL;
-            delete peffect;
-         }
-
-         m_pplayer->OnEvent(::multimedia::audio::wave_player::EventPlaybackEnd);
+         ::multimedia::audio::wave_out::wave_out_on_playback_end();
 
       }
-
-
-
 
 
       void * wave_out::get_os_data()

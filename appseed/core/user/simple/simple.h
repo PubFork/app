@@ -51,19 +51,17 @@
 
 #include "simple_tree_view.h"
 
+
 #include "simple_tab_control.h"
 
-//#include "simple_form_list_edit.h"
 
 #include "simple_frame_window.h"
-//#include "simple_mdi_frame_window.h"
-//#include "simple_mdi_child_window.h"
 #include "simple_child_frame.h"
 #include "simple_main_frame.h"
 
 
 
 
-#include "simple_user_interaction.inl"
+#include "core/user/simple/simple.inl"
 
 

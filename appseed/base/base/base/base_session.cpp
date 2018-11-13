@@ -12,6 +12,12 @@ namespace base
       ::aura::session(papp),
       axis::session(papp)
    {
+      
+      m_strAppId                    = "base_session";
+      m_strAppName                  = "base_session";
+      m_strBaseSupportId            = "base_session";
+      m_strInstallToken             = "base_session";
+
 
       m_iMainMonitor = -1;
 

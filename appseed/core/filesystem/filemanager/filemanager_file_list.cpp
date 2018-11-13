@@ -389,8 +389,6 @@ namespace filemanager
       if (_001HitTest_(ptClient, iItem))
       {
 
-         ::user::menu menu(get_app());
-
          if (get_fs_mesh_data()->m_itema.get_item(iItem).IsFolder())
          {
 
@@ -808,7 +806,7 @@ namespace filemanager
       for (int32_t i = 0; i < itema.get_size(); i++)
       {
 
-         patha.add(itema[i]->get_friendly_path());
+         patha.add(System.defer_process_path(itema[i]->get_friendly_path(), get_app()));
 
       }
 
@@ -890,10 +888,10 @@ namespace filemanager
          m_straOpenWith = stra;
          ::count iCount = stra.get_size();
 
-         sp(::user::menu_item) pmenuitem(canew(::user::menu_item(get_app())));
          string str;
          for (int32_t i = 0; i < iCount; i++)
          {
+            sp(::user::menu_item) pmenuitem(canew(::user::menu_item(get_app())));
             pmenuitem->m_id = "open with" + stra[i];
 
             if (pmenuitem->m_pui != NULL)
@@ -911,10 +909,13 @@ namespace filemanager
          }
          pcommand->m_iIndex = iStartIndex;
 
-         pcommand->m_iCount = iIndex;
+         pcommand->m_iCount += iCount - 1;
+         
+         index iNewIndex = iStartIndex + iCount - 1;
 
+         pmenucommandui->m_iIndex = iNewIndex;
 
-         pmenu->on_layout();
+         pmenu->set_need_layout();
 
       }
 

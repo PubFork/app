@@ -145,9 +145,9 @@ void ns_main_sync(dispatch_block_t block)
    
 }
 
+class object;
 
-
-
+CLASS_DECL_AURA void one_shot_run(::object * pobjectRunnable);
 void main_async_runnable(::object * pobjectRunnable)
 {
    

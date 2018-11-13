@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 
@@ -16,7 +16,7 @@ typedef uint32_t IDTHREAD;
 
 #define QS_ALLEVENTS 0xffff
 
-void __clear_mq();
+void __clear_mq(bool bClose);
 
 template <  >
 inline bool EqualElements<IDTHREAD>(IDTHREAD r1, IDTHREAD r2)

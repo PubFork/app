@@ -9,6 +9,7 @@
 
 void os_post_quit();
 
+extern mutex * g_pmutexLibrary;
 
 #ifdef LINUX
 
@@ -83,6 +84,12 @@ namespace aura
       ::object(NULL),
       ::thread(NULL)
    {
+      
+      m_strAppId                    = "aura_system";
+      m_strAppName                  = "aura_system";
+      m_strBaseSupportId            = "aura_system";
+      m_strInstallToken             = "aura_system";
+
 
 #if !defined(METROWIN) && !defined(ANDROID)
 
@@ -138,8 +145,6 @@ namespace aura
 
 #endif
 
-      m_strAppId = "system";
-
       m_bThreadToolsForIncreasedFps = false;
 
       m_typemap.InitHashTable(2048);
@@ -171,7 +176,7 @@ namespace aura
 
       m_pmath                    = canew(math::math(this));
       m_pgeometry                = canew(geometry::geometry(this));
-      //      m_phtml = NULL;
+      m_phtml                    = NULL;
 
 
       m_bDoNotExitIfNoApplications              = true;
@@ -186,15 +191,7 @@ namespace aura
 
       m_pmachineeventcentral = NULL;
 
-      //::ca::application::m_file.set_app(this);
-      //::ca::application::m_dir.set_app(this);
-
       string strId;
-      //strId = m_strAppName;
-      //strId += ::str::has_char(m_strAppId, ".");
-      //strId += ::str::has_char(m_strBaseSupportId, ".");
-
-
       strId = "ca2log";
 
 
@@ -249,8 +246,6 @@ namespace aura
       factory().creatable_small < ::file::application >();
       factory().creatable_small < ::file::dir::application >();
 
-      m_phtml = NULL;
-
       __node_aura_factory_exchange(this);
 
       m_pdatetime = canew(class ::datetime::department(this));
@@ -277,9 +272,6 @@ namespace aura
 
       m_pcompress = NULL;
 
-      m_strAppName               = "system";
-      m_strInstallToken          = "system";
-
       m_dwAfterApplicationFirstRequest = 0;
 
 
@@ -298,6 +290,68 @@ namespace aura
    }
 
 
+   ::aura::library * system::get_library(const char * pszLibrary, bool bOpenCa2)
+   {
+      
+      synch_lock sl(g_pmutexLibrary);
+      
+      sp(::aura::library) & plibrary = m_mapLibrary[pszLibrary];
+      
+      if(plibrary.is_null())
+      {
+       
+         plibrary.alloc(allocer());
+         
+         if(!plibrary->open(pszLibrary))
+         {
+          
+#if !defined(VSNORD)
+            if(!plibrary->open(System.dir().ca2module() / pszLibrary))
+#endif
+            {
+               
+            }
+
+         }
+         
+         if(plibrary->is_opened())
+         {
+            
+            if(bOpenCa2)
+            {
+               
+               plibrary->open_ca2_library();
+               
+            }
+            
+         }
+         
+      }
+      
+      if(!plibrary->is_opened())
+      {
+       
+         return NULL;
+         
+      }
+      
+      if(bOpenCa2)
+      {
+         
+         if(!plibrary->m_pca2library.is_null())
+         {
+          
+            return NULL;
+            
+         }
+         
+      }
+      
+      return plibrary;
+      
+   }
+   
+   
    system::~system()
    {
 
@@ -408,9 +462,7 @@ namespace aura
       if(!m_bDoNotExitIfNoApplications)
       {
 
-         ::aura::application_ptra appptra;
-
-         appptra = get_appptra();
+         auto appptra = get_appptra();
 
          for(int32_t i = 0; i < appptra.get_size();)
          {
@@ -850,7 +902,7 @@ namespace aura
       try
       {
 
-         for (auto & papp : System.m_appptra)
+         for (auto & papp : m_appptra)
          {
 
             try
@@ -876,7 +928,6 @@ namespace aura
       {
 
       }
-
 
       __wait_threading_count(::millis((5000) * 8));
 
@@ -1720,27 +1771,6 @@ namespace aura
       return c;
 
    }
-
-
-   application_ptra system::get_appptra()
-   {
-
-      application_ptra appptra;
-
-
-      {
-
-         synch_lock sl(m_pmutex);
-
-         appptra = Session.m_appptra;
-
-      }
-
-      return appptra;
-
-   }
-
-
 
 
    string system::crypto_md5_text(const string & str)
@@ -2671,82 +2701,31 @@ RetryBuildNumber:
    void system::request_exit()
    {
 
-      fork([=]()
+      fork([&]()
       {
 
-         set_thread_priority(::multithreading::priority_highest);
-
-         auto ptra = Session.m_appptra;
-
-         //for (auto papp : ptra)
-         //{
-
-         //   papp->m_bAgreeExit = false;
-
-         //   papp->m_bAgreeExitOk = false;
-
-         //}
-
-         //for (auto papp : ptra)
-         //{
-
-         //   papp->handler()->handle(::command_on_agree_exit);
-
-         //}
-
-         //int i = 500;
-
-         //MESSAGE msg;
-
-         //while (i > 0 && ptra.get_size() > 0)
-         //{
+         auto ptra = m_appptra;
 
          for (index j = 0; j < ptra.get_size(); j++)
          {
-
-            //if (ptra[j]->m_bAgreeExitOk)
-            //{
-
-            //if (!ptra[j]->m_bAgreeExit)
-            if (!ptra[j]->_001OnAgreeExit())
+            
+            try
             {
 
-               return;
+               if (!ptra[j]->_001OnAgreeExit())
+               {
 
+                  return;
+
+               }
+               
             }
-            //else
-            //{
-
-            //   ptra.remove_at(j);
-
-            //}
-
-            //}
-            //else
-            //{
-
-            // j++;
+            catch(...)
+            {
+               
+            }
 
          }
-//
-//            }
-//
-////            Sleep(50);
-//
-//            i--;
-//
-//         }
-
-         //if (i == 0)
-         //{
-
-         //   return;
-
-         //}
-
-         //ptra = Session.m_appptra;
-
-         //MESSAGE msg;
 
          for (auto & papp : ptra)
          {
@@ -2775,7 +2754,7 @@ RetryBuildNumber:
             for (index j = 0; j < ptra.get_size(); )
             {
 
-               auto * pappItem = ptra[j].m_p;
+               auto pappItem = ptra[j];
 
                if (pappItem == NULL || pappItem->m_bFranceExit)
                {
@@ -2786,7 +2765,7 @@ RetryBuildNumber:
                else
                {
 
-                  TRACE("Waiting France Exit of %s", typeid(*pappItem).name());
+                  TRACE("Waiting France Exit of %s", typeid(pappItem.m_p).name());
 
                   j++;
 
@@ -3417,18 +3396,26 @@ success:
 
    bool system::on_application_menu_action(const char * pszCommand)
    {
-
-      for(auto & app : m_appptra)
+      
+      synch_lock sl(m_pmutex);
+      
+      auto appptra = m_appptra;
+      
+      sl.unlock();
+      
+      for(auto & papp : appptra)
       {
+         
+         ASSERT(papp != this);
 
-         if(app == this)
+         if(papp == this)
          {
 
             continue;
 
          }
 
-         if(app->on_application_menu_action(pszCommand))
+         if(papp->on_application_menu_action(pszCommand))
          {
 
             return true;
@@ -3440,8 +3427,8 @@ success:
       return false;
 
    }
-
-
+   
+   
    bool system::merge_accumulated_on_open_file(::create * pcreate)
    {
 

@@ -1,11 +1,5 @@
 #include "framework.h"
 
-//#if defined(LINUX) || defined(APPLEOS)
-//#include <dlfcn.h>
-//#endif
-
-
-
 
 namespace asphere
 {
@@ -44,26 +38,11 @@ namespace asphere
       {
          
          initialize_contextualized_theme();
-
        
       }
 
-//      fork([&]()
-//      {
-//
-//         while (get_thread_run())
-//         {
-//
-//            sync_with_stored_theme();
-//
-//            Sleep(1000);
-//
-//         }
-//
-//         TRACE("finished sync context theme thread");
-//
-//      });
-
+      m_watchid = System.dir().add_watch(::dir::system()/"config", this, false);
+      
       return true;
 
    }
@@ -354,41 +333,6 @@ namespace asphere
 
    }
 
-//void application::set_theme(::sphere::e_theme etheme)
-//{
-
-//   int iTheme = (int)etheme;
-
-//   int iThemeCount = (int)::sphere::theme_count;
-
-//   if (iTheme < 0)
-//   {
-
-//      iTheme = 0;
-
-//   }
-//   else
-//   {
-
-//      iTheme %= iThemeCount;
-
-//   }
-
-//   m_etheme = (::sphere::e_theme) iTheme;
-
-//   data_save("application.theme", iTheme);
-
-//   output_debug_string("theme set to " + ::str::from(iTheme) + "\n");
-
-//}
-
-//::sphere::e_theme application::get_theme()
-//{
-
-//   return m_etheme;
-
-//}
-
 
    uint32_t application::guess_code_page(const string & str)
    {
@@ -414,29 +358,96 @@ namespace asphere
       void application::handle_file_action(::file_watcher::id watchid, const char * dir, const char * filename, ::file_watcher::e_action action)
       {
          
-         ::file::path path;
+         string strFilename = filename;
          
-         path = dir;
-         
-         path /= filename;
-         
-               ::file::path pathWeatherState = ::dir::system() / "config/weather_state.txt";
-         
-         if (path.is_equal_full(pathWeatherState))
+         if (strFilename.ends_ci("weather_state.txt"))
          {
             
             delay_fork(&m_bSync, &m_iSyncCount, millis(300),
                          [=]
                          ()
                          {
+                            
+                            on_change_weather_state();
 
-            sync_with_stored_theme();
                          });
             
          }
          
          
       }
+   
+   
+
+   void application::on_change_weather_state()
+   {
+   
+      ::file::path pathWeatherState = ::dir::system() / "config/weather_state.txt";
+      
+      string strWeatherState = Application.file().as_string(pathWeatherState);
+      
+      m_strWeatherState = strWeatherState;
+      
+      bool bDay = m_strWeatherState.find_ci(".day") >= 0;
+      
+      string strDayNight;
+      
+      string strDayNightTheme;
+      
+      if (bDay)
+      {
+         
+         strDayNight = "day";
+         
+         strDayNightTheme = "lite";
+         
+      }
+      else
+      {
+         
+         strDayNight = "night";
+         
+         strDayNightTheme = "dark";
+         
+      }
+      
+      m_strDayNight = strDayNight;
+      
+      m_strDayNightTheme = strDayNightTheme;
+      
+      if(m_bContextTheme)
+      {
+         
+         sync_with_stored_theme();
+         
+      }
+      
+   }
+   
+   
+   string application::get_weather_state()
+   {
+    
+      return m_strWeatherState;
+      
+   }
+
+
+   string application::get_day_night()
+   {
+      
+      return m_strDayNight;
+      
+   }
+   
+   
+   string application::get_day_night_theme()
+   {
+      
+      return m_strDayNightTheme;
+      
+   }
+
 
    void application::initialize_contextualized_theme()
    {
@@ -494,18 +505,12 @@ namespace asphere
       connect_command("theme", &application::_001OnTheme);
       
       sync_with_stored_theme();
-      m_watchid = System.dir().add_watch(::dir::system()/"config", this, false);
 
       
    }
    
    
-
-
 } //namespace sphere
-
-
-
 
 
 

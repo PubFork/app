@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 namespace aura
@@ -10,8 +10,12 @@ namespace aura
       ::object(papp),
       m_rx(papp)
    {
-
+      
+      m_id = "::aura::ipi";
+      
       defer_create_mutex();
+      
+      //children_add(&m_rx);
 
       m_strApp          = strApp;
 
@@ -34,9 +38,11 @@ namespace aura
       string strKey = key(strApp, iPid);
 
       if(!m_rx.create(strKey))
+      {
+         
          _throw(::resource_exception(papp));
-
-      //Application.simple_message_box(NULL, Application.m_strAppName + string(" : ") + strKey, MB_OK);
+         
+      }
 
    }
 
@@ -45,6 +51,16 @@ namespace aura
    {
 
 
+   }
+   
+   
+   void ipi::safe_pre_term()
+   {
+      
+      ::object::safe_pre_term();
+      
+      m_rx.safe_pre_term();
+      
    }
 
 
@@ -378,7 +394,7 @@ started:
 #else
 
 
-      strKey = :dir::system() / "ipi" / strApp / ::str::from(iPid);
+      strKey = ::dir::system() / "ipi" / strApp / ::str::from(iPid);
 
 #endif
 
