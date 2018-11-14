@@ -4106,8 +4106,10 @@ success:
    }
 
 
-   ::visual::dib_sp & system::get_dib(::aura::application * papp, ::file::path path, bool bAsync)
+   ::visual::dib_sp & system::get_dib(::aura::application * papp, var varFile, bool bAsync)
    {
+      
+      ::file::path path = varFile.get_file_path();
 
 #if FILE_SYSTEM_CASE_INSENSITIVE
 
@@ -4138,39 +4140,41 @@ success:
 
             synch_lock sl(dib->m_pmutex);
 
-            if (!dib.load_from_file(path, true))
-            {
+            dib.load_from_file(varFile, true);
+            
+            //if (!dib.load_from_file(varFile, true))
+//            {
 
-               if (is_debugger_attached())
-               {
+//               if (is_debugger_attached())
+//               {
+//
+//                  //simple_message_box("missing image from resource: \"" + path + "\"", MB_OK);
+//
+//               }
+//
+//               if (!dib.load_from_matter("missing_image.png"))
+//               {
+//
+//                  if (is_debugger_attached())
+//                  {
+//
+//                     //simple_message_box("missing framework image from system resource: \"matter://missing_image.png\"", MB_OK);
+//
+//                  }
+//
+//                  dib->create(32, 48);
+//
+//                  dib->Fill(255, 255, 255, 255);
+//
+//                  dib->get_graphics()->set_text_color(ARGB(255, 255, 0, 0));
+//
+//                  dib->get_graphics()->draw3d_rect_coord(0, 0, 31, 47, ARGB(255, 128, 128, 128));
+//
+//                  dib->get_graphics()->draw_text("x", rect(0, 0, 32, 48), DT_CENTER | DT_VCENTER | DT_SINGLELINE);
+//
+//               }
 
-                  //simple_message_box("missing image from resource: \"" + path + "\"", MB_OK);
-
-               }
-
-               if (!dib.load_from_matter("missing_image.png"))
-               {
-
-                  if (is_debugger_attached())
-                  {
-
-                     //simple_message_box("missing framework image from system resource: \"matter://missing_image.png\"", MB_OK);
-
-                  }
-
-                  dib->create(32, 48);
-
-                  dib->Fill(255, 255, 255, 255);
-
-                  dib->get_graphics()->set_text_color(ARGB(255, 255, 0, 0));
-
-                  dib->get_graphics()->draw3d_rect_coord(0, 0, 31, 47, ARGB(255, 128, 128, 128));
-
-                  dib->get_graphics()->draw_text("x", rect(0, 0, 32, 48), DT_CENTER | DT_VCENTER | DT_SINGLELINE);
-
-               }
-
-            }
+            //}
 
             sync_object * pmutex = dib->m_pmutex;
 

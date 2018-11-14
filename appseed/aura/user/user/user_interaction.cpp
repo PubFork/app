@@ -1441,8 +1441,8 @@ restart:
 
          if (m_pimpl != NULL)
          {
-
-            m_pimpl->delete_all_timers();
+            
+            m_pimpl->m_ptimerarray.release();
 
          }
 

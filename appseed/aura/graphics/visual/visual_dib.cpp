@@ -479,8 +479,8 @@ namespace visual
 
       switch (m_sparray->element_at(m_sparray->m_iLastFrame)->m_edisposal)
       {
-      case dib_sp::pointer::disposal_undefined:
-      case dib_sp::pointer::disposal_none:
+      case disposal_undefined:
+      case disposal_none:
       {
          COLORREF crBack = m_sparray->m_crBack;
 
@@ -489,7 +489,7 @@ namespace visual
 
       }
       break;
-      case dib_sp::pointer::disposal_background:
+      case disposal_background:
       {
          // Dispose background
          // Clear the area covered by the current raw frame with background color
@@ -500,7 +500,7 @@ namespace visual
          m_sparray->m_dibCompose->get_graphics()->fill_solid_rect(m_sparray->element_at(m_sparray->m_iLastFrame)->m_rect, crBack);
       }
       break;
-      case dib_sp::pointer::disposal_previous:
+      case disposal_previous:
          // Dispose previous
          // We restore the previous composed frame first
          //hr = RestoreSavedFrame();

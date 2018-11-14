@@ -4471,6 +4471,8 @@ namespace draw2d_quartz2d
 
    bool graphics::GetTextExtent(sized & size, const char * lpszString, strsize nCount, int32_t iIndex)
    {
+      
+      synch_lock sl(m_pmutex);
 
       CGFloat ascent, descent, leading, width;
 

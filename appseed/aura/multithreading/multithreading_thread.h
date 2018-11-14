@@ -48,7 +48,7 @@ class CLASS_DECL_AURA thread :
    ,virtual public ::exception::translator
 #endif
 {
-private:
+protected:
 
    bool                                   m_bRunThisThread;
 

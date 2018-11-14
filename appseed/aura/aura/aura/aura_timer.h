@@ -162,6 +162,17 @@ public:
    void impl_stop();
 
 
+   virtual void children_add(::aura::application * papp);
+   
+   
+   virtual void post_quit() override;
+   
+   
+   virtual void wait_quit(duration durationTimeout) override;
+   
+   virtual void safe_pre_term() override;
+
+   
 };
 
 

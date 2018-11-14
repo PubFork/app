@@ -203,6 +203,22 @@ public:
    //sp(T) clone() const;
 
    void alloc(const ::aura::allocatorsp & spallocator);
+   
+   inline void defer_alloc(const ::aura::allocatorsp & spallocator)
+   {
+      
+      if(is_set())
+      {
+         
+         return;
+         
+      }
+      
+      alloc(spallocator);
+      
+   }
+
+   inline void defer_alloc(::aura::application * papp);
 
    inline void run_and_release()
    {

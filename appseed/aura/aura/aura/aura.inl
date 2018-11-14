@@ -546,7 +546,20 @@ void ::stream::prop_serial(const char * pszName, TYPE & t)
 }
 
 
-
+template < typename T >
+inline void smart_pointer < T > ::defer_alloc(::aura::application * papp)
+{
+   
+   if(is_set())
+   {
+      
+      return;
+      
+   }
+   
+   operator=(canew(T(papp)));
+   
+}
 
 
 CLASS_DECL_AURA ::stream & operator << (::stream & os, ::datetime::time & time);

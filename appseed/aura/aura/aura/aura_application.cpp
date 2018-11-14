@@ -421,10 +421,10 @@ namespace aura
    }
 
 
-   ::visual::dib_sp & application::dib(::file::path path, bool bAsync)
+   ::visual::dib_sp & application::dib(var varFile, bool bAsync)
    {
 
-      return System.get_dib(this, path, bAsync);
+      return System.get_dib(this, varFile, bAsync);
 
    }
 

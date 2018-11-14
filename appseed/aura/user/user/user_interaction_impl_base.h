@@ -6,8 +6,7 @@ namespace user
 
 
    class CLASS_DECL_AURA interaction_impl_base:
-      virtual public ::user::interaction_base,
-      virtual public ::aura::timer_array
+      virtual public ::user::interaction_base
    {
    public:
 
@@ -27,6 +26,8 @@ namespace user
       bool                                m_bIgnoreSizeEvent;
       bool                                m_bIgnoreMoveEvent;
       ap(critical_section)                m_pcsDisplay;
+      
+      sp(::aura::timer_array)             m_ptimerarray;
 
       mutex                               m_mutexLongPtr;
       int_ptr_to_int_ptr                  m_longptr;
@@ -50,7 +51,6 @@ namespace user
 
 
       virtual void queue_message_handler(::message::base * pbase);
-
 
       virtual bool has_focus() override;
       virtual bool is_active() override;

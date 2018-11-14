@@ -100,8 +100,6 @@ namespace aura
 
       m_map.remove_key(nIDEvent);
 
-      ptimer->children_post_quit_and_wait(one_minute());
-
       ptimer->m_pmutex = NULL;
 
       ptimer->stop();
@@ -140,6 +138,16 @@ namespace aura
 
    }
 
+   
+   void timer_array::safe_pre_term()
+   {
+      
+      delete_all_timers();
+      
+      ::timer_callback::safe_pre_term();
+      
+   }
+   
 
    void timer_array::delete_all_timers()
    {
@@ -156,7 +164,8 @@ namespace aura
          }
 
       }
-
+      
+      wait_quit(one_minute());
 
       MAP::pair * ppair = NULL;
 

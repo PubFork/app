@@ -153,7 +153,7 @@ bool imaging::apple_load_diba_from_file(::visual::dib_sp::array * pdiba, ::file:
          if(_load_image(p->m_dib, w, h, iScan, pdata))
          {
             
-            p->m_edisposal = ::visual::dib_sp::pointer::disposal_none;
+            p->m_edisposal = ::visual::disposal_none;
             
             p->m_rect.left = 0;
             

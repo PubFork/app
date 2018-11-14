@@ -67,17 +67,16 @@ void timer::impl_term()
 void timer::impl_stop()
 {
          
-         if (m_timer != NULL)
-         {
-            
-            CancelDispatchSource(m_timer);
-            
-            ReleaseDispatch(m_timer);
-            
-            m_timer = NULL;
-            
-         }
-         
+   if (m_timer != NULL)
+   {
+      
+      CancelDispatchSource(m_timer);
+      
+      ReleaseDispatch(m_timer);
+      
+      m_timer = NULL;
+      
+   }
 
 }
 

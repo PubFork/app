@@ -5,8 +5,6 @@ timer::timer(::aura::application * papp, uint_ptr uiTimer, PFN_TIMER pfnTimer, v
    ::object(papp)
 {
 
-//   m_bThreadInit = false;
-
    impl_init();
 
    m_nIDEvent = uiTimer;
@@ -20,8 +18,6 @@ timer::timer(::aura::application * papp, uint_ptr uiTimer, PFN_TIMER pfnTimer, v
    m_pmutex = pmutex;
 
    m_pcallback = NULL;
-
-   m_ptimerRunning = NULL;
 
 }
 
@@ -43,13 +39,11 @@ bool timer::start(int millis, bool bPeriodic)
 
    synch_lock sl(m_pmutex);
 
-//   m_bThreadInit = false;
-
    m_bPeriodic = bPeriodic;
 
    m_dwMillis = millis;
 
-   if(m_ptimerRunning != NULL)
+   if(m_ptimerRunning.is_set())
    {
 
       return true;
@@ -64,7 +58,7 @@ bool timer::start(int millis, bool bPeriodic)
       if(!impl_start())
       {
 
-         m_ptimerRunning = NULL;
+         m_ptimerRunning.release();
 
          return false;
 
@@ -74,7 +68,7 @@ bool timer::start(int millis, bool bPeriodic)
    catch(...)
    {
 
-      m_ptimerRunning = NULL;
+      m_ptimerRunning.release();
 
       return false;
 
@@ -124,6 +118,8 @@ void timer::call_on_timer()
 {
 
    bool bRepeat = true;
+   
+   thread_set_is_timer();
 
    try
    {
@@ -140,17 +136,6 @@ void timer::call_on_timer()
    {
 
       bRepeat = false;
-
-   }
-
-   try
-   {
-
-      get_app()->children_add(this);
-
-   }
-   catch (...)
-   {
 
    }
 
@@ -213,31 +198,10 @@ void timer::call_on_timer()
 
       try
       {
+         
+         m_ptimerRunning->release_parents();
 
-         children_post_quit_and_wait(one_minute());
-
-      }
-      catch (...)
-      {
-
-
-      }
-
-      try
-      {
-
-         get_app()->children_remove(this);
-
-      }
-      catch (...)
-      {
-
-      }
-
-      try
-      {
-
-         m_ptimerRunning = NULL;
+         m_ptimerRunning.release();
 
       }
       catch(...)
@@ -273,6 +237,49 @@ void timer::on_timer()
 
    }
 
+}
+
+
+void timer::children_add(::aura::application * papp)
+{
+   
+}
+
+
+void timer::wait_quit(duration durationTimeout)
+{
+
+   Sleep(10);
+   
+
+}
+
+void timer::safe_pre_term()
+{
+   
+   release_parents();
+   
+}
+
+void timer::post_quit()
+{
+   
+   try
+   {
+      
+      if(m_bRunThisThread)
+      {
+         
+         m_bRunThisThread = false;
+         
+      }
+      
+   }
+   catch (...)
+   {
+   
+   }
+   
 }
 
 

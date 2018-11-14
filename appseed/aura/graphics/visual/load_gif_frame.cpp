@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 //#define unequal(a, b, n) ((a) > (b) - (n))
 
@@ -206,7 +206,7 @@ bool gif_load_frame(::draw2d::dib * pdibCompose, ::visual::dib_sp::array * pdiba
       gif_draw_frame(pdibCompose, pdiba, pointer, uFrameIndex, ba, iScan, cra, transparentIndex);
 
 
-      if (uFrameIndex > 0 && pdiba->element_at(uFrameIndex - 1)->m_edisposal == ::visual::dib_sp::pointer::disposal_background)
+      if (uFrameIndex > 0 && pdiba->element_at(uFrameIndex - 1)->m_edisposal == ::visual::disposal_background)
       {
 
          pdibCompose->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_set);

@@ -33,21 +33,31 @@ namespace visual
 
    };
 
+   
+   enum e_load
+   {
+      
+      load_none,
+      load_going_to_load,
+      load_fail,
+      load_ok,
+      
+   };
+
+   
+   enum e_disposal
+   {
+      disposal_undefined = 0,
+      disposal_none = 1,
+      disposal_background = 2,
+      disposal_previous = 3
+   };
+
 
    class CLASS_DECL_AURA dib_sp :
       public ::draw2d::dib_sp
    {
    public:
-
-      enum e_load
-      {
-
-         load_none,
-         load_going_to_load,
-         load_fail,
-         load_ok,
-
-      };
 
 
       class pointer :
@@ -55,13 +65,6 @@ namespace visual
       {
       public:
 
-         enum e_disposal
-         {
-            disposal_undefined = 0,
-            disposal_none = 1,
-            disposal_background = 2,
-            disposal_previous = 3
-         };
 
          rect                 m_rect;
          ::draw2d::dib_sp     m_dib;

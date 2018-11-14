@@ -7,7 +7,6 @@ namespace user
 
 
    interaction_impl_base::interaction_impl_base() :
-      ::aura::timer_array(get_app()),
       m_rectParentClient(0,0,0,0),
       m_rectParentClientRequest(0, 0, 0, 0),
       m_mutexLongPtr(get_app())
@@ -1512,16 +1511,25 @@ namespace user
 //         ::output_debug_string(str);
 
       }
+      
+      m_ptimerarray.defer_alloc(get_app());
 
-      return create_timer(nIDEvent, nEllapse, pfnTimer, true, m_pui);
+      return m_ptimerarray->create_timer(nIDEvent, nEllapse, pfnTimer, true, m_pui);
 
    }
 
 
    bool interaction_impl_base::KillTimer(uint_ptr nIDEvent)
    {
+      
+      if(m_ptimerarray.is_null())
+      {
+         
+         return true;
+         
+      }
 
-      return delete_timer(nIDEvent);
+      return m_ptimerarray->delete_timer(nIDEvent);
 
    }
 
@@ -1570,7 +1578,7 @@ namespace user
       try
       {
 
-         delete_all_timers();
+         m_ptimerarray.release();
 
       }
       catch(...)
@@ -1713,13 +1721,14 @@ namespace user
 
    }
 
+   
    void interaction_impl_base::_001OnDestroyWindow(::message::message * pobj)
    {
 
       try
       {
 
-         delete_all_timers();
+         m_ptimerarray.release();
 
       }
       catch(...)

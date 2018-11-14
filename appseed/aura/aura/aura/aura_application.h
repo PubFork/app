@@ -137,7 +137,7 @@ namespace aura
 
       virtual ::file::path appconfig_folder();
 
-      ::visual::dib_sp & dib(::file::path path, bool bAsync = false);
+      ::visual::dib_sp & dib(var varFile, bool bAsync = false);
 
       ::visual::dib_sp & matter_dib(string strMatter, bool bAsync = false);
 

@@ -250,6 +250,21 @@ CLASS_DECL_AURA bool thread_zip_is_dir()
 }
 
 
+CLASS_DECL_AURA void thread_set_is_timer(bool bIsTimer)
+{
+   
+   thread_set_flag(THREAD_FLAGS_IS_TIMER, bIsTimer);
+   
+}
+
+
+CLASS_DECL_AURA bool thread_is_timer()
+{
+   
+   return (thread_flags() & THREAD_FLAGS_IS_TIMER) != 0ULL;
+   
+}
+
 
 thread_pointer < ::thread > t_pthread;
 

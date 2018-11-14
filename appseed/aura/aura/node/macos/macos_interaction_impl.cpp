@@ -50,8 +50,7 @@ namespace macos
    };
 
 
-   interaction_impl::interaction_impl():
-      ::aura::timer_array(get_app())
+   interaction_impl::interaction_impl()
    {
 
       m_bEnabled = true;
@@ -69,8 +68,7 @@ namespace macos
 
 
    interaction_impl::interaction_impl(::aura::application * papp) :
-      ::object(papp),
-      ::aura::timer_array(papp)
+      ::object(papp)
    {
 
       m_bEnabled = true;
@@ -556,8 +554,8 @@ namespace macos
       Default();
 
       round_window_hide();
-
-      delete_all_timers();
+      
+      m_ptimerarray.release();
 
 //      ::multithreading::post_quit_and_wait(m_pthreadProDevian, seconds(5));
 //

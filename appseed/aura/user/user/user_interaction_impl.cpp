@@ -8,8 +8,7 @@ namespace user
 {
 
 
-   interaction_impl::interaction_impl() :
-      ::aura::timer_array(get_app())
+   interaction_impl::interaction_impl()
    {
 
       user_common_construct();
@@ -2915,8 +2914,7 @@ namespace user
 
 
    guie_message_wnd::guie_message_wnd(::aura::application * papp):
-      ::object(papp),
-      ::aura::timer_array(papp)
+      ::object(papp)
    {
 
       m_puiForward = NULL;
