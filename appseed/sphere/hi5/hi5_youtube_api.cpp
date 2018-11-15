@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 #define DEBUG_THROTTLE 0
@@ -21,6 +21,24 @@ namespace hi5
 
    youtube_api::~youtube_api()
    {
+   }
+
+
+   sync_object * youtube_api::get_api_mutex()
+   {
+
+      defer_create_mutex();
+
+      return m_pmutex;
+
+   }
+
+
+   string youtube_api::get_local_path()
+   {
+
+      return System.defer_process_matter_path("appconfig://youtube_api", get_app());
+
    }
 
 

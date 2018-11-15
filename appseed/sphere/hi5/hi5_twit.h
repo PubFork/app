@@ -5,7 +5,7 @@ namespace hi5
 {
 
    /* twitCurl class */
-   class CLASS_DECL_CORE twit :
+   class CLASS_DECL_SPHERE twit :
       virtual public ::simple_log
    {
    public:

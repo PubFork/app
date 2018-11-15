@@ -1,11 +1,11 @@
-#pragma once
+﻿#pragma once
 
 
 namespace hi5
 {
 
 
-   class CLASS_DECL_CORE youtube_api :
+   class CLASS_DECL_SPHERE youtube_api :
       virtual public object
    {
    public:
@@ -20,9 +20,9 @@ namespace hi5
       virtual ~youtube_api();
 
 
-      virtual mutex * get_api_mutex() = 0;
+      virtual sync_object * get_api_mutex();
 
-      virtual string get_local_path() = 0;
+      virtual string get_local_path();
 
       virtual string youtube_api_token(bool bForce);
 
