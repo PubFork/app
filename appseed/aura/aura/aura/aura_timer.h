@@ -100,13 +100,14 @@ public:
 
    };
 
-   uint_ptr             m_nIDEvent;
-   PFN_TIMER            m_pfnTimer;
-   timer_callback *     m_pcallback;
-   bool                 m_bPeriodic;
-   void *               m_pvoidData;
-   sp(timer)            m_ptimerRunning;
-   DWORD                m_dwMillis;
+   uint_ptr                m_nIDEvent;
+   PFN_TIMER               m_pfnTimer;
+   timer_callback *        m_pcallback;
+   bool                    m_bPeriodic;
+   void *                  m_pvoidData;
+   sp(timer)               m_ptimerRunning;
+   DWORD                   m_dwMillis;
+   ::user::interaction *   m_pui;
 
    //bool                 m_bThreadInit;
 
@@ -140,7 +141,7 @@ public:
 
 
 
-   timer(::aura::application * papp,uint_ptr uiTimer = 0,PFN_TIMER pfnTimer = NULL,void * pvoidData = NULL, sync_object * pmutex = NULL);
+   timer(::aura::application * papp, uint_ptr uiTimer = 0, PFN_TIMER pfnTimer = NULL, void * pvoidData = NULL, sync_object * pmutex = NULL);
    virtual ~timer();
 
 
@@ -163,16 +164,16 @@ public:
 
 
    virtual void children_add(::aura::application * papp);
-   
-   
+
+
    virtual void post_quit() override;
-   
-   
+
+
    virtual void wait_quit(duration durationTimeout) override;
-   
+
    virtual void safe_pre_term() override;
 
-   
+
 };
 
 

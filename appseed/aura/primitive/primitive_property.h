@@ -403,14 +403,15 @@ public:
       m_element2 = b;
       return *this;
    }
-   
-   // 2018-11-11 macos macos macos macOS macOS macOS MACOS MACOS MACOS
 
+   // 2018-11-11 macos macos macos macOS macOS macOS MACOS MACOS MACOS
+#if !defined(WINDOWSEX)
    property & operator =(size_t * p)
    {
       m_element2 = (int64_t *) p;
       return *this;
    }
+#endif
 
    template < class T >
    property & operator =(const smart_pointer < T > & p)

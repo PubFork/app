@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #ifdef WINDOWSEX
 #include "aura/aura/os/windows/windows_system_interaction_impl.h"
 #endif
@@ -169,7 +169,7 @@ namespace aura
       m_phandler = canew(::handler(this));
 
       m_bLicense = false;
-      
+
       m_bIpi = true;
 
       m_bAuraProcessInitialize = false;
@@ -196,25 +196,25 @@ namespace aura
 
    }
 
-   
+
    application::~application()
    {
 
       ::aura::del(m_puiptraFrame);
-      
+
    }
-   
+
 
    application_message::application_message(e_application_message esignal)
    {
-      
+
       m_id = ::message::type_application;
       m_esignal = esignal;
       m_bOk = true;
-      
+
    }
-   
-   
+
+
    application_menu & application::applicationmenu()
    {
 
@@ -2633,46 +2633,46 @@ run:
 
    }
 
-   
+
    void application::release_parents()
    {
 
       try
       {
-         
+
          if(::is_set(m_psystem))
          {
-         
+
             m_psystem->appptra_remove(this);
-            
+
          }
-         
+
       }
       catch(...)
       {
-         
+
       }
 
       try
       {
-         
+
          if(::is_set(m_psession))
          {
-         
+
             m_psession->appptra_remove(this);
-            
+
          }
-         
+
       }
       catch(...)
       {
-         
+
       }
 
       ::thread::release_parents();
 
    }
-   
+
 
    void application::pos_run()
    {
@@ -3388,11 +3388,11 @@ retry_license:
       sp(application) papp;
 
       {
-         
+
          synch_lock sl(m_psession->m_pmutex);
-         
+
          papp = Session.m_appptra.find_running_defer_try_quit_damaged(pszAppId);
-         
+
       }
 
       if (papp.is_null())
@@ -3563,23 +3563,23 @@ retry_license:
 
       if(::is_set(m_psystem))
       {
-         
+
          m_psystem->appptra_add(this);
-         
+
       }
-         
+
       if(::is_set(m_psession))
       {
-      
+
          m_psession->appptra_add(this);
-         
+
       }
 
       if(::is_set(m_papp))
       {
-         
+
          m_papp->appptra_add(this);
-         
+
       }
 
       if (is_system() || is_session())
@@ -3859,7 +3859,7 @@ retry_license:
 
       if (!is_system() && !is_session())
       {
-         
+
          if(m_bIpi)
          {
 
@@ -3873,7 +3873,7 @@ retry_license:
             {
 
             }
-            
+
          }
 
          thisok << 0.1;
@@ -4375,150 +4375,160 @@ retry_license:
 
    }
 
-   
+
    application_ptra & application::appptra()
    {
-      
+
       return m_appptra;
-      
+
    }
-   
+
 
    application_ptra application::get_appptra()
    {
-      
+
       synch_lock sl(m_pmutex);
-      
+
       return m_appptra;
-      
+
    }
 
-   
+
    void application::appptra_add(::aura::application * papp)
    {
-      
+
       if(::is_null(papp))
       {
-         
+
          return;
-         
+
       }
-      
+
       synch_lock sl(m_pmutex);
-      
+
       if(papp == this)
       {
-         
+
          return;
-         
+
       }
-      
+
       m_appptra.add_unique(papp);
 
    }
-   
-   
+
+
    void application::appptra_remove(::aura::application * papp)
    {
-      
+
       synch_lock sl(m_pmutex);
-      
+
+      m_appptra.remove(papp);
+
+   }
+
+
+   void application::release_children()
+   {
+
+      ::thread::release_children();
+
+      synch_lock sl(m_pmutex);
+
       try
       {
-         
+
          for (auto & papp : m_appptra)
          {
-            
+
             try
             {
-               
-               if (papp->m_papp == this && papp != this)
+
+               if (papp != this && papp->m_papp == this)
                {
-                  
+
                   papp->m_papp = NULL;
-                  
+
                }
-               
-               if(is_session())
+
+               if (is_session())
                {
-                  
-                  ::aura::session * psessionThis = dynamic_cast < ::aura::session * >(this);
-                  
+
+                  ::aura::session * psessionThis = dynamic_cast <::aura::session *>(this);
+
                   if (papp->m_psession == psessionThis && papp != this)
                   {
-                     
+
                      papp->m_psession = NULL;
-                     
+
                   }
-                  
+
                }
-               
-               if(is_system())
+
+               if (is_system())
                {
-                  
-                  ::aura::system * psystemThis = dynamic_cast < ::aura::system * >(this);
-                  
+
+                  ::aura::system * psystemThis = dynamic_cast <::aura::system *>(this);
+
                   if (papp->m_psystem == psystemThis && papp != this)
                   {
-                     
+
                      papp->m_psystem = NULL;
-                     
+
                   }
-                  
+
                }
 
             }
             catch (...)
             {
-               
+
             }
-            
+
          }
-         
+
       }
       catch (...)
       {
-         
+
       }
 
-      m_appptra.remove(papp);
-      
    }
-   
-   
+
+
    void application::term_application()
    {
-      
+
       if(::is_set(m_papp))
       {
-      
+
          m_papp->appptra_remove(this);
-         
+
       }
-      
+
       if(::is_set(m_psession))
       {
 
          m_psession->appptra_remove(this);
-         
+
       }
-      
+
       if(::is_set(m_psystem))
       {
 
          m_psystem->appptra_remove(this);
-         
+
       }
-      
+
       try
       {
-       
+
          m_pipi.release();
-         
+
       }
       catch (...)
       {
-       
+
       }
 
       try

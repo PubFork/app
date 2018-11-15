@@ -899,7 +899,7 @@ namespace helloaxis
 //
 //                  auto & dib = dib23(m_strLast23);
 //
-//                  if (dib.m_eload == ::visual::dib_sp::load_ok)
+//                  if (dib.m_eload == ::visual::load_ok)
 //                  {
 //
 //                     dib.defer_update();
@@ -917,7 +917,7 @@ namespace helloaxis
 //
 //                  auto & dib = dib23(m_strCurrent23);
 //
-//                  if (dib.m_eload == ::visual::dib_sp::load_ok)
+//                  if (dib.m_eload == ::visual::load_ok)
 //                  {
 //
 //                     dib.defer_update();
@@ -936,7 +936,7 @@ namespace helloaxis
 //
 //               auto & dib = dib23(m_strCurrent23);
 //
-//               if (dib.m_eload == ::visual::dib_sp::load_ok)
+//               if (dib.m_eload == ::visual::load_ok)
 //               {
 //
 //                  dib.defer_update();
@@ -1129,10 +1129,10 @@ namespace helloaxis
 
       //}
 
-      //if (dib.m_eload == ::visual::dib_sp::load_none)
+      //if (dib.m_eload == ::visual::load_none)
       //{
 
-      //   dib.m_eload = ::visual::dib_sp::load_going_to_load;
+      //   dib.m_eload = ::visual::load_going_to_load;
 
       //   ::fork(get_app(), [=]()
       //   {

@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "user_shell_windows.h"
 
 
@@ -1082,7 +1082,11 @@ namespace user
 
          synch_lock sl(m_pmutex);
 
-         m_threadptra.add(canew(thread(this)));
+         thread * pthread = canew(thread(this));
+
+         children_add(pthread);
+
+         m_threadptra.add(pthread);
 
          m_uiThread = m_threadptra.get_upper_bound();
 

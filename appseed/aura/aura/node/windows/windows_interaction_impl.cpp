@@ -54,8 +54,7 @@ namespace windows
 {
 
 
-   interaction_impl::interaction_impl() :
-      ::aura::timer_array(get_app())
+   interaction_impl::interaction_impl()
    {
 
       user_common_construct();
@@ -286,8 +285,7 @@ namespace windows
 
 
    interaction_impl::interaction_impl(::aura::application * papp) :
-      ::object(papp),
-      ::aura::timer_array(papp)
+      ::object(papp)
    {
 
       user_common_construct();
@@ -4458,20 +4456,6 @@ namespace windows
 
    }
 
-   bool interaction_impl::SetTimer(uint_ptr nIDEvent, UINT nElapse, PFN_TIMER pfnTimer)
-   {
-
-      return create_timer(nIDEvent, nElapse, pfnTimer, true, m_pui);
-
-   }
-
-
-   bool interaction_impl::KillTimer(uint_ptr nIDEvent)
-   {
-
-      return delete_timer(nIDEvent);
-
-   }
 
    bool interaction_impl::is_window_enabled()
    {

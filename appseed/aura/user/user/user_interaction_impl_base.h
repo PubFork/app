@@ -26,7 +26,7 @@ namespace user
       bool                                m_bIgnoreSizeEvent;
       bool                                m_bIgnoreMoveEvent;
       ap(critical_section)                m_pcsDisplay;
-      
+
       sp(::aura::timer_array)             m_ptimerarray;
 
       mutex                               m_mutexLongPtr;
@@ -238,7 +238,7 @@ namespace user
 
       virtual bool get_rect_normal(LPRECT lprect);
 
-      virtual bool SetTimer(uint_ptr nIDEvent,UINT nElapse, PFN_TIMER pfnTimer) override;
+      virtual bool SetTimer(uint_ptr nIDEvent, UINT nElapse, PFN_TIMER pfnTimer = NULL) override;
       virtual bool KillTimer(uint_ptr nIDEvent) override;
 
       virtual void _001OnTimer(::timer * ptimer) override;

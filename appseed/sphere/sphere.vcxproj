@@ -821,6 +821,10 @@
     <ClInclude Include="filehandler\filehandler_pane_view_update_hint.h" />
     <ClInclude Include="filehandler\filehandler_view.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="hi5\hi5.h" />
+    <ClInclude Include="hi5\hi5_oauth.h" />
+    <ClInclude Include="hi5\hi5_twit.h" />
+    <ClInclude Include="hi5\hi5_youtube_api.h" />
     <ClInclude Include="net\mail\mail.h" />
     <ClInclude Include="net\mail\mail_pop3.h" />
     <ClInclude Include="net\mail\pop3_socket.h" />
@@ -1232,6 +1236,9 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='basis|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='stage|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="hi5\hi5_oauth.cpp" />
+    <ClCompile Include="hi5\hi5_twit.cpp" />
+    <ClCompile Include="hi5\hi5_youtube_api.cpp" />
     <ClCompile Include="net\mail\_mail.cpp" />
     <ClCompile Include="pcre\pcre.cpp" />
     <ClCompile Include="sphere\sphere_application.cpp" />

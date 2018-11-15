@@ -349,9 +349,11 @@ CLASS_DECL_AURA WINBOOL show_window(oswindow oswindow, int iShowCmd)
 }
 
 
-CLASS_DECL_AURA oswindow_array get_top_level_windows()
+/// from top to bottom
+CLASS_DECL_AURA ::user::oswindow_array get_top_level_windows()
 {
 
+   /// from top to bottom
    enum_windows enumwindows;
 
    return enumwindows.m_oswindowa;
@@ -393,7 +395,7 @@ BOOL CALLBACK enum_windows::EnumWindowsProc(oswindow oswindow, LPARAM lParam)
 int_bool is_window_occluded(oswindow oswindow)
 {
 
-   oswindow_array oswindowa = get_top_level_windows();
+   auto oswindowa = get_top_level_windows();
 
    if(oswindowa.is_empty())
    {

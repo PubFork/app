@@ -1,10 +1,10 @@
-#pragma once
+﻿#pragma once
 
 
 namespace aura
 {
 
-   
+
 
 
    class CLASS_DECL_AURA application :
@@ -55,7 +55,7 @@ namespace aura
       bool                                            m_bAppHasInstallerProtected;
       bool                                            m_bAppHasInstallerChangedProtected;
       ::install::installer *                          m_pinstaller;
-      
+
       object_ptra                                     m_objectptraSystemEvents;
 
 
@@ -158,11 +158,11 @@ namespace aura
 
 
       virtual void post_quit() override;
-      
-      
+
+
       virtual void release_parents() override;
 
-      
+
       virtual object * alloc(sp(type) info);
       virtual object * alloc(const id & idType);
 
@@ -197,13 +197,15 @@ namespace aura
          return pt;
       }
 
-      
+
       virtual void appptra_add(::aura::application * papp);
       virtual void appptra_remove(::aura::application * papp);
 
       application_ptra & appptra();
-      
+
       application_ptra                                get_appptra();
+
+      virtual void release_children() override;
 
 
       virtual void on_system_event(e_system_event eevent, lparam lparam) override;

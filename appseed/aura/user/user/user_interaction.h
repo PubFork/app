@@ -6,7 +6,8 @@ namespace user
 
 
    class CLASS_DECL_AURA interaction:
-      virtual public interaction_base
+      virtual public interaction_base,
+      virtual public ::timer_callback
    {
    public:
 
@@ -602,6 +603,7 @@ namespace user
       DECL_GEN_SIGNAL(_001OnKeyDown);
       DECL_GEN_SIGNAL(_001OnKeyUp);
       virtual void _001OnTimer(::timer * ptimer) override;
+      virtual bool on_timer(::timer * ptimer) override;
       DECL_GEN_SIGNAL(_001OnChar);
       DECL_GEN_SIGNAL(_001OnDestroy);
       DECL_GEN_SIGNAL(_001OnSize);
@@ -1182,12 +1184,12 @@ namespace user
 } // namespace user
 
 // timer_ui works correctly when timer is originated from SetTimer call
-inline ::user::interaction * timer_ui(::timer * ptimer)
-{
-
-   return (::user::interaction *) ptimer->m_pvoidData;
-
-}
+//inline ::user::interaction * timer_ui(::timer * ptimer)
+//{
+//
+//   return (::user::interaction *) ptimer->m_pvoidData;
+//
+//}
 
 
 

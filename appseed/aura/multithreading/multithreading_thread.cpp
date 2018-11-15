@@ -305,7 +305,12 @@ CLASS_DECL_AURA ::thread * get_thread_raw();
 void thread::CommonConstruct()
 {
 
+#ifdef MACOS
+
    m_runloop = NULL;
+
+#endif
+
    m_bFork = false;
    m_pmutexThreadUiPtra = NULL;
    m_puiptraThread = NULL;
@@ -1123,7 +1128,7 @@ void thread::post_quit()
          ::output_debug_string("\n\n\nWM_QUIT at multimedia::audio::wave_player\n\n\n");
 
       }
-      
+
       if (m_bRunThisThread)
       {
 
@@ -1139,43 +1144,43 @@ void thread::post_quit()
          }
 
       }
-      
+
 //#ifdef __APPLE__
-//      
+//
 //      if(m_runloop)
 //      {
-//         
+//
 //         try
 //         {
-//            
+//
 //            for(auto & source : m_runloopsourcea)
 //            {
-//            
+//
 //               CFRunLoopRemoveSource(m_runloop, source, kCFRunLoopCommonModes);
-//            
+//
 //            }
-//         
+//
 //            CFRunLoopStop(m_runloop);
-//            
+//
 //         }
 //         catch(...)
 //         {
-//         
+//
 //         }
-//         
+//
 //         m_runloop = NULL;
-//         
+//
 //      }
-//      
+//
 //#endif
-         
+
       if(is_thread())
       {
 
          ::PostThreadMessage(m_uiThread, WM_QUIT, 0, 0);
-         
+
       }
-      
+
    }
    catch (...)
    {
@@ -1655,12 +1660,12 @@ bool thread::begin_thread(bool bSynch, int32_t epriority,uint_ptr nStackSize,uin
    pstartup->m_event2.ResetEvent();
 
    add_ref();
-   
+
    if(m_id.is_empty())
    {
-      
+
       m_id = demangle(typeid(*this).name());
-                    
+
    }
 
    HTHREAD hthread = ::create_thread(lpSecurityAttrs,nStackSize,&__thread_entry,pstartup.m_p,dwCreateFlags,&m_uiThread);
@@ -1851,7 +1856,7 @@ uint32_t __thread_entry(void * pparam)
    UINT uiRet = 0;
 
    sp(::thread) pthread;
-   
+
    try
    {
 

@@ -9,22 +9,26 @@ CLASS_DECL_AURA wstring windows_calc_icon_window_class(::user::interaction * pui
 CLASS_DECL_AURA wstring windows_get_user_interaction_window_class(::user::interaction * pui);
 CLASS_DECL_AURA bool windows_register_with_icon(WNDCLASSW* pWndCls, const unichar * lpszClassName, UINT nIDIcon);
 
+/// from top to bottom
+CLASS_DECL_AURA ::user::oswindow_array get_top_level_windows();
 
-CLASS_DECL_AURA oswindow_array get_top_level_windows();
 
-
+/// from top to bottom
 CLASS_DECL_AURA class enum_windows
 {
 public:
 
 
-   oswindow_array    m_oswindowa;
+   ::user::oswindow_array    m_oswindowa;
 
 
    enum_windows();
    ~enum_windows();
 
+
+   /// from top to bottom
    static BOOL CALLBACK EnumWindowsProc(oswindow oswindow, LPARAM lParam);
+
 
 };
 

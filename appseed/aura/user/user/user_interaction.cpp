@@ -1441,7 +1441,7 @@ restart:
 
          if (m_pimpl != NULL)
          {
-            
+
             m_pimpl->m_ptimerarray.release();
 
          }
@@ -2860,8 +2860,19 @@ restart:
       //}
    }
 
+
    void interaction::_001OnTimer(::timer * ptimer)
    {
+
+   }
+
+
+   bool interaction::on_timer(::timer * ptimer)
+   {
+
+      _001OnTimer(ptimer);
+
+      return true;
 
    }
 
@@ -4408,7 +4419,7 @@ restart:
 //      {
 //
 //      }
-      
+
       ::user::interaction_base::post_quit();
 
    }

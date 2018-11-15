@@ -203,22 +203,7 @@ public:
    //sp(T) clone() const;
 
    void alloc(const ::aura::allocatorsp & spallocator);
-   
-   inline void defer_alloc(const ::aura::allocatorsp & spallocator)
-   {
-      
-      if(is_set())
-      {
-         
-         return;
-         
-      }
-      
-      alloc(spallocator);
-      
-   }
 
-   inline void defer_alloc(::aura::application * papp);
 
    inline void run_and_release()
    {
@@ -263,29 +248,29 @@ void destruct(T * p)
 
 template < class T >
 class guard_pointer :
-public ::smart_pointer < T >
+   public ::smart_pointer < T >
 {
-   public:
+public:
    guard_pointer() {}
-   guard_pointer(const lparam & lparam) : ::smart_pointer<T>(lparam){}
-   guard_pointer(const smart_pointer < T > & t): ::smart_pointer< T>(t){}
-   guard_pointer(guard_pointer < T > && t): ::smart_pointer<T>(::move(t)){}
-   guard_pointer(const ::aura::allocatorsp & t): ::smart_pointer<T>(t){}
-   guard_pointer(::aura::allocatorsp && t): ::smart_pointer<T>(::move(t)){}
+   guard_pointer(const lparam & lparam) : ::smart_pointer<T>(lparam) {}
+   guard_pointer(const smart_pointer < T > & t): ::smart_pointer< T>(t) {}
+   guard_pointer(guard_pointer < T > && t): ::smart_pointer<T>(::move(t)) {}
+   guard_pointer(const ::aura::allocatorsp & t): ::smart_pointer<T>(t) {}
+   guard_pointer(::aura::allocatorsp && t): ::smart_pointer<T>(::move(t)) {}
    template < class T2 >
-   guard_pointer(T2 * p) : ::smart_pointer <T>(p){}
-   guard_pointer(T * p) : ::smart_pointer <T>(p){}
+   guard_pointer(T2 * p) : ::smart_pointer <T>(p) {}
+   guard_pointer(T * p) : ::smart_pointer <T>(p) {}
 
    template < class T2 >
-   guard_pointer(const T2 * p): ::smart_pointer <T>(p){}
+   guard_pointer(const T2 * p): ::smart_pointer <T>(p) {}
 
    template < class T2 >
-   guard_pointer(const smart_pointer < T2 > & t): ::smart_pointer <T>(t){}
+   guard_pointer(const smart_pointer < T2 > & t): ::smart_pointer <T>(t) {}
 
 
    template < class T2 >
    guard_pointer(guard_pointer < T2 > && t) :
-   ::smart_pointer <T>(::move(t)) {}
+      ::smart_pointer <T>(::move(t)) {}
 
    ~guard_pointer()
    {
@@ -298,7 +283,7 @@ public ::smart_pointer < T >
       }
 
       this->release();
-      
+
    }
 
 

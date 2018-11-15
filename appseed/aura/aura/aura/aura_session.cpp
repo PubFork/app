@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "aura/net/sockets/bsd/sockets_sockets.h"
 
 
@@ -376,10 +376,10 @@ namespace aura
 
       try
       {
-         
+
          if(::is_set(m_psystem))
          {
-            
+
             synch_lock sl(m_psystem->m_pmutex);
 
             for (auto & papp : m_psystem->m_appptra)
@@ -402,7 +402,7 @@ namespace aura
                }
 
             }
-            
+
          }
 
       }
@@ -413,38 +413,42 @@ namespace aura
 
       ::aura::application::term_application();
 
+      m_ptheme.release();
+
+      m_mapTheme.remove_all();
+
    }
 
-   
+
    void session::appptra_add(::aura::application * papp)
    {
-      
+
       if(::is_null(papp))
       {
-         
+
          return;
-         
+
       }
-      
+
       ::aura::application::appptra_add(papp);
-      
+
       if(!papp->is_session() && !papp->is_system() && !papp->is_serviceable())
       {
-         
+
          m_psystem->m_bDoNotExitIfNoApplications = false;
-         
+
       }
-      
+
    }
 
-   
+
    void session::appptra_remove(::aura::application * papp)
    {
-      
+
       ::aura::application::appptra_remove(papp);
-      
+
    }
-   
+
 
    //// only usable from base.dll and dependants
    //::sockets::sockets & session::sockets()

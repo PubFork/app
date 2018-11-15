@@ -1797,6 +1797,36 @@ namespace user
    }
 
 
+   //bool interaction_impl::SetTimer(uint_ptr nIDEvent, UINT nElapse, PFN_TIMER pfnTimer)
+   //{
+
+   //   if (m_ptimerarray.is_null())
+   //   {
+
+   //      m_ptimerarray = canew(::aura::timer_array(get_app()));
+
+   //   }
+
+   //   return m_ptimerarray->create_timer(nIDEvent, nElapse, pfnTimer, true, m_pui);
+
+   //}
+
+
+   //bool interaction_impl::KillTimer(uint_ptr nIDEvent)
+   //{
+
+   //   if (m_ptimerarray.is_null())
+   //   {
+
+   //      return true;
+
+   //   }
+
+   //   return m_ptimerarray->delete_timer(nIDEvent);
+
+   //}
+
+
    bool interaction_impl::is_window_enabled()
    {
 

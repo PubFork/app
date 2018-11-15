@@ -486,19 +486,19 @@ bool freeimage_load_diba_from_file(::visual::dib_sp::array * pdiba, ::file::file
             switch (iDisposal)
             {
             case 0:
-               p->m_edisposal = ::visual::dib_sp::pointer::disposal_undefined;
+               p->m_edisposal = ::visual::disposal_undefined;
                break;
             case 1:
-               p->m_edisposal = ::visual::dib_sp::pointer::disposal_none;
+               p->m_edisposal = ::visual::disposal_none;
                break;
             case 2:
-               p->m_edisposal = ::visual::dib_sp::pointer::disposal_background;
+               p->m_edisposal = ::visual::disposal_background;
                break;
             case 3:
-               p->m_edisposal = ::visual::dib_sp::pointer::disposal_previous;
+               p->m_edisposal = ::visual::disposal_previous;
                break;
             default:
-               p->m_edisposal = ::visual::dib_sp::pointer::disposal_undefined;
+               p->m_edisposal = ::visual::disposal_undefined;
                break;
             }
 
@@ -508,7 +508,7 @@ bool freeimage_load_diba_from_file(::visual::dib_sp::array * pdiba, ::file::file
 
       }
 
-      if (uFrameIndex > 0 && pdiba->element_at(uFrameIndex - 1)->m_edisposal == ::visual::dib_sp::pointer::disposal_background)
+      if (uFrameIndex > 0 && pdiba->element_at(uFrameIndex - 1)->m_edisposal == ::visual::disposal_background)
       {
 
          dibCompose->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_set);
@@ -1248,7 +1248,7 @@ UINT uFrameIndex)
          if (SUCCEEDED(hr))
          {
 
-            pointer->m_edisposal = (::visual::dib_sp::pointer::e_disposal) propValue.bVal;
+            pointer->m_edisposal = (::visual::e_disposal) propValue.bVal;
 
          }
 
@@ -1258,7 +1258,7 @@ UINT uFrameIndex)
 
          // Failed to get the disposal method, use default. Possibly a
          // non-animated gif.
-         pointer->m_edisposal = ::visual::dib_sp::pointer::disposal_undefined;
+         pointer->m_edisposal = ::visual::disposal_undefined;
 
       }
 

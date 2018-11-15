@@ -19,6 +19,8 @@ timer::timer(::aura::application * papp, uint_ptr uiTimer, PFN_TIMER pfnTimer, v
 
    m_pcallback = NULL;
 
+   m_pui = NULL;
+
 }
 
 
@@ -118,7 +120,7 @@ void timer::call_on_timer()
 {
 
    bool bRepeat = true;
-   
+
    thread_set_is_timer();
 
    try
@@ -198,7 +200,7 @@ void timer::call_on_timer()
 
       try
       {
-         
+
          m_ptimerRunning->release_parents();
 
          m_ptimerRunning.release();
@@ -242,7 +244,7 @@ void timer::on_timer()
 
 void timer::children_add(::aura::application * papp)
 {
-   
+
 }
 
 
@@ -250,36 +252,36 @@ void timer::wait_quit(duration durationTimeout)
 {
 
    Sleep(10);
-   
+
 
 }
 
 void timer::safe_pre_term()
 {
-   
+
    release_parents();
-   
+
 }
 
 void timer::post_quit()
 {
-   
+
    try
    {
-      
+
       if(m_bRunThisThread)
       {
-         
+
          m_bRunThisThread = false;
-         
+
       }
-      
+
    }
    catch (...)
    {
-   
+
    }
-   
+
 }
 
 

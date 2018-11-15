@@ -2789,6 +2789,9 @@
     <ClInclude Include="graphics\visual\visual_text_box.h">
       <Filter>Header Files\graphics\visual</Filter>
     </ClInclude>
+    <ClInclude Include="aura\aura\aura_application_menu.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="multithreading\multithreading_condition.cpp">
@@ -4812,6 +4815,15 @@
     </ClCompile>
     <ClCompile Include="graphics\visual\visual_text_box.cpp">
       <Filter>Source Files\graphics\visual</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_application_menu.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_application_ptra.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_list_serial_ports.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

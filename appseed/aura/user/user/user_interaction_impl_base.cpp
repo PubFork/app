@@ -1511,22 +1511,29 @@ namespace user
 //         ::output_debug_string(str);
 
       }
-      
-      m_ptimerarray.defer_alloc(get_app());
 
-      return m_ptimerarray->create_timer(nIDEvent, nEllapse, pfnTimer, true, m_pui);
+      if (m_ptimerarray.is_null())
+      {
+
+         m_ptimerarray = canew(::aura::timer_array(get_app()));
+
+         m_ptimerarray->m_pcallback = m_pui;
+
+      }
+
+      return m_ptimerarray->create_timer(nIDEvent, nEllapse, pfnTimer, true);
 
    }
 
 
    bool interaction_impl_base::KillTimer(uint_ptr nIDEvent)
    {
-      
+
       if(m_ptimerarray.is_null())
       {
-         
+
          return true;
-         
+
       }
 
       return m_ptimerarray->delete_timer(nIDEvent);
@@ -1721,7 +1728,7 @@ namespace user
 
    }
 
-   
+
    void interaction_impl_base::_001OnDestroyWindow(::message::message * pobj)
    {
 

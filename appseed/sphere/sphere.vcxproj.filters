@@ -84,6 +84,12 @@
     <Filter Include="Header Files\net\mail">
       <UniqueIdentifier>{ed1815e7-2168-461c-8b8f-d29a2bd575aa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\hi5">
+      <UniqueIdentifier>{be3ca3f9-1a5f-494f-bdab-c2a571062595}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\hi5">
+      <UniqueIdentifier>{acc51bae-2682-4efe-b426-0b6e966c4bf2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="command\command.h">
@@ -446,6 +452,18 @@
     <ClInclude Include="net\mail\simple_pop3.h">
       <Filter>Header Files\net\mail</Filter>
     </ClInclude>
+    <ClInclude Include="hi5\hi5.h">
+      <Filter>Header Files\hi5</Filter>
+    </ClInclude>
+    <ClInclude Include="hi5\hi5_oauth.h">
+      <Filter>Header Files\hi5</Filter>
+    </ClInclude>
+    <ClInclude Include="hi5\hi5_twit.h">
+      <Filter>Header Files\hi5</Filter>
+    </ClInclude>
+    <ClInclude Include="hi5\hi5_youtube_api.h">
+      <Filter>Header Files\hi5</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="calculator\calculator_application.cpp">
@@ -702,6 +720,15 @@
     </ClCompile>
     <ClCompile Include="net\mail\_mail.cpp">
       <Filter>Source Files\net\mail</Filter>
+    </ClCompile>
+    <ClCompile Include="hi5\hi5_oauth.cpp">
+      <Filter>Source Files\hi5</Filter>
+    </ClCompile>
+    <ClCompile Include="hi5\hi5_twit.cpp">
+      <Filter>Source Files\hi5</Filter>
+    </ClCompile>
+    <ClCompile Include="hi5\hi5_youtube_api.cpp">
+      <Filter>Source Files\hi5</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

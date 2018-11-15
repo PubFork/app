@@ -1,7 +1,8 @@
-#pragma once
+﻿#pragma once
 
 
 #include "app/appseed/sphere/console/console.h"
+#include "app/appseed/sphere/hi5/hi5.h"
 
 
 

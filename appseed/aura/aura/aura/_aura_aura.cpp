@@ -8,6 +8,8 @@
 #include "aura_allocate_system_heap.cpp"
 #include "aura_allocate_x86_cache_oriented.cpp"
 #include "aura_application.cpp"
+#include "aura_application_menu.cpp"
+#include "aura_application_ptra.cpp"
 #include "aura_app_core.cpp"
 #include "aura_app_launcher.cpp"
 #include "aura_argcargv.cpp"

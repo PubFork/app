@@ -136,18 +136,25 @@ namespace aura
    void timer_array::_001OnTimer(::timer * ptimer)
    {
 
+      if (m_pcallback != NULL)
+      {
+
+         m_pcallback->on_timer(ptimer);
+
+      }
+
    }
 
-   
+
    void timer_array::safe_pre_term()
    {
-      
+
       delete_all_timers();
-      
+
       ::timer_callback::safe_pre_term();
-      
+
    }
-   
+
 
    void timer_array::delete_all_timers()
    {
@@ -164,7 +171,7 @@ namespace aura
          }
 
       }
-      
+
       wait_quit(one_minute());
 
       MAP::pair * ppair = NULL;

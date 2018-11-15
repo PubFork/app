@@ -159,7 +159,27 @@ uint64_t flen_dup(FILE *str)
 
 }
 
+
 #endif
+
+
+int32_t file_touch_dup(const char * psz)
+{
+
+   FILE * pfile = ::fopen(psz, "a");
+
+   if (pfile == NULL)
+   {
+
+      return FALSE;
+
+   }
+
+   ::fclose(pfile);
+
+   return TRUE;
+
+}
 
 
 

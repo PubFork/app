@@ -62,6 +62,7 @@ CLASS_DECL_AURA int32_t ungetc_dup(int32_t c,FILE *s);
 CLASS_DECL_AURA int32_t ferror_dup(FILE *s);
 CLASS_DECL_AURA int32_t fflush_dup(FILE *s);
 CLASS_DECL_AURA uint64_t flen_dup(FILE *s);
+CLASS_DECL_AURA int32_t file_touch_dup(const char * psz);
 
 
 #ifdef WINDOWS

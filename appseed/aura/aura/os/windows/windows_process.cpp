@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "windows_process.h"
 
 
@@ -323,11 +323,11 @@ uint32_t call_sync(const char * pszPath, const char * pszParam, const char * psz
 
    }
 
-   DWORD dwExitCode;
+   DWORD dwExitCode = (DWORD) -1;
 
    int32_t iTry = 0;
 
-   while (iRetry < 0 || iTry <= iRetry)
+   while ((iRetry < 0 || iTry <= iRetry) && !::get_thread_run())
    {
 
       if (!GetExitCodeProcess(infoa.hProcess, &dwExitCode))

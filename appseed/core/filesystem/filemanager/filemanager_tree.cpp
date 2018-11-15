@@ -1103,16 +1103,16 @@ restart:
          if (m_iAnimate >= 11)
          {
             m_iAnimate = 0;
-            timer_ui(ptimer)->KillTimer(ptimer->m_nIDEvent);
+            ptimer->m_pui->KillTimer(ptimer->m_nIDEvent);
 
          }
-         timer_ui(ptimer)->set_need_redraw();
+         ptimer->m_pui->set_need_redraw();
       }
       else if (ptimer->m_nIDEvent == 123)
       {
-         timer_ui(ptimer)->set_need_redraw();
+         ptimer->m_pui->set_need_redraw();
          m_bTimer123 = false;
-         timer_ui(ptimer)->KillTimer(123);
+         ptimer->m_pui->KillTimer(123);
       }
 
    }
