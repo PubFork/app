@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 #ifdef WINDOWS
 #define FILE_SYSTEM_CASE_INSENSITIVE 1
@@ -84,7 +84,7 @@ namespace aura
       ::object(NULL),
       ::thread(NULL)
    {
-      
+
       m_strAppId                    = "aura_system";
       m_strAppName                  = "aura_system";
       m_strBaseSupportId            = "aura_system";
@@ -292,66 +292,66 @@ namespace aura
 
    ::aura::library * system::get_library(const char * pszLibrary, bool bOpenCa2)
    {
-      
+
       synch_lock sl(g_pmutexLibrary);
-      
+
       sp(::aura::library) & plibrary = m_mapLibrary[pszLibrary];
-      
+
       if(plibrary.is_null())
       {
-       
+
          plibrary.alloc(allocer());
-         
+
          if(!plibrary->open(pszLibrary))
          {
-          
+
 #if !defined(VSNORD)
             if(!plibrary->open(System.dir().ca2module() / pszLibrary))
 #endif
             {
-               
+
             }
 
          }
-         
+
          if(plibrary->is_opened())
          {
-            
+
             if(bOpenCa2)
             {
-               
+
                plibrary->open_ca2_library();
-               
+
             }
-            
+
          }
-         
+
       }
-      
+
       if(!plibrary->is_opened())
       {
-       
+
          return NULL;
-         
+
       }
-      
+
       if(bOpenCa2)
       {
-         
+
          if(!plibrary->m_pca2library.is_null())
          {
-          
+
             return NULL;
-            
+
          }
-         
+
       }
-      
+
       return plibrary;
-      
+
    }
-   
-   
+
+
    system::~system()
    {
 
@@ -2708,7 +2708,7 @@ RetryBuildNumber:
 
          for (index j = 0; j < ptra.get_size(); j++)
          {
-            
+
             try
             {
 
@@ -2718,11 +2718,11 @@ RetryBuildNumber:
                   return;
 
                }
-               
+
             }
             catch(...)
             {
-               
+
             }
 
          }
@@ -3396,16 +3396,16 @@ success:
 
    bool system::on_application_menu_action(const char * pszCommand)
    {
-      
+
       synch_lock sl(m_pmutex);
-      
+
       auto appptra = m_appptra;
-      
+
       sl.unlock();
-      
+
       for(auto & papp : appptra)
       {
-         
+
          ASSERT(papp != this);
 
          if(papp == this)
@@ -3427,8 +3427,8 @@ success:
       return false;
 
    }
-   
-   
+
+
    bool system::merge_accumulated_on_open_file(::create * pcreate)
    {
 
@@ -3542,7 +3542,21 @@ success:
    LPWAVEOUT system::waveout_open(int iChannel, LPAUDIOFORMAT pformat, LPWAVEOUT_CALLBACK pcallback)
    {
 
-      return get_appptra()[0]->waveout_open(iChannel, pformat, pcallback);
+      for (auto & papp : m_appptra)
+      {
+
+         if (papp->is_system() || papp->is_session())
+         {
+
+            continue;
+
+         }
+
+         return papp->waveout_open(iChannel, pformat, pcallback);
+
+      }
+
+      return NULL;
 
    }
 
@@ -4108,7 +4122,7 @@ success:
 
    ::visual::dib_sp & system::get_dib(::aura::application * papp, var varFile, bool bAsync)
    {
-      
+
       ::file::path path = varFile.get_file_path();
 
 #if FILE_SYSTEM_CASE_INSENSITIVE
@@ -4141,7 +4155,7 @@ success:
             synch_lock sl(dib->m_pmutex);
 
             dib.load_from_file(varFile, true);
-            
+
             //if (!dib.load_from_file(varFile, true))
 //            {
 
